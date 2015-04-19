@@ -53,7 +53,7 @@
         android:layout_below="@+id/user_password"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="30dp"
+        android:layout_margin="20dp"
         android:background="#191970"
         android:textColor="#ffffff"
         android:text="LOGIN"
@@ -68,6 +68,6 @@
         android:layout_margin="5dp"
         android:textSize="20dp"
         android:gravity="center"/>
-    
+
 
 </RelativeLayout>
