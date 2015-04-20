@@ -31,20 +31,23 @@
         android:orientation="vertical"
         android:layout_margin="20dp"
         android:padding="10dp"
-        android:background="#ffffff"
-        >
+        android:background="#ffffff">
+
         <EditText
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:padding="20dp"
-            android:hint="Email address"
-            />
+            android:hint="Mail"
+            android:id="@+id/email_editText"
+            android:inputType="textEmailAddress"/>
+
         <EditText
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:padding="20dp"
+            android:padding="15dp"
             android:hint="Password"
-            />
+            android:id="@+id/password_editText"
+            android:inputType="textPassword"/>
     </LinearLayout>
 <!-- Fine username e password -->
 
@@ -54,10 +57,7 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_margin="20dp"
-        android:background="#191970"
-        android:textColor="#ffffff"
-        android:text="LOGIN"
-        />
+        android:text="LOGIN"/>
 
     <TextView
         android:id="@+id/register_link"

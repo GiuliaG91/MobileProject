@@ -37,18 +37,23 @@
         android:padding="10dp"
         android:background="#ffffff"
         >
+
         <EditText
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:padding="20dp"
-            android:hint="Email address"
-            />
+            android:hint="Mail"
+            android:id="@+id/email_editText"
+            android:inputType="textEmailAddress"/>
+
         <EditText
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:padding="15dp"
             android:hint="Password"
-            />
+            android:id="@+id/password_editText"
+            android:inputType="textPassword"/>
+
     </LinearLayout>
     <!-- Fine username e password -->
 
