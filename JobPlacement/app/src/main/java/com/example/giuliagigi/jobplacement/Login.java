@@ -56,15 +56,22 @@ public class Login extends ActionBarActivity {
                 GlobalData gd = (GlobalData)getApplicationContext();
                 String result;
 
-                if(gd.performLogin(mail.getText().toString(),password.getText().toString()))
+                if(gd.performLogin(mail.getText().toString(),password.getText().toString())){
+
                     result = "login successful";
-                else
+                    Toast.makeText(getApplicationContext(),result,Toast.LENGTH_SHORT).show();
+                    Intent i = new Intent(getApplicationContext(),Home.class);
+                    startActivity(i);
+                }
+                else{
+
                     result = "invalid username or password";
+                    Toast.makeText(getApplicationContext(),result,Toast.LENGTH_SHORT).show();
+                }
 
-                Toast.makeText(getApplicationContext(),result,Toast.LENGTH_SHORT).show();
 
-                Intent i = new Intent(getApplicationContext(),Home.class);
-                startActivity(i);
+
+
             }
         });
 

@@ -72,24 +72,26 @@ public class StudentRegistrationFragment extends Fragment {
         final CheckBox female = (CheckBox)root.findViewById(R.id.female_checkBox);
 
         Spinner degreeList = (Spinner)root.findViewById(R.id.degree_list);
+        Spinner studiesList = (Spinner)root.findViewById(R.id.studies_list);
 
         male.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(!male.isSelected())
-                    female.setSelected(false);
+                if(male.isChecked())
+                    female.setChecked(false);
             }
         });
 
         female.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(!female.isSelected())
-                    male.setSelected(false);
+                if(female.isChecked())
+                    male.setChecked(false);
             }
         });
 
         degreeList.setAdapter(new StringAdapter(Student.DEGREE_TYPES));
+        studiesList.setAdapter(new StringAdapter(Student.STUDIES_TYPES));
 
         return root;
     }
@@ -115,25 +117,18 @@ public class StudentRegistrationFragment extends Fragment {
         CheckBox male = (CheckBox)root.findViewById(R.id.male_checkBox);
         CheckBox female = (CheckBox)root.findViewById(R.id.female_checkBox);
         Spinner degreeList = (Spinner)root.findViewById(R.id.degree_list);
+        Spinner studiesList = (Spinner)root.findViewById(R.id.studies_list);
+
         String degree = (String)degreeList.getSelectedItem();
+        String studies = (String)studiesList.getSelectedItem();
 
-
-        //TODO: bug - for some reason it always sees both checkbox as not selected
-        // everyone registered as male at the moment
-        String sex = Student.SEX_MALE;
-
-        if(male.isSelected()){
-            Log.println(Log.ASSERT,"STUD REG FRAG", "a male");
+        String sex;
+        if(male.isChecked())
             sex = Student.SEX_MALE;
-        }
-        else if(female.isSelected()){
-            Log.println(Log.ASSERT,"STUD REG FRAG", "a female");
+        else if(female.isChecked())
             sex = Student.SEX_FEMALE;
-        }
-//        else{
-//            Log.println(Log.ASSERT,"STUD REG FRAG", "a null");
-//            sex = null;
-//        }
+        else
+            sex = null;
 
 
         Student newStudent = new Student();
@@ -150,6 +145,8 @@ public class StudentRegistrationFragment extends Fragment {
             return null;
         if(degree == null)
             return null;
+        if(studies == null)
+            return null;
 
         newStudent.setMail(mail.getText().toString());
         newStudent.setPassword(password.getText().toString());
@@ -158,7 +155,7 @@ public class StudentRegistrationFragment extends Fragment {
         newStudent.setName(name.getText().toString());
         newStudent.setSurname(surname.getText().toString());
         newStudent.setDegree(degree);
-
+        newStudent.setStudies(studies);
         return newStudent;
     }
 

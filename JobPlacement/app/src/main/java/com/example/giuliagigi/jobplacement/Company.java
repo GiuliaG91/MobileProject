@@ -10,6 +10,7 @@ public class Company extends User {
 
     protected static final String NAME_FIELD = "Company_Name";
     protected static final String FISCAL_CODE_FIELD = "Fiscal_Code";
+    protected static final String  FIELD_FIELD = "Field";
 
     public Company(){
         super();
@@ -27,5 +28,12 @@ public class Company extends User {
     }
     public String getFiscalCode(){
         return this.getString(FISCAL_CODE_FIELD);
+    }
+
+    public void setField(String field) {
+        this.put(FIELD_FIELD,field);
+    }
+    public String getField(){
+        return this.getString(FIELD_FIELD);
     }
 }

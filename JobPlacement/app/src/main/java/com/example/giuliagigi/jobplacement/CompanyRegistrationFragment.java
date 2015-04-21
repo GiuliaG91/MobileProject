@@ -7,7 +7,10 @@ import android.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.BaseAdapter;
 import android.widget.EditText;
+import android.widget.Spinner;
+import android.widget.TextView;
 
 
 /**
@@ -59,6 +62,9 @@ public class CompanyRegistrationFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         root = inflater.inflate(R.layout.fragment_company_registration, container, false);
+
+        Spinner fields = (Spinner)root.findViewById(R.id.fields_list);
+        fields.setAdapter(new StringAdapter(Student.STUDIES_TYPES));
         return root;
     }
 
@@ -75,11 +81,17 @@ public class CompanyRegistrationFragment extends Fragment {
         EditText password = (EditText)root.findViewById(R.id.company_password);
         EditText fiscalCode = (EditText)root.findViewById(R.id.company_fiscal_code);
         EditText name = (EditText)root.findViewById(R.id.company_name);
+
+        Spinner fieldsList = (Spinner)root.findViewById(R.id.fields_list);
+        String field = (String)fieldsList.getSelectedItem();
+
         String type = User.TYPE_COMPANY;
 
         if(mail.getText().toString().trim().isEmpty())
             return null;
         if(password.getText().toString().isEmpty())
+            return null;
+        if(field == null)
             return null;
 
         Company newCompany = new Company();
@@ -88,7 +100,7 @@ public class CompanyRegistrationFragment extends Fragment {
         newCompany.setMail(mail.getText().toString().trim());
         newCompany.setPassword(password.getText().toString());
         newCompany.setType(type);
-
+        newCompany.setField(field);
         return newCompany;
     }
 
@@ -104,6 +116,43 @@ public class CompanyRegistrationFragment extends Fragment {
      */
     public interface OnInteractionListener {
         // TODO: Update argument type and name
+    }
+
+
+    private class StringAdapter extends BaseAdapter {
+
+        public String[] stringArray;
+
+        public StringAdapter(String[] stringArray){
+            super();
+            this.stringArray = stringArray;
+        }
+
+        @Override
+        public int getCount() {
+            return stringArray.length;
+        }
+
+        @Override
+        public String getItem(int position) {
+            return stringArray[position];
+        }
+
+        @Override
+        public long getItemId(int position) {
+            return position;
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+
+            if(convertView == null)
+                convertView = getActivity().getLayoutInflater().inflate(R.layout.list_text_element,parent,false);
+
+            TextView text = (TextView)convertView.findViewById(R.id.text_view);
+            text.setText(stringArray[position]);
+            return convertView;
+        }
     }
 
 }

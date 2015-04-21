@@ -10,15 +10,28 @@ import com.parse.ParseClassName;
 public class Student extends User {
 
     //TODO: a thousand attributes
-    protected static final String NAME_FIELD = "name_field";
-    protected static final String SURNAME_FIELD = "surname_field";
-    protected static final String DEGREE_FIELD = "degree_field";
-    protected static final String SEX_FIELD = "sex_field";
+    protected static final String NAME_FIELD = "name";
+    protected static final String SURNAME_FIELD = "surname";
+    protected static final String DEGREE_FIELD = "degree";
+    protected static final String SEX_FIELD = "sex";
+    protected static final String STUDIES_FIELD = "studies";
 
     public static final String DEGREE_BACHELOR = "Bachelor";
     public static final String DEGREE_MASTER = "Master";
     public static final String DEGREE_DOCTORATE = "Doctorate";
     public static final String[] DEGREE_TYPES = new String[]{DEGREE_BACHELOR,DEGREE_MASTER,DEGREE_DOCTORATE};
+
+    public static final String STUDIES_MECHANICS    =   "Mechanics";
+    public static final String STUDIES_INFORMATICS  =   "Informatics";
+    public static final String STUDIES_CHEMISTRY    =   "Chemistry";
+    public static final String STUDIES_ENERGY       =   "Energy";
+    public static final String STUDIES_MATERIALS    =   "Materials";
+    public static final String[] STUDIES_TYPES = new String[]{
+                                                        STUDIES_MECHANICS,
+                                                        STUDIES_CHEMISTRY,
+                                                        STUDIES_INFORMATICS,
+                                                        STUDIES_ENERGY,
+                                                        STUDIES_MATERIALS};
 
     public static final String SEX_MALE = "Male";
     public static final String SEX_FEMALE = "Female";
@@ -39,6 +52,9 @@ public class Student extends User {
     public String getSex() {
         return getString(SEX_FIELD);
     }
+    public String getStudies(){
+        return this.getString(STUDIES_FIELD);
+    }
 
     public void setName(String name){
 
@@ -55,5 +71,9 @@ public class Student extends User {
     public void setSex(String sex){
 
         this.put(SEX_FIELD,sex);
+    }
+    public void setStudies(String studies){
+
+        this.put(STUDIES_FIELD,studies);
     }
 }

@@ -58,7 +58,7 @@
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:text="Sex:"
-                    android:id="@+id/textView" />
+                    android:id="@+id/sex_textView" />
 
                 <CheckBox
                     android:layout_width="wrap_content"
@@ -75,17 +75,37 @@
                     android:layout_gravity="center_horizontal" />
             </LinearLayout>
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Degree:"
+                android:id="@+id/degree_textView" />
+
             <Spinner
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/degree_list" />
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Studies:"
+                android:id="@+id/studies_textView" />
+
+            <Spinner
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/studies_list" />
 
         </LinearLayout>
 
     </ScrollView>
 
-    </FrameLayout>
+
+
+</FrameLayout>
 
 
 
