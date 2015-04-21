@@ -16,7 +16,13 @@ public class User extends ParseObject{
 
     protected static final String MAIL_FIELD = "mail";
     protected static final String PASSWORD_FIELD = "password";
-    protected static final String TYPE_FIELD = "type";
+    private static final String TYPE_FIELD = "type";
+
+    /* it is an external key for a second relation:
+            - accesses the relation "Students" in the DB if the type is student
+            - otherwise accesses "Companies"
+     */
+    private static final String ACCOUNT_ID_FIELD = "account_id";
 
     public static final String TYPE_STUDENT = "Student";
     public static final String TYPE_COMPANY = "Company";
@@ -48,13 +54,20 @@ public class User extends ParseObject{
         return getString(PASSWORD_FIELD);
     }
 
-
     public String getType() {
         return getString(TYPE_FIELD);
     }
 
     public void setType(String type) {
         this.put(TYPE_FIELD, type);
+    }
+
+    public void setAccountId(String id){
+        this.put(ACCOUNT_ID_FIELD,id);
+    }
+
+    public String getAccountID(){
+        return this.getString(ACCOUNT_ID_FIELD);
     }
 }
 

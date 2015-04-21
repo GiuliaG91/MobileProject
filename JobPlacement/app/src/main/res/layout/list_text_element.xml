@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="type name"
-        android:id="@+id/type_name" />
+        android:text="text"
+        android:id="@+id/text_view" />
 
 </LinearLayout>

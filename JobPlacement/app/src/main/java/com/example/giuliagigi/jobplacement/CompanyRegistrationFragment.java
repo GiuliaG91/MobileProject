@@ -7,6 +7,7 @@ import android.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 
 
 /**
@@ -19,15 +20,15 @@ import android.view.ViewGroup;
  */
 public class CompanyRegistrationFragment extends Fragment {
 
-    // TODO: Attributes
     private OnInteractionListener hostActivity;
+    private View root;
 
     /**
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
      * @return A new instance of fragment CompanyRegistrationFragment.
      */
-    // TODO: Rename and change types and number of parameters
+    public CompanyRegistrationFragment() {     super();    }
     public static CompanyRegistrationFragment newInstance() {
         CompanyRegistrationFragment fragment = new CompanyRegistrationFragment();
         Bundle args = new Bundle();
@@ -35,29 +36,7 @@ public class CompanyRegistrationFragment extends Fragment {
         return fragment;
     }
 
-    public CompanyRegistrationFragment() {
-        // Required empty public constructor
-    }
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-        }
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_company_registration, container, false);
-    }
-
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (hostActivity != null) {
-        }
-    }
 
     @Override
     public void onAttach(Activity activity) {
@@ -71,9 +50,46 @@ public class CompanyRegistrationFragment extends Fragment {
     }
 
     @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        if (getArguments() != null) {
+        }
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        root = inflater.inflate(R.layout.fragment_company_registration, container, false);
+        return root;
+    }
+
+    @Override
     public void onDetach() {
         super.onDetach();
         hostActivity = null;
+    }
+
+
+    public Company retrieveRegistrationInfo(){
+
+        EditText mail = (EditText)root.findViewById(R.id.company_mail);
+        EditText password = (EditText)root.findViewById(R.id.company_password);
+        EditText fiscalCode = (EditText)root.findViewById(R.id.company_fiscal_code);
+        EditText name = (EditText)root.findViewById(R.id.company_name);
+        String type = User.TYPE_COMPANY;
+
+        if(mail.getText().toString().trim().isEmpty())
+            return null;
+        if(password.getText().toString().isEmpty())
+            return null;
+
+        Company newCompany = new Company();
+        newCompany.setName(name.getText().toString());
+        newCompany.setFiscalCode(fiscalCode.getText().toString());
+        newCompany.setMail(mail.getText().toString().trim());
+        newCompany.setPassword(password.getText().toString());
+        newCompany.setType(type);
+
+        return newCompany;
     }
 
     /**
