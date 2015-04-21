@@ -6,8 +6,8 @@ android {
 
     defaultConfig {
         applicationId "com.example.giuliagigi.jobplacement"
-        minSdkVersion 10
-        targetSdkVersion 21
+        minSdkVersion 15
+        targetSdkVersion 11
         versionCode 1
         versionName "1.0"
     }
@@ -21,7 +21,7 @@ android {
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile 'com.android.support:appcompat-v7:21.0.3'
     compile files('libs/Parse-1.9.1.jar')
     compile files('libs/bolts-android-1.2.0.jar')
+    compile 'com.android.support:appcompat-v7:22.0.0'
 }

@@ -3,6 +3,9 @@ package com.example.giuliagigi.jobplacement;
 import com.parse.ParseClassName;
 import com.parse.ParseObject;
 
+import java.util.LinkedList;
+import java.util.List;
+
 /**
  * Created by MarcoEsposito90 on 20/04/2015.
  */
@@ -15,9 +18,10 @@ public class User extends ParseObject{
     protected static final String PASSWORD_FIELD = "password";
     protected static final String TYPE_FIELD = "type";
 
-    public static final String TYPE_STUDENT = "STUDENT";
-    public static final String TYPE_COMPANY = "COMPANY";
+    public static final String TYPE_STUDENT = "Student";
+    public static final String TYPE_COMPANY = "Company";
 
+    public static final String[] TYPES = new String[]{TYPE_STUDENT,TYPE_COMPANY};
     /** default zero-argument constructor:
      * no parse object field can be modified in it
      */
