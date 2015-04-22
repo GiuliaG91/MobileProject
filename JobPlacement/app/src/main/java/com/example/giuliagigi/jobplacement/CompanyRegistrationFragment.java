@@ -64,7 +64,7 @@ public class CompanyRegistrationFragment extends Fragment {
         root = inflater.inflate(R.layout.fragment_company_registration, container, false);
 
         Spinner fields = (Spinner)root.findViewById(R.id.fields_list);
-        fields.setAdapter(new StringAdapter(Student.STUDIES_TYPES));
+        fields.setAdapter(new StringAdapter(Degree.STUDIES));
         return root;
     }
 
