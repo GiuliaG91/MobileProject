@@ -28,7 +28,7 @@ public class User extends ParseObject{
     public static final String TYPE_COMPANY = "Company";
 
     public static final String[] TYPES = new String[]{TYPE_STUDENT,TYPE_COMPANY};
-    /** default zero-argument constructor:
+    /* default zero-argument constructor:
      * no parse object field can be modified in it
      */
     public User(){ super(); }
