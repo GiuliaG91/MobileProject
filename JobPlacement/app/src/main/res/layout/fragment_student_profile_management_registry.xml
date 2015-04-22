@@ -29,7 +29,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="20dp"
-                android:text="No Address"
                 />
 
             <TextView
@@ -46,7 +45,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="20dp"
-                android:text="No City"
                 />
 
             <TextView
@@ -62,7 +60,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="20dp"
-                android:text="Postal Code"
                 />
 
             <TextView
@@ -78,7 +75,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="20dp"
-                android:text="No Nation"
                 />
             <TextView
                 android:id="@+id/student_phones_title"

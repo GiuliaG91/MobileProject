@@ -16,12 +16,12 @@ import android.app.Fragment;
 import android.widget.Spinner;
 
 
-public class ProfileManagement extends ActionBarActivity implements StudentProfileManagementBasicsFragment.OnInteractionListener,
+public class ProfileManagement extends ActionBarActivity implements ProfileManagementFragment.OnInteractionListener, StudentProfileManagementBasicsFragment.OnInteractionListener,
         StudentProfileManagementSkillsFragment.OnInteractionListener, StudentProfileManagementRegistryFragment.OnInteractionListener
 {
 
     private GlobalData application;
-    private Fragment currentFragment;
+    private ProfileManagementFragment currentFragment;
     private boolean editable;
 
     @Override
@@ -32,6 +32,8 @@ public class ProfileManagement extends ActionBarActivity implements StudentProfi
         editable = false;
 
         application = (GlobalData)getApplicationContext();
+
+
         if(application.getCurrentUser().getType().equals(User.TYPE_STUDENT)){
 
 
@@ -43,9 +45,26 @@ public class ProfileManagement extends ActionBarActivity implements StudentProfi
 
             ft.add(R.id.container_profile_management_fragment, currentFragment);
 
+            Button editProfile = (Button)findViewById(R.id.editProfileButton);
+            if(editable){
+                editProfile.setText("Save");
+            }else {
+                editProfile.setText("Edit Profile");
+            }
+            editProfile.setOnClickListener(new View.OnClickListener(){
+
+                @Override
+                public void onClick(View v) {
+                    currentFragment.setEnable(editable);
+                    if(editable) editable = false;
+                    else editable = true;
+                }
+            });
+
             Button overviewButton = (Button)findViewById(R.id.student_button_overview);
             Button skillsButton = (Button)findViewById(R.id.student_button_skills);
             Button registryButton = (Button)findViewById(R.id.student_button_registry);
+
 
             overviewButton.setOnClickListener(new View.OnClickListener() {
                 @Override

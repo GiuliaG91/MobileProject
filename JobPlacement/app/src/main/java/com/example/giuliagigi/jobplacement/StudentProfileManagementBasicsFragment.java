@@ -9,7 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 
-public class StudentProfileManagementBasicsFragment extends Fragment {
+public class StudentProfileManagementBasicsFragment extends ProfileManagementFragment {
 
     private OnInteractionListener hostActivity;
     private ProfileManagement profileActivity;
@@ -62,6 +62,7 @@ public class StudentProfileManagementBasicsFragment extends Fragment {
             nameText.setText("Inser name");
         }else{
             nameText.setText(currentUser.getName());
+            Log.println(Log.ASSERT,"FRAG OVERVIEW ST", "nation: " + currentUser.getName());
         }
 
         EditText surnameText = (EditText)root.findViewById(R.id.student_surname_area);
@@ -72,14 +73,7 @@ public class StudentProfileManagementBasicsFragment extends Fragment {
         }
 
         EditText emailText = (EditText)root.findViewById(R.id.student_email_area);
-        surnameText.setText(currentUser.getMail());
-
-
-
-        if(currentUser.getNation() == null)
-            Log.println(Log.ASSERT,"FRAG OVERVIEW ST", "no nation");
-        else
-            Log.println(Log.ASSERT,"FRAG OVERVIEW ST", "nation: " + currentUser.getNation());
+        emailText.setText(currentUser.getMail());
 
 
         return root;
@@ -115,28 +109,32 @@ public class StudentProfileManagementBasicsFragment extends Fragment {
         if(nameText.getText() == null) {
             nameText.setVisibility(visibility);
         }
+        nameText.setEnabled(enable);
 
         EditText surnameText = (EditText)root.findViewById(R.id.student_surname_area);
         if(surnameText.getText() == null) {
             surnameText.setVisibility(visibility);
         }
+        surnameText.setEnabled(enable);
 
         EditText birthText = (EditText)root.findViewById(R.id.student_birth_area);
         if(birthText.getText() == null) {
             birthText.setVisibility(visibility);
         }
+        birthText.setEnabled(enable);
 
         EditText sexText = (EditText)root.findViewById(R.id.student_sex_area);
         if(sexText.getText() == null) {
             sexText.setVisibility(visibility);
         }
+        sexText.setEnabled(enable);
 
         if(enable == false){
             currentUser.setName(nameText.getText().toString());
             currentUser.setSurname(surnameText.getText().toString());
             currentUser.setSex(sexText.getText().toString());
             //currentUser.setBirth(birthText.getText().toString());
-            
+
         }
 
         //TODO quando imposto a false è peechè devo salvare le modifiche --> fare i setter e fare saveInBackground()

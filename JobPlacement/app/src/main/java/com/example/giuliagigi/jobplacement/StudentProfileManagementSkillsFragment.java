@@ -7,7 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-public class StudentProfileManagementSkillsFragment extends Fragment {
+public class StudentProfileManagementSkillsFragment extends ProfileManagementFragment {
 
     private OnInteractionListener hostActivity;
 

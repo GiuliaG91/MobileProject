@@ -25,12 +25,17 @@
         </LinearLayout>
 
     </HorizontalScrollView>
+    <Button
+        android:id="@+id/editProfileButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        />
     
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/container_profile_management_fragment"
-        
+
         />
 
     <!--android:name="com.example.giuliagigi.jobplacement.StudentProfileManagementBasicsFragment"-->
