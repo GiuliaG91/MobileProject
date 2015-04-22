@@ -24,6 +24,7 @@ public class Student extends User {
     protected static final String NATION_FIELD = "nation";
     protected static final String PHONE_FIELD = "phone";
 
+
     public static final String SEX_MALE = "Male";
     public static final String SEX_FEMALE = "Female";
 
@@ -82,7 +83,7 @@ public class Student extends User {
         this.put(SEX_FIELD,sex);
     }
 
-    public void setBirth(String birth){
+    public void setBirth(Date birth){
 
         this.put(BIRTH_FIELD,birth);
     }
@@ -102,9 +103,9 @@ public class Student extends User {
 
         this.put(NATION_FIELD,nation);
     }
-    public void setPhone(String phone){
+    public void addPhone(String phone){
 
-        this.put(PHONE_FIELD,phone);
+        this.addUnique(DEGREES_FIELD, Arrays.asList(phone));
     }
     /*END SETTER METHODS*/
 

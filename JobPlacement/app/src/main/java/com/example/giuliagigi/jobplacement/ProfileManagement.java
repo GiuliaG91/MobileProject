@@ -3,43 +3,83 @@ package com.example.giuliagigi.jobplacement;
 import android.app.FragmentTransaction;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-<<<<<<< Updated upstream
-import android.widget.TabHost;
-=======
+
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.app.Fragment;
 import android.widget.Spinner;
->>>>>>> Stashed changes
 
 
-public class ProfileManagement extends ActionBarActivity {
+public class ProfileManagement extends ActionBarActivity implements StudentProfileManagementBasicsFragment.OnInteractionListener,
+        StudentProfileManagementSkillsFragment.OnInteractionListener, StudentProfileManagementRegistryFragment.OnInteractionListener
+{
 
     private GlobalData application;
     private Fragment currentFragment;
+    private boolean editable;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile_management);
         FragmentTransaction ft = getFragmentManager().beginTransaction();
+        editable = false;
 
         application = (GlobalData)getApplicationContext();
         if(application.getCurrentUser().getType().equals(User.TYPE_STUDENT)){
 
+
             LinearLayout buttonContainers = (LinearLayout)findViewById(R.id.buttons_container);
             getLayoutInflater().inflate(R.layout.students_buttons_module,buttonContainers);
 
-            FrameLayout fragmentContainer = (FrameLayout)findViewById(R.id.container_profile_management_fragment);
+            final FrameLayout fragmentContainer = (FrameLayout)findViewById(R.id.container_profile_management_fragment);
             currentFragment = StudentProfileManagementBasicsFragment.newInstance();
-            ft.replace(R.id.container_register_fragment,currentFragment);
 
-<<<<<<< Updated upstream
-=======
+            ft.add(R.id.container_profile_management_fragment, currentFragment);
+
+            Button overviewButton = (Button)findViewById(R.id.student_button_overview);
+            Button skillsButton = (Button)findViewById(R.id.student_button_skills);
+            Button registryButton = (Button)findViewById(R.id.student_button_registry);
+
+            overviewButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    FragmentTransaction ft = getFragmentManager().beginTransaction();
+                    currentFragment = StudentProfileManagementBasicsFragment.newInstance();
+                    ft.replace(R.id.container_profile_management_fragment, currentFragment);
+                    ft.commit();
+                }
+            });
+
+            skillsButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    FragmentTransaction ft = getFragmentManager().beginTransaction();
+                    currentFragment = StudentProfileManagementSkillsFragment.newInstance();
+                    ft.replace(R.id.container_profile_management_fragment, currentFragment);
+                    ft.commit();
+                }
+            });
+
+            registryButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    FragmentTransaction ft = getFragmentManager().beginTransaction();
+                    currentFragment = StudentProfileManagementRegistryFragment.newInstance();
+                    ft.replace(R.id.container_profile_management_fragment, currentFragment);
+                    ft.commit();
+                }
+            });
+
+            Log.println(Log.ASSERT,"PROF MANAG", "user is: " + application.getStudentFromUser().getObjectId());
+
+
 
         }else if(application.getCurrentUser().getType().equals(User.TYPE_COMPANY)){
 
@@ -47,7 +87,6 @@ public class ProfileManagement extends ActionBarActivity {
         }
         ft.commit();
 
->>>>>>> Stashed changes
     }
 
 
@@ -69,5 +108,9 @@ public class ProfileManagement extends ActionBarActivity {
     }
 
 
+    public boolean getEditable(){
+
+        return editable;
+    }
 
 }

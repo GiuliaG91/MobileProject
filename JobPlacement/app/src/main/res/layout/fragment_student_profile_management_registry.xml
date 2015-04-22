@@ -3,8 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/frag_student__profile_management_basics"
-    tools:context="com.example.giuliagigi.jobplacement.StudentProfileManagementBasicsFragment">
+    android:id="@+id/frag_student__profile_management_registry"
+    tools:context="com.example.giuliagigi.jobplacement.StudentProfileManagementRegistryFragment">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -16,89 +16,78 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/student_name_title"
+                android:id="@+id/student_address_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="10dp"
-                android:text="Name:"
+                android:text="Address:"
                 android:textSize="20dp"
                 />
 
             <EditText
-                android:id="@+id/student_name_area"
+                android:id="@+id/student_address_area"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="20dp"
-                android:text="No Name"
+                android:text="No Address"
                 />
 
             <TextView
-                android:id="@+id/student_surname_title"
+                android:id="@+id/student_city_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="10dp"
-                android:text="Surame:"
+                android:text="City:"
                 android:textSize="20dp"
                 />
 
             <EditText
-                android:id="@+id/student_surname_area"
+                android:id="@+id/student_city_area"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="20dp"
-                android:text="No Surname"
+                android:text="No City"
                 />
 
             <TextView
-                android:id="@+id/student_sex_title"
+                android:id="@+id/student_CAP_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="10dp"
-                android:text="Sex:"
+                android:text="Postal Code:"
                 android:textSize="20dp"
                 />
-
             <EditText
-                android:id="@+id/student_sex_area"
+                android:id="@+id/student_CAP_area"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="20dp"
-                android:text="No Sex"
+                android:text="Postal Code"
                 />
 
             <TextView
-                android:id="@+id/student_birth_title"
+                android:id="@+id/student_nation_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="10dp"
-                android:text="Date of birth:"
+                android:text="Nation:"
                 android:textSize="20dp"
                 />
             <EditText
-                android:id="@+id/student_birth_area"
+                android:id="@+id/student_nation_area"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="date"
                 android:padding="20dp"
+                android:text="No Nation"
                 />
-
             <TextView
-                android:id="@+id/student_email_title"
+                android:id="@+id/student_phones_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="10dp"
-                android:text="Email address:"
+                android:text="Phones:"
                 android:textSize="20dp"
                 />
-
-            <EditText
-                android:id="@+id/student_email_area"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="20dp"
-                android:text="No Email"
-                />
-
 
 
         </LinearLayout>

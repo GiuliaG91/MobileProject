@@ -165,4 +165,35 @@ public class GlobalData extends Application {
     public User getCurrentUser() {
         return currentUser;
     }
+
+    public Student getStudentFromUser(){
+
+        if(currentUser.getType().equals(User.TYPE_COMPANY))
+            return null;
+
+        ParseQuery<Student> studentQuery = ParseQuery.getQuery(Student.class);
+        studentQuery.whereEqualTo(User.MAIL_FIELD,currentUser.getMail());
+        Student result = null;
+        try {
+            result = (Student)studentQuery.find().get(0);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+
+    public Company getCompanyFromUser(){
+        if(currentUser.getType().equals(User.TYPE_STUDENT))
+            return null;
+
+        ParseQuery<Company> companyQuery = ParseQuery.getQuery(Company.class);
+        companyQuery.whereEqualTo(User.MAIL_FIELD,currentUser.getMail());
+        Company result = null;
+        try {
+            result = (Company)companyQuery.find().get(0);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
 }
