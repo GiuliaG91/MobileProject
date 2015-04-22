@@ -12,7 +12,7 @@ public class StudentProfileManagementBasicsFragment extends Fragment {
     private OnInteractionListener hostActivity;
 
     public StudentProfileManagementBasicsFragment() {super();}
-    public static StudentProfileManagementBasicsFragment newInstance(String param1, String param2) {
+    public static StudentProfileManagementBasicsFragment newInstance(Student s) {
         StudentProfileManagementBasicsFragment fragment = new StudentProfileManagementBasicsFragment();
         Bundle args = new Bundle();
         fragment.setArguments(args);
@@ -43,6 +43,7 @@ public class StudentProfileManagementBasicsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+
         return inflater.inflate(R.layout.fragment_student_profile_management_basics, container, false);
     }
 

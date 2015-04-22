@@ -1,10 +1,93 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/frag_student__profile_management_basics"
     tools:context="com.example.giuliagigi.jobplacement.StudentProfileManagementBasicsFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView android:layout_width="match_parent" android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/student_name_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:text="Name:"
+                android:textSize="20dp"
+                />
+
+            <TextView
+                android:id="@+id/student_name_area"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="20dp"
+                android:text="No Name"
+                />
+
+            <TextView
+                android:id="@+id/student_surname_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:text="Surame:"
+                android:textSize="20dp"
+                />
+
+            <TextView
+                android:id="@+id/student_surname_area"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="20dp"
+                android:text="No Surame"
+                />
+
+            <TextView
+                android:id="@+id/student_birth_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:text="Date of birth:"
+                android:textSize="20dp"
+                />
+            <TextView
+                android:id="@+id/student_birth_area"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="20dp"
+                android:text="No Birth Date"
+                />
+
+            <TextView
+                android:id="@+id/student_email_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:text="Email address:"
+                android:textSize="20dp"
+                />
+
+            <TextView
+                android:id="@+id/student_email_area"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="20dp"
+                android:text="No Email"
+                />
+
+
+
+        </LinearLayout>
+
+    </ScrollView>
+
+
 
 </FrameLayout>
