@@ -1,6 +1,7 @@
 package com.example.giuliagigi.jobplacement;
 
 import android.app.FragmentTransaction;
+import android.content.res.Configuration;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -32,39 +33,37 @@ public class ProfileManagement extends ActionBarActivity implements ProfileManag
         editable = false;
 
         application = (GlobalData)getApplicationContext();
-
+        LinearLayout buttonsModule = new LinearLayout(getApplicationContext());
 
         if(application.getCurrentUser().getType().equals(User.TYPE_STUDENT)){
 
-
             LinearLayout buttonContainers = (LinearLayout)findViewById(R.id.buttons_container);
-            getLayoutInflater().inflate(R.layout.students_buttons_module,buttonContainers);
-
-            final FrameLayout fragmentContainer = (FrameLayout)findViewById(R.id.container_profile_management_fragment);
+            buttonsModule = (LinearLayout)getLayoutInflater().inflate(R.layout.students_buttons_module,buttonContainers);
             currentFragment = StudentProfileManagementBasicsFragment.newInstance();
 
-            ft.add(R.id.container_profile_management_fragment, currentFragment);
+            ft.replace(R.id.container_profile_management_fragment, currentFragment);
 
-            Button editProfile = (Button)findViewById(R.id.editProfileButton);
-            if(editable){
-                editProfile.setText("Save");
-            }else {
-                editProfile.setText("Edit Profile");
-            }
+            final Button editProfile = (Button)findViewById(R.id.editProfileButton);
             editProfile.setOnClickListener(new View.OnClickListener(){
 
                 @Override
                 public void onClick(View v) {
-                    currentFragment.setEnable(editable);
+
                     if(editable) editable = false;
                     else editable = true;
+                    currentFragment.setEnable(editable);
+
+                    if(editable){
+                        editProfile.setText("Save changes");
+                    }else {
+                        editProfile.setText("Edit Profile");
+                    }
                 }
             });
 
             Button overviewButton = (Button)findViewById(R.id.student_button_overview);
             Button skillsButton = (Button)findViewById(R.id.student_button_skills);
             Button registryButton = (Button)findViewById(R.id.student_button_registry);
-
 
             overviewButton.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -96,16 +95,19 @@ public class ProfileManagement extends ActionBarActivity implements ProfileManag
                 }
             });
 
-            Log.println(Log.ASSERT,"PROF MANAG", "user is: " + application.getStudentFromUser().getObjectId());
-
-
-
-        }else if(application.getCurrentUser().getType().equals(User.TYPE_COMPANY)){
-
-
         }
-        ft.commit();
+        else if(application.getCurrentUser().getType().equals(User.TYPE_COMPANY)){
 
+            //TODO
+        }
+
+        // TODO: orientation change not working
+        if(getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE)
+            buttonsModule.setOrientation(LinearLayout.VERTICAL);
+        else
+            buttonsModule.setOrientation(LinearLayout.HORIZONTAL);
+
+        ft.commit();
     }
 
 

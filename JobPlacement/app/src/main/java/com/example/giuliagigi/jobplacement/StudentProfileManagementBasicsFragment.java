@@ -3,19 +3,19 @@ package com.example.giuliagigi.jobplacement;
 import android.app.Activity;
 import android.os.Bundle;
 import android.app.Fragment;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
 import android.widget.EditText;
 
 public class StudentProfileManagementBasicsFragment extends ProfileManagementFragment {
 
-    private OnInteractionListener hostActivity;
-    private ProfileManagement profileActivity;
-    private GlobalData application;
     private Student currentUser;
-    private View root;
+    EditText nameText,surnameText;
 
     public StudentProfileManagementBasicsFragment() {super();}
     public static StudentProfileManagementBasicsFragment newInstance() {
@@ -30,16 +30,7 @@ public class StudentProfileManagementBasicsFragment extends ProfileManagementFra
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-
-        application = (GlobalData)getActivity().getApplicationContext();
         currentUser = application.getStudentFromUser();
-        try {
-            profileActivity = (ProfileManagement) activity;
-            hostActivity = (OnInteractionListener) activity;
-        } catch (ClassCastException e) {
-            throw new ClassCastException(activity.toString()
-                    + " must implement OnInteractionListener");
-        }
     }
 
     @Override
@@ -55,27 +46,49 @@ public class StudentProfileManagementBasicsFragment extends ProfileManagementFra
 
         root = inflater.inflate(R.layout.fragment_student_profile_management_basics, container, false);
 
-        setEnable(profileActivity.getEditable());
-
-        EditText nameText = (EditText)root.findViewById(R.id.student_name_area);
-        if(currentUser.getName() == null){
-            nameText.setText("Inser name");
-        }else{
+        nameText = (EditText)root.findViewById(R.id.student_name_area);
+        if(currentUser.getName() == null)
+            nameText.setText(INSERT_FIELD);
+        else
             nameText.setText(currentUser.getName());
-            Log.println(Log.ASSERT,"FRAG OVERVIEW ST", "nation: " + currentUser.getName());
-        }
 
-        EditText surnameText = (EditText)root.findViewById(R.id.student_surname_area);
-        if(currentUser.getSurname() == null){
-            surnameText.setText("Inser surname");
-        }else{
+        surnameText = (EditText)root.findViewById(R.id.student_surname_area);
+        if(currentUser.getSurname() == null)
+            surnameText.setText(INSERT_FIELD);
+        else
             surnameText.setText(currentUser.getSurname());
-        }
+
+        textFields.add(nameText);
+        textFields.add(surnameText);
+
+        OnFieldChangedListener hasChangedListener = new OnFieldChangedListener();
+        for(EditText et:textFields)
+            et.addTextChangedListener(hasChangedListener);
+
+        final CheckBox male = (CheckBox)root.findViewById(R.id.male_checkBox);
+        final CheckBox female = (CheckBox)root.findViewById(R.id.female_checkBox);
+
+        male.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                hasChanged = true;
+                if(male.isChecked())
+                    female.setChecked(false);
+            }
+        });
+        female.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                hasChanged = true;
+                if(female.isChecked())
+                    male.setChecked(false);
+            }
+        });
 
         EditText emailText = (EditText)root.findViewById(R.id.student_email_area);
         emailText.setText(currentUser.getMail());
 
-
+        setEnable(profileActivity.getEditable());
         return root;
     }
 
@@ -85,59 +98,36 @@ public class StudentProfileManagementBasicsFragment extends ProfileManagementFra
         hostActivity = null;
     }
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     */
-    public interface OnInteractionListener {
-
-
+    public interface OnInteractionListener{
     }
 
     public void setEnable(boolean enable){
 
-        int visibility;
+        super.setEnable(enable);
 
-        if(enable)
-            visibility = View.VISIBLE;
-        else
-            visibility = View.INVISIBLE;
+        final CheckBox male = (CheckBox)root.findViewById(R.id.male_checkBox);
+        final CheckBox female = (CheckBox)root.findViewById(R.id.female_checkBox);
+        boolean isMale = currentUser.getSex().equals(Student.SEX_MALE);
+        male.setChecked(isMale);
+        female.setChecked(!isMale);
+        male.setEnabled(enable);
+        female.setEnabled(enable);
 
-        EditText nameText = (EditText)root.findViewById(R.id.student_name_area);
-        if(nameText.getText() == null) {
-            nameText.setVisibility(visibility);
-        }
-        nameText.setEnabled(enable);
+        if(!enable && hasChanged){
 
-        EditText surnameText = (EditText)root.findViewById(R.id.student_surname_area);
-        if(surnameText.getText() == null) {
-            surnameText.setVisibility(visibility);
-        }
-        surnameText.setEnabled(enable);
+            Log.println(Log.ASSERT,"BASICS FRAG", "update required");
+            String sex;
+            if(male.isChecked())
+                sex = Student.SEX_MALE;
+            else
+                sex = Student.SEX_FEMALE;
 
-        EditText birthText = (EditText)root.findViewById(R.id.student_birth_area);
-        if(birthText.getText() == null) {
-            birthText.setVisibility(visibility);
-        }
-        birthText.setEnabled(enable);
-
-        EditText sexText = (EditText)root.findViewById(R.id.student_sex_area);
-        if(sexText.getText() == null) {
-            sexText.setVisibility(visibility);
-        }
-        sexText.setEnabled(enable);
-
-        if(enable == false){
             currentUser.setName(nameText.getText().toString());
             currentUser.setSurname(surnameText.getText().toString());
-            currentUser.setSex(sexText.getText().toString());
-            //currentUser.setBirth(birthText.getText().toString());
-
+            currentUser.setSex(sex);
+            currentUser.saveInBackground();
+            hasChanged = false;
         }
-
-        //TODO quando imposto a false è peechè devo salvare le modifiche --> fare i setter e fare saveInBackground()
     }
 
 

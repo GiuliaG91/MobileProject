@@ -1,19 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
     android:layout_height="match_parent">
-
-    <HorizontalScrollView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/horizontalScrollView"
-        android:layout_weight="1">
-
-        <LinearLayout
-            android:orientation="horizontal"
-            android:id="@+id/buttons_container"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
 
             <Button
                 android:id="@+id/student_button_overview"
@@ -45,11 +34,5 @@
                 android:layout_height="wrap_content"
                 android:text="Account"
                 android:layout_weight="1"/>
-
-
-        </LinearLayout>
-
-    </HorizontalScrollView>
-
 
 </LinearLayout>

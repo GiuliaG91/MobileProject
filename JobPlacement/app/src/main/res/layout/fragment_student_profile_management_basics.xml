@@ -47,37 +47,34 @@
                 android:padding="20dp"
                 />
 
-            <TextView
-                android:id="@+id/student_sex_title"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="10dp"
-                android:text="Sex:"
-                android:textSize="20dp"
-                />
+                android:orientation="horizontal"
+                android:padding="5dp"
+                android:id="@+id/container_sex_checkboxs">
 
-            <EditText
-                android:id="@+id/student_sex_area"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="20dp"
-                />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="Sex:"
+                    android:id="@+id/student_sex_title" />
 
-            <TextView
-                android:id="@+id/student_birth_title"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="10dp"
-                android:text="Date of birth:"
-                android:textSize="20dp"
-                />
-            <EditText
-                android:id="@+id/student_birth_area"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="date"
-                android:padding="20dp"
-                />
+                <CheckBox
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="M"
+                    android:id="@+id/male_checkBox"
+                    android:layout_gravity="center_horizontal" />
+
+                <CheckBox
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="F"
+                    android:id="@+id/female_checkBox"
+                    android:layout_gravity="center_horizontal" />
+            </LinearLayout>
 
             <TextView
                 android:id="@+id/student_email_title"

@@ -11,11 +11,8 @@ import android.widget.EditText;
 
 public class StudentProfileManagementRegistryFragment extends ProfileManagementFragment {
 
-    private OnInteractionListener hostActivity;
-    private ProfileManagement profileActivity;
-    private GlobalData application;
     private Student currentUser;
-    private View root;
+    private EditText addressText, cityText,postalText,nationText;
 
     public StudentProfileManagementRegistryFragment() {super();}
     public static StudentProfileManagementRegistryFragment newInstance() {
@@ -30,16 +27,7 @@ public class StudentProfileManagementRegistryFragment extends ProfileManagementF
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-
-        application = (GlobalData)getActivity().getApplicationContext();
         currentUser = application.getStudentFromUser();
-        try {
-            profileActivity = (ProfileManagement) activity;
-            hostActivity = (OnInteractionListener) activity;
-        } catch (ClassCastException e) {
-            throw new ClassCastException(activity.toString()
-                    + " must implement OnInteractionListener");
-        }
     }
 
     @Override
@@ -54,83 +42,63 @@ public class StudentProfileManagementRegistryFragment extends ProfileManagementF
                              Bundle savedInstanceState) {
         root = inflater.inflate(R.layout.fragment_student_profile_management_registry, container, false);
 
-        setEnable(profileActivity.getEditable());
-
-        EditText addressText = (EditText)root.findViewById(R.id.student_address_area);
+        addressText = (EditText)root.findViewById(R.id.student_address_area);
         if(currentUser.getAddress() == null){
-            addressText.setText("Inser address");
+            addressText.setText(INSERT_FIELD);
         }else{
             addressText.setText(currentUser.getAddress());
         }
 
-        EditText cityText = (EditText)root.findViewById(R.id.student_city_area);
+        cityText = (EditText)root.findViewById(R.id.student_city_area);
         if(currentUser.getCity() == null){
-            cityText.setText("Inser city");
+            cityText.setText(INSERT_FIELD);
         }else{
             cityText.setText(currentUser.getCity());
         }
 
-        EditText postalText = (EditText)root.findViewById(R.id.student_CAP_area);
+        postalText = (EditText)root.findViewById(R.id.student_CAP_area);
         if(currentUser.getPostalCode() == null){
-            postalText.setText("Inser CAP");
+            postalText.setText(INSERT_FIELD);
         }else{
             postalText.setText(currentUser.getPostalCode());
         }
 
-        EditText nationText = (EditText)root.findViewById(R.id.student_nation_area);
+        nationText = (EditText)root.findViewById(R.id.student_nation_area);
         if(currentUser.getNation() == null){
-            nationText.setText("Inser nation");
+            nationText.setText(INSERT_FIELD);
         }else{
             nationText.setText(currentUser.getNation());
         }
 
+        OnFieldChangedListener hasChangedListener = new OnFieldChangedListener();
+        textFields.add(addressText);
+        textFields.add(cityText);
+        textFields.add(postalText);
+        textFields.add(nationText);
+
+        for(EditText et: textFields)
+            et.addTextChangedListener(hasChangedListener);
+
+        setEnable(profileActivity.getEditable());
         return root;
     }
 
 
-     public interface OnInteractionListener {
-
-
-    }
+     public interface OnInteractionListener {}
 
     public void setEnable(boolean enable){
-        int visibility;
 
-        if(enable)
-            visibility = View.VISIBLE;
-        else
-            visibility = View.INVISIBLE;
+        super.setEnable(enable);
 
-        EditText addressText = (EditText)root.findViewById(R.id.student_address_area);
-        if(addressText.getText() == null) {
-            addressText.setVisibility(visibility);
-        }
-        addressText.setEnabled(enable);
+        if(!enable && hasChanged){
 
-        EditText cityText = (EditText)root.findViewById(R.id.student_city_area);
-        if(cityText.getText() == null) {
-            cityText.setVisibility(visibility);
-        }
-        cityText.setEnabled(enable);
-
-        EditText postalText = (EditText)root.findViewById(R.id.student_CAP_area);
-        if(postalText.getText() == null) {
-            postalText.setVisibility(visibility);
-        }
-        postalText.setEnabled(enable);
-
-        EditText nationText = (EditText)root.findViewById(R.id.student_nation_area);
-        if(nationText.getText() == null) {
-            nationText.setVisibility(visibility);
-        }
-        nationText.setEnabled(enable);
-
-        if(enable == false){
+            Log.println(Log.ASSERT,"REGISTRY FRAG", "update required");
             currentUser.setAddress(addressText.getText().toString());
             currentUser.setCity(cityText.getText().toString());
             currentUser.setPostalCode(postalText.getText().toString());
             currentUser.setNation(nationText.getText().toString());
-
+            currentUser.saveInBackground();
+            hasChanged = false;
         }
     }
 

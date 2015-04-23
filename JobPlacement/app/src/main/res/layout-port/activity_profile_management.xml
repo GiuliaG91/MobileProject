@@ -27,6 +27,7 @@
     </HorizontalScrollView>
     <Button
         android:id="@+id/editProfileButton"
+        android:text="Edit Profile"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         />
