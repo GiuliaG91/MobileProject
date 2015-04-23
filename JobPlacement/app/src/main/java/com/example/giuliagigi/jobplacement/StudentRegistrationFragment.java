@@ -8,9 +8,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.CheckBox;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
+
+import java.util.Date;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 
 
 /**
@@ -114,6 +119,12 @@ public class StudentRegistrationFragment extends Fragment {
         CheckBox female = (CheckBox)root.findViewById(R.id.female_checkBox);
         Spinner degreeTypeList = (Spinner)root.findViewById(R.id.degree_list);
         Spinner degreeStudiesList = (Spinner)root.findViewById(R.id.studies_list);
+        DatePicker birthPicker = (DatePicker)root.findViewById(R.id.birth_datePicker);
+
+        Date birth = null;
+        Calendar c = GregorianCalendar.getInstance();
+        c.set(birthPicker.getYear(),birthPicker.getMonth(),birthPicker.getDayOfMonth());
+        birth = c.getTime();
 
         String degreeType = (String)degreeTypeList.getSelectedItem();
         String degreeStudies = (String)degreeStudiesList.getSelectedItem();
@@ -125,7 +136,6 @@ public class StudentRegistrationFragment extends Fragment {
             sex = Student.SEX_FEMALE;
         else
             sex = null;
-
 
         Student newStudent = new Student();
         Degree degree = new Degree();
@@ -154,26 +164,12 @@ public class StudentRegistrationFragment extends Fragment {
         newStudent.setSex(sex);
         newStudent.setName(name.getText().toString());
         newStudent.setSurname(surname.getText().toString());
+        newStudent.setBirth(birth);
         newStudent.addDegree(degree);
         return newStudent;
     }
 
-
-
-
-
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     */
-    public interface onInteractionListener {
-        // TODO: Update argument type and name
-    }
-
-
-
+    public interface onInteractionListener {}
 
     private class StringAdapter extends BaseAdapter {
 

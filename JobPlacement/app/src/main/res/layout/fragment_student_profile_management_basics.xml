@@ -77,6 +77,19 @@
             </LinearLayout>
 
             <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Birth Date:"
+                android:id="@+id/student_birth_title" />
+
+            <DatePicker
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:calendarViewShown="false"
+                android:id="@+id/student_birth_datePicker" />
+
+            <TextView
                 android:id="@+id/student_email_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

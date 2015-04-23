@@ -18,16 +18,18 @@ import java.util.ArrayList;
 public class ProfileManagementFragment extends Fragment {
 
     protected static final String INSERT_FIELD = "Insert";
+    protected static final String BUNDLE_KEY_CHANGED = "ProfileManagementFragment_hasChanged";
+
 
     protected OnInteractionListener hostActivity;
     protected ProfileManagement profileActivity;
     protected ArrayList<EditText> textFields;
     protected GlobalData application;
-    protected boolean hasChanged;
+    protected boolean hasChanged = false;
     protected View root;
 
     public ProfileManagementFragment() {}
-    public static ProfileManagementFragment newInstance(String param1, String param2) {
+    public static ProfileManagementFragment newInstance() {
         ProfileManagementFragment fragment = new ProfileManagementFragment();
         Bundle args = new Bundle();
         fragment.setArguments(args);
@@ -39,7 +41,7 @@ public class ProfileManagementFragment extends Fragment {
     public void onAttach(Activity activity) {
         super.onAttach(activity);
 
-        hasChanged = false;
+        hasChanged = getArguments().getBoolean(BUNDLE_KEY_CHANGED);
         application = (GlobalData)activity.getApplicationContext();
         textFields = new ArrayList<EditText>();
 
@@ -67,6 +69,12 @@ public class ProfileManagementFragment extends Fragment {
     }
 
     @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putBoolean(BUNDLE_KEY_CHANGED,hasChanged);
+    }
+
+    @Override
     public void onDetach() {
         super.onDetach();
 
@@ -77,8 +85,12 @@ public class ProfileManagementFragment extends Fragment {
 
     public interface OnInteractionListener {}
     protected void setEnable(boolean enable){
+
         setTextFieldsEnable(enable);
     }
+    protected void restorePreaviousState() {}
+    public void saveChanges(){}
+
     protected void setTextFieldsEnable(boolean enable){
 
         int visibility;
