@@ -21,16 +21,16 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".Home"
-            android:label="@string/title_activity_home" >
-        </activity>
-        <activity
             android:name=".Registration"
             android:label="@string/title_activity_registration" >
         </activity>
         <activity
             android:name=".ProfileManagement"
             android:label="@string/title_activity_profile_management" >
+        </activity>
+        <activity
+            android:name=".Home"
+            android:label="@string/title_activity_home" >
         </activity>
     </application>
 
