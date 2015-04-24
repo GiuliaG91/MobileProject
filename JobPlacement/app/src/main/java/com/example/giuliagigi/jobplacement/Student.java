@@ -1,10 +1,13 @@
 package com.example.giuliagigi.jobplacement;
 
 import com.parse.ParseClassName;
+import com.parse.ParseObject;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
+import java.util.Objects;
 
 /**
  * Created by MarcoEsposito90 on 21/04/2015.
@@ -16,7 +19,7 @@ public class Student extends User {
     //TODO: a thousand attributes
     protected static final String NAME_FIELD = "name";
     protected static final String SURNAME_FIELD = "surname";
-    protected static final String DEGREES_FIELD = "degrees";
+    protected static final String DEGREES_FIELD = "degrees"; //dovrebbe tornare un array
     protected static final String SEX_FIELD = "sex";
     protected static final String BIRTH_FIELD = "birthDate";
     protected static final String ADDRESS_FIELD = "address";
@@ -24,14 +27,17 @@ public class Student extends User {
     protected static final String POSTAL_CODE_FIELD = "postalCode";
     protected static final String NATION_FIELD = "nation";
     protected static final String PHONE_FIELD = "phone";
-
-
+    protected static final String FAVOURITES_FIELD = "favourites";
     public static final String SEX_MALE = "Male";
     public static final String SEX_FEMALE = "Female";
+    //Manca il campo degree????
+
+
 
     public Student(){
         super();
     }
+
 
     /*GETTER METHODS*/
     public String getName() {
@@ -64,6 +70,9 @@ public class Student extends User {
     public String getPhone(){
         return this.getString(PHONE_FIELD);
     }
+    public List<ParseObject> getFavourites( ){ return this.getList(FAVOURITES_FIELD);}   //I need a cast
+
+
     /* END GETTER METHODS*/
 
     /*SETTER METHODS*/
@@ -106,7 +115,13 @@ public class Student extends User {
     }
     public void addPhone(String phone){
 
-        this.addUnique(DEGREES_FIELD, Arrays.asList(phone));
+        this.addUnique(PHONE_FIELD, Arrays.asList(phone));
+    }
+
+    public void addFavourites(Company company)
+    {
+        this.addUnique(FAVOURITES_FIELD,Arrays.asList(company));
+
     }
     /*END SETTER METHODS*/
 

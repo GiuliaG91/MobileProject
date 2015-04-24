@@ -11,7 +11,6 @@ import java.util.List;
  */
 
 @ParseClassName("User")
-
 public class User extends ParseObject{
 
     protected static final String MAIL_FIELD = "mail";

@@ -109,6 +109,7 @@ public class Registration extends ActionBarActivity implements StudentRegistrati
         });
     }
 
+    /*these methords are useless*/
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_registration, menu);
