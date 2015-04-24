@@ -47,7 +47,16 @@ public class Student extends User {
         return this.getString(SURNAME_FIELD);
     }
     public ArrayList<Degree> getDegrees() {
-        return new ArrayList<Degree>(this.<Degree>getList(DEGREES_FIELD));
+
+        List<Object> list = this.getList(DEGREES_FIELD);
+        ArrayList<Degree> degreeList = new ArrayList<Degree>();
+
+        for(Object po:list){
+            if(po instanceof Degree)
+                degreeList.add((Degree)po);
+        }
+
+        return degreeList;
     }
     public String getSex() {
         return getString(SEX_FIELD);

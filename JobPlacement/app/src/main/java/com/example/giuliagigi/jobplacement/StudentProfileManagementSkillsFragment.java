@@ -92,23 +92,26 @@ public class StudentProfileManagementSkillsFragment extends ProfileManagementFra
             StringAdapter stringAdapterType = new StringAdapter(Degree.TYPES);
             StringAdapter stringAdapterField = new StringAdapter(Degree.STUDIES);
 
+            Log.println(Log.ASSERT,"SKILLSFRAG","1");
+
             Spinner types = (Spinner)convertView.findViewById(R.id.degree_spinnerType);
             Spinner fields = (Spinner)convertView.findViewById(R.id.degree_spinnerField);
             EditText mark = (EditText)convertView.findViewById(R.id.degree__mark_area);
 
+            Log.println(Log.ASSERT,"SKILLSFRAG","2");
+
             types.setAdapter(stringAdapterType);
             fields.setAdapter(stringAdapterField);
 
+            Log.println(Log.ASSERT,"SKILLSFRAG","3");
 
-            Log.println(Log.ASSERT,"DEGREEADAPTER", "getting IDs");
+            types.setSelection(degrees.get(position).getTypeID());
+            fields.setSelection(degrees.get(position).getStudyID());
 
-            degrees.get(position);
+            mark.setText(degrees.get(position).getMark());
 
-            Log.println(Log.ASSERT,"DEGREEADAPTER", "type id: " + degrees.get(position).getStudyID());
-            Log.println(Log.ASSERT,"DEGREEADAPTER", "type id: " + degrees.get(position).getTypeID());
-
-            //types.setSelection();
-            //fields.setSelection();
+            Log.println(Log.ASSERT,"SKILLSFRAG","type. " + degrees.get(position).getTypeID());
+            Log.println(Log.ASSERT,"SKILLSFRAG","study. " + degrees.get(position).getStudyID());
 
             return convertView;
         }
