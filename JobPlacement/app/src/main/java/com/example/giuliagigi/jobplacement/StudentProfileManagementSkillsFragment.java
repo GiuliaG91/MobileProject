@@ -46,22 +46,25 @@ public class StudentProfileManagementSkillsFragment extends ProfileManagementFra
 
         root = inflater.inflate(R.layout.fragment_student_profile_management_skills, container, false);
         degreeList = (ListView)root.findViewById(R.id.skills_degree_listview);
-        Log.println(Log.ASSERT,"SKILLSFRAG", "setting adapter");
         degreeList.setAdapter(new DegreeAdapter(currentUser.getDegrees()));
-        Log.println(Log.ASSERT,"SKILLSFRAG", "adapter ok");
+        setEnable(hostActivity.isInEditMode());
         return root;
     }
 
     @Override
     public void onDetach() {
         super.onDetach();
-        hostActivity = null;
     }
 
-    public interface OnInteractionListener {}
-    
-    
+
+    @Override
+    protected void setEnable(boolean enable) {
+        super.setEnable(enable);
+
+    }
+
     protected class DegreeAdapter extends BaseAdapter {
+
 
         private final ArrayList<Degree> degrees;
 
@@ -110,13 +113,20 @@ public class StudentProfileManagementSkillsFragment extends ProfileManagementFra
             types.setSelection(Degree.getTypeID(degrees.get(position).getType()));
             fields.setSelection(Degree.getStudyID(degrees.get(position).getStudies()));
 
-            //mark.setText(degrees.get(position).getMark());
-
             return convertView;
         }
+
+//        public void setEnable(boolean enable){
+//
+//            for(View v: elements){
+//
+//                Spinner types = (Spinner)v.findViewById(R.id.degree_spinnerType);
+//                Spinner fields = (Spinner)v.findViewById(R.id.degree_spinnerField);
+//                types.setEnabled(enable);
+//                fields.setEnabled(enable);
+//            }
+//        }
     }
-
-
     private class StringAdapter extends BaseAdapter {
 
         public String[] stringArray;

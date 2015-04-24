@@ -102,12 +102,11 @@ public class StudentProfileManagementRegistryFragment extends ProfileManagementF
             }
         });
 
-        setEnable(profileActivity.getEditable());
+        setEnable(hostActivity.isInEditMode());
         return root;
     }
 
 
-     public interface OnInteractionListener {}
 
     public void setEnable(boolean enable){
 

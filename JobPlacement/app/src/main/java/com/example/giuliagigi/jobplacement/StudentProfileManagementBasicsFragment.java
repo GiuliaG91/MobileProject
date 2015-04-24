@@ -103,8 +103,7 @@ public class StudentProfileManagementBasicsFragment extends ProfileManagementFra
 
         EditText emailText = (EditText)root.findViewById(R.id.student_email_area);
         emailText.setText(currentUser.getMail());
-
-        setEnable(profileActivity.getEditable());
+        setEnable(hostActivity.isInEditMode());
         return root;
     }
 
@@ -126,8 +125,9 @@ public class StudentProfileManagementBasicsFragment extends ProfileManagementFra
         hostActivity = null;
     }
 
-    public interface OnInteractionListener{
-    }
+
+
+
 
     @Override
     public void setEnable(boolean enable){
