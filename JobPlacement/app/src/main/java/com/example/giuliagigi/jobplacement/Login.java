@@ -61,7 +61,12 @@ public class Login extends ActionBarActivity {
                     result = "login successful";
                     Toast.makeText(getApplicationContext(),result,Toast.LENGTH_SHORT).show();
 
+
                     Intent i = new Intent(getApplicationContext(),Home.class);
+
+                 //   Intent i = new Intent(getApplicationContext(),ProfileManagement.class);
+
+
                     startActivity(i);
                 }
                 else{

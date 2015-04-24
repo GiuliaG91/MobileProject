@@ -13,6 +13,7 @@
 <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_profile_management">ProfileManagement</string>
+
     <string name="title_activity_home">Home</string>
 
 
@@ -23,4 +24,8 @@
 
 
   
+
+    <string name="user_icon_description">UserIcon</string>
+    <string name="nofavourites">No Favourites</string>
+
 </resources>

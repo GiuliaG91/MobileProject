@@ -1,8 +1,13 @@
 package com.example.giuliagigi.jobplacement;
 
 import com.parse.ParseClassName;
+import com.parse.ParseObject;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
+import java.util.Objects;
 
 /**
  * Created by MarcoEsposito90 on 21/04/2015.
@@ -14,39 +19,25 @@ public class Student extends User {
     //TODO: a thousand attributes
     protected static final String NAME_FIELD = "name";
     protected static final String SURNAME_FIELD = "surname";
-    protected static final String DEGREE_FIELD = "degree";
+    protected static final String DEGREES_FIELD = "degrees"; //dovrebbe tornare un array
     protected static final String SEX_FIELD = "sex";
-    protected static final String STUDIES_FIELD = "studies";
     protected static final String BIRTH_FIELD = "birthDate";
     protected static final String ADDRESS_FIELD = "address";
     protected static final String CITY_FIELD = "city";
     protected static final String POSTAL_CODE_FIELD = "postalCode";
     protected static final String NATION_FIELD = "nation";
     protected static final String PHONE_FIELD = "phone";
-
-    public static final String DEGREE_BACHELOR = "Bachelor";
-    public static final String DEGREE_MASTER = "Master";
-    public static final String DEGREE_DOCTORATE = "Doctorate";
-    public static final String[] DEGREE_TYPES = new String[]{DEGREE_BACHELOR,DEGREE_MASTER,DEGREE_DOCTORATE};
-
-    public static final String STUDIES_MECHANICS    =   "Mechanics";
-    public static final String STUDIES_INFORMATICS  =   "Informatics";
-    public static final String STUDIES_CHEMISTRY    =   "Chemistry";
-    public static final String STUDIES_ENERGY       =   "Energy";
-    public static final String STUDIES_MATERIALS    =   "Materials";
-    public static final String[] STUDIES_TYPES = new String[]{
-                                                        STUDIES_MECHANICS,
-                                                        STUDIES_CHEMISTRY,
-                                                        STUDIES_INFORMATICS,
-                                                        STUDIES_ENERGY,
-                                                        STUDIES_MATERIALS};
-
+    protected static final String FAVOURITES_FIELD = "favourites";
     public static final String SEX_MALE = "Male";
     public static final String SEX_FEMALE = "Female";
+    //Manca il campo degree????
+
+
 
     public Student(){
         super();
     }
+
 
     /*GETTER METHODS*/
     public String getName() {
@@ -55,14 +46,11 @@ public class Student extends User {
     public String getSurname() {
         return this.getString(SURNAME_FIELD);
     }
-    public String getDegree() {
-        return this.getString(DEGREE_FIELD);
+    public Degree getDegree() {
+        return (Degree)this.getParseObject(DEGREES_FIELD);
     }
     public String getSex() {
         return getString(SEX_FIELD);
-    }
-    public String getStudies(){
-        return this.getString(STUDIES_FIELD);
     }
     public Date getBirth(){
         return this.getDate(BIRTH_FIELD);
@@ -82,6 +70,9 @@ public class Student extends User {
     public String getPhone(){
         return this.getString(PHONE_FIELD);
     }
+    public List<ParseObject> getFavourites( ){ return this.getList(FAVOURITES_FIELD);}   //I need a cast
+
+
     /* END GETTER METHODS*/
 
     /*SETTER METHODS*/
@@ -93,19 +84,16 @@ public class Student extends User {
 
         this.put(SURNAME_FIELD,surname);
     }
-    public void setDegree(String degree){
+    public void addDegree(Degree degree){
 
-        this.put(DEGREE_FIELD,degree);
+        this.addUnique(DEGREES_FIELD, Arrays.asList(degree));
     }
     public void setSex(String sex){
 
         this.put(SEX_FIELD,sex);
     }
-    public void setStudies(String studies){
 
-        this.put(STUDIES_FIELD,studies);
-    }
-    public void setBirth(String birth){
+    public void setBirth(Date birth){
 
         this.put(BIRTH_FIELD,birth);
     }
@@ -125,9 +113,15 @@ public class Student extends User {
 
         this.put(NATION_FIELD,nation);
     }
-    public void setPhone(String phone){
+    public void addPhone(String phone){
 
-        this.put(PHONE_FIELD,phone);
+        this.addUnique(PHONE_FIELD, Arrays.asList(phone));
+    }
+
+    public void addFavourites(Company company)
+    {
+        this.addUnique(FAVOURITES_FIELD,Arrays.asList(company));
+
     }
     /*END SETTER METHODS*/
 

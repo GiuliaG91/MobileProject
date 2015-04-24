@@ -34,6 +34,7 @@ public class GlobalData extends Application {
         ParseObject.registerSubclass(User.class);
         ParseObject.registerSubclass(Student.class);
         ParseObject.registerSubclass(Company.class);
+        ParseObject.registerSubclass(Degree.class);
         Parse.initialize(this, "EICiUy2eT7CZPXw8N6I1p6lE4844svLI73JTc2QY", "8I9HZ7AgMHgeIxQKk8k653jNBvBCz57nRuSH73pA");
 
 
@@ -163,5 +164,36 @@ public class GlobalData extends Application {
 
     public User getCurrentUser() {
         return currentUser;
+    }
+
+    public Student getStudentFromUser(){
+
+        if(currentUser.getType().equals(User.TYPE_COMPANY))
+            return null;
+
+        ParseQuery<Student> studentQuery = ParseQuery.getQuery(Student.class);
+        studentQuery.whereEqualTo(User.MAIL_FIELD,currentUser.getMail());
+        Student result = null;
+        try {
+            result = (Student)studentQuery.find().get(0);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+
+    public Company getCompanyFromUser(){
+        if(currentUser.getType().equals(User.TYPE_STUDENT))
+            return null;
+
+        ParseQuery<Company> companyQuery = ParseQuery.getQuery(Company.class);
+        companyQuery.whereEqualTo(User.MAIL_FIELD,currentUser.getMail());
+        Company result = null;
+        try {
+            result = (Company)companyQuery.find().get(0);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return result;
     }
 }

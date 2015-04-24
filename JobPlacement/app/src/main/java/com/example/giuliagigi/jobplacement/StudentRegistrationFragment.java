@@ -3,18 +3,19 @@ package com.example.giuliagigi.jobplacement;
 import android.app.Activity;
 import android.os.Bundle;
 import android.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.CheckBox;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import java.util.Arrays;
+import java.util.Date;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 
 
 /**
@@ -90,8 +91,8 @@ public class StudentRegistrationFragment extends Fragment {
             }
         });
 
-        degreeList.setAdapter(new StringAdapter(Student.DEGREE_TYPES));
-        studiesList.setAdapter(new StringAdapter(Student.STUDIES_TYPES));
+        degreeList.setAdapter(new StringAdapter(Degree.TYPES));
+        studiesList.setAdapter(new StringAdapter(Degree.STUDIES));
 
         return root;
     }
@@ -116,11 +117,17 @@ public class StudentRegistrationFragment extends Fragment {
         EditText surname = (EditText)root.findViewById(R.id.student_surname);
         CheckBox male = (CheckBox)root.findViewById(R.id.male_checkBox);
         CheckBox female = (CheckBox)root.findViewById(R.id.female_checkBox);
-        Spinner degreeList = (Spinner)root.findViewById(R.id.degree_list);
-        Spinner studiesList = (Spinner)root.findViewById(R.id.studies_list);
+        Spinner degreeTypeList = (Spinner)root.findViewById(R.id.degree_list);
+        Spinner degreeStudiesList = (Spinner)root.findViewById(R.id.studies_list);
+        DatePicker birthPicker = (DatePicker)root.findViewById(R.id.birth_datePicker);
 
-        String degree = (String)degreeList.getSelectedItem();
-        String studies = (String)studiesList.getSelectedItem();
+        Date birth = null;
+        Calendar c = GregorianCalendar.getInstance();
+        c.set(birthPicker.getYear(),birthPicker.getMonth(),birthPicker.getDayOfMonth());
+        birth = c.getTime();
+
+        String degreeType = (String)degreeTypeList.getSelectedItem();
+        String degreeStudies = (String)degreeStudiesList.getSelectedItem();
 
         String sex;
         if(male.isChecked())
@@ -130,8 +137,8 @@ public class StudentRegistrationFragment extends Fragment {
         else
             sex = null;
 
-
         Student newStudent = new Student();
+        Degree degree = new Degree();
 
         if(mail.getText().toString().trim().isEmpty())
             return null;
@@ -143,10 +150,13 @@ public class StudentRegistrationFragment extends Fragment {
             return null;
         if(surname.getText().toString().isEmpty())
             return null;
-        if(degree == null)
+        if(degreeType == null)
             return null;
-        if(studies == null)
+        if(degreeStudies == null)
             return null;
+
+        degree.setType(degreeType);
+        degree.setStudies(degreeStudies);
 
         newStudent.setMail(mail.getText().toString());
         newStudent.setPassword(password.getText().toString());
@@ -154,27 +164,12 @@ public class StudentRegistrationFragment extends Fragment {
         newStudent.setSex(sex);
         newStudent.setName(name.getText().toString());
         newStudent.setSurname(surname.getText().toString());
-        newStudent.setDegree(degree);
-        newStudent.setStudies(studies);
+        newStudent.setBirth(birth);
+        newStudent.addDegree(degree);
         return newStudent;
     }
 
-
-
-
-
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     */
-    public interface onInteractionListener {
-        // TODO: Update argument type and name
-    }
-
-
-
+    public interface onInteractionListener {}
 
     private class StringAdapter extends BaseAdapter {
 

@@ -1,5 +1,7 @@
 package com.example.giuliagigi.jobplacement;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 
 import android.support.v7.app.ActionBarActivity;
@@ -20,6 +22,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.parse.ParseException;
+import com.parse.ParseObject;
+import com.parse.ParseQuery;
 
 
 public class Home extends ActionBarActivity implements ActionBar.TabListener {
@@ -48,6 +54,32 @@ public class Home extends ActionBarActivity implements ActionBar.TabListener {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+
+
+        //just try to add a favourite
+          GlobalData gd=(GlobalData) getApplication();
+            Student s=null;
+        if( gd.getCurrentUser().getType().toLowerCase().equals("student"))
+        {
+             s=gd.getStudentFromUser();
+        }
+        List<Company> companies=null;
+        //query
+        ParseQuery<Company> query=new ParseQuery<Company>("Company");
+        try {
+           companies=query.find();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+
+        s.addFavourites(companies.get(0));
+        try {
+            s.save();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
 
         // Set up the action bar.
         final ActionBar actionBar = getSupportActionBar();
@@ -237,6 +269,10 @@ public class Home extends ActionBarActivity implements ActionBar.TabListener {
                     mRecyclerView.setAdapter(mAdapter);
 
 
+
+                    break;
+
+                case 3:
 
                     break;
 

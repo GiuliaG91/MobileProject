@@ -99,9 +99,23 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/studies_list" />
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Birth Date:"
+                android:id="@+id/birth_textView" />
+
+            <DatePicker
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:calendarViewShown="false"
+                android:id="@+id/birth_datePicker" />
+
         </LinearLayout>
 
     </ScrollView>
+
 
 
 
