@@ -171,7 +171,7 @@ public class StudentRegistrationFragment extends Fragment {
 
     public interface onInteractionListener {}
 
-    private class StringAdapter extends BaseAdapter {
+    public class StringAdapter extends BaseAdapter {
 
         public String[] stringArray;
 

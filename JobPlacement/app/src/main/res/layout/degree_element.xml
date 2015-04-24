@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+
+    <TextView
+        android:id="@+id/degree_text_view_type"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Degree type"/>
+
+
+    <Spinner
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/degree_spinnerType" />
+
+    <TextView
+        android:id="@+id/degree_text_view_field"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Field"/>
+
+    <Spinner
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/degree_spinnerField" />
+
+    <TextView
+        android:id="@+id/degree_text_view_mark"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Mark"/>
+
+    <EditText
+        android:id="@+id/degree__mark_area"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+</LinearLayout>

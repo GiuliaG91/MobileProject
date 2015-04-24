@@ -46,8 +46,8 @@ public class Student extends User {
     public String getSurname() {
         return this.getString(SURNAME_FIELD);
     }
-    public Degree getDegree() {
-        return (Degree)this.getParseObject(DEGREES_FIELD);
+    public ArrayList<Degree> getDegrees() {
+        return new ArrayList<Degree>(this.<Degree>getList(DEGREES_FIELD));
     }
     public String getSex() {
         return getString(SEX_FIELD);

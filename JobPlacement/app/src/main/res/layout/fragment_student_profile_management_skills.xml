@@ -11,74 +11,25 @@
         android:layout_height="match_parent">
 
         <LinearLayout
+            android:id="@+id/student_degreeList_container"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/student_degreeType_title"
+            <ListView
+                android:id="@+id/skills_degree_listview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+            </ListView>
+            <Button
+                android:id="@+id/skills_add_degree"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="10dp"
-                android:text="Degree Type:"
-                android:textSize="20dp"
-                />
-
-            <EditText
-                android:id="@+id/student_degreeType_area"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="20dp"
-                android:text="No Degree Type"
-                />
-
-            <TextView
-                android:id="@+id/student_mark_title"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="10dp"
-                android:text="Mark:"
-                android:textSize="20dp"
-                />
-
-            <EditText
-                android:id="@+id/student_mark_area"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="20dp"
-                android:text="No Surame"
-                />
-
-            <TextView
-                android:id="@+id/student_field_title"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="10dp"
-                android:text="Field:"
-                android:textSize="20dp"
-                />
-            <EditText
-                android:id="@+id/student_field_area"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="20dp"
-                android:text="No Field"
-                />
-
-            <TextView
-                android:id="@+id/student_skills_title"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="10dp"
-                android:text="Skills:"
-                android:textSize="20dp"
-                />
-
-
+                android:text="Add Degree"/>
 
 
         </LinearLayout>
-
     </ScrollView>
 
 
