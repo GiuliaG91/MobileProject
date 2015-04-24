@@ -1,7 +1,11 @@
 package com.example.giuliagigi.jobplacement;
 
+import android.util.Log;
+
 import com.parse.ParseClassName;
+import com.parse.ParseException;
 import com.parse.ParseObject;
+import com.parse.ParseQuery;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -30,9 +34,6 @@ public class Student extends User {
     protected static final String FAVOURITES_FIELD = "favourites";
     public static final String SEX_MALE = "Male";
     public static final String SEX_FEMALE = "Female";
-    //Manca il campo degree????
-
-
 
     public Student(){
         super();
@@ -48,15 +49,28 @@ public class Student extends User {
     }
     public ArrayList<Degree> getDegrees() {
 
+        ArrayList<Degree> degrees = new ArrayList<Degree>();
         List<Object> list = this.getList(DEGREES_FIELD);
-        ArrayList<Degree> degreeList = new ArrayList<Degree>();
 
-        for(Object po:list){
-            if(po instanceof Degree)
-                degreeList.add((Degree)po);
+        for(Object o:list){
+
+            ArrayList<Object> l = (ArrayList<Object>)o;
+
+            if(l.get(0) instanceof Degree){
+                Log.println(Log.ASSERT,"STUDENT", "I'm a badmotherfucker degree, you bitch!");
+                Degree d = (Degree) l.get(0);
+
+                try {
+                    d.fetchIfNeeded();
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+
+                degrees.add(d);
+            }
         }
 
-        return degreeList;
+        return degrees;
     }
     public String getSex() {
         return getString(SEX_FIELD);
@@ -95,7 +109,7 @@ public class Student extends User {
     }
     public void addDegree(Degree degree){
 
-        this.addUnique(DEGREES_FIELD, Arrays.asList(degree));
+        this.addUnique(DEGREES_FIELD, degree);
     }
     public void setSex(String sex){
 

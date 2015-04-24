@@ -46,8 +46,9 @@ public class StudentProfileManagementSkillsFragment extends ProfileManagementFra
 
         root = inflater.inflate(R.layout.fragment_student_profile_management_skills, container, false);
         degreeList = (ListView)root.findViewById(R.id.skills_degree_listview);
+        Log.println(Log.ASSERT,"SKILLSFRAG", "setting adapter");
         degreeList.setAdapter(new DegreeAdapter(currentUser.getDegrees()));
-
+        Log.println(Log.ASSERT,"SKILLSFRAG", "adapter ok");
         return root;
     }
 
@@ -65,6 +66,7 @@ public class StudentProfileManagementSkillsFragment extends ProfileManagementFra
         private final ArrayList<Degree> degrees;
 
         public DegreeAdapter(ArrayList<Degree> degrees){
+            super();
             this.degrees = degrees;
         }
 
@@ -105,13 +107,10 @@ public class StudentProfileManagementSkillsFragment extends ProfileManagementFra
 
             Log.println(Log.ASSERT,"SKILLSFRAG","3");
 
-            types.setSelection(degrees.get(position).getTypeID());
-            fields.setSelection(degrees.get(position).getStudyID());
+            types.setSelection(Degree.getTypeID(degrees.get(position).getType()));
+            fields.setSelection(Degree.getStudyID(degrees.get(position).getStudies()));
 
-            mark.setText(degrees.get(position).getMark());
-
-            Log.println(Log.ASSERT,"SKILLSFRAG","type. " + degrees.get(position).getTypeID());
-            Log.println(Log.ASSERT,"SKILLSFRAG","study. " + degrees.get(position).getStudyID());
+            //mark.setText(degrees.get(position).getMark());
 
             return convertView;
         }

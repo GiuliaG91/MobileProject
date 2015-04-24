@@ -59,11 +59,9 @@ public class Degree extends ParseObject{
     }
 
 
-    public int getTypeID(){
+    public static int getTypeID(String type){
 
         Log.println(Log.ASSERT,"DEGREE", "getTypeID started");
-
-        String type = this.getType();
 
         for(int i=0; i<TYPES.length;i++){
 
@@ -76,10 +74,9 @@ public class Degree extends ParseObject{
         return -1;
     }
 
-    public int getStudyID(){
+    public static int getStudyID(String study){
 
         Log.println(Log.ASSERT,"DEGREE", "getStudyID started");
-        String study = this.getStudies();
 
         for(int i=0; i<STUDIES.length;i++){
 
