@@ -3,6 +3,7 @@ package com.example.giuliagigi.jobplacement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.Objects;
 
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBar;
@@ -63,7 +64,7 @@ public class Home extends ActionBarActivity implements ActionBar.TabListener {
         {
              s=gd.getStudentFromUser();
         }
-        List<Company> companies=null;
+     /*    List<Company> companies=null;
         //query
         ParseQuery<Company> query=new ParseQuery<Company>("Company");
         try {
@@ -79,7 +80,7 @@ public class Home extends ActionBarActivity implements ActionBar.TabListener {
         } catch (ParseException e) {
             e.printStackTrace();
         }
-
+*/
 
         // Set up the action bar.
         final ActionBar actionBar = getSupportActionBar();
@@ -274,15 +275,24 @@ public class Home extends ActionBarActivity implements ActionBar.TabListener {
 
                 case 3:
 
+
+                            Student s = gd.getStudentFromUser();
+                            ArrayList<Company> fav=(ArrayList<Company>)s.getFavourites();
+                            if(fav.isEmpty())
+                            {
+                                mAdapter=new voidPrefAdapter(this.getActivity());
+                                mRecyclerView.setAdapter(mAdapter);
+                            }
+                                else {
+                                mAdapter = new FavouritesAdapter(fav, this.getActivity());
+                                mRecyclerView.setAdapter(mAdapter);
+                            }
+
                     break;
 
                 default:
 
                     break;
-
-
-
-
 
             }
 

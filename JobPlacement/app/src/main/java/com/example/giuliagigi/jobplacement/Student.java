@@ -1,5 +1,7 @@
 package com.example.giuliagigi.jobplacement;
 
+import android.util.Log;
+
 import com.parse.ParseClassName;
 import com.parse.ParseObject;
 
@@ -30,7 +32,7 @@ public class Student extends User {
     protected static final String FAVOURITES_FIELD = "favourites";
     public static final String SEX_MALE = "Male";
     public static final String SEX_FEMALE = "Female";
-    //Manca il campo degree????
+
 
 
 
@@ -68,14 +70,13 @@ public class Student extends User {
         return this.getString(NATION_FIELD);
     }
     public String getPhone(){
-        return this.getString(PHONE_FIELD);
-    }
-    public List<ParseObject> getFavourites( ){ return this.getList(FAVOURITES_FIELD);}   //I need a cast
+        return this.getString(  PHONE_FIELD);
+}
+    public Object getFavourites( ){  return this.getList(FAVOURITES_FIELD);}   //I need a cast
 
 
     /* END GETTER METHODS*/
 
-    /*SETTER METHODS*/
     public void setName(String name){
 
         this.put(NAME_FIELD,name);

@@ -2,6 +2,7 @@ package com.example.giuliagigi.jobplacement;
 
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +13,7 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * Created by pietro on 24/04/2015.
@@ -43,10 +45,20 @@ public class FavouritesAdapter extends  RecyclerView.Adapter<FavouritesAdapter.V
 
 
 
-    public FavouritesAdapter(ArrayList<Company> companies,FragmentActivity c)
+    public FavouritesAdapter(List<Company> companies,FragmentActivity c)
     {
-        companyList=companies;
+
+         for(Company comp : companies)
+         {
+
+             companyList.add(comp);
+         }
+
+
         myContext=c;
+
+        Log.d("AAAAAAAAAAAA", companyList.get(0).getClass().toString());
+
     }
 
 
@@ -69,6 +81,10 @@ public class FavouritesAdapter extends  RecyclerView.Adapter<FavouritesAdapter.V
         Integer id=myContext.getResources().getIdentifier("nolecture" ,"string", myContext.getPackageName());
 
         holder.iv_companyLogo.setImageResource(R.drawable.ic_profile);
+
+
+        Company c=companyList.get(position);
+
         holder.tv_companyName.setText(companyList.get(position).getName());
         holder.cb_star.setChecked(true);
         holder.cb_star.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
