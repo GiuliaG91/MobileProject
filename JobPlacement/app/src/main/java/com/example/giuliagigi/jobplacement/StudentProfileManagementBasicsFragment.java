@@ -82,7 +82,8 @@ public class StudentProfileManagementBasicsFragment extends ProfileManagementFra
         male.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                hasChanged = true;
+                if(!hasChanged)
+                    hasChanged = true;
                 if(male.isChecked())
                     female.setChecked(false);
             }
@@ -90,7 +91,8 @@ public class StudentProfileManagementBasicsFragment extends ProfileManagementFra
         female.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                hasChanged = true;
+                if(!hasChanged)
+                    hasChanged = true;
                 if(female.isChecked())
                     male.setChecked(false);
             }
@@ -101,8 +103,7 @@ public class StudentProfileManagementBasicsFragment extends ProfileManagementFra
 
         EditText emailText = (EditText)root.findViewById(R.id.student_email_area);
         emailText.setText(currentUser.getMail());
-
-        setEnable(profileActivity.getEditable());
+        setEnable(hostActivity.isInEditMode());
         return root;
     }
 
@@ -124,8 +125,9 @@ public class StudentProfileManagementBasicsFragment extends ProfileManagementFra
         hostActivity = null;
     }
 
-    public interface OnInteractionListener{
-    }
+
+
+
 
     @Override
     public void setEnable(boolean enable){

@@ -17,9 +17,7 @@ import android.app.Fragment;
 import android.widget.Spinner;
 
 
-public class ProfileManagement extends ActionBarActivity implements ProfileManagementFragment.OnInteractionListener, StudentProfileManagementBasicsFragment.OnInteractionListener,
-        StudentProfileManagementSkillsFragment.OnInteractionListener, StudentProfileManagementRegistryFragment.OnInteractionListener
-{
+public class ProfileManagement extends ActionBarActivity implements ProfileManagementFragment.OnInteractionListener{
 
     private GlobalData application;
     private ProfileManagementFragment currentFragment;
@@ -128,10 +126,8 @@ public class ProfileManagement extends ActionBarActivity implements ProfileManag
         return super.onOptionsItemSelected(item);
     }
 
-
-    public boolean getEditable(){
-
+    @Override
+    public boolean isInEditMode() {
         return editable;
     }
-
 }

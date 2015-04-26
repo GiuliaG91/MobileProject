@@ -1,5 +1,6 @@
 package com.example.giuliagigi.jobplacement;
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.os.Bundle;
 import android.app.Fragment;
@@ -7,12 +8,18 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
+
+import java.util.ArrayList;
 
 public class StudentProfileManagementRegistryFragment extends ProfileManagementFragment {
 
     private Student currentUser;
-    private EditText addressText, cityText,postalText,nationText;
+    private EditText addressText,cityText,postalText,nationText;
+    private ArrayList<EditText> phones;
+    private Button phonePlus;
 
     public StudentProfileManagementRegistryFragment() {super();}
     public static StudentProfileManagementRegistryFragment newInstance() {
@@ -28,6 +35,7 @@ public class StudentProfileManagementRegistryFragment extends ProfileManagementF
     public void onAttach(Activity activity) {
         super.onAttach(activity);
         currentUser = application.getStudentFromUser();
+        phones = new ArrayList<EditText>();
     }
 
     @Override
@@ -79,12 +87,26 @@ public class StudentProfileManagementRegistryFragment extends ProfileManagementF
         for(EditText et: textFields)
             et.addTextChangedListener(hasChangedListener);
 
-        setEnable(profileActivity.getEditable());
+        phonePlus = (Button)root.findViewById(R.id.student_phones_plusButton);
+        phonePlus.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Log.println(Log.ASSERT,"REGISTRYFRAG", "adding a new phone");
+                EditText newPhone = new EditText(getActivity().getApplicationContext());
+                newPhone.setLayoutParams(new ActionBar.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,LinearLayout.LayoutParams.WRAP_CONTENT));
+                newPhone.setHint("new number");
+                LinearLayout phonesContainer = (LinearLayout)root.findViewById(R.id.student_phones_container);
+                phonesContainer.addView(newPhone);
+                phones.add(newPhone);
+            }
+        });
+
+        setEnable(hostActivity.isInEditMode());
         return root;
     }
 
 
-     public interface OnInteractionListener {}
 
     public void setEnable(boolean enable){
 

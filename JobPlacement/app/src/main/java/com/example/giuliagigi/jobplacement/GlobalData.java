@@ -196,4 +196,12 @@ public class GlobalData extends Application {
         }
         return result;
     }
+
+
+
+
+
+
+
+
 }

@@ -1,5 +1,7 @@
 package com.example.giuliagigi.jobplacement;
 
+import android.util.Log;
+
 import com.parse.ParseClassName;
 import com.parse.ParseObject;
 
@@ -54,6 +56,36 @@ public class Degree extends ParseObject{
     }
     public void setMark(int mark){
         this.put(MARK_FIELD,mark);
+    }
+
+
+    public static int getTypeID(String type){
+
+        Log.println(Log.ASSERT,"DEGREE", "getTypeID started");
+
+        for(int i=0; i<TYPES.length;i++){
+
+            if(type.equals(TYPES[i]))
+                return i;
+        }
+
+        Log.println(Log.ASSERT,"DEGREE", "getTypeID finish");
+
+        return -1;
+    }
+
+    public static int getStudyID(String study){
+
+        Log.println(Log.ASSERT,"DEGREE", "getStudyID started");
+
+        for(int i=0; i<STUDIES.length;i++){
+
+            if(study.equals(STUDIES[i]))
+                return i;
+        }
+
+        Log.println(Log.ASSERT,"DEGREE", "getStudyID finish");
+        return -1;
     }
 
 }

@@ -22,7 +22,6 @@ public class ProfileManagementFragment extends Fragment {
 
 
     protected OnInteractionListener hostActivity;
-    protected ProfileManagement profileActivity;
     protected ArrayList<EditText> textFields;
     protected GlobalData application;
     protected boolean hasChanged = false;
@@ -46,7 +45,6 @@ public class ProfileManagementFragment extends Fragment {
         textFields = new ArrayList<EditText>();
 
         try {
-            profileActivity = (ProfileManagement)activity;
             hostActivity = (OnInteractionListener)activity;
         }
         catch (ClassCastException e){
@@ -83,12 +81,16 @@ public class ProfileManagementFragment extends Fragment {
 
 
 
-    public interface OnInteractionListener {}
+    public interface OnInteractionListener {
+        public boolean isInEditMode();
+    }
+
     protected void setEnable(boolean enable){
 
         setTextFieldsEnable(enable);
     }
     protected void restorePreaviousState() {}
+
     public void saveChanges(){}
 
     protected void setTextFieldsEnable(boolean enable){
@@ -106,7 +108,6 @@ public class ProfileManagementFragment extends Fragment {
             et.setEnabled(enable);
         }
     }
-
 
     protected class OnFieldChangedListener implements TextWatcher{
 
