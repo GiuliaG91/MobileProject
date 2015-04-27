@@ -56,10 +56,6 @@ public class Student extends User {
         ArrayList<Degree> degreeList = new ArrayList<Degree>();
 
 
-<<<<<<< HEAD
-
-=======
->>>>>>> origin/master
             for (Object o : list) {
 
                 if(o instanceof ArrayList){
@@ -80,10 +76,7 @@ public class Student extends User {
                     }
                 }
             }
-<<<<<<< HEAD
 
-=======
->>>>>>> origin/master
 
             return degrees;
     }
@@ -105,7 +98,7 @@ public class Student extends User {
     public String getNation(){
         return this.getString(NATION_FIELD);
     }
-<<<<<<< HEAD
+
     public String getPhones(){
         ArrayList<String> phones = new ArrayList<String>();
         List<Object> list = this.getList(PHONE_FIELD);
@@ -128,10 +121,7 @@ public class Student extends User {
 
 
         return phones;
-=======
-    public String getPhone(){
-        return this.getString(PHONE_FIELD);
->>>>>>> origin/master
+
 }
     public ArrayList<Company> getFavourites( ){
 
