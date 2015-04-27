@@ -53,7 +53,6 @@ public class Student extends User {
 
         ArrayList<Degree> degrees = new ArrayList<Degree>();
         List<Object> list = this.getList(DEGREES_FIELD);
-        ArrayList<Degree> degreeList = new ArrayList<Degree>();
 
 
             for (Object o : list) {
@@ -99,10 +98,10 @@ public class Student extends User {
         return this.getString(NATION_FIELD);
     }
 
-    public String getPhones(){
+    public ArrayList<String> getPhones(){
+
         ArrayList<String> phones = new ArrayList<String>();
         List<Object> list = this.getList(PHONE_FIELD);
-        ArrayList<String> phoneList = new ArrayList<String>();
 
             for (Object o : list) {
 
@@ -111,18 +110,15 @@ public class Student extends User {
                     ArrayList<Object> l = (ArrayList<Object>) o;
 
                     if (l.get(0) instanceof String) {
-                        Log.println(Log.ASSERT, "STUDENT", "I'm a badmotherfucker degree, you bitch!");
+                        Log.println(Log.ASSERT, "STUDENT", "I'm a string");
                         String s = (String) l.get(0);
-
                         phones.add(s);
                     }
                 }
             }
 
-
         return phones;
-
-}
+    }
     public ArrayList<Company> getFavourites( ){
 
         ArrayList<Company> favourites = new ArrayList<Company>();
