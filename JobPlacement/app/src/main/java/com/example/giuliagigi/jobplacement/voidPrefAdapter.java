@@ -52,10 +52,12 @@ public class voidPrefAdapter extends RecyclerView.Adapter<voidPrefAdapter.ViewHo
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
 
-        Integer id=myContext.getResources().getIdentifier("nolecture" ,"string", myContext.getPackageName());
+        //Integer id= myContext.getResources().getIdentifier("nolecture" ,"string", myContext.getPackageName());
+        //holder.vText.setText(myContext.getString(id));
 
-        holder.vText.setText(myContext.getString(id));
+        //TODO: Sorry Pietro commented it because crash "resourceNotFound"
 
+        holder.vText.setText("nolecture");
     }
 
     @Override
