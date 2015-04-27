@@ -97,8 +97,11 @@ public class StudentProfileManagementRegistryFragment extends ProfileManagementF
                 newPhone.setLayoutParams(new ActionBar.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,LinearLayout.LayoutParams.WRAP_CONTENT));
                 newPhone.setHint("new number");
                 LinearLayout phonesContainer = (LinearLayout)root.findViewById(R.id.student_phones_container);
-                phonesContainer.addView(newPhone);
-                phones.add(newPhone);
+                if (newPhone.getText() != null) {
+                    phonesContainer.addView(newPhone);
+                    phones.add(newPhone);
+                }
+
             }
         });
 
@@ -109,8 +112,16 @@ public class StudentProfileManagementRegistryFragment extends ProfileManagementF
 
 
     public void setEnable(boolean enable){
+        int visibility;
+
+        if(enable)
+            visibility = View.VISIBLE;
+        else
+            visibility = View.INVISIBLE;
 
         super.setEnable(enable);
+        Button phonePlus = (Button)root.findViewById(R.id.student_phones_plusButton);
+        phonePlus.setVisibility(visibility);
 
         if(!enable && hasChanged){
 
