@@ -47,8 +47,8 @@ public class StudentProfileManagementSkillsFragment extends ProfileManagementFra
                              Bundle savedInstanceState) {
 
         root = inflater.inflate(R.layout.fragment_student_profile_management_skills, container, false);
-        degreeList = (ListView)root.findViewById(R.id.skills_degree_listview);
-        degreeList.setAdapter(new DegreeAdapter(currentUser.getDegrees()));
+        //degreeList = (ListView)root.findViewById(R.id.skills_degree_listview);
+        //degreeList.setAdapter(new DegreeAdapter(currentUser.getDegrees()));
         setEnable(hostActivity.isInEditMode());
 
         addDegree = (Button)root.findViewById(R.id.skills_add_degree);

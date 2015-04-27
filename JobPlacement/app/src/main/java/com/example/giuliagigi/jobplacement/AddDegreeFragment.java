@@ -23,15 +23,18 @@ public class AddDegreeFragment extends Fragment {
     private Student currentUser;
     private Spinner degreeType;
     private Spinner degreeField;
+    private EditText degreeMark;
+    private static Degree currentDegree;
 
 
     public AddDegreeFragment() {
         super();
     }
-    public static AddDegreeFragment newInstance() {
+    public static AddDegreeFragment newInstance(Degree degree) {
         AddDegreeFragment fragment = new AddDegreeFragment();
         Bundle args = new Bundle();
         fragment.setArguments(args);
+        currentDegree = degree;
         return fragment;
 
     }
@@ -53,7 +56,7 @@ public class AddDegreeFragment extends Fragment {
         degreeType = (Spinner)root.findViewById(R.id.add_degree_spinnerType);
         degreeField = (Spinner)root.findViewById(R.id.add_degree_spinnerField);
 
-        final EditText degreeMark = (EditText)root.findViewById(R.id.add_degree__mark_area);
+        degreeMark = (EditText)root.findViewById(R.id.add_degree__mark_area);
 
         degreeType.setAdapter(new StringAdapter(Degree.TYPES));
         degreeField.setAdapter(new StringAdapter(Degree.STUDIES));
@@ -62,16 +65,10 @@ public class AddDegreeFragment extends Fragment {
         confirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String type = (String)degreeType.getSelectedItem();
-                String field = (String)degreeField.getSelectedItem();
-                Integer mark = Integer.parseInt(degreeMark.getText().toString());
 
-                Degree newDegree = new Degree();
-                newDegree.setType(type);
-                newDegree.setStudies(field);
-                newDegree.setMark(mark);
-
-                currentUser.addDegree(newDegree);
+                saveChanges();
+                //Degree newDegree = new Degree();
+                //currentUser.addDegree(newDegree);
             }
         });
 
@@ -136,6 +133,13 @@ public class AddDegreeFragment extends Fragment {
             text.setText(stringArray[position]);
             return convertView;
         }
+    }
+
+    public void saveChanges(){
+        currentDegree.setType((String)degreeType.getSelectedItem());
+        currentDegree.setStudies((String)degreeField.getSelectedItem());
+        currentDegree.setMark(Integer.parseInt(degreeMark.getText().toString()));
+        currentDegree.saveInBackground();
     }
 
 
