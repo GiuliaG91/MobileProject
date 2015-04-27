@@ -84,13 +84,12 @@ public class StudentProfileManagementRegistryFragment extends ProfileManagementF
             nationText.setText(currentUser.getNation());
         }
 
+        phonesContainer = (LinearLayout)root.findViewById(R.id.student_phones_container);
         ArrayList<String> userPhones = currentUser.getPhones();
+
         for(String p: userPhones){
-            EditText newPhone = new EditText(getActivity().getApplicationContext());
-            newPhone.setLayoutParams(new ActionBar.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,LinearLayout.LayoutParams.WRAP_CONTENT));
-            newPhone.setText(p);
-            phonesContainer.addView(newPhone);
-            phones.add(newPhone);
+
+            newPhoneText(p);
         }
 
 
@@ -104,7 +103,6 @@ public class StudentProfileManagementRegistryFragment extends ProfileManagementF
             et.addTextChangedListener(hasChangedListener);
 
 
-        phonesContainer = (LinearLayout)root.findViewById(R.id.student_phones_container);
 
         phonePlus = (Button)root.findViewById(R.id.student_phones_plusButton);
         phonePlus.setOnClickListener(new View.OnClickListener() {
@@ -112,14 +110,7 @@ public class StudentProfileManagementRegistryFragment extends ProfileManagementF
             public void onClick(View v) {
 
                 Log.println(Log.ASSERT,"REGISTRYFRAG", "adding a new phone");
-                EditText newPhone = new EditText(getActivity().getApplicationContext());
-                newPhone.setLayoutParams(new ActionBar.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,LinearLayout.LayoutParams.WRAP_CONTENT));
-                newPhone.setHint("new number");
-                newPhone.setTextColor(Color.parseColor("#000000"));
-
-                phonesContainer.addView(newPhone);
-                phones.add(newPhone);
-
+                newPhoneText(null);
             }
         });
 
@@ -140,9 +131,11 @@ public class StudentProfileManagementRegistryFragment extends ProfileManagementF
         super.setEnable(enable);
         Button phonePlus = (Button)root.findViewById(R.id.student_phones_plusButton);
         phonePlus.setVisibility(visibility);
+
         for(EditText et: phones){
             et.setEnabled(enable);
         }
+
         if(!enable && hasChanged){
 
             Log.println(Log.ASSERT,"REGISTRY FRAG", "update required");
@@ -151,17 +144,35 @@ public class StudentProfileManagementRegistryFragment extends ProfileManagementF
             currentUser.setPostalCode(postalText.getText().toString());
             currentUser.setNation(nationText.getText().toString());
 
-            currentUser.saveInBackground();
-
             for(EditText et: phones){
-               currentUser.addPhone(et.getText().toString());
-                currentUser.saveInBackground();
+
+                currentUser.addPhone(et.getText().toString());
+                Log.println(Log.ASSERT,"RAG FRAG", "saving phone");
             }
 
-
-
+            currentUser.saveInBackground();
             hasChanged = false;
         }
+    }
+
+
+
+    private void newPhoneText(String phone){
+
+        EditText newPhone = new EditText(getActivity().getApplicationContext());
+        newPhone.setLayoutParams(new ActionBar.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,LinearLayout.LayoutParams.WRAP_CONTENT));
+
+        if(phone == null)
+            newPhone.setHint("new number");
+        else
+            newPhone.setText(phone);
+
+        newPhone.setTextColor(Color.parseColor("#000000"));
+        newPhone.addTextChangedListener(new OnFieldChangedListener());
+
+        phonesContainer.addView(newPhone);
+        phones.add(newPhone);
+
     }
 
 }

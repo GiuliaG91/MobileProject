@@ -29,7 +29,7 @@ public class Student extends User {
     protected static final String CITY_FIELD = "city";
     protected static final String POSTAL_CODE_FIELD = "postalCode";
     protected static final String NATION_FIELD = "nation";
-    protected static final String PHONE_FIELD = "phone";
+    protected static final String PHONE_FIELD = "phones";
     protected static final String FAVOURITES_FIELD = "favourites";
     public static final String SEX_MALE = "Male";
     public static final String SEX_FEMALE = "Female";
@@ -54,30 +54,23 @@ public class Student extends User {
         ArrayList<Degree> degrees = new ArrayList<Degree>();
         List<Object> list = this.getList(DEGREES_FIELD);
 
-
+        if(list!=null)
             for (Object o : list) {
 
-                if(o instanceof ArrayList){
+                if(o instanceof Degree){
+                    Degree d =(Degree)o;
 
-                    ArrayList<Object> l = (ArrayList<Object>) o;
-
-                    if (l.get(0) instanceof Degree) {
-                        Log.println(Log.ASSERT, "STUDENT", "I'm a degree");
-                        Degree d = (Degree) l.get(0);
-
-                        try {
-                            d.fetchIfNeeded();
-                        } catch (ParseException e) {
-                            e.printStackTrace();
-                        }
-
-                        degrees.add(d);
+                    try {
+                        d.fetchIfNeeded();
+                    } catch (ParseException e) {
+                        e.printStackTrace();
                     }
+
+                    degrees.add(d);
                 }
             }
 
-
-            return degrees;
+        return degrees;
     }
     public String getSex() {
         return getString(SEX_FIELD);
@@ -97,27 +90,15 @@ public class Student extends User {
     public String getNation(){
         return this.getString(NATION_FIELD);
     }
-
     public ArrayList<String> getPhones(){
 
         ArrayList<String> phones = new ArrayList<String>();
         List<Object> list = this.getList(PHONE_FIELD);
 
-        if(list != null) {
-            for (Object o : list) {
-
-                if (o instanceof ArrayList) {
-
-                    ArrayList<Object> l = (ArrayList<Object>) o;
-
-                    if (l.get(0) instanceof String) {
-                        Log.println(Log.ASSERT, "STUDENT", "I'm a string");
-                        String s = (String) l.get(0);
-                        phones.add(s);
-                    }
-                }
-            }
-        }
+        if(list != null)
+            for (Object o : list)
+                if (o instanceof String)
+                    phones.add((String)o);
 
         return phones;
     }
@@ -126,30 +107,22 @@ public class Student extends User {
         ArrayList<Company> favourites = new ArrayList<Company>();
         List<Object> list = this.getList(FAVOURITES_FIELD);
 
-        for(Object o:list){
+        if(list!= null)
+            for(Object o:list){
+                if(o instanceof Company){
 
-            if(o instanceof ArrayList){
-
-                ArrayList<Object> l = (ArrayList<Object>)o;
-
-                if(l.get(0) instanceof Company){
-
-                    Company c = (Company)l.get(0);
-
+                    Company c = (Company)o;
                     try {
                         c.fetchIfNeeded();
                     } catch (ParseException e) {
                         e.printStackTrace();
                     }
-
                     favourites.add(c);
                 }
             }
-        }
 
         return favourites;
     }
-
 
     /* END GETTER METHODS*/
 
@@ -163,7 +136,7 @@ public class Student extends User {
     }
     public void addDegree(Degree degree){
 
-        this.addUnique(DEGREES_FIELD, Arrays.asList(degree));
+        this.addUnique(DEGREES_FIELD, degree);
     }
     public void setSex(String sex){
 
@@ -192,12 +165,12 @@ public class Student extends User {
     }
     public void addPhone(String phone){
 
-        this.addUnique(PHONE_FIELD, Arrays.asList(phone));
+        this.addUnique(PHONE_FIELD, phone);
     }
 
     public void addFavourites(Company company)
     {
-        this.addUnique(FAVOURITES_FIELD,Arrays.asList(company));
+        this.addUnique(FAVOURITES_FIELD,company);
 
     }
     /*END SETTER METHODS*/

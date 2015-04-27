@@ -1,5 +1,6 @@
 package com.example.giuliagigi.jobplacement;
 
+import android.app.ActionBar;
 import android.app.FragmentTransaction;
 import android.content.res.Configuration;
 import android.support.v7.app.ActionBarActivity;
@@ -17,15 +18,18 @@ import android.app.Fragment;
 import android.widget.Spinner;
 
 
-public class ProfileManagement extends ActionBarActivity implements ProfileManagementFragment.OnInteractionListener{
+public class ProfileManagement extends ActionBarActivity implements ProfileManagementFragment.OnInteractionListener, ActionBar.TabListener{
 
     private GlobalData application;
     private ProfileManagementFragment currentFragment;
     private boolean editable;
 
+    /*------------- STANDARD CALLBACKS ------------------------------------------------------------*/
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_profile_management);
         FragmentTransaction ft = getFragmentManager().beginTransaction();
         editable = false;
@@ -108,7 +112,6 @@ public class ProfileManagement extends ActionBarActivity implements ProfileManag
         ft.commit();
     }
 
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_profile_management, menu);
@@ -126,8 +129,27 @@ public class ProfileManagement extends ActionBarActivity implements ProfileManag
         return super.onOptionsItemSelected(item);
     }
 
+    /*------------- FRAGMENT INTERACTION INTERFACE -----------------------------------------------*/
+
     @Override
     public boolean isInEditMode() {
         return editable;
+    }
+
+    /*------------- TAB LISTENER INTERFACE -------------------------------------------------------*/
+
+    @Override
+    public void onTabSelected(ActionBar.Tab tab, FragmentTransaction ft) {
+
+    }
+
+    @Override
+    public void onTabUnselected(ActionBar.Tab tab, FragmentTransaction ft) {
+
+    }
+
+    @Override
+    public void onTabReselected(ActionBar.Tab tab, FragmentTransaction ft) {
+
     }
 }
