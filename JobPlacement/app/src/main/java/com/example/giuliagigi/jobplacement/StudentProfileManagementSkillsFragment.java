@@ -56,7 +56,7 @@ public class StudentProfileManagementSkillsFragment extends ProfileManagementFra
             @Override
             public void onClick(View v) {
 
-
+                
 
             }
         });
