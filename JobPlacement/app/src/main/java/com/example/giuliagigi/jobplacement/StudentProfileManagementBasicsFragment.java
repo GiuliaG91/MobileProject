@@ -2,10 +2,6 @@ package com.example.giuliagigi.jobplacement;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.app.Fragment;
-import android.text.Editable;
-import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,9 +15,6 @@ import java.util.GregorianCalendar;
 
 public class StudentProfileManagementBasicsFragment extends ProfileManagementFragment {
 
-    private static final String BUNDLE_KEY_NAME = "StudentProfileManagementBasicsFragment_name";
-    private static final String BUNDLE_KEY_SURNAME = "StudentProfileManagementBasicsFragment_surname";
-    private static final String BUNDLE_KEY_MALE = "StudentProfileManagementBasicsFragment_isMale";
 
     private Student currentUser;
     EditText nameText,surnameText;
@@ -103,7 +96,7 @@ public class StudentProfileManagementBasicsFragment extends ProfileManagementFra
 
         EditText emailText = (EditText)root.findViewById(R.id.student_email_area);
         emailText.setText(currentUser.getMail());
-        setEnable(hostActivity.isInEditMode());
+        setEnable(host.isInEditMode());
         return root;
     }
 
@@ -111,18 +104,12 @@ public class StudentProfileManagementBasicsFragment extends ProfileManagementFra
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
 
-        if(hasChanged){
-
-            outState.putString(BUNDLE_KEY_NAME,nameText.getText().toString());
-            outState.putString(BUNDLE_KEY_SURNAME, surnameText.getText().toString());
-            outState.putBoolean(BUNDLE_KEY_MALE,male.isChecked());
-        }
     }
 
     @Override
     public void onDetach() {
         super.onDetach();
-        hostActivity = null;
+        host = null;
     }
 
 
@@ -141,25 +128,10 @@ public class StudentProfileManagementBasicsFragment extends ProfileManagementFra
         female.setEnabled(enable);
         birthPicker.setEnabled(enable);
 
-        if(hasChanged){
-
-            if(enable)
-                restorePreaviousState();
-            else
-                saveChanges();
-        }
-
+        if(!enable && hasChanged)
+            saveChanges();
     }
 
-    @Override
-    protected void restorePreaviousState() {
-
-        //TODO not working as expected
-        nameText.setText(getArguments().getString(BUNDLE_KEY_NAME));
-        surnameText.setText(getArguments().getString(BUNDLE_KEY_SURNAME));
-        male.setChecked(getArguments().getBoolean(BUNDLE_KEY_MALE));
-        female.setChecked(!getArguments().getBoolean(BUNDLE_KEY_MALE));
-    }
 
     @Override
     public void saveChanges(){

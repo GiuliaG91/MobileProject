@@ -17,11 +17,14 @@ import android.widget.LinearLayout;
 import android.app.Fragment;
 import android.widget.Spinner;
 
+import java.util.ArrayList;
 
-public class ProfileManagement extends ActionBarActivity implements ProfileManagementFragment.OnInteractionListener, ActionBar.TabListener{
+
+public class ProfileManagement extends ActionBarActivity implements ProfileManagementFragment.OnInteractionListener{
 
     private GlobalData application;
     private ProfileManagementFragment currentFragment;
+    private ArrayList<OnActivityChangedListener> listeners;
     private boolean editable;
 
     /*------------- STANDARD CALLBACKS ------------------------------------------------------------*/
@@ -29,6 +32,8 @@ public class ProfileManagement extends ActionBarActivity implements ProfileManag
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        listeners = new ArrayList<OnActivityChangedListener>();
 
         setContentView(R.layout.activity_profile_management);
         FragmentTransaction ft = getFragmentManager().beginTransaction();
@@ -53,13 +58,13 @@ public class ProfileManagement extends ActionBarActivity implements ProfileManag
 
                     if(editable) editable = false;
                     else editable = true;
-                    currentFragment.setEnable(editable);
 
-                    if(editable){
-                        editProfile.setText("Save changes");
-                    }else {
-                        editProfile.setText("Edit Profile");
-                    }
+                    if(editable)
+                        for(OnActivityChangedListener l:listeners)
+                            l.onActivityStateChanged(OnActivityChangedListener.State.EDIT_MODE_STATE,OnActivityChangedListener.State.DISPLAY_MODE_STATE);
+                    else
+                        for(OnActivityChangedListener l:listeners)
+                            l.onActivityStateChanged(OnActivityChangedListener.State.DISPLAY_MODE_STATE,OnActivityChangedListener.State.EDIT_MODE_STATE);
                 }
             });
 
@@ -103,12 +108,6 @@ public class ProfileManagement extends ActionBarActivity implements ProfileManag
             //TODO
         }
 
-        // TODO: orientation change not working
-        if(getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE)
-            buttonsModule.setOrientation(LinearLayout.VERTICAL);
-        else
-            buttonsModule.setOrientation(LinearLayout.HORIZONTAL);
-
         ft.commit();
     }
 
@@ -133,23 +132,23 @@ public class ProfileManagement extends ActionBarActivity implements ProfileManag
 
     @Override
     public boolean isInEditMode() {
+
         return editable;
     }
 
-    /*------------- TAB LISTENER INTERFACE -------------------------------------------------------*/
-
     @Override
-    public void onTabSelected(ActionBar.Tab tab, FragmentTransaction ft) {
+    public void addOnActivityChangedListener(OnActivityChangedListener listener) {
 
+        listeners.add(listener);
     }
 
     @Override
-    public void onTabUnselected(ActionBar.Tab tab, FragmentTransaction ft) {
+    public void removeOnActivityChangedListener(OnActivityChangedListener listener) {
 
+        listeners.remove(listener);
     }
 
-    @Override
-    public void onTabReselected(ActionBar.Tab tab, FragmentTransaction ft) {
 
-    }
+    /*--------------------------------------------------------------------------------------------*/
+
 }

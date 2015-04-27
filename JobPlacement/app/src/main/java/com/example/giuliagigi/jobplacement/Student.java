@@ -139,6 +139,10 @@ public class Student extends User {
 
         this.addUnique(DEGREES_FIELD, degree);
     }
+    public void removeDegree(Degree degree){
+
+        this.removeAll(DEGREES_FIELD,Arrays.asList(degree));
+    }
     public void setSex(String sex){
 
         this.put(SEX_FIELD,sex);
