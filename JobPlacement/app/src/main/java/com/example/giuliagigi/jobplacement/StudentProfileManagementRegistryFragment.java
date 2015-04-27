@@ -24,6 +24,7 @@ public class StudentProfileManagementRegistryFragment extends ProfileManagementF
     private EditText addressText,cityText,postalText,nationText;
     private ArrayList<EditText> phones;
     private Button phonePlus;
+    private LinearLayout phonesContainer;
 
     public StudentProfileManagementRegistryFragment() {super();}
     public static StudentProfileManagementRegistryFragment newInstance() {
@@ -91,6 +92,11 @@ public class StudentProfileManagementRegistryFragment extends ProfileManagementF
         for(EditText et: textFields)
             et.addTextChangedListener(hasChangedListener);
 
+
+        phonesContainer = (LinearLayout)root.findViewById(R.id.student_phones_container);
+        ListView phonesList = (ListView)root.findViewById(R.id.student_phones_textArea);
+
+        phonesList.setAdapter(new PhoneAdapter(currentUser.getPhones()));
         phonePlus = (Button)root.findViewById(R.id.student_phones_plusButton);
         phonePlus.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -100,11 +106,7 @@ public class StudentProfileManagementRegistryFragment extends ProfileManagementF
                 EditText newPhone = new EditText(getActivity().getApplicationContext());
                 newPhone.setLayoutParams(new ActionBar.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,LinearLayout.LayoutParams.WRAP_CONTENT));
                 newPhone.setHint("new number");
-                LinearLayout phonesContainer = (LinearLayout)root.findViewById(R.id.student_phones_container);
-                ListView phonesList = (ListView)root.findViewById(R.id.student_phones_textArea);
 
-
-                phonesList.setAdapter(new PhoneAdapter(currentUser.getPhones()));
 
                 if (newPhone.getText() != null) {
                     phonesContainer.addView(newPhone);
