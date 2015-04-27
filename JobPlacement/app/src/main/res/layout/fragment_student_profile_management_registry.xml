@@ -93,6 +93,15 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/student_phones_container">
 
+                <ListView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/student_phones_textArea">
+
+
+
+                    </ListView>
+
                 <Button
                     android:id="@+id/student_phones_plusButton"
                     android:layout_width="match_parent"

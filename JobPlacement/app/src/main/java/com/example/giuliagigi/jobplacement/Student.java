@@ -55,9 +55,11 @@ public class Student extends User {
         List<Object> list = this.getList(DEGREES_FIELD);
         ArrayList<Degree> degreeList = new ArrayList<Degree>();
 
-        for(Object po:list) {
-            if (po instanceof Degree)
-                degreeList.add((Degree) po);
+
+<<<<<<< HEAD
+
+=======
+>>>>>>> origin/master
             for (Object o : list) {
 
                 if(o instanceof ArrayList){
@@ -65,7 +67,7 @@ public class Student extends User {
                     ArrayList<Object> l = (ArrayList<Object>) o;
 
                     if (l.get(0) instanceof Degree) {
-                        Log.println(Log.ASSERT, "STUDENT", "I'm a badmotherfucker degree, you bitch!");
+                        Log.println(Log.ASSERT, "STUDENT", "I'm a degree");
                         Degree d = (Degree) l.get(0);
 
                         try {
@@ -78,7 +80,10 @@ public class Student extends User {
                     }
                 }
             }
-        }
+<<<<<<< HEAD
+
+=======
+>>>>>>> origin/master
 
             return degrees;
     }
@@ -100,10 +105,62 @@ public class Student extends User {
     public String getNation(){
         return this.getString(NATION_FIELD);
     }
+<<<<<<< HEAD
+    public String getPhones(){
+        ArrayList<String> phones = new ArrayList<String>();
+        List<Object> list = this.getList(PHONE_FIELD);
+        ArrayList<String> phoneList = new ArrayList<String>();
+
+            for (Object o : list) {
+
+                if(o instanceof ArrayList){
+
+                    ArrayList<Object> l = (ArrayList<Object>) o;
+
+                    if (l.get(0) instanceof String) {
+                        Log.println(Log.ASSERT, "STUDENT", "I'm a badmotherfucker degree, you bitch!");
+                        String s = (String) l.get(0);
+
+                        phones.add(s);
+                    }
+                }
+            }
+
+
+        return phones;
+=======
     public String getPhone(){
-        return this.getString(  PHONE_FIELD);
+        return this.getString(PHONE_FIELD);
+>>>>>>> origin/master
 }
-    public Object getFavourites( ){  return this.getList(FAVOURITES_FIELD);}   //I need a cast
+    public ArrayList<Company> getFavourites( ){
+
+        ArrayList<Company> favourites = new ArrayList<Company>();
+        List<Object> list = this.getList(FAVOURITES_FIELD);
+
+        for(Object o:list){
+
+            if(o instanceof ArrayList){
+
+                ArrayList<Object> l = (ArrayList<Object>)o;
+
+                if(l.get(0) instanceof Company){
+
+                    Company c = (Company)l.get(0);
+
+                    try {
+                        c.fetchIfNeeded();
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+
+                    favourites.add(c);
+                }
+            }
+        }
+
+        return favourites;
+    }
 
 
     /* END GETTER METHODS*/

@@ -8,9 +8,13 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.ListView;
+import android.widget.Spinner;
 
 import java.util.ArrayList;
 
@@ -97,11 +101,15 @@ public class StudentProfileManagementRegistryFragment extends ProfileManagementF
                 newPhone.setLayoutParams(new ActionBar.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,LinearLayout.LayoutParams.WRAP_CONTENT));
                 newPhone.setHint("new number");
                 LinearLayout phonesContainer = (LinearLayout)root.findViewById(R.id.student_phones_container);
+                ListView phonesList = (ListView)root.findViewById(R.id.student_phones_textArea);
+
+
+                phonesList.setAdapter(new PhoneAdapter(currentUser.getPhones()));
+
                 if (newPhone.getText() != null) {
                     phonesContainer.addView(newPhone);
                     phones.add(newPhone);
                 }
-
             }
         });
 
@@ -133,6 +141,59 @@ public class StudentProfileManagementRegistryFragment extends ProfileManagementF
             currentUser.saveInBackground();
             hasChanged = false;
         }
+    }
+
+
+    protected class PhoneAdapter extends BaseAdapter {
+
+
+        private final ArrayList<String> phones;
+
+        public PhoneAdapter(ArrayList<String> phones){
+            super();
+            this.phones = phones;
+        }
+
+        @Override
+        public int getCount() {
+            return phones.size();
+        }
+
+        @Override
+        public Object getItem(int position) {
+            return phones.get(position);
+        }
+
+        @Override
+        public long getItemId(int position) {
+            return position;
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+
+            if(convertView == null)
+                convertView = getActivity().getLayoutInflater().inflate(R.layout.phone_element,parent,false);
+
+
+
+            EditText phone = (EditText)convertView.findViewById(R.id.student_phone_element);
+
+
+
+            return convertView;
+        }
+
+//        public void setEnable(boolean enable){
+//
+//            for(View v: elements){
+//
+//                Spinner types = (Spinner)v.findViewById(R.id.degree_spinnerType);
+//                Spinner fields = (Spinner)v.findViewById(R.id.degree_spinnerField);
+//                types.setEnabled(enable);
+//                fields.setEnabled(enable);
+//            }
+//        }
     }
 
 }
