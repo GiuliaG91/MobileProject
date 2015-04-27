@@ -101,7 +101,6 @@ public class StudentProfileManagementRegistryFragment extends ProfileManagementF
                     phonesContainer.addView(newPhone);
                     phones.add(newPhone);
                 }
-
             }
         });
 

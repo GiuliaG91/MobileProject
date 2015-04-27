@@ -55,9 +55,7 @@ public class Student extends User {
         List<Object> list = this.getList(DEGREES_FIELD);
         ArrayList<Degree> degreeList = new ArrayList<Degree>();
 
-        for(Object po:list) {
-            if (po instanceof Degree)
-                degreeList.add((Degree) po);
+
             for (Object o : list) {
 
                 if(o instanceof ArrayList){
@@ -65,7 +63,7 @@ public class Student extends User {
                     ArrayList<Object> l = (ArrayList<Object>) o;
 
                     if (l.get(0) instanceof Degree) {
-                        Log.println(Log.ASSERT, "STUDENT", "I'm a badmotherfucker degree, you bitch!");
+                        Log.println(Log.ASSERT, "STUDENT", "I'm a degree");
                         Degree d = (Degree) l.get(0);
 
                         try {
@@ -78,7 +76,6 @@ public class Student extends User {
                     }
                 }
             }
-        }
 
             return degrees;
     }
@@ -101,9 +98,36 @@ public class Student extends User {
         return this.getString(NATION_FIELD);
     }
     public String getPhone(){
-        return this.getString(  PHONE_FIELD);
+        return this.getString(PHONE_FIELD);
 }
-    public Object getFavourites( ){  return this.getList(FAVOURITES_FIELD);}   //I need a cast
+    public ArrayList<Company> getFavourites( ){
+
+        ArrayList<Company> favourites = new ArrayList<Company>();
+        List<Object> list = this.getList(FAVOURITES_FIELD);
+
+        for(Object o:list){
+
+            if(o instanceof ArrayList){
+
+                ArrayList<Object> l = (ArrayList<Object>)o;
+
+                if(l.get(0) instanceof Company){
+
+                    Company c = (Company)l.get(0);
+
+                    try {
+                        c.fetchIfNeeded();
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+
+                    favourites.add(c);
+                }
+            }
+        }
+
+        return favourites;
+    }
 
 
     /* END GETTER METHODS*/

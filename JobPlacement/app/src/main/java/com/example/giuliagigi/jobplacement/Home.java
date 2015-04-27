@@ -277,7 +277,7 @@ public class Home extends ActionBarActivity implements ActionBar.TabListener {
 
 
                             Student s = gd.getStudentFromUser();
-                            ArrayList<Company> fav=(ArrayList<Company>)s.getFavourites();
+                            ArrayList<Company> fav = s.getFavourites();
                             if(fav.isEmpty())
                             {
                                 mAdapter=new voidPrefAdapter(this.getActivity());
