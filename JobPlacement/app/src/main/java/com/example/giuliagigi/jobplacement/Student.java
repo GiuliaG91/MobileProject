@@ -3,6 +3,7 @@ package com.example.giuliagigi.jobplacement;
 import android.util.Log;
 
 import com.parse.ParseClassName;
+import com.parse.ParseException;
 import com.parse.ParseObject;
 
 import java.util.ArrayList;
@@ -48,8 +49,38 @@ public class Student extends User {
     public String getSurname() {
         return this.getString(SURNAME_FIELD);
     }
-    public Degree getDegree() {
-        return (Degree)this.getParseObject(DEGREES_FIELD);
+    public ArrayList<Degree> getDegrees() {
+
+        ArrayList<Degree> degrees = new ArrayList<Degree>();
+        List<Object> list = this.getList(DEGREES_FIELD);
+        ArrayList<Degree> degreeList = new ArrayList<Degree>();
+
+        for(Object po:list) {
+            if (po instanceof Degree)
+                degreeList.add((Degree) po);
+            for (Object o : list) {
+
+                if(o instanceof ArrayList){
+
+                    ArrayList<Object> l = (ArrayList<Object>) o;
+
+                    if (l.get(0) instanceof Degree) {
+                        Log.println(Log.ASSERT, "STUDENT", "I'm a badmotherfucker degree, you bitch!");
+                        Degree d = (Degree) l.get(0);
+
+                        try {
+                            d.fetchIfNeeded();
+                        } catch (ParseException e) {
+                            e.printStackTrace();
+                        }
+
+                        degrees.add(d);
+                    }
+                }
+            }
+        }
+
+            return degrees;
     }
     public String getSex() {
         return getString(SEX_FIELD);
