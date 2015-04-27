@@ -56,7 +56,7 @@ public class StudentProfileManagementSkillsFragment extends ProfileManagementFra
             @Override
             public void onClick(View v) {
 
-                
+
 
             }
         });
@@ -127,6 +127,14 @@ public class StudentProfileManagementSkillsFragment extends ProfileManagementFra
 
             types.setSelection(Degree.getTypeID(degrees.get(position).getType()));
             fields.setSelection(Degree.getStudyID(degrees.get(position).getStudies()));
+
+            /*Integer tmpMark = null;
+            try {
+                tmpMark = Integer.valueOf(degrees.get(position).getMark());
+            } catch (NumberFormatException e) {
+            }
+            if(tmpMark != null)
+                mark.setText(degrees.get(position).getMark());*/
 
             return convertView;
         }
