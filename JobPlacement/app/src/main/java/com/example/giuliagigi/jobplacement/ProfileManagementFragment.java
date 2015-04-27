@@ -84,6 +84,7 @@ public class ProfileManagementFragment extends Fragment implements OnActivityCha
     }
 
 
+    protected interface OnInteractionListener{
 
         public boolean isInEditMode();
         public void addOnActivityChangedListener(OnActivityChangedListener listener);

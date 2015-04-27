@@ -41,7 +41,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="insert"
-        android:id="@+id/degree_management_mark"/>
+        android:id="@+id/degree_management_mark_area"/>
 
     <Button
         android:layout_width="match_parent"

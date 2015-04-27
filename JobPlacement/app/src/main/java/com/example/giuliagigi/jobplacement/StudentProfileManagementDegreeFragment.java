@@ -67,8 +67,6 @@ public class StudentProfileManagementDegreeFragment extends ProfileManagementFra
         root = inflater.inflate(R.layout.fragment_degree_management, container, false);
         degreeType = (Spinner)root.findViewById(R.id.degree_management_spinnerType);
         degreeStudies = (Spinner)root.findViewById(R.id.degree_management_spinnerField);
-        degreeMark = (EditText)root.findViewById(R.id.degree_management_mark);
-        if(degreeMark == null) Log.println(Log.ASSERT,"DEGREE FRAG", "not found mark");
 
         degreeType.setAdapter(new StringAdapter(Degree.TYPES));
         degreeStudies.setAdapter(new StringAdapter(Degree.STUDIES));
@@ -77,17 +75,6 @@ public class StudentProfileManagementDegreeFragment extends ProfileManagementFra
             degreeType.setSelection(Degree.getTypeID(degree.getType()));
         if(degree.getStudies()!= null)
             degreeStudies.setSelection(Degree.getStudyID(degree.getStudies()));
-
-        if(degree.getMark()!= null)
-            degreeMark.setText(degree.getMark());
-        else
-            degreeMark.setText(INSERT_FIELD);
-
-        textFields.add(degreeMark);
-
-        OnFieldChangedListener hasChangedListener = new OnFieldChangedListener();
-        for(EditText et:textFields)
-            et.addTextChangedListener(hasChangedListener);
 
         confirm = (Button)root.findViewById(R.id.degree_management_confirm_button);
         confirm.setOnClickListener(new View.OnClickListener() {
@@ -114,6 +101,20 @@ public class StudentProfileManagementDegreeFragment extends ProfileManagementFra
                 root.setVisibility(View.INVISIBLE);
             }
         });
+
+        degreeMark = (EditText)root.findViewById(R.id.degree_management_mark_area);
+        if(degreeMark!= null){
+            if(degree.getMark()!= null)
+                degreeMark.setText(String.valueOf(degree.getMark()));
+            else
+                degreeMark.setText(INSERT_FIELD);
+        }
+
+        textFields.add(degreeMark);
+
+        OnFieldChangedListener hasChangedListener = new OnFieldChangedListener();
+        for(EditText et:textFields)
+            et.addTextChangedListener(hasChangedListener);
 
         setEnable(host.isInEditMode());
         return root;
