@@ -103,9 +103,10 @@ public class Student extends User {
         ArrayList<String> phones = new ArrayList<String>();
         List<Object> list = this.getList(PHONE_FIELD);
 
+        if(list != null) {
             for (Object o : list) {
 
-                if(o instanceof ArrayList){
+                if (o instanceof ArrayList) {
 
                     ArrayList<Object> l = (ArrayList<Object>) o;
 
@@ -116,6 +117,7 @@ public class Student extends User {
                     }
                 }
             }
+        }
 
         return phones;
     }

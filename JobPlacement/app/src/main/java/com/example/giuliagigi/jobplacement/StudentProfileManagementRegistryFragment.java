@@ -2,6 +2,7 @@ package com.example.giuliagigi.jobplacement;
 
 import android.app.ActionBar;
 import android.app.Activity;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.util.Log;
@@ -83,6 +84,16 @@ public class StudentProfileManagementRegistryFragment extends ProfileManagementF
             nationText.setText(currentUser.getNation());
         }
 
+        ArrayList<String> userPhones = currentUser.getPhones();
+        for(String p: userPhones){
+            EditText newPhone = new EditText(getActivity().getApplicationContext());
+            newPhone.setLayoutParams(new ActionBar.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,LinearLayout.LayoutParams.WRAP_CONTENT));
+            newPhone.setText(p);
+            phonesContainer.addView(newPhone);
+            phones.add(newPhone);
+        }
+
+
         OnFieldChangedListener hasChangedListener = new OnFieldChangedListener();
         textFields.add(addressText);
         textFields.add(cityText);
@@ -94,9 +105,7 @@ public class StudentProfileManagementRegistryFragment extends ProfileManagementF
 
 
         phonesContainer = (LinearLayout)root.findViewById(R.id.student_phones_container);
-        ListView phonesList = (ListView)root.findViewById(R.id.student_phones_textArea);
 
-        phonesList.setAdapter(new PhoneAdapter(currentUser.getPhones()));
         phonePlus = (Button)root.findViewById(R.id.student_phones_plusButton);
         phonePlus.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -106,12 +115,11 @@ public class StudentProfileManagementRegistryFragment extends ProfileManagementF
                 EditText newPhone = new EditText(getActivity().getApplicationContext());
                 newPhone.setLayoutParams(new ActionBar.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,LinearLayout.LayoutParams.WRAP_CONTENT));
                 newPhone.setHint("new number");
+                newPhone.setTextColor(Color.parseColor("#000000"));
 
+                phonesContainer.addView(newPhone);
+                phones.add(newPhone);
 
-                if (newPhone.getText() != null) {
-                    phonesContainer.addView(newPhone);
-                    phones.add(newPhone);
-                }
             }
         });
 
@@ -132,7 +140,9 @@ public class StudentProfileManagementRegistryFragment extends ProfileManagementF
         super.setEnable(enable);
         Button phonePlus = (Button)root.findViewById(R.id.student_phones_plusButton);
         phonePlus.setVisibility(visibility);
-
+        for(EditText et: phones){
+            et.setEnabled(enable);
+        }
         if(!enable && hasChanged){
 
             Log.println(Log.ASSERT,"REGISTRY FRAG", "update required");
@@ -140,62 +150,18 @@ public class StudentProfileManagementRegistryFragment extends ProfileManagementF
             currentUser.setCity(cityText.getText().toString());
             currentUser.setPostalCode(postalText.getText().toString());
             currentUser.setNation(nationText.getText().toString());
+
             currentUser.saveInBackground();
+
+            for(EditText et: phones){
+               currentUser.addPhone(et.getText().toString());
+                currentUser.saveInBackground();
+            }
+
+
+
             hasChanged = false;
         }
-    }
-
-
-    protected class PhoneAdapter extends BaseAdapter {
-
-
-        private final ArrayList<String> phones;
-
-        public PhoneAdapter(ArrayList<String> phones){
-            super();
-            this.phones = phones;
-        }
-
-        @Override
-        public int getCount() {
-            return phones.size();
-        }
-
-        @Override
-        public Object getItem(int position) {
-            return phones.get(position);
-        }
-
-        @Override
-        public long getItemId(int position) {
-            return position;
-        }
-
-        @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
-
-            if(convertView == null)
-                convertView = getActivity().getLayoutInflater().inflate(R.layout.phone_element,parent,false);
-
-
-
-            EditText phone = (EditText)convertView.findViewById(R.id.student_phone_element);
-
-
-
-            return convertView;
-        }
-
-//        public void setEnable(boolean enable){
-//
-//            for(View v: elements){
-//
-//                Spinner types = (Spinner)v.findViewById(R.id.degree_spinnerType);
-//                Spinner fields = (Spinner)v.findViewById(R.id.degree_spinnerField);
-//                types.setEnabled(enable);
-//                fields.setEnabled(enable);
-//            }
-//        }
     }
 
 }

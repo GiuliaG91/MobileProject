@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Spinner;
@@ -18,6 +19,7 @@ public class StudentProfileManagementSkillsFragment extends ProfileManagementFra
 
     private Student currentUser;
     ListView degreeList;
+    Button addDegree;
 
     public StudentProfileManagementSkillsFragment() {super();}
     public static StudentProfileManagementSkillsFragment newInstance() {
@@ -48,6 +50,19 @@ public class StudentProfileManagementSkillsFragment extends ProfileManagementFra
         degreeList = (ListView)root.findViewById(R.id.skills_degree_listview);
         degreeList.setAdapter(new DegreeAdapter(currentUser.getDegrees()));
         setEnable(hostActivity.isInEditMode());
+
+        addDegree = (Button)root.findViewById(R.id.skills_add_degree);
+        addDegree.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+
+
+            }
+        });
+
+
+
         return root;
     }
 
@@ -108,7 +123,7 @@ public class StudentProfileManagementSkillsFragment extends ProfileManagementFra
             types.setAdapter(stringAdapterType);
             fields.setAdapter(stringAdapterField);
 
-            Log.println(Log.ASSERT,"SKILLSFRAG","3");
+            Log.println(Log.ASSERT, "SKILLSFRAG", "3");
 
             types.setSelection(Degree.getTypeID(degrees.get(position).getType()));
             fields.setSelection(Degree.getStudyID(degrees.get(position).getStudies()));
