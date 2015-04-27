@@ -8,6 +8,7 @@ import com.parse.ParseObject;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
@@ -167,12 +168,16 @@ public class Student extends User {
 
         this.addUnique(PHONE_FIELD, phone);
     }
+    public void removePhone(String phone) {
 
+        this.removeAll(PHONE_FIELD,Arrays.asList(phone));
+    }
     public void addFavourites(Company company)
     {
         this.addUnique(FAVOURITES_FIELD,company);
 
     }
+
     /*END SETTER METHODS*/
 
 }

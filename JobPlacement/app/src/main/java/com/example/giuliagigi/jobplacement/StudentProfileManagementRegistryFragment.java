@@ -4,18 +4,13 @@ import android.app.ActionBar;
 import android.app.Activity;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.ListView;
-import android.widget.Spinner;
 
 import java.util.ArrayList;
 
@@ -23,7 +18,8 @@ public class StudentProfileManagementRegistryFragment extends ProfileManagementF
 
     private Student currentUser;
     private EditText addressText,cityText,postalText,nationText;
-    private ArrayList<EditText> phones;
+    private ArrayList<EditText> phoneTexts;
+    private ArrayList<String> originalPhones;
     private Button phonePlus;
     private LinearLayout phonesContainer;
 
@@ -41,7 +37,8 @@ public class StudentProfileManagementRegistryFragment extends ProfileManagementF
     public void onAttach(Activity activity) {
         super.onAttach(activity);
         currentUser = application.getStudentFromUser();
-        phones = new ArrayList<EditText>();
+        phoneTexts = new ArrayList<EditText>();
+        originalPhones = new ArrayList<String>();
     }
 
     @Override
@@ -90,6 +87,7 @@ public class StudentProfileManagementRegistryFragment extends ProfileManagementF
         for(String p: userPhones){
 
             newPhoneText(p);
+            originalPhones.add(p);
         }
 
 
@@ -132,7 +130,7 @@ public class StudentProfileManagementRegistryFragment extends ProfileManagementF
         Button phonePlus = (Button)root.findViewById(R.id.student_phones_plusButton);
         phonePlus.setVisibility(visibility);
 
-        for(EditText et: phones){
+        for(EditText et: phoneTexts){
             et.setEnabled(enable);
         }
 
@@ -143,12 +141,7 @@ public class StudentProfileManagementRegistryFragment extends ProfileManagementF
             currentUser.setCity(cityText.getText().toString());
             currentUser.setPostalCode(postalText.getText().toString());
             currentUser.setNation(nationText.getText().toString());
-
-            for(EditText et: phones){
-
-                currentUser.addPhone(et.getText().toString());
-                Log.println(Log.ASSERT,"RAG FRAG", "saving phone");
-            }
+            updatePhones();
 
             currentUser.saveInBackground();
             hasChanged = false;
@@ -169,10 +162,43 @@ public class StudentProfileManagementRegistryFragment extends ProfileManagementF
 
         newPhone.setTextColor(Color.parseColor("#000000"));
         newPhone.addTextChangedListener(new OnFieldChangedListener());
-
         phonesContainer.addView(newPhone);
-        phones.add(newPhone);
+        phoneTexts.add(newPhone);
+    }
 
+    private void updatePhones(){
+
+
+        for(int i = 0;i<phoneTexts.size();i++){
+
+            String phone = phoneTexts.get(i).getText().toString();
+
+            Log.println(Log.ASSERT,"REG FRAG", "save: " + phoneTexts.get(i).getText().toString());
+            if(i<originalPhones.size() && !originalPhones.get(i).equals(phone)){
+
+                Log.println(Log.ASSERT,"REG FRAG", "older: " + originalPhones.get(i) + ", new: " + phone);
+                currentUser.removePhone(originalPhones.get(i));
+                currentUser.saveInBackground();
+            }
+            Log.println(Log.ASSERT,"REG FRAG", "ok");
+            if(!phone.equals("")){
+
+                Log.println(Log.ASSERT,"REG FRAG", "add/update the phone");
+                currentUser.addPhone(phone);
+                currentUser.saveInBackground();
+            }
+            else {
+
+                Log.println(Log.ASSERT,"REG FRAG", "the phone is going to be deleted");
+                phonesContainer.removeView(phoneTexts.get(i));
+                phoneTexts.remove(i);
+            }
+        }
+
+        originalPhones = new ArrayList<String>();
+
+        for(EditText et:phoneTexts)
+            originalPhones.add(et.getText().toString());
     }
 
 }
