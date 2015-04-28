@@ -2,9 +2,7 @@ package com.example.giuliagigi.jobplacement;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.app.Fragment;
-import android.text.Editable;
-import android.text.TextWatcher;
+import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -37,13 +35,6 @@ public class StudentProfileManagementBasicsFragment extends ProfileManagementFra
     }
 
 
-
-    @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-        currentUser = application.getStudentFromUser();
-    }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,6 +46,7 @@ public class StudentProfileManagementBasicsFragment extends ProfileManagementFra
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
+        currentUser=application.getStudentFromUser();
         root = inflater.inflate(R.layout.fragment_student_profile_management_basics, container, false);
 
         nameText = (EditText)root.findViewById(R.id.student_name_area);
@@ -118,13 +110,6 @@ public class StudentProfileManagementBasicsFragment extends ProfileManagementFra
             outState.putBoolean(BUNDLE_KEY_MALE,male.isChecked());
         }
     }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        hostActivity = null;
-    }
-
 
 
 

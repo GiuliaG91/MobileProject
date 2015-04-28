@@ -1,13 +1,12 @@
 package com.example.giuliagigi.jobplacement;
 
 import android.app.Activity;
-import android.content.DialogInterface;
-import android.net.Uri;
 import android.os.Bundle;
-import android.app.Fragment;
+
+import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,7 +21,7 @@ public class ProfileManagementFragment extends Fragment {
 
 
     protected OnInteractionListener hostActivity;
-    protected ArrayList<EditText> textFields;
+    protected ArrayList<EditText> textFields=new ArrayList<>();
     protected GlobalData application;
     protected boolean hasChanged = false;
     protected View root;
@@ -36,26 +35,13 @@ public class ProfileManagementFragment extends Fragment {
     }
 
 
-    @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-
-        hasChanged = getArguments().getBoolean(BUNDLE_KEY_CHANGED);
-        application = (GlobalData)activity.getApplicationContext();
-        textFields = new ArrayList<EditText>();
-
-        try {
-            hostActivity = (OnInteractionListener)activity;
-        }
-        catch (ClassCastException e){
-            throw new ClassCastException(activity.toString()
-                    + " must implement OnInteractionListener");
-        }
-    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        application=(GlobalData)getActivity().getApplication();
+
 
     }
 
@@ -66,18 +52,12 @@ public class ProfileManagementFragment extends Fragment {
         return inflater.inflate(R.layout.fragment_profile_management, container, false);
     }
 
+
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putBoolean(BUNDLE_KEY_CHANGED,hasChanged);
     }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
-
-    }
-
 
 
 

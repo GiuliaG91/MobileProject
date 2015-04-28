@@ -4,20 +4,16 @@ import android.app.FragmentTransaction;
 import android.content.res.Configuration;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.FrameLayout;
 import android.widget.LinearLayout;
-import android.app.Fragment;
-import android.widget.Spinner;
 
-
-public class ProfileManagement extends ActionBarActivity implements ProfileManagementFragment.OnInteractionListener{
+ public class ProfileManagement extends ActionBarActivity /*implements ProfileManagementFragment.OnInteractionListener, StudentProfileManagementBasicsFragment.OnInteractionListener,
+        StudentProfileManagementSkillsFragment.OnInteractionListener, StudentProfileManagementRegistryFragment.OnInteractionListener*/
+{
 
     private GlobalData application;
     private ProfileManagementFragment currentFragment;
@@ -39,7 +35,7 @@ public class ProfileManagement extends ActionBarActivity implements ProfileManag
             buttonsModule = (LinearLayout)getLayoutInflater().inflate(R.layout.students_buttons_module,buttonContainers);
             currentFragment = StudentProfileManagementBasicsFragment.newInstance();
 
-            ft.replace(R.id.container_profile_management_fragment, currentFragment);
+          //  ft.replace(R.id.container_profile_management_fragment, currentFragment);
 
             final Button editProfile = (Button)findViewById(R.id.editProfileButton);
             editProfile.setOnClickListener(new View.OnClickListener(){
@@ -68,7 +64,7 @@ public class ProfileManagement extends ActionBarActivity implements ProfileManag
                 public void onClick(View v) {
                     FragmentTransaction ft = getFragmentManager().beginTransaction();
                     currentFragment = StudentProfileManagementBasicsFragment.newInstance();
-                    ft.replace(R.id.container_profile_management_fragment, currentFragment);
+                 //   ft.replace(R.id.container_profile_management_fragment, currentFragment);
                     ft.commit();
                 }
             });
@@ -78,7 +74,7 @@ public class ProfileManagement extends ActionBarActivity implements ProfileManag
                 public void onClick(View v) {
                     FragmentTransaction ft = getFragmentManager().beginTransaction();
                     currentFragment = StudentProfileManagementSkillsFragment.newInstance();
-                    ft.replace(R.id.container_profile_management_fragment, currentFragment);
+                 //   ft.replace(R.id.container_profile_management_fragment, currentFragment);
                     ft.commit();
                 }
             });
@@ -88,7 +84,7 @@ public class ProfileManagement extends ActionBarActivity implements ProfileManag
                 public void onClick(View v) {
                     FragmentTransaction ft = getFragmentManager().beginTransaction();
                     currentFragment = StudentProfileManagementRegistryFragment.newInstance();
-                    ft.replace(R.id.container_profile_management_fragment, currentFragment);
+                //    ft.replace(R.id.container_profile_management_fragment, currentFragment);
                     ft.commit();
                 }
             });
@@ -126,8 +122,6 @@ public class ProfileManagement extends ActionBarActivity implements ProfileManag
         return super.onOptionsItemSelected(item);
     }
 
-    @Override
-    public boolean isInEditMode() {
-        return editable;
-    }
+
+
 }

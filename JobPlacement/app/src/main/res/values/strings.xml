@@ -28,4 +28,30 @@
     <string name="user_icon_description">UserIcon</string>
     <string name="nofavourites">No Favourites</string>
 
+
+    <string name="action_search">search</string>
+    <string name="action_menu">menu</string>
+
+    <string name="drawer_open">Open</string>
+    <string name="drawer_close">Close</string>
+
+
+    <string-array name="Menu_items_student">
+        <item>Home</item>
+        <item>Profile</item>
+        <item>Search</item>
+        <item>AutoCandidate</item>
+        <item>MessageBox</item>
+    </string-array>
+
+    <string-array name="Menu_items_Company">
+        <item>Home</item>
+        <item>Profile</item>
+        <item>Search</item>
+        <item>NewOffer</item>
+        <item>MessageBox</item>
+    </string-array>
+
+
+
 </resources>
