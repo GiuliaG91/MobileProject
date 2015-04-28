@@ -17,8 +17,10 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 
-public class Home extends ActionBarActivity  implements TabHomeFragment.OnFragmentInteractionListener
+
+public class Home extends ActionBarActivity  implements TabHomeFragment.OnFragmentInteractionListener , ProfileManagementFragment.OnInteractionListener
 {
 
 
@@ -36,7 +38,17 @@ public class Home extends ActionBarActivity  implements TabHomeFragment.OnFragme
     private CharSequence mDrawerTitle;
     private CharSequence mTitle;
 /********************************************************/
+/**
+ *
+ * *************PROFILE MAGEMENT
+ */
 
+
+    private GlobalData application;
+    private ProfileManagementFragment currentFragment;
+    private ArrayList<OnActivityChangedListener> listeners;
+
+/****************************************************************/
     /**
      * *************For page viewer***************************
      */
@@ -161,5 +173,18 @@ public class Home extends ActionBarActivity  implements TabHomeFragment.OnFragme
     }
 
 
+    @Override
+    public boolean isInEditMode() {
+        return false;
+    }
 
+    @Override
+    public void addOnActivityChangedListener(OnActivityChangedListener listener) {
+
+    }
+
+    @Override
+    public void removeOnActivityChangedListener(OnActivityChangedListener listener) {
+
+    }
 }

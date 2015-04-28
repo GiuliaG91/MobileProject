@@ -1,33 +1,96 @@
 package com.example.giuliagigi.jobplacement;
 
-import android.app.ActionBar;
-import android.app.FragmentTransaction;
-import android.content.res.Configuration;
-import android.support.v7.app.ActionBarActivity;
+
+
+import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
+import android.support.v4.view.ViewPager;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
-
+import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.FrameLayout;
-import android.widget.LinearLayout;
-import android.app.Fragment;
-import android.widget.Spinner;
-
-import java.util.ArrayList;
+import android.view.ViewGroup;
 
 
-public class ProfileManagement extends ActionBarActivity implements ProfileManagementFragment.OnInteractionListener{
+public class ProfileManagement extends Fragment{
 
     private GlobalData application;
-    private ProfileManagementFragment currentFragment;
-    private ArrayList<OnActivityChangedListener> listeners;
+
     private boolean editable;
 
+
+
+    /**
+     * *************For page viewer***************************
+     */
+    ViewPager pager;
+    ProfileManagementViewAdapter adapter;
+    SlidingTabLayout tabs;
+    CharSequence Titles[] = {"Overview", "Skills","Registry","Account"};
+    int Numboftabs = 4;
+
+    /***************************************************************/
+
+
+
+    public  ProfileManagement(){ }
+    public static ProfileManagement newInstance() {
+        ProfileManagement fragment = new ProfileManagement();
+        Bundle args = new Bundle();
+        fragment.setArguments(args);
+        return fragment;
+    }
+
     /*------------- STANDARD CALLBACKS ------------------------------------------------------------*/
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        return inflater.inflate(R.layout.fragment_tab_home, container, false);
+    }
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+
+        /*************ViewPager***************************/
+
+        // Creating The ViewPagerAdapter and Passing Fragment Manager, Titles fot the Tabs and Number Of Tabs.
+        adapter = new ProfileManagementViewAdapter(getFragmentManager(), Titles, Numboftabs);
+        // Assigning ViewPager View and setting the adapter
+        pager = (ViewPager) view.findViewById(R.id.pager);
+        pager.setAdapter(adapter);
+
+        // Assiging the Sliding Tab Layout View
+        tabs = (SlidingTabLayout) view.findViewById(R.id.tabs);
+        tabs.setDistributeEvenly(true); // To make the Tabs Fixed set this true, This makes the tabs Space Evenly in Available width
+
+
+        // Setting Custom Color for the Scroll bar indicator of the Tab View
+        tabs.setCustomTabColorizer(new SlidingTabLayout.TabColorizer() {
+            @Override
+            public int getIndicatorColor(int position) {
+                return getResources().getColor(R.color.tabsScrollColor);
+            }
+        });
+
+        // Setting the ViewPager For the SlidingTabsLayout
+        tabs.setViewPager(pager);
+
+
+        /****************************************************/
+
+
+    }
+
+
+
+
+    /*
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -128,27 +191,5 @@ public class ProfileManagement extends ActionBarActivity implements ProfileManag
         return super.onOptionsItemSelected(item);
     }
 
-    /*------------- FRAGMENT INTERACTION INTERFACE -----------------------------------------------*/
-
-    @Override
-    public boolean isInEditMode() {
-
-        return editable;
-    }
-
-    @Override
-    public void addOnActivityChangedListener(OnActivityChangedListener listener) {
-
-        listeners.add(listener);
-    }
-
-    @Override
-    public void removeOnActivityChangedListener(OnActivityChangedListener listener) {
-
-        listeners.remove(listener);
-    }
-
-
-    /*--------------------------------------------------------------------------------------------*/
-
+*/
 }

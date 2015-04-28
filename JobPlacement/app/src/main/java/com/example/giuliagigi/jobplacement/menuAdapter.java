@@ -117,7 +117,7 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.ViewHolder> {
                                 TextView tv = (TextView) v.findViewById(R.id.rowText);
 
                                 toolbar.setTitle(tv.getText());
-                                //    mDrawerLayout.closeDrawer(mDrawerList);
+                                mDrawerLayout.closeDrawers();
 
                             }
                         }
@@ -137,11 +137,7 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.ViewHolder> {
 
                              FragmentManager fragmentManager =activity.getSupportFragmentManager();
 
-
-                                 //New Fragment
-                                ProfileManagementv2 fragment=ProfileManagementv2.newInstance();
-                                 // Insert the fragment by replacing any existing fragment
-                                 // Insert the fragment by replacing any existing fragment
+                                 Fragment fragment=ProfileManagement.newInstance();
 
                                  fragmentManager.beginTransaction()
                                          .replace(R.id.tab_Home_container, fragment)
@@ -152,7 +148,7 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.ViewHolder> {
                                  TextView tv = (TextView) v.findViewById(R.id.rowText);
 
                                  toolbar.setTitle(tv.getText());
-                                 //    mDrawerLayout.closeDrawer(mDrawerList);
+                                 mDrawerLayout.closeDrawers();
 
 
 
