@@ -177,10 +177,7 @@ public class ProfileManagementv2 extends Fragment {
         mListener = null;
     }
 
-    @Override
-    public boolean isInEditMode() {
-        return editable;
-    }
+
 
 
     /**

@@ -18,7 +18,7 @@ import android.view.View;
 import android.widget.TextView;
 
 
-public class Home extends ActionBarActivity  implements TabHomeFragment.OnFragmentInteractionListener , ProfileManagementv2.OnFragmentInteractionListener
+public class Home extends ActionBarActivity  implements TabHomeFragment.OnFragmentInteractionListener
 {
 
 
@@ -119,7 +119,7 @@ public class Home extends ActionBarActivity  implements TabHomeFragment.OnFragme
         mDrawerLayout.setDrawerListener(mDrawerToggle); // Drawer Listener set to the Drawer toggle
         mDrawerToggle.syncState();               // Finally we set the drawer toggle sync State
 
-        FragmentManager fragmentManager =getSupportFragmentManager();
+           FragmentManager fragmentManager =getSupportFragmentManager();
 
             //New Fragment
             TabHomeFragment homeFragment = TabHomeFragment.newInstance();
@@ -160,8 +160,6 @@ public class Home extends ActionBarActivity  implements TabHomeFragment.OnFragme
 
     }
 
-    @Override
-    public boolean isInEditMode() {
-        return false;
-    }
+
+
 }
