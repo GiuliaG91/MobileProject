@@ -1,27 +1,40 @@
 package com.example.giuliagigi.jobplacement;
 
+import android.app.ActionBar;
 import android.app.FragmentTransaction;
 import android.content.res.Configuration;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.LinearLayout;
+import android.app.Fragment;
+import android.widget.Spinner;
 
- public class ProfileManagement extends ActionBarActivity /*implements ProfileManagementFragment.OnInteractionListener, StudentProfileManagementBasicsFragment.OnInteractionListener,
-        StudentProfileManagementSkillsFragment.OnInteractionListener, StudentProfileManagementRegistryFragment.OnInteractionListener*/
-{
+import java.util.ArrayList;
+
+
+public class ProfileManagement extends ActionBarActivity implements ProfileManagementFragment.OnInteractionListener{
 
     private GlobalData application;
     private ProfileManagementFragment currentFragment;
+    private ArrayList<OnActivityChangedListener> listeners;
     private boolean editable;
+
+    /*------------- STANDARD CALLBACKS ------------------------------------------------------------*/
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        listeners = new ArrayList<OnActivityChangedListener>();
+
         setContentView(R.layout.activity_profile_management);
         FragmentTransaction ft = getFragmentManager().beginTransaction();
         editable = false;
@@ -35,7 +48,7 @@ import android.widget.LinearLayout;
             buttonsModule = (LinearLayout)getLayoutInflater().inflate(R.layout.students_buttons_module,buttonContainers);
             currentFragment = StudentProfileManagementBasicsFragment.newInstance();
 
-          //  ft.replace(R.id.container_profile_management_fragment, currentFragment);
+            ft.replace(R.id.container_profile_management_fragment, currentFragment);
 
             final Button editProfile = (Button)findViewById(R.id.editProfileButton);
             editProfile.setOnClickListener(new View.OnClickListener(){
@@ -45,13 +58,13 @@ import android.widget.LinearLayout;
 
                     if(editable) editable = false;
                     else editable = true;
-                    currentFragment.setEnable(editable);
 
-                    if(editable){
-                        editProfile.setText("Save changes");
-                    }else {
-                        editProfile.setText("Edit Profile");
-                    }
+                    if(editable)
+                        for(OnActivityChangedListener l:listeners)
+                            l.onActivityStateChanged(OnActivityChangedListener.State.EDIT_MODE_STATE,OnActivityChangedListener.State.DISPLAY_MODE_STATE);
+                    else
+                        for(OnActivityChangedListener l:listeners)
+                            l.onActivityStateChanged(OnActivityChangedListener.State.DISPLAY_MODE_STATE,OnActivityChangedListener.State.EDIT_MODE_STATE);
                 }
             });
 
@@ -64,7 +77,7 @@ import android.widget.LinearLayout;
                 public void onClick(View v) {
                     FragmentTransaction ft = getFragmentManager().beginTransaction();
                     currentFragment = StudentProfileManagementBasicsFragment.newInstance();
-                 //   ft.replace(R.id.container_profile_management_fragment, currentFragment);
+                    ft.replace(R.id.container_profile_management_fragment, currentFragment);
                     ft.commit();
                 }
             });
@@ -74,7 +87,7 @@ import android.widget.LinearLayout;
                 public void onClick(View v) {
                     FragmentTransaction ft = getFragmentManager().beginTransaction();
                     currentFragment = StudentProfileManagementSkillsFragment.newInstance();
-                 //   ft.replace(R.id.container_profile_management_fragment, currentFragment);
+                    ft.replace(R.id.container_profile_management_fragment, currentFragment);
                     ft.commit();
                 }
             });
@@ -84,7 +97,7 @@ import android.widget.LinearLayout;
                 public void onClick(View v) {
                     FragmentTransaction ft = getFragmentManager().beginTransaction();
                     currentFragment = StudentProfileManagementRegistryFragment.newInstance();
-                //    ft.replace(R.id.container_profile_management_fragment, currentFragment);
+                    ft.replace(R.id.container_profile_management_fragment, currentFragment);
                     ft.commit();
                 }
             });
@@ -95,15 +108,8 @@ import android.widget.LinearLayout;
             //TODO
         }
 
-        // TODO: orientation change not working
-        if(getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE)
-            buttonsModule.setOrientation(LinearLayout.VERTICAL);
-        else
-            buttonsModule.setOrientation(LinearLayout.HORIZONTAL);
-
         ft.commit();
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -122,6 +128,27 @@ import android.widget.LinearLayout;
         return super.onOptionsItemSelected(item);
     }
 
+    /*------------- FRAGMENT INTERACTION INTERFACE -----------------------------------------------*/
 
+    @Override
+    public boolean isInEditMode() {
+
+        return editable;
+    }
+
+    @Override
+    public void addOnActivityChangedListener(OnActivityChangedListener listener) {
+
+        listeners.add(listener);
+    }
+
+    @Override
+    public void removeOnActivityChangedListener(OnActivityChangedListener listener) {
+
+        listeners.remove(listener);
+    }
+
+
+    /*--------------------------------------------------------------------------------------------*/
 
 }

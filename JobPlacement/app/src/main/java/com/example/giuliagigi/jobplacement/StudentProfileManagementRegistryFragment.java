@@ -2,8 +2,8 @@ package com.example.giuliagigi.jobplacement;
 
 import android.app.ActionBar;
 import android.app.Activity;
+import android.graphics.Color;
 import android.os.Bundle;
-import android.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,8 +18,10 @@ public class StudentProfileManagementRegistryFragment extends ProfileManagementF
 
     private Student currentUser;
     private EditText addressText,cityText,postalText,nationText;
-    private ArrayList<EditText> phones;
+    private ArrayList<EditText> phoneTexts;
+    private ArrayList<String> originalPhones;
     private Button phonePlus;
+    private LinearLayout phonesContainer;
 
     public StudentProfileManagementRegistryFragment() {super();}
     public static StudentProfileManagementRegistryFragment newInstance() {
@@ -35,7 +37,8 @@ public class StudentProfileManagementRegistryFragment extends ProfileManagementF
     public void onAttach(Activity activity) {
         super.onAttach(activity);
         currentUser = application.getStudentFromUser();
-        phones = new ArrayList<EditText>();
+        phoneTexts = new ArrayList<EditText>();
+        originalPhones = new ArrayList<String>();
     }
 
     @Override
@@ -78,6 +81,16 @@ public class StudentProfileManagementRegistryFragment extends ProfileManagementF
             nationText.setText(currentUser.getNation());
         }
 
+        phonesContainer = (LinearLayout)root.findViewById(R.id.student_phones_container);
+        ArrayList<String> userPhones = currentUser.getPhones();
+
+        for(String p: userPhones){
+
+            newPhoneText(p);
+            originalPhones.add(p);
+        }
+
+
         OnFieldChangedListener hasChangedListener = new OnFieldChangedListener();
         textFields.add(addressText);
         textFields.add(cityText);
@@ -87,41 +100,105 @@ public class StudentProfileManagementRegistryFragment extends ProfileManagementF
         for(EditText et: textFields)
             et.addTextChangedListener(hasChangedListener);
 
+
+
         phonePlus = (Button)root.findViewById(R.id.student_phones_plusButton);
         phonePlus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 Log.println(Log.ASSERT,"REGISTRYFRAG", "adding a new phone");
-                EditText newPhone = new EditText(getActivity().getApplicationContext());
-                newPhone.setLayoutParams(new ActionBar.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,LinearLayout.LayoutParams.WRAP_CONTENT));
-                newPhone.setHint("new number");
-                LinearLayout phonesContainer = (LinearLayout)root.findViewById(R.id.student_phones_container);
-                phonesContainer.addView(newPhone);
-                phones.add(newPhone);
+                newPhoneText(null);
             }
         });
 
-        setEnable(hostActivity.isInEditMode());
+        setEnable(host.isInEditMode());
         return root;
     }
 
 
 
     public void setEnable(boolean enable){
+        int visibility;
+
+        if(enable)
+            visibility = View.VISIBLE;
+        else
+            visibility = View.INVISIBLE;
 
         super.setEnable(enable);
+        Button phonePlus = (Button)root.findViewById(R.id.student_phones_plusButton);
+        phonePlus.setVisibility(visibility);
+
+        for(EditText et: phoneTexts){
+            et.setEnabled(enable);
+        }
 
         if(!enable && hasChanged){
 
             Log.println(Log.ASSERT,"REGISTRY FRAG", "update required");
-            currentUser.setAddress(addressText.getText().toString());
-            currentUser.setCity(cityText.getText().toString());
-            currentUser.setPostalCode(postalText.getText().toString());
-            currentUser.setNation(nationText.getText().toString());
+            if(!addressText.getText().toString().equals(INSERT_FIELD))  currentUser.setAddress(addressText.getText().toString());
+            if(!cityText.getText().toString().equals(INSERT_FIELD))     currentUser.setCity(cityText.getText().toString());
+            if(!postalText.getText().toString().equals(INSERT_FIELD))   currentUser.setPostalCode(postalText.getText().toString());
+            if(!nationText.getText().toString().equals(INSERT_FIELD))   currentUser.setNation(nationText.getText().toString());
+            updatePhones();
+
             currentUser.saveInBackground();
             hasChanged = false;
         }
+    }
+
+
+
+    private void newPhoneText(String phone){
+
+        EditText newPhone = new EditText(getActivity().getApplicationContext());
+        newPhone.setLayoutParams(new ActionBar.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,LinearLayout.LayoutParams.WRAP_CONTENT));
+
+        if(phone == null)
+            newPhone.setHint("new number");
+        else
+            newPhone.setText(phone);
+
+        newPhone.setTextColor(Color.parseColor("#000000"));
+        newPhone.addTextChangedListener(new OnFieldChangedListener());
+        phonesContainer.addView(newPhone);
+        phoneTexts.add(newPhone);
+    }
+
+    private void updatePhones(){
+
+
+        for(int i = 0;i<phoneTexts.size();i++){
+
+            String phone = phoneTexts.get(i).getText().toString();
+
+            Log.println(Log.ASSERT,"REG FRAG", "save: " + phoneTexts.get(i).getText().toString());
+            if(i<originalPhones.size() && !originalPhones.get(i).equals(phone)){
+
+                Log.println(Log.ASSERT,"REG FRAG", "older: " + originalPhones.get(i) + ", new: " + phone);
+                currentUser.removePhone(originalPhones.get(i));
+                currentUser.saveInBackground();
+            }
+            Log.println(Log.ASSERT,"REG FRAG", "ok");
+            if(!phone.equals("")){
+
+                Log.println(Log.ASSERT,"REG FRAG", "add/update the phone");
+                currentUser.addPhone(phone);
+                currentUser.saveInBackground();
+            }
+            else {
+
+                Log.println(Log.ASSERT,"REG FRAG", "the phone is going to be deleted");
+                phonesContainer.removeView(phoneTexts.get(i));
+                phoneTexts.remove(i);
+            }
+        }
+
+        originalPhones = new ArrayList<String>();
+
+        for(EditText et:phoneTexts)
+            originalPhones.add(et.getText().toString());
     }
 
 }

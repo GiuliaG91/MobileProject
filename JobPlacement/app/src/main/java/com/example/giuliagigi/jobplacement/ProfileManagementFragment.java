@@ -2,11 +2,10 @@ package com.example.giuliagigi.jobplacement;
 
 import android.app.Activity;
 import android.os.Bundle;
-
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
+import android.app.Fragment;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,17 +13,19 @@ import android.widget.EditText;
 
 import java.util.ArrayList;
 
-public class ProfileManagementFragment extends Fragment {
+public class ProfileManagementFragment extends Fragment implements OnActivityChangedListener{
 
     protected static final String INSERT_FIELD = "Insert";
-    protected static final String BUNDLE_KEY_CHANGED = "ProfileManagementFragment_hasChanged";
 
 
-    protected OnInteractionListener hostActivity;
-    protected ArrayList<EditText> textFields=new ArrayList<>();
+    protected OnInteractionListener host;
+    protected ArrayList<EditText> textFields;
     protected GlobalData application;
     protected boolean hasChanged = false;
     protected View root;
+
+
+    /* --------------------- CONSTRUCTORS -------------------------------------------------------- */
 
     public ProfileManagementFragment() {}
     public static ProfileManagementFragment newInstance() {
@@ -35,13 +36,32 @@ public class ProfileManagementFragment extends Fragment {
     }
 
 
+    /* --------------------- STANDARD CALLBACKS ------------------------------------------------- */
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+
+        Log.println(Log.ASSERT, "PM FRAG", "on attach start");
+
+        hasChanged = false;
+        textFields = new ArrayList<EditText>();
+        application = (GlobalData)activity.getApplicationContext();
+
+        try {
+            host = (OnInteractionListener)activity;
+        }
+        catch (ClassCastException e){
+            throw new ClassCastException(activity.toString()
+                    + " must implement OnInteractionListener");
+        }
+
+        host.addOnActivityChangedListener(this);
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        application=(GlobalData)getActivity().getApplication();
-
 
     }
 
@@ -52,24 +72,43 @@ public class ProfileManagementFragment extends Fragment {
         return inflater.inflate(R.layout.fragment_profile_management, container, false);
     }
 
-
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putBoolean(BUNDLE_KEY_CHANGED,hasChanged);
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        host.removeOnActivityChangedListener(this);
     }
 
 
+    protected interface OnInteractionListener{
 
-    public interface OnInteractionListener {
         public boolean isInEditMode();
+        public void addOnActivityChangedListener(OnActivityChangedListener listener);
+        public void removeOnActivityChangedListener(OnActivityChangedListener listener);
     }
+
+
+    /* --------------------- ACTIVITY LISTENER METHODS ------------------------------------------ */
+
+    @Override
+    public void onActivityStateChanged(State newState, State pastState) {
+
+        if(newState.equals(State.EDIT_MODE_STATE))
+            this.setEnable(true);
+        else if(newState.equals(State.DISPLAY_MODE_STATE))
+            this.setEnable(false);
+    }
+
+    /* --------------------- AUXILIARY METHODS ------------------------------------------------- */
 
     protected void setEnable(boolean enable){
 
         setTextFieldsEnable(enable);
     }
-    protected void restorePreaviousState() {}
 
     public void saveChanges(){}
 
@@ -88,6 +127,9 @@ public class ProfileManagementFragment extends Fragment {
             et.setEnabled(enable);
         }
     }
+
+
+    /* --------------------- AUXILIARY CLASSES -------------------------------------------------- */
 
     protected class OnFieldChangedListener implements TextWatcher{
 

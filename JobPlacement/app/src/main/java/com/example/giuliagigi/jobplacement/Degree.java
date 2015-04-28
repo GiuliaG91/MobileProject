@@ -51,11 +51,17 @@ public class Degree extends ParseObject{
         this.put(STUDIES_FIELD,studies);
     }
 
-    public int getMark(){
-        return (int) this.getNumber(MARK_FIELD);
+    public Integer getMark(){
+        return (Integer)this.getNumber(MARK_FIELD);
+
     }
-    public void setMark(int mark){
-        this.put(MARK_FIELD,mark);
+    public boolean setMark(int mark){
+
+        if(mark >=60 &&  mark<=110) {
+            this.put(MARK_FIELD,mark);
+            return true;
+        }
+        return false;
     }
 
 

@@ -3,10 +3,12 @@ package com.example.giuliagigi.jobplacement;
 import android.util.Log;
 
 import com.parse.ParseClassName;
+import com.parse.ParseException;
 import com.parse.ParseObject;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
@@ -28,7 +30,7 @@ public class Student extends User {
     protected static final String CITY_FIELD = "city";
     protected static final String POSTAL_CODE_FIELD = "postalCode";
     protected static final String NATION_FIELD = "nation";
-    protected static final String PHONE_FIELD = "phone";
+    protected static final String PHONE_FIELD = "phones";
     protected static final String FAVOURITES_FIELD = "favourites";
     public static final String SEX_MALE = "Male";
     public static final String SEX_FEMALE = "Female";
@@ -48,8 +50,28 @@ public class Student extends User {
     public String getSurname() {
         return this.getString(SURNAME_FIELD);
     }
-    public Degree getDegree() {
-        return (Degree)this.getParseObject(DEGREES_FIELD);
+    public ArrayList<Degree> getDegrees() {
+
+        ArrayList<Degree> degrees = new ArrayList<Degree>();
+        List<Object> list = this.getList(DEGREES_FIELD);
+
+        if(list!=null)
+            for (Object o : list) {
+
+                if(o instanceof Degree){
+                    Degree d =(Degree)o;
+
+                    try {
+                        d.fetchIfNeeded();
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+
+                    degrees.add(d);
+                }
+            }
+
+        return degrees;
     }
     public String getSex() {
         return getString(SEX_FIELD);
@@ -69,11 +91,39 @@ public class Student extends User {
     public String getNation(){
         return this.getString(NATION_FIELD);
     }
-    public String getPhone(){
-        return this.getString(  PHONE_FIELD);
-}
-    public Object getFavourites( ){  return this.getList(FAVOURITES_FIELD);}   //I need a cast
+    public ArrayList<String> getPhones(){
 
+        ArrayList<String> phones = new ArrayList<String>();
+        List<Object> list = this.getList(PHONE_FIELD);
+
+        if(list != null)
+            for (Object o : list)
+                if (o instanceof String)
+                    phones.add((String)o);
+
+        return phones;
+    }
+    public ArrayList<Company> getFavourites( ){
+
+        ArrayList<Company> favourites = new ArrayList<Company>();
+        List<Object> list = this.getList(FAVOURITES_FIELD);
+
+        if(list!= null)
+            for(Object o:list){
+                if(o instanceof Company){
+
+                    Company c = (Company)o;
+                    try {
+                        c.fetchIfNeeded();
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+                    favourites.add(c);
+                }
+            }
+
+        return favourites;
+    }
 
     /* END GETTER METHODS*/
 
@@ -87,7 +137,11 @@ public class Student extends User {
     }
     public void addDegree(Degree degree){
 
-        this.addUnique(DEGREES_FIELD, Arrays.asList(degree));
+        this.addUnique(DEGREES_FIELD, degree);
+    }
+    public void removeDegree(Degree degree){
+
+        this.removeAll(DEGREES_FIELD,Arrays.asList(degree));
     }
     public void setSex(String sex){
 
@@ -116,14 +170,18 @@ public class Student extends User {
     }
     public void addPhone(String phone){
 
-        this.addUnique(PHONE_FIELD, Arrays.asList(phone));
+        this.addUnique(PHONE_FIELD, phone);
     }
+    public void removePhone(String phone) {
 
+        this.removeAll(PHONE_FIELD,Arrays.asList(phone));
+    }
     public void addFavourites(Company company)
     {
-        this.addUnique(FAVOURITES_FIELD,Arrays.asList(company));
+        this.addUnique(FAVOURITES_FIELD,company);
 
     }
+
     /*END SETTER METHODS*/
 
 }
