@@ -34,26 +34,26 @@ public class ProfileManagementViewAdapter extends FragmentPagerAdapter
         @Override
         public Fragment getItem(int position) {
 
-//        if(position == 0) // if the position is 0 we are returning the First tab
-//        {
-//            //StudentProfileManagementBasicsFragment tab0 = StudentProfileManagementBasicsFragment.newInstance();
-//            return fragments[0];
-//        }
-//        else  if(position == 1)           // As we are having 2 tabs if the position is now 0 it must be 1 so we are returning second tab
-//        {
-//            StudentProfileManagementSkillsFragment tab1=StudentProfileManagementSkillsFragment.newInstance();
-//            return tab1;
-//        }
-//
-//
-//        else  if(position == 2)           // As we are having 2 tabs if the position is now 0 it must be 1 so we are returning second tab
-//        {
-//            StudentProfileManagementRegistryFragment tab2=StudentProfileManagementRegistryFragment.newInstance();
-//            return tab2;
-//        }
+        if(position == 0) // if the position is 0 we are returning the First tab
+        {
+            //StudentProfileManagementBasicsFragment tab0 = StudentProfileManagementBasicsFragment.newInstance();
+            return fragments[0];
+        }
+        else  if(position == 1)           // As we are having 2 tabs if the position is now 0 it must be 1 so we are returning second tab
+        {
+            StudentProfileManagementSkillsFragment tab1=StudentProfileManagementSkillsFragment.newInstance();
+            return tab1;
+        }
 
-        if(position<3)
-            return fragments[position];
+
+        else  if(position == 2)           // As we are having 2 tabs if the position is now 0 it must be 1 so we are returning second tab
+        {
+            StudentProfileManagementRegistryFragment tab2=StudentProfileManagementRegistryFragment.newInstance();
+            return tab2;
+        }
+
+//        if(position<3)
+//            return fragments[position];
 
         else  if(position == 3)           // As we are having 2 tabs if the position is now 0 it must be 1 so we are returning second tab
         {

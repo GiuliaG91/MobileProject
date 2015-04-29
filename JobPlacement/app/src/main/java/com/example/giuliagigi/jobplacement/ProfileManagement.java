@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,7 +30,6 @@ public class ProfileManagement extends Fragment{
     ProfileManagementViewAdapter adapter;
     SlidingTabLayout tabs;
     CharSequence Titles[] = {"Overview", "Skills","Registry","Account"};
-    int Numboftabs = 4;
 
     /***************************************************************/
 
@@ -48,6 +48,8 @@ public class ProfileManagement extends Fragment{
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
+
+        Log.println(Log.ASSERT,"PROFILE MANAG", "onAttach");
 
         editable = false;
         try {
@@ -78,7 +80,7 @@ public class ProfileManagement extends Fragment{
         /*************ViewPager***************************/
 
         // Creating The ViewPagerAdapter and Passing Fragment Manager, Titles fot the Tabs and Number Of Tabs.
-        adapter = new ProfileManagementViewAdapter(getFragmentManager(), Titles, Numboftabs);
+        adapter = new ProfileManagementViewAdapter(getFragmentManager(), Titles, Titles.length);
         // Assigning ViewPager View and setting the adapter
         pager = (ViewPager) view.findViewById(R.id.pager);
         pager.setAdapter(adapter);
@@ -101,6 +103,7 @@ public class ProfileManagement extends Fragment{
 
         final Button edit = new Button(getActivity().getApplicationContext());
         edit.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+        edit.setText("edit profile");
         edit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -114,6 +117,12 @@ public class ProfileManagement extends Fragment{
         /****************************************************/
 
 
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        Log.println(Log.ASSERT,"PROFILE MANAG", "onDetach");
     }
 
     public interface OnInteractionListener {

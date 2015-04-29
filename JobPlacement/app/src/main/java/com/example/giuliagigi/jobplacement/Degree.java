@@ -15,7 +15,9 @@ public class Degree extends ParseObject{
     public static final String TYPE_BACHELOR = "Bachelor";
     public static final String TYPE_MASTER = "Master";
     public static final String TYPE_DOCTORATE = "Doctorate";
-    public static final String[] TYPES = new String[]{TYPE_BACHELOR, TYPE_MASTER, TYPE_DOCTORATE};
+    public static final String TYPE_GRADUATING = "Graduating";
+    public static final String TYPE_NONE = "None";
+    public static final String[] TYPES = new String[]{TYPE_NONE , TYPE_GRADUATING, TYPE_BACHELOR, TYPE_MASTER, TYPE_DOCTORATE};
 
     public static final String STUDIES_MECHANICS    =   "Mechanics";
     public static final String STUDIES_INFORMATICS  =   "Informatics";

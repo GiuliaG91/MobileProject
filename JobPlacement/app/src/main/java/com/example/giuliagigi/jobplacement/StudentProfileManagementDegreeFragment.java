@@ -69,7 +69,8 @@ public class StudentProfileManagementDegreeFragment extends ProfileManagementFra
                              Bundle savedInstanceState) {
         Log.println(Log.ASSERT,"DEGREE FRAG", "OnCreateView");
 
-        int type,study,mark;
+        int type,study;
+        Integer mark = null;
         if(getArguments().getBoolean(BUNDLE_HASCHANGED)){
 
             Log.println(Log.ASSERT,"DEGREE FRAG", "changes not saved: restoring state");
@@ -79,9 +80,19 @@ public class StudentProfileManagementDegreeFragment extends ProfileManagementFra
         }
         else {
 
-            type = Degree.getTypeID(degree.getType());
-            study = Degree.getStudyID(degree.getStudies());
-            mark = degree.getMark();
+            if(degree.getType()!= null)
+                type = Degree.getTypeID(degree.getType());
+            else
+                type = 0;
+
+            if(degree.getStudies()!= null)
+                study = Degree.getStudyID(degree.getStudies());
+            else
+                study = 0;
+
+            if(degree.getMark()!= null)
+                mark = degree.getMark();
+
         }
 
         root = inflater.inflate(R.layout.fragment_degree_management, container, false);
@@ -91,10 +102,9 @@ public class StudentProfileManagementDegreeFragment extends ProfileManagementFra
         degreeType.setAdapter(new StringAdapter(Degree.TYPES));
         degreeStudies.setAdapter(new StringAdapter(Degree.STUDIES));
 
-        if(degree.getType()!= null)
-            degreeType.setSelection(type);
-        if(degree.getStudies()!= null)
-            degreeStudies.setSelection(study);
+
+        degreeType.setSelection(type);
+        degreeStudies.setSelection(study);
 
         confirm = (Button)root.findViewById(R.id.degree_management_confirm_button);
         confirm.setOnClickListener(new View.OnClickListener() {
@@ -123,12 +133,10 @@ public class StudentProfileManagementDegreeFragment extends ProfileManagementFra
         });
 
         degreeMark = (EditText)root.findViewById(R.id.degree_management_mark_area);
-        if(degreeMark!= null){
-            if(degree.getMark()!= null)
-                degreeMark.setText(String.valueOf(mark));
-            else
-                degreeMark.setText(INSERT_FIELD);
-        }
+        if(mark != null)
+            degreeMark.setText(String.valueOf(mark));
+        else
+            degreeMark.setText(INSERT_FIELD);
 
         textFields.add(degreeMark);
 
