@@ -2,6 +2,7 @@ package com.example.giuliagigi.jobplacement;
 
 
 
+import android.app.Activity;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
@@ -9,12 +10,14 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.LinearLayout;
 
 
 public class ProfileManagement extends Fragment{
 
     private GlobalData application;
-
+    private OnInteractionListener host;
     private boolean editable;
 
 
@@ -41,6 +44,21 @@ public class ProfileManagement extends Fragment{
     }
 
     /*------------- STANDARD CALLBACKS ------------------------------------------------------------*/
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+
+        editable = false;
+        try {
+            host = (OnInteractionListener)activity;
+        }
+        catch (ClassCastException e){
+            throw new ClassCastException(activity.toString()
+                    + " must implement OnInteractionListener");
+        }
+        host.setEditMode(editable);
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -81,13 +99,27 @@ public class ProfileManagement extends Fragment{
         // Setting the ViewPager For the SlidingTabsLayout
         tabs.setViewPager(pager);
 
+        final Button edit = new Button(getActivity().getApplicationContext());
+        edit.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+        edit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
+                editable = !editable;
+                host.setEditMode(editable);
+            }
+        });
+        ViewGroup root = (ViewGroup)view.findViewById(R.id.fragment_tab_home);
+        root.addView(edit);
         /****************************************************/
 
 
     }
 
+    public interface OnInteractionListener {
 
+        public void setEditMode(boolean editable);
+    }
 
 
     /*

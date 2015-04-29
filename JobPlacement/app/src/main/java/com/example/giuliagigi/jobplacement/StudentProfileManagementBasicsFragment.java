@@ -2,6 +2,7 @@ package com.example.giuliagigi.jobplacement;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,6 +35,7 @@ public class StudentProfileManagementBasicsFragment extends ProfileManagementFra
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
+        Log.println(Log.ASSERT,"BASICS FRAG", "OnAttach");
         currentUser = application.getStudentFromUser();
     }
 
@@ -47,6 +49,7 @@ public class StudentProfileManagementBasicsFragment extends ProfileManagementFra
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        Log.println(Log.ASSERT,"BASICS FRAG", "OnCreateView");
 
         root = inflater.inflate(R.layout.fragment_student_profile_management_basics, container, false);
 
@@ -96,7 +99,7 @@ public class StudentProfileManagementBasicsFragment extends ProfileManagementFra
 
         EditText emailText = (EditText)root.findViewById(R.id.student_email_area);
         emailText.setText(currentUser.getMail());
-        setEnable(host.isInEditMode());
+        setEnable(host.isEditMode());
         return root;
     }
 
@@ -109,6 +112,7 @@ public class StudentProfileManagementBasicsFragment extends ProfileManagementFra
     @Override
     public void onDetach() {
         super.onDetach();
+        Log.println(Log.ASSERT,"BASICS FRAG", "OnDetach");
         host = null;
     }
 

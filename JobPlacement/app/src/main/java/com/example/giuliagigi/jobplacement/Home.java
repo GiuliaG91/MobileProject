@@ -2,7 +2,6 @@ package com.example.giuliagigi.jobplacement;
 
 
 import android.net.Uri;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
@@ -12,15 +11,15 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.TextView;
 
 import java.util.ArrayList;
 
 
-public class Home extends ActionBarActivity  implements TabHomeFragment.OnFragmentInteractionListener , ProfileManagementFragment.OnInteractionListener
+public class Home extends ActionBarActivity  implements TabHomeFragment.OnFragmentInteractionListener , ProfileManagementFragment.OnInteractionListener, ProfileManagement.OnInteractionListener
 {
 
 
@@ -43,7 +42,7 @@ public class Home extends ActionBarActivity  implements TabHomeFragment.OnFragme
  * *************PROFILE MAGEMENT
  */
 
-
+    private boolean isEditMode;
     private GlobalData application;
     private ProfileManagementFragment currentFragment;
     private ArrayList<OnActivityChangedListener> listeners;
@@ -83,6 +82,13 @@ public class Home extends ActionBarActivity  implements TabHomeFragment.OnFragme
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
+        /* initialize the listeners list:
+                each listener is a fragment: when the activity
+                performs a significant change, listeners are informed via
+                the "onActivityStateChanged" method
+         */
+        listeners = new ArrayList<OnActivityChangedListener>();
+        isEditMode = false;
 
         toolbar = (Toolbar) findViewById(R.id.toolbar); // Attaching the layout to the toolbar object
         setSupportActionBar(toolbar);                   // Setting toolbar as the ActionBar with setSupportActionBar() call
@@ -167,24 +173,43 @@ public class Home extends ActionBarActivity  implements TabHomeFragment.OnFragme
         return super.onOptionsItemSelected(item);
     }
 
+
+
+
     @Override
     public void onFragmentInteraction(Uri uri) {
 
     }
 
-
     @Override
-    public boolean isInEditMode() {
-        return false;
+    public boolean isEditMode() {
+        return isEditMode;
     }
 
     @Override
     public void addOnActivityChangedListener(OnActivityChangedListener listener) {
 
+        listeners.add(listener);
+        Log.println(Log.ASSERT, "HOME ACTIVITY", "number of listeners: " + listeners.size());
     }
 
     @Override
     public void removeOnActivityChangedListener(OnActivityChangedListener listener) {
 
+        listeners.remove(listener);
+        Log.println(Log.ASSERT,"HOME ACTIVITY", "number of listeners: " + listeners.size());
+    }
+
+    @Override
+    public void setEditMode(boolean editable) {
+
+        isEditMode = editable;
+
+        if(editable)
+            for (OnActivityChangedListener l:listeners)
+                l.onActivityStateChanged(OnActivityChangedListener.State.EDIT_MODE_STATE, OnActivityChangedListener.State.DISPLAY_MODE_STATE);
+        else
+            for (OnActivityChangedListener l:listeners)
+                l.onActivityStateChanged(OnActivityChangedListener.State.DISPLAY_MODE_STATE, OnActivityChangedListener.State.EDIT_MODE_STATE);
     }
 }

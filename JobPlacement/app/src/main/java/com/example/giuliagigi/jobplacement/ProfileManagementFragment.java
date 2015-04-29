@@ -42,9 +42,6 @@ public class ProfileManagementFragment extends Fragment implements OnActivityCha
     public void onAttach(Activity activity) {
         super.onAttach(activity);
 
-        Log.println(Log.ASSERT, "PM FRAG", "on attach start");
-
-        hasChanged = false;
         textFields = new ArrayList<EditText>();
         application = (GlobalData)activity.getApplicationContext();
 
@@ -57,6 +54,7 @@ public class ProfileManagementFragment extends Fragment implements OnActivityCha
         }
 
         host.addOnActivityChangedListener(this);
+        hasChanged = false;
     }
 
     @Override
@@ -86,7 +84,7 @@ public class ProfileManagementFragment extends Fragment implements OnActivityCha
 
     protected interface OnInteractionListener{
 
-        public boolean isInEditMode();
+        public boolean isEditMode();
         public void addOnActivityChangedListener(OnActivityChangedListener listener);
         public void removeOnActivityChangedListener(OnActivityChangedListener listener);
     }
@@ -107,6 +105,7 @@ public class ProfileManagementFragment extends Fragment implements OnActivityCha
 
     protected void setEnable(boolean enable){
 
+        Log.println(Log.ASSERT,"PM FRAG", "enabling: " + enable);
         setTextFieldsEnable(enable);
     }
 
@@ -152,6 +151,9 @@ public class ProfileManagementFragment extends Fragment implements OnActivityCha
 
         @Override
         public void onClick(View v) {
+
+            Log.println(Log.ASSERT,"ONCLICKLIST", "click!");
+
             if(!hasChanged)
                 hasChanged = true;
         }

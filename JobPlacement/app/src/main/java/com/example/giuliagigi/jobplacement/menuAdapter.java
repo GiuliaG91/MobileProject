@@ -72,7 +72,7 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.ViewHolder> {
     }
 
 
-    public MenuAdapter(String Titles[], int Icons[], String Name, String Email, int Profile,FragmentActivity act,DrawerLayout d,RecyclerView l,Toolbar t)
+    public MenuAdapter(String Titles[], int Icons[], String Name, String Email, int Profile, FragmentActivity act, DrawerLayout d, RecyclerView l, Toolbar t)
     {
         // titles, icons, name, email, profile pic are passed from the main activity as we
         mNavTitles = Titles;                //have seen earlier

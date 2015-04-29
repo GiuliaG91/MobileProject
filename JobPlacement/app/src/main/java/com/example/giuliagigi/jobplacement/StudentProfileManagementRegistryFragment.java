@@ -36,6 +36,8 @@ public class StudentProfileManagementRegistryFragment extends ProfileManagementF
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
+        Log.println(Log.ASSERT, "REGISTRY FRAG", "OnAttach");
+
         currentUser = application.getStudentFromUser();
         phoneTexts = new ArrayList<EditText>();
         originalPhones = new ArrayList<String>();
@@ -51,6 +53,8 @@ public class StudentProfileManagementRegistryFragment extends ProfileManagementF
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        Log.println(Log.ASSERT,"REGISTRY FRAG", "OnCreateView");
+
         root = inflater.inflate(R.layout.fragment_student_profile_management_registry, container, false);
 
         addressText = (EditText)root.findViewById(R.id.student_address_area);
@@ -112,11 +116,16 @@ public class StudentProfileManagementRegistryFragment extends ProfileManagementF
             }
         });
 
-        setEnable(host.isInEditMode());
+        setEnable(host.isEditMode());
         return root;
     }
 
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        Log.println(Log.ASSERT, "REGISTRY FRAG", "OnDetach");
 
+    }
 
     public void setEnable(boolean enable){
         int visibility;

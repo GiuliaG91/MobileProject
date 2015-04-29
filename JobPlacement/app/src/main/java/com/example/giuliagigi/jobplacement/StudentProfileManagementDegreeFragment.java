@@ -18,6 +18,11 @@ import com.parse.ParseException;
 
 public class StudentProfileManagementDegreeFragment extends ProfileManagementFragment {
 
+    private static String BUNDLE_TYPE = "bundle_type";
+    private static String BUNDLE_STUDY = "bundle_study";
+    private static String BUNDLE_MARK = "bundle_mark";
+    private static String BUNDLE_HASCHANGED = "bundle_recycled";
+
     private Student currentUser;
     private Spinner degreeType, degreeStudies;
     private EditText degreeMark;
@@ -34,6 +39,7 @@ public class StudentProfileManagementDegreeFragment extends ProfileManagementFra
         Bundle args = new Bundle();
         fragment.setArguments(args);
         fragment.setDegree(degree);
+        Log.println(Log.ASSERT,"DEGREE FRAG", "creating new degree fragment");
         return fragment;
 
     }
@@ -47,7 +53,7 @@ public class StudentProfileManagementDegreeFragment extends ProfileManagementFra
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-        Log.println(Log.ASSERT,"DEGREE FRAG", "on attach started");
+        Log.println(Log.ASSERT, "DEGREE FRAG", "OnAttach");
         currentUser = application.getStudentFromUser();
     }
 
@@ -61,8 +67,22 @@ public class StudentProfileManagementDegreeFragment extends ProfileManagementFra
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        Log.println(Log.ASSERT,"DEGREE FRAG", "OnCreateView");
 
-        Log.println(Log.ASSERT,"DEGREE FRAG", "onCreateView start");
+        int type,study,mark;
+        if(getArguments().getBoolean(BUNDLE_HASCHANGED)){
+
+            Log.println(Log.ASSERT,"DEGREE FRAG", "changes not saved: restoring state");
+            type = getArguments().getInt(BUNDLE_TYPE);
+            study = getArguments().getInt(BUNDLE_STUDY);
+            mark = getArguments().getInt(BUNDLE_MARK);
+        }
+        else {
+
+            type = Degree.getTypeID(degree.getType());
+            study = Degree.getStudyID(degree.getStudies());
+            mark = degree.getMark();
+        }
 
         root = inflater.inflate(R.layout.fragment_degree_management, container, false);
         degreeType = (Spinner)root.findViewById(R.id.degree_management_spinnerType);
@@ -72,9 +92,9 @@ public class StudentProfileManagementDegreeFragment extends ProfileManagementFra
         degreeStudies.setAdapter(new StringAdapter(Degree.STUDIES));
 
         if(degree.getType()!= null)
-            degreeType.setSelection(Degree.getTypeID(degree.getType()));
+            degreeType.setSelection(type);
         if(degree.getStudies()!= null)
-            degreeStudies.setSelection(Degree.getStudyID(degree.getStudies()));
+            degreeStudies.setSelection(study);
 
         confirm = (Button)root.findViewById(R.id.degree_management_confirm_button);
         confirm.setOnClickListener(new View.OnClickListener() {
@@ -105,7 +125,7 @@ public class StudentProfileManagementDegreeFragment extends ProfileManagementFra
         degreeMark = (EditText)root.findViewById(R.id.degree_management_mark_area);
         if(degreeMark!= null){
             if(degree.getMark()!= null)
-                degreeMark.setText(String.valueOf(degree.getMark()));
+                degreeMark.setText(String.valueOf(mark));
             else
                 degreeMark.setText(INSERT_FIELD);
         }
@@ -116,13 +136,27 @@ public class StudentProfileManagementDegreeFragment extends ProfileManagementFra
         for(EditText et:textFields)
             et.addTextChangedListener(hasChangedListener);
 
-        setEnable(host.isInEditMode());
+        setEnable(host.isEditMode());
         return root;
     }
 
+
     @Override
     public void onDetach() {
+
         super.onDetach();
+        Log.println(Log.ASSERT,"DEGREE FRAG", "OnDetach. saving state");
+
+        getArguments().putBoolean(BUNDLE_HASCHANGED,hasChanged);
+
+        if(hasChanged){
+
+            Log.println(Log.ASSERT,"DEGREE FRAG", "values changed. saving in bundle");
+            getArguments().putInt(BUNDLE_TYPE,degreeType.getSelectedItemPosition());
+            getArguments().putInt(BUNDLE_STUDY,degreeStudies.getSelectedItemPosition());
+            getArguments().putInt(BUNDLE_MARK, Integer.parseInt(degreeMark.getText().toString()));
+        }
+
     }
 
 
@@ -140,6 +174,8 @@ public class StudentProfileManagementDegreeFragment extends ProfileManagementFra
         degree.setStudies((String) degreeStudies.getSelectedItem());
         if(!degreeMark.getText().toString().equals(INSERT_FIELD)) degree.setMark(Integer.parseInt(degreeMark.getText().toString()));
         degree.saveInBackground();
+
+        hasChanged = false;
     }
 
     @Override
