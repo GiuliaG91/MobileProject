@@ -21,10 +21,8 @@ public class StudentProfileManagementSkillsFragment extends ProfileManagementFra
     private Student currentUser;
     Button addDegree;
     ArrayList<StudentProfileManagementDegreeFragment> degreeFragments;
-    private ArrayList<EditText> languagesTexts;
-    private ArrayList<String> originalLanguages;
-    private Button languagePlus;
-    private LinearLayout languagesContainer;
+    Button addLanguage;
+    ArrayList<StudentProfileManagementLanguageFragment> languageFragments;
 
     /*----------------------- CONSTRUCTORS ------------------------------------------------------*/
 
@@ -45,8 +43,7 @@ public class StudentProfileManagementSkillsFragment extends ProfileManagementFra
         Log.println(Log.ASSERT, "REGISTRY FRAG", "OnAttach");
         currentUser = application.getStudentFromUser();
         degreeFragments = new ArrayList<StudentProfileManagementDegreeFragment>();
-        languagesTexts = new ArrayList<EditText>();
-        originalLanguages = new ArrayList<String>();
+        languageFragments = new ArrayList<StudentProfileManagementLanguageFragment>();
     }
 
     @Override
@@ -92,23 +89,35 @@ public class StudentProfileManagementSkillsFragment extends ProfileManagementFra
 
         }
 
-        languagesContainer = (LinearLayout)root.findViewById(R.id.student_languages_container);
-        ArrayList<String> userLanguages = currentUser.getLanguages();
-
-        for(String l: userLanguages){
-
-            newLanguageText(l);
-            originalLanguages.add(l);
-        }
-
-        languagePlus = (Button)root.findViewById(R.id.student_languages_plusButton);
-        languagePlus.setOnClickListener(new View.OnClickListener() {
+        addLanguage = (Button)root.findViewById(R.id.skills_add_language);
+        addLanguage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                newLanguageText(null);
+                StudentProfileManagementLanguageFragment lmf = StudentProfileManagementLanguageFragment.newInstance(new Language());
+                FragmentTransaction ft = getFragmentManager().beginTransaction();
+                ft.add(R.id.student_languageList_container,lmf);
+                ft.commit();
+                languageFragments.add(lmf);
             }
         });
+
+        int max2 = Math.max(languageFragments.size(),currentUser.getLanguages().size());
+        for(int j=0;j<max2;j++){
+
+            if(j>=languageFragments.size()){
+
+                StudentProfileManagementLanguageFragment lmf = StudentProfileManagementLanguageFragment.newInstance(currentUser.getLanguages().get(j));
+                languageFragments.add(lmf);
+            }
+
+            FragmentTransaction ft = getFragmentManager().beginTransaction();
+            ft.add(R.id.student_languageList_container, languageFragments.get(j));
+            ft.commit();
+
+        }
+
+
 
         setEnable(host.isEditMode());
         return root;
@@ -119,6 +128,13 @@ public class StudentProfileManagementSkillsFragment extends ProfileManagementFra
         super.onDestroyView();
 
         for(Fragment f: degreeFragments){
+
+            FragmentTransaction ft = getFragmentManager().beginTransaction();
+            ft.remove(f);
+            ft.commit();
+        }
+
+        for(Fragment f: languageFragments){
 
             FragmentTransaction ft = getFragmentManager().beginTransaction();
             ft.remove(f);
@@ -138,72 +154,12 @@ public class StudentProfileManagementSkillsFragment extends ProfileManagementFra
     @Override
     protected void setEnable(boolean enable) {
 
-        int visibility;
 
-        if(enable)
-            visibility = View.VISIBLE;
-        else
-            visibility = View.INVISIBLE;
         super.setEnable(enable);
 
-        Button languagePlus = (Button)root.findViewById(R.id.student_languages_plusButton);
-        languagePlus.setVisibility(visibility);
 
-        for(EditText et: languagesTexts){
-            et.setEnabled(enable);
-        }
-        updateLanguages();
-        currentUser.saveInBackground();
     }
 
 
-    private void newLanguageText(String language){
-
-        EditText newLanguage = new EditText(getActivity().getApplicationContext());
-        newLanguage.setLayoutParams(new ActionBar.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,LinearLayout.LayoutParams.WRAP_CONTENT));
-
-        if(language == null)
-            newLanguage.setHint("new language");
-        else
-            newLanguage.setText(language);
-
-        newLanguage.setTextColor(Color.parseColor("#000000"));
-        newLanguage.addTextChangedListener(new OnFieldChangedListener());
-        languagesContainer.addView(newLanguage);
-        languagesTexts.add(newLanguage);
-    }
-
-    private void updateLanguages(){
-
-
-        for(int i = 0;i<languagesTexts.size();i++){
-
-            String language = languagesTexts.get(i).getText().toString();
-
-            if(i<originalLanguages.size() && !originalLanguages.get(i).equals(language)){
-
-                Log.println(Log.ASSERT,"REG FRAG", "older: " + originalLanguages.get(i) + ", new: " + language);
-                currentUser.removeLanguage(originalLanguages.get(i));
-                currentUser.saveInBackground();
-            }
-
-            if(!language.equals("")){
-
-
-                currentUser.addLanguage(language);
-                currentUser.saveInBackground();
-            }
-            else {
-
-                languagesContainer.removeView(languagesTexts.get(i));
-                languagesTexts.remove(i);
-            }
-        }
-
-        originalLanguages = new ArrayList<String>();
-
-        for(EditText et:languagesTexts)
-            originalLanguages.add(et.getText().toString());
-    }
 
 }

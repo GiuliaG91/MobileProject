@@ -108,15 +108,26 @@ public class Student extends User {
 
         return phones;
     }
-    public ArrayList<String> getLanguages(){
+    public ArrayList<Language> getLanguages(){
 
-        ArrayList<String> languages = new ArrayList<String>();
+        ArrayList<Language> languages = new ArrayList<Language>();
         List<Object> list = this.getList(LANGUAGE_FIELD);
 
-        if(list != null)
-            for (Object o : list)
-                if (o instanceof String)
-                    languages.add((String)o);
+        if(list!=null)
+            for (Object o : list) {
+
+                if(o instanceof Language){
+                    Language l =(Language)o;
+
+                    try {
+                        l.fetchIfNeeded();
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+
+                    languages.add(l);
+                }
+            }
 
         return languages;
     }
@@ -197,11 +208,11 @@ public class Student extends User {
 
         this.removeAll(PHONE_FIELD,Arrays.asList(phone));
     }
-    public void addLanguage(String language){
+    public void addLanguage(Language language){
 
         this.addUnique(LANGUAGE_FIELD, language);
     }
-    public void removeLanguage(String language) {
+    public void removeLanguage(Language language) {
 
         this.removeAll(LANGUAGE_FIELD,Arrays.asList(language));
     }

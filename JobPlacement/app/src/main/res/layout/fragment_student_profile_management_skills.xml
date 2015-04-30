@@ -11,6 +11,31 @@
         android:layout_height="match_parent">
 
         <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+        <LinearLayout
+            android:id="@+id/student_languageList_container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <ListView
+                android:id="@+id/skills_language_listview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+            </ListView>
+            <Button
+                android:id="@+id/skills_add_language"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Add Degree"/>
+
+
+        </LinearLayout>
+
+
+        <LinearLayout
             android:id="@+id/student_degreeList_container"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -28,30 +53,8 @@
                 android:layout_height="wrap_content"
                 android:text="Add Degree"/>
 
-            <TextView
-                android:id="@+id/student_languages_title"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="10dp"
-                android:text="Languages:"
-                android:textSize="20dp"
-                />
 
-            <LinearLayout
-                android:orientation="vertical"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/student_languages_container">
-
-                <Button
-                    android:id="@+id/student_languages_plusButton"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:text="+"/>
-
-            </LinearLayout>
-
-
+        </LinearLayout>
         </LinearLayout>
     </ScrollView>
 
