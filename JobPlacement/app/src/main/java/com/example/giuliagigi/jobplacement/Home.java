@@ -1,9 +1,9 @@
 package com.example.giuliagigi.jobplacement;
 
 
+import android.content.res.TypedArray;
 import android.net.Uri;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -16,10 +16,12 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 
 
-public class Home extends ActionBarActivity  implements TabHomeFragment.OnFragmentInteractionListener , ProfileManagementFragment.OnInteractionListener, ProfileManagement.OnInteractionListener
+public class Home extends ActionBarActivity  implements TabHomeStudentFragment.OnFragmentInteractionListener ,TabHomeCompanyFragment.OnFragmentInteractionListener, NewOffer.OnFragmentInteractionListener,
+        ProfileManagementFragment.OnInteractionListener, ProfileManagement.OnInteractionListener
 {
 
 
@@ -30,49 +32,24 @@ public class Home extends ActionBarActivity  implements TabHomeFragment.OnFragme
      */
     private DrawerLayout mDrawerLayout;
     private RecyclerView mDrawerList;
-    private String[] mListTitles;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
     private ActionBarDrawerToggle mDrawerToggle;
-    private CharSequence mDrawerTitle;
-    private CharSequence mTitle;
+    private TypedArray ICONS;
+    private String[] TITLES;
+
 /********************************************************/
-/**
- *
- * *************PROFILE MAGEMENT
- */
+    /**
+     *
+     * *************PROFILE MAGEMENT
+     */
 
     private boolean isEditMode;
     private GlobalData application;
     private ProfileManagementFragment currentFragment;
     private ArrayList<OnActivityChangedListener> listeners;
 
-/****************************************************************/
-    /**
-     * *************For page viewer***************************
-     */
-    ViewPager pager;
-    ViewPagerAdapter adapter;
-    SlidingTabLayout tabs;
-    CharSequence Titles[] = {"Home", "Favourites"};
-    int Numboftabs = 2;
 
-    /***************************************************************/
-
-    /**
-     * **********************FOR EXAMPLE**********************
-     */
-    String TITLES[] = {"Home", "Profile", "Search", "Companies", "MailBox"};
-    int ICONS[] = {R.drawable.ic_home,
-            R.drawable.ic_profile,
-            R.drawable.ic_search,
-            R.drawable.ic_search,
-            R.drawable.ic_action};
-
-
-    String NAME = "Akash Bangad";
-    String EMAIL = "akash.bangad@android4devs.com";
-    int PROFILE = R.drawable.ic_profile;
 
     /**
      * ***********************************************************
@@ -81,6 +58,10 @@ public class Home extends ActionBarActivity  implements TabHomeFragment.OnFragme
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+
+        application = (GlobalData)getApplication();
+
+
 
         /* initialize the listeners list:
                 each listener is a fragment: when the activity
@@ -95,12 +76,11 @@ public class Home extends ActionBarActivity  implements TabHomeFragment.OnFragme
         toolbar.setNavigationIcon(R.drawable.ic_menu_white);
 
         //Setup Drawer
-        mListTitles = getResources().getStringArray(R.array.Menu_items_student);
-
-        mTitle = mDrawerTitle = getTitle();
 
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mDrawerList = (RecyclerView) findViewById(R.id.left_drawer);
+        mDrawerList.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL_LIST));
+
 
         //create adapter
         // use this setting to improve performance if you know that changes
@@ -112,8 +92,21 @@ public class Home extends ActionBarActivity  implements TabHomeFragment.OnFragme
         // use a linear layout manager
         mDrawerList.setLayoutManager(mLayoutManager);
 
+        /*********************Different menu for Student and companies******/
+        User user=application.getCurrentUser();
+        if(user.getType().toLowerCase().equals("student"))
+        {
+            TITLES=getResources().getStringArray(R.array.Menu_items_student);
+            ICONS=getResources().obtainTypedArray(R.array.StudentMenuicons);
+        }
+        else
+        {
+            TITLES=getResources().getStringArray(R.array.Menu_items_Company);
+            ICONS=getResources().obtainTypedArray(R.array.CompanytMenuicons);
+        }
+
         // specify an adapter (see also next example)
-        mAdapter = new menuAdapter(TITLES, ICONS, NAME, EMAIL, PROFILE,this,mDrawerLayout,mDrawerList,toolbar);
+        mAdapter = new MenuAdapter(TITLES, ICONS,user,this,mDrawerLayout,mDrawerList,toolbar,application);
         mDrawerList.setAdapter(mAdapter);
 
 
@@ -137,16 +130,16 @@ public class Home extends ActionBarActivity  implements TabHomeFragment.OnFragme
         mDrawerLayout.setDrawerListener(mDrawerToggle); // Drawer Listener set to the Drawer toggle
         mDrawerToggle.syncState();               // Finally we set the drawer toggle sync State
 
-           FragmentManager fragmentManager =getSupportFragmentManager();
+        FragmentManager fragmentManager =getSupportFragmentManager();
 
-            //New Fragment
-            TabHomeFragment homeFragment = TabHomeFragment.newInstance();
-            // Insert the fragment by replacing any existing fragment
-            // Insert the fragment by replacing any existing fragment
+        //New Fragment
+        TabHomeStudentFragment homeFragment = TabHomeStudentFragment.newInstance();
+        // Insert the fragment by replacing any existing fragment
+        // Insert the fragment by replacing any existing fragment
 
-            fragmentManager.beginTransaction()
-                    .replace(R.id.tab_Home_container, homeFragment)
-                    .commit();
+        fragmentManager.beginTransaction()
+                .replace(R.id.tab_Home_container, homeFragment)
+                .commit();
 
 
     }
