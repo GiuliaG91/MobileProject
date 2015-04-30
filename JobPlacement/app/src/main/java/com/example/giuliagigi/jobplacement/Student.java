@@ -32,6 +32,7 @@ public class Student extends User {
     protected static final String POSTAL_CODE_FIELD = "postalCode";
     protected static final String NATION_FIELD = "nation";
     protected static final String PHONE_FIELD = "phones";
+    protected static final String LANGUAGE_FIELD = "languages";
     protected static final String FAVOURITES_FIELD = "favourites";
     public static final String SEX_MALE = "Male";
     public static final String SEX_FEMALE = "Female";
@@ -106,6 +107,18 @@ public class Student extends User {
                     phones.add((String)o);
 
         return phones;
+    }
+    public ArrayList<String> getLanguages(){
+
+        ArrayList<String> languages = new ArrayList<String>();
+        List<Object> list = this.getList(LANGUAGE_FIELD);
+
+        if(list != null)
+            for (Object o : list)
+                if (o instanceof String)
+                    languages.add((String)o);
+
+        return languages;
     }
     public ArrayList<Company> getFavourites( ){
 
@@ -184,6 +197,15 @@ public class Student extends User {
 
         this.removeAll(PHONE_FIELD,Arrays.asList(phone));
     }
+    public void addLanguage(String language){
+
+        this.addUnique(LANGUAGE_FIELD, language);
+    }
+    public void removeLanguage(String language) {
+
+        this.removeAll(LANGUAGE_FIELD,Arrays.asList(language));
+    }
+
     public void addFavourites(Company company)
     {
         this.addUnique(FAVOURITES_FIELD,company);
