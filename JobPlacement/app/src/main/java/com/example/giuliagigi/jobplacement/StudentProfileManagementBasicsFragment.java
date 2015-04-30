@@ -19,7 +19,7 @@ public class StudentProfileManagementBasicsFragment extends ProfileManagementFra
 
 
     private Student currentUser;
-    EditText nameText,surnameText;
+    EditText nameText,surnameText, birthCityText;
     CheckBox male,female;
     DatePicker birthPicker;
 
@@ -66,8 +66,15 @@ public class StudentProfileManagementBasicsFragment extends ProfileManagementFra
         else
             surnameText.setText(currentUser.getSurname());
 
+        birthCityText = (EditText)root.findViewById(R.id.student_birth_city_area);
+        if(currentUser.getBirthCity() == null)
+            birthCityText.setText(INSERT_FIELD);
+        else
+            birthCityText.setText(currentUser.getBirthCity());
+
         textFields.add(nameText);
         textFields.add(surnameText);
+        textFields.add(birthCityText);
 
         OnFieldChangedListener hasChangedListener = new OnFieldChangedListener();
         for(EditText et:textFields)
@@ -104,6 +111,7 @@ public class StudentProfileManagementBasicsFragment extends ProfileManagementFra
             birthPicker.updateDate(today.monthDay,today.month,today.year);
         }
         birthPicker.setOnClickListener(new OnFieldClickedListener());
+
 
         EditText emailText = (EditText)root.findViewById(R.id.student_email_area);
         emailText.setText(currentUser.getMail());
@@ -161,6 +169,7 @@ public class StudentProfileManagementBasicsFragment extends ProfileManagementFra
 
         currentUser.setName(nameText.getText().toString());
         currentUser.setSurname(surnameText.getText().toString());
+        currentUser.setBirthCity(birthCityText.getText().toString());
         currentUser.setSex(sex);
         currentUser.setBirth(birth);
         currentUser.saveInBackground();
