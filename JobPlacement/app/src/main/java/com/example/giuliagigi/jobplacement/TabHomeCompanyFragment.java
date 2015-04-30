@@ -3,11 +3,9 @@ package com.example.giuliagigi.jobplacement;
 import android.app.Activity;
 import android.net.Uri;
 import android.os.Bundle;
-
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,21 +14,20 @@ import android.view.ViewGroup;
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link TabHomeFragment.OnFragmentInteractionListener} interface
+ * {@link TabHomeCompanyFragment.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link TabHomeFragment#newInstance} factory method to
+ * Use the {@link TabHomeCompanyFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class TabHomeFragment extends Fragment {
-
+public class TabHomeCompanyFragment extends Fragment {
     /**
      * *************For page viewer***************************
      */
     ViewPager pager;
     ViewPagerAdapter adapter;
     SlidingTabLayout tabs;
-    CharSequence Titles[] = {"Home", "Preferred","Applies"};
-    int Numboftabs = 3;
+    CharSequence Titles[] = {"Home","Offers"};
+    int Numboftabs = 2;
 
     /***************************************************************/
 
@@ -45,13 +42,12 @@ public class TabHomeFragment extends Fragment {
      * @return A new instance of fragment TabHomeFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static TabHomeFragment newInstance() {
-        TabHomeFragment fragment = new TabHomeFragment();
-
+    public static TabHomeCompanyFragment newInstance() {
+        TabHomeCompanyFragment fragment = new TabHomeCompanyFragment();
         return fragment;
     }
 
-    public TabHomeFragment() {
+    public TabHomeCompanyFragment() {
         // Required empty public constructor
     }
 

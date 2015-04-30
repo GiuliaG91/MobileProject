@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:id="@+id/fragment_tab_home"
-    tools:context="com.example.giuliagigi.jobplacement.TabHomeFragment">
+    tools:context="com.example.giuliagigi.jobplacement.TabHomeStudentFragment">
 
     <com.example.giuliagigi.jobplacement.SlidingTabLayout
         android:id="@+id/tabs"
