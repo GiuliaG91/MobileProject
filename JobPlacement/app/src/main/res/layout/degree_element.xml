@@ -40,4 +40,32 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Degree date:"
+        android:id="@+id/degree_date_area" />
+
+    <DatePicker
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:calendarViewShown="false"
+        android:id="@+id/degree_datePicker" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Loud:"
+        android:id="@+id/degree_loud_area" />
+
+    <Switch
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/degree_loud_switch"
+        android:showText="true"
+        android:textOn="Yes"
+        android:textOff="No"
+        />
+
+
 </LinearLayout>

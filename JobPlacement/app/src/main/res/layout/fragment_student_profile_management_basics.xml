@@ -90,6 +90,23 @@
                 android:id="@+id/student_birth_datePicker" />
 
             <TextView
+                android:id="@+id/student_birth_city_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:text="Birth city:"
+                android:textSize="20dp"
+                />
+
+            <EditText
+                android:id="@+id/student_birth_city_area"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:editable="false"
+                android:padding="20dp"
+                />
+
+            <TextView
                 android:id="@+id/student_email_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

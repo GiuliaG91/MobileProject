@@ -9,11 +9,18 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Switch;
 import android.widget.TextView;
 
 import com.parse.ParseException;
+
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
+
 
 
 public class StudentProfileManagementDegreeFragment extends ProfileManagementFragment {
@@ -26,6 +33,8 @@ public class StudentProfileManagementDegreeFragment extends ProfileManagementFra
     private Student currentUser;
     private Spinner degreeType, degreeStudies;
     private EditText degreeMark;
+    private DatePicker degreeDate;
+    private Switch hasLoud;
     Button confirm, delete;
     private Degree degree;
 
@@ -140,6 +149,15 @@ public class StudentProfileManagementDegreeFragment extends ProfileManagementFra
 
         textFields.add(degreeMark);
 
+        degreeDate = (DatePicker)root.findViewById(R.id.degree_management_datePicker);
+        degreeDate.setOnClickListener(new OnFieldClickedListener());
+
+        hasLoud = (Switch)root.findViewById(R.id.degree_management_loud_switch);
+        if (degree.getMark()!= null)
+            hasLoud.setChecked(degree.getLoud());
+        else hasLoud.setChecked(false);
+
+
         OnFieldChangedListener hasChangedListener = new OnFieldChangedListener();
         for(EditText et:textFields)
             et.addTextChangedListener(hasChangedListener);
@@ -178,6 +196,12 @@ public class StudentProfileManagementDegreeFragment extends ProfileManagementFra
         currentUser.addDegree(degree);
         currentUser.saveInBackground();
 
+        Date date = null;
+        Calendar c = GregorianCalendar.getInstance();
+        c.set(degreeDate.getYear(),degreeDate.getMonth(),degreeDate.getDayOfMonth());
+        date = c.getTime();
+
+
         degree.setType((String) degreeType.getSelectedItem());
         degree.setStudies((String) degreeStudies.getSelectedItem());
         if(!degreeMark.getText().toString().equals(INSERT_FIELD)) degree.setMark(Integer.parseInt(degreeMark.getText().toString()));
@@ -192,6 +216,12 @@ public class StudentProfileManagementDegreeFragment extends ProfileManagementFra
 
         degreeType.setEnabled(enable);
         degreeStudies.setEnabled(enable);
+
+        degreeDate.setEnabled(enable);
+        if(degree.getMark()==110){
+            hasLoud.setEnabled(enable);
+        }else hasLoud.setEnabled(false);
+
 
         int visibility;
         if(enable)
