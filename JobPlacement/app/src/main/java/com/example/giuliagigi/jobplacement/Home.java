@@ -113,7 +113,7 @@ public class Home extends ActionBarActivity  implements TabHomeFragment.OnFragme
         mDrawerList.setLayoutManager(mLayoutManager);
 
         // specify an adapter (see also next example)
-        mAdapter = new menuAdapter(TITLES, ICONS, NAME, EMAIL, PROFILE,this,mDrawerLayout,mDrawerList,toolbar);
+        mAdapter = new MenuAdapter(TITLES, ICONS, NAME, EMAIL, PROFILE,this,mDrawerLayout,mDrawerList,toolbar);
         mDrawerList.setAdapter(mAdapter);
 
 

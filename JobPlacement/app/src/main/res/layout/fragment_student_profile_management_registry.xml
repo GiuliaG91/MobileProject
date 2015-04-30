@@ -93,7 +93,6 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/student_phones_container">
 
-
                 <Button
                     android:id="@+id/student_phones_plusButton"
                     android:layout_width="match_parent"

@@ -2,7 +2,6 @@ package com.example.giuliagigi.jobplacement;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.text.format.Time;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,7 +18,7 @@ public class StudentProfileManagementBasicsFragment extends ProfileManagementFra
 
 
     private Student currentUser;
-    EditText nameText,surnameText, birthCityText;
+    EditText nameText,surnameText;
     CheckBox male,female;
     DatePicker birthPicker;
 
@@ -66,15 +65,8 @@ public class StudentProfileManagementBasicsFragment extends ProfileManagementFra
         else
             surnameText.setText(currentUser.getSurname());
 
-        birthCityText = (EditText)root.findViewById(R.id.student_birth_city_area);
-        if(currentUser.getBirthCity() == null)
-            birthCityText.setText(INSERT_FIELD);
-        else
-            birthCityText.setText(currentUser.getBirthCity());
-
         textFields.add(nameText);
         textFields.add(surnameText);
-        textFields.add(birthCityText);
 
         OnFieldChangedListener hasChangedListener = new OnFieldChangedListener();
         for(EditText et:textFields)
@@ -103,15 +95,7 @@ public class StudentProfileManagementBasicsFragment extends ProfileManagementFra
         });
 
         birthPicker = (DatePicker)root.findViewById(R.id.student_birth_datePicker);
-        if(currentUser.getBirth()!=null)
-            birthPicker.updateDate(currentUser.getBirth().getYear(), currentUser.getBirth().getMonth(), currentUser.getBirth().getDay());
-        else {
-            Time today = new Time(Time.getCurrentTimezone());
-            today.setToNow();
-            birthPicker.updateDate(today.monthDay,today.month,today.year);
-        }
         birthPicker.setOnClickListener(new OnFieldClickedListener());
-
 
         EditText emailText = (EditText)root.findViewById(R.id.student_email_area);
         emailText.setText(currentUser.getMail());
@@ -169,7 +153,6 @@ public class StudentProfileManagementBasicsFragment extends ProfileManagementFra
 
         currentUser.setName(nameText.getText().toString());
         currentUser.setSurname(surnameText.getText().toString());
-        currentUser.setBirthCity(birthCityText.getText().toString());
         currentUser.setSex(sex);
         currentUser.setBirth(birth);
         currentUser.saveInBackground();
