@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,12 +15,12 @@ import android.view.ViewGroup;
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link TabHomeFragment.OnFragmentInteractionListener} interface
+ * {@link TabHomeStudentFragment.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link TabHomeFragment#newInstance} factory method to
+ * Use the {@link TabHomeStudentFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class TabHomeFragment extends Fragment {
+public class TabHomeStudentFragment extends Fragment {
 
     /**
      * *************For page viewer***************************
@@ -45,13 +44,13 @@ public class TabHomeFragment extends Fragment {
      * @return A new instance of fragment TabHomeFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static TabHomeFragment newInstance() {
-        TabHomeFragment fragment = new TabHomeFragment();
+    public static TabHomeStudentFragment newInstance() {
+        TabHomeStudentFragment fragment = new TabHomeStudentFragment();
 
         return fragment;
     }
 
-    public TabHomeFragment() {
+    public TabHomeStudentFragment() {
         // Required empty public constructor
     }
 

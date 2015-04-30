@@ -1,6 +1,8 @@
 package com.example.giuliagigi.jobplacement;
 
+import android.app.ActionBar;
 import android.app.Activity;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -9,6 +11,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.LinearLayout;
 
 import java.util.ArrayList;
 
@@ -17,6 +21,8 @@ public class StudentProfileManagementSkillsFragment extends ProfileManagementFra
     private Student currentUser;
     Button addDegree;
     ArrayList<StudentProfileManagementDegreeFragment> degreeFragments;
+    Button addLanguage;
+    ArrayList<StudentProfileManagementLanguageFragment> languageFragments;
 
     /*----------------------- CONSTRUCTORS ------------------------------------------------------*/
 
@@ -37,6 +43,7 @@ public class StudentProfileManagementSkillsFragment extends ProfileManagementFra
         Log.println(Log.ASSERT, "REGISTRY FRAG", "OnAttach");
         currentUser = application.getStudentFromUser();
         degreeFragments = new ArrayList<StudentProfileManagementDegreeFragment>();
+        languageFragments = new ArrayList<StudentProfileManagementLanguageFragment>();
     }
 
     @Override
@@ -82,6 +89,35 @@ public class StudentProfileManagementSkillsFragment extends ProfileManagementFra
 
         }
 
+        addLanguage = (Button)root.findViewById(R.id.skills_add_language);
+        addLanguage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                StudentProfileManagementLanguageFragment lmf = StudentProfileManagementLanguageFragment.newInstance(new Language());
+                FragmentTransaction ft = getFragmentManager().beginTransaction();
+                ft.add(R.id.student_languageList_container,lmf);
+                ft.commit();
+                languageFragments.add(lmf);
+            }
+        });
+
+        int max2 = Math.max(languageFragments.size(),currentUser.getLanguages().size());
+        for(int j=0;j<max2;j++){
+
+            if(j>=languageFragments.size()){
+
+                StudentProfileManagementLanguageFragment lmf = StudentProfileManagementLanguageFragment.newInstance(currentUser.getLanguages().get(j));
+                languageFragments.add(lmf);
+            }
+
+            FragmentTransaction ft = getFragmentManager().beginTransaction();
+            ft.add(R.id.student_languageList_container, languageFragments.get(j));
+            ft.commit();
+
+        }
+
+
 
         setEnable(host.isEditMode());
         return root;
@@ -92,6 +128,13 @@ public class StudentProfileManagementSkillsFragment extends ProfileManagementFra
         super.onDestroyView();
 
         for(Fragment f: degreeFragments){
+
+            FragmentTransaction ft = getFragmentManager().beginTransaction();
+            ft.remove(f);
+            ft.commit();
+        }
+
+        for(Fragment f: languageFragments){
 
             FragmentTransaction ft = getFragmentManager().beginTransaction();
             ft.remove(f);
@@ -110,7 +153,13 @@ public class StudentProfileManagementSkillsFragment extends ProfileManagementFra
 
     @Override
     protected void setEnable(boolean enable) {
+
+
         super.setEnable(enable);
+
+
     }
+
+
 
 }

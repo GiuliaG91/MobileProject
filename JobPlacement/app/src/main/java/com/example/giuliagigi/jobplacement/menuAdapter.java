@@ -17,7 +17,7 @@ import android.widget.TextView;
 /**
  * Created by pietro on 25/04/2015.
  */
-public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.ViewHolder> {
+public class menuAdapter extends RecyclerView.Adapter<menuAdapter.ViewHolder> {
 
     private static final int TYPE_HEADER = 0;  // Declaring Variable to Understand which View is being worked on
     // IF the view under inflation and population is header or Item
@@ -72,7 +72,7 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.ViewHolder> {
     }
 
 
-    public MenuAdapter(String Titles[], int Icons[], String Name, String Email, int Profile, FragmentActivity act, DrawerLayout d, RecyclerView l, Toolbar t)
+    public menuAdapter(String Titles[], int Icons[], String Name, String Email, int Profile, FragmentActivity act, DrawerLayout d, RecyclerView l, Toolbar t)
     {
         // titles, icons, name, email, profile pic are passed from the main activity as we
         mNavTitles = Titles;                //have seen earlier
@@ -88,7 +88,7 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.ViewHolder> {
     }
 
     @Override
-    public MenuAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public menuAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
         if (viewType == TYPE_HOME || viewType == TYPE_PROFILE || viewType == TYPE_SEARCH || viewType == TYPE_COMPANIES || viewType == TYPE_MAILBOX ) {
             View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_row, parent, false); //Inflating the layout
@@ -184,7 +184,7 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.ViewHolder> {
     }
 
     @Override
-    public void onBindViewHolder(MenuAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(menuAdapter.ViewHolder holder, int position) {
         if (holder.Holderid == 1) {                              // as the list view is going to be called after the header view so we decrement the
             // position by 1 and pass it to the holder while setting the text and image
             holder.textView.setText(mNavTitles[position - 1]); // Setting the Text with the array of our Titles

@@ -11,6 +11,31 @@
         android:layout_height="match_parent">
 
         <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+        <LinearLayout
+            android:id="@+id/student_languageList_container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <ListView
+                android:id="@+id/skills_language_listview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+            </ListView>
+            <Button
+                android:id="@+id/skills_add_language"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Add Degree"/>
+
+
+        </LinearLayout>
+
+
+        <LinearLayout
             android:id="@+id/student_degreeList_container"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -29,6 +54,7 @@
                 android:text="Add Degree"/>
 
 
+        </LinearLayout>
         </LinearLayout>
     </ScrollView>
 
