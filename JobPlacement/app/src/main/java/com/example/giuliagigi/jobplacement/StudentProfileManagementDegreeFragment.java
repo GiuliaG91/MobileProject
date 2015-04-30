@@ -3,6 +3,7 @@ package com.example.giuliagigi.jobplacement;
 import android.app.Activity;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.text.format.Time;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,6 +29,10 @@ public class StudentProfileManagementDegreeFragment extends ProfileManagementFra
     private static String BUNDLE_TYPE = "bundle_type";
     private static String BUNDLE_STUDY = "bundle_study";
     private static String BUNDLE_MARK = "bundle_mark";
+    private static String BUNDLE_DAY = "bundle_day";
+    private static String BUNDLE_MONTH = "bundle_month";
+    private static String BUNDLE_YEAR = "bundle_year";
+    private static String BUNDLE_LOUD = "bundle_loud";
     private static String BUNDLE_HASCHANGED = "bundle_recycled";
 
     private Student currentUser;
@@ -80,12 +85,18 @@ public class StudentProfileManagementDegreeFragment extends ProfileManagementFra
 
         int type,study;
         Integer mark = null;
+        int day, month, year;
+        boolean loud;
         if(getArguments().getBoolean(BUNDLE_HASCHANGED)){
 
             Log.println(Log.ASSERT,"DEGREE FRAG", "changes not saved: restoring state");
             type = getArguments().getInt(BUNDLE_TYPE);
             study = getArguments().getInt(BUNDLE_STUDY);
             mark = getArguments().getInt(BUNDLE_MARK);
+            day = getArguments().getInt(BUNDLE_DAY);
+            month = getArguments().getInt(BUNDLE_MONTH);
+            year = getArguments().getInt(BUNDLE_YEAR);
+            loud = getArguments().getBoolean(BUNDLE_LOUD);
         }
         else {
 
@@ -101,6 +112,21 @@ public class StudentProfileManagementDegreeFragment extends ProfileManagementFra
 
             if(degree.getMark()!= null)
                 mark = degree.getMark();
+
+            if(degree.getDegreeDate()!= null){
+                day = degree.getDegreeDate().getDay();
+                month = degree.getDegreeDate().getMonth();
+                year = degree.getDegreeDate().getYear();
+            }
+            else
+            {
+                Time today = new Time(Time.getCurrentTimezone());
+                today.setToNow();
+                day = today.monthDay; month=today.month; year=today.year;
+            }
+            if(degree.getLoud()!=null){
+                loud = degree.getLoud();
+            }
 
         }
 
@@ -150,6 +176,7 @@ public class StudentProfileManagementDegreeFragment extends ProfileManagementFra
         textFields.add(degreeMark);
 
         degreeDate = (DatePicker)root.findViewById(R.id.degree_management_datePicker);
+        degreeDate.updateDate(year,month,day);
         degreeDate.setOnClickListener(new OnFieldClickedListener());
 
         hasLoud = (Switch)root.findViewById(R.id.degree_management_loud_switch);
@@ -181,6 +208,10 @@ public class StudentProfileManagementDegreeFragment extends ProfileManagementFra
             getArguments().putInt(BUNDLE_TYPE,degreeType.getSelectedItemPosition());
             getArguments().putInt(BUNDLE_STUDY,degreeStudies.getSelectedItemPosition());
             getArguments().putInt(BUNDLE_MARK, Integer.parseInt(degreeMark.getText().toString()));
+            getArguments().putInt(BUNDLE_DAY, Integer.parseInt(String.valueOf(degreeDate.getDayOfMonth())));
+            getArguments().putInt(BUNDLE_MONTH, Integer.parseInt(String.valueOf(degreeDate.getMonth())));
+            getArguments().putInt(BUNDLE_YEAR, Integer.parseInt(String.valueOf(degreeDate.getYear())));
+            getArguments().putBoolean(BUNDLE_LOUD, hasLoud.isChecked());
         }
 
     }
@@ -205,6 +236,8 @@ public class StudentProfileManagementDegreeFragment extends ProfileManagementFra
         degree.setType((String) degreeType.getSelectedItem());
         degree.setStudies((String) degreeStudies.getSelectedItem());
         if(!degreeMark.getText().toString().equals(INSERT_FIELD)) degree.setMark(Integer.parseInt(degreeMark.getText().toString()));
+        degree.setDegreeDate(date);
+        degree.setLoud(hasLoud.isChecked());
         degree.saveInBackground();
 
         hasChanged = false;
@@ -218,10 +251,12 @@ public class StudentProfileManagementDegreeFragment extends ProfileManagementFra
         degreeStudies.setEnabled(enable);
 
         degreeDate.setEnabled(enable);
-        if(degree.getMark()==110){
-            hasLoud.setEnabled(enable);
-        }else hasLoud.setEnabled(false);
 
+        if(degree.getMark()!= null) {
+            if (degree.getMark() == 110) {
+                hasLoud.setEnabled(enable);
+            } else hasLoud.setEnabled(false);
+        }else hasLoud.setEnabled(false);
 
         int visibility;
         if(enable)

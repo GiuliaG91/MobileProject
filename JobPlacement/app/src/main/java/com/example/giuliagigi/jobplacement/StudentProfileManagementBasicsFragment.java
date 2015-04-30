@@ -2,6 +2,7 @@ package com.example.giuliagigi.jobplacement;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.text.format.Time;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -95,6 +96,13 @@ public class StudentProfileManagementBasicsFragment extends ProfileManagementFra
         });
 
         birthPicker = (DatePicker)root.findViewById(R.id.student_birth_datePicker);
+        if(currentUser.getBirth()!=null)
+            birthPicker.updateDate(currentUser.getBirth().getYear(), currentUser.getBirth().getMonth(), currentUser.getBirth().getDay());
+        else {
+            Time today = new Time(Time.getCurrentTimezone());
+            today.setToNow();
+            birthPicker.updateDate(today.monthDay,today.month,today.year);
+        }
         birthPicker.setOnClickListener(new OnFieldClickedListener());
 
         EditText emailText = (EditText)root.findViewById(R.id.student_email_area);
