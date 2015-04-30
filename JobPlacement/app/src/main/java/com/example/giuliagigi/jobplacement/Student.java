@@ -26,6 +26,7 @@ public class Student extends User {
     protected static final String DEGREES_FIELD = "degrees"; //dovrebbe tornare un array
     protected static final String SEX_FIELD = "sex";
     protected static final String BIRTH_FIELD = "birthDate";
+    protected static final String BIRTH_CITY = "birthCity";
     protected static final String ADDRESS_FIELD = "address";
     protected static final String CITY_FIELD = "city";
     protected static final String POSTAL_CODE_FIELD = "postalCode";
@@ -84,6 +85,9 @@ public class Student extends User {
     }
     public String getCity(){
         return this.getString(CITY_FIELD);
+    }
+    public String getBirthCity(){
+        return this.getString(BIRTH_CITY);
     }
     public String getPostalCode(){
         return this.getString(POSTAL_CODE_FIELD);
@@ -180,6 +184,10 @@ public class Student extends User {
     {
         this.addUnique(FAVOURITES_FIELD,company);
 
+    }
+    public void setBirthCity(String birthCity){
+
+        this.put(BIRTH_CITY,birthCity);
     }
 
     /*END SETTER METHODS*/

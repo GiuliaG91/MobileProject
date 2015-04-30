@@ -5,6 +5,8 @@ import android.util.Log;
 import com.parse.ParseClassName;
 import com.parse.ParseObject;
 
+import java.util.Date;
+
 /**
  * Created by MarcoEsposito90 on 22/04/2015.
  */
@@ -32,6 +34,8 @@ public class Degree extends ParseObject{
     protected static final String STUDIES_FIELD = "studies";
     protected static final String TYPE_FIELD = "type";
     protected static final String MARK_FIELD = "mark";
+    protected static final String DATE_FIELD = "degreeDate";
+    protected static final String LOUD_FIELD = "loud";
 
     public Degree(){
         super();
@@ -64,6 +68,15 @@ public class Degree extends ParseObject{
         return false;
     }
 
+    public void setDegreeDate(Date degreeDate){
+
+        this.put(DATE_FIELD,degreeDate);
+    }
+
+    public void setLoud(Boolean loud){
+        this.put(LOUD_FIELD, loud);
+    }
+
 
     public static int getTypeID(String type){
 
@@ -92,6 +105,14 @@ public class Degree extends ParseObject{
 
         Log.println(Log.ASSERT,"DEGREE", "getStudyID finish");
         return -1;
+    }
+
+    public Date getDegreeDate(){
+        return this.getDate(DATE_FIELD);
+    }
+
+    public Boolean getLoud(){
+        return  this.getBoolean(LOUD_FIELD);
     }
 
 }
