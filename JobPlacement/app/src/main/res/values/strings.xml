@@ -67,4 +67,9 @@
     <string name="string_degree_fragment_degree_loud_title">Loud:</string>
     <string name="string_degree_fragment_degree_date_title">Degree date:</string>
 
+    <!-- New Offer Fragment -->
+
+    <string name="new_offer_fragment_title">New Offer</string>
+    <string name="new_offer_fragment_hint">Description up to 500 chracters</string>
+    <string name="new_offer_fragment_publish">Publish offer</string>
 </resources>
