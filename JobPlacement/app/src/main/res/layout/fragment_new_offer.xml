@@ -7,4 +7,45 @@
 
     <!-- TODO: Update blank fragment layout -->
 
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:text="@string/new_offer_fragment_title"
+        android:layout_weight="0.2"
+        android:gravity="center" />
+
+    <Spinner
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:id="@+id/fieldSpinner"
+        android:layout_weight="0.2" />
+
+    <FrameLayout
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <EditText
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:id="@+id/offerDesciption"
+            android:layout_weight="1"
+            android:hint="@string/new_offer_fragment_hint"
+            android:gravity="top" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="New Text"
+            android:id="@+id/characterCount"
+            android:layout_gravity="bottom|right"
+            android:layout_marginBottom="10dp"
+            android:layout_marginRight="10dp" />
+    </FrameLayout>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="New Button"
+        android:id="@+id/publishOffer" />
 </LinearLayout>

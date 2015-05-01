@@ -3,10 +3,17 @@ package com.example.giuliagigi.jobplacement;
 import android.app.Activity;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.BaseAdapter;
+import android.widget.EditText;
+import android.widget.Spinner;
+import android.widget.TextView;
 
 
 /**
@@ -80,6 +87,37 @@ public class NewOffer extends Fragment {
         mListener = null;
     }
 
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        Spinner fieldSpinner = (Spinner) view.findViewById(R.id.fieldSpinner);
+
+        fieldSpinner.setAdapter(new StringAdapter(Degree.STUDIES));
+        EditText editText=(EditText)view.findViewById(R.id.offerDesciption);
+        final TextView textView=(TextView)view.findViewById(R.id.characterCount);
+
+        //Conta caratteri
+           final TextWatcher mTextEditorWatcher = new TextWatcher() {
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                //This sets a textview to the current length
+                textView.setText(String.valueOf(s.length()));
+            }
+
+            public void afterTextChanged(Editable s) {
+            }
+        };
+
+
+        editText.addTextChangedListener(mTextEditorWatcher);
+
+    }
+
+
     /**
      * This interface must be implemented by activities that contain this
      * fragment to allow an interaction in this fragment to be communicated
@@ -95,4 +133,35 @@ public class NewOffer extends Fragment {
         public void onFragmentInteraction(Uri uri);
     }
 
+
+
+    public class StringAdapter extends BaseAdapter {
+
+        public String[] stringArray;
+
+        public StringAdapter(String[] stringArray) {
+            super();
+            this.stringArray = stringArray;
+        }
+
+        @Override
+        public int getCount() {
+            return 0;
+        }
+
+        @Override
+        public Object getItem(int position) {
+            return null;
+        }
+
+        @Override
+        public long getItemId(int position) {
+            return 0;
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+            return null;
+        }
+    }
 }
