@@ -11,24 +11,51 @@
         android:layout_height="match_parent">
 
         <LinearLayout
-            android:id="@+id/student_degreeList_container"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
-
-            <ListView
-                android:id="@+id/skills_degree_listview"
+            <LinearLayout
+                android:id="@+id/student_languageList_container"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="match_parent"
+                android:orientation="vertical">
 
-            </ListView>
-            <Button
-                android:id="@+id/skills_add_degree"
+                <ListView
+                    android:id="@+id/skills_language_listview"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                </ListView>
+                <Button
+                    android:id="@+id/skills_add_language"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Add Degree"/>
+
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:id="@+id/student_degreeList_container"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Add Degree"/>
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <ListView
+                    android:id="@+id/skills_degree_listview"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                </ListView>
+                <Button
+                    android:id="@+id/skills_add_degree"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Add Degree"/>
 
 
+            </LinearLayout>
         </LinearLayout>
     </ScrollView>
 
