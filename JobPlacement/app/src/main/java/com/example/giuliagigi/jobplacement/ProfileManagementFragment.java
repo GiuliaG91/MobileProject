@@ -104,8 +104,11 @@ public class ProfileManagementFragment extends Fragment implements OnActivityCha
 
         if(newState.equals(State.EDIT_MODE_STATE))
             this.setEnable(true);
-        else if(newState.equals(State.DISPLAY_MODE_STATE))
+        else if(newState.equals(State.DISPLAY_MODE_STATE)){
+
+            if(hasChanged) saveChanges();
             this.setEnable(false);
+        }
     }
 
     /* --------------------- AUXILIARY METHODS ------------------------------------------------- */
@@ -115,7 +118,9 @@ public class ProfileManagementFragment extends Fragment implements OnActivityCha
         setTextFieldsEnable(enable);
     }
 
-    public void saveChanges(){}
+    public void saveChanges(){
+        hasChanged = false;
+    }
 
     protected void setTextFieldsEnable(boolean enable){
 

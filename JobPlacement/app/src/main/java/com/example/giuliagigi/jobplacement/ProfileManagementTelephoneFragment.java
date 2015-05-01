@@ -7,6 +7,7 @@ import android.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
@@ -76,8 +77,10 @@ public class ProfileManagementTelephoneFragment extends ProfileManagementFragmen
         }
         else{
 
-            type = Telephone.getTypeID(telephone.getType());
-            number = telephone.getNumber();
+            if(telephone.getType()!=null)
+                type = Telephone.getTypeID(telephone.getType());
+            if(telephone.getNumber()!=null)
+                number = telephone.getNumber();
         }
 
         removeButton = (Button)root.findViewById(R.id.telephone_remove_button);
@@ -102,7 +105,6 @@ public class ProfileManagementTelephoneFragment extends ProfileManagementFragmen
         });
 
         typeSelector.setAdapter(new StringAdapter(Telephone.TYPES));
-        typeSelector.setOnClickListener(new OnFieldClickedListener());
         typeSelector.setSelection(type);
 
         numberText.addTextChangedListener(new OnFieldChangedListener());
@@ -110,6 +112,7 @@ public class ProfileManagementTelephoneFragment extends ProfileManagementFragmen
         else                numberText.setText(telephone.getNumber());
         textFields.add(numberText);
 
+        setEnable(host.isEditMode());
         return root;
     }
 
@@ -131,13 +134,18 @@ public class ProfileManagementTelephoneFragment extends ProfileManagementFragmen
     @Override
     public void saveChanges() {
 
+        currentUser.addPhone(telephone);
+        currentUser.saveInBackground();
 
+        telephone.setNumber(numberText.getText().toString());
+        telephone.setType((String) typeSelector.getSelectedItem());
+        telephone.saveInBackground();
     }
 
     @Override
     protected void setEnable(boolean enable) {
         super.setEnable(enable);
 
-        //TODO
+        typeSelector.setEnabled(enable);
     }
 }

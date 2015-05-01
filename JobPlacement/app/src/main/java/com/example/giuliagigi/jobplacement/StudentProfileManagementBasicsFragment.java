@@ -128,15 +128,13 @@ public class StudentProfileManagementBasicsFragment extends ProfileManagementFra
         male.setEnabled(enable);
         female.setEnabled(enable);
         birthPicker.setEnabled(enable);
-
-        if(!enable && hasChanged)
-            saveChanges();
     }
 
 
     @Override
     public void saveChanges(){
 
+        super.saveChanges();
         String sex;
         if(male.isChecked())
             sex = Student.SEX_MALE;
@@ -153,7 +151,6 @@ public class StudentProfileManagementBasicsFragment extends ProfileManagementFra
         currentUser.setSex(sex);
         currentUser.setBirth(birth);
         currentUser.saveInBackground();
-        hasChanged = false;
     }
 
 

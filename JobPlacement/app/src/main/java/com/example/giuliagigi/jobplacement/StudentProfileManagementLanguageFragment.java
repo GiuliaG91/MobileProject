@@ -158,7 +158,6 @@ public class StudentProfileManagementLanguageFragment extends ProfileManagementF
         if(!languageDesc.getText().toString().equals(INSERT_FIELD)) language.setDescription((String) languageDesc.getText().toString());
         language.saveInBackground();
 
-        hasChanged = false;
     }
 
     @Override

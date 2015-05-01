@@ -99,8 +99,8 @@ public class StudentProfileManagementSkillsFragment extends ProfileManagementFra
             }
         });
 
-        int max2 = Math.max(languageFragments.size(),currentUser.getLanguages().size());
-        for(int j=0;j<max2;j++){
+        max = Math.max(languageFragments.size(),currentUser.getLanguages().size());
+        for(int j=0;j<max;j++){
 
             if(j>=languageFragments.size()){
 
@@ -113,9 +113,6 @@ public class StudentProfileManagementSkillsFragment extends ProfileManagementFra
             ft.commit();
 
         }
-
-
-
         setEnable(host.isEditMode());
         return root;
     }
@@ -158,6 +155,8 @@ public class StudentProfileManagementSkillsFragment extends ProfileManagementFra
         super.setEnable(enable);
     }
 
-
-
+    @Override
+    public void saveChanges() {
+        super.saveChanges();
+    }
 }

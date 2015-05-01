@@ -103,8 +103,18 @@ public class Student extends User {
 
         if(list != null)
             for (Object o : list)
-                if (o instanceof Telephone)
-                    phones.add((Telephone)o);
+                if (o instanceof Telephone){
+
+                    Telephone t = (Telephone)o;
+
+                    try {
+                        t.fetchIfNeeded();
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+
+                    phones.add(t);
+                }
 
         return phones;
     }

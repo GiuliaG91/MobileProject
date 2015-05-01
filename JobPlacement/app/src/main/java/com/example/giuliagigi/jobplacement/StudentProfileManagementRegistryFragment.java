@@ -4,6 +4,7 @@ import android.app.ActionBar;
 import android.app.Activity;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -97,17 +98,51 @@ public class StudentProfileManagementRegistryFragment extends ProfileManagementF
             @Override
             public void onClick(View v) {
 
-                newPhoneText(null);
+                ProfileManagementTelephoneFragment tf = ProfileManagementTelephoneFragment.newInstance(new Telephone());
+                FragmentTransaction ft = getFragmentManager().beginTransaction();
+                ft.add(R.id.student_phones_container,tf);
+                ft.commit();
+                telephoneFragments.add(tf);
             }
         });
+
+        int max = Math.max(telephoneFragments.size(),currentUser.getPhones().size());
+
+        for(int i=0;i<max;i++){
+
+            if(i>=telephoneFragments.size()){
+
+                ProfileManagementTelephoneFragment tf  = ProfileManagementTelephoneFragment.newInstance(currentUser.getPhones().get(i));
+                telephoneFragments.add(tf);
+            }
+
+            FragmentTransaction ft = getFragmentManager().beginTransaction();
+            ft.add(R.id.student_phones_container,telephoneFragments.get(i));
+            ft.commit();
+        }
 
         setEnable(host.isEditMode());
         return root;
     }
 
     @Override
+    public void onPause() {
+        super.onPause();
+
+        for (ProfileManagementTelephoneFragment tf: telephoneFragments){
+
+            FragmentTransaction ft = getFragmentManager().beginTransaction();
+            ft.remove(tf);
+            ft.commit();
+        }
+    }
+
+    @Override
     public void onDetach() {
         super.onDetach();
+
+        for(ProfileManagementTelephoneFragment tf:telephoneFragments)
+            host.removeOnActivityChangedListener(tf);
     }
 
     public void setEnable(boolean enable){
@@ -121,31 +156,17 @@ public class StudentProfileManagementRegistryFragment extends ProfileManagementF
         super.setEnable(enable);
         Button phonePlus = (Button)root.findViewById(R.id.student_phones_plusButton);
         phonePlus.setVisibility(visibility);
-
-        if(!enable && hasChanged){
-
-            if(!addressText.getText().toString().equals(INSERT_FIELD))  currentUser.setAddress(addressText.getText().toString());
-            if(!cityText.getText().toString().equals(INSERT_FIELD))     currentUser.setCity(cityText.getText().toString());
-            if(!postalText.getText().toString().equals(INSERT_FIELD))   currentUser.setPostalCode(postalText.getText().toString());
-            if(!nationText.getText().toString().equals(INSERT_FIELD))   currentUser.setNation(nationText.getText().toString());
-            updatePhones();
-
-            currentUser.saveInBackground();
-            hasChanged = false;
-        }
     }
 
+    @Override
+    public void saveChanges() {
+        super.saveChanges();
 
+        if(!addressText.getText().toString().equals(INSERT_FIELD))  currentUser.setAddress(addressText.getText().toString());
+        if(!cityText.getText().toString().equals(INSERT_FIELD))     currentUser.setCity(cityText.getText().toString());
+        if(!postalText.getText().toString().equals(INSERT_FIELD))   currentUser.setPostalCode(postalText.getText().toString());
+        if(!nationText.getText().toString().equals(INSERT_FIELD))   currentUser.setNation(nationText.getText().toString());
+        currentUser.saveInBackground();
 
-    private void newPhoneText(String phone){
-
-        //TODO
     }
-
-    private void updatePhones(){
-
-        Log.println(Log.ASSERT, "REG FRAG", "updating phones");
-        //TODO
-    }
-
 }
