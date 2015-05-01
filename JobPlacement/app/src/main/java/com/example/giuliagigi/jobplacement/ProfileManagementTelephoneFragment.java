@@ -147,5 +147,6 @@ public class ProfileManagementTelephoneFragment extends ProfileManagementFragmen
         super.setEnable(enable);
 
         typeSelector.setEnabled(enable);
+        removeButton.setEnabled(enable);
     }
 }
