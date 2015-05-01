@@ -1,6 +1,7 @@
 package com.example.giuliagigi.jobplacement;
 
 import android.app.Activity;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
@@ -9,7 +10,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.BaseAdapter;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 
@@ -157,6 +160,44 @@ public class ProfileManagementFragment extends Fragment implements OnActivityCha
 
             if(!hasChanged)
                 hasChanged = true;
+        }
+    }
+
+
+    protected class StringAdapter extends BaseAdapter {
+
+        public String[] stringArray;
+
+        public StringAdapter(String[] stringArray){
+            super();
+            this.stringArray = stringArray;
+        }
+
+        @Override
+        public int getCount() {
+            return stringArray.length;
+        }
+
+        @Override
+        public String getItem(int position) {
+            return stringArray[position];
+        }
+
+        @Override
+        public long getItemId(int position) {
+            return position;
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+
+            if(convertView == null)
+                convertView = new TextView(getActivity().getApplicationContext());
+            TextView tv = (TextView)convertView;
+            tv.setText(stringArray[position]);
+            tv.setTextColor(Color.BLACK);
+
+            return convertView;
         }
     }
 

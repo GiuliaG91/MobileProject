@@ -155,11 +155,7 @@ public class StudentProfileManagementSkillsFragment extends ProfileManagementFra
 
     @Override
     protected void setEnable(boolean enable) {
-
-
         super.setEnable(enable);
-
-
     }
 
 

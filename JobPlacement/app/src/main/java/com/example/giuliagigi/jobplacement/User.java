@@ -3,6 +3,7 @@ package com.example.giuliagigi.jobplacement;
 import com.parse.ParseClassName;
 import com.parse.ParseObject;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -16,6 +17,7 @@ public class User extends ParseObject{
     protected static final String MAIL_FIELD = "mail";
     protected static final String PASSWORD_FIELD = "password";
     private static final String TYPE_FIELD = "type";
+    protected static final String PHONE_FIELD = "phones";
 
     /* it is an external key for a second relation:
             - accesses the relation "Students" in the DB if the type is student
@@ -44,6 +46,17 @@ public class User extends ParseObject{
         this.put(MAIL_FIELD, mail);
     }
 
+    public void addPhone(Telephone telephone){
+
+    }
+    public void removePhone(Telephone telephone){
+
+    }
+
+    public ArrayList<Telephone> getPhones(){
+
+        return null;
+    }
 
     public void setPassword(String password) {
         this.put(PASSWORD_FIELD, password);
