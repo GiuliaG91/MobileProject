@@ -16,6 +16,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 
@@ -106,7 +107,7 @@ public class Home extends ActionBarActivity  implements TabHomeStudentFragment.O
         }
 
         // specify an adapter (see also next example)
-        mAdapter = new MenuAdapter(TITLES, ICONS,user,this,mDrawerLayout,mDrawerList,toolbar,application);
+        mAdapter = new menuAdapter(TITLES, ICONS,user,this,mDrawerLayout,mDrawerList,toolbar,application);
         mDrawerList.setAdapter(mAdapter);
 
 

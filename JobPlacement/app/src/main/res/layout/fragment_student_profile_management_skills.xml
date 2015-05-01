@@ -30,7 +30,7 @@
                     android:id="@+id/skills_add_language"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Add Degree"/>
+                    android:text="Add Language"/>
 
 
             </LinearLayout>
