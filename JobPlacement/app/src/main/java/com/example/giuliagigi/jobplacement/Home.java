@@ -106,7 +106,7 @@ public class Home extends ActionBarActivity  implements TabHomeStudentFragment.O
         }
 
         // specify an adapter (see also next example)
-        mAdapter = new MenuAdapter(TITLES, ICONS,user,this,mDrawerLayout,mDrawerList,toolbar,application);
+        mAdapter = new menuAdapter(TITLES, ICONS,user,this,mDrawerLayout,mDrawerList,toolbar,application);
         mDrawerList.setAdapter(mAdapter);
 
 
@@ -182,7 +182,8 @@ public class Home extends ActionBarActivity  implements TabHomeStudentFragment.O
     @Override
     public void addOnActivityChangedListener(OnActivityChangedListener listener) {
 
-        listeners.add(listener);
+        if(!listeners.contains(listener))
+            listeners.add(listener);
         Log.println(Log.ASSERT, "HOME ACTIVITY", "number of listeners: " + listeners.size());
     }
 

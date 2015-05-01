@@ -36,7 +36,6 @@ public class StudentProfileManagementRegistryFragment extends ProfileManagementF
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-        Log.println(Log.ASSERT, "REGISTRY FRAG", "OnAttach");
 
         currentUser = application.getStudentFromUser();
         phoneTexts = new ArrayList<EditText>();
@@ -53,7 +52,6 @@ public class StudentProfileManagementRegistryFragment extends ProfileManagementF
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        Log.println(Log.ASSERT,"REGISTRY FRAG", "OnCreateView");
 
         root = inflater.inflate(R.layout.fragment_student_profile_management_registry, container, false);
 
@@ -111,7 +109,6 @@ public class StudentProfileManagementRegistryFragment extends ProfileManagementF
             @Override
             public void onClick(View v) {
 
-                Log.println(Log.ASSERT,"REGISTRYFRAG", "adding a new phone");
                 newPhoneText(null);
             }
         });
@@ -123,8 +120,6 @@ public class StudentProfileManagementRegistryFragment extends ProfileManagementF
     @Override
     public void onDetach() {
         super.onDetach();
-        Log.println(Log.ASSERT, "REGISTRY FRAG", "OnDetach");
-
     }
 
     public void setEnable(boolean enable){
@@ -145,7 +140,6 @@ public class StudentProfileManagementRegistryFragment extends ProfileManagementF
 
         if(!enable && hasChanged){
 
-            Log.println(Log.ASSERT,"REGISTRY FRAG", "update required");
             if(!addressText.getText().toString().equals(INSERT_FIELD))  currentUser.setAddress(addressText.getText().toString());
             if(!cityText.getText().toString().equals(INSERT_FIELD))     currentUser.setCity(cityText.getText().toString());
             if(!postalText.getText().toString().equals(INSERT_FIELD))   currentUser.setPostalCode(postalText.getText().toString());
@@ -177,28 +171,23 @@ public class StudentProfileManagementRegistryFragment extends ProfileManagementF
 
     private void updatePhones(){
 
-
+        Log.println(Log.ASSERT,"REG FRAG", "updating phones");
         for(int i = 0;i<phoneTexts.size();i++){
 
             String phone = phoneTexts.get(i).getText().toString();
 
-            Log.println(Log.ASSERT,"REG FRAG", "save: " + phoneTexts.get(i).getText().toString());
             if(i<originalPhones.size() && !originalPhones.get(i).equals(phone)){
 
-                Log.println(Log.ASSERT,"REG FRAG", "older: " + originalPhones.get(i) + ", new: " + phone);
                 currentUser.removePhone(originalPhones.get(i));
                 currentUser.saveInBackground();
             }
-            Log.println(Log.ASSERT,"REG FRAG", "ok");
             if(!phone.equals("")){
 
-                Log.println(Log.ASSERT,"REG FRAG", "add/update the phone");
                 currentUser.addPhone(phone);
                 currentUser.saveInBackground();
             }
             else {
 
-                Log.println(Log.ASSERT,"REG FRAG", "the phone is going to be deleted");
                 phonesContainer.removeView(phoneTexts.get(i));
                 phoneTexts.remove(i);
             }

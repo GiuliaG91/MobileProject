@@ -53,7 +53,6 @@ public class StudentProfileManagementDegreeFragment extends ProfileManagementFra
         Bundle args = new Bundle();
         fragment.setArguments(args);
         fragment.setDegree(degree);
-        Log.println(Log.ASSERT,"DEGREE FRAG", "creating new degree fragment");
         return fragment;
 
     }
@@ -67,8 +66,8 @@ public class StudentProfileManagementDegreeFragment extends ProfileManagementFra
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-        Log.println(Log.ASSERT, "DEGREE FRAG", "OnAttach");
         currentUser = application.getStudentFromUser();
+        isListenerAfterDetach = true;
     }
 
     @Override
@@ -81,7 +80,6 @@ public class StudentProfileManagementDegreeFragment extends ProfileManagementFra
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        Log.println(Log.ASSERT,"DEGREE FRAG", "OnCreateView");
 
         int type,study;
         Integer mark = null;
@@ -89,7 +87,6 @@ public class StudentProfileManagementDegreeFragment extends ProfileManagementFra
         boolean loud;
         if(getArguments().getBoolean(BUNDLE_HASCHANGED)){
 
-            Log.println(Log.ASSERT,"DEGREE FRAG", "changes not saved: restoring state");
             type = getArguments().getInt(BUNDLE_TYPE);
             study = getArguments().getInt(BUNDLE_STUDY);
             mark = getArguments().getInt(BUNDLE_MARK);
@@ -198,13 +195,11 @@ public class StudentProfileManagementDegreeFragment extends ProfileManagementFra
     public void onDetach() {
 
         super.onDetach();
-        Log.println(Log.ASSERT,"DEGREE FRAG", "OnDetach. saving state");
 
         getArguments().putBoolean(BUNDLE_HASCHANGED,hasChanged);
 
         if(hasChanged){
 
-            Log.println(Log.ASSERT,"DEGREE FRAG", "values changed. saving in bundle");
             getArguments().putInt(BUNDLE_TYPE,degreeType.getSelectedItemPosition());
             getArguments().putInt(BUNDLE_STUDY,degreeStudies.getSelectedItemPosition());
             getArguments().putInt(BUNDLE_MARK, Integer.parseInt(degreeMark.getText().toString()));

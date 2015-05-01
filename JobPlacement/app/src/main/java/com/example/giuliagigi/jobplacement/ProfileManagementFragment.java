@@ -23,6 +23,7 @@ public class ProfileManagementFragment extends Fragment implements OnActivityCha
     protected GlobalData application;
     protected boolean hasChanged = false;
     protected View root;
+    protected boolean isListenerAfterDetach;
 
 
     /* --------------------- CONSTRUCTORS -------------------------------------------------------- */
@@ -54,6 +55,7 @@ public class ProfileManagementFragment extends Fragment implements OnActivityCha
         }
 
         host.addOnActivityChangedListener(this);
+        isListenerAfterDetach = false;
         hasChanged = false;
     }
 
@@ -78,7 +80,9 @@ public class ProfileManagementFragment extends Fragment implements OnActivityCha
     @Override
     public void onDetach() {
         super.onDetach();
-        host.removeOnActivityChangedListener(this);
+
+        if(!isListenerAfterDetach)
+            host.removeOnActivityChangedListener(this);
     }
 
 
@@ -105,7 +109,6 @@ public class ProfileManagementFragment extends Fragment implements OnActivityCha
 
     protected void setEnable(boolean enable){
 
-        Log.println(Log.ASSERT,"PM FRAG", "enabling: " + enable);
         setTextFieldsEnable(enable);
     }
 
@@ -151,8 +154,6 @@ public class ProfileManagementFragment extends Fragment implements OnActivityCha
 
         @Override
         public void onClick(View v) {
-
-            Log.println(Log.ASSERT,"ONCLICKLIST", "click!");
 
             if(!hasChanged)
                 hasChanged = true;

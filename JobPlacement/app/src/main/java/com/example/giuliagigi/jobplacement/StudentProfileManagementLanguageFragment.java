@@ -28,6 +28,9 @@ public class StudentProfileManagementLanguageFragment extends ProfileManagementF
     private Language language;
 
 
+    /* ----------------- CONSTRUCTORS GETTERS SETTERS ------------------------------------------- */
+
+    public StudentProfileManagementLanguageFragment() { super(); }
     public static StudentProfileManagementLanguageFragment newInstance(Language language) {
         StudentProfileManagementLanguageFragment fragment = new StudentProfileManagementLanguageFragment();
         Bundle args = new Bundle();
@@ -40,8 +43,14 @@ public class StudentProfileManagementLanguageFragment extends ProfileManagementF
         this.language = language;
     }
 
-    public StudentProfileManagementLanguageFragment() {
-        super();
+
+    /* ----------------- STANDARD CALLBACKS ---------------------------------------------------- */
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        currentUser = application.getStudentFromUser();
+        isListenerAfterDetach = true;
     }
 
     @Override
@@ -52,13 +61,11 @@ public class StudentProfileManagementLanguageFragment extends ProfileManagementF
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         int level;
         String description;
         if (getArguments().getBoolean(BUNDLE_HASCHANGED)) {
-
 
             level = getArguments().getInt(BUNDLE_LEVEL);
             description = getArguments().getString(BUNDLE_DESCRIPTION);
@@ -77,11 +84,9 @@ public class StudentProfileManagementLanguageFragment extends ProfileManagementF
         }
 
         root = inflater.inflate(R.layout.fragment_student_profile_management_language, container, false);
+
         languageLevel = (Spinner) root.findViewById(R.id.language_management_spinnerLevel);
-
         languageLevel.setAdapter(new StringAdapter(Language.LEVELS));
-
-
         languageLevel.setSelection(level);
 
         confirm = (Button) root.findViewById(R.id.language_management_confirm_button);
@@ -122,17 +127,8 @@ public class StudentProfileManagementLanguageFragment extends ProfileManagementF
         for (EditText et : textFields)
             et.addTextChangedListener(hasChangedListener);
 
-
-
         setEnable(host.isEditMode());
         return root;
-    }
-
-
-    @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-        currentUser = application.getStudentFromUser();
     }
 
     @Override
@@ -147,6 +143,8 @@ public class StudentProfileManagementLanguageFragment extends ProfileManagementF
             getArguments().putString(BUNDLE_DESCRIPTION, languageDesc.getText().toString());
         }
     }
+
+    /* ----------------- AUXILIARY METHODS ----------------------------------------------------- */
 
     @Override
     public void saveChanges(){
@@ -180,6 +178,9 @@ public class StudentProfileManagementLanguageFragment extends ProfileManagementF
         confirm.setVisibility(visibility);
         delete.setVisibility(visibility);
     }
+
+
+    /* ---------------- AUXILIARY CLASSES -------------------------------------------------------*/
 
     public class StringAdapter extends BaseAdapter {
 

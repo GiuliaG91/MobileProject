@@ -40,7 +40,6 @@ public class StudentProfileManagementSkillsFragment extends ProfileManagementFra
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-        Log.println(Log.ASSERT, "REGISTRY FRAG", "OnAttach");
         currentUser = application.getStudentFromUser();
         degreeFragments = new ArrayList<StudentProfileManagementDegreeFragment>();
         languageFragments = new ArrayList<StudentProfileManagementLanguageFragment>();
@@ -56,7 +55,7 @@ public class StudentProfileManagementSkillsFragment extends ProfileManagementFra
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        Log.println(Log.ASSERT,"REGISTRY FRAG", "OnCreateView");
+
         root = inflater.inflate(R.layout.fragment_student_profile_management_skills, container, false);
 
         addDegree = (Button)root.findViewById(R.id.skills_add_degree);
@@ -64,7 +63,6 @@ public class StudentProfileManagementSkillsFragment extends ProfileManagementFra
             @Override
             public void onClick(View v) {
 
-                Log.println(Log.ASSERT,"SKILLS FRAG", "View is:" + v.toString() );
                 StudentProfileManagementDegreeFragment dmf = StudentProfileManagementDegreeFragment.newInstance(new Degree());
                 FragmentTransaction ft = getFragmentManager().beginTransaction();
                 ft.add(R.id.student_degreeList_container,dmf);
@@ -75,7 +73,6 @@ public class StudentProfileManagementSkillsFragment extends ProfileManagementFra
 
         int max = Math.max(degreeFragments.size(),currentUser.getDegrees().size());
         for(int i=0;i<max;i++){
-            Log.println(Log.ASSERT,"SKILLS FRAG", "adding fragment (existing degree)");
 
             if(i>=degreeFragments.size()){
 
@@ -124,8 +121,8 @@ public class StudentProfileManagementSkillsFragment extends ProfileManagementFra
     }
 
     @Override
-    public void onDestroyView() {
-        super.onDestroyView();
+    public void onPause() {
+        super.onPause();
 
         for(Fragment f: degreeFragments){
 
@@ -147,6 +144,11 @@ public class StudentProfileManagementSkillsFragment extends ProfileManagementFra
     public void onDetach() {
         super.onDetach();
         Log.println(Log.ASSERT,"REGISTRY FRAG", "OnDetach");
+
+        for(ProfileManagementFragment f: degreeFragments)
+            host.removeOnActivityChangedListener(f);
+        for (ProfileManagementFragment f: languageFragments)
+            host.removeOnActivityChangedListener(f);
     }
 
     /*----------------------- AUXILIARY METHODS ------------------------------------------------------*/
