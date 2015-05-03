@@ -1,6 +1,7 @@
 package com.example.giuliagigi.jobplacement;
 
 import android.app.Activity;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
@@ -9,7 +10,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.BaseAdapter;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 
@@ -101,8 +104,11 @@ public class ProfileManagementFragment extends Fragment implements OnActivityCha
 
         if(newState.equals(State.EDIT_MODE_STATE))
             this.setEnable(true);
-        else if(newState.equals(State.DISPLAY_MODE_STATE))
+        else if(newState.equals(State.DISPLAY_MODE_STATE)){
+
+            if(hasChanged) saveChanges();
             this.setEnable(false);
+        }
     }
 
     /* --------------------- AUXILIARY METHODS ------------------------------------------------- */
@@ -112,7 +118,9 @@ public class ProfileManagementFragment extends Fragment implements OnActivityCha
         setTextFieldsEnable(enable);
     }
 
-    public void saveChanges(){}
+    public void saveChanges(){
+        hasChanged = false;
+    }
 
     protected void setTextFieldsEnable(boolean enable){
 
@@ -157,6 +165,44 @@ public class ProfileManagementFragment extends Fragment implements OnActivityCha
 
             if(!hasChanged)
                 hasChanged = true;
+        }
+    }
+
+
+    protected class StringAdapter extends BaseAdapter {
+
+        public String[] stringArray;
+
+        public StringAdapter(String[] stringArray){
+            super();
+            this.stringArray = stringArray;
+        }
+
+        @Override
+        public int getCount() {
+            return stringArray.length;
+        }
+
+        @Override
+        public String getItem(int position) {
+            return stringArray[position];
+        }
+
+        @Override
+        public long getItemId(int position) {
+            return position;
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+
+            if(convertView == null)
+                convertView = new TextView(getActivity().getApplicationContext());
+            TextView tv = (TextView)convertView;
+            tv.setText(stringArray[position]);
+            tv.setTextColor(Color.BLACK);
+
+            return convertView;
         }
     }
 

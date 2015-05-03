@@ -263,43 +263,5 @@ public class StudentProfileManagementDegreeFragment extends ProfileManagementFra
         delete.setVisibility(visibility);
     }
 
-    /* ---------- ADAPTERS ----------------------------------------------------------------*/
-
-    public class StringAdapter extends BaseAdapter {
-
-        public String[] stringArray;
-
-        public StringAdapter(String[] stringArray){
-            super();
-            this.stringArray = stringArray;
-        }
-
-        @Override
-        public int getCount() {
-            return stringArray.length;
-        }
-
-        @Override
-        public String getItem(int position) {
-            return stringArray[position];
-        }
-
-        @Override
-        public long getItemId(int position) {
-            return position;
-        }
-
-        @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
-
-            if(convertView == null)
-                convertView = new TextView(getActivity().getApplicationContext());
-            TextView tv = (TextView)convertView;
-            tv.setText(stringArray[position]);
-            tv.setTextColor(Color.BLACK);
-
-            return convertView;
-        }
-    }
 
 }

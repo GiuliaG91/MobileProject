@@ -1,0 +1,33 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal"
+    tools:context="com.example.giuliagigi.jobplacement.ProfileManagementTelephoneFragment">
+
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1.6"
+        android:text="-"
+        android:id="@+id/telephone_remove_button"
+        android:layout_gravity="center_vertical" />
+
+    <Spinner
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/telefone_type_selector"
+        android:layout_gravity="center_vertical"
+        android:layout_weight="1.2" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="phone"
+        android:ems="10"
+        android:id="@+id/telephone_number_text"
+        android:layout_gravity="center_vertical"
+        android:layout_weight="1" />
+</LinearLayout>

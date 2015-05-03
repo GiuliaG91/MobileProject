@@ -96,15 +96,25 @@ public class Student extends User {
     public String getNation(){
         return this.getString(NATION_FIELD);
     }
-    public ArrayList<String> getPhones(){
+    public ArrayList<Telephone> getPhones(){
 
-        ArrayList<String> phones = new ArrayList<String>();
+        ArrayList<Telephone> phones = new ArrayList<Telephone>();
         List<Object> list = this.getList(PHONE_FIELD);
 
         if(list != null)
             for (Object o : list)
-                if (o instanceof String)
-                    phones.add((String)o);
+                if (o instanceof Telephone){
+
+                    Telephone t = (Telephone)o;
+
+                    try {
+                        t.fetchIfNeeded();
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+
+                    phones.add(t);
+                }
 
         return phones;
     }
@@ -200,12 +210,12 @@ public class Student extends User {
 
         this.put(NATION_FIELD,nation);
     }
-    public void addPhone(String phone){
+    public void addPhone(Telephone phone){
 
         this.addUnique(PHONE_FIELD, phone);
     }
-    public void removePhone(String phone) {
-
+    public void removePhone(Telephone phone) {
+        
         this.removeAll(PHONE_FIELD,Arrays.asList(phone));
     }
     public void addLanguage(Language language){
