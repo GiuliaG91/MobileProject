@@ -98,11 +98,36 @@ public class Home extends ActionBarActivity  implements TabHomeStudentFragment.O
         {
             TITLES=getResources().getStringArray(R.array.Menu_items_student);
             ICONS=getResources().obtainTypedArray(R.array.StudentMenuicons);
+
+            FragmentManager fragmentManager =getSupportFragmentManager();
+
+            //New Fragment
+            TabHomeStudentFragment homeFragment = TabHomeStudentFragment.newInstance();
+            // Insert the fragment by replacing any existing fragment
+            // Insert the fragment by replacing any existing fragment
+
+            fragmentManager.beginTransaction()
+                    .replace(R.id.tab_Home_container, homeFragment)
+                    .commit();
+
         }
       else
         {
             TITLES=getResources().getStringArray(R.array.Menu_items_Company);
             ICONS=getResources().obtainTypedArray(R.array.CompanytMenuicons);
+
+            FragmentManager fragmentManager =getSupportFragmentManager();
+
+            //New Fragment
+            TabHomeCompanyFragment homeFragment = TabHomeCompanyFragment.newInstance();
+            // Insert the fragment by replacing any existing fragment
+            // Insert the fragment by replacing any existing fragment
+
+            fragmentManager.beginTransaction()
+                    .replace(R.id.tab_Home_container, homeFragment)
+                    .commit();
+
+
         }
 
         // specify an adapter (see also next example)
@@ -130,16 +155,6 @@ public class Home extends ActionBarActivity  implements TabHomeStudentFragment.O
         mDrawerLayout.setDrawerListener(mDrawerToggle); // Drawer Listener set to the Drawer toggle
         mDrawerToggle.syncState();               // Finally we set the drawer toggle sync State
 
-           FragmentManager fragmentManager =getSupportFragmentManager();
-
-            //New Fragment
-            TabHomeStudentFragment homeFragment = TabHomeStudentFragment.newInstance();
-            // Insert the fragment by replacing any existing fragment
-            // Insert the fragment by replacing any existing fragment
-
-            fragmentManager.beginTransaction()
-                    .replace(R.id.tab_Home_container, homeFragment)
-                    .commit();
 
 
     }

@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content"
+    android:layout_width="fill_parent"
     android:paddingTop="8dp"
     android:paddingBottom="8dp"
-    android:layout_height="wrap_content"
-    android:background="#ffffff"
+    android:layout_height="70dp"
+    android:background="@drawable/selector_item_drawer"
     android:orientation="horizontal">
 
 
@@ -13,6 +13,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/rowIcon"
         android:paddingLeft="16dp"
+        android:layout_gravity="center"
         android:src="@drawable/abc_ic_voice_search_api_mtrl_alpha"/>
 
     <TextView
@@ -22,6 +23,7 @@
         android:paddingTop="4dp"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="Medium Text"
-        android:id="@+id/rowText" />
+        android:id="@+id/rowText"
+        android:layout_gravity="center"/>
 
 </LinearLayout>

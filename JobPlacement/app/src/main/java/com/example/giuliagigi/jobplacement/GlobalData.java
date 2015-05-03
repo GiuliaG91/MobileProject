@@ -36,6 +36,8 @@ public class GlobalData extends Application {
         ParseObject.registerSubclass(Company.class);
         ParseObject.registerSubclass(Degree.class);
         ParseObject.registerSubclass(Language.class);
+        ParseObject.registerSubclass(CompanyOffer.class);
+        ParseObject.registerSubclass(Tag.class);
         Parse.initialize(this, "EICiUy2eT7CZPXw8N6I1p6lE4844svLI73JTc2QY", "8I9HZ7AgMHgeIxQKk8k653jNBvBCz57nRuSH73pA");
 
 
@@ -197,12 +199,4 @@ public class GlobalData extends Application {
         }
         return result;
     }
-
-
-
-
-
-
-
-
 }

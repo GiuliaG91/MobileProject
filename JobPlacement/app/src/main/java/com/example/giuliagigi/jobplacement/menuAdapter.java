@@ -194,7 +194,7 @@ public class menuAdapter extends RecyclerView.Adapter<menuAdapter.ViewHolder> {
 
                                       // Highlight the selected item, update the title, and close the drawer
                                       // Highlight the selected item, update the title, and close the drawer
-                                      TextView tv = (TextView) v.findViewById(R.id.rowText);
+                                        TextView tv = (TextView) v.findViewById(R.id.rowText);
 
                                       toolbar.setTitle(tv.getText());
                                       mDrawerLayout.closeDrawers();
@@ -210,7 +210,42 @@ public class menuAdapter extends RecyclerView.Adapter<menuAdapter.ViewHolder> {
 
 
 
+                      case TYPE_COMPANIES :
 
+                          v.setOnClickListener(new View.OnClickListener() {
+                              @Override
+                              public void onClick(View v) {
+
+
+                                  FragmentManager fragmentManager = activity.getSupportFragmentManager();
+                                  Fragment current = fragmentManager.findFragmentById(R.id.fragment_new_offer);
+
+                                  if (!(current instanceof NewOffer)) {
+                                      //New Fragment
+                                      NewOffer fragment = NewOffer.newInstance();
+                                      // Insert the fragment by replacing any existing fragment
+                                      // Insert the fragment by replacing any existing fragment
+
+                                      fragmentManager.beginTransaction()
+                                              .replace(R.id.tab_Home_container, fragment)
+                                              .addToBackStack("Home")
+                                              .commit();
+
+                                      // Highlight the selected item, update the title, and close the drawer
+                                      // Highlight the selected item, update the title, and close the drawer
+                                      TextView tv = (TextView) v.findViewById(R.id.rowText);
+
+                                      toolbar.setTitle(tv.getText());
+                                      mDrawerLayout.closeDrawers();
+
+                                  }
+                              }
+
+
+                          });
+
+
+                          break;
 
 
                   }

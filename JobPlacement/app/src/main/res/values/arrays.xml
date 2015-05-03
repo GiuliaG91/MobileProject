@@ -14,7 +14,7 @@
         <item>@drawable/ic_home</item>
         <item>@drawable/ic_profile</item>
         <item>@drawable/ic_search</item>
-        <item>@drawable/ic_menu</item>
+        <item>@drawable/ic_offer</item>
         <item>@drawable/ic_action</item>
 
     </string-array>

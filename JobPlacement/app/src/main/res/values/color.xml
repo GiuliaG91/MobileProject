@@ -5,4 +5,8 @@
             <color name="tabsScrollColor">#3F51B5</color>
              <color name="tabsColor">#E0E0E0</color>
 
+    <!--Offer colors-->
+
+    <color name="offer_card_background_color">#FFFFFFFF</color>
+
         </resources>

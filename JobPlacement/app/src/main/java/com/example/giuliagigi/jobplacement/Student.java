@@ -23,7 +23,7 @@ public class Student extends User {
     //TODO: a thousand attributes
     protected static final String NAME_FIELD = "name";
     protected static final String SURNAME_FIELD = "surname";
-    protected static final String DEGREES_FIELD = "degrees"; //dovrebbe tornare un array
+    protected static final String DEGREES_FIELD = "degrees";
     protected static final String SEX_FIELD = "sex";
     protected static final String BIRTH_FIELD = "birthDate";
     protected static final String BIRTH_CITY = "birthCity";
