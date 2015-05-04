@@ -49,34 +49,6 @@ public class GlobalData extends Application {
         Parse.initialize(this, "EICiUy2eT7CZPXw8N6I1p6lE4844svLI73JTc2QY", "8I9HZ7AgMHgeIxQKk8k653jNBvBCz57nRuSH73pA");
     }
 
-
-
-    /* methods to perform login:
-        1: returns true if login is successful
-        2: updates the value of the current user attribute
-     */
-//    public void performLogin(String mail, String password) throws Exception {
-//
-//        ParseUser.logInInBackground(mail, password, new LogInCallback() {
-//            @Override
-//            public void done(ParseUser parseUser, ParseException e) {
-//
-//                if (e == null) {
-//
-//                    Log.println(Log.ASSERT, "GLOBAL DATA", "login ok");
-//                } else {
-//
-//                    Log.println(Log.ASSERT, "GLOBAL DATA", "login failed");
-//                    try {
-//                        throw e;
-//                    } catch (ParseException e1) {
-//                        e1.printStackTrace();
-//                    }
-//                }
-//            }
-//        });
-//    }
-
     public ParseUserWrapper getCurrentUser() {
 
         if(currentUser == null)

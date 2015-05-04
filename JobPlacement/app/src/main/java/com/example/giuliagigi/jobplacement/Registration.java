@@ -164,6 +164,20 @@ public class Registration extends ActionBarActivity implements StudentRegistrati
 
     private void registerNewAccount(final User newUser){
 
+        if(newUser.getType().equals(User.TYPE_STUDENT)){
+            Log.println(Log.ASSERT,"GLOBAL DATA", "registering a student");
+            Student newStudent = (Student)newUser;
+            newStudent.saveInBackground();
+        }
+        else if(newUser.getType().equals(User.TYPE_COMPANY)){
+            Log.println(Log.ASSERT,"GLOBAL DATA", "registering a company");
+            Company newCompany = (Company)newUser;
+            newCompany.saveInBackground();
+        }
+        else{
+            Log.println(Log.ASSERT,"GLOBAL DATA","Error: unknown type");
+        }
+
 
         ParseUserWrapper newParseUser = new ParseUserWrapper();
         newParseUser.setEmail(newUser.getMail());
@@ -179,19 +193,7 @@ public class Registration extends ActionBarActivity implements StudentRegistrati
                     Log.println(Log.ASSERT,"REGISTRATION","registration successful. Redirect to login activity");
                     startActivity(new Intent(getApplicationContext(),Login.class));
 
-                    if(newUser.getType().equals(User.TYPE_STUDENT)){
-                        Log.println(Log.ASSERT,"GLOBAL DATA", "registering a student");
-                        Student newStudent = (Student)newUser;
-                        newStudent.saveInBackground();
-                    }
-                    else if(newUser.getType().equals(User.TYPE_COMPANY)){
-                        Log.println(Log.ASSERT,"GLOBAL DATA", "registering a company");
-                        Company newCompany = (Company)newUser;
-                        newCompany.saveInBackground();
-                    }
-                    else{
-                        Log.println(Log.ASSERT,"GLOBAL DATA","Error: unknown type");
-                    }
+
                 }
                 else {
 
