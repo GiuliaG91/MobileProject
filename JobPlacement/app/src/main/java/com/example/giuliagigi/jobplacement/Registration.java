@@ -93,17 +93,22 @@ public class Registration extends ActionBarActivity implements StudentRegistrati
                     Toast.makeText(getApplicationContext(),"missing informations",Toast.LENGTH_SHORT).show();
                 else {
 
-                    Log.println(Log.ASSERT,"REGISTRATION","user: " + user.getMail() + ", " + user.getPassword() + ", " + user.getType());
-                    if(application.registerNewAccount(user)){
+                    Log.println(Log.ASSERT,"REGISTRATION","user: " + user.getMail() + ", " + user.getType());
 
+                    try {
+
+                        application.registerNewAccount(user);
                         Log.println(Log.ASSERT,"REGISTRATION","registration successful. Redirect to login activity");
                         startActivity(new Intent(getApplicationContext(),Login.class));
-                    }
-                    else {
 
-                        Log.println(Log.ASSERT,"REGISTRATION","registration unsuccessful. displaying error message");
-                        Toast.makeText(getApplicationContext(),"the mail you are tying to use is already used by another account",Toast.LENGTH_SHORT).show();
+                    } catch (Exception e) {
+
+                        e.printStackTrace();
+                        //TODO manage different kind of errors
+                        Log.println(Log.ASSERT,"REGISTRATION","registration unsuccessful. displaying error message - " + e.getMessage());
+                        Toast.makeText(getApplicationContext(),"some error occurred",Toast.LENGTH_SHORT).show();
                     }
+
                 }
             }
         });

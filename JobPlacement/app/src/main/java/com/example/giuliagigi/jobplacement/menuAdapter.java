@@ -33,7 +33,7 @@ public class menuAdapter extends RecyclerView.Adapter<menuAdapter.ViewHolder> {
     private TypedArray ICONS;      // Int Array to store the passed icons resource value from MainActivity.java
 
     private  GlobalData gd;
-    private  User user;
+    private  ParseUserWrapper user;
     private  int flag;
     private    FragmentActivity activity;
     private DrawerLayout mDrawerLayout;
@@ -72,7 +72,7 @@ public class menuAdapter extends RecyclerView.Adapter<menuAdapter.ViewHolder> {
     }
 
 
-    public menuAdapter(String Titles[], TypedArray Icons, User u, FragmentActivity act, DrawerLayout d, RecyclerView l, Toolbar t, GlobalData globalData)
+    public menuAdapter(String Titles[], TypedArray Icons, ParseUserWrapper u, FragmentActivity act, DrawerLayout d, RecyclerView l, Toolbar t, GlobalData globalData)
     {
         // titles, icons, name, email, profile pic are passed from the main activity as we
         mNavTitles = Titles;                //have seen earlier

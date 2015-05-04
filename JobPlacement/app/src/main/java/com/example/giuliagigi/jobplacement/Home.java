@@ -93,7 +93,7 @@ public class Home extends ActionBarActivity  implements TabHomeStudentFragment.O
         mDrawerList.setLayoutManager(mLayoutManager);
 
         /*********************Different menu for Student and companies******/
-          User user=application.getCurrentUser();
+        ParseUserWrapper user=application.getCurrentUser();
         if(user.getType().toLowerCase().equals("student"))
         {
             TITLES=getResources().getStringArray(R.array.Menu_items_student);

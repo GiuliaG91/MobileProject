@@ -2,6 +2,7 @@ package com.example.giuliagigi.jobplacement;
 
 import com.parse.ParseClassName;
 import com.parse.ParseException;
+import com.parse.ParseObject;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -20,10 +21,7 @@ public class Company extends User {
     protected static final String NAME_FIELD = "Company_Name";
     protected static final String FISCAL_CODE_FIELD = "Fiscal_Code";
     protected static final String  FIELD_FIELD = "Field";
-
-
     protected static final String PHONE_FIELD = "phones";
-
     protected static final String OFFERS_FIELD = "offers";
 
     public Company(){

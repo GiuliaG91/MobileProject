@@ -159,6 +159,7 @@ public class StudentRegistrationFragment extends Fragment {
         degree.setStudies(degreeStudies);
 
         newStudent.setMail(mail.getText().toString());
+        newStudent.setUsername(mail.getText().toString());
         newStudent.setPassword(password.getText().toString());
         newStudent.setType(User.TYPE_STUDENT);
         newStudent.setSex(sex);
