@@ -55,27 +55,27 @@ public class GlobalData extends Application {
         1: returns true if login is successful
         2: updates the value of the current user attribute
      */
-    public void performLogin(String mail, String password) throws Exception {
-
-        ParseUser.logInInBackground(mail, password, new LogInCallback() {
-            @Override
-            public void done(ParseUser parseUser, ParseException e) {
-
-                if (e == null) {
-
-                    Log.println(Log.ASSERT, "GLOBAL DATA", "login ok");
-                } else {
-
-                    Log.println(Log.ASSERT, "GLOBAL DATA", "login failed");
-                    try {
-                        throw e;
-                    } catch (ParseException e1) {
-                        e1.printStackTrace();
-                    }
-                }
-            }
-        });
-    }
+//    public void performLogin(String mail, String password) throws Exception {
+//
+//        ParseUser.logInInBackground(mail, password, new LogInCallback() {
+//            @Override
+//            public void done(ParseUser parseUser, ParseException e) {
+//
+//                if (e == null) {
+//
+//                    Log.println(Log.ASSERT, "GLOBAL DATA", "login ok");
+//                } else {
+//
+//                    Log.println(Log.ASSERT, "GLOBAL DATA", "login failed");
+//                    try {
+//                        throw e;
+//                    } catch (ParseException e1) {
+//                        e1.printStackTrace();
+//                    }
+//                }
+//            }
+//        });
+//    }
 
     public ParseUserWrapper getCurrentUser() {
 

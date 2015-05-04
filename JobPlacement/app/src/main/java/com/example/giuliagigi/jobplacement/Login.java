@@ -5,6 +5,7 @@ import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -12,6 +13,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.parse.LogInCallback;
+import com.parse.ParseException;
+import com.parse.ParseUser;
 
 
 public class Login extends ActionBarActivity {
@@ -54,23 +59,7 @@ public class Login extends ActionBarActivity {
             public void onClick(View v) {
 
                 GlobalData gd = (GlobalData)getApplicationContext();
-                String result;
-
-                try {
-
-                    gd.performLogin(mail.getText().toString(),password.getText().toString());
-                    result = "login successful";
-                    Toast.makeText(getApplicationContext(),result,Toast.LENGTH_SHORT).show();
-                    Intent i = new Intent(getApplicationContext(),Home.class);
-                    startActivity(i);
-
-                } catch (Exception e) {
-
-                    e.printStackTrace();
-                    result = "invalid username or password";
-                    Toast.makeText(getApplicationContext(),result,Toast.LENGTH_SHORT).show();
-                }
-
+                performLogin(mail.getText().toString(),password.getText().toString());
             }
         });
 
@@ -105,5 +94,31 @@ public class Login extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void performLogin(String mail, String password) {
+
+        ParseUser.logInInBackground(mail, password, new LogInCallback() {
+            @Override
+            public void done(ParseUser parseUser, ParseException e) {
+
+                String result;
+                if (e == null) {
+
+                    Log.println(Log.ASSERT, "LOGIN", "login ok");
+                    result = "login successful";
+                    Toast.makeText(getApplicationContext(),result,Toast.LENGTH_SHORT).show();
+                    Intent i = new Intent(getApplicationContext(),Home.class);
+                    startActivity(i);
+
+                } else {
+
+                    Log.println(Log.ASSERT, "LOGIN", "login failed");
+                    e.printStackTrace();
+                    result = "invalid username or password";
+                    Toast.makeText(getApplicationContext(),result,Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
     }
 }

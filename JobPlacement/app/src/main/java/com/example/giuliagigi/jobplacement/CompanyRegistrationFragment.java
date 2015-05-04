@@ -98,7 +98,6 @@ public class CompanyRegistrationFragment extends Fragment {
         newCompany.setFiscalCode(fiscalCode.getText().toString());
         newCompany.setMail(mail.getText().toString().trim());
         newCompany.setPassword(password.getText().toString());
-        newCompany.setUsername(mail.getText().toString());
         newCompany.setType(type);
         newCompany.setField(field);
         return newCompany;
