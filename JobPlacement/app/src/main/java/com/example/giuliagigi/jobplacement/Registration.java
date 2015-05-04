@@ -19,6 +19,9 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.parse.ParseException;
+import com.parse.SignUpCallback;
+
 import java.util.Arrays;
 
 
@@ -94,21 +97,7 @@ public class Registration extends ActionBarActivity implements StudentRegistrati
                 else {
 
                     Log.println(Log.ASSERT,"REGISTRATION","user: " + user.getMail() + ", " + user.getType());
-
-                    try {
-
-                        application.registerNewAccount(user);
-                        Log.println(Log.ASSERT,"REGISTRATION","registration successful. Redirect to login activity");
-                        startActivity(new Intent(getApplicationContext(),Login.class));
-
-                    } catch (Exception e) {
-
-                        e.printStackTrace();
-                        //TODO manage different kind of errors
-                        Log.println(Log.ASSERT,"REGISTRATION","registration unsuccessful. displaying error message - " + e.getMessage());
-                        Toast.makeText(getApplicationContext(),"some error occurred",Toast.LENGTH_SHORT).show();
-                    }
-
+                    registerNewAccount(user);
                 }
             }
         });
@@ -172,5 +161,49 @@ public class Registration extends ActionBarActivity implements StudentRegistrati
         }
     }
 
+    private void registerNewAccount(User newUser){
 
+        Student newStudent = null;
+        Company newCompany = null;
+
+        if(newUser.getType().equals(User.TYPE_STUDENT)){
+            Log.println(Log.ASSERT,"GLOBAL DATA", "registering a student");
+            newStudent = (Student)newUser;
+            newStudent.saveInBackground();
+        }
+        else if(newUser.getType().equals(User.TYPE_COMPANY)){
+            Log.println(Log.ASSERT,"GLOBAL DATA", "registering a company");
+            newCompany = (Company)newUser;
+            newCompany.saveInBackground();
+        }
+        else{
+            Log.println(Log.ASSERT,"GLOBAL DATA","Error: unknown type");
+        }
+
+        ParseUserWrapper newParseUser = new ParseUserWrapper();
+        newParseUser.setEmail(newUser.getMail());
+        newParseUser.setPassword(newUser.getPassword());
+        newParseUser.setUsername(newUser.getUsername());
+        newParseUser.setType(newUser.getType());
+        newParseUser.signUpInBackground(new SignUpCallback() {
+            @Override
+            public void done(ParseException e) {
+
+                if(e == null){
+
+                    Log.println(Log.ASSERT,"REGISTRATION", "signup ok");
+                    Log.println(Log.ASSERT,"REGISTRATION","registration successful. Redirect to login activity");
+                    startActivity(new Intent(getApplicationContext(),Login.class));
+                }
+                else {
+
+                    Log.println(Log.ASSERT,"REGISTRATION", "signup fail");
+                    e.printStackTrace();
+                    //TODO manage different kind of errors
+                    Log.println(Log.ASSERT,"REGISTRATION","registration unsuccessful. displaying error message - " + e.getMessage());
+                    Toast.makeText(getApplicationContext(),"some error occurred",Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+    }
 }

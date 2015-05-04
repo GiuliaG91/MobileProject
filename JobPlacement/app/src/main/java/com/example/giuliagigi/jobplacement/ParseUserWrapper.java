@@ -7,6 +7,8 @@ import com.parse.ParseException;
 import com.parse.ParseUser;
 import com.parse.SignUpCallback;
 
+import bolts.Task;
+
 /**
  * Created by MarcoEsposito90 on 04/05/2015.
  */
@@ -46,33 +48,6 @@ public class ParseUserWrapper extends ParseUser {
     }
     public void setType(String type) {
         this.put(TYPE_FIELD, type);
-    }
-
-    public void signUp() throws ParseException{
-
-        Log.println(Log.ASSERT, "USER WRAPPER", "signup start");
-
-        super.signUpInBackground(new SignUpCallback() {
-            @Override
-            public void done(ParseException e) {
-
-                if(e == null){
-
-                    Log.println(Log.ASSERT, "USER WRAPPER", "signup ok");
-                }
-                else {
-
-                    Log.println(Log.ASSERT,"USER WRAPPER","signup failed");
-                    Log.println(Log.ASSERT, "USER WRAPPER", "error: " + e.getMessage());
-
-                    try {
-                        throw e;
-                    } catch (ParseException e1) {
-                        e1.printStackTrace();
-                    }
-                }
-            }
-        });
     }
 
 }
