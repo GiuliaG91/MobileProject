@@ -1,13 +1,10 @@
 package com.example.giuliagigi.jobplacement;
 
 import android.app.Activity;
-import android.net.Uri;
 import android.os.Bundle;
-import android.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
@@ -50,9 +47,9 @@ public class ProfileManagementTelephoneFragment extends ProfileManagementFragmen
         isListenerAfterDetach = true;
 
         if(application.getCurrentUser().getType().equals(User.TYPE_STUDENT))
-            currentUser = application.getStudentFromUser();
+            currentUser = application.getUserObject();
         else
-            currentUser = application.getCompanyFromUser();
+            currentUser = application.getUserObject();
     }
 
     @Override

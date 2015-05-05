@@ -1,11 +1,8 @@
 package com.example.giuliagigi.jobplacement;
 
-import android.app.ActionBar;
 import android.app.Activity;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,7 +34,7 @@ public class StudentProfileManagementRegistryFragment extends ProfileManagementF
     public void onAttach(Activity activity) {
         super.onAttach(activity);
 
-        currentUser = application.getStudentFromUser();
+        currentUser = (Student)application.getUserObject();
         telephoneFragments = new ArrayList<ProfileManagementTelephoneFragment>();
     }
 

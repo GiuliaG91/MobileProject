@@ -1,16 +1,13 @@
 package com.example.giuliagigi.jobplacement;
 
 import android.app.Activity;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.TextView;
 
 import com.parse.ParseException;
 
@@ -49,7 +46,7 @@ public class StudentProfileManagementLanguageFragment extends ProfileManagementF
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-        currentUser = application.getStudentFromUser();
+        currentUser = (Student)application.getUserObject();
         isListenerAfterDetach = true;
     }
 

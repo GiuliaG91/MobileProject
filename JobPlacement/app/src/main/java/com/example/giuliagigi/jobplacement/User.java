@@ -1,9 +1,12 @@
 package com.example.giuliagigi.jobplacement;
 
+import android.util.Log;
+
 import com.parse.ParseClassName;
 import com.parse.ParseObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -18,31 +21,53 @@ public class User extends ParseObject{
     protected static final String PASSWORD_FIELD = "password";
     private static final String TYPE_FIELD = "type";
     protected static final String PHONE_FIELD = "phones";
-
-    /* it is an external key for a second relation:
-            - accesses the relation "Students" in the DB if the type is student
-            - otherwise accesses "Companies"
-     */
-    private static final String ACCOUNT_ID_FIELD = "account_id";
-
     public static final String TYPE_STUDENT = "Student";
     public static final String TYPE_COMPANY = "Company";
 
     public static final String[] TYPES = new String[]{TYPE_STUDENT,TYPE_COMPANY};
+
+
+    protected String mail;
+    protected String password;
+    protected String type;
+    protected ArrayList<Telephone> phones;
+    protected HashMap<String,Boolean> isCached;
+
+
     /* default zero-argument constructor:
      * no parse object field can be modified in it
      */
-    public User(){ super(); }
+    public User(){
+
+        super();
+
+        mail = null;
+        password = null;
+        type = null;
+        isCached = new HashMap<String,Boolean>();
+
+        isCached.put(MAIL_FIELD, false);
+        isCached.put(TYPE_FIELD, false);
+        isCached.put(PHONE_FIELD,false);
+    }
 
 
     /* ------------- GETTERS AND SETTERS ------------------------- */
 
 
     public String getMail() {
-        return getString(MAIL_FIELD);
-    }
 
+        if(isCached.get(MAIL_FIELD))
+            return mail;
+
+        mail = this.getString(MAIL_FIELD);
+        isCached.put(MAIL_FIELD,true);
+        return mail;
+    }
     public void setMail(String mail){
+
+        this.mail = mail;
+        isCached.put(MAIL_FIELD,true);
         this.put(MAIL_FIELD, mail);
     }
 
@@ -52,34 +77,48 @@ public class User extends ParseObject{
     public void removePhone(Telephone telephone){
 
     }
-
     public ArrayList<Telephone> getPhones(){
 
         return null;
     }
 
     public void setPassword(String password) {
-        this.put(PASSWORD_FIELD, password);
-    }
 
+        this.password = password;
+    }
     public String getPassword() {
-        return getString(PASSWORD_FIELD);
+        return this.password;
     }
 
     public String getType() {
-        return getString(TYPE_FIELD);
-    }
 
+        if(isCached.get(TYPE_FIELD))
+            return type;
+
+        type = getString(TYPE_FIELD);
+        isCached.put(TYPE_FIELD,true);
+        return type;
+    }
     public void setType(String type) {
+
+        this.type = type;
+        isCached.put(TYPE_FIELD,true);
         this.put(TYPE_FIELD, type);
     }
 
-    public void setAccountId(String id){
-        this.put(ACCOUNT_ID_FIELD,id);
+
+    public void cacheData(){
+
+        getMail();
+        getType();
     }
 
-    public String getAccountID(){
-        return this.getString(ACCOUNT_ID_FIELD);
+    public void printCacheStatus(){
+
+        for(String key:isCached.keySet()){
+
+            Log.println(Log.ASSERT, "USER", key + ": " + isCached.get(key));
+        }
     }
 
 }

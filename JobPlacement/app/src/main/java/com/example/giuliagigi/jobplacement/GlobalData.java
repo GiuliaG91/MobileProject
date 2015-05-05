@@ -27,12 +27,14 @@ public class GlobalData extends Application {
      */
 
     private ParseUserWrapper currentUser;
+    private User currentUserObject;
 
     @Override
     public void onCreate() {
         super.onCreate();
 
         currentUser = null;
+        currentUserObject = null;
 
         // Enable Local Datastore.
         Parse.enableLocalDatastore(this);
@@ -56,35 +58,34 @@ public class GlobalData extends Application {
         return  currentUser;
     }
 
-    public Student getStudentFromUser(){
+    public User getUserObject(){
 
-        if(currentUser.getType().equals(User.TYPE_COMPANY))
-            return null;
+        if(currentUserObject == null){
 
-        ParseQuery<Student> studentQuery = ParseQuery.getQuery(Student.class);
-        studentQuery.whereEqualTo(User.MAIL_FIELD,currentUser.getEmail());
-        Student result = null;
-        try {
-            result = (Student)studentQuery.find().get(0);
-        } catch (ParseException e) {
-            e.printStackTrace();
+            if(currentUser.getType().equals((User.TYPE_STUDENT))){
+
+                ParseQuery<Student> studentQuery = ParseQuery.getQuery(Student.class);
+                studentQuery.whereEqualTo(User.MAIL_FIELD,currentUser.getEmail());
+                try {
+                    currentUserObject = studentQuery.find().get(0);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+            }
+            else {
+
+                ParseQuery<Company> companyQuery = ParseQuery.getQuery(Company.class);
+                companyQuery.whereEqualTo(User.MAIL_FIELD,currentUser.getEmail());
+                try {
+                    currentUserObject = companyQuery.find().get(0);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+            }
         }
-        return result;
+
+        currentUserObject.cacheData();
+        return currentUserObject;
     }
 
-    public Company getCompanyFromUser(){
-
-        if(currentUser.getType().equals(User.TYPE_STUDENT))
-            return null;
-
-        ParseQuery<Company> companyQuery = ParseQuery.getQuery(Company.class);
-        companyQuery.whereEqualTo(User.MAIL_FIELD,currentUser.getEmail());
-        Company result = null;
-        try {
-            result = (Company)companyQuery.find().get(0);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        return result;
-    }
 }

@@ -77,7 +77,7 @@ public class menuAdapter extends RecyclerView.Adapter<menuAdapter.ViewHolder> {
         // titles, icons, name, email, profile pic are passed from the main activity as we
         mNavTitles = Titles;                //have seen earlier
         ICONS = Icons;
-         user=u;
+        user=u;
         activity=act;
         mDrawerLayout=d;
         mDrawerList=l;
@@ -288,20 +288,19 @@ public class menuAdapter extends RecyclerView.Adapter<menuAdapter.ViewHolder> {
         } else {
             if(user.getType().toLowerCase().equals("student"))
             {
-               Student s=gd.getStudentFromUser();
-            holder.profile.setImageResource(R.drawable.ic_profile);           // Similarly we set the resources for header view
-            holder.Name.setText(s.getName());
-            holder.email.setText(s.getMail());
+                Student s=(Student)gd.getUserObject();
+                holder.profile.setImageResource(R.drawable.ic_profile);           // Similarly we set the resources for header view
+                holder.Name.setText(s.getName());
+                holder.email.setText(s.getMail());
                 flag= 1;
 
             }
             else
             {
-                Company c=gd.getCompanyFromUser();
+                Company c=(Company)gd.getUserObject();
                 holder.profile.setImageResource(R.drawable.ic_profile);           //logo azienda
                 holder.Name.setText(c.getName());
                 holder.email.setText(c.getMail());
-
                 flag=2;
             }
 

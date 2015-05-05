@@ -164,23 +164,10 @@ public class Registration extends ActionBarActivity implements StudentRegistrati
 
     private void registerNewAccount(final User newUser){
 
-        if(newUser.getType().equals(User.TYPE_STUDENT)){
-            Log.println(Log.ASSERT,"GLOBAL DATA", "registering a student");
-            Student newStudent = (Student)newUser;
-            newStudent.saveInBackground();
-        }
-        else if(newUser.getType().equals(User.TYPE_COMPANY)){
-            Log.println(Log.ASSERT,"GLOBAL DATA", "registering a company");
-            Company newCompany = (Company)newUser;
-            newCompany.saveInBackground();
-        }
-        else{
-            Log.println(Log.ASSERT,"GLOBAL DATA","Error: unknown type");
-        }
 
-
-        ParseUserWrapper newParseUser = new ParseUserWrapper();
+        final ParseUserWrapper newParseUser = new ParseUserWrapper();
         newParseUser.setEmail(newUser.getMail());
+        newParseUser.setUsername(newUser.getMail());
         newParseUser.setPassword(newUser.getPassword());
         newParseUser.setType(newUser.getType());
         newParseUser.signUpInBackground(new SignUpCallback() {
@@ -191,9 +178,8 @@ public class Registration extends ActionBarActivity implements StudentRegistrati
 
                     Log.println(Log.ASSERT,"REGISTRATION", "signup ok");
                     Log.println(Log.ASSERT,"REGISTRATION","registration successful. Redirect to login activity");
+                    newUser.saveInBackground();
                     startActivity(new Intent(getApplicationContext(),Login.class));
-
-
                 }
                 else {
 
