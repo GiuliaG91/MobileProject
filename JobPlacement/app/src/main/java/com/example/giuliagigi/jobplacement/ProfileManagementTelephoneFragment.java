@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.parse.ParseException;
 
@@ -22,6 +23,7 @@ public class ProfileManagementTelephoneFragment extends ProfileManagementFragmen
     private User currentUser = null;
     private Spinner typeSelector;
     private Button removeButton;
+    private boolean isRemoved;
     private EditText numberText;
 
 
@@ -45,11 +47,8 @@ public class ProfileManagementTelephoneFragment extends ProfileManagementFragmen
     public void onAttach(Activity activity) {
         super.onAttach(activity);
         isListenerAfterDetach = true;
-
-        if(application.getCurrentUser().getType().equals(User.TYPE_STUDENT))
-            currentUser = application.getUserObject();
-        else
-            currentUser = application.getUserObject();
+        isRemoved = false;
+        currentUser = application.getUserObject();
     }
 
     @Override
@@ -88,16 +87,17 @@ public class ProfileManagementTelephoneFragment extends ProfileManagementFragmen
             @Override
             public void onClick(View v) {
 
-                currentUser.removePhone(telephone);
-                currentUser.saveInBackground();
-
                 try {
                     telephone.delete();
+                    isRemoved = true;
+                    currentUser.removePhone(telephone);
+                    currentUser.saveEventually();
+                    root.setVisibility(View.INVISIBLE);
+
                 } catch (ParseException e) {
                     e.printStackTrace();
+                    Toast.makeText(getActivity(), "unable to delete", Toast.LENGTH_SHORT).show();
                 }
-
-                root.setVisibility(View.INVISIBLE);
             }
         });
 
@@ -131,12 +131,16 @@ public class ProfileManagementTelephoneFragment extends ProfileManagementFragmen
     @Override
     public void saveChanges() {
 
-        currentUser.addPhone(telephone);
-        currentUser.saveInBackground();
+        if(!isRemoved){
 
-        telephone.setNumber(numberText.getText().toString());
-        telephone.setType((String) typeSelector.getSelectedItem());
-        telephone.saveInBackground();
+            currentUser.addPhone(telephone);
+            currentUser.saveEventually();
+
+            telephone.setNumber(numberText.getText().toString());
+            telephone.setType((String) typeSelector.getSelectedItem());
+            telephone.saveEventually();
+        }
+
     }
 
     @Override

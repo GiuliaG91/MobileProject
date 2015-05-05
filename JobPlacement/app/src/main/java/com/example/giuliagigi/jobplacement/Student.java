@@ -280,7 +280,6 @@ public class Student extends User {
         this.surname = surname;
         isCached.put(SURNAME_FIELD,true);
         this.put(SURNAME_FIELD,surname);
-
     }
     public void addDegree(Degree degree){
 
@@ -290,7 +289,7 @@ public class Student extends User {
     public void removeDegree(Degree degree){
 
         degrees.remove(degree);
-        this.removeAll(DEGREES_FIELD,Arrays.asList(degree));
+        removeAll(DEGREES_FIELD,Arrays.asList(degree));
     }
     public void setSex(String sex){
 
@@ -342,7 +341,7 @@ public class Student extends User {
     public void removePhone(Telephone phone) {
 
         phones.remove(phone);
-        this.removeAll(PHONE_FIELD,Arrays.asList(phone));
+        removeAll(PHONE_FIELD,Arrays.asList(phone));
     }
     public void addLanguage(Language language){
 

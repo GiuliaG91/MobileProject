@@ -37,7 +37,6 @@ public class StudentProfileManagementSkillsFragment extends ProfileManagementFra
     public void onAttach(Activity activity) {
         super.onAttach(activity);
 
-        Log.println(Log.ASSERT,"SKILLS FRAG", "onAttach");
         currentUser = (Student)application.getUserObject();
         degreeFragments = new ArrayList<StudentProfileManagementDegreeFragment>();
         languageFragments = new ArrayList<StudentProfileManagementLanguageFragment>();
@@ -54,6 +53,7 @@ public class StudentProfileManagementSkillsFragment extends ProfileManagementFra
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
+
         root = inflater.inflate(R.layout.fragment_student_profile_management_skills, container, false);
 
         addDegree = (Button)root.findViewById(R.id.skills_add_degree);
@@ -68,6 +68,26 @@ public class StudentProfileManagementSkillsFragment extends ProfileManagementFra
                 degreeFragments.add(dmf);
             }
         });
+
+        addLanguage = (Button)root.findViewById(R.id.skills_add_language);
+        addLanguage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                StudentProfileManagementLanguageFragment lmf = StudentProfileManagementLanguageFragment.newInstance(new Language());
+                FragmentTransaction ft = getFragmentManager().beginTransaction();
+                ft.add(R.id.student_languageList_container,lmf);
+                ft.commit();
+                languageFragments.add(lmf);
+            }
+        });
+
+        return root;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
 
         int max = Math.max(degreeFragments.size(),currentUser.getDegrees().size());
         for(int i=0;i<max;i++){
@@ -84,19 +104,6 @@ public class StudentProfileManagementSkillsFragment extends ProfileManagementFra
 
         }
 
-        addLanguage = (Button)root.findViewById(R.id.skills_add_language);
-        addLanguage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                StudentProfileManagementLanguageFragment lmf = StudentProfileManagementLanguageFragment.newInstance(new Language());
-                FragmentTransaction ft = getFragmentManager().beginTransaction();
-                ft.add(R.id.student_languageList_container,lmf);
-                ft.commit();
-                languageFragments.add(lmf);
-            }
-        });
-
         max = Math.max(languageFragments.size(),currentUser.getLanguages().size());
         for(int j=0;j<max;j++){
 
@@ -111,8 +118,8 @@ public class StudentProfileManagementSkillsFragment extends ProfileManagementFra
             ft.commit();
 
         }
+
         setEnable(host.isEditMode());
-        return root;
     }
 
     @Override
@@ -138,7 +145,6 @@ public class StudentProfileManagementSkillsFragment extends ProfileManagementFra
     @Override
     public void onDetach() {
         super.onDetach();
-        Log.println(Log.ASSERT,"REGISTRY FRAG", "OnDetach");
 
         for(ProfileManagementFragment f: degreeFragments)
             host.removeOnActivityChangedListener(f);

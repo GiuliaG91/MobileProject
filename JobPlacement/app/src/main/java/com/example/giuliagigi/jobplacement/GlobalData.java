@@ -84,7 +84,9 @@ public class GlobalData extends Application {
             }
         }
 
-        currentUserObject.cacheData();
+        if(currentUserObject.isCachingNeeded())
+            currentUserObject.cacheData();
+
         return currentUserObject;
     }
 

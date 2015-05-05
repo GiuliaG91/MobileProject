@@ -153,7 +153,7 @@ public class StudentProfileManagementBasicsFragment extends ProfileManagementFra
         currentUser.setSurname(surnameText.getText().toString());
         currentUser.setSex(sex);
         currentUser.setBirth(birth);
-        currentUser.saveInBackground();
+        currentUser.saveEventually();
     }
 
 

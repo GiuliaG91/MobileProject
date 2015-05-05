@@ -211,14 +211,14 @@ public class Home extends ActionBarActivity  implements TabHomeStudentFragment.O
 
         if(!listeners.contains(listener))
             listeners.add(listener);
-        Log.println(Log.ASSERT, "HOME ACTIVITY", "number of listeners: " + listeners.size());
+//        Log.println(Log.ASSERT, "HOME ACTIVITY", "number of listeners: " + listeners.size());
     }
 
     @Override
     public void removeOnActivityChangedListener(OnActivityChangedListener listener) {
 
         listeners.remove(listener);
-        Log.println(Log.ASSERT,"HOME ACTIVITY", "number of listeners: " + listeners.size());
+//        Log.println(Log.ASSERT,"HOME ACTIVITY", "number of listeners: " + listeners.size());
     }
 
     @Override

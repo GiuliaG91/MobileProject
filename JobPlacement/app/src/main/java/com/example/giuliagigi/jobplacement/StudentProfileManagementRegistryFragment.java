@@ -105,8 +105,14 @@ public class StudentProfileManagementRegistryFragment extends ProfileManagementF
             }
         });
 
-        int max = Math.max(telephoneFragments.size(),currentUser.getPhones().size());
+        return root;
+    }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        int max = Math.max(telephoneFragments.size(),currentUser.getPhones().size());
         for(int i=0;i<max;i++){
 
             if(i>=telephoneFragments.size()){
@@ -121,7 +127,6 @@ public class StudentProfileManagementRegistryFragment extends ProfileManagementF
         }
 
         setEnable(host.isEditMode());
-        return root;
     }
 
     @Override
@@ -165,7 +170,7 @@ public class StudentProfileManagementRegistryFragment extends ProfileManagementF
         if(!cityText.getText().toString().equals(INSERT_FIELD))     currentUser.setCity(cityText.getText().toString());
         if(!postalText.getText().toString().equals(INSERT_FIELD))   currentUser.setPostalCode(postalText.getText().toString());
         if(!nationText.getText().toString().equals(INSERT_FIELD))   currentUser.setNation(nationText.getText().toString());
-        currentUser.saveInBackground();
+        currentUser.saveEventually();
 
     }
 }

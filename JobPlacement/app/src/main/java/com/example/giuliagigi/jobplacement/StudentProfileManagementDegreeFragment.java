@@ -11,6 +11,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Switch;
+import android.widget.Toast;
 
 import com.parse.ParseException;
 
@@ -38,6 +39,7 @@ public class StudentProfileManagementDegreeFragment extends ProfileManagementFra
     private Switch hasLoud;
     Button confirm, delete;
     private Degree degree;
+    private boolean isRemoved;
 
     /* ---------- CONSTRUCTORS, GETTERS, SETTERS ----------------------------------------------*/
 
@@ -64,6 +66,7 @@ public class StudentProfileManagementDegreeFragment extends ProfileManagementFra
         super.onAttach(activity);
         currentUser = (Student)application.getUserObject();
         isListenerAfterDetach = true;
+        isRemoved = false;
     }
 
     @Override
@@ -147,16 +150,18 @@ public class StudentProfileManagementDegreeFragment extends ProfileManagementFra
         delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                currentUser.removeDegree(degree);
-                currentUser.saveInBackground();
 
                 try {
                     degree.delete();
+                    isRemoved = true;
+                    currentUser.removeDegree(degree);
+                    currentUser.saveEventually();
+                    root.setVisibility(View.INVISIBLE);
+
                 } catch (ParseException e) {
                     e.printStackTrace();
+                    Toast.makeText(getActivity(),"unable to delete",Toast.LENGTH_SHORT).show();
                 }
-
-                root.setVisibility(View.INVISIBLE);
             }
         });
 
@@ -215,23 +220,25 @@ public class StudentProfileManagementDegreeFragment extends ProfileManagementFra
 
         super.saveChanges();
 
-        currentUser.addDegree(degree);
-        currentUser.saveInBackground();
+        if(!isRemoved){
 
-        Date date = null;
-        Calendar c = GregorianCalendar.getInstance();
-        c.set(degreeDate.getYear(),degreeDate.getMonth(),degreeDate.getDayOfMonth());
-        date = c.getTime();
+            currentUser.addDegree(degree);
+            currentUser.saveEventually();
+
+            Date date = null;
+            Calendar c = GregorianCalendar.getInstance();
+            c.set(degreeDate.getYear(),degreeDate.getMonth(),degreeDate.getDayOfMonth());
+            date = c.getTime();
 
 
-        degree.setType((String) degreeType.getSelectedItem());
-        degree.setStudies((String) degreeStudies.getSelectedItem());
-        if(!degreeMark.getText().toString().equals(INSERT_FIELD)) degree.setMark(Integer.parseInt(degreeMark.getText().toString()));
-        degree.setDegreeDate(date);
-        degree.setLoud(hasLoud.isChecked());
-        degree.saveInBackground();
+            degree.setType((String) degreeType.getSelectedItem());
+            degree.setStudies((String) degreeStudies.getSelectedItem());
+            if(!degreeMark.getText().toString().equals(INSERT_FIELD)) degree.setMark(Integer.parseInt(degreeMark.getText().toString()));
+            degree.setDegreeDate(date);
+            degree.setLoud(hasLoud.isChecked());
+            degree.saveEventually();
+        }
 
-        hasChanged = false;
     }
 
     @Override
