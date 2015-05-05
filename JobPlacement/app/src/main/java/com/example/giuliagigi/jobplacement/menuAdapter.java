@@ -32,10 +32,10 @@ public class menuAdapter extends RecyclerView.Adapter<menuAdapter.ViewHolder> {
     private String mNavTitles[]; // String Array to store the passed titles Value from MainActivity.java
     private TypedArray ICONS;      // Int Array to store the passed icons resource value from MainActivity.java
 
-    private  GlobalData gd;
-    private  ParseUserWrapper user;
-    private  int flag;
-    private    FragmentActivity activity;
+    private GlobalData gd;
+    private ParseUserWrapper user;
+    private int flag;
+    private FragmentActivity activity;
     private DrawerLayout mDrawerLayout;
     private RecyclerView mDrawerList;
     private Toolbar toolbar;
@@ -286,7 +286,7 @@ public class menuAdapter extends RecyclerView.Adapter<menuAdapter.ViewHolder> {
             holder.imageView.setImageResource(ICONS.getResourceId(position - 1,0));// Settimg the image with array of our icons
 
         } else {
-            if(user.getType().toLowerCase().equals("student"))
+            if(user.getType().equals(User.TYPE_STUDENT))
             {
                 Student s=(Student)gd.getUserObject();
                 holder.profile.setImageResource(R.drawable.ic_profile);           // Similarly we set the resources for header view

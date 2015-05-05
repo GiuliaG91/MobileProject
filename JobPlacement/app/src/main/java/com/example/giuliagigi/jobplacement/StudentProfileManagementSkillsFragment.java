@@ -36,6 +36,8 @@ public class StudentProfileManagementSkillsFragment extends ProfileManagementFra
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
+
+        Log.println(Log.ASSERT,"SKILLS FRAG", "onAttach");
         currentUser = (Student)application.getUserObject();
         degreeFragments = new ArrayList<StudentProfileManagementDegreeFragment>();
         languageFragments = new ArrayList<StudentProfileManagementLanguageFragment>();

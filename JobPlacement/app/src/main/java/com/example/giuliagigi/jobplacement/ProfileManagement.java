@@ -80,7 +80,7 @@ public class ProfileManagement extends Fragment{
         /*************ViewPager***************************/
 
         // Creating The ViewPagerAdapter and Passing Fragment Manager, Titles fot the Tabs and Number Of Tabs.
-        adapter = new ProfileManagementViewAdapter(getFragmentManager(), Titles, Titles.length);
+        adapter = new ProfileManagementViewAdapter(getChildFragmentManager(), Titles, Titles.length);
         // Assigning ViewPager View and setting the adapter
         pager = (ViewPager) view.findViewById(R.id.pager);
         pager.setAdapter(adapter);
