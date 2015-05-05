@@ -109,8 +109,14 @@ public class User extends ParseObject{
 
     public void cacheData(){
 
+        Log.println(Log.ASSERT,"USER", "caching!");
         getMail();
         getType();
+    }
+
+    public boolean isCachingNeeded(){
+
+        return isCached.containsValue(false);
     }
 
     public void printCacheStatus(){
