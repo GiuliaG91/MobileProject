@@ -3,6 +3,7 @@ package com.example.giuliagigi.jobplacement;
 
 import android.content.res.TypedArray;
 import android.net.Uri;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
@@ -15,6 +16,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 
 
 import java.util.ArrayList;
@@ -181,8 +183,18 @@ public class Home extends ActionBarActivity  implements TabHomeStudentFragment.O
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public void onBackPressed() {
 
 
+
+        if(getSupportFragmentManager().getBackStackEntryCount()>0) {
+            toolbar.setTitle("Home");
+
+            getSupportFragmentManager().popBackStackImmediate();
+        }
+        else  super.onBackPressed();
+}
 
     @Override
     public void onFragmentInteraction(Uri uri) {
