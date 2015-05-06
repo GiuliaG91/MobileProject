@@ -42,6 +42,7 @@ public class GlobalData extends Application {
         ParseObject.registerSubclass(ParseUserWrapper.class);
         ParseObject.registerSubclass(Student.class);
         ParseObject.registerSubclass(Company.class);
+        ParseObject.registerSubclass(Office.class);
         ParseObject.registerSubclass(Degree.class);
         ParseObject.registerSubclass(Language.class);
         ParseObject.registerSubclass(Telephone.class);
