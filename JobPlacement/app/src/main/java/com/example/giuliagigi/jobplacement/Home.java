@@ -17,6 +17,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 import java.util.ArrayList;
@@ -130,6 +131,10 @@ public class Home extends ActionBarActivity  implements TabHomeStudentFragment.O
                     .commit();
 
 
+
+
+
+
         }
 
         // specify an adapter (see also next example)
@@ -158,6 +163,15 @@ public class Home extends ActionBarActivity  implements TabHomeStudentFragment.O
         mDrawerToggle.syncState();               // Finally we set the drawer toggle sync State
 
 
+
+        
+        /* -------------------
+                    email verification alert
+             */
+
+        Log.println(Log.ASSERT,"HOME ACTIVITY", "account verified: " + application.getCurrentUser().isEmailVerified());
+        if (!application.getCurrentUser().isEmailVerified())
+            Toast.makeText(getApplicationContext(),"Your email wasn't verified yet. Please click on the link we sent you",Toast.LENGTH_SHORT).show();
 
     }
 
