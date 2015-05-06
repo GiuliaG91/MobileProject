@@ -9,10 +9,12 @@ import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 public class ProfileManagementDialogChangePassword extends DialogFragment {
 
     private EditText newPassword,confirmPassword;
+    GlobalData application;
 
     public ProfileManagementDialogChangePassword() {}
     public static ProfileManagementDialogChangePassword newInstance() {
@@ -25,7 +27,9 @@ public class ProfileManagementDialogChangePassword extends DialogFragment {
 
     @Override
     public void onAttach(Activity activity) {
+
         super.onAttach(activity);
+        application = (GlobalData)getActivity().getApplicationContext();
     }
 
     @Override
@@ -40,19 +44,6 @@ public class ProfileManagementDialogChangePassword extends DialogFragment {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
-        builder.setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-
-                //TODO: perform password change
-            }
-        });
-
-        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {}
-        });
-
         builder.setTitle("Change Password");
 
         LinearLayout layout = new LinearLayout(getActivity());
@@ -65,6 +56,30 @@ public class ProfileManagementDialogChangePassword extends DialogFragment {
         layout.addView(newPassword);
         layout.addView(confirmPassword);
         builder.setView(layout);
+
+        builder.setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+                if(newPassword.getText().toString().equals(confirmPassword.getText().toString())){
+                    application.getCurrentUser().setPassword(newPassword.getText().toString());
+                    application.getCurrentUser().saveEventually();
+                }
+                else {
+
+                    newPassword.setText("");
+                    confirmPassword.setText("");
+                    Toast.makeText(getActivity(),"Passwords doesn't match", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {}
+        });
+
+
 
         return builder.create();
     }

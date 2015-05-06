@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -90,7 +91,12 @@ public class ProfileManagementAccountFragment extends ProfileManagementFragment 
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
 
-                            //TODO: send a new mail for verification
+                            String mail = application.getCurrentUser().getEmail();
+                            Log.println(Log.ASSERT,"ACCOUNT FRAG","re-send verification mail to: " + mail);
+                            application.getCurrentUser().setEmail("null@null.null");
+                            application.getCurrentUser().saveEventually();
+                            application.getCurrentUser().setEmail(mail);
+                            application.getCurrentUser().saveEventually();
                         }
                     });
 
