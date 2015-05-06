@@ -15,6 +15,8 @@ import com.parse.ParseException;
 
 public class CompanyProfileManagementOfficeFragment extends ProfileManagementFragment {
 
+    private static final String TITLE = "Office";
+
     private static String BUNDLE_TYPE = "bundle_type";
     private static String BUNDLE_CITY = "bundle_city";
     private static String BUNDLE_ADDRESS = "bundle_address";
@@ -33,7 +35,6 @@ public class CompanyProfileManagementOfficeFragment extends ProfileManagementFra
     public CompanyProfileManagementOfficeFragment() {
         super();
     }
-
     public static CompanyProfileManagementOfficeFragment newInstance(Office office) {
         CompanyProfileManagementOfficeFragment fragment = new CompanyProfileManagementOfficeFragment();
         Bundle args = new Bundle();
@@ -45,6 +46,13 @@ public class CompanyProfileManagementOfficeFragment extends ProfileManagementFra
     public void setOffice(Office office){
         this.office = office;
     }
+
+    @Override
+    public String getTitle() {
+        return TITLE;
+    }
+
+
 
     @Override
     public void onAttach(Activity activity) {

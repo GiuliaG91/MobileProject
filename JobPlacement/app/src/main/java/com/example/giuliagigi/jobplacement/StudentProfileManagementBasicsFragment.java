@@ -16,6 +16,7 @@ import java.util.GregorianCalendar;
 
 public class StudentProfileManagementBasicsFragment extends ProfileManagementFragment {
 
+    private static final String TITLE = "Overview";
 
     private Student currentUser;
     EditText nameText,surnameText;
@@ -28,6 +29,10 @@ public class StudentProfileManagementBasicsFragment extends ProfileManagementFra
         Bundle args = new Bundle();
         fragment.setArguments(args);
         return fragment;
+    }
+    @Override
+    public String getTitle() {
+        return TITLE;
     }
 
 

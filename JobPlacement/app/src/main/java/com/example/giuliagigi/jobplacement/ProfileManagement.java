@@ -29,7 +29,6 @@ public class ProfileManagement extends Fragment{
     ViewPager pager;
     ProfileManagementViewAdapter adapter;
     SlidingTabLayout tabs;
-    CharSequence Titles[] = {"Overview", "Skills","Registry","Account"};
 
     /***************************************************************/
 
@@ -60,6 +59,7 @@ public class ProfileManagement extends Fragment{
                     + " must implement OnInteractionListener");
         }
         host.setEditMode(editable);
+        application = (GlobalData)getActivity().getApplication();
     }
 
     @Override
@@ -80,7 +80,7 @@ public class ProfileManagement extends Fragment{
         /*************ViewPager***************************/
 
         // Creating The ViewPagerAdapter and Passing Fragment Manager, Titles fot the Tabs and Number Of Tabs.
-        adapter = new ProfileManagementViewAdapter(getChildFragmentManager(), Titles, Titles.length);
+        adapter = new ProfileManagementViewAdapter(getChildFragmentManager(), application.getCurrentUser().getType());
         // Assigning ViewPager View and setting the adapter
         pager = (ViewPager) view.findViewById(R.id.pager);
         pager.setAdapter(adapter);

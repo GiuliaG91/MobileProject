@@ -15,6 +15,8 @@ import java.util.ArrayList;
 
 public class CompanyProfileManagementRegistryFragment extends ProfileManagementFragment {
 
+    private static final String TITLE = "Registry";
+
     private Company currentUser;
     Button addOffice;
     ArrayList<CompanyProfileManagementOfficeFragment> officeFragments;
@@ -23,12 +25,16 @@ public class CompanyProfileManagementRegistryFragment extends ProfileManagementF
     public CompanyProfileManagementRegistryFragment() {
         super();
     }
-
     public static CompanyProfileManagementRegistryFragment newInstance() {
         CompanyProfileManagementRegistryFragment fragment = new CompanyProfileManagementRegistryFragment();
         Bundle args = new Bundle();
         fragment.setArguments(args);
         return fragment;
+    }
+
+    @Override
+    public String getTitle() {
+        return TITLE;
     }
 
     @Override

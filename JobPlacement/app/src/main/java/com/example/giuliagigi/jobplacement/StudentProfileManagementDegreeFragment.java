@@ -23,6 +23,7 @@ import java.util.GregorianCalendar;
 
 public class StudentProfileManagementDegreeFragment extends ProfileManagementFragment {
 
+    private static final String TITLE = "Degree";
     private static String BUNDLE_TYPE = "bundle_type";
     private static String BUNDLE_STUDY = "bundle_study";
     private static String BUNDLE_MARK = "bundle_mark";
@@ -58,6 +59,10 @@ public class StudentProfileManagementDegreeFragment extends ProfileManagementFra
         this.degree = degree;
     }
 
+    @Override
+    public String getTitle() {
+        return TITLE;
+    }
 
     /* ---------- STANDARD CALLBACKS -------------------------------------------------------*/
 

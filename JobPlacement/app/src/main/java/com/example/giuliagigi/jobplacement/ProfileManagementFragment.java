@@ -19,6 +19,7 @@ import java.util.ArrayList;
 public class ProfileManagementFragment extends Fragment implements OnActivityChangedListener{
 
     protected static final String INSERT_FIELD = "Insert";
+    protected static final String TITLE = "None";
 
 
     protected OnInteractionListener host;
@@ -27,6 +28,7 @@ public class ProfileManagementFragment extends Fragment implements OnActivityCha
     protected boolean hasChanged = false;
     protected View root;
     protected boolean isListenerAfterDetach;
+    protected String title;
 
 
     /* --------------------- CONSTRUCTORS -------------------------------------------------------- */
@@ -39,6 +41,9 @@ public class ProfileManagementFragment extends Fragment implements OnActivityCha
         return fragment;
     }
 
+    public String getTitle(){
+        return TITLE;
+    }
 
     /* --------------------- STANDARD CALLBACKS ------------------------------------------------- */
 

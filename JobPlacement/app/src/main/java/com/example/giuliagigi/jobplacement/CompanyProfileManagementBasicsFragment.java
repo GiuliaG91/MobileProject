@@ -18,6 +18,8 @@ import java.util.GregorianCalendar;
 
 public class CompanyProfileManagementBasicsFragment extends ProfileManagementFragment {
 
+    private static final String TITLE = "Overview";
+
     private Company currentUser;
     EditText nameText,VATNumber;
     DatePicker foundationDatePicker;
@@ -30,6 +32,11 @@ public class CompanyProfileManagementBasicsFragment extends ProfileManagementFra
         return fragment;
 
     }
+    @Override
+    public String getTitle() {
+        return TITLE;
+    }
+
 
 
     @Override

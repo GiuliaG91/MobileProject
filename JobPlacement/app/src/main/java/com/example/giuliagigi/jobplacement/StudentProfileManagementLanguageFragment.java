@@ -15,6 +15,8 @@ import com.parse.ParseException;
 
 
 public class StudentProfileManagementLanguageFragment extends ProfileManagementFragment {
+
+    private static final String TITLE = "Language";
     private static String BUNDLE_DESCRIPTION = "bundle_description";
     private static String BUNDLE_LEVEL = "bundle_level";
     private static String BUNDLE_HASCHANGED = "bundle_recycled";

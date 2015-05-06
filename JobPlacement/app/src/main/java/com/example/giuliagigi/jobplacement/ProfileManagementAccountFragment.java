@@ -13,8 +13,9 @@ import android.widget.Toast;
 
 public class ProfileManagementAccountFragment extends ProfileManagementFragment {
 
-    private User currentUser;
+    private static String TITLE = "Account";
 
+    private User currentUser;
     private Button deleteAccount, sendVerification, changeUsername, changePassword;
 
 
@@ -26,6 +27,10 @@ public class ProfileManagementAccountFragment extends ProfileManagementFragment 
         return fragment;
     }
 
+    @Override
+    public String getTitle() {
+        return TITLE;
+    }
 
     /* -------------- STANDARD CALLBACKS ------------------------------------------------------- */
 

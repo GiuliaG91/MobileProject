@@ -15,6 +15,9 @@ import java.util.ArrayList;
 
 public class StudentProfileManagementRegistryFragment extends ProfileManagementFragment {
 
+
+    private static final String TITLE = "Registry";
+
     private Student currentUser;
     private EditText addressText,cityText,postalText,nationText;
     private Button phonePlus;
@@ -29,11 +32,15 @@ public class StudentProfileManagementRegistryFragment extends ProfileManagementF
         return fragment;
     }
 
-
+    @Override
+    public String getTitle() {
+        return TITLE;
+    }
 
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
+
 
         Log.println(Log.ASSERT,"REGISTRY FRAG", "onAttach");
         currentUser = (Student)application.getUserObject();

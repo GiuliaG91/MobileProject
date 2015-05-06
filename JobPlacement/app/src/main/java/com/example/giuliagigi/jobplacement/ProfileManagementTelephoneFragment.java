@@ -15,6 +15,7 @@ import com.parse.ParseException;
 
 public class ProfileManagementTelephoneFragment extends ProfileManagementFragment {
 
+    private static final String TITLE = "Telephone";
     private static String BUNDLE_NUMBER = "bundle_number";
     private static String BUNDLE_TYPE = "bundle_type";
     private static String BUNDLE_HASCHANGED = "bundle_hasChanged";
@@ -39,6 +40,11 @@ public class ProfileManagementTelephoneFragment extends ProfileManagementFragmen
 
     public void setTelephone(Telephone telephone){
         this.telephone = telephone;
+    }
+
+    @Override
+    public String getTitle() {
+        return TITLE;
     }
 
     /* ------------------- STANDARD CALLBACKS ---------------------------------------------------*/

@@ -14,6 +14,8 @@ import java.util.ArrayList;
 
 public class StudentProfileManagementSkillsFragment extends ProfileManagementFragment {
 
+    private static final String TITLE = "Skills";
+
     private Student currentUser;
     Button addDegree;
     ArrayList<StudentProfileManagementDegreeFragment> degreeFragments;
@@ -30,6 +32,10 @@ public class StudentProfileManagementSkillsFragment extends ProfileManagementFra
         return fragment;
     }
 
+    @Override
+    public String getTitle() {
+        return TITLE;
+    }
 
     /*----------------------- STANDARD CALLBACKS -------------------------------------------------*/
 

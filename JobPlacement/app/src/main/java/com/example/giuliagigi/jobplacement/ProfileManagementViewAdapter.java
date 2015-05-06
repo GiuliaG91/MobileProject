@@ -6,29 +6,33 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.util.Log;
 
+import java.util.ArrayList;
+
 /**
  * Created by pietro on 28/04/2015.
  */
-public class ProfileManagementViewAdapter extends FragmentPagerAdapter
+public class ProfileManagementViewAdapter extends FragmentPagerAdapter{
 
-    {
-
-        CharSequence Titles[]; // This will Store the Titles of the Tabs which are Going to be passed when ViewPagerAdapter is created
-        int NumbOfTabs; // Store the number of tabs, this will also be passed when the ViewPagerAdapter is created
-        ProfileManagementFragment[] fragments;
+        ArrayList<ProfileManagementFragment> fragments;
 
         // Build a Constructor and assign the passed Values to appropriate values in the class
-        public ProfileManagementViewAdapter(FragmentManager fm,CharSequence mTitles[], int mNumbOfTabsumb) {
+        public ProfileManagementViewAdapter(FragmentManager fm, String userType) {
             super(fm);
+            fragments = new ArrayList<ProfileManagementFragment>();
 
-            this.Titles = mTitles;
-            this.NumbOfTabs = mNumbOfTabsumb;
-            fragments = new ProfileManagementFragment[mNumbOfTabsumb];
+            if(userType.equals(User.TYPE_STUDENT)){
 
-            fragments[0] = StudentProfileManagementBasicsFragment.newInstance();
-            fragments[1] = StudentProfileManagementSkillsFragment.newInstance();
-            fragments[2] = StudentProfileManagementRegistryFragment.newInstance();
-            fragments[3] = ProfileManagementAccountFragment.newInstance();
+                fragments.add(StudentProfileManagementBasicsFragment.newInstance());
+                fragments.add(StudentProfileManagementSkillsFragment.newInstance());
+                fragments.add(StudentProfileManagementRegistryFragment.newInstance());
+            }
+            else {
+
+                fragments.add(CompanyProfileManagementBasicsFragment.newInstance());
+                fragments.add(CompanyProfileManagementRegistryFragment.newInstance());
+            }
+
+            fragments.add(ProfileManagementAccountFragment.newInstance());
 
         }
 
@@ -36,8 +40,8 @@ public class ProfileManagementViewAdapter extends FragmentPagerAdapter
         @Override
         public Fragment getItem(int position) {
 
-        if(position<fragments.length)
-            return fragments[position];
+        if(position<fragments.size())
+            return fragments.get(position);
 
         else return null;
 
@@ -46,15 +50,16 @@ public class ProfileManagementViewAdapter extends FragmentPagerAdapter
         // This method return the titles for the Tabs in the Tab Strip
 
         @Override
-        public CharSequence getPageTitle(int position) {
-        return Titles[position];
+    public CharSequence getPageTitle(int position) {
+
+        return fragments.get(position).getTitle();
     }
 
         // This method return the Number of tabs for the tabs Strip
+    @Override
+    public int getCount() {
 
-        @Override
-        public int getCount() {
-        return NumbOfTabs;
+        return fragments.size();
     }
   }
 
