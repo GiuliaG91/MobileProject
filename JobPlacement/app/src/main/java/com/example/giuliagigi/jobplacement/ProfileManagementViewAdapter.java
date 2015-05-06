@@ -28,6 +28,7 @@ public class ProfileManagementViewAdapter extends FragmentPagerAdapter
             fragments[0] = StudentProfileManagementBasicsFragment.newInstance();
             fragments[1] = StudentProfileManagementSkillsFragment.newInstance();
             fragments[2] = StudentProfileManagementRegistryFragment.newInstance();
+            fragments[3] = ProfileManagementAccountFragment.newInstance();
 
         }
 
@@ -35,15 +36,10 @@ public class ProfileManagementViewAdapter extends FragmentPagerAdapter
         @Override
         public Fragment getItem(int position) {
 
-        if(position<3)
+        if(position<fragments.length)
             return fragments[position];
 
-        else  if(position == 3)           // As we are having 2 tabs if the position is now 0 it must be 1 so we are returning second tab
-        {
-            Fav_tab tab1 = new Fav_tab();
-            return tab1;
-        }
-            else return null;
+        else return null;
 
     }
 
