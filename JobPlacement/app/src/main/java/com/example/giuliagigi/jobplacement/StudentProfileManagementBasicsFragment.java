@@ -37,7 +37,6 @@ public class StudentProfileManagementBasicsFragment extends ProfileManagementFra
         super.onAttach(activity);
 
         Log.println(Log.ASSERT, "BASICS FRAG", "onAttach");
-
         currentUser = (Student)application.getUserObject();
     }
 
@@ -102,12 +101,6 @@ public class StudentProfileManagementBasicsFragment extends ProfileManagementFra
         emailText.setText(currentUser.getMail());
         setEnable(host.isEditMode());
         return root;
-    }
-
-    @Override
-    public void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-
     }
 
     @Override

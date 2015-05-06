@@ -164,7 +164,7 @@ public class Home extends ActionBarActivity  implements TabHomeStudentFragment.O
 
 
 
-        
+
         /* -------------------
                     email verification alert
              */
