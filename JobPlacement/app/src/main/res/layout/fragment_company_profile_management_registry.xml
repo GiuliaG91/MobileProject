@@ -1,0 +1,31 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.giuliagigi.jobplacement.CompanyProfileManagementRegistryFragment">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:id="@+id/company_offices_container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <ListView
+                android:id="@+id/company_office_listview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+            </ListView>
+            <Button
+                android:id="@+id/company_add_office"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Add Office"/>
+
+        </LinearLayout>
+    </ScrollView>
+
+</FrameLayout>

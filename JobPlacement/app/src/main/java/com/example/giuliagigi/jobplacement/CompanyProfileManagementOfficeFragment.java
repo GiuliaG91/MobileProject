@@ -1,28 +1,19 @@
 package com.example.giuliagigi.jobplacement;
 
 import android.app.Activity;
-import android.net.Uri;
 import android.os.Bundle;
-import android.app.Fragment;
-import android.text.format.Time;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.Switch;
 import android.widget.Toast;
 
 import com.parse.ParseException;
 
-import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
 
-
-public class CompanyProfileManagementOfficeManagement extends ProfileManagementFragment {
+public class CompanyProfileManagementOfficeFragment extends ProfileManagementFragment {
 
     private static String BUNDLE_TYPE = "bundle_type";
     private static String BUNDLE_CITY = "bundle_city";
@@ -39,12 +30,12 @@ public class CompanyProfileManagementOfficeManagement extends ProfileManagementF
     private Office office;
     private boolean isRemoved;
 
-    public CompanyProfileManagementOfficeManagement() {
+    public CompanyProfileManagementOfficeFragment() {
         super();
     }
 
-    public static CompanyProfileManagementOfficeManagement newInstance(Office office) {
-        CompanyProfileManagementOfficeManagement fragment = new CompanyProfileManagementOfficeManagement();
+    public static CompanyProfileManagementOfficeFragment newInstance(Office office) {
+        CompanyProfileManagementOfficeFragment fragment = new CompanyProfileManagementOfficeFragment();
         Bundle args = new Bundle();
         fragment.setArguments(args);
         fragment.setOffice(office);
