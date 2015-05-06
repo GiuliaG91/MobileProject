@@ -5,7 +5,7 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:fillViewport="true"
-    android:background="#abe2f7">
+    android:background="@drawable/background_port">
 
 <!-- Intestazione con logo -->
     <LinearLayout
@@ -31,6 +31,7 @@
         android:orientation="vertical"
         android:layout_margin="20dp"
         android:padding="10dp"
+        android:alpha=".8"
         android:background="#ffffff">
 
         <EditText
@@ -57,6 +58,8 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_margin="20dp"
+        android:background="#191970"
+        android:textColor="#ffffff"
         android:text="LOGIN"/>
 
     <TextView
@@ -68,6 +71,7 @@
         android:layout_margin="25dp"
         android:textSize="20dp"
         android:gravity="center"
+        android:textColor="#ffffff"
         android:layout_alignParentBottom="true"/>
 
 
