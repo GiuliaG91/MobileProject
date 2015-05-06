@@ -1,13 +1,19 @@
 package com.example.giuliagigi.jobplacement;
 
 import android.app.Activity;
+import android.app.Application;
+import android.content.Context;
+import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.parse.ParseException;
@@ -51,8 +57,6 @@ public class CompanyProfileManagementOfficeFragment extends ProfileManagementFra
     public String getTitle() {
         return TITLE;
     }
-
-
 
     @Override
     public void onAttach(Activity activity) {
@@ -113,11 +117,16 @@ public class CompanyProfileManagementOfficeFragment extends ProfileManagementFra
         }
 
         root = inflater.inflate(R.layout.fragment_office_management, container, false);
+
+
+
+
         officeType = (Spinner)root.findViewById(R.id.office_management_spinnerType);
 
         officeType.setAdapter(new StringAdapter(Office.TYPES));
-
         officeType.setSelection(type);
+        
+
 
         confirm = (Button)root.findViewById(R.id.office_management_confirm_button);
         confirm.setOnClickListener(new View.OnClickListener() {

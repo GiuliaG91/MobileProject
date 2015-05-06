@@ -11,7 +11,8 @@
             android:id="@+id/company_offices_container"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:background="@color/tabsColor">
 
             <ListView
                 android:id="@+id/company_office_listview"
@@ -23,6 +24,11 @@
                 android:id="@+id/company_add_office"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="@color/ColorPrimary"
+                android:layout_margin="5dp"
+                android:textSize="15dp"
+                android:textStyle="bold"
+                android:textColor="@color/tabsColor"
                 android:text="Add Office"/>
 
         </LinearLayout>

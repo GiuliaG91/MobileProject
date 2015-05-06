@@ -5,36 +5,51 @@
     android:orientation="vertical"
     tools:context="com.example.giuliagigi.jobplacement.StudentProfileManagementLanguageFragment">
 
-
-    <EditText
+    <android.support.v7.widget.CardView
+        xmlns:card_view="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/card_view"
+        android:layout_gravity="center"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="insert language"
-        android:id="@+id/language_management_description_area"/>
+        card_view:cardCornerRadius="10dp"
+        card_view:cardMaxElevation="5dp"
+        android:alpha=".9">
 
-    <TextView
-        android:id="@+id/add_language_text_view_type"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Level: "/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="insert language"
+                android:id="@+id/language_management_description_area"/>
+
+            <TextView
+                android:id="@+id/add_language_text_view_type"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Level: "/>
 
 
-    <Spinner
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/language_management_spinnerLevel" />
+            <Spinner
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/language_management_spinnerLevel" />
 
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Confirm Changes"
-        android:id="@+id/language_management_confirm_button"/>
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Confirm Changes"
+                android:id="@+id/language_management_confirm_button"/>
 
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Delete"
-        android:id="@+id/language_management_delete_button"/>
-
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Delete"
+                android:id="@+id/language_management_delete_button"/>
+        </LinearLayout>
+    </android.support.v7.widget.CardView>
 
 </LinearLayout>
