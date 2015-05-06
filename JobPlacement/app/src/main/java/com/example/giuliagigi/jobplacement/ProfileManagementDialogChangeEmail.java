@@ -8,6 +8,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.support.v4.app.DialogFragment;
+import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -63,8 +64,10 @@ public class ProfileManagementDialogChangeEmail extends DialogFragment {
 
         LinearLayout layout = new LinearLayout(getActivity());
         layout.setOrientation(LinearLayout.VERTICAL);
-        layout.setPadding(10,10,10,10);
+        layout.setPadding(10, 10, 10, 10);
         newMail = new EditText(getActivity());
+        newMail.setHint("Instert new mail");
+        newMail.setInputType(InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS);
         layout.addView(newMail);
         builder.setView(layout);
 
