@@ -3,6 +3,8 @@ package com.example.giuliagigi.jobplacement;
 import com.parse.ParseClassName;
 import com.parse.ParseObject;
 
+import java.util.Arrays;
+
 /**
  * Created by GiuliaGiGi on 06/05/15.
  */
@@ -58,5 +60,17 @@ public class Office extends ParseObject {
     public String getOfficeCAP(){
         return this.getString(OFFICE_POSTAL_CODE_FIELD);
     }
+
+    public static int getTypeID(String type){
+
+        for(int i=0; i<TYPES.length;i++){
+
+            if(type.equals(TYPES[i]))
+                return i;
+        }
+        return -1;
+    }
+
+
 
 }

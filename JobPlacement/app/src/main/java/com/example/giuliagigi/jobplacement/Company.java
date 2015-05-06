@@ -25,11 +25,13 @@ public class Company extends User {
     protected static final String PHONE_FIELD = "phones";
     protected static final String OFFERS_FIELD = "offers";
     protected static final String FOUNDATION_DATE_FIELD = "Foundation_Date";
+    protected static final String OFFICES_FIELD = "offices";
 
     protected String name;
     protected String fiscalCode;
     protected String field;
     protected Date foundationDate;
+    protected ArrayList<Office> offices;
 
     public Company(){
 
@@ -39,11 +41,13 @@ public class Company extends User {
         fiscalCode = null;
         field = null;
         foundationDate = null;
+        offices = new ArrayList<Office>();
 
         isCached.put(NAME_FIELD,false);
         isCached.put(FISCAL_CODE_FIELD,false);
         isCached.put(FIELD_FIELD,false);
         isCached.put(FOUNDATION_DATE_FIELD,false);
+        isCached.put(OFFICES_FIELD,false);
     }
 
     public void setName(String name){
@@ -146,6 +150,46 @@ public class Company extends User {
         this.put(FOUNDATION_DATE_FIELD,foundation);
     }
 
+    public ArrayList<Office> getOffices() {
+
+        if(isCached.get(OFFICES_FIELD))
+            return this.offices;
+
+        ArrayList<Office> offices = new ArrayList<Office>();
+        List<Object> list = this.getList(OFFICES_FIELD);
+
+        if(list!=null)
+            for (Object o : list) {
+
+                if(o instanceof Office){
+                    Office d =(Office)o;
+
+                    try {
+                        d.fetchIfNeeded();
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+
+                    offices.add(d);
+                }
+            }
+
+        this.offices = offices;
+        isCached.put(OFFICES_FIELD, true);
+        return offices;
+    }
+
+    public void addOffice(Office office){
+
+        offices.add(office);
+        this.addUnique(OFFICES_FIELD, office);
+    }
+    public void removeOffice(Office office){
+
+        offices.remove(office);
+        removeAll(OFFICES_FIELD,Arrays.asList(office));
+    }
+
 
      public void addOffer(CompanyOffer offer){
           this.addUnique(OFFERS_FIELD,offer);
@@ -186,5 +230,6 @@ public class Company extends User {
         getFiscalCode();
         getField();
         getPhones();
+        getOffices();
     }
 }

@@ -4,6 +4,17 @@
     android:layout_height="match_parent">
 
     <TextView
+        android:id="@+id/ffice_management_type_field"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Office type:"/>
+
+    <Spinner
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/office_management_spinnerType" />
+
+    <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="City:"
@@ -46,5 +57,17 @@
         android:id="@+id/office_nation_area"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Confirm Changes"
+        android:id="@+id/office_management_confirm_button"/>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Delete"
+        android:id="@+id/office_management_delete_button"/>
 
 </LinearLayout>
