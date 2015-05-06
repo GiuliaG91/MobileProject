@@ -15,11 +15,13 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 public class ProfileManagementDialogChangeEmail extends DialogFragment {
 
     private EditText newMail;
+    GlobalData application;
 
     public ProfileManagementDialogChangeEmail() {}
     public static ProfileManagementDialogChangeEmail newInstance() {
@@ -32,7 +34,9 @@ public class ProfileManagementDialogChangeEmail extends DialogFragment {
 
     @Override
     public void onAttach(Activity activity) {
+
         super.onAttach(activity);
+        application = (GlobalData)getActivity().getApplicationContext();
     }
 
     @Override
@@ -47,19 +51,6 @@ public class ProfileManagementDialogChangeEmail extends DialogFragment {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
-        builder.setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-
-                //TODO: perform username change
-            }
-        });
-
-        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {}
-        });
-
         builder.setTitle("Change Email / Username");
 
         LinearLayout layout = new LinearLayout(getActivity());
@@ -70,6 +61,26 @@ public class ProfileManagementDialogChangeEmail extends DialogFragment {
         newMail.setInputType(InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS);
         layout.addView(newMail);
         builder.setView(layout);
+
+        builder.setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+                application.getUserObject().setMail(newMail.getText().toString());
+                application.getCurrentUser().setEmail(newMail.getText().toString());
+                application.getCurrentUser().setUsername(newMail.getText().toString());
+
+                application.getCurrentUser().saveEventually();
+                application.getUserObject().saveEventually();
+
+                Toast.makeText(getActivity(),"You will receive a message on the new eMail for verification", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {}
+        });
 
         return builder.create();
     }
