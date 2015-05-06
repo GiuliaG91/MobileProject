@@ -1,10 +1,61 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context="com.example.giuliagigi.jobplacement.CompanyProfileManagementBasicsFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView android:layout_width="match_parent" android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+   <EditText
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       android:textSize="35dp"
+       android:text="Company Name"
+       android:id="@+id/company_basics_name_field"
+       />
 
-</FrameLayout>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="VAT Number:"
+        android:textSize="20dp"
+        android:id="@+id/company_basics_VAT_area"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Insert"
+        android:textSize="20dp"
+        android:id="@+id/company_basics_VAT_field"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Foundation Date:"
+        android:id="@+id/company_basics_foundation_area" />
+
+    <DatePicker
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:calendarViewShown="false"
+        android:id="@+id/company_basics_foundationDatePicker" />
+
+    <TextView
+        android:id="@+id/company_basics_email_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:text="Email address:"
+        android:textSize="20dp"
+        />
+
+    <EditText
+        android:id="@+id/company_basics_email_area"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:editable="false"
+        android:padding="20dp"
+        />
+
+</LinearLayout>

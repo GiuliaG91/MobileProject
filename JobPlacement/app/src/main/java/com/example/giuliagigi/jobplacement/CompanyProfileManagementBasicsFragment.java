@@ -4,106 +4,121 @@ import android.app.Activity;
 import android.net.Uri;
 import android.os.Bundle;
 import android.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.DatePicker;
+import android.widget.EditText;
+
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 
 
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link CompanyProfileManagementBasicsFragment.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link CompanyProfileManagementBasicsFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
-public class CompanyProfileManagementBasicsFragment extends Fragment {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+public class CompanyProfileManagementBasicsFragment extends ProfileManagementFragment {
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    private Company currentUser;
+    EditText nameText,VATNumber;
+    DatePicker foundationDatePicker;
 
-    private OnFragmentInteractionListener mListener;
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment CompanyProfileManagementBasicsFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static CompanyProfileManagementBasicsFragment newInstance(String param1, String param2) {
+    public CompanyProfileManagementBasicsFragment() {super();}
+    public static CompanyProfileManagementBasicsFragment newInstance() {
         CompanyProfileManagementBasicsFragment fragment = new CompanyProfileManagementBasicsFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
         return fragment;
+
     }
 
-    public CompanyProfileManagementBasicsFragment() {
-        // Required empty public constructor
-    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_company_profile_management_basics, container, false);
-    }
-
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
         }
     }
 
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-        try {
-            mListener = (OnFragmentInteractionListener) activity;
-        } catch (ClassCastException e) {
-            throw new ClassCastException(activity.toString()
-                    + " must implement OnFragmentInteractionListener");
-        }
+
+        Log.println(Log.ASSERT, "BASICS FRAG", "onAttach");
+
+        currentUser = (Company)application.getUserObject();
+    }
+
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+
+        root = inflater.inflate(R.layout.fragment_company_profile_management_basics, container, false);
+
+        nameText = (EditText)root.findViewById(R.id.company_basics_name_field);
+        if(currentUser.getName() == null)
+            nameText.setText(INSERT_FIELD);
+        else
+            nameText.setText(currentUser.getName());
+
+        VATNumber = (EditText)root.findViewById(R.id.company_basics_VAT_field);
+        if(currentUser.getFiscalCode() == null)
+            VATNumber.setText(INSERT_FIELD);
+        else
+            VATNumber.setText(currentUser.getFiscalCode());
+
+        textFields.add(nameText);
+        textFields.add(VATNumber);
+
+        OnFieldChangedListener hasChangedListener = new OnFieldChangedListener();
+        for(EditText et:textFields)
+            et.addTextChangedListener(hasChangedListener);
+
+        foundationDatePicker = (DatePicker)root.findViewById(R.id.company_basics_foundationDatePicker);
+        foundationDatePicker.setOnClickListener(new OnFieldClickedListener());
+
+        EditText emailText = (EditText)root.findViewById(R.id.company_basics_email_area);
+        emailText.setText(currentUser.getMail());
+        setEnable(host.isEditMode());
+        return root;
+    }
+
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+
     }
 
     @Override
     public void onDetach() {
         super.onDetach();
-        mListener = null;
+        host = null;
     }
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p/>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
-    public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        public void onFragmentInteraction(Uri uri);
+
+    @Override
+    public void setEnable(boolean enable){
+        super.setEnable(enable);
+
+        foundationDatePicker.setEnabled(enable);
+    }
+
+
+    @Override
+    public void saveChanges(){
+        super.saveChanges();
+
+        Date foundation = null;
+        Calendar c = GregorianCalendar.getInstance();
+        c.set(foundationDatePicker.getYear(),foundationDatePicker.getMonth(),foundationDatePicker.getDayOfMonth());
+        foundation = c.getTime();
+
+        currentUser.setName(nameText.getText().toString());
+        currentUser.setFiscalCode(VATNumber.getText().toString());
+        currentUser.setFoundation(foundation);
+        currentUser.saveEventually();
+
     }
 
 }
