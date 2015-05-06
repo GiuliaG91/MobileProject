@@ -6,6 +6,7 @@ import com.parse.ParseObject;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
 import java.util.ArrayList;
@@ -23,10 +24,12 @@ public class Company extends User {
     protected static final String  FIELD_FIELD = "Field";
     protected static final String PHONE_FIELD = "phones";
     protected static final String OFFERS_FIELD = "offers";
+    protected static final String FOUNDATION_DATE_FIELD = "Foundation_Date";
 
     protected String name;
     protected String fiscalCode;
     protected String field;
+    protected Date foundationDate;
 
     public Company(){
 
@@ -35,10 +38,12 @@ public class Company extends User {
         name = null;
         fiscalCode = null;
         field = null;
+        foundationDate = null;
 
         isCached.put(NAME_FIELD,false);
         isCached.put(FISCAL_CODE_FIELD,false);
         isCached.put(FIELD_FIELD,false);
+        isCached.put(FOUNDATION_DATE_FIELD,false);
     }
 
     public void setName(String name){
@@ -122,6 +127,23 @@ public class Company extends User {
         field = this.getString(FIELD_FIELD);
         isCached.put(FIELD_FIELD,true);
         return field;
+    }
+
+    public Date getFoundation(){
+
+        if(isCached.get(FOUNDATION_DATE_FIELD))
+            return foundationDate;
+
+        foundationDate = this.getDate(FOUNDATION_DATE_FIELD);
+        isCached.put(FOUNDATION_DATE_FIELD,true);
+        return foundationDate;
+    }
+
+    public void setFoundation(Date foundation){
+
+        this.foundationDate = foundation;
+        isCached.put(FOUNDATION_DATE_FIELD,true);
+        this.put(FOUNDATION_DATE_FIELD,foundation);
     }
 
 

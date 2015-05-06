@@ -16,8 +16,9 @@ public class Telephone extends ParseObject{
     public static String TYPE_CELLULAR = "Cellular";
     public static String TYPE_HOME = "Home";
     public static String TYPE_OFFICE = "Office";
+    public static String TYPE_FAX= "Fax";
     public static String TYPE_OTHER = "Other";
-    public static String[] TYPES = new String[]{TYPE_CELLULAR,TYPE_HOME,TYPE_OFFICE,TYPE_OTHER};
+    public static String[] TYPES = new String[]{TYPE_CELLULAR,TYPE_HOME,TYPE_OFFICE,TYPE_FAX,TYPE_OTHER};
 
     public Telephone(){
         super();
