@@ -103,47 +103,44 @@
                     android:id="@+id/degree_management_loud_switch"
                     android:showText="true"
                     android:textOn="Loud"
-                    android:textOff="No Loud"
+                    android:textOff="Loud"
                     />
 
             </LinearLayout>
 
-            <GridLayout
-                android:layout_width="match_parent"
+        <TextView
+            android:id="@+id/degree_management_text_view_date"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="20dp"
+            android:textColor="@color/ColorPrimary"
+            android:text="Date:"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="7"
+            android:id="@+id/degree_date_container"
+            >
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:src="@drawable/date"
+                android:layout_weight="2"
+                android:layout_gravity="center_vertical"
+                android:id="@+id/student_degreedate_icon"/>
+
+            <TextView
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/degree_date_container">
+                android:textColor="#000000"
+                android:layout_weight="5"
+                android:id="@+id/degree_management_datePicker" />
 
 
-                <ImageView
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:src="@drawable/date"
-                    android:layout_margin="3dp"
-                    android:layout_gravity="center_vertical"
-                    android:id="@+id/student_degreedate_icon"/>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Degree date:"
-                        android:textSize="20dp"
-                        android:textColor="@color/ColorPrimary"
-                        android:id="@+id/degree_management_date_area" />
-                    <DatePicker
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:calendarViewShown="false"
-                        android:id="@+id/degree_management_datePicker" />
-
-
-                </LinearLayout>
-            </GridLayout>
-
+        </LinearLayout>
 
             <Button
                 android:layout_width="match_parent"

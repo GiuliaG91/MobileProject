@@ -56,7 +56,7 @@
                 android:background="@null"
                 />
 
-            <GridLayout
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
@@ -78,9 +78,9 @@
                     android:background="@null"
                     android:padding="20dp"
                     />
-            </GridLayout>
+            </LinearLayout>
 
-            <GridLayout
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
@@ -109,9 +109,9 @@
                     android:id="@+id/female_checkBox"
                     android:textColor="#000000"
                     android:layout_gravity="center_horizontal" />
-            </GridLayout>
+            </LinearLayout>
 
-            <GridLayout
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
@@ -125,17 +125,16 @@
                     android:layout_gravity="center_vertical"
                     android:id="@+id/student_birth_icon"/>
 
-                <DatePicker
+                <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:calendarTextColor="#000000"
-                    android:calendarViewShown="false"
+                    android:textColor="#000000"
                     android:id="@+id/student_birth_datePicker" />
 
 
-            </GridLayout>
+            </LinearLayout>
 
-            <GridLayout
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
@@ -157,7 +156,7 @@
                     android:background="@null"
                     android:padding="20dp"
                     />
-            </GridLayout>
+            </LinearLayout>
 
 
 

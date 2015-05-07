@@ -1,8 +1,11 @@
 package com.example.giuliagigi.jobplacement;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.text.format.Time;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,10 +14,12 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Switch;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.parse.ParseException;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -27,16 +32,14 @@ public class StudentProfileManagementDegreeFragment extends ProfileManagementFra
     private static String BUNDLE_TYPE = "bundle_type";
     private static String BUNDLE_STUDY = "bundle_study";
     private static String BUNDLE_MARK = "bundle_mark";
-    private static String BUNDLE_DAY = "bundle_day";
-    private static String BUNDLE_MONTH = "bundle_month";
-    private static String BUNDLE_YEAR = "bundle_year";
     private static String BUNDLE_LOUD = "bundle_loud";
+    private static String BUNDLE_DATE = "bundle_date";
     private static String BUNDLE_HASCHANGED = "bundle_recycled";
 
     private Student currentUser;
     private Spinner degreeType, degreeStudies;
     private EditText degreeMark;
-    private DatePicker degreeDate;
+    private TextView degreeDate;
     private Switch hasLoud;
     Button delete;
     private Degree degree;
@@ -87,16 +90,14 @@ public class StudentProfileManagementDegreeFragment extends ProfileManagementFra
 
         int type,study;
         Integer mark = null;
-        int day, month, year;
+        String date = null;
         boolean loud;
         if(getArguments().getBoolean(BUNDLE_HASCHANGED)){
 
             type = getArguments().getInt(BUNDLE_TYPE);
             study = getArguments().getInt(BUNDLE_STUDY);
             mark = getArguments().getInt(BUNDLE_MARK);
-            day = getArguments().getInt(BUNDLE_DAY);
-            month = getArguments().getInt(BUNDLE_MONTH);
-            year = getArguments().getInt(BUNDLE_YEAR);
+            date = getArguments().getString(BUNDLE_DATE);
             loud = getArguments().getBoolean(BUNDLE_LOUD);
         }
         else {
@@ -115,16 +116,11 @@ public class StudentProfileManagementDegreeFragment extends ProfileManagementFra
                 mark = degree.getMark();
 
             if(degree.getDegreeDate()!= null){
-                day = degree.getDegreeDate().getDay();
-                month = degree.getDegreeDate().getMonth();
-                year = degree.getDegreeDate().getYear();
+                date = degree.getDegreeDate().getDay()+"/"+degree.getDegreeDate().getMonth()+"/"+degree.getDegreeDate().getYear();
+            } else {
+                date = INSERT_FIELD;
             }
-            else
-            {
-                Time today = new Time(Time.getCurrentTimezone());
-                today.setToNow();
-                day = today.monthDay; month=today.month; year=today.year;
-            }
+
             if(degree.getLoud()!=null){
                 loud = degree.getLoud();
             }
@@ -169,9 +165,36 @@ public class StudentProfileManagementDegreeFragment extends ProfileManagementFra
 
         textFields.add(degreeMark);
 
-        degreeDate = (DatePicker)root.findViewById(R.id.degree_management_datePicker);
-        degreeDate.updateDate(year,month,day);
-        degreeDate.setOnClickListener(new OnFieldClickedListener());
+        degreeDate = (TextView)root.findViewById(R.id.degree_management_datePicker);
+        if(degree.getDegreeDate() == null)
+            degreeDate.setText(INSERT_FIELD);
+        else
+            degreeDate.setText(date);
+
+        degreeDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+
+                final DatePicker picker = new DatePicker(getActivity());
+                picker.setCalendarViewShown(false);
+                builder.setTitle("Edit birth date");
+                builder.setView(picker);
+                builder.setPositiveButton("Save", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        degreeDate.setText(picker.getDayOfMonth() + "/" + picker.getMonth() + "/" + picker.getYear());
+                    }
+                });
+                builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                    }
+                });
+                builder.create().show();
+            }
+        });
 
         hasLoud = (Switch)root.findViewById(R.id.degree_management_loud_switch);
         if (degree.getMark()!= null)
@@ -200,9 +223,7 @@ public class StudentProfileManagementDegreeFragment extends ProfileManagementFra
             getArguments().putInt(BUNDLE_TYPE,degreeType.getSelectedItemPosition());
             getArguments().putInt(BUNDLE_STUDY,degreeStudies.getSelectedItemPosition());
             getArguments().putInt(BUNDLE_MARK, Integer.parseInt(degreeMark.getText().toString()));
-            getArguments().putInt(BUNDLE_DAY, Integer.parseInt(String.valueOf(degreeDate.getDayOfMonth())));
-            getArguments().putInt(BUNDLE_MONTH, Integer.parseInt(String.valueOf(degreeDate.getMonth())));
-            getArguments().putInt(BUNDLE_YEAR, Integer.parseInt(String.valueOf(degreeDate.getYear())));
+            getArguments().putString(BUNDLE_DATE, degreeDate.getText().toString());
             getArguments().putBoolean(BUNDLE_LOUD, hasLoud.isChecked());
         }
 
@@ -221,10 +242,16 @@ public class StudentProfileManagementDegreeFragment extends ProfileManagementFra
             currentUser.addDegree(degree);
             currentUser.saveEventually();
 
-            Date date = null;
-            Calendar c = GregorianCalendar.getInstance();
-            c.set(degreeDate.getYear(),degreeDate.getMonth(),degreeDate.getDayOfMonth());
-            date = c.getTime();
+            String dateString = degreeDate.getText().toString();
+            SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+            Date date  = new Date();
+            try {
+                date = dateFormat.parse(dateString);
+            } catch (java.text.ParseException e) {
+                e.printStackTrace();
+            }
+
+            Log.println(Log.ASSERT, "BASICS", "DATE:" + date.toString());
 
 
             degree.setType((String) degreeType.getSelectedItem());
