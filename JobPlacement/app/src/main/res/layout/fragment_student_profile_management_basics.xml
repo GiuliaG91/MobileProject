@@ -61,6 +61,30 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:padding="5dp"
+                android:id="@+id/container_student_mail">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="30dp"
+                    android:layout_gravity="center_vertical"
+                    android:src="@drawable/mail"
+                    android:id="@+id/student_mail_icon"/>
+
+                <EditText
+                    android:id="@+id/student_email_area"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:editable="false"
+                    android:background="@null"
+                    android:padding="20dp"
+                    />
+            </GridLayout>
+
+            <GridLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="5dp"
                 android:id="@+id/container_sex_checkboxs">
 
                 <ImageView
@@ -104,7 +128,7 @@
                     android:layout_height="wrap_content"
                     android:calendarViewShown="false"
                     android:id="@+id/student_birth_datePicker" />
-                
+
 
             </GridLayout>
 
@@ -132,29 +156,7 @@
                     />
             </GridLayout>
 
-            <GridLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:padding="5dp"
-                android:id="@+id/container_student_mail">
 
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="30dp"
-                    android:layout_gravity="center_vertical"
-                    android:src="@drawable/mail"
-                    android:id="@+id/student_mail_icon"/>
-
-                <EditText
-                    android:id="@+id/student_email_area"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:editable="false"
-                    android:background="@null"
-                    android:padding="20dp"
-                    />
-            </GridLayout>
 
 
         </LinearLayout>
