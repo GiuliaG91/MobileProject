@@ -1,6 +1,7 @@
 package com.example.giuliagigi.jobplacement;
 
 import android.app.Application;
+import android.content.ContentResolver;
 import android.util.Log;
 
 import com.parse.FindCallback;
@@ -26,6 +27,8 @@ public class GlobalData extends Application {
     NOTA: in this class shuld only put data structures and their setter and getter
      */
 
+    public static ContentResolver contentResolver;
+
     private ParseUserWrapper currentUser;
     private User currentUserObject;
 
@@ -35,6 +38,7 @@ public class GlobalData extends Application {
 
         currentUser = null;
         currentUserObject = null;
+        contentResolver = getApplicationContext().getContentResolver();
 
         // Enable Local Datastore.
         Parse.enableLocalDatastore(this);
@@ -91,4 +95,8 @@ public class GlobalData extends Application {
         return currentUserObject;
     }
 
+    public static ContentResolver retrieveContentResolver(){
+
+        return contentResolver;
+    }
 }

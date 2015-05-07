@@ -19,6 +19,7 @@ import android.widget.Toast;
 import com.parse.GetDataCallback;
 import com.parse.ParseException;
 
+import java.io.File;
 import java.util.Date;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
@@ -124,16 +125,10 @@ public class StudentProfileManagementBasicsFragment extends ProfileManagementFra
         emailText.setText(currentUser.getMail());
 
         profilePhoto = (ImageView)root.findViewById(R.id.basics_profilePhoto);
-        currentUser.getProfilePhoto().getDataInBackground(new GetDataCallback() {
-            @Override
-            public void done(byte[] bytes, ParseException e) {
 
-                if(e == null)
-                    profilePhoto.setImageBitmap(BitmapFactory.decodeByteArray(bytes,0,bytes.length));
-                else 
-                    Toast.makeText(getActivity(),"Profile photo not available", Toast.LENGTH_SHORT).show();
-            }
-        });
+        if(currentUser.getProfilePhoto() != null)
+            profilePhoto.setImageBitmap(currentUser.getProfilePhoto());
+
         profilePhoto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

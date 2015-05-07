@@ -17,6 +17,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.parse.ParseException;
 import com.parse.ParseFile;
@@ -153,32 +154,8 @@ public class ProfileManagement extends Fragment{
 
                 if(photoBitmap == null)
                     Log.println(Log.ASSERT,"PM FRAG", "photoBitmap null");
-
-                else {
-
-                    ByteArrayOutputStream os = new ByteArrayOutputStream();
-                    photoBitmap.compress(Bitmap.CompressFormat.JPEG,100,os);
-                    byte[] photoByteArray = os.toByteArray();
-                    final ParseFile photoFile = new ParseFile("profilePicture.jpg", photoByteArray);
-                    photoFile.saveInBackground(
-
-                        new SaveCallback() {
-                            @Override
-                            public void done(ParseException e) {
-
-                                application.getUserObject().setProfilePhoto(photoFile);
-                                application.getUserObject().saveEventually();
-                            }
-                        },
-                        new ProgressCallback() {
-
-                            @Override
-                            public void done(Integer integer) {
-
-                                //TODO: display the progress upload to user
-                            }
-                    });
-                }
+                else
+                    application.getUserObject().setProfilePhoto(photoBitmap);
 
             } catch (IOException e) {
                 e.printStackTrace();
