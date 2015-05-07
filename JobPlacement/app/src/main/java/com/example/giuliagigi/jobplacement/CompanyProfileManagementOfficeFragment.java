@@ -34,7 +34,7 @@ public class CompanyProfileManagementOfficeFragment extends ProfileManagementFra
     private Spinner officeType;
     private EditText officeCity, officeAddress, officeCAP, officeNation;
 
-    Button confirm, delete;
+    Button delete;
     private Office office;
     private boolean isRemoved;
 
@@ -125,17 +125,7 @@ public class CompanyProfileManagementOfficeFragment extends ProfileManagementFra
 
         officeType.setAdapter(new StringAdapter(Office.TYPES));
         officeType.setSelection(type);
-        
 
-
-        confirm = (Button)root.findViewById(R.id.office_management_confirm_button);
-        confirm.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                saveChanges();
-            }
-        });
 
         delete = (Button)root.findViewById(R.id.office_management_delete_button);
         delete.setOnClickListener(new View.OnClickListener() {
@@ -251,7 +241,7 @@ public class CompanyProfileManagementOfficeFragment extends ProfileManagementFra
         else
             visibility = View.INVISIBLE;
 
-        confirm.setVisibility(visibility);
+
         delete.setVisibility(visibility);
     }
 

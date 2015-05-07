@@ -84,11 +84,6 @@
                 android:textOff="No"
                 />
 
-            <Button
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Confirm Changes"
-                android:id="@+id/degree_management_confirm_button"/>
 
             <Button
                 android:layout_width="match_parent"

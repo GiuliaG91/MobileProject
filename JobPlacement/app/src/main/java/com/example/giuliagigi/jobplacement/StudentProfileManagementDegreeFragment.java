@@ -38,7 +38,7 @@ public class StudentProfileManagementDegreeFragment extends ProfileManagementFra
     private EditText degreeMark;
     private DatePicker degreeDate;
     private Switch hasLoud;
-    Button confirm, delete;
+    Button delete;
     private Degree degree;
     private boolean isRemoved;
 
@@ -141,15 +141,6 @@ public class StudentProfileManagementDegreeFragment extends ProfileManagementFra
 
         degreeType.setSelection(type);
         degreeStudies.setSelection(study);
-
-        confirm = (Button)root.findViewById(R.id.degree_management_confirm_button);
-        confirm.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                saveChanges();
-            }
-        });
 
         delete = (Button)root.findViewById(R.id.degree_management_delete_button);
         delete.setOnClickListener(new View.OnClickListener() {
@@ -268,7 +259,6 @@ public class StudentProfileManagementDegreeFragment extends ProfileManagementFra
         else
             visibility = View.INVISIBLE;
 
-        confirm.setVisibility(visibility);
         delete.setVisibility(visibility);
     }
 

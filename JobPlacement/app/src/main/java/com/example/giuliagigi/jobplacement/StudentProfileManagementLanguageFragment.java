@@ -24,7 +24,7 @@ public class StudentProfileManagementLanguageFragment extends ProfileManagementF
     private Student currentUser;
     private Spinner languageLevel;
     private EditText languageDesc;
-    Button confirm, delete;
+    Button  delete;
     private Language language;
     private boolean isRemoved;
 
@@ -95,14 +95,6 @@ public class StudentProfileManagementLanguageFragment extends ProfileManagementF
         languageLevel.setAdapter(new StringAdapter(Language.LEVELS));
         languageLevel.setSelection(level);
 
-        confirm = (Button) root.findViewById(R.id.language_management_confirm_button);
-        confirm.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                saveChanges();
-            }
-        });
 
         delete = (Button) root.findViewById(R.id.language_management_delete_button);
         delete.setOnClickListener(new View.OnClickListener() {
@@ -185,7 +177,6 @@ public class StudentProfileManagementLanguageFragment extends ProfileManagementF
         else
             visibility = View.INVISIBLE;
 
-        confirm.setVisibility(visibility);
         delete.setVisibility(visibility);
     }
 
