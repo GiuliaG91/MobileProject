@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
+    android:layout_width="match_parent"
+    android:layout_height="70dp"
     android:background="#ffffff"
     android:orientation="horizontal">
 
@@ -11,15 +11,17 @@
         android:layout_height="wrap_content"
         android:id="@+id/rowIcon"
         android:paddingLeft="16dp"
+        android:layout_gravity="center"
         android:src="@drawable/abc_ic_voice_search_api_mtrl_alpha"/>
 
     <TextView
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:paddingLeft="12dp"
+        android:layout_height="fill_parent"
+        android:paddingLeft="20dp"
         android:paddingTop="4dp"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="Medium Text"
-        android:id="@+id/rowText" />
+        android:id="@+id/rowText"
+        android:gravity="center" />
 
 </LinearLayout>

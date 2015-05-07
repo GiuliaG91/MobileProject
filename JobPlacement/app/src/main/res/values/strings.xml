@@ -139,7 +139,9 @@
         <item>Materials</item>
     </string-array>
 
+<!-- SHOW OFFER -->
 
+    <string name="show_offer_fragment_tags">Tags:</string>
 
 
 

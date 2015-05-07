@@ -29,14 +29,13 @@
 
 
 
-    <!-- The navigation drawer -->
-    <!-- A RecyclerView with some commonly used attributes -->
+
+    A RecyclerView with some commonly used attributes
     <android.support.v7.widget.RecyclerView
         android:id="@+id/left_drawer"
         android:layout_width="320dp"
         android:layout_height="match_parent"
         android:layout_gravity="start"
         android:background="#FFFFFF"/>
-
 
 </android.support.v4.widget.DrawerLayout>

@@ -35,11 +35,13 @@ public class menuAdapter extends RecyclerView.Adapter<menuAdapter.ViewHolder> {
     private  GlobalData gd;
     private  ParseUserWrapper user;
     private  int flag;
-    private    FragmentActivity activity;
+    private  FragmentActivity activity;
     private DrawerLayout mDrawerLayout;
     private RecyclerView mDrawerList;
     private Toolbar toolbar;
 
+
+    private SetSelectedItem mCallbacks;
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         // each data item is just a string in this case
@@ -83,7 +85,7 @@ public class menuAdapter extends RecyclerView.Adapter<menuAdapter.ViewHolder> {
         mDrawerList=l;
         toolbar=t;
         gd=globalData;
-
+        mCallbacks=(SetSelectedItem)activity;
     }
 
 
@@ -155,6 +157,7 @@ public class menuAdapter extends RecyclerView.Adapter<menuAdapter.ViewHolder> {
 
                                     toolbar.setTitle(tv.getText());
                                     mDrawerLayout.closeDrawers();
+                                    mCallbacks.setSelectedItem(TYPE_PROFILE);
                                 }
 
                             }
@@ -198,7 +201,7 @@ public class menuAdapter extends RecyclerView.Adapter<menuAdapter.ViewHolder> {
 
                                       toolbar.setTitle(tv.getText());
                                       mDrawerLayout.closeDrawers();
-
+                                      mCallbacks.setSelectedItem(TYPE_HOME);
                                   }
                               }
 
@@ -237,8 +240,10 @@ public class menuAdapter extends RecyclerView.Adapter<menuAdapter.ViewHolder> {
 
                                       toolbar.setTitle(tv.getText());
                                       mDrawerLayout.closeDrawers();
+                                      mCallbacks.setSelectedItem(TYPE_COMPANIES);
 
                                   }
+
                               }
 
 
@@ -332,5 +337,13 @@ public class menuAdapter extends RecyclerView.Adapter<menuAdapter.ViewHolder> {
     private boolean isPositionHeader(int position) {
         return position == 0;
     }
+
+
+   public interface SetSelectedItem{
+
+
+       public void setSelectedItem(int position);
+
+   }
 
 }

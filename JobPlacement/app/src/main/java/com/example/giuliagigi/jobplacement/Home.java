@@ -1,6 +1,7 @@
 package com.example.giuliagigi.jobplacement;
 
 
+import android.app.Activity;
 import android.content.res.TypedArray;
 import android.net.Uri;
 import android.support.v4.app.Fragment;
@@ -13,9 +14,11 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.TextView;
 
 
@@ -23,7 +26,7 @@ import java.util.ArrayList;
 
 
 public class Home extends ActionBarActivity  implements TabHomeStudentFragment.OnFragmentInteractionListener ,TabHomeCompanyFragment.OnFragmentInteractionListener, NewOffer.OnFragmentInteractionListener,
-                                                ProfileManagementFragment.OnInteractionListener, ProfileManagement.OnInteractionListener
+                                                ProfileManagementFragment.OnInteractionListener, ProfileManagement.OnInteractionListener , menuAdapter.SetSelectedItem
 {
 
 
@@ -39,6 +42,7 @@ public class Home extends ActionBarActivity  implements TabHomeStudentFragment.O
     private ActionBarDrawerToggle mDrawerToggle;
     private TypedArray ICONS;
     private String[] TITLES;
+    private static int mDrawerSelectedItem=1;
 
 /********************************************************/
 /**
@@ -62,8 +66,6 @@ public class Home extends ActionBarActivity  implements TabHomeStudentFragment.O
         setContentView(R.layout.activity_home);
 
         application = (GlobalData)getApplication();
-
-
 
         /* initialize the listeners list:
                 each listener is a fragment: when the activity
@@ -101,33 +103,14 @@ public class Home extends ActionBarActivity  implements TabHomeStudentFragment.O
             TITLES=getResources().getStringArray(R.array.Menu_items_student);
             ICONS=getResources().obtainTypedArray(R.array.StudentMenuicons);
 
-            FragmentManager fragmentManager =getSupportFragmentManager();
-
-            //New Fragment
-            TabHomeStudentFragment homeFragment = TabHomeStudentFragment.newInstance();
-            // Insert the fragment by replacing any existing fragment
-            // Insert the fragment by replacing any existing fragment
-
-            fragmentManager.beginTransaction()
-                    .replace(R.id.tab_Home_container, homeFragment)
-                    .commit();
-
+                   setUpMainFragment(1);
         }
       else
         {
             TITLES=getResources().getStringArray(R.array.Menu_items_Company);
             ICONS=getResources().obtainTypedArray(R.array.CompanytMenuicons);
 
-            FragmentManager fragmentManager =getSupportFragmentManager();
-
-            //New Fragment
-            TabHomeCompanyFragment homeFragment = TabHomeCompanyFragment.newInstance();
-            // Insert the fragment by replacing any existing fragment
-            // Insert the fragment by replacing any existing fragment
-
-            fragmentManager.beginTransaction()
-                    .replace(R.id.tab_Home_container, homeFragment)
-                    .commit();
+               setUpMainFragment(2);
 
 
         }
@@ -183,6 +166,9 @@ public class Home extends ActionBarActivity  implements TabHomeStudentFragment.O
         return super.onOptionsItemSelected(item);
     }
 
+
+
+
     @Override
     public void onBackPressed() {
 
@@ -233,4 +219,147 @@ public class Home extends ActionBarActivity  implements TabHomeStudentFragment.O
             for (OnActivityChangedListener l:listeners)
                 l.onActivityStateChanged(OnActivityChangedListener.State.DISPLAY_MODE_STATE, OnActivityChangedListener.State.EDIT_MODE_STATE);
     }
+
+    @Override
+    public void setSelectedItem(int position) {
+        mDrawerSelectedItem=position;
+    }
+
+
+    public void setUpMainFragment(int type) {
+
+
+        switch (type) {
+
+            case 1 :
+
+            //Student menu --> student fragments
+            switch (mDrawerSelectedItem) {
+                case 1: // Home
+
+
+                    FragmentManager fragmentManager = getSupportFragmentManager();
+                    Fragment current = fragmentManager.findFragmentById(R.id.tab_Home_container);
+
+                        //New Fragment
+                        TabHomeStudentFragment homeFragment = TabHomeStudentFragment.newInstance();
+                        // Insert the fragment by replacing any existing fragment
+                        // Insert the fragment by replacing any existing fragment
+
+                        fragmentManager.beginTransaction()
+                                .replace(R.id.tab_Home_container, homeFragment)
+                                .commit();
+
+                        // Highlight the selected item, update the title, and close the drawer
+                        // Highlight the selected item, update the title, and close the drawer
+                    toolbar.setTitle(TITLES[mDrawerSelectedItem]);
+                    mDrawerLayout.closeDrawers();
+
+
+
+                    break;
+
+                case 2:
+
+
+                            fragmentManager = getSupportFragmentManager();
+                            current = fragmentManager.findFragmentById(R.id.tab_Home_container);
+
+                                Fragment fragment = ProfileManagement.newInstance();
+
+                                fragmentManager.beginTransaction()
+                                        .replace(R.id.tab_Home_container, fragment)
+                                        .commit();
+
+
+                    toolbar.setTitle(TITLES[mDrawerSelectedItem]);
+                    mDrawerLayout.closeDrawers();
+
+
+
+                    break;
+
+
+                default:
+                    break;
+
+
+            }
+
+       break;
+  /**************************************************END STUDENT SWITCH***********************************/
+            case 2:
+                switch (mDrawerSelectedItem) {
+
+                    case 1 :
+
+
+
+                                FragmentManager fragmentManager =getSupportFragmentManager();
+                                Fragment current = fragmentManager.findFragmentById(R.id.tab_Home_container);
+
+
+                                    //New Fragment
+                                    TabHomeCompanyFragment homeFragment = TabHomeCompanyFragment.newInstance();
+                                    // Insert the fragment by replacing any existing fragment
+                                    // Insert the fragment by replacing any existing fragment
+
+                                    fragmentManager.beginTransaction()
+                                            .replace(R.id.tab_Home_container, homeFragment)
+                                            .commit();
+
+
+
+                        toolbar.setTitle(TITLES[mDrawerSelectedItem]);
+                        mDrawerLayout.closeDrawers();
+
+
+
+
+
+                        break;
+
+
+
+                    case 4 :
+
+
+
+                                 fragmentManager = getSupportFragmentManager();
+                                 current = fragmentManager.findFragmentById(R.id.fragment_new_offer);
+
+
+                                    //New Fragment
+                                    NewOffer fragment = NewOffer.newInstance();
+                                    // Insert the fragment by replacing any existing fragment
+                                    // Insert the fragment by replacing any existing fragment
+
+                                    fragmentManager.beginTransaction()
+                                            .replace(R.id.tab_Home_container, fragment)
+                                            .addToBackStack("Home")
+                                            .commit();
+
+                        toolbar.setTitle(TITLES[mDrawerSelectedItem]);
+                        mDrawerLayout.closeDrawers();
+
+                        break;
+
+
+
+
+
+
+                }
+                break;
+/**************************************************END COMPANY SWITCH***********************************/
+
+            default:
+      break;
+        }
+   /*****************************************END TYPE SWITCH******************************/
+    }
+
+
+
+
 }

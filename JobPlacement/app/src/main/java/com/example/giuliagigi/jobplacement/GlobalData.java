@@ -2,6 +2,7 @@ package com.example.giuliagigi.jobplacement;
 
 import android.app.Application;
 import android.util.Log;
+import android.widget.Toolbar;
 
 import com.parse.FindCallback;
 import com.parse.LogInCallback;
@@ -25,7 +26,6 @@ public class GlobalData extends Application {
     it is also very useful to store data that should go from one activity to another
     NOTA: in this class shuld only put data structures and their setter and getter
      */
-
     private ParseUserWrapper currentUser;
 
     @Override
@@ -87,4 +87,12 @@ public class GlobalData extends Application {
         }
         return result;
     }
+
+
+
+
+
+
+
+
 }

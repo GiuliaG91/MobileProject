@@ -20,11 +20,13 @@ import android.view.ViewGroup;
  * create an instance of this fragment.
  */
 public class TabHomeCompanyFragment extends Fragment {
+
+    View root;
     /**
      * *************For page viewer***************************
      */
     ViewPager pager;
-    ViewPagerAdapter adapter;
+   CompanyViewPagerAdapter adapter;
     SlidingTabLayout tabs;
     CharSequence Titles[] = {"Home","Offers"};
     int Numboftabs = 2;
@@ -64,23 +66,18 @@ public class TabHomeCompanyFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_tab_home, container, false);
-    }
+        root= inflater.inflate(R.layout.fragment_tab_home, container, false);
 
-    @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
 
         /*************ViewPager***************************/
 
         // Creating The ViewPagerAdapter and Passing Fragment Manager, Titles fot the Tabs and Number Of Tabs.
-        adapter = new ViewPagerAdapter(getFragmentManager(), Titles, Numboftabs);
+        adapter = new CompanyViewPagerAdapter(getChildFragmentManager(), Titles, Numboftabs);
         // Assigning ViewPager View and setting the adapter
-        pager = (ViewPager) view.findViewById(R.id.pager);
+        pager = (ViewPager) root.findViewById(R.id.pager);
         pager.setAdapter(adapter);
-
         // Assiging the Sliding Tab Layout View
-        tabs = (SlidingTabLayout) view.findViewById(R.id.tabs);
+        tabs = (SlidingTabLayout) root.findViewById(R.id.tabs);
         tabs.setDistributeEvenly(true); // To make the Tabs Fixed set this true, This makes the tabs Space Evenly in Available width
 
 
@@ -98,8 +95,10 @@ public class TabHomeCompanyFragment extends Fragment {
 
         /****************************************************/
 
+        return root;
 
     }
+
 
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {

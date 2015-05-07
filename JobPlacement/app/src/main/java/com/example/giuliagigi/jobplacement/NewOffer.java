@@ -17,6 +17,7 @@ import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.GridLayout;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.MultiAutoCompleteTextView;
@@ -277,7 +278,7 @@ public class NewOffer extends Fragment implements DatePickerFragment.OnDataSetLi
                 if(support.add(tagsView.getText().toString().toLowerCase().trim())==false)
                 {
                     if(existent.add(tagsView.getText().toString().toLowerCase().trim())==true) {
-                        final LinearLayout tagConntainer = (LinearLayout) root.findViewById(R.id.tagContainder);
+                        final GridLayout tagConntainer = (GridLayout) root.findViewById(R.id.tagContainder);
 
                         LayoutInflater inflater = (LayoutInflater) getActivity().getBaseContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                         View mytagView = inflater.inflate(R.layout.taglayout, null);

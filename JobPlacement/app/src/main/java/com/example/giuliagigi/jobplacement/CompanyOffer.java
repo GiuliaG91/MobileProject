@@ -29,6 +29,7 @@ public class CompanyOffer extends ParseObject {
     private static final String COMPANY_FIELD=  "company";
 
     private static final String TAGS_FIELD=  "tags";
+    private static final String APPLIES_FIELD="applies";
 
 
     public CompanyOffer(){
@@ -96,6 +97,28 @@ public class CompanyOffer extends ParseObject {
         return tags;
     }
 
+    public ArrayList<Student> getStudents( ){
+
+        ArrayList<Student> students = new ArrayList<Student>();
+        List<Object> list = this.getList(APPLIES_FIELD);
+
+        if(list!= null)
+            for(Object o:list){
+                if(o instanceof Student){
+
+                    Student s = (Student)o;
+                    try {
+                        s.fetchIfNeeded();
+                    } catch (com.parse.ParseException e) {
+                        e.printStackTrace();
+                    }
+                    students.add(s);
+                }
+            }
+
+        return students;
+    }
+
     /***************END GETTER****************/
 
 
@@ -144,6 +167,12 @@ public class CompanyOffer extends ParseObject {
     }
 
     public void addTag(Tag t){ this.addUnique(TAGS_FIELD, Arrays.asList(t));}
+
+    public void addStudent(Student student)
+    {
+        this.addUnique(APPLIES_FIELD,Arrays.asList(student));
+    }
+
 
 
     /*END SETTER METHODS*/

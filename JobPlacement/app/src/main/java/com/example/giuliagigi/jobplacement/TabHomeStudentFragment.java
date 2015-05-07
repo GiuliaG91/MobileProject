@@ -28,7 +28,7 @@ public class TabHomeStudentFragment extends Fragment {
     ViewPager pager;
     ViewPagerAdapter adapter;
     SlidingTabLayout tabs;
-    CharSequence Titles[] = {"Home", "Preferred","Applies"};
+    CharSequence Titles[] = {"News", "Preferred","Applies"};
     int Numboftabs = 3;
 
     /***************************************************************/

@@ -14,6 +14,17 @@ import android.view.ViewGroup;
  */
 public class Home_tab extends Fragment {
 
+
+
+   public Home_tab(){}
+
+    public Home_tab newInstance(){
+
+        Home_tab fragment=new Home_tab();
+        return fragment;
+
+    }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
