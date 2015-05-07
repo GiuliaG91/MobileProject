@@ -1,22 +1,21 @@
 package com.example.giuliagigi.jobplacement;
 
 import android.app.Activity;
-import android.net.Uri;
 import android.os.Bundle;
-import android.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.parse.ParseException;
 
 
 public class ProfileManagementTelephoneFragment extends ProfileManagementFragment {
 
+    private static final String TITLE = "Telephone";
     private static String BUNDLE_NUMBER = "bundle_number";
     private static String BUNDLE_TYPE = "bundle_type";
     private static String BUNDLE_HASCHANGED = "bundle_hasChanged";
@@ -25,6 +24,7 @@ public class ProfileManagementTelephoneFragment extends ProfileManagementFragmen
     private User currentUser = null;
     private Spinner typeSelector;
     private Button removeButton;
+    private boolean isRemoved;
     private EditText numberText;
 
 
@@ -42,17 +42,19 @@ public class ProfileManagementTelephoneFragment extends ProfileManagementFragmen
         this.telephone = telephone;
     }
 
+    @Override
+    public String getTitle() {
+        return TITLE;
+    }
+
     /* ------------------- STANDARD CALLBACKS ---------------------------------------------------*/
 
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
         isListenerAfterDetach = true;
-
-        if(application.getCurrentUser().getType().equals(User.TYPE_STUDENT))
-            currentUser = application.getStudentFromUser();
-        else
-            currentUser = application.getCompanyFromUser();
+        isRemoved = false;
+        currentUser = application.getUserObject();
     }
 
     @Override
@@ -91,16 +93,17 @@ public class ProfileManagementTelephoneFragment extends ProfileManagementFragmen
             @Override
             public void onClick(View v) {
 
-                currentUser.removePhone(telephone);
-                currentUser.saveInBackground();
-
                 try {
                     telephone.delete();
+                    isRemoved = true;
+                    currentUser.removePhone(telephone);
+                    currentUser.saveEventually();
+                    root.setVisibility(View.INVISIBLE);
+
                 } catch (ParseException e) {
                     e.printStackTrace();
+                    Toast.makeText(getActivity(), "unable to delete", Toast.LENGTH_SHORT).show();
                 }
-
-                root.setVisibility(View.INVISIBLE);
             }
         });
 
@@ -134,12 +137,17 @@ public class ProfileManagementTelephoneFragment extends ProfileManagementFragmen
     @Override
     public void saveChanges() {
 
-        currentUser.addPhone(telephone);
-        currentUser.saveInBackground();
+        if(!isRemoved){
 
-        telephone.setNumber(numberText.getText().toString());
-        telephone.setType((String) typeSelector.getSelectedItem());
-        telephone.saveInBackground();
+            currentUser.addPhone(telephone);
+            currentUser.saveEventually();
+
+            telephone.setNumber(numberText.getText().toString());
+            telephone.setType((String) typeSelector.getSelectedItem());
+            telephone.setUser(currentUser);
+            telephone.saveEventually();
+        }
+
     }
 
     @Override

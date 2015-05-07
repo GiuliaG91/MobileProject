@@ -1,6 +1,10 @@
 package com.example.giuliagigi.jobplacement;
 
 import android.app.Activity;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -9,6 +13,11 @@ import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.Toast;
+
+import com.parse.GetDataCallback;
+import com.parse.ParseException;
 
 import java.util.Date;
 import java.util.Calendar;
@@ -16,9 +25,12 @@ import java.util.GregorianCalendar;
 
 public class StudentProfileManagementBasicsFragment extends ProfileManagementFragment {
 
+    private static final String TITLE = "Overview";
+    private static final int REQUEST_IMAGE_GET = 1;
 
     private Student currentUser;
-    EditText nameText,surnameText;
+    EditText nameText,surnameText, birthCityText;
+    ImageView profilePhoto;
     CheckBox male,female;
     DatePicker birthPicker;
 
@@ -29,13 +41,19 @@ public class StudentProfileManagementBasicsFragment extends ProfileManagementFra
         fragment.setArguments(args);
         return fragment;
     }
+    @Override
+    public String getTitle() {
+        return TITLE;
+    }
 
 
 
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-        currentUser = application.getStudentFromUser();
+
+        Log.println(Log.ASSERT, "BASICS FRAG", "onAttach");
+        currentUser = (Student)application.getUserObject();
     }
 
     @Override
@@ -63,8 +81,15 @@ public class StudentProfileManagementBasicsFragment extends ProfileManagementFra
         else
             surnameText.setText(currentUser.getSurname());
 
+        birthCityText = (EditText)root.findViewById(R.id.student_birth_city_area);
+        if(currentUser.getBirthCity() == null)
+            birthCityText.setText(INSERT_FIELD);
+        else
+            birthCityText.setText(currentUser.getBirthCity());
+
         textFields.add(nameText);
         textFields.add(surnameText);
+        textFields.add(birthCityText);
 
         OnFieldChangedListener hasChangedListener = new OnFieldChangedListener();
         for(EditText et:textFields)
@@ -97,14 +122,32 @@ public class StudentProfileManagementBasicsFragment extends ProfileManagementFra
 
         EditText emailText = (EditText)root.findViewById(R.id.student_email_area);
         emailText.setText(currentUser.getMail());
+
+        profilePhoto = (ImageView)root.findViewById(R.id.basics_profilePhoto);
+        currentUser.getProfilePhoto().getDataInBackground(new GetDataCallback() {
+            @Override
+            public void done(byte[] bytes, ParseException e) {
+
+                if(e == null)
+                    profilePhoto.setImageBitmap(BitmapFactory.decodeByteArray(bytes,0,bytes.length));
+                else 
+                    Toast.makeText(getActivity(),"Profile photo not available", Toast.LENGTH_SHORT).show();
+            }
+        });
+        profilePhoto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+                intent.setType("image/*");
+                if(intent.resolveActivity(getActivity().getPackageManager()) != null){
+                    startActivityForResult(intent,REQUEST_IMAGE_GET);
+                }
+            }
+        });
+
         setEnable(host.isEditMode());
         return root;
-    }
-
-    @Override
-    public void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-
     }
 
     @Override
@@ -113,9 +156,7 @@ public class StudentProfileManagementBasicsFragment extends ProfileManagementFra
         host = null;
     }
 
-
-
-
+    /* ----------------------- AUXILIARY METHODS ----------------------------------------------- */
 
     @Override
     public void setEnable(boolean enable){
@@ -128,6 +169,7 @@ public class StudentProfileManagementBasicsFragment extends ProfileManagementFra
         male.setEnabled(enable);
         female.setEnabled(enable);
         birthPicker.setEnabled(enable);
+        profilePhoto.setEnabled(enable);
     }
 
 
@@ -148,9 +190,10 @@ public class StudentProfileManagementBasicsFragment extends ProfileManagementFra
 
         currentUser.setName(nameText.getText().toString());
         currentUser.setSurname(surnameText.getText().toString());
+        currentUser.setBirthCity(birthCityText.getText().toString());
         currentUser.setSex(sex);
         currentUser.setBirth(birth);
-        currentUser.saveInBackground();
+        currentUser.saveEventually();
     }
 
 

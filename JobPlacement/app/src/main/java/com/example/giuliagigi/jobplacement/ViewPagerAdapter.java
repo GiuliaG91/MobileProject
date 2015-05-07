@@ -45,7 +45,6 @@ public class ViewPagerAdapter extends FragmentPagerAdapter {
         }
 
         else return null;
-
     }
 
     // This method return the titles for the Tabs in the Tab Strip

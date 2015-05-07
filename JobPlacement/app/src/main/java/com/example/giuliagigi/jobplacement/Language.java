@@ -17,6 +17,7 @@ public class Language extends ParseObject {
 
     protected static final String LEVEL_FIELD = "level";
     protected static final String LANGUAGE_DESCRIPTION = "description";
+    protected static final String STUDENT_FIELD = "student";
 
     public Language(){
         super();
@@ -34,6 +35,14 @@ public class Language extends ParseObject {
     }
     public void setLevel(String level){
         this.put(LEVEL_FIELD,level);
+    }
+
+    public void setStudent(Student owner){
+        this.put(STUDENT_FIELD,owner);
+    }
+    public Student getStudent(){
+
+        return (Student)this.get(STUDENT_FIELD);
     }
 
     public static int getLevelID(String level){

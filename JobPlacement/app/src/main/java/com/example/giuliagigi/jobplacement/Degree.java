@@ -38,6 +38,7 @@ public class Degree extends ParseObject{
     protected static final String MARK_FIELD = "mark";
     protected static final String DATE_FIELD = "degreeDate";
     protected static final String LOUD_FIELD = "loud";
+    protected static final String STUDENT_FIELD = "student";
 
 
     public Degree(){
@@ -70,14 +71,33 @@ public class Degree extends ParseObject{
         }
         return false;
     }
+
     public void setDegreeDate(Date degreeDate){
 
         this.put(DATE_FIELD,degreeDate);
+    }
+    public Date getDegreeDate(){
+        return this.getDate(DATE_FIELD);
     }
 
     public void setLoud(Boolean loud){
         this.put(LOUD_FIELD, loud);
     }
+    public Boolean getLoud(){
+        return  this.getBoolean(LOUD_FIELD);
+    }
+
+    public void setStudent(Student owner){
+
+        this.put(STUDENT_FIELD,owner);
+    }
+    public Student getStudent(){
+
+        return (Student)this.get(STUDENT_FIELD);
+    }
+
+
+
 
 
     public static int getTypeID(String type){
@@ -89,7 +109,6 @@ public class Degree extends ParseObject{
         }
         return -1;
     }
-
     public static int getStudyID(String study){
 
         for(int i=0; i<STUDIES.length;i++){
@@ -98,14 +117,6 @@ public class Degree extends ParseObject{
                 return i;
         }
         return -1;
-    }
-
-    public Date getDegreeDate(){
-        return this.getDate(DATE_FIELD);
-    }
-
-    public Boolean getLoud(){
-        return  this.getBoolean(LOUD_FIELD);
     }
 
 

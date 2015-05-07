@@ -4,29 +4,35 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentStatePagerAdapter;
+import android.util.Log;
+
+import java.util.ArrayList;
 
 /**
  * Created by pietro on 28/04/2015.
  */
-public class ProfileManagementViewAdapter extends FragmentPagerAdapter
+public class ProfileManagementViewAdapter extends FragmentPagerAdapter{
 
-    {
-
-        CharSequence Titles[]; // This will Store the Titles of the Tabs which are Going to be passed when ViewPagerAdapter is created
-        int NumbOfTabs; // Store the number of tabs, this will also be passed when the ViewPagerAdapter is created
-        ProfileManagementFragment[] fragments;
+        ArrayList<ProfileManagementFragment> fragments;
 
         // Build a Constructor and assign the passed Values to appropriate values in the class
-        public ProfileManagementViewAdapter(FragmentManager fm,CharSequence mTitles[], int mNumbOfTabsumb) {
+        public ProfileManagementViewAdapter(FragmentManager fm, String userType) {
             super(fm);
+            fragments = new ArrayList<ProfileManagementFragment>();
 
-            this.Titles = mTitles;
-            this.NumbOfTabs = mNumbOfTabsumb;
-            fragments = new ProfileManagementFragment[mNumbOfTabsumb];
+            if(userType.equals(User.TYPE_STUDENT)){
 
-            fragments[0] = StudentProfileManagementBasicsFragment.newInstance();
-            fragments[1] = StudentProfileManagementSkillsFragment.newInstance();
-            fragments[2] = StudentProfileManagementRegistryFragment.newInstance();
+                fragments.add(StudentProfileManagementBasicsFragment.newInstance());
+                fragments.add(StudentProfileManagementSkillsFragment.newInstance());
+                fragments.add(StudentProfileManagementRegistryFragment.newInstance());
+            }
+            else {
+
+                fragments.add(CompanyProfileManagementBasicsFragment.newInstance());
+                fragments.add(CompanyProfileManagementRegistryFragment.newInstance());
+            }
+
+            fragments.add(ProfileManagementAccountFragment.newInstance());
 
         }
 
@@ -34,48 +40,26 @@ public class ProfileManagementViewAdapter extends FragmentPagerAdapter
         @Override
         public Fragment getItem(int position) {
 
-        if(position == 0) // if the position is 0 we are returning the First tab
-        {
-            //StudentProfileManagementBasicsFragment tab0 = StudentProfileManagementBasicsFragment.newInstance();
-            return fragments[0];
-        }
-        else  if(position == 1)           // As we are having 2 tabs if the position is now 0 it must be 1 so we are returning second tab
-        {
-            StudentProfileManagementSkillsFragment tab1=StudentProfileManagementSkillsFragment.newInstance();
-            return tab1;
-        }
+        if(position<fragments.size())
+            return fragments.get(position);
 
-
-        else  if(position == 2)           // As we are having 2 tabs if the position is now 0 it must be 1 so we are returning second tab
-        {
-            StudentProfileManagementRegistryFragment tab2=StudentProfileManagementRegistryFragment.newInstance();
-            return tab2;
-        }
-
-//        if(position<3)
-//            return fragments[position];
-
-        else  if(position == 3)           // As we are having 2 tabs if the position is now 0 it must be 1 so we are returning second tab
-        {
-            Fav_tab tab1 = new Fav_tab();
-            return tab1;
-        }
-            else return null;
+        else return null;
 
     }
 
         // This method return the titles for the Tabs in the Tab Strip
 
         @Override
-        public CharSequence getPageTitle(int position) {
-        return Titles[position];
+    public CharSequence getPageTitle(int position) {
+
+        return fragments.get(position).getTitle();
     }
 
         // This method return the Number of tabs for the tabs Strip
+    @Override
+    public int getCount() {
 
-        @Override
-        public int getCount() {
-        return NumbOfTabs;
+        return fragments.size();
     }
   }
 

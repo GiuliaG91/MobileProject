@@ -1,22 +1,22 @@
 package com.example.giuliagigi.jobplacement;
 
 import android.app.Activity;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.TextView;
+import android.widget.Toast;
 
 import com.parse.ParseException;
 
 
 
 public class StudentProfileManagementLanguageFragment extends ProfileManagementFragment {
+
+    private static final String TITLE = "Language";
     private static String BUNDLE_DESCRIPTION = "bundle_description";
     private static String BUNDLE_LEVEL = "bundle_level";
     private static String BUNDLE_HASCHANGED = "bundle_recycled";
@@ -24,8 +24,9 @@ public class StudentProfileManagementLanguageFragment extends ProfileManagementF
     private Student currentUser;
     private Spinner languageLevel;
     private EditText languageDesc;
-    Button confirm, delete;
+    Button  delete;
     private Language language;
+    private boolean isRemoved;
 
 
     /* ----------------- CONSTRUCTORS GETTERS SETTERS ------------------------------------------- */
@@ -43,14 +44,19 @@ public class StudentProfileManagementLanguageFragment extends ProfileManagementF
         this.language = language;
     }
 
+    @Override
+    public String getTitle() {
+        return TITLE;
+    }
 
     /* ----------------- STANDARD CALLBACKS ---------------------------------------------------- */
 
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-        currentUser = application.getStudentFromUser();
+        currentUser = (Student)application.getUserObject();
         isListenerAfterDetach = true;
+        isRemoved = false;
     }
 
     @Override
@@ -89,29 +95,23 @@ public class StudentProfileManagementLanguageFragment extends ProfileManagementF
         languageLevel.setAdapter(new StringAdapter(Language.LEVELS));
         languageLevel.setSelection(level);
 
-        confirm = (Button) root.findViewById(R.id.language_management_confirm_button);
-        confirm.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                saveChanges();
-            }
-        });
 
         delete = (Button) root.findViewById(R.id.language_management_delete_button);
         delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                currentUser.removeLanguage(language);
-                currentUser.saveInBackground();
 
                 try {
                     language.delete();
+                    isRemoved = true;
+                    currentUser.removeLanguage(language);
+                    currentUser.saveEventually();
+                    root.setVisibility(View.INVISIBLE);
+
                 } catch (ParseException e) {
                     e.printStackTrace();
+                    Toast.makeText(getActivity(), "unable to delete", Toast.LENGTH_SHORT).show();
                 }
-
-                root.setVisibility(View.INVISIBLE);
             }
         });
 
@@ -151,13 +151,16 @@ public class StudentProfileManagementLanguageFragment extends ProfileManagementF
 
         super.saveChanges();
 
-        currentUser.addLanguage(language);
-        currentUser.saveInBackground();
+        if(!isRemoved){
 
-        language.setLevel((String) languageLevel.getSelectedItem());
-        if(!languageDesc.getText().toString().equals(INSERT_FIELD)) language.setDescription((String) languageDesc.getText().toString());
-        language.saveInBackground();
+            currentUser.addLanguage(language);
+            currentUser.saveEventually();
 
+            language.setLevel((String) languageLevel.getSelectedItem());
+            if(!languageDesc.getText().toString().equals(INSERT_FIELD)) language.setDescription((String) languageDesc.getText().toString());
+            language.setStudent(currentUser);
+            language.saveEventually();
+        }
     }
 
     @Override
@@ -174,7 +177,6 @@ public class StudentProfileManagementLanguageFragment extends ProfileManagementF
         else
             visibility = View.INVISIBLE;
 
-        confirm.setVisibility(visibility);
         delete.setVisibility(visibility);
     }
 

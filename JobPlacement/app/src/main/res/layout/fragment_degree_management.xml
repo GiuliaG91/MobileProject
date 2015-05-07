@@ -7,80 +7,90 @@
     android:background="#ffc3faff"
     tools:context="com.example.giuliagigi.jobplacement.StudentProfileManagementDegreeFragment">
 
-
-    <TextView
-        android:id="@+id/add_degree_text_view_type"
+    <android.support.v7.widget.CardView
+        xmlns:card_view="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/card_view"
+        android:layout_gravity="center"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Degree type"/>
+        card_view:cardCornerRadius="10dp"
+        card_view:cardMaxElevation="5dp"
+        android:alpha=".9">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/add_degree_text_view_type"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Degree type"/>
 
 
-    <Spinner
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/degree_management_spinnerType" />
+            <Spinner
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/degree_management_spinnerType" />
 
-    <TextView
-        android:id="@+id/degree_management_text_view_field"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Field"/>
+            <TextView
+                android:id="@+id/degree_management_text_view_field"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Field"/>
 
-    <Spinner
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/degree_management_spinnerField" />
+            <Spinner
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/degree_management_spinnerField" />
 
-    <TextView
-        android:id="@+id/degree_management_text_view_mark"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Mark"/>
+            <TextView
+                android:id="@+id/degree_management_text_view_mark"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Mark"/>
 
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="insert"
-        android:id="@+id/degree_management_mark_area"/>
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="insert"
+                android:id="@+id/degree_management_mark_area"/>
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Degree date:"
-        android:id="@+id/degree_management_date_area" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Degree date:"
+                android:id="@+id/degree_management_date_area" />
 
-    <DatePicker
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:calendarViewShown="false"
-        android:id="@+id/degree_management_datePicker" />
+            <DatePicker
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:calendarViewShown="false"
+                android:id="@+id/degree_management_datePicker" />
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Loud:"
-        android:id="@+id/degree_management_loud_area" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Loud:"
+                android:id="@+id/degree_management_loud_area" />
 
-    <Switch
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/degree_management_loud_switch"
-        android:showText="true"
-        android:textOn="Yes"
-        android:textOff="No"
-        />
+            <Switch
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/degree_management_loud_switch"
+                android:showText="true"
+                android:textOn="Yes"
+                android:textOff="No"
+                />
 
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Confirm Changes"
-        android:id="@+id/degree_management_confirm_button"/>
 
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Delete"
-        android:id="@+id/degree_management_delete_button"/>
-
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Delete"
+                android:id="@+id/degree_management_delete_button"/>
+        </LinearLayout>
+    </android.support.v7.widget.CardView>
 
 </LinearLayout>

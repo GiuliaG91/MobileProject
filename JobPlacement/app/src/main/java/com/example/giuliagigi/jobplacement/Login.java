@@ -1,9 +1,14 @@
 package com.example.giuliagigi.jobplacement;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
+import android.support.v4.app.DialogFragment;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.text.Editable;
+import android.text.InputType;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Menu;
@@ -17,6 +22,7 @@ import android.widget.Toast;
 import com.parse.LogInCallback;
 import com.parse.ParseException;
 import com.parse.ParseUser;
+import com.parse.RequestPasswordResetCallback;
 
 
 public class Login extends ActionBarActivity {
@@ -30,6 +36,7 @@ public class Login extends ActionBarActivity {
         final EditText password = (EditText)findViewById(R.id.password_editText);
         final Button login = (Button)findViewById(R.id.login_button);
         final TextView registerLink = (TextView)findViewById(R.id.register_link);
+        final TextView forgotPassword = (TextView)findViewById(R.id.login_passwordReset_text);
 
         mail.addTextChangedListener(new TextWatcher() {
             @Override
@@ -71,6 +78,43 @@ public class Login extends ActionBarActivity {
                 startActivity(i);
             }
         });
+
+        forgotPassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(Login.this);
+
+                builder.setTitle("Password reset?");
+                final EditText mail = new EditText(getApplicationContext());
+                mail.setHint("Insert your mail");
+                mail.setTextColor(Color.BLACK);
+                mail.setInputType(InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS);
+                builder.setView(mail);
+
+                builder.setPositiveButton("Send", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                        Log.println(Log.ASSERT,"LOGIN", "asked a password reset for: " + mail.getText().toString());
+                        ParseUser.requestPasswordResetInBackground(mail.getText().toString(), new RequestPasswordResetCallback() {
+                            @Override
+                            public void done(ParseException e) {
+
+                                Toast.makeText(getApplicationContext(),"We will send you an eMail for password reset", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                    }
+                });
+
+                builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {}
+                });
+
+                builder.create().show();
+            }
+        });
     }
 
 
@@ -97,6 +141,8 @@ public class Login extends ActionBarActivity {
     }
 
     private void performLogin(String mail, String password) {
+
+        Log.println(Log.ASSERT,"LOGIN", "logging in");
 
         ParseUser.logInInBackground(mail, password, new LogInCallback() {
             @Override

@@ -2,6 +2,7 @@ package com.example.giuliagigi.jobplacement;
 
 
 import android.app.Activity;
+import android.content.Intent;
 import android.content.res.TypedArray;
 import android.net.Uri;
 import android.support.v4.app.Fragment;
@@ -18,8 +19,14 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
+
+
+
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.view.LayoutInflater;
+
 
 
 import java.util.ArrayList;
@@ -113,6 +120,10 @@ public class Home extends ActionBarActivity  implements TabHomeStudentFragment.O
                setUpMainFragment(2);
 
 
+
+
+
+
         }
 
         // specify an adapter (see also next example)
@@ -142,6 +153,15 @@ public class Home extends ActionBarActivity  implements TabHomeStudentFragment.O
 
 
 
+
+        /* -------------------
+                    email verification alert
+             */
+
+        Log.println(Log.ASSERT,"HOME ACTIVITY", "account verified: " + application.getCurrentUser().isEmailVerified());
+        if (!application.getCurrentUser().isEmailVerified())
+            Toast.makeText(getApplicationContext(),"Your email wasn't verified yet. Please click on the link we sent you",Toast.LENGTH_SHORT).show();
+
     }
 
     @Override
@@ -168,6 +188,12 @@ public class Home extends ActionBarActivity  implements TabHomeStudentFragment.O
 
 
 
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        Log.println(Log.ASSERT,"HOME ACTIVITY", "onActivityResult");
+    }
 
     @Override
     public void onBackPressed() {

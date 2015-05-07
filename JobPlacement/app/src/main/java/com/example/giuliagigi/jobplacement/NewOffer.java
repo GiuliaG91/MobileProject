@@ -8,7 +8,6 @@ import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBarActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,9 +27,7 @@ import android.widget.Toast;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
 
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -39,7 +36,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.zip.Inflater;
 
 /**
  * A simple {@link android.support.v4.app.Fragment} subclass.
@@ -101,7 +97,7 @@ public class NewOffer extends Fragment implements DatePickerFragment.OnDataSetLi
                              Bundle savedInstanceState) {
 
         globalData=(GlobalData)getActivity().getApplication();
-        company=globalData.getCompanyFromUser();
+        company=(Company)globalData.getUserObject();
 
         // Inflate the layout for this fragment
         root= inflater.inflate(R.layout.fragment_new_offer, container, false);
@@ -465,7 +461,7 @@ else {
                     offer.setTerm(termSpinner.getSelectedItem().toString());
                     GlobalData gd=(GlobalData)getActivity().getApplication();
 
-                    Company company=gd.getCompanyFromUser();
+                    Company company=(Company)gd.getUserObject();
 
                     offer.setCompany(company);
 

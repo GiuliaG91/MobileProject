@@ -1,8 +1,6 @@
 package com.example.giuliagigi.jobplacement;
 
-import android.app.ActionBar;
 import android.app.Activity;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -11,12 +9,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.LinearLayout;
 
 import java.util.ArrayList;
 
 public class StudentProfileManagementSkillsFragment extends ProfileManagementFragment {
+
+    private static final String TITLE = "Skills";
 
     private Student currentUser;
     Button addDegree;
@@ -34,13 +32,18 @@ public class StudentProfileManagementSkillsFragment extends ProfileManagementFra
         return fragment;
     }
 
+    @Override
+    public String getTitle() {
+        return TITLE;
+    }
 
     /*----------------------- STANDARD CALLBACKS -------------------------------------------------*/
 
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-        currentUser = application.getStudentFromUser();
+
+        currentUser = (Student)application.getUserObject();
         degreeFragments = new ArrayList<StudentProfileManagementDegreeFragment>();
         languageFragments = new ArrayList<StudentProfileManagementLanguageFragment>();
     }
@@ -55,6 +58,7 @@ public class StudentProfileManagementSkillsFragment extends ProfileManagementFra
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
 
         root = inflater.inflate(R.layout.fragment_student_profile_management_skills, container, false);
 
@@ -71,6 +75,26 @@ public class StudentProfileManagementSkillsFragment extends ProfileManagementFra
             }
         });
 
+        addLanguage = (Button)root.findViewById(R.id.skills_add_language);
+        addLanguage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                StudentProfileManagementLanguageFragment lmf = StudentProfileManagementLanguageFragment.newInstance(new Language());
+                FragmentTransaction ft = getFragmentManager().beginTransaction();
+                ft.add(R.id.student_languageList_container,lmf);
+                ft.commit();
+                languageFragments.add(lmf);
+            }
+        });
+
+        return root;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
         int max = Math.max(degreeFragments.size(),currentUser.getDegrees().size());
         for(int i=0;i<max;i++){
 
@@ -86,19 +110,6 @@ public class StudentProfileManagementSkillsFragment extends ProfileManagementFra
 
         }
 
-        addLanguage = (Button)root.findViewById(R.id.skills_add_language);
-        addLanguage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                StudentProfileManagementLanguageFragment lmf = StudentProfileManagementLanguageFragment.newInstance(new Language());
-                FragmentTransaction ft = getFragmentManager().beginTransaction();
-                ft.add(R.id.student_languageList_container,lmf);
-                ft.commit();
-                languageFragments.add(lmf);
-            }
-        });
-
         max = Math.max(languageFragments.size(),currentUser.getLanguages().size());
         for(int j=0;j<max;j++){
 
@@ -113,8 +124,8 @@ public class StudentProfileManagementSkillsFragment extends ProfileManagementFra
             ft.commit();
 
         }
+
         setEnable(host.isEditMode());
-        return root;
     }
 
     @Override
@@ -140,7 +151,6 @@ public class StudentProfileManagementSkillsFragment extends ProfileManagementFra
     @Override
     public void onDetach() {
         super.onDetach();
-        Log.println(Log.ASSERT,"REGISTRY FRAG", "OnDetach");
 
         for(ProfileManagementFragment f: degreeFragments)
             host.removeOnActivityChangedListener(f);

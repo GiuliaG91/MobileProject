@@ -15,6 +15,12 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:src="@drawable/user_icon"
+                android:id="@+id/basics_profilePhoto"/>
+
             <TextView
                 android:id="@+id/student_name_title"
                 android:layout_width="match_parent"
@@ -28,7 +34,9 @@
                 android:id="@+id/student_name_area"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="@null"
                 android:padding="20dp"
+
                 />
 
             <TextView
@@ -45,26 +53,52 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="20dp"
+                android:background="@null"
                 />
 
-            <LinearLayout
+            <GridLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="5dp"
+                android:id="@+id/container_student_mail">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="30dp"
+                    android:layout_gravity="center_vertical"
+                    android:src="@drawable/mail"
+                    android:id="@+id/student_mail_icon"/>
+
+                <EditText
+                    android:id="@+id/student_email_area"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:editable="false"
+                    android:background="@null"
+                    android:padding="20dp"
+                    />
+            </GridLayout>
+
+            <GridLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:padding="5dp"
                 android:id="@+id/container_sex_checkboxs">
 
-                <TextView
+                <ImageView
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:text="Sex:"
-                    android:id="@+id/student_sex_title" />
+                    android:layout_height="30dp"
+                    android:src="@drawable/gender"
+                    android:layout_gravity="center_vertical"
+                    android:id="@+id/student_gender_icon"/>
 
                 <CheckBox
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="M"
+                    android:textColor="#000000"
                     android:id="@+id/male_checkBox"
                     android:layout_gravity="center_horizontal" />
 
@@ -73,55 +107,58 @@
                     android:layout_height="wrap_content"
                     android:text="F"
                     android:id="@+id/female_checkBox"
+                    android:textColor="#000000"
                     android:layout_gravity="center_horizontal" />
-            </LinearLayout>
+            </GridLayout>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="Birth Date:"
-                android:id="@+id/student_birth_title" />
-
-            <DatePicker
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:calendarViewShown="false"
-                android:id="@+id/student_birth_datePicker" />
-
-            <TextView
-                android:id="@+id/student_birth_city_title"
+            <GridLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="10dp"
-                android:text="Birth city:"
-                android:textSize="20dp"
-                />
+                android:orientation="horizontal"
+                android:padding="5dp"
+                android:id="@+id/container_birth_date">
 
-            <EditText
-                android:id="@+id/student_birth_city_area"
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="30dp"
+                    android:src="@drawable/birth"
+                    android:layout_gravity="center_vertical"
+                    android:id="@+id/student_birth_icon"/>
+
+                <DatePicker
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:calendarTextColor="#000000"
+                    android:calendarViewShown="false"
+                    android:id="@+id/student_birth_datePicker" />
+
+
+            </GridLayout>
+
+            <GridLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:editable="false"
-                android:padding="20dp"
-                />
+                android:orientation="horizontal"
+                android:padding="5dp"
+                android:id="@+id/container_birth_city">
 
-            <TextView
-                android:id="@+id/student_email_title"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="10dp"
-                android:text="Email address:"
-                android:textSize="20dp"
-                />
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="30dp"
+                    android:layout_gravity="center_vertical"
+                    android:src="@drawable/birthcity"
+                    android:id="@+id/student_birthcity_icon"/>
 
-            <EditText
-                android:id="@+id/student_email_area"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:editable="false"
-                android:padding="20dp"
-                />
+                <EditText
+                    android:id="@+id/student_birth_city_area"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="#000000"
+                    android:background="@null"
+                    android:padding="20dp"
+                    />
+            </GridLayout>
+
 
 
 

@@ -1,20 +1,17 @@
 package com.example.giuliagigi.jobplacement;
 
 import android.app.Activity;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.text.format.Time;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Switch;
-import android.widget.TextView;
+import android.widget.Toast;
 
 import com.parse.ParseException;
 
@@ -26,6 +23,7 @@ import java.util.GregorianCalendar;
 
 public class StudentProfileManagementDegreeFragment extends ProfileManagementFragment {
 
+    private static final String TITLE = "Degree";
     private static String BUNDLE_TYPE = "bundle_type";
     private static String BUNDLE_STUDY = "bundle_study";
     private static String BUNDLE_MARK = "bundle_mark";
@@ -40,8 +38,9 @@ public class StudentProfileManagementDegreeFragment extends ProfileManagementFra
     private EditText degreeMark;
     private DatePicker degreeDate;
     private Switch hasLoud;
-    Button confirm, delete;
+    Button delete;
     private Degree degree;
+    private boolean isRemoved;
 
     /* ---------- CONSTRUCTORS, GETTERS, SETTERS ----------------------------------------------*/
 
@@ -60,14 +59,19 @@ public class StudentProfileManagementDegreeFragment extends ProfileManagementFra
         this.degree = degree;
     }
 
+    @Override
+    public String getTitle() {
+        return TITLE;
+    }
 
     /* ---------- STANDARD CALLBACKS -------------------------------------------------------*/
 
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-        currentUser = application.getStudentFromUser();
+        currentUser = (Student)application.getUserObject();
         isListenerAfterDetach = true;
+        isRemoved = false;
     }
 
     @Override
@@ -138,29 +142,22 @@ public class StudentProfileManagementDegreeFragment extends ProfileManagementFra
         degreeType.setSelection(type);
         degreeStudies.setSelection(study);
 
-        confirm = (Button)root.findViewById(R.id.degree_management_confirm_button);
-        confirm.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                saveChanges();
-            }
-        });
-
         delete = (Button)root.findViewById(R.id.degree_management_delete_button);
         delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                currentUser.removeDegree(degree);
-                currentUser.saveInBackground();
 
                 try {
                     degree.delete();
+                    isRemoved = true;
+                    currentUser.removeDegree(degree);
+                    currentUser.saveEventually();
+                    root.setVisibility(View.INVISIBLE);
+
                 } catch (ParseException e) {
                     e.printStackTrace();
+                    Toast.makeText(getActivity(),"unable to delete",Toast.LENGTH_SHORT).show();
                 }
-
-                root.setVisibility(View.INVISIBLE);
             }
         });
 
@@ -219,23 +216,26 @@ public class StudentProfileManagementDegreeFragment extends ProfileManagementFra
 
         super.saveChanges();
 
-        currentUser.addDegree(degree);
-        currentUser.saveInBackground();
+        if(!isRemoved){
 
-        Date date = null;
-        Calendar c = GregorianCalendar.getInstance();
-        c.set(degreeDate.getYear(),degreeDate.getMonth(),degreeDate.getDayOfMonth());
-        date = c.getTime();
+            currentUser.addDegree(degree);
+            currentUser.saveEventually();
+
+            Date date = null;
+            Calendar c = GregorianCalendar.getInstance();
+            c.set(degreeDate.getYear(),degreeDate.getMonth(),degreeDate.getDayOfMonth());
+            date = c.getTime();
 
 
-        degree.setType((String) degreeType.getSelectedItem());
-        degree.setStudies((String) degreeStudies.getSelectedItem());
-        if(!degreeMark.getText().toString().equals(INSERT_FIELD)) degree.setMark(Integer.parseInt(degreeMark.getText().toString()));
-        degree.setDegreeDate(date);
-        degree.setLoud(hasLoud.isChecked());
-        degree.saveInBackground();
+            degree.setType((String) degreeType.getSelectedItem());
+            degree.setStudies((String) degreeStudies.getSelectedItem());
+            if(!degreeMark.getText().toString().equals(INSERT_FIELD)) degree.setMark(Integer.parseInt(degreeMark.getText().toString()));
+            degree.setDegreeDate(date);
+            degree.setLoud(hasLoud.isChecked());
+            degree.setStudent(currentUser);
+            degree.saveEventually();
+        }
 
-        hasChanged = false;
     }
 
     @Override
@@ -259,7 +259,6 @@ public class StudentProfileManagementDegreeFragment extends ProfileManagementFra
         else
             visibility = View.INVISIBLE;
 
-        confirm.setVisibility(visibility);
         delete.setVisibility(visibility);
     }
 

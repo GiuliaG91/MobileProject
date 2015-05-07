@@ -27,12 +27,14 @@ public class GlobalData extends Application {
     NOTA: in this class shuld only put data structures and their setter and getter
      */
     private ParseUserWrapper currentUser;
+    private User currentUserObject;
 
     @Override
     public void onCreate() {
         super.onCreate();
 
         currentUser = null;
+        currentUserObject = null;
 
         // Enable Local Datastore.
         Parse.enableLocalDatastore(this);
@@ -40,6 +42,7 @@ public class GlobalData extends Application {
         ParseObject.registerSubclass(ParseUserWrapper.class);
         ParseObject.registerSubclass(Student.class);
         ParseObject.registerSubclass(Company.class);
+        ParseObject.registerSubclass(Office.class);
         ParseObject.registerSubclass(Degree.class);
         ParseObject.registerSubclass(Language.class);
         ParseObject.registerSubclass(Telephone.class);
@@ -88,11 +91,44 @@ public class GlobalData extends Application {
         return result;
     }
 
+    public User getUserObject(){
+
+        if(currentUserObject == null){
+
+            if(currentUser.getType().equals((User.TYPE_STUDENT))){
+
+                ParseQuery<Student> studentQuery = ParseQuery.getQuery(Student.class);
+                studentQuery.whereEqualTo(User.MAIL_FIELD,currentUser.getEmail());
+                try {
+                    currentUserObject = studentQuery.find().get(0);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+            }
+            else {
+
+                ParseQuery<Company> companyQuery = ParseQuery.getQuery(Company.class);
+                companyQuery.whereEqualTo(User.MAIL_FIELD,currentUser.getEmail());
+                try {
+                    currentUserObject = companyQuery.find().get(0);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+        if(currentUserObject.isCachingNeeded())
+            currentUserObject.cacheData();
 
 
 
 
 
 
+
+
+        return currentUserObject;
+    }
 
 }
+

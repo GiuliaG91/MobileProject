@@ -3,6 +3,10 @@ package com.example.giuliagigi.jobplacement;
 
 
 import android.app.Activity;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.net.Uri;
+import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
@@ -14,9 +18,18 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
 
+import com.parse.ParseException;
+import com.parse.ParseFile;
+import com.parse.ProgressCallback;
+import com.parse.SaveCallback;
+
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+
 
 public class ProfileManagement extends Fragment{
 
+    private static final int REQUEST_IMAGE_GET = 1;
     private GlobalData application;
     private OnInteractionListener host;
     private boolean editable;
@@ -29,7 +42,6 @@ public class ProfileManagement extends Fragment{
     ViewPager pager;
     ProfileManagementViewAdapter adapter;
     SlidingTabLayout tabs;
-    CharSequence Titles[] = {"Overview", "Skills","Registry","Account"};
 
     /***************************************************************/
 
@@ -60,6 +72,7 @@ public class ProfileManagement extends Fragment{
                     + " must implement OnInteractionListener");
         }
         host.setEditMode(editable);
+        application = (GlobalData)getActivity().getApplication();
     }
 
     @Override
@@ -80,7 +93,7 @@ public class ProfileManagement extends Fragment{
         /*************ViewPager***************************/
 
         // Creating The ViewPagerAdapter and Passing Fragment Manager, Titles fot the Tabs and Number Of Tabs.
-        adapter = new ProfileManagementViewAdapter(getFragmentManager(), Titles, Titles.length);
+        adapter = new ProfileManagementViewAdapter(getChildFragmentManager(), application.getCurrentUser().getType());
         // Assigning ViewPager View and setting the adapter
         pager = (ViewPager) view.findViewById(R.id.pager);
         pager.setAdapter(adapter);
@@ -123,6 +136,54 @@ public class ProfileManagement extends Fragment{
     public void onDetach() {
         super.onDetach();
         Log.println(Log.ASSERT,"PROFILE MANAG", "onDetach");
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        Log.println(Log.ASSERT,"PM FRAG", "onActivity result");
+
+        if(requestCode == REQUEST_IMAGE_GET && resultCode == Activity.RESULT_OK){
+
+            Uri photoUri = data.getData();
+            Bitmap photoBitmap = null;
+
+            try {
+                photoBitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(),photoUri);
+
+                if(photoBitmap == null)
+                    Log.println(Log.ASSERT,"PM FRAG", "photoBitmap null");
+
+                else {
+
+                    ByteArrayOutputStream os = new ByteArrayOutputStream();
+                    photoBitmap.compress(Bitmap.CompressFormat.JPEG,100,os);
+                    byte[] photoByteArray = os.toByteArray();
+                    final ParseFile photoFile = new ParseFile("profilePicture.jpg", photoByteArray);
+                    photoFile.saveInBackground(
+
+                        new SaveCallback() {
+                            @Override
+                            public void done(ParseException e) {
+
+                                application.getUserObject().setProfilePhoto(photoFile);
+                                application.getUserObject().saveEventually();
+                            }
+                        },
+                        new ProgressCallback() {
+
+                            @Override
+                            public void done(Integer integer) {
+
+                                //TODO: display the progress upload to user
+                            }
+                    });
+                }
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     public interface OnInteractionListener {

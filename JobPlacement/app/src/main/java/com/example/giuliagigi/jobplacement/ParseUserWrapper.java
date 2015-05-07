@@ -18,6 +18,8 @@ public class ParseUserWrapper extends ParseUser {
     protected static final String TYPE_FIELD = "type";
     public static final String TYPE_STUDENT = "Student";
     public static final String TYPE_COMPANY = "Company";
+    public static final String USER_FIELD = "user";
+    protected static final String EMAIL_VERIFIED_FIELD = "emailVerified";
 
     public static final String[] TYPES = new String[]{TYPE_STUDENT,TYPE_COMPANY};
 
@@ -48,6 +50,10 @@ public class ParseUserWrapper extends ParseUser {
     }
     public void setType(String type) {
         this.put(TYPE_FIELD, type);
+    }
+
+    public boolean isEmailVerified(){
+        return this.getBoolean(EMAIL_VERIFIED_FIELD);
     }
 
 }
