@@ -144,6 +144,7 @@ public class ProfileManagementTelephoneFragment extends ProfileManagementFragmen
 
             telephone.setNumber(numberText.getText().toString());
             telephone.setType((String) typeSelector.getSelectedItem());
+            telephone.setUser(currentUser);
             telephone.saveEventually();
         }
 

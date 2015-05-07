@@ -44,6 +44,10 @@ public class StudentProfileManagementLanguageFragment extends ProfileManagementF
         this.language = language;
     }
 
+    @Override
+    public String getTitle() {
+        return TITLE;
+    }
 
     /* ----------------- STANDARD CALLBACKS ---------------------------------------------------- */
 
@@ -162,6 +166,7 @@ public class StudentProfileManagementLanguageFragment extends ProfileManagementF
 
             language.setLevel((String) languageLevel.getSelectedItem());
             if(!languageDesc.getText().toString().equals(INSERT_FIELD)) language.setDescription((String) languageDesc.getText().toString());
+            language.setStudent(currentUser);
             language.saveEventually();
         }
     }

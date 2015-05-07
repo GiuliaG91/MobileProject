@@ -241,6 +241,7 @@ public class StudentProfileManagementDegreeFragment extends ProfileManagementFra
             if(!degreeMark.getText().toString().equals(INSERT_FIELD)) degree.setMark(Integer.parseInt(degreeMark.getText().toString()));
             degree.setDegreeDate(date);
             degree.setLoud(hasLoud.isChecked());
+            degree.setStudent(currentUser);
             degree.saveEventually();
         }
 

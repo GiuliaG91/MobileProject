@@ -15,6 +15,12 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:src="@drawable/user_icon"
+                android:id="@+id/basics_profilePhoto"/>
+
             <TextView
                 android:id="@+id/student_name_title"
                 android:layout_width="match_parent"

@@ -1,6 +1,7 @@
 package com.example.giuliagigi.jobplacement;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -9,6 +10,8 @@ import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.Toast;
 
 import java.util.Date;
 import java.util.Calendar;
@@ -20,6 +23,7 @@ public class StudentProfileManagementBasicsFragment extends ProfileManagementFra
 
     private Student currentUser;
     EditText nameText,surnameText;
+    ImageView profilePhoto;
     CheckBox male,female;
     DatePicker birthPicker;
 
@@ -104,6 +108,20 @@ public class StudentProfileManagementBasicsFragment extends ProfileManagementFra
 
         EditText emailText = (EditText)root.findViewById(R.id.student_email_area);
         emailText.setText(currentUser.getMail());
+
+        profilePhoto = (ImageView)root.findViewById(R.id.basics_profilePhoto);
+        profilePhoto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+                intent.setType("image/*");
+                if(intent.resolveActivity(getActivity().getPackageManager()) != null){
+                    startActivityForResult(intent,1);
+                }
+            }
+        });
+
         setEnable(host.isEditMode());
         return root;
     }
@@ -129,6 +147,7 @@ public class StudentProfileManagementBasicsFragment extends ProfileManagementFra
         male.setEnabled(enable);
         female.setEnabled(enable);
         birthPicker.setEnabled(enable);
+        profilePhoto.setEnabled(enable);
     }
 
 

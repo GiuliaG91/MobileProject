@@ -12,6 +12,7 @@ public class Telephone extends ParseObject{
 
     public static String NUMBER_FIELD = "number";
     public static String TYPE_FIELD = "type";
+    public static String USER_FIELD = "user";
 
     public static String TYPE_CELLULAR = "Cellular";
     public static String TYPE_HOME = "Home";
@@ -34,11 +35,16 @@ public class Telephone extends ParseObject{
     public void setType(String type){
         this.put(TYPE_FIELD,type);
     }
-
     public String getType(){
         return this.getString(TYPE_FIELD);
     }
 
+    public void setUser(User owner){
+        this.put(USER_FIELD,owner);
+    }
+    public User getUser(){
+        return (User)this.get(USER_FIELD);
+    }
 
     public static int getTypeID(String type){
 
