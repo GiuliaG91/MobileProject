@@ -38,11 +38,6 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/language_management_spinnerLevel" />
 
-            <Button
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Confirm Changes"
-                android:id="@+id/language_management_confirm_button"/>
 
             <Button
                 android:layout_width="match_parent"
