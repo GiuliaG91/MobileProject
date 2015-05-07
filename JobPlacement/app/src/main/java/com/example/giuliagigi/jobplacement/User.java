@@ -110,10 +110,13 @@ public class User extends ParseObject{
         this.put(TYPE_FIELD, type);
     }
 
-    public void setProfilePhoto(byte[] byteArray){
+    public void setProfilePhoto(ParseFile photo){
 
-        ParseFile photo = new ParseFile("profilePhoto.jpg",byteArray);
         this.put(PROFILE_PHOTO_FIELD,photo);
+    }
+    public ParseFile getProfilePhoto(){
+
+        return  (ParseFile)get(PROFILE_PHOTO_FIELD);
     }
 
 

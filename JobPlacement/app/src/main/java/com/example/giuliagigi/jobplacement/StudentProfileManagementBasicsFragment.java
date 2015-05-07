@@ -3,6 +3,7 @@ package com.example.giuliagigi.jobplacement;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -14,6 +15,9 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
+
+import com.parse.GetDataCallback;
+import com.parse.ParseException;
 
 import java.util.Date;
 import java.util.Calendar;
@@ -113,6 +117,16 @@ public class StudentProfileManagementBasicsFragment extends ProfileManagementFra
         emailText.setText(currentUser.getMail());
 
         profilePhoto = (ImageView)root.findViewById(R.id.basics_profilePhoto);
+        currentUser.getProfilePhoto().getDataInBackground(new GetDataCallback() {
+            @Override
+            public void done(byte[] bytes, ParseException e) {
+
+                if(e == null)
+                    profilePhoto.setImageBitmap(BitmapFactory.decodeByteArray(bytes,0,bytes.length));
+                else 
+                    Toast.makeText(getActivity(),"Profile photo not available", Toast.LENGTH_SHORT).show();
+            }
+        });
         profilePhoto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
