@@ -24,11 +24,8 @@ import com.parse.GetDataCallback;
 import com.parse.ParseException;
 
 import java.io.File;
-<<<<<<< Updated upstream
 import java.io.IOException;
-=======
 import java.text.SimpleDateFormat;
->>>>>>> Stashed changes
 import java.util.Date;
 import java.util.Calendar;
 import java.util.GregorianCalendar;

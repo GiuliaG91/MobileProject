@@ -222,7 +222,7 @@ public class StudentProfileManagementDegreeFragment extends ProfileManagementFra
 
             getArguments().putInt(BUNDLE_TYPE,degreeType.getSelectedItemPosition());
             getArguments().putInt(BUNDLE_STUDY,degreeStudies.getSelectedItemPosition());
-            getArguments().putInt(BUNDLE_MARK, Integer.parseInt(degreeMark.getText().toString()));
+            if(!degreeMark.getText().toString().equals(INSERT_FIELD)) getArguments().putInt(BUNDLE_MARK, Integer.parseInt(degreeMark.getText().toString()));
             getArguments().putString(BUNDLE_DATE, degreeDate.getText().toString());
             getArguments().putBoolean(BUNDLE_LOUD, hasLoud.isChecked());
         }
