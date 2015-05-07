@@ -3,6 +3,7 @@ package com.example.giuliagigi.jobplacement;
 import android.util.Log;
 
 import com.parse.ParseClassName;
+import com.parse.ParseFile;
 import com.parse.ParseObject;
 
 import java.util.ArrayList;
@@ -21,8 +22,11 @@ public class User extends ParseObject{
     protected static final String PASSWORD_FIELD = "password";
     private static final String TYPE_FIELD = "type";
     protected static final String PHONE_FIELD = "phones";
+    protected static final String PROFILE_PHOTO_FIELD = "profilePhoto";
+
     public static final String TYPE_STUDENT = "Student";
     public static final String TYPE_COMPANY = "Company";
+
 
     public static final String[] TYPES = new String[]{TYPE_STUDENT,TYPE_COMPANY};
 
@@ -106,6 +110,12 @@ public class User extends ParseObject{
         this.put(TYPE_FIELD, type);
     }
 
+    public void setProfilePhoto(byte[] byteArray){
+
+        ParseFile photo = new ParseFile("profilePhoto.jpg",byteArray);
+        this.put(PROFILE_PHOTO_FIELD,photo);
+    }
+
 
     public void cacheData(){
 
@@ -113,12 +123,10 @@ public class User extends ParseObject{
         getMail();
         getType();
     }
-
     public boolean isCachingNeeded(){
 
         return isCached.containsValue(false);
     }
-
     public void printCacheStatus(){
 
         for(String key:isCached.keySet()){

@@ -142,6 +142,8 @@ public class Login extends ActionBarActivity {
 
     private void performLogin(String mail, String password) {
 
+        Log.println(Log.ASSERT,"LOGIN", "logging in");
+
         ParseUser.logInInBackground(mail, password, new LogInCallback() {
             @Override
             public void done(ParseUser parseUser, ParseException e) {

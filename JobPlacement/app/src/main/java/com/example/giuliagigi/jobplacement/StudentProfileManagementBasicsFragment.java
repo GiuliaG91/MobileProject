@@ -2,6 +2,8 @@ package com.example.giuliagigi.jobplacement;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -20,6 +22,7 @@ import java.util.GregorianCalendar;
 public class StudentProfileManagementBasicsFragment extends ProfileManagementFragment {
 
     private static final String TITLE = "Overview";
+    private static final int REQUEST_IMAGE_GET = 1;
 
     private Student currentUser;
     EditText nameText,surnameText;
@@ -117,7 +120,7 @@ public class StudentProfileManagementBasicsFragment extends ProfileManagementFra
                 Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
                 intent.setType("image/*");
                 if(intent.resolveActivity(getActivity().getPackageManager()) != null){
-                    startActivityForResult(intent,1);
+                    startActivityForResult(intent,REQUEST_IMAGE_GET);
                 }
             }
         });
@@ -132,9 +135,7 @@ public class StudentProfileManagementBasicsFragment extends ProfileManagementFra
         host = null;
     }
 
-
-
-
+    /* ----------------------- AUXILIARY METHODS ----------------------------------------------- */
 
     @Override
     public void setEnable(boolean enable){

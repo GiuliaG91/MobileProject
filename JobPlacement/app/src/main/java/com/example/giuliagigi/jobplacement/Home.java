@@ -1,6 +1,7 @@
 package com.example.giuliagigi.jobplacement;
 
 
+import android.content.Intent;
 import android.content.res.TypedArray;
 import android.net.Uri;
 import android.support.v4.app.Fragment;
@@ -195,6 +196,12 @@ public class Home extends ActionBarActivity  implements TabHomeStudentFragment.O
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        Log.println(Log.ASSERT,"HOME ACTIVITY", "onActivityResult");
     }
 
     @Override

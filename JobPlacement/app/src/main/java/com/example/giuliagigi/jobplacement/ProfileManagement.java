@@ -3,6 +3,10 @@ package com.example.giuliagigi.jobplacement;
 
 
 import android.app.Activity;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.net.Uri;
+import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
@@ -14,9 +18,13 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+
 
 public class ProfileManagement extends Fragment{
 
+    private static final int REQUEST_IMAGE_GET = 1;
     private GlobalData application;
     private OnInteractionListener host;
     private boolean editable;
@@ -123,6 +131,37 @@ public class ProfileManagement extends Fragment{
     public void onDetach() {
         super.onDetach();
         Log.println(Log.ASSERT,"PROFILE MANAG", "onDetach");
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        Log.println(Log.ASSERT,"PM FRAG", "onActivity result");
+
+        if(requestCode == REQUEST_IMAGE_GET && resultCode == Activity.RESULT_OK){
+
+            Uri photoUri = data.getData();
+            Bitmap photoBitmap = null;
+
+            try {
+                photoBitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(),photoUri);
+
+                if(photoBitmap == null)
+                    Log.println(Log.ASSERT,"PM FRAG", "photoBitmap null");
+
+                else {
+
+                    ByteArrayOutputStream os = new ByteArrayOutputStream();
+                    photoBitmap.compress(Bitmap.CompressFormat.JPEG,100,os);
+                    byte[] photoByteArray = os.toByteArray();
+                    application.getUserObject().setProfilePhoto(photoByteArray);
+                    application.getUserObject().saveEventually();
+                }
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     public interface OnInteractionListener {
