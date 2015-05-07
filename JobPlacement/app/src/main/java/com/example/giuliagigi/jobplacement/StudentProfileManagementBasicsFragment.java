@@ -6,6 +6,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,13 +21,14 @@ import com.parse.GetDataCallback;
 import com.parse.ParseException;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.Date;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
 public class StudentProfileManagementBasicsFragment extends ProfileManagementFragment {
 
-    private static final String TITLE = "Overview";
+    public static final String TITLE = "Overview";
     private static final int REQUEST_IMAGE_GET = 1;
 
     private Student currentUser;
@@ -149,6 +151,34 @@ public class StudentProfileManagementBasicsFragment extends ProfileManagementFra
     public void onDetach() {
         super.onDetach();
         host = null;
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        Log.println(Log.ASSERT,"BASICS FRAG", "onActivity result");
+
+        if(requestCode == REQUEST_IMAGE_GET && resultCode == Activity.RESULT_OK){
+
+            Uri photoUri = data.getData();
+            Bitmap photoBitmap = null;
+
+            try {
+                photoBitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(),photoUri);
+
+                if(photoBitmap == null)
+                    Log.println(Log.ASSERT,"PM FRAG", "photoBitmap null");
+                else{
+
+                    application.getUserObject().setProfilePhoto(photoBitmap);
+                    profilePhoto.setImageBitmap(photoBitmap);
+                }
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     /* ----------------------- AUXILIARY METHODS ----------------------------------------------- */

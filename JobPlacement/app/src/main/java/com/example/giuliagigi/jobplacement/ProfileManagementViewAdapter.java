@@ -61,5 +61,11 @@ public class ProfileManagementViewAdapter extends FragmentPagerAdapter{
 
         return fragments.size();
     }
+
+
+    public ArrayList<ProfileManagementFragment> getFragments(){
+
+        return fragments;
+    }
   }
 

@@ -26,6 +26,7 @@ import com.parse.SaveCallback;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 
 
 public class ProfileManagement extends Fragment{
@@ -33,6 +34,7 @@ public class ProfileManagement extends Fragment{
     private static final int REQUEST_IMAGE_GET = 1;
     private GlobalData application;
     private OnInteractionListener host;
+    private ArrayList<ProfileManagementFragment> fragments;
     private boolean editable;
 
 
@@ -98,6 +100,7 @@ public class ProfileManagement extends Fragment{
         // Assigning ViewPager View and setting the adapter
         pager = (ViewPager) view.findViewById(R.id.pager);
         pager.setAdapter(adapter);
+        fragments = adapter.getFragments();
 
         // Assiging the Sliding Tab Layout View
         tabs = (SlidingTabLayout) view.findViewById(R.id.tabs);
@@ -142,25 +145,29 @@ public class ProfileManagement extends Fragment{
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        Log.println(Log.ASSERT,"PM FRAG", "onActivity result");
 
-        if(requestCode == REQUEST_IMAGE_GET && resultCode == Activity.RESULT_OK){
+        for (ProfileManagementFragment f: fragments)
+            f.onActivityResult(requestCode,resultCode,data);
 
-            Uri photoUri = data.getData();
-            Bitmap photoBitmap = null;
-
-            try {
-                photoBitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(),photoUri);
-
-                if(photoBitmap == null)
-                    Log.println(Log.ASSERT,"PM FRAG", "photoBitmap null");
-                else
-                    application.getUserObject().setProfilePhoto(photoBitmap);
-
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
+//        Log.println(Log.ASSERT,"PM FRAG", "onActivity result");
+//
+//        if(requestCode == REQUEST_IMAGE_GET && resultCode == Activity.RESULT_OK){
+//
+//            Uri photoUri = data.getData();
+//            Bitmap photoBitmap = null;
+//
+//            try {
+//                photoBitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(),photoUri);
+//
+//                if(photoBitmap == null)
+//                    Log.println(Log.ASSERT,"PM FRAG", "photoBitmap null");
+//                else
+//                    application.getUserObject().setProfilePhoto(photoBitmap);
+//
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
+//        }
     }
 
     public interface OnInteractionListener {
