@@ -83,9 +83,6 @@ public class ProfileDeleteFragment extends Fragment {
                 for(CheckBox cb: checkboxes)
                     if(cb.isChecked()){
 
-                        if(cb == other && otherReason.getText().toString() == null)
-                            continue;
-
                         flag = true;
                         break;
                     }
@@ -97,6 +94,23 @@ public class ProfileDeleteFragment extends Fragment {
                 else {
 
                     Toast.makeText(getActivity(),"proceeding with account delete", Toast.LENGTH_SHORT).show();
+                    Withdrawal w = new Withdrawal();
+
+                    ArrayList<String> reasons = new ArrayList<String>();
+
+                    if(foundJob.isChecked()) reasons.add(Withdrawal.REASON_FOUND_JOB);
+                    if(badApplication.isChecked()) reasons.add(Withdrawal.REASON_BAD_APPLICATION);
+                    if(fewUsers.isChecked()) reasons.add(Withdrawal.REASON_FEW_USERS);
+                    if(other.isChecked()){
+                        reasons.add(Withdrawal.REASON_OTHER);
+                        w.setOtherReason(otherReason.getText().toString());
+                    }
+
+                    w.setReasons(reasons);
+                    if(!hints.getText().toString().equals(""))
+                        w.setHints(hints.getText().toString());
+
+                    w.saveEventually();
                 }
             }
         });
