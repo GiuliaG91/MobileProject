@@ -105,7 +105,6 @@ public class ProfileDeleteFragment extends Fragment {
 
                     Toast.makeText(getActivity(),"proceeding with account delete", Toast.LENGTH_SHORT).show();
 
-                    deleteRelatedObjects();
                     application.getUserObject().deleteInBackground();
                     application.getCurrentUser().deleteInBackground();
 
@@ -143,72 +142,4 @@ public class ProfileDeleteFragment extends Fragment {
     }
 
 
-    private void deleteRelatedObjects(){
-
-        ParseQuery<Telephone> telephoneQuery =ParseQuery.getQuery(Telephone.class);
-        ParseQuery<Degree> degreeQuery =ParseQuery.getQuery(Degree.class);
-        ParseQuery<Language> languageQuery =ParseQuery.getQuery(Language.class);
-        ParseQuery<Office> officeQuery =ParseQuery.getQuery(Office.class);
-
-        telephoneQuery.whereEqualTo(Telephone.USER_FIELD,application.getUserObject());
-        telephoneQuery.findInBackground(new FindCallback<Telephone>() {
-            @Override
-            public void done(List<Telephone> telephones, ParseException e) {
-
-                if(e==null && telephones.size()>0)
-                    for (Telephone t:telephones)
-                        t.deleteInBackground();
-                else
-                    Log.println(Log.ASSERT,"DELETE PROF", "error in deleting telephones");
-            }
-        });
-
-        if(application.getUserObject().getType().equals(User.TYPE_STUDENT)){
-
-            Log.println(Log.ASSERT,"DELETE PROF", "deleting a student");
-
-            degreeQuery.whereEqualTo(Degree.STUDENT_FIELD,application.getUserObject());
-            degreeQuery.findInBackground(new FindCallback<Degree>() {
-                @Override
-                public void done(List<Degree> degrees, ParseException e) {
-
-                    if(e == null && degrees.size()>0)
-                        for(Degree d:degrees)
-                            d.deleteInBackground();
-                    else
-                        Log.println(Log.ASSERT,"DELETE PROF", "error in deleting degrees");
-                }
-            });
-
-            languageQuery.whereEqualTo(Language.STUDENT_FIELD,application.getUserObject());
-            languageQuery.findInBackground(new FindCallback<Language>() {
-                @Override
-                public void done(List<Language> languages, ParseException e) {
-
-                    if(e==null && languages.size()>0)
-                        for(Language l:languages)
-                            l.deleteInBackground();
-                    else
-                        Log.println(Log.ASSERT,"DELETE PROF", "error in deleting languages");
-                }
-            });
-        }
-        else {
-
-            Log.println(Log.ASSERT,"DELETE PROF", "deleting a company");
-
-            officeQuery.whereEqualTo(Office.OFFICE_COMPANY_FIELD,application.getUserObject());
-            officeQuery.findInBackground(new FindCallback<Office>() {
-                @Override
-                public void done(List<Office> offices, ParseException e) {
-
-                    if(e==null && offices.size()>0)
-                        for(Office o:offices)
-                            o.deleteInBackground();
-                    else
-                        Log.println(Log.ASSERT,"DELETE PROF", "error in deleting offices");
-                }
-            });
-        }
-    }
 }
