@@ -6,6 +6,9 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
+import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -17,6 +20,7 @@ import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -39,7 +43,7 @@ public class StudentProfileManagementBasicsFragment extends ProfileManagementFra
     private int day,month,year;
     EditText nameText,surnameText, birthCityText;
     TextView birthPicker;
-    ImageView profilePhoto;
+    LinearLayout profilePhoto;
     CheckBox male,female;
 
     public StudentProfileManagementBasicsFragment() {super();}
@@ -89,14 +93,37 @@ public class StudentProfileManagementBasicsFragment extends ProfileManagementFra
         else
             surnameText.setText(currentUser.getSurname());
 
-        birthCityText = (EditText)root.findViewById(R.id.student_birth_city_area);
+
+        LinearLayout emailLinearLayout=(LinearLayout)root.findViewById(R.id.student_basics_email_row);
+        TextView emailHint = (TextView)emailLinearLayout.findViewById(R.id.hint_tv);
+        EditText emailText = (EditText)emailLinearLayout.findViewById(R.id.content_et);
+        ImageView emailIcon = (ImageView)emailLinearLayout.findViewById(R.id.rowIcon);
+        Drawable new_image= getResources().getDrawable(R.drawable.ic_email);
+        emailIcon.setBackgroundDrawable(new_image);
+        emailHint.setText("Email");
+        emailText.setText(currentUser.getMail());
+        emailText.setEnabled(false);
+
+        LinearLayout birthCityLinearLayout=(LinearLayout)root.findViewById(R.id.student_birthCity_row);
+        TextView birthCityHint = (TextView)birthCityLinearLayout.findViewById(R.id.hint_tv);
+        birthCityText = (EditText)birthCityLinearLayout.findViewById(R.id.content_et);
+        birthCityHint.setText("Birth city");
         if(currentUser.getBirthCity() == null)
             birthCityText.setText(INSERT_FIELD);
         else
             birthCityText.setText(currentUser.getBirthCity());
+        ImageView birthCityIcon = (ImageView)birthCityLinearLayout.findViewById(R.id.rowIcon);
+        Drawable new_image2= getResources().getDrawable(R.drawable.ic_birthcity);
+        birthCityIcon.setBackgroundDrawable(new_image2);
+        emailHint.setText("Email");
 
-        birthPicker = (TextView)root.findViewById(R.id.student_birth_datePicker);
-
+        LinearLayout birthLinearLayout=(LinearLayout)root.findViewById(R.id.student_birthDate_row);
+        TextView birthHint = (TextView)birthLinearLayout.findViewById(R.id.hint_tv);
+        birthPicker = (EditText)birthLinearLayout.findViewById(R.id.content_et);
+        birthHint.setText("Birth date");
+        ImageView birthIcon = (ImageView)birthLinearLayout.findViewById(R.id.rowIcon);
+        Drawable new_image3= getResources().getDrawable(R.drawable.ic_birth);
+        birthIcon.setBackgroundDrawable(new_image3);
         if(currentUser.getBirth() == null)
             birthPicker.setText(INSERT_FIELD);
 
@@ -107,6 +134,7 @@ public class StudentProfileManagementBasicsFragment extends ProfileManagementFra
             year = currentUser.getBirth().getYear() + 1900;
             birthPicker.setText(day + "/" + month + "/" + year);
         }
+
 
         birthPicker.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -146,6 +174,11 @@ public class StudentProfileManagementBasicsFragment extends ProfileManagementFra
         for(EditText et:textFields)
             et.addTextChangedListener(hasChangedListener);
 
+
+        LinearLayout genderLinearLayout=(LinearLayout)root.findViewById(R.id.student_gender_row);
+        TextView genderHint = (TextView)genderLinearLayout.findViewById(R.id.container_sex_hint);
+        genderHint.setText("Sex");
+
         male = (CheckBox)root.findViewById(R.id.male_checkBox);
         female = (CheckBox)root.findViewById(R.id.female_checkBox);
 
@@ -170,13 +203,13 @@ public class StudentProfileManagementBasicsFragment extends ProfileManagementFra
 
 
 
-        EditText emailText = (EditText)root.findViewById(R.id.student_email_area);
-        emailText.setText(currentUser.getMail());
+        profilePhoto = (LinearLayout)root.findViewById(R.id.basics_profilePhoto);
 
-        profilePhoto = (ImageView)root.findViewById(R.id.basics_profilePhoto);
-
-        if(currentUser.getProfilePhoto() != null)
-            profilePhoto.setImageBitmap(currentUser.getProfilePhoto());
+        if(currentUser.getProfilePhoto() != null) {
+            Bitmap bmImg = currentUser.getProfilePhoto();
+            BitmapDrawable background = new BitmapDrawable(bmImg);
+            profilePhoto.setBackgroundDrawable(background);
+        }
 
         profilePhoto.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -219,7 +252,9 @@ public class StudentProfileManagementBasicsFragment extends ProfileManagementFra
                 else{
 
                     application.getUserObject().setProfilePhoto(photoBitmap);
-                    profilePhoto.setImageBitmap(photoBitmap);
+                    Bitmap bmImg = currentUser.getProfilePhoto();
+                    BitmapDrawable background = new BitmapDrawable(bmImg);
+                    profilePhoto.setBackgroundDrawable(background);
                 }
 
             } catch (IOException e) {

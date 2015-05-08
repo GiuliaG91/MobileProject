@@ -1,165 +1,87 @@
-<FrameLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     android:id="@+id/frag_student__profile_management_basics"
     tools:context="com.example.giuliagigi.jobplacement.StudentProfileManagementBasicsFragment">
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_weight="1">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:src="@drawable/user_icon"
-                android:id="@+id/basics_profilePhoto"/>
-
-            <TextView
-                android:id="@+id/student_name_title"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="10dp"
-                android:text="Name:"
-                android:textSize="20dp"
-                />
-
-            <EditText
-                android:id="@+id/student_name_area"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@null"
-                android:padding="20dp"
-
-                />
-
-            <TextView
-                android:id="@+id/student_surname_title"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="10dp"
-                android:text="Surname:"
-                android:textSize="20dp"
-                />
-
-            <EditText
-                android:id="@+id/student_surname_area"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="20dp"
-                android:background="@null"
-                />
-
             <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:padding="5dp"
-                android:id="@+id/container_student_mail">
+                android:layout_width="fill_parent"
+                android:layout_height="0dp"
+                android:layout_weight="0.3"
+                android:id="@+id/basics_profilePhoto"
+                android:background="@drawable/user_icon">
 
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="30dp"
-                    android:layout_gravity="center_vertical"
-                    android:src="@drawable/mail"
-                    android:id="@+id/student_mail_icon"/>
+                <!-- A RecyclerView with some commonly used attributes -->
 
-                <EditText
-                    android:id="@+id/student_email_area"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:editable="false"
-                    android:background="@null"
-                    android:padding="20dp"
-                    />
-            </LinearLayout>
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:gravity="bottom"
+                    android:weightSum="1"
+                    android:paddingBottom="20dp"
+                    android:id="@+id/basics_name_surname_container">
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:padding="5dp"
-                android:id="@+id/container_sex_checkboxs">
+                    <EditText
+                        android:layout_width="fill_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="0.2"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:text="Name"
+                        android:id="@+id/student_name_area"
+                        android:gravity="bottom"
+                        android:paddingLeft="10dp"
+                        android:paddingBottom="5dp"
+                        android:textColor="#ffffff" />
 
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="30dp"
-                    android:src="@drawable/gender"
-                    android:layout_gravity="center_vertical"
-                    android:id="@+id/student_gender_icon"/>
-
-                <CheckBox
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="M"
-                    android:textColor="#000000"
-                    android:id="@+id/male_checkBox"
-                    android:layout_gravity="center_horizontal" />
-
-                <CheckBox
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="F"
-                    android:id="@+id/female_checkBox"
-                    android:textColor="#000000"
-                    android:layout_gravity="center_horizontal" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:padding="5dp"
-                android:id="@+id/container_birth_date">
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="30dp"
-                    android:src="@drawable/birth"
-                    android:layout_gravity="center_vertical"
-                    android:id="@+id/student_birth_icon"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="#000000"
-                    android:id="@+id/student_birth_datePicker" />
-
+                    <EditText
+                        android:layout_width="fill_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="0.2"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:text="Surname"
+                        android:gravity="bottom"
+                        android:id="@+id/student_surname_area"
+                        android:paddingLeft="10dp"
+                        android:textColor="#ffffff"
+                        android:paddingTop="5dp" />
+                </LinearLayout>
 
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:padding="5dp"
-                android:id="@+id/container_birth_city">
+                android:layout_height="0dp"
+                android:orientation="vertical"
+                android:layout_weight="0.7">
 
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="30dp"
-                    android:layout_gravity="center_vertical"
-                    android:src="@drawable/birthcity"
-                    android:id="@+id/student_birthcity_icon"/>
+                <include android:id="@+id/student_basics_email_row"
+                    layout="@layout/student_profile_item_row"> </include>
 
-                <EditText
-                    android:id="@+id/student_birth_city_area"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textColor="#000000"
-                    android:background="@null"
-                    android:padding="20dp"
-                    />
+                <include android:id="@+id/student_gender_row"
+                    layout="@layout/gender_item_row"> </include>
+
+                <include android:id="@+id/student_birthDate_row"
+                    layout="@layout/student_profile_item_row"> </include>
+
+                <include android:id="@+id/student_birthCity_row"
+                    layout="@layout/student_profile_item_row"> </include>
+
             </LinearLayout>
-
-
-
 
         </LinearLayout>
 
@@ -167,4 +89,4 @@
 
 
 
-</FrameLayout>
+</LinearLayout>
