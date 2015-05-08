@@ -220,6 +220,7 @@ public class CompanyProfileManagementOfficeFragment extends ProfileManagementFra
             if(!officeAddress.getText().toString().equals(INSERT_FIELD)) office.setOfficeAddress(officeAddress.getText().toString());
             if(!officeCAP.getText().toString().equals(INSERT_FIELD)) office.setOfficeCAP(officeCAP.getText().toString());
             if(!officeNation.getText().toString().equals(INSERT_FIELD)) office.setOfficeNation(officeNation.getText().toString());
+            office.setCompany(currentUser);
             office.saveEventually();
         }
 

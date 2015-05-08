@@ -33,12 +33,12 @@ public class Degree extends ParseObject{
             STUDIES_ENERGY,
             STUDIES_MATERIALS};
 
-    protected static final String STUDIES_FIELD = "studies";
-    protected static final String TYPE_FIELD = "type";
-    protected static final String MARK_FIELD = "mark";
-    protected static final String DATE_FIELD = "degreeDate";
-    protected static final String LOUD_FIELD = "loud";
-    protected static final String STUDENT_FIELD = "student";
+    public static final String STUDIES_FIELD = "studies";
+    public static final String TYPE_FIELD = "type";
+    public static final String MARK_FIELD = "mark";
+    public static final String DATE_FIELD = "degreeDate";
+    public static final String LOUD_FIELD = "loud";
+    public static final String STUDENT_FIELD = "student";
 
 
     public Degree(){

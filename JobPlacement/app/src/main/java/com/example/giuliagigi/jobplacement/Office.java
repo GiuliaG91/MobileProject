@@ -15,11 +15,12 @@ public class Office extends ParseObject {
     public static final String TYPE_BRANCH = "Branch";
     public static final String[] TYPES = new String[]{TYPE_HEADQUARTER , TYPE_BRANCH};
 
-    protected static final String OFFICE_ADDRESS_FIELD = "address";
-    protected static final String OFFICE_CITY_FIELD = "city";
-    protected static final String OFFICE_POSTAL_CODE_FIELD = "postalCode";
-    protected static final String OFFICE_NATION_FIELD = "nation";
-    protected static final String OFFICE_TYPE_FIELD = "officeType";
+    public static final String OFFICE_ADDRESS_FIELD = "address";
+    public static final String OFFICE_CITY_FIELD = "city";
+    public static final String OFFICE_POSTAL_CODE_FIELD = "postalCode";
+    public static final String OFFICE_NATION_FIELD = "nation";
+    public static final String OFFICE_TYPE_FIELD = "officeType";
+    public static final String OFFICE_COMPANY_FIELD = "company";
 
     public Office(){
         super();
@@ -59,6 +60,13 @@ public class Office extends ParseObject {
     }
     public String getOfficeCAP(){
         return this.getString(OFFICE_POSTAL_CODE_FIELD);
+    }
+
+    public void setCompany(Company company){
+        this.put(OFFICE_COMPANY_FIELD,company);
+    }
+    public Company getCompany(){
+        return (Company)get(OFFICE_COMPANY_FIELD);
     }
 
     public static int getTypeID(String type){

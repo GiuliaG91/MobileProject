@@ -15,9 +15,9 @@ public class Language extends ParseObject {
     public static final String LEVEL_NONE = "None";
     public static final String[] LEVELS = new String[]{LEVEL_NONE , LEVEL_LOW, LEVEL_MEDIUM, LEVEL_HIGH};
 
-    protected static final String LEVEL_FIELD = "level";
-    protected static final String LANGUAGE_DESCRIPTION = "description";
-    protected static final String STUDENT_FIELD = "student";
+    public static final String LEVEL_FIELD = "level";
+    public static final String LANGUAGE_DESCRIPTION = "description";
+    public static final String STUDENT_FIELD = "student";
 
     public Language(){
         super();
