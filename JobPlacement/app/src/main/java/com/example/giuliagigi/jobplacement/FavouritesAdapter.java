@@ -30,14 +30,16 @@ public class FavouritesAdapter extends  RecyclerView.Adapter<FavouritesAdapter.V
 
         // each data item is just a string in this case
         protected TextView tv_companyName;
+        protected TextView tv_description;
         protected ImageView iv_companyLogo;
         protected CheckBox cb_star;
 
 
         public ViewHolder(View v) {
             super(v);
-            tv_companyName=(TextView)v.findViewById(R.id.tv_companyName);
-            iv_companyLogo=(ImageView)v.findViewById(R.id.iv_companyLogo);
+            tv_companyName=(TextView)v.findViewById(R.id.objectOffer_tv);
+            tv_description=(TextView)v.findViewById(R.id.description_tv);
+            iv_companyLogo=(ImageView)v.findViewById(R.id.logo_img);
             cb_star=(CheckBox)v.findViewById(R.id.star);
         }
 

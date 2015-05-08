@@ -491,7 +491,7 @@ else {
                         offer.setDescription(editDescriptionText.getText().toString());
                     }
 
-                    final LinearLayout tagContainer=(LinearLayout)root.findViewById(R.id.tagContainder);
+                    final GridLayout tagContainer=(GridLayout)root.findViewById(R.id.tagContainder);
 
                     int n_tags=tagContainer.getChildCount();
                     for(int i=0;i<n_tags;i++)

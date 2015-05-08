@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal" android:layout_width="match_parent"
+    android:layout_height="100dp">
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/rowIcon"
+        android:paddingLeft="16dp"
+        android:layout_gravity="center"
+        android:src="@drawable/ic_offer"/>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="0dp"
+        android:layout_height="fill_parent"
+        android:layout_weight="1"
+        android:paddingLeft="5dp">
+
+
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="0dp"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="Small Text"
+            android:id="@+id/hint_tv"
+            android:layout_weight="1"
+            android:paddingLeft="30dp"
+            android:gravity="bottom"
+            android:textSize="10sp" />
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="0dp"
+            android:text="New Text"
+            android:id="@+id/content_tv"
+            android:layout_weight="1"
+            android:textColor="#ff000000"
+            android:textSize="20dp"
+            android:paddingLeft="30dp"
+            android:paddingTop="5dp" />
+
+    </LinearLayout>
+
+
+</LinearLayout>

@@ -1,8 +1,8 @@
 package com.example.giuliagigi.jobplacement;
 
 import android.app.Application;
-import android.util.Log;
-import android.widget.Toolbar;
+import android.support.v7.widget.Toolbar;
+
 
 import com.parse.FindCallback;
 import com.parse.LogInCallback;
@@ -28,6 +28,8 @@ public class GlobalData extends Application {
      */
     private ParseUserWrapper currentUser;
     private User currentUserObject;
+    Toolbar toolbar;
+    CompanyOffer currentViewOffer;
 
     @Override
     public void onCreate() {
@@ -120,15 +122,28 @@ public class GlobalData extends Application {
         if(currentUserObject.isCachingNeeded())
             currentUserObject.cacheData();
 
-
-
-
-
-
-
-
         return currentUserObject;
     }
 
+    public void setToolbar(Toolbar t)
+    {
+        toolbar=t;
+    }
+
+    public Toolbar getToolbar()
+    {
+        return toolbar;
+    }
+
+
+    public void setCurrentOffer(CompanyOffer o)
+    {
+        currentViewOffer=o;
+    }
+
+    public CompanyOffer getCurrentViewOffer()
+    {
+        return currentViewOffer;
+    }
 }
 
