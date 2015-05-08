@@ -100,6 +100,7 @@ public class ProfileManagementFragment extends Fragment implements OnActivityCha
         public boolean isEditMode();
         public void addOnActivityChangedListener(OnActivityChangedListener listener);
         public void removeOnActivityChangedListener(OnActivityChangedListener listener);
+        public void startDeleteAccountActivity();
     }
 
 
