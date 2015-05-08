@@ -7,6 +7,7 @@ import android.content.res.TypedArray;
 import android.net.Uri;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -232,6 +233,17 @@ public class Home extends ActionBarActivity  implements TabHomeStudentFragment.O
 
         listeners.remove(listener);
         Log.println(Log.ASSERT,"HOME ACTIVITY", "number of listeners: " + listeners.size());
+    }
+
+    @Override
+    public void startDeleteAccountActivity() {
+
+        FragmentTransaction fm = getSupportFragmentManager().beginTransaction();
+        ProfileDeleteFragment pdf = ProfileDeleteFragment.newInstance();
+
+        fm.replace(R.id.tab_Home_container,pdf);
+        fm.commit();
+
     }
 
     @Override

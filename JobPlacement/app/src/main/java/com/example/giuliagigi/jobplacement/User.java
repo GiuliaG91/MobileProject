@@ -1,11 +1,24 @@
 package com.example.giuliagigi.jobplacement;
 
+import android.app.Application;
+import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
+import android.provider.MediaStore;
 import android.util.Log;
 
+import com.parse.GetDataCallback;
 import com.parse.ParseClassName;
+import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.ParseObject;
+import com.parse.ProgressCallback;
+import com.parse.SaveCallback;
 
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -19,7 +32,6 @@ import java.util.List;
 public class User extends ParseObject{
 
     protected static final String MAIL_FIELD = "mail";
-    protected static final String PASSWORD_FIELD = "password";
     private static final String TYPE_FIELD = "type";
     protected static final String PHONE_FIELD = "phones";
     protected static final String PROFILE_PHOTO_FIELD = "profilePhoto";
@@ -35,7 +47,9 @@ public class User extends ParseObject{
     protected String password;
     protected String type;
     protected ArrayList<Telephone> phones;
+    protected Bitmap profilePhoto;
     protected HashMap<String,Boolean> isCached;
+    protected HashMap<String,Boolean> isDownloading;
 
 
     /* default zero-argument constructor:
@@ -48,11 +62,16 @@ public class User extends ParseObject{
         mail = null;
         password = null;
         type = null;
+        profilePhoto = null;
         isCached = new HashMap<String,Boolean>();
+        isDownloading = new HashMap<String,Boolean>();
 
         isCached.put(MAIL_FIELD, false);
         isCached.put(TYPE_FIELD, false);
         isCached.put(PHONE_FIELD,false);
+        isCached.put(PROFILE_PHOTO_FIELD,false);
+
+        isDownloading.put(PROFILE_PHOTO_FIELD,false);
     }
 
 
@@ -110,13 +129,53 @@ public class User extends ParseObject{
         this.put(TYPE_FIELD, type);
     }
 
-    public void setProfilePhoto(ParseFile photo){
+    public void setProfilePhoto(Bitmap photoBitmap){
 
-        this.put(PROFILE_PHOTO_FIELD,photo);
+        profilePhoto = photoBitmap;
+        isCached.put(PROFILE_PHOTO_FIELD,true);
+        ByteArrayOutputStream os = new ByteArrayOutputStream();
+        photoBitmap.compress(Bitmap.CompressFormat.JPEG,100,os);
+        byte[] photoByteArray = os.toByteArray();
+        final ParseFile photoFile = new ParseFile("profilePicture.jpg", photoByteArray);
+
+        photoFile.saveInBackground(new SaveCallback() {
+            @Override
+            public void done(ParseException e) {
+
+                Log.println(Log.ASSERT,"USER", "profile photo uplead completed");
+                User.this.put(PROFILE_PHOTO_FIELD, photoFile);
+            }
+        });
     }
-    public ParseFile getProfilePhoto(){
+    public Bitmap getProfilePhoto(){
 
-        return  (ParseFile)get(PROFILE_PHOTO_FIELD);
+        if(!isCached.get(PROFILE_PHOTO_FIELD) && !isDownloading.get(PROFILE_PHOTO_FIELD)){
+
+            ParseFile file = (ParseFile)get(PROFILE_PHOTO_FIELD);
+
+            if(file == null)
+                return null;
+
+            file.getDataInBackground(new GetDataCallback() {
+                @Override
+                public void done(byte[] bytes, ParseException e) {
+
+                    profilePhoto = BitmapFactory.decodeByteArray(bytes,0,bytes.length);
+                    isCached.put(PROFILE_PHOTO_FIELD,true);
+                    isDownloading.put(PROFILE_PHOTO_FIELD,true);
+                }
+            },
+                new ProgressCallback() {
+                    @Override
+                    public void done(Integer integer) {
+
+                        if(!isDownloading.get(PROFILE_PHOTO_FIELD))
+                            isDownloading.put(PROFILE_PHOTO_FIELD,true);
+                    }
+                });
+        }
+
+        return profilePhoto;
     }
 
 
@@ -125,6 +184,7 @@ public class User extends ParseObject{
         Log.println(Log.ASSERT,"USER", "caching!");
         getMail();
         getType();
+        getProfilePhoto();
     }
     public boolean isCachingNeeded(){
 

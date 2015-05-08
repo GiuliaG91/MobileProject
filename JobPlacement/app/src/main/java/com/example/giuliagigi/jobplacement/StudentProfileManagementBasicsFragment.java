@@ -1,11 +1,14 @@
 package com.example.giuliagigi.jobplacement;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,25 +17,30 @@ import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.parse.GetDataCallback;
 import com.parse.ParseException;
 
+import java.io.File;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
 public class StudentProfileManagementBasicsFragment extends ProfileManagementFragment {
 
-    private static final String TITLE = "Overview";
+    public static final String TITLE = "Overview";
     private static final int REQUEST_IMAGE_GET = 1;
 
     private Student currentUser;
+    private int day,month,year;
     EditText nameText,surnameText, birthCityText;
+    TextView birthPicker;
     ImageView profilePhoto;
     CheckBox male,female;
-    DatePicker birthPicker;
 
     public StudentProfileManagementBasicsFragment() {super();}
     public static StudentProfileManagementBasicsFragment newInstance() {
@@ -87,6 +95,49 @@ public class StudentProfileManagementBasicsFragment extends ProfileManagementFra
         else
             birthCityText.setText(currentUser.getBirthCity());
 
+        birthPicker = (TextView)root.findViewById(R.id.student_birth_datePicker);
+
+        if(currentUser.getBirth() == null)
+            birthPicker.setText(INSERT_FIELD);
+
+        else{
+
+            day = currentUser.getBirth().getDay();
+            month = currentUser.getBirth().getMonth();
+            year = currentUser.getBirth().getYear() + 1900;
+            birthPicker.setText(day + "/" + month + "/" + year);
+        }
+
+        birthPicker.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+
+                final DatePicker picker = new DatePicker(getActivity());
+                picker.setCalendarViewShown(false);
+                builder.setTitle("Edit birth date");
+                builder.setView(picker);
+                builder.setPositiveButton("Save", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        hasChanged = true;
+                        day = picker.getDayOfMonth();
+                        month = picker.getMonth();
+                        year = picker.getYear();
+                        birthPicker.setText(day + "/" + month + "/" + year);
+                    }
+                });
+                builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                    }
+                });
+                builder.create().show();
+            }
+        });
+
         textFields.add(nameText);
         textFields.add(surnameText);
         textFields.add(birthCityText);
@@ -117,23 +168,16 @@ public class StudentProfileManagementBasicsFragment extends ProfileManagementFra
             }
         });
 
-        birthPicker = (DatePicker)root.findViewById(R.id.student_birth_datePicker);
-        birthPicker.setOnClickListener(new OnFieldClickedListener());
+
 
         EditText emailText = (EditText)root.findViewById(R.id.student_email_area);
         emailText.setText(currentUser.getMail());
 
         profilePhoto = (ImageView)root.findViewById(R.id.basics_profilePhoto);
-        currentUser.getProfilePhoto().getDataInBackground(new GetDataCallback() {
-            @Override
-            public void done(byte[] bytes, ParseException e) {
 
-                if(e == null)
-                    profilePhoto.setImageBitmap(BitmapFactory.decodeByteArray(bytes,0,bytes.length));
-                else 
-                    Toast.makeText(getActivity(),"Profile photo not available", Toast.LENGTH_SHORT).show();
-            }
-        });
+        if(currentUser.getProfilePhoto() != null)
+            profilePhoto.setImageBitmap(currentUser.getProfilePhoto());
+
         profilePhoto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -154,6 +198,34 @@ public class StudentProfileManagementBasicsFragment extends ProfileManagementFra
     public void onDetach() {
         super.onDetach();
         host = null;
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        Log.println(Log.ASSERT,"BASICS FRAG", "onActivity result");
+
+        if(requestCode == REQUEST_IMAGE_GET && resultCode == Activity.RESULT_OK){
+
+            Uri photoUri = data.getData();
+            Bitmap photoBitmap = null;
+
+            try {
+                photoBitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(),photoUri);
+
+                if(photoBitmap == null)
+                    Log.println(Log.ASSERT,"PM FRAG", "photoBitmap null");
+                else{
+
+                    application.getUserObject().setProfilePhoto(photoBitmap);
+                    profilePhoto.setImageBitmap(photoBitmap);
+                }
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     /* ----------------------- AUXILIARY METHODS ----------------------------------------------- */
@@ -183,17 +255,31 @@ public class StudentProfileManagementBasicsFragment extends ProfileManagementFra
         else
             sex = Student.SEX_FEMALE;
 
-        Date birth = null;
+        /*
+        String dateString = birthPicker.getText().toString();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        Date birth  = new Date();
+        try {
+            birth = dateFormat.parse(dateString);
+        } catch (java.text.ParseException e) {
+            e.printStackTrace();
+        }
+        */
+
+        Date date = null;
         Calendar c = GregorianCalendar.getInstance();
-        c.set(birthPicker.getYear(),birthPicker.getMonth(),birthPicker.getDayOfMonth());
-        birth = c.getTime();
+        c.set(day,month,year);
+        date = c.getTime();
+
+        Log.println(Log.ASSERT,"Basics", "data: " + date.toString());
 
         currentUser.setName(nameText.getText().toString());
         currentUser.setSurname(surnameText.getText().toString());
         currentUser.setBirthCity(birthCityText.getText().toString());
         currentUser.setSex(sex);
-        currentUser.setBirth(birth);
-        currentUser.saveEventually();
+        currentUser.setBirth(date);
+        Log.println(Log.ASSERT,"BASICS", "now saving");
+        currentUser.saveInBackground();
     }
 
 

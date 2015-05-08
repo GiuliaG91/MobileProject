@@ -1,6 +1,7 @@
 package com.example.giuliagigi.jobplacement;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -99,6 +100,7 @@ public class ProfileManagementFragment extends Fragment implements OnActivityCha
         public boolean isEditMode();
         public void addOnActivityChangedListener(OnActivityChangedListener listener);
         public void removeOnActivityChangedListener(OnActivityChangedListener listener);
+        public void startDeleteAccountActivity();
     }
 
 
@@ -143,6 +145,10 @@ public class ProfileManagementFragment extends Fragment implements OnActivityCha
         }
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+    }
 
     /* --------------------- AUXILIARY CLASSES -------------------------------------------------- */
 

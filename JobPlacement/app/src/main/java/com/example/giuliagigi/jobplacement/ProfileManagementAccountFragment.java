@@ -121,7 +121,7 @@ public class ProfileManagementAccountFragment extends ProfileManagementFragment 
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
 
-                        //TODO: perform delete (maybe through a new activity for further safety)
+                        host.startDeleteAccountActivity();
                     }
                 });
 
