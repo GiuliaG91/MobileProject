@@ -11,5 +11,6 @@
         android:gravity="center"
         android:background="#ff64b5f6"
         android:alpha="0.5"
-        android:textColor="#ff000000" />
+        android:textColor="#ff000000"
+        android:drawableLeft="@drawable/ic_cross_white"/>
 </RelativeLayout>

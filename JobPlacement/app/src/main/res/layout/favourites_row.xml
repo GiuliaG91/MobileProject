@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="horizontal" android:layout_width="match_parent"
-    android:layout_height="100dp"
+    android:layout_height="70dp"
     android:background="@android:color/white">
 
     <de.hdodenhof.circleimageview.CircleImageView
@@ -41,18 +41,34 @@
     </LinearLayout>
 
 
-    <CheckBox
-        android:id="@+id/star"
+    <LinearLayout
+        android:orientation="vertical"
         android:layout_width="0dp"
         android:layout_height="fill_parent"
-        android:layout_weight="0.4"
-        android:layout_marginTop="20dp"
-        android:layout_marginLeft="5dp"
-        android:textSize="14sp"
-        android:textStyle="bold"
-        android:textColor="#ccc"
-        android:clickable="true"
-        android:focusable="true"
-        android:button="@drawable/star"/>
+        android:layout_weight="0.5">
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="0dp"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="Small Text"
+            android:id="@+id/date_row_tv"
+            android:layout_weight="1"
+            android:gravity="bottom"
+            android:layout_marginBottom="5dp"
+            android:layout_marginLeft="5dp" />
+
+        <CheckBox
+            android:id="@+id/star"
+            android:layout_width="fill_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:clickable="true"
+            android:focusable="true"
+            android:button="@drawable/star"
+            android:layout_marginLeft="30dp"
+            android:layout_marginBottom="5dp"
+            android:checked="false"/>
+    </LinearLayout>
 
 </LinearLayout>

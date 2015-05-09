@@ -19,7 +19,7 @@
             android:id="@+id/noFav"
             android:gravity="center"
             android:textIsSelectable="false"
-            android:textSize="80sp"
+            android:textSize="70sp"
             android:alpha="0.5" />
 
 

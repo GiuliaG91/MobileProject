@@ -44,7 +44,7 @@ public class Student extends User {
     protected String postalCode;
     protected String nation;
     protected ArrayList<Language> languages;
-    protected ArrayList<Company> favourites;
+    protected ArrayList<CompanyOffer> favourites;
 
     public Student(){
 
@@ -62,7 +62,7 @@ public class Student extends User {
         nation = null;
         phones = new ArrayList<Telephone>();
         languages = new ArrayList<Language>();
-        favourites = new ArrayList<Company>();
+        favourites = new ArrayList<CompanyOffer>();
 
         isCached.put(NAME_FIELD,false);
         isCached.put(SURNAME_FIELD,false);
@@ -242,19 +242,19 @@ public class Student extends User {
         isCached.put(LANGUAGE_FIELD,true);
         return languages;
     }
-    public ArrayList<Company> getFavourites( ){
+    public ArrayList<CompanyOffer> getFavourites( ){
 
         if(isCached.get(FAVOURITES_FIELD))
             return favourites;
 
-        ArrayList<Company> favourites = new ArrayList<Company>();
+        ArrayList<CompanyOffer> favourites = new ArrayList<>();
         List<Object> list = this.getList(FAVOURITES_FIELD);
 
         if(list!= null)
             for(Object o:list){
-                if(o instanceof Company){
+                if(o instanceof CompanyOffer){
 
-                    Company c = (Company)o;
+                    CompanyOffer c = (CompanyOffer)o;
                     try {
                         c.fetchIfNeeded();
                     } catch (ParseException e) {
@@ -355,12 +355,19 @@ public class Student extends User {
         languages.remove(language);
         this.removeAll(LANGUAGE_FIELD,Arrays.asList(language));
     }
-    public void addFavourites(Company company){
+    public void addFavourites(CompanyOffer companyOffer){
 
-        favourites.add(company);
-        this.addUnique(FAVOURITES_FIELD,company);
+        favourites.add(companyOffer);
+        this.addUnique(FAVOURITES_FIELD,companyOffer);
+
     }
 
+    public void removeFavourites(CompanyOffer companyOffer) {
+        {
+            favourites.remove(companyOffer);
+            this.removeAll(FAVOURITES_FIELD, Arrays.asList(companyOffer));
+        }
+    }
     /*END SETTER METHODS*/
 
 

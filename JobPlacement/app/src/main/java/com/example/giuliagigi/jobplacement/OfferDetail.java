@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.parse.ParseException;
 import com.parse.ParseObject;
 
 import java.text.DateFormat;
@@ -51,8 +52,11 @@ public class OfferDetail extends Fragment {
             getFragmentManager().popBackStackImmediate();
         }
 
-        company=offer.getCompany();
-        company.fetchIfNeededInBackground();
+        try {
+            company=offer.getCompany().fetchIfNeeded();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
 
     }
 
@@ -137,9 +141,11 @@ public class OfferDetail extends Fragment {
         TextView companyName=(TextView)root.findViewById(R.id.company_name_tv);
         TextView companyMail=(TextView)root.findViewById(R.id.company_mail);
 
-         companyName.setText(company.getName());
-         companyName.setText(company.getMail());
+        TextView description=(TextView)root.findViewById(R.id.DescriptionText_tv);
+        description.setText(offer.getDescription());
 
+        companyName.setText(company.getName());
+        companyName.setText(company.getMail());
 
 
 

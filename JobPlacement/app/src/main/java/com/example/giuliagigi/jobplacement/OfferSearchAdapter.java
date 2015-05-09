@@ -11,12 +11,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by pietro on 07/05/2015.
@@ -27,7 +31,8 @@ public class OfferSearchAdapter extends RecyclerView.Adapter<OfferSearchAdapter.
     private FragmentActivity context;
     private ArrayList<CompanyOffer> mDataset;
     private GlobalData globalData;
-
+    private Student student;
+    private Set<CompanyOffer> supportSet;
 
     // Provide a reference to the views for each data item
     // Complex data items may need more than one view per item, and
@@ -38,7 +43,9 @@ public class OfferSearchAdapter extends RecyclerView.Adapter<OfferSearchAdapter.
         private ImageView logo;
         private TextView object;
         private TextView descriprion;
+        private TextView date;
         private CheckBox pref;
+
 
 
         public ViewHolder(View v) {
@@ -47,6 +54,7 @@ public class OfferSearchAdapter extends RecyclerView.Adapter<OfferSearchAdapter.
             logo=(ImageView)v.findViewById(R.id.logo_img);
             object=(TextView)v.findViewById(R.id.objectOffer_tv);
             descriprion=(TextView)v.findViewById(R.id.description_tv);
+            date=(TextView)v.findViewById(R.id.date_row_tv);
             pref=(CheckBox)v.findViewById(R.id.star);
         }
     }
@@ -56,6 +64,8 @@ public class OfferSearchAdapter extends RecyclerView.Adapter<OfferSearchAdapter.
         context=c;
         mDataset=new ArrayList<>();
         globalData=(GlobalData)context.getApplication();
+        student=globalData.getStudentFromUser();
+        supportSet=new HashSet<>();
     }
 
 
@@ -75,7 +85,7 @@ public class OfferSearchAdapter extends RecyclerView.Adapter<OfferSearchAdapter.
 
     // Replace the contents of a view (invoked by the layout manager)
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
+    public void onBindViewHolder(ViewHolder holder, final int position) {
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
 
@@ -95,11 +105,45 @@ public class OfferSearchAdapter extends RecyclerView.Adapter<OfferSearchAdapter.
             }
             else
             {
-                holder.descriprion.setText(mDataset.get(position).getDescription().substring(0,1)+"...");
+                holder.descriprion.setText(mDataset.get(position).getDescription().substring(0,29)+"...");
             }
         }
+        SimpleDateFormat dateFormat=new SimpleDateFormat("dd/MM/yyyy");
+        String d=dateFormat.format(mDataset.get(position).getValidity());
+        holder.date.setText(d);
 
-        holder.pref.setChecked(false);
+       supportSet.clear();
+        supportSet.addAll(student.getFavourites());
+
+        if(supportSet.add(mDataset.get(position))==false) {
+            holder.pref.setChecked(true);
+        }
+        else
+        {
+            holder.pref.setChecked(false);
+        }
+        holder.pref.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+
+                if(isChecked)
+                {
+                    //add this offer to pref
+                   student.addFavourites(mDataset.get(position));
+                    student.saveInBackground();
+                }
+                else
+                {
+                    //delete this offer from pref
+                    student.removeFavourites(mDataset.get(position));
+                    student.saveInBackground();
+
+                }
+
+            }
+        });
+
+
 
     }
 

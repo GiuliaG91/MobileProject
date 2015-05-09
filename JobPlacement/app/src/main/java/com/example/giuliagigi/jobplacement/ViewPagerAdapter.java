@@ -40,7 +40,7 @@ public class ViewPagerAdapter extends FragmentPagerAdapter {
         }
         else if(position == 2)
         {
-            Fav_tab tab3= new Fav_tab();
+           Home_tab tab3=new Home_tab();
             return tab3;
         }
 
