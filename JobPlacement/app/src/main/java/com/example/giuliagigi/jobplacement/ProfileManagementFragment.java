@@ -114,6 +114,7 @@ public class ProfileManagementFragment extends Fragment implements OnActivityCha
 
         else if(newState.equals(State.DISPLAY_MODE_STATE)){
 
+            Log.println(Log.ASSERT,"PM FRAG", getTitle() + " changed: " + hasChanged);
             if(hasChanged) saveChanges();
             this.setEnable(false);
         }

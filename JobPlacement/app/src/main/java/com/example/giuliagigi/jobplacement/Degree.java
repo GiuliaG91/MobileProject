@@ -63,13 +63,13 @@ public class Degree extends ParseObject{
         return (Integer)this.getNumber(MARK_FIELD);
 
     }
-    public boolean setMark(int mark){
+    public void setMark(int mark) throws Exception{
 
         if(mark >=60 &&  mark<=110) {
             this.put(MARK_FIELD,mark);
-            return true;
+            return;
         }
-        return false;
+        throw new Exception();
     }
 
     public void setDegreeDate(Date degreeDate){

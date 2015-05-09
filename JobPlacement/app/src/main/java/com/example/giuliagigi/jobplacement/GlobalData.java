@@ -2,6 +2,7 @@ package com.example.giuliagigi.jobplacement;
 
 import android.app.Application;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 
 
 import com.parse.FindCallback;
@@ -95,6 +96,8 @@ public class GlobalData extends Application {
     }
 
     public User getUserObject(){
+
+        Log.println(Log.ASSERT,"GLOBAL DATA", "currentUser: " + currentUser.getEmail());
 
         if(currentUserObject == null){
 

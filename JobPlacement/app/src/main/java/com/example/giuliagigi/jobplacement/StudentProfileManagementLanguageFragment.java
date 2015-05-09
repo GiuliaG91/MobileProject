@@ -12,7 +12,7 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.parse.ParseException;
-
+import com.parse.SaveCallback;
 
 
 public class StudentProfileManagementLanguageFragment extends ProfileManagementFragment {
@@ -154,19 +154,23 @@ public class StudentProfileManagementLanguageFragment extends ProfileManagementF
 
         if(!isRemoved){
 
-            Log.println(Log.ASSERT,"LANGUAGE FRAG", "saving language");
-            currentUser.addLanguage(language);
-
             language.setLevel((String) languageLevel.getSelectedItem());
             if(!languageDesc.getText().toString().equals(INSERT_FIELD)) language.setDescription((String) languageDesc.getText().toString());
             language.setStudent(currentUser);
-            language.saveEventually();
+            language.saveEventually(new SaveCallback() {
+                @Override
+                public void done(ParseException e) {
 
-            currentUser.saveEventually();
+                    if(e==null){
+
+                        currentUser.addLanguage(language);
+                        currentUser.saveEventually();
+                    }
+
+                }
+            });
+
         }
-
-        Log.println(Log.ASSERT,"LANGUAGE FRAG", "saving languages onestly finished");
-
     }
 
     @Override
@@ -175,7 +179,6 @@ public class StudentProfileManagementLanguageFragment extends ProfileManagementF
 
         languageLevel.setEnabled(enable);
         languageDesc.setEnabled(enable);
-
 
         int visibility;
         if(enable)

@@ -288,12 +288,12 @@ public class StudentProfileManagementBasicsFragment extends ProfileManagementFra
             birthDateChanged = false;
         }
 
-        Log.println(Log.ASSERT,"BASICS", "now saving");
-        currentUser.saveEventually(new SaveCallback() {
+        Log.println(Log.ASSERT,"BASICS", "now saving: " + currentUser.getObjectId());
+        currentUser.saveInBackground(new SaveCallback() {
             @Override
             public void done(ParseException e) {
 
-                Log.println(Log.ASSERT,"BASICS FRAG", "save: " + e.getMessage());
+                Log.println(Log.ASSERT,"BASICS FRAG", "save: " + e);
             }
         });
     }

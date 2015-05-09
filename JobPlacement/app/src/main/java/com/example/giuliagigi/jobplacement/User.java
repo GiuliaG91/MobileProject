@@ -144,6 +144,7 @@ public class User extends ParseObject{
 
                 Log.println(Log.ASSERT,"USER", "profile photo uplead completed");
                 User.this.put(PROFILE_PHOTO_FIELD, photoFile);
+                Log.println(Log.ASSERT,"USER", "user updated");
             }
         });
     }

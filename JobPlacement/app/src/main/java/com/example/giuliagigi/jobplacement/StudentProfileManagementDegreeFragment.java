@@ -221,6 +221,7 @@ public class StudentProfileManagementDegreeFragment extends ProfileManagementFra
                     public void onClick(DialogInterface dialog, int which) {
                         degreeDate.setText(picker.getDayOfMonth() + "/" + picker.getMonth() + "/" + picker.getYear());
                         degreeDateChanged = true;
+                        hasChanged = true;
                     }
                 });
                 builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -292,6 +293,10 @@ public class StudentProfileManagementDegreeFragment extends ProfileManagementFra
 
                 Toast.makeText(getActivity(),"not a number inside mark field",Toast.LENGTH_SHORT).show();
                 degreeMark.setText(degree.getMark());
+            } catch (Exception e) {
+                e.printStackTrace();
+                Toast.makeText(getActivity(),"invalid number inside mark field",Toast.LENGTH_SHORT).show();
+
             }
 
             if(degreeDateChanged) {
@@ -325,23 +330,22 @@ public class StudentProfileManagementDegreeFragment extends ProfileManagementFra
     public void setEnable(boolean enable) {
         super.setEnable(enable);
 
+        int i = 1;
         degreeType.setEnabled(enable);
         degreeStudies.setEnabled(enable);
-
         degreeDate.setEnabled(enable);
 
-        if(degree.getMark()!= null) {
-            if (degree.getMark() == 110) {
-                hasLoud.setEnabled(enable);
-            } else hasLoud.setEnabled(false);
-        }else hasLoud.setEnabled(false);
+//        if(degree.getMark()!= null) {
+//            if (degree.getMark() == 110) {
+//                hasLoud.setEnabled(enable);
+//            } else hasLoud.setEnabled(false);
+//        }else hasLoud.setEnabled(false);
 
         int visibility;
         if(enable)
             visibility = View.VISIBLE;
         else
             visibility = View.INVISIBLE;
-
         delete.setVisibility(visibility);
     }
 

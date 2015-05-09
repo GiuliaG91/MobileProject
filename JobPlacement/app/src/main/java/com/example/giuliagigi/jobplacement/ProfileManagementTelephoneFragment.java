@@ -3,6 +3,7 @@ package com.example.giuliagigi.jobplacement;
 import android.app.Activity;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +15,7 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.parse.ParseException;
+import com.parse.SaveCallback;
 
 
 public class ProfileManagementTelephoneFragment extends ProfileManagementFragment {
@@ -145,10 +147,9 @@ public class ProfileManagementTelephoneFragment extends ProfileManagementFragmen
     @Override
     public void saveChanges() {
 
-        if(!isRemoved){
+        if(!isRemoved && !numberText.getText().toString().equals(INSERT_FIELD)){
 
-            currentUser.addPhone(telephone);
-            currentUser.saveEventually();
+            Log.println(Log.ASSERT,"TELEPHONE FRAG","saving a phone...");
 
             telephone.setNumber(numberText.getText().toString());
             telephone.setType((String) typeSelector.getSelectedItem());
@@ -167,7 +168,18 @@ public class ProfileManagementTelephoneFragment extends ProfileManagementFragmen
             phoneIcon.setBackgroundDrawable(new_image);
             */
             telephone.setUser(currentUser);
-            telephone.saveEventually();
+            telephone.saveEventually(new SaveCallback() {
+                @Override
+                public void done(ParseException e) {
+
+                    if(e == null){
+
+                        Log.println(Log.ASSERT,"TELEPHONE FRAG", "phone saved. updating user");
+                        currentUser.addPhone(telephone);
+                        currentUser.saveEventually();
+                    }
+                }
+            });
         }
 
     }
