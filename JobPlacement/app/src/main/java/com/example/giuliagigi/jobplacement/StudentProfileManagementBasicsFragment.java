@@ -26,6 +26,7 @@ import android.widget.Toast;
 
 import com.parse.GetDataCallback;
 import com.parse.ParseException;
+import com.parse.SaveCallback;
 
 import java.io.File;
 import java.io.IOException;
@@ -41,6 +42,7 @@ public class StudentProfileManagementBasicsFragment extends ProfileManagementFra
 
     private Student currentUser;
     private int day,month,year;
+    private boolean birthDateChanged;
     EditText nameText,surnameText, birthCityText;
     TextView birthPicker;
     LinearLayout profilePhoto;
@@ -66,6 +68,7 @@ public class StudentProfileManagementBasicsFragment extends ProfileManagementFra
 
         Log.println(Log.ASSERT, "BASICS FRAG", "onAttach");
         currentUser = (Student)application.getUserObject();
+        birthDateChanged = false;
     }
 
     @Override
@@ -108,6 +111,7 @@ public class StudentProfileManagementBasicsFragment extends ProfileManagementFra
         TextView birthCityHint = (TextView)birthCityLinearLayout.findViewById(R.id.hint_tv);
         birthCityText = (EditText)birthCityLinearLayout.findViewById(R.id.content_et);
         birthCityHint.setText("Birth city");
+
         if(currentUser.getBirthCity() == null)
             birthCityText.setText(INSERT_FIELD);
         else
@@ -124,8 +128,11 @@ public class StudentProfileManagementBasicsFragment extends ProfileManagementFra
         ImageView birthIcon = (ImageView)birthLinearLayout.findViewById(R.id.rowIcon);
         Drawable new_image3= getResources().getDrawable(R.drawable.ic_birth);
         birthIcon.setBackgroundDrawable(new_image3);
-        if(currentUser.getBirth() == null)
+
+        if(currentUser.getBirth() == null){
+
             birthPicker.setText(INSERT_FIELD);
+        }
 
         else{
 
@@ -150,6 +157,7 @@ public class StudentProfileManagementBasicsFragment extends ProfileManagementFra
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         hasChanged = true;
+                        birthDateChanged = true;
                         day = picker.getDayOfMonth();
                         month = picker.getMonth();
                         year = picker.getYear();
@@ -290,31 +298,31 @@ public class StudentProfileManagementBasicsFragment extends ProfileManagementFra
         else
             sex = Student.SEX_FEMALE;
 
-        /*
-        String dateString = birthPicker.getText().toString();
-        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-        Date birth  = new Date();
-        try {
-            birth = dateFormat.parse(dateString);
-        } catch (java.text.ParseException e) {
-            e.printStackTrace();
-        }
-        */
-
-        Date date = null;
-        Calendar c = GregorianCalendar.getInstance();
-        c.set(day,month,year);
-        date = c.getTime();
-
-        Log.println(Log.ASSERT,"Basics", "data: " + date.toString());
-
-        currentUser.setName(nameText.getText().toString());
-        currentUser.setSurname(surnameText.getText().toString());
-        currentUser.setBirthCity(birthCityText.getText().toString());
+        if(!nameText.getText().toString().equals(INSERT_FIELD)) currentUser.setName(nameText.getText().toString());
+        if(!surnameText.getText().toString().equals(INSERT_FIELD)) currentUser.setSurname(surnameText.getText().toString());
+        if(!birthCityText.getText().toString().equals(INSERT_FIELD)) currentUser.setBirthCity(birthCityText.getText().toString());
         currentUser.setSex(sex);
-        currentUser.setBirth(date);
+
+        if(birthDateChanged){
+
+            Date date = null;
+            Calendar c = GregorianCalendar.getInstance();
+            c.set(day,month,year);
+            date = c.getTime();
+
+            Log.println(Log.ASSERT,"Basics", "data: " + date.toString());
+            currentUser.setBirth(date);
+            birthDateChanged = false;
+        }
+
         Log.println(Log.ASSERT,"BASICS", "now saving");
-        currentUser.saveInBackground();
+        currentUser.saveEventually(new SaveCallback() {
+            @Override
+            public void done(ParseException e) {
+
+                Log.println(Log.ASSERT,"BASICS FRAG", "save: " + e.getMessage());
+            }
+        });
     }
 
 

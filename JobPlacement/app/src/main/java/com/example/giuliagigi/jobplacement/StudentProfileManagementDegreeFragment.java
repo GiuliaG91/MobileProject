@@ -18,6 +18,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.parse.ParseException;
+import com.parse.SaveCallback;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -33,7 +34,9 @@ public class StudentProfileManagementDegreeFragment extends ProfileManagementFra
     private static String BUNDLE_STUDY = "bundle_study";
     private static String BUNDLE_MARK = "bundle_mark";
     private static String BUNDLE_LOUD = "bundle_loud";
-    private static String BUNDLE_DATE = "bundle_date";
+    private static String BUNDLE_DATE_DAY = "bundle_date_day";
+    private static String BUNDLE_DATE_MONTH = "bundle_date_month";
+    private static String BUNDLE_DATE_YEAR = "bundle_date_year";
     private static String BUNDLE_HASCHANGED = "bundle_recycled";
 
     private Student currentUser;
@@ -43,7 +46,8 @@ public class StudentProfileManagementDegreeFragment extends ProfileManagementFra
     private Switch hasLoud;
     Button delete;
     private Degree degree;
-    private boolean isRemoved;
+    private boolean isRemoved, degreeDateChanged;
+    private int day,month,year;
 
     /* ---------- CONSTRUCTORS, GETTERS, SETTERS ----------------------------------------------*/
 
@@ -75,6 +79,7 @@ public class StudentProfileManagementDegreeFragment extends ProfileManagementFra
         currentUser = (Student)application.getUserObject();
         isListenerAfterDetach = true;
         isRemoved = false;
+        degreeDateChanged = false;
     }
 
     @Override
@@ -97,7 +102,10 @@ public class StudentProfileManagementDegreeFragment extends ProfileManagementFra
             type = getArguments().getInt(BUNDLE_TYPE);
             study = getArguments().getInt(BUNDLE_STUDY);
             mark = getArguments().getInt(BUNDLE_MARK);
-            date = getArguments().getString(BUNDLE_DATE);
+            day = getArguments().getInt(BUNDLE_DATE_DAY);
+            month = getArguments().getInt(BUNDLE_DATE_MONTH);
+            year = getArguments().getInt(BUNDLE_DATE_YEAR);
+            date = day+"/"+month+"/"+year;
             loud = getArguments().getBoolean(BUNDLE_LOUD);
         }
         else {
@@ -116,7 +124,12 @@ public class StudentProfileManagementDegreeFragment extends ProfileManagementFra
                 mark = degree.getMark();
 
             if(degree.getDegreeDate()!= null){
-                date = degree.getDegreeDate().getDay()+"/"+degree.getDegreeDate().getMonth()+"/"+degree.getDegreeDate().getYear();
+
+                day = degree.getDegreeDate().getDay();
+                month = degree.getDegreeDate().getMonth();
+                year = degree.getDegreeDate().getYear() + 1900;
+                date = day+"/"+month+"/"+year;
+
             } else {
                 date = INSERT_FIELD;
             }
@@ -184,6 +197,7 @@ public class StudentProfileManagementDegreeFragment extends ProfileManagementFra
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         degreeDate.setText(picker.getDayOfMonth() + "/" + picker.getMonth() + "/" + picker.getYear());
+                        degreeDateChanged = true;
                     }
                 });
                 builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -223,8 +237,10 @@ public class StudentProfileManagementDegreeFragment extends ProfileManagementFra
             getArguments().putInt(BUNDLE_TYPE,degreeType.getSelectedItemPosition());
             getArguments().putInt(BUNDLE_STUDY,degreeStudies.getSelectedItemPosition());
             if(!degreeMark.getText().toString().equals(INSERT_FIELD)) getArguments().putInt(BUNDLE_MARK, Integer.parseInt(degreeMark.getText().toString()));
-            getArguments().putString(BUNDLE_DATE, degreeDate.getText().toString());
             getArguments().putBoolean(BUNDLE_LOUD, hasLoud.isChecked());
+            getArguments().putInt(BUNDLE_DATE_DAY,day);
+            getArguments().putInt(BUNDLE_DATE_MONTH,month);
+            getArguments().putInt(BUNDLE_DATE_YEAR,year);
         }
 
     }
@@ -239,28 +255,31 @@ public class StudentProfileManagementDegreeFragment extends ProfileManagementFra
 
         if(!isRemoved){
 
-            currentUser.addDegree(degree);
-            currentUser.saveEventually();
-
-            String dateString = degreeDate.getText().toString();
-            SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-            Date date  = new Date();
-            try {
-                date = dateFormat.parse(dateString);
-            } catch (java.text.ParseException e) {
-                e.printStackTrace();
-            }
-
-            Log.println(Log.ASSERT, "BASICS", "DATE:" + date.toString());
-
-
             degree.setType((String) degreeType.getSelectedItem());
             degree.setStudies((String) degreeStudies.getSelectedItem());
             if(!degreeMark.getText().toString().equals(INSERT_FIELD)) degree.setMark(Integer.parseInt(degreeMark.getText().toString()));
-            degree.setDegreeDate(date);
+            if(degreeDateChanged) {
+
+                Date date = null;
+                Calendar c = GregorianCalendar.getInstance();
+                c.set(day,month,year);
+                date = c.getTime();
+                Log.println(Log.ASSERT, "BASICS", "DATE:" + date.toString());
+                degree.setDegreeDate(date);
+            }
             degree.setLoud(hasLoud.isChecked());
             degree.setStudent(currentUser);
-            degree.saveEventually();
+            degree.saveEventually(new SaveCallback() {
+                @Override
+                public void done(ParseException e) {
+
+                    if(e == null){
+
+                        currentUser.addDegree(degree);
+                        currentUser.saveEventually();
+                    }
+                }
+            });
         }
 
     }

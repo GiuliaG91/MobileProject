@@ -2,6 +2,7 @@ package com.example.giuliagigi.jobplacement;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -153,6 +154,7 @@ public class StudentProfileManagementLanguageFragment extends ProfileManagementF
 
         if(!isRemoved){
 
+            Log.println(Log.ASSERT,"LANGUAGE FRAG", "saving language");
             currentUser.addLanguage(language);
 
             language.setLevel((String) languageLevel.getSelectedItem());
@@ -162,6 +164,9 @@ public class StudentProfileManagementLanguageFragment extends ProfileManagementF
 
             currentUser.saveEventually();
         }
+
+        Log.println(Log.ASSERT,"LANGUAGE FRAG", "saving languages onestly finished");
+
     }
 
     @Override

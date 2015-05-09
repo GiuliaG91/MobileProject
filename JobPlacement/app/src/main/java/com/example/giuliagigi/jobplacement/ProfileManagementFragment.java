@@ -111,6 +111,7 @@ public class ProfileManagementFragment extends Fragment implements OnActivityCha
 
         if(newState.equals(State.EDIT_MODE_STATE))
             this.setEnable(true);
+
         else if(newState.equals(State.DISPLAY_MODE_STATE)){
 
             if(hasChanged) saveChanges();
@@ -122,10 +123,13 @@ public class ProfileManagementFragment extends Fragment implements OnActivityCha
 
     protected void setEnable(boolean enable){
 
+        Log.println(Log.ASSERT,"PM FRAG", "enabling: " + getTitle());
         setTextFieldsEnable(enable);
     }
 
     public void saveChanges(){
+
+        Log.println(Log.ASSERT,"PM FRAG", "saving: " + getTitle());
         hasChanged = false;
     }
 
@@ -144,6 +148,7 @@ public class ProfileManagementFragment extends Fragment implements OnActivityCha
             et.setEnabled(enable);
         }
     }
+
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {

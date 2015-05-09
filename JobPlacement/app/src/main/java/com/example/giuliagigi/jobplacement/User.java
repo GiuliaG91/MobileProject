@@ -198,6 +198,15 @@ public class User extends ParseObject{
         }
     }
 
+    public void printCacheContent(){
+
+        Log.println(Log.ASSERT,"USER", "mail: " + mail);
+
+        for(Telephone t:phones)
+            Log.println(Log.ASSERT,"USER", "telephone: " + t.getNumber());
+
+    }
+
 }
 
 

@@ -1,5 +1,7 @@
 package com.example.giuliagigi.jobplacement;
 
+import android.util.Log;
+
 import com.parse.ParseClassName;
 import com.parse.ParseException;
 
@@ -379,5 +381,17 @@ public class Student extends User {
         getPhones();
         getLanguages();
         getFavourites();
+    }
+
+    public void printCacheContent(){
+
+        super.printCacheContent();
+        Log.println(Log.ASSERT,"STUDENT","name: " + name);
+        Log.println(Log.ASSERT,"STUDENT","surname: " + surname);
+        Log.println(Log.ASSERT,"STUDENT","sex: " + sex);
+        Log.println(Log.ASSERT,"STUDENT","address: " + address);
+        Log.println(Log.ASSERT,"STUDENT","city: " + city);
+        Log.println(Log.ASSERT,"STUDENT","birthCity: " + birthCity);
+        Log.println(Log.ASSERT,"STUDENT","birthDate: " + birthDate.toString());
     }
 }
