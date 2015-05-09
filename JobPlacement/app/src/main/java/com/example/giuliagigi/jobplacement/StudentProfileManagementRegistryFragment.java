@@ -177,6 +177,7 @@ public class StudentProfileManagementRegistryFragment extends ProfileManagementF
         if(!cityText.getText().toString().equals(INSERT_FIELD))     currentUser.setCity(cityText.getText().toString());
         if(!postalText.getText().toString().equals(INSERT_FIELD))   currentUser.setPostalCode(postalText.getText().toString());
         if(!nationText.getText().toString().equals(INSERT_FIELD))   currentUser.setNation(nationText.getText().toString());
+        
         currentUser.saveEventually();
 
     }

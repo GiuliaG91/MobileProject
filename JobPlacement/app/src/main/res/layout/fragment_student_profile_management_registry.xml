@@ -1,106 +1,243 @@
-<FrameLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/frag_student__profile_management_registry"
-    tools:context="com.example.giuliagigi.jobplacement.StudentProfileManagementRegistryFragment">
+    android:orientation="vertical"
+    android:id="@+id/frag_student__profile_management_basics"
+    tools:context="com.example.giuliagigi.jobplacement.StudentProfileManagementBasicsFragment">
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_weight="1">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/student_address_title"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="10dp"
-                android:text="Address:"
-                android:textSize="20dp"
-                />
 
-            <EditText
-                android:id="@+id/student_address_area"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="20dp"
-                />
-
-            <TextView
-                android:id="@+id/student_city_title"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="10dp"
-                android:text="City:"
-                android:textSize="20dp"
-                />
-
-            <EditText
-                android:id="@+id/student_city_area"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="20dp"
-                />
-
-            <TextView
-                android:id="@+id/student_CAP_title"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="10dp"
-                android:text="Postal Code:"
-                android:textSize="20dp"
-                />
-            <EditText
-                android:id="@+id/student_CAP_area"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="20dp"
-                />
-
-
-
-            <TextView
-                android:id="@+id/student_nation_title"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="10dp"
-                android:text="Nation:"
-                android:textSize="20dp"
-                />
-            <EditText
-                android:id="@+id/student_nation_area"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="20dp"
-                />
-            <TextView
-                android:id="@+id/student_phones_title"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="10dp"
-                android:text="Phones:"
-                android:textSize="20dp"
-                />
+            <!-- Address and cap -->
 
             <LinearLayout
-                android:orientation="vertical"
+                android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/student_phones_container">
+                android:layout_height="70dp">
 
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/addressIcon"
+                    android:src="@drawable/ic_map"
+                    android:paddingLeft="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_gravity="center_vertical"/>
 
-                <Button
-                    android:id="@+id/student_phones_plusButton"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:text="+"/>
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="0dp"
+                    android:layout_height="fill_parent"
+                    android:layout_weight=".7"
+                    android:paddingLeft="10dp">
+
+                    <TextView
+                        android:layout_width="fill_parent"
+                        android:layout_height="0dp"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:text="Address"
+                        android:id="@+id/student_address_title"
+                        android:layout_weight=".3"
+                        android:paddingLeft="10dp"
+                        android:gravity="bottom"
+                        android:textSize="10sp" />
+
+                    <EditText
+                        android:layout_width="fill_parent"
+                        android:layout_height="0dp"
+                        android:text="New Text"
+                        android:id="@+id/student_address_area"
+                        android:scrollHorizontally="true"
+                        android:layout_weight=".7"
+                        android:textColor="#ff000000"
+                        android:textSize="15dp"
+                        android:paddingLeft="10dp"
+                        android:paddingTop="5dp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="0dp"
+                    android:layout_height="fill_parent"
+                    android:layout_weight=".3"
+                    android:paddingLeft="10dp">
+
+                    <TextView
+                        android:layout_width="fill_parent"
+                        android:layout_height="0dp"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:text="CAP"
+                        android:id="@+id/student_cap_title"
+                        android:layout_weight=".3"
+                        android:paddingLeft="10dp"
+                        android:gravity="bottom"
+                        android:textSize="10sp" />
+
+                    <EditText
+                        android:layout_width="fill_parent"
+                        android:layout_height="0dp"
+                        android:text="New Text"
+                        android:id="@+id/student_CAP_area"
+                        android:scrollHorizontally="true"
+                        android:layout_weight=".7"
+                        android:textColor="#ff000000"
+                        android:textSize="15dp"
+                        android:paddingLeft="10dp"
+                        android:paddingTop="5dp" />
+
+                </LinearLayout>
+
 
             </LinearLayout>
+
+            <!-- END Address and cap -->
+
+
+            <!-- City and Nation -->
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="70dp">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/cityIcon"
+                    android:src="@drawable/ic_world"
+                    android:paddingLeft="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_gravity="center_vertical"/>
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="0dp"
+                    android:layout_height="fill_parent"
+                    android:layout_weight=".5"
+                    android:paddingLeft="10dp">
+
+                    <TextView
+                        android:layout_width="fill_parent"
+                        android:layout_height="0dp"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:text="City"
+                        android:id="@+id/student_city_title"
+                        android:layout_weight=".3"
+                        android:paddingLeft="10dp"
+                        android:gravity="bottom"
+                        android:textSize="10sp" />
+
+                    <EditText
+                        android:layout_width="fill_parent"
+                        android:layout_height="0dp"
+                        android:text="New Text"
+                        android:id="@+id/student_city_area"
+                        android:scrollHorizontally="true"
+                        android:layout_weight=".7"
+                        android:textColor="#ff000000"
+                        android:textSize="15dp"
+                        android:paddingLeft="10dp"
+                        android:paddingTop="5dp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="0dp"
+                    android:layout_height="fill_parent"
+                    android:layout_weight=".5"
+                    android:paddingLeft="10dp">
+
+                    <TextView
+                        android:layout_width="fill_parent"
+                        android:layout_height="0dp"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:text="Nation"
+                        android:id="@+id/student_nation_title"
+                        android:layout_weight=".3"
+                        android:paddingLeft="10dp"
+                        android:gravity="bottom"
+                        android:textSize="10sp" />
+
+                    <EditText
+                        android:layout_width="fill_parent"
+                        android:layout_height="0dp"
+                        android:text="New Text"
+                        android:id="@+id/student_nation_area"
+                        android:scrollHorizontally="true"
+                        android:layout_weight=".7"
+                        android:textColor="#ff000000"
+                        android:textSize="15dp"
+                        android:paddingLeft="10dp"
+                        android:paddingTop="5dp" />
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+            <!-- END City and Nation -->
+
+
+            <!-- Phones -->
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="100dp">
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="0dp"
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"
+                    android:paddingLeft="5dp">
+
+
+
+                    <TextView
+                        android:layout_width="fill_parent"
+                        android:layout_height="0dp"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:text="Phones:"
+                        android:id="@+id/student_phone_title"
+                        android:layout_weight="1"
+                        android:paddingLeft="10dp"
+                        android:gravity="bottom"
+                        android:textSize="10sp" />
+
+                    <LinearLayout
+                        android:orientation="vertical"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/student_phones_container">
+
+                        <Button
+                            android:id="@+id/student_phones_plusButton"
+                            android:layout_width="match_parent"
+                            android:layout_height="20dp"
+                            android:text="+"/>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+            <!-- END Phones -->
+
 
 
         </LinearLayout>
@@ -109,4 +246,4 @@
 
 
 
-</FrameLayout>
+</LinearLayout>

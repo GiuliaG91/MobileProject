@@ -154,12 +154,13 @@ public class StudentProfileManagementLanguageFragment extends ProfileManagementF
         if(!isRemoved){
 
             currentUser.addLanguage(language);
-            currentUser.saveEventually();
 
             language.setLevel((String) languageLevel.getSelectedItem());
             if(!languageDesc.getText().toString().equals(INSERT_FIELD)) language.setDescription((String) languageDesc.getText().toString());
             language.setStudent(currentUser);
             language.saveEventually();
+
+            currentUser.saveEventually();
         }
     }
 

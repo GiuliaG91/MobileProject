@@ -6,28 +6,36 @@
     android:orientation="horizontal"
     tools:context="com.example.giuliagigi.jobplacement.ProfileManagementTelephoneFragment">
 
-
-    <Button
-        android:layout_width="match_parent"
+    <ImageView
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_weight="1.6"
-        android:text="-"
-        android:id="@+id/telephone_remove_button"
-        android:layout_gravity="center_vertical" />
+        android:id="@+id/telephoneIcon"
+        android:paddingLeft="16dp"
+        android:layout_margin="3dp"
+        android:layout_gravity="center"/>
+
 
     <Spinner
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:id="@+id/telefone_type_selector"
         android:layout_gravity="center_vertical"
-        android:layout_weight="1.2" />
+        android:layout_weight=".35" />
 
     <EditText
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:inputType="phone"
-        android:ems="10"
         android:id="@+id/telephone_number_text"
         android:layout_gravity="center_vertical"
-        android:layout_weight="1" />
+        android:layout_weight=".5" />
+
+    <Button
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight=".15"
+        android:text="-"
+        android:id="@+id/telephone_remove_button"
+        android:layout_gravity="center_vertical"
+        android:layout_margin="3dp"/>
+
 </LinearLayout>

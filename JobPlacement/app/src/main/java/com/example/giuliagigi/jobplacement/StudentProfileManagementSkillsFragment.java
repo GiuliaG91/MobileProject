@@ -168,5 +168,6 @@ public class StudentProfileManagementSkillsFragment extends ProfileManagementFra
     @Override
     public void saveChanges() {
         super.saveChanges();
+        Log.println(Log.ASSERT, "BASICS", "sto salvando skills");
     }
 }
