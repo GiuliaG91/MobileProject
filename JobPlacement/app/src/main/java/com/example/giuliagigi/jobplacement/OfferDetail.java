@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -24,9 +25,7 @@ import java.text.SimpleDateFormat;
  */
 public class OfferDetail extends Fragment {
 
-
-
-        View root;
+    View root;
     CompanyOffer offer;
     GlobalData globalData;
     Company company;
@@ -53,6 +52,8 @@ public class OfferDetail extends Fragment {
         }
 
         company=offer.getCompany();
+        company.fetchIfNeededInBackground();
+
     }
 
     @Override
@@ -60,6 +61,8 @@ public class OfferDetail extends Fragment {
                              Bundle savedInstanceState) {
 
        root=inflater.inflate(R.layout.offer_layout,container,false);
+
+
         //set object
         //todo mettere hint come stringhe
         LinearLayout linearLayout=(LinearLayout)root.findViewById(R.id.object_row);
@@ -126,8 +129,19 @@ public class OfferDetail extends Fragment {
         linearLayout=(LinearLayout)root.findViewById(R.id.salary_row);
         hint=(TextView)linearLayout.findViewById(R.id.hint_tv);
         content=(TextView)linearLayout.findViewById(R.id.content_tv);
-        hint.setText("Salary");
+
         content.setText(offer.getSAlARY());
+
+
+        ImageView logo=(ImageView)root.findViewById(R.id.circleView_logo);
+        TextView companyName=(TextView)root.findViewById(R.id.company_name_tv);
+        TextView companyMail=(TextView)root.findViewById(R.id.company_mail);
+
+         companyName.setText(company.getName());
+         companyName.setText(company.getMail());
+
+
+
 
         return root;
     }

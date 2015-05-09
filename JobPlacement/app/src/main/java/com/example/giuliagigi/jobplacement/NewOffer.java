@@ -223,8 +223,7 @@ public class NewOffer extends Fragment implements DatePickerFragment.OnDataSetLi
         editDescriptionText.addTextChangedListener(mTextEditorWatcher);
         editObject.addTextChangedListener(mobjectTextWhatcer);
 
-
-                publish.setOnClickListener(new View.OnClickListener() {
+        publish.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         publishOffer(v);
@@ -503,10 +502,6 @@ else {
                         offer.addTag(tag);
 
                     }
-
-
-
-                    company.addOffer(offer);
                     offer.saveInBackground();
                     Toast.makeText(getActivity(),"Done",Toast.LENGTH_SHORT ).show();
 

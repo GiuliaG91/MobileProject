@@ -39,7 +39,8 @@
                     android:layout_gravity="center"
                     android:id="@+id/circleView_logo"
                     android:src="@drawable/ic_profile"
-                    app:border_color="@android:color/darker_gray"/>
+                    app:border_color="@android:color/darker_gray"
+                    app:border_width="2dp"/>
 
                 <LinearLayout
                     android:orientation="vertical"
@@ -139,7 +140,7 @@
                 android:id="@+id/CardDescription"
                 android:layout_gravity="center"
                 android:layout_width="350dp"
-                android:layout_height="200dp"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 card_view:cardCornerRadius="4dp">
 
@@ -154,23 +155,6 @@
 
 
             </android.support.v7.widget.CardView>
-
-            <TextView
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/show_offer_fragment_tags"
-                android:id="@+id/tags_tv"
-                android:layout_marginBottom="10dp"
-                android:layout_marginLeft="10dp" />
-
-
-            <LinearLayout
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
-                android:orientation="vertical"
-                android:id="@+id/tagContainder"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="20dp"></LinearLayout>
 
 
 

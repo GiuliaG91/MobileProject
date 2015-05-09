@@ -23,7 +23,6 @@ public class Company extends User {
     protected static final String FISCAL_CODE_FIELD = "Fiscal_Code";
     protected static final String  FIELD_FIELD = "Field";
     protected static final String PHONE_FIELD = "phones";
-    protected static final String OFFERS_FIELD = "offers";
     protected static final String FOUNDATION_DATE_FIELD = "Foundation_Date";
     protected static final String OFFICES_FIELD = "offices";
 
@@ -188,38 +187,6 @@ public class Company extends User {
 
         offices.remove(office);
         removeAll(OFFICES_FIELD,Arrays.asList(office));
-    }
-
-
-     public void addOffer(CompanyOffer offer){
-          this.addUnique(OFFERS_FIELD,offer);
-     }
-
-    public ArrayList<CompanyOffer> getOffers( ){
-
-        ArrayList<CompanyOffer> offers = new ArrayList<CompanyOffer>();
-        List<Object> list = this.getList(OFFERS_FIELD);
-
-        if(list!= null)
-            for(Object o:list){
-                if(o instanceof CompanyOffer){
-
-                    CompanyOffer of = (CompanyOffer)o;
-                    try {
-                        of.fetchIfNeeded();
-                    } catch (ParseException e) {
-                        e.printStackTrace();
-                    }
-                    offers.add(of);
-                }
-            }
-
-        return offers;
-    }
-
-    public void removeOffer(CompanyOffer offer)
-    {
-        this.removeAll(OFFERS_FIELD, Arrays.asList(offer));
     }
 
     @Override
