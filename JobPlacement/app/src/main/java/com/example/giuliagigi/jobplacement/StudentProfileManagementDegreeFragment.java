@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.text.format.Time;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -176,6 +178,27 @@ public class StudentProfileManagementDegreeFragment extends ProfileManagementFra
         else
             degreeMark.setText(INSERT_FIELD);
 
+        degreeMark.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                try{
+                    hasLoud.setChecked((Integer.parseInt(degreeMark.getText().toString())== 110));
+                    hasLoud.setEnabled((Integer.parseInt(degreeMark.getText().toString())== 110));
+                }
+                catch (NumberFormatException e){
+
+                    hasLoud.setChecked(false);
+                    hasLoud.setEnabled(false);
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {}
+        });
+
         textFields.add(degreeMark);
 
         degreeDate = (TextView)root.findViewById(R.id.degree_management_datePicker);
@@ -238,8 +261,8 @@ public class StudentProfileManagementDegreeFragment extends ProfileManagementFra
             getArguments().putInt(BUNDLE_STUDY,degreeStudies.getSelectedItemPosition());
             if(!degreeMark.getText().toString().equals(INSERT_FIELD)) getArguments().putInt(BUNDLE_MARK, Integer.parseInt(degreeMark.getText().toString()));
             getArguments().putBoolean(BUNDLE_LOUD, hasLoud.isChecked());
-            getArguments().putInt(BUNDLE_DATE_DAY,day);
-            getArguments().putInt(BUNDLE_DATE_MONTH,month);
+            getArguments().putInt(BUNDLE_DATE_DAY, day);
+            getArguments().putInt(BUNDLE_DATE_MONTH, month);
             getArguments().putInt(BUNDLE_DATE_YEAR,year);
         }
 
@@ -257,7 +280,17 @@ public class StudentProfileManagementDegreeFragment extends ProfileManagementFra
 
             degree.setType((String) degreeType.getSelectedItem());
             degree.setStudies((String) degreeStudies.getSelectedItem());
-            if(!degreeMark.getText().toString().equals(INSERT_FIELD)) degree.setMark(Integer.parseInt(degreeMark.getText().toString()));
+
+            try{
+
+                if(!degreeMark.getText().toString().equals(INSERT_FIELD)) degree.setMark(Integer.parseInt(degreeMark.getText().toString()));
+            }
+            catch (NumberFormatException e){
+
+                Toast.makeText(getActivity(),"number not valid inside mark field",Toast.LENGTH_SHORT).show();
+                degreeMark.setText(degree.getMark());
+            }
+
             if(degreeDateChanged) {
 
                 Date date = null;
@@ -275,6 +308,7 @@ public class StudentProfileManagementDegreeFragment extends ProfileManagementFra
 
                     if(e == null){
 
+                        Log.println(Log.ASSERT,"DEGREE FRAG","degree saved successfully. Adding to user");
                         currentUser.addDegree(degree);
                         currentUser.saveEventually();
                     }
