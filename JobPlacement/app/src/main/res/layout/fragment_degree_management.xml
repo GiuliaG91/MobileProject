@@ -67,6 +67,15 @@
 
                 </LinearLayout>
 
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="fill_parent"
+                    android:text="Delete"
+                    android:background="@color/ColorPrimary"
+                    android:textColor="#ffffff"
+                    android:textSize="15dp"
+                    android:layout_margin="4dp"
+                    android:id="@+id/degree_management_delete_button"/>
 
             </LinearLayout>
 
@@ -114,8 +123,7 @@
                         android:layout_weight=".7"
                         android:textColor="#ff000000"
                         android:textSize="15dp"
-                        android:paddingLeft="10dp"
-                        android:paddingTop="5dp" />
+                        android:paddingLeft="10dp" />
 
                 </LinearLayout>
 
@@ -209,15 +217,7 @@
 
              <!--END Degree date-->
 
-            <Button
-                android:layout_width="match_parent"
-                android:layout_height="20dp"
-                android:text="Delete"
-                android:background="@color/ColorPrimary"
-                android:textColor="#ffffff"
-                android:textSize="15dp"
-                android:layout_margin="4dp"
-                android:id="@+id/degree_management_delete_button"/>
+
 
 
 

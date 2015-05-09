@@ -259,7 +259,10 @@ public class StudentProfileManagementDegreeFragment extends ProfileManagementFra
 
             getArguments().putInt(BUNDLE_TYPE,degreeType.getSelectedItemPosition());
             getArguments().putInt(BUNDLE_STUDY,degreeStudies.getSelectedItemPosition());
-            if(!degreeMark.getText().toString().equals(INSERT_FIELD)) getArguments().putInt(BUNDLE_MARK, Integer.parseInt(degreeMark.getText().toString()));
+
+            try{ if(!degreeMark.getText().toString().equals(INSERT_FIELD)) getArguments().putInt(BUNDLE_MARK, Integer.parseInt(degreeMark.getText().toString())); }
+            catch (NumberFormatException e){ getArguments().putInt(BUNDLE_MARK, degree.getMark()); }
+
             getArguments().putBoolean(BUNDLE_LOUD, hasLoud.isChecked());
             getArguments().putInt(BUNDLE_DATE_DAY, day);
             getArguments().putInt(BUNDLE_DATE_MONTH, month);
@@ -287,7 +290,7 @@ public class StudentProfileManagementDegreeFragment extends ProfileManagementFra
             }
             catch (NumberFormatException e){
 
-                Toast.makeText(getActivity(),"number not valid inside mark field",Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(),"not a number inside mark field",Toast.LENGTH_SHORT).show();
                 degreeMark.setText(degree.getMark());
             }
 
