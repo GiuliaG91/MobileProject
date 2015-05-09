@@ -69,17 +69,225 @@
                 android:orientation="vertical"
                 android:layout_weight="0.7">
 
-                <include android:id="@+id/student_basics_email_row"
-                    layout="@layout/student_profile_item_row"> </include>
+                <!-- email area -->
 
-                <include android:id="@+id/student_gender_row"
-                    layout="@layout/gender_item_row"> </include>
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp">
 
-                <include android:id="@+id/student_birthDate_row"
-                    layout="@layout/student_profile_item_row"> </include>
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/rowIcon"
+                        android:paddingLeft="10dp"
+                        android:layout_marginLeft="10dp"
+                        android:src="@drawable/ic_email"
+                        android:layout_gravity="center_vertical"/>
 
-                <include android:id="@+id/student_birthCity_row"
-                    layout="@layout/student_profile_item_row"> </include>
+                    <LinearLayout
+                        android:orientation="vertical"
+                        android:layout_width="0dp"
+                        android:layout_height="fill_parent"
+                        android:layout_weight="1"
+                        android:paddingLeft="30dp">
+
+                        <TextView
+                            android:layout_width="fill_parent"
+                            android:layout_height="0dp"
+                            android:textAppearance="?android:attr/textAppearanceSmall"
+                            android:text="Email"
+                            android:id="@+id/email_hint"
+                            android:layout_weight="1"
+                            android:paddingLeft="10dp"
+                            android:gravity="bottom"
+                            android:textSize="10sp" />
+
+                        <EditText
+                            android:layout_width="fill_parent"
+                            android:layout_height="0dp"
+                            android:id="@+id/student_email_et"
+                            android:layout_weight="1"
+                            android:textColor="#ff000000"
+                            android:textSize="20dp"
+                            android:paddingLeft="10dp"
+                            android:paddingTop="5dp"
+                            android:enabled="false"/>
+
+                    </LinearLayout>
+
+
+                </LinearLayout>
+
+                <!-- end email area -->
+
+                <!-- gender area -->
+                <LinearLayout
+                    android:orientation="horizontal" android:layout_width="match_parent"
+                    android:layout_height="100dp">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/genderIcon"
+                        android:paddingLeft="10dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_gravity="center"
+                        android:src="@drawable/ic_gender"/>
+
+                    <LinearLayout
+                        android:orientation="vertical"
+                        android:layout_width="0dp"
+                        android:layout_height="fill_parent"
+                        android:layout_weight="1"
+                        android:paddingLeft="30dp">
+
+
+
+                        <TextView
+                            android:layout_width="fill_parent"
+                            android:layout_height="0dp"
+                            android:textAppearance="?android:attr/textAppearanceSmall"
+                            android:text="Small Text"
+                            android:paddingLeft="10dp"
+                            android:id="@+id/container_sex_hint"
+                            android:layout_weight="1"
+                            android:gravity="bottom"
+                            android:textSize="10sp" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:weightSum="2">
+
+                            <CheckBox
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="F"
+                                android:layout_weight="1"
+                                android:id="@+id/female_checkBox"
+                                android:textColor="#000000"
+                                android:layout_gravity="center_horizontal" />
+                            <CheckBox
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="M"
+                                android:layout_weight="1"
+                                android:textColor="#000000"
+                                android:id="@+id/male_checkBox"
+                                android:layout_gravity="center_horizontal" />
+
+
+
+                        </LinearLayout>
+                    </LinearLayout>
+
+
+                </LinearLayout>
+                <!-- end gender area -->
+
+                <!-- date area -->
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/birth_icon"
+                        android:paddingLeft="10dp"
+                        android:layout_marginLeft="10dp"
+                        android:src="@drawable/ic_birth"
+                        android:layout_gravity="center_vertical"/>
+
+                    <LinearLayout
+                        android:orientation="vertical"
+                        android:layout_width="0dp"
+                        android:layout_height="fill_parent"
+                        android:layout_weight="1"
+                        android:paddingLeft="30dp">
+
+                        <TextView
+                            android:layout_width="fill_parent"
+                            android:layout_height="0dp"
+                            android:textAppearance="?android:attr/textAppearanceSmall"
+                            android:text="Birth date"
+                            android:id="@+id/birth_hint"
+                            android:layout_weight="1"
+                            android:paddingLeft="10dp"
+                            android:gravity="bottom"
+                            android:textSize="10sp" />
+
+                        <EditText
+                            android:layout_width="fill_parent"
+                            android:layout_height="0dp"
+                            android:id="@+id/student_birth_et"
+                            android:layout_weight="1"
+                            android:textColor="#ff000000"
+                            android:textSize="20dp"
+                            android:paddingLeft="10dp"
+                            android:paddingTop="5dp" />
+
+                    </LinearLayout>
+
+
+                </LinearLayout>
+
+                <!-- end date area -->
+
+                <!-- birth city area -->
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/birth_city_icon"
+                        android:paddingLeft="10dp"
+                        android:layout_marginLeft="10dp"
+                        android:src="@drawable/ic_birthcity"
+                        android:layout_gravity="center_vertical"/>
+
+                    <LinearLayout
+                        android:orientation="vertical"
+                        android:layout_width="0dp"
+                        android:layout_height="fill_parent"
+                        android:layout_weight="1"
+                        android:paddingLeft="30dp">
+
+                        <TextView
+                            android:layout_width="fill_parent"
+                            android:layout_height="0dp"
+                            android:textAppearance="?android:attr/textAppearanceSmall"
+                            android:text="Birth city"
+                            android:id="@+id/student_birthCity_hint"
+                            android:layout_weight="1"
+                            android:paddingLeft="10dp"
+                            android:gravity="bottom"
+                            android:textSize="10sp" />
+
+                        <EditText
+                            android:layout_width="fill_parent"
+                            android:layout_height="0dp"
+                            android:id="@+id/student_birthCity_et"
+                            android:layout_weight="1"
+                            android:textColor="#ff000000"
+                            android:textSize="20dp"
+                            android:paddingLeft="10dp"
+                            android:paddingTop="5dp" />
+
+                    </LinearLayout>
+
+
+                </LinearLayout>
+
+                <!-- end birth city area -->
 
             </LinearLayout>
 
