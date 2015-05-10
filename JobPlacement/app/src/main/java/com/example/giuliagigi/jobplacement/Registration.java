@@ -25,10 +25,12 @@ import com.parse.ParseException;
 import com.parse.SignUpCallback;
 
 import java.util.Arrays;
+import java.util.Currency;
 
 
 public class Registration extends ActionBarActivity implements StudentRegistrationFragment.onInteractionListener, CompanyRegistrationFragment.OnInteractionListener {
 
+    private static final String USER_TYPE_SELECT = "Select a type";
 
     private Fragment currentFragment;
     private GlobalData application;
@@ -64,7 +66,9 @@ public class Registration extends ActionBarActivity implements StudentRegistrati
                         ft.replace(R.id.container_register_fragment, currentFragment);
                         break;
                     default:
-                        Log.println(Log.ASSERT,"REGISTRATION", "Error: type unknown");
+                        if(currentFragment!= null)
+                            ft.remove(currentFragment);
+                        currentFragment = null;
                         break;
                 }
 
@@ -76,6 +80,8 @@ public class Registration extends ActionBarActivity implements StudentRegistrati
 
             }
         });
+
+        typeList.setSelection(0);
 
         register = (Button)findViewById(R.id.register_button);
         register.setOnClickListener(new View.OnClickListener() {

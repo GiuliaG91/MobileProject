@@ -161,6 +161,7 @@ public class StudentRegistrationFragment extends Fragment {
 
         EditText mail = (EditText)root.findViewById(R.id.student_mail);
         EditText password = (EditText)root.findViewById(R.id.student_password);
+        EditText confirmPassword = (EditText)root.findViewById(R.id.student_confirmPassword);
         EditText name = (EditText)root.findViewById(R.id.student_name);
         EditText surname = (EditText)root.findViewById(R.id.student_surname);
         CheckBox male = (CheckBox)root.findViewById(R.id.male_checkBox);
@@ -185,7 +186,7 @@ public class StudentRegistrationFragment extends Fragment {
 
         if(mail.getText().toString().trim().isEmpty())
             return null;
-        if(password.getText().toString().isEmpty())
+        if(password.getText().toString().isEmpty() || !password.getText().toString().equals(confirmPassword.getText().toString()))
             return null;
         if(sex == null)
             return null;

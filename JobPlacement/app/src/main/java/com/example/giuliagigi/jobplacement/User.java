@@ -38,9 +38,10 @@ public class User extends ParseObject{
 
     public static final String TYPE_STUDENT = "Student";
     public static final String TYPE_COMPANY = "Company";
+    public static final String TYPE_SELECT = "Select a type";
 
 
-    public static final String[] TYPES = new String[]{TYPE_STUDENT,TYPE_COMPANY};
+    public static final String[] TYPES = new String[]{TYPE_SELECT,TYPE_STUDENT,TYPE_COMPANY};
 
 
     protected String mail;

@@ -78,6 +78,7 @@ public class CompanyRegistrationFragment extends Fragment {
 
         EditText mail = (EditText)root.findViewById(R.id.company_mail);
         EditText password = (EditText)root.findViewById(R.id.company_password);
+        EditText confirmPassword = (EditText)root.findViewById(R.id.company_confirmPassword);
         EditText fiscalCode = (EditText)root.findViewById(R.id.company_fiscal_code);
         EditText name = (EditText)root.findViewById(R.id.company_name);
 
@@ -88,7 +89,7 @@ public class CompanyRegistrationFragment extends Fragment {
 
         if(mail.getText().toString().trim().isEmpty())
             return null;
-        if(password.getText().toString().isEmpty())
+        if(!password.getText().toString().equals(confirmPassword.getText().toString()) || password.getText().toString().isEmpty())
             return null;
         if(field == null)
             return null;
