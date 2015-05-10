@@ -6,14 +6,13 @@ import android.util.Log;
 
 
 import com.parse.FindCallback;
-import com.parse.LogInCallback;
 import com.parse.Parse;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
-import com.parse.SignUpCallback;
-
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import bolts.Task;
@@ -27,10 +26,14 @@ public class GlobalData extends Application {
     it is also very useful to store data that should go from one activity to another
     NOTA: in this class shuld only put data structures and their setter and getter
      */
+
+
     private ParseUserWrapper currentUser;
     private User currentUserObject;
     Toolbar toolbar;
     CompanyOffer currentViewOffer;
+    private HashMap<String,Tag> tags;
+    private HashMap<String,Boolean> isCached;
 
     @Override
     public void onCreate() {
@@ -55,6 +58,11 @@ public class GlobalData extends Application {
         ParseObject.registerSubclass(Certificate.class);
 
         Parse.initialize(this, "EICiUy2eT7CZPXw8N6I1p6lE4844svLI73JTc2QY", "8I9HZ7AgMHgeIxQKk8k653jNBvBCz57nRuSH73pA");
+
+        isCached = new HashMap<String,Boolean>();
+        tags = new HashMap<String,Tag>();
+        isCached.put("tag",false);
+        getTags();
     }
 
     public ParseUserWrapper getCurrentUser() {
@@ -63,7 +71,6 @@ public class GlobalData extends Application {
             currentUser = (ParseUserWrapper)ParseUser.getCurrentUser();
         return  currentUser;
     }
-
     public Student getStudentFromUser(){
 
         if(currentUser.getType().equals(User.TYPE_COMPANY))
@@ -79,7 +86,6 @@ public class GlobalData extends Application {
         }
         return result;
     }
-
     public Company getCompanyFromUser(){
 
         if(currentUser.getType().equals(User.TYPE_STUDENT))
@@ -95,7 +101,6 @@ public class GlobalData extends Application {
         }
         return result;
     }
-
     public User getUserObject(){
 
         Log.println(Log.ASSERT,"GLOBAL DATA", "currentUser: " + currentUser.getEmail());
@@ -134,7 +139,6 @@ public class GlobalData extends Application {
     {
         toolbar=t;
     }
-
     public Toolbar getToolbar()
     {
         return toolbar;
@@ -145,10 +149,28 @@ public class GlobalData extends Application {
     {
         currentViewOffer=o;
     }
-
     public CompanyOffer getCurrentViewOffer()
     {
         return currentViewOffer;
+    }
+
+    public HashMap<String,Tag> getTags(){
+
+        if(isCached.get("tag"))
+            return tags;
+
+        ParseQuery<Tag> query=ParseQuery.getQuery(Tag.class);
+        query.findInBackground(new FindCallback<Tag>() {
+            @Override
+            public void done(List<Tag> tagList, ParseException e) {
+
+                for(Tag t:tagList)
+                    tags.put(t.getTag(),t);
+                isCached.put("tag",true);
+            }
+        });
+
+        return tags;
     }
 }
 

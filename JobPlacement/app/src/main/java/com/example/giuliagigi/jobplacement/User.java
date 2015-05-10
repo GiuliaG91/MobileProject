@@ -20,6 +20,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -34,6 +35,7 @@ public class User extends ParseObject{
     protected static final String MAIL_FIELD = "mail";
     private static final String TYPE_FIELD = "type";
     protected static final String PHONE_FIELD = "phones";
+    protected static final String TAG_FIELD = "tags";
     protected static final String PROFILE_PHOTO_FIELD = "profilePhoto";
 
     public static final String TYPE_STUDENT = "Student";
@@ -48,6 +50,7 @@ public class User extends ParseObject{
     protected String password;
     protected String type;
     protected ArrayList<Telephone> phones;
+    protected HashMap<String,Tag> tags;
     protected Bitmap profilePhoto;
     protected HashMap<String,Boolean> isCached;
     protected HashMap<String,Boolean> isDownloading;
@@ -64,6 +67,7 @@ public class User extends ParseObject{
         password = null;
         type = null;
         profilePhoto = null;
+        tags = new HashMap<String,Tag>();
         isCached = new HashMap<String,Boolean>();
         isDownloading = new HashMap<String,Boolean>();
 
@@ -71,6 +75,7 @@ public class User extends ParseObject{
         isCached.put(TYPE_FIELD, false);
         isCached.put(PHONE_FIELD,false);
         isCached.put(PROFILE_PHOTO_FIELD,false);
+        isCached.put(TAG_FIELD,false);
 
         isDownloading.put(PROFILE_PHOTO_FIELD,false);
     }
@@ -104,6 +109,42 @@ public class User extends ParseObject{
     public ArrayList<Telephone> getPhones(){
 
         return null;
+    }
+
+    public void addTag(Tag tag){
+
+        tags.put(tag.getTag(),tag);
+        this.addUnique(TAG_FIELD,tag);
+    }
+    public void removeTag(Tag tag){
+
+        tags.remove(tag.getTag());
+        removeAll(TAG_FIELD, Arrays.asList(tag));
+    }
+    public HashMap<String,Tag> getTags(){
+
+        if(isCached.get(TAG_FIELD))
+            return tags;
+
+        List<Object> list = getList(TAG_FIELD);
+
+        if(list!=null)
+            for(Object o:list)
+                if(o instanceof Tag){
+
+                    Tag t = (Tag)o;
+
+                    try {
+                        t.fetchIfNeeded();
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+
+                    tags.put(t.getTag(),t);
+                }
+
+        isCached.put(TAG_FIELD,true);
+        return tags;
     }
 
     public void setPassword(String password) {
@@ -187,6 +228,7 @@ public class User extends ParseObject{
         getMail();
         getType();
         getProfilePhoto();
+        getTags();
     }
     public boolean isCachingNeeded(){
 

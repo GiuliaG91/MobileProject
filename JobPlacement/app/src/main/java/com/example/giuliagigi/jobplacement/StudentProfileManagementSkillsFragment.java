@@ -1,6 +1,7 @@
 package com.example.giuliagigi.jobplacement;
 
 import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -8,9 +9,19 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.GridLayout;
+import android.widget.ImageButton;
+import android.widget.MultiAutoCompleteTextView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Set;
 
 public class StudentProfileManagementSkillsFragment extends ProfileManagementFragment {
 
@@ -18,9 +29,14 @@ public class StudentProfileManagementSkillsFragment extends ProfileManagementFra
 
     private Student currentUser;
     Button addDegree, addLanguage,addCertificate;
+    ImageButton addTag;
+    GridLayout tagContainer;
+    MultiAutoCompleteTextView tagsText;
     ArrayList<StudentProfileManagementDegreeFragment> degreeFragments;
     ArrayList<StudentProfileManagementLanguageFragment> languageFragments;
     ArrayList<StudentProfileManagementCertificateFragment> certificateFragments;
+    HashMap<String,Tag> studentTags;
+    ArrayList<View> tagViews;
 
     /*----------------------- CONSTRUCTORS ------------------------------------------------------*/
 
@@ -47,6 +63,8 @@ public class StudentProfileManagementSkillsFragment extends ProfileManagementFra
         degreeFragments = new ArrayList<StudentProfileManagementDegreeFragment>();
         languageFragments = new ArrayList<StudentProfileManagementLanguageFragment>();
         certificateFragments = new ArrayList<StudentProfileManagementCertificateFragment>();
+        studentTags = currentUser.getTags();
+        tagViews = new ArrayList<View>();
     }
 
     @Override
@@ -102,6 +120,97 @@ public class StudentProfileManagementSkillsFragment extends ProfileManagementFra
             }
         });
 
+
+
+        tagsText = (MultiAutoCompleteTextView) root.findViewById(R.id.student_tagAutoComplete_text);
+        addTag = (ImageButton) root.findViewById(R.id.student_addTagButton);
+        tagContainer = (GridLayout)root.findViewById(R.id.student_tagContainer);
+
+        for(String t:studentTags.keySet()){
+
+            final View mytagView = inflater.inflate(R.layout.taglayout, null);
+            final TextView tagTextView = (TextView) mytagView.findViewById(R.id.tag_tv);
+            tagTextView.setText(t);
+
+            mytagView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    tagContainer.removeView(v);
+                    currentUser.removeTag(studentTags.get(tagTextView.getText().toString()));
+                    studentTags.remove(tagTextView.getText().toString());
+                    tagViews.remove(mytagView);
+                    Toast.makeText(getActivity(), "Removed", Toast.LENGTH_SHORT).show();
+                    hasChanged = true;
+                }
+            });
+
+            tagContainer.addView(mytagView);
+            tagViews.add(mytagView);
+        }
+
+
+        final String[] tagNames = new String[application.getTags().size()];
+
+        int i =0;
+        for (String t: application.getTags().keySet())
+            tagNames[i++] = t;
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this.getActivity(),
+                android.R.layout.simple_dropdown_item_1line, tagNames);
+
+        tagsText.setAdapter(adapter);
+        tagsText.setTokenizer(new SpaceTokenizer());
+        tagsText.setThreshold(1);
+
+        addTag.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                ArrayList<String> support = new ArrayList<String>();
+                for (String t: tagNames)
+                    support.add(t.toLowerCase().trim());
+
+                ArrayList<String> existent = new ArrayList<String>();
+                for(String t: studentTags.keySet())
+                    existent.add(t.toLowerCase().trim());
+
+                if(support.contains(tagsText.getText().toString().toLowerCase().trim()))
+                {
+                    if(!existent.contains(tagsText.getText().toString().toLowerCase().trim())) {
+
+                        LayoutInflater inflater = (LayoutInflater) getActivity().getBaseContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                        final View mytagView = inflater.inflate(R.layout.taglayout, null);
+                        final TextView t = (TextView) mytagView.findViewById(R.id.tag_tv);
+                        t.setText(tagsText.getText().toString());
+
+                        mytagView.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+
+                                tagContainer.removeView(v);
+                                currentUser.removeTag(studentTags.get(t.getText().toString()));
+                                studentTags.remove(t.getText().toString());
+                                tagViews.remove(mytagView);
+                                Toast.makeText(getActivity(), "Removed", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+
+                        tagContainer.addView(mytagView);
+                        tagViews.add(mytagView);
+                        studentTags.put(tagsText.getText().toString(), application.getTags().get(tagsText.getText().toString()));
+
+                        tagsText.setText("");
+                        Toast.makeText(getActivity(),"Added",Toast.LENGTH_SHORT ).show();
+                        hasChanged = true;
+
+                    }else Toast.makeText(getActivity().getApplicationContext(),"Existent tag",Toast.LENGTH_SHORT).show();
+
+                }
+                else Toast.makeText(getActivity().getApplicationContext(),"Wrong tag",Toast.LENGTH_SHORT).show();
+
+            }
+        });
 
         return root;
     }
@@ -201,12 +310,32 @@ public class StudentProfileManagementSkillsFragment extends ProfileManagementFra
 
     @Override
     protected void setEnable(boolean enable) {
+
         super.setEnable(enable);
+
+        addTag.setEnabled(enable);
+        addCertificate.setEnabled(enable);
+        addDegree.setEnabled(enable);
+        addLanguage.setEnabled(enable);
+        tagsText.setEnabled(enable);
+
+        for(View tag:tagViews)
+            tag.setEnabled(enable);
+
     }
 
     @Override
     public void saveChanges() {
         super.saveChanges();
-        Log.println(Log.ASSERT, "BASICS", "sto salvando skills");
+        Log.println(Log.ASSERT, "SKILLS FRAG", "sto salvando skills");
+        Log.println(Log.ASSERT, "SKILLS FRAG", "lista tag: ");
+
+        for(Tag t: studentTags.values()){
+
+            Log.println(Log.ASSERT, "SKILLS FRAG", "tag: " + t.getTag());
+            currentUser.addTag(t);
+        }
+
+        currentUser.saveEventually();
     }
 }
