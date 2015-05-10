@@ -14,11 +14,9 @@ import android.view.ViewGroup;
  */
 public class Home_tab extends Fragment {
 
-
-
    public Home_tab(){}
 
-    public Home_tab newInstance(){
+    public static Home_tab newInstance(){
 
         Home_tab fragment=new Home_tab();
         return fragment;

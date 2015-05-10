@@ -10,9 +10,9 @@
         app:showAsAction="never" />
 
 
-    <item android:id="@+id/action_search"
-        android:icon="@drawable/ic_search_white"
-        android:title="@string/action_search"
+    <item android:id="@+id/action_modify"
+        android:icon="@drawable/ic_modify_white"
+        android:title="@string/action_modify"
         app:showAsAction="always"/>
 
 

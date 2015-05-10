@@ -32,7 +32,16 @@ public class GlobalData extends Application {
     Toolbar toolbar;
     CompanyOffer currentViewOffer;
 
+    /*********STATE OF PAGES***************/
+     private int home_student_position=0; //default
+     private int home_company_position=0; //default
+     private int fav_position=-1;      //default
+     private int applies_position=-1;   //default
+
+
+    /***************************************/
     @Override
+
     public void onCreate() {
         super.onCreate();
 
@@ -150,5 +159,55 @@ public class GlobalData extends Application {
     {
         return currentViewOffer;
     }
+
+
+    /****************GETTER AND SETTER FOR STATES***********/
+    public int getHome_student_position() {
+        return home_student_position;
+    }
+
+    public int getHome_company_position() {
+        return home_company_position;
+    }
+
+    public void setHome_student_position(int home_student_position) {
+        this.home_student_position = home_student_position;
+    }
+
+    public void setHome_company_position(int home_company_position) {
+        this.home_company_position = home_company_position;
+    }
+
+    public int getFav_position() {
+        return fav_position;
+    }
+
+    public void setFav_position(int fav_position) {
+        this.fav_position = fav_position;
+    }
+
+    public int getApplies_position() {
+        return applies_position;
+    }
+
+    public void setApplies_position(int applies_position) {
+        this.applies_position = applies_position;
+    }
+    //item_view state
+    public void resetState()
+    {
+        fav_position=-1;
+
+
+
+    }
+
+
+
+
+
+
+
+/*****************************************************************/
 }
 

@@ -126,7 +126,8 @@ public class menuAdapter extends RecyclerView.Adapter<menuAdapter.ViewHolder> {
 
                                     toolbar.setTitle(tv.getText());
                                     mDrawerLayout.closeDrawers();
-
+                                    mCallbacks.setSelectedItem(TYPE_HOME);
+                                    gd.resetState();
                                 }
                             }
 
@@ -158,6 +159,7 @@ public class menuAdapter extends RecyclerView.Adapter<menuAdapter.ViewHolder> {
                                     toolbar.setTitle(tv.getText());
                                     mDrawerLayout.closeDrawers();
                                     mCallbacks.setSelectedItem(TYPE_PROFILE);
+                                    gd.resetState();
                                 }
 
                             }
@@ -188,6 +190,7 @@ public class menuAdapter extends RecyclerView.Adapter<menuAdapter.ViewHolder> {
                                     toolbar.setTitle(tv.getText());
                                     mDrawerLayout.closeDrawers();
                                     mCallbacks.setSelectedItem(TYPE_SEARCH);
+                                    gd.resetState();
                                 }
 
                             }
@@ -219,6 +222,7 @@ public class menuAdapter extends RecyclerView.Adapter<menuAdapter.ViewHolder> {
                                         toolbar.setTitle(tv.getText());
                                         mDrawerLayout.closeDrawers();
                                         mCallbacks.setSelectedItem(TYPE_MAILBOX);
+                                        gd.resetState();
                                     }
 
 
@@ -267,6 +271,7 @@ public class menuAdapter extends RecyclerView.Adapter<menuAdapter.ViewHolder> {
                                       toolbar.setTitle(tv.getText());
                                       mDrawerLayout.closeDrawers();
                                       mCallbacks.setSelectedItem(TYPE_HOME);
+                                      gd.resetState();
                                   }
                               }
 
@@ -290,7 +295,7 @@ public class menuAdapter extends RecyclerView.Adapter<menuAdapter.ViewHolder> {
 
                                   if (!(current instanceof NewOffer)) {
                                       //New Fragment
-                                      NewOffer fragment = NewOffer.newInstance();
+                                      NewOffer fragment = NewOffer.newInstance(true,true);
                                       // Insert the fragment by replacing any existing fragment
                                       // Insert the fragment by replacing any existing fragment
 
@@ -306,7 +311,7 @@ public class menuAdapter extends RecyclerView.Adapter<menuAdapter.ViewHolder> {
                                       toolbar.setTitle(tv.getText());
                                       mDrawerLayout.closeDrawers();
                                       mCallbacks.setSelectedItem(TYPE_COMPANIES);
-
+                                      gd.resetState();
                                   }
 
                               }
@@ -342,6 +347,7 @@ public class menuAdapter extends RecyclerView.Adapter<menuAdapter.ViewHolder> {
                                       toolbar.setTitle(tv.getText());
                                       mDrawerLayout.closeDrawers();
                                       mCallbacks.setSelectedItem(TYPE_MAILBOX);
+                                      gd.resetState();
                                   }
 
 
@@ -443,7 +449,7 @@ public class menuAdapter extends RecyclerView.Adapter<menuAdapter.ViewHolder> {
    public interface SetSelectedItem{
 
 
-       public void setSelectedItem(int position);
+       public void setSelectedItem(int item);
 
    }
 

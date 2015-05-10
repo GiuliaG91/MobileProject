@@ -37,8 +37,6 @@ public class Home extends ActionBarActivity  implements TabHomeStudentFragment.O
                                                 ProfileManagementFragment.OnInteractionListener, ProfileManagement.OnInteractionListener , menuAdapter.SetSelectedItem ,
                                                   OfferSearchFragment.OnFragmentInteractionListener
 {
-
-
     private Toolbar toolbar;   // Declaring the Toolbar Object
 
     /**
@@ -65,6 +63,9 @@ public class Home extends ActionBarActivity  implements TabHomeStudentFragment.O
     private ArrayList<OnActivityChangedListener> listeners;
 
 
+    /****************BACK BUTTON*************/
+
+    protected OnBackPressedListener onBackPressedListener;
 
     /**
      * ***********************************************************
@@ -121,11 +122,6 @@ public class Home extends ActionBarActivity  implements TabHomeStudentFragment.O
 
                setUpMainFragment(2);
 
-
-
-
-
-
         }
 
         // specify an adapter (see also next example)
@@ -169,6 +165,7 @@ public class Home extends ActionBarActivity  implements TabHomeStudentFragment.O
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
+        menu.clear();
         getMenuInflater().inflate(R.menu.menu_home, menu);
         return true;
     }
@@ -197,18 +194,6 @@ public class Home extends ActionBarActivity  implements TabHomeStudentFragment.O
         Log.println(Log.ASSERT,"HOME ACTIVITY", "onActivityResult");
     }
 
-    @Override
-    public void onBackPressed() {
-
-
-
-        if(getSupportFragmentManager().getBackStackEntryCount()>0) {
-            toolbar.setTitle("Home");
-
-            getSupportFragmentManager().popBackStackImmediate();
-        }
-        else  super.onBackPressed();
-}
 
     @Override
     public void onFragmentInteraction(Uri uri) {
@@ -275,11 +260,7 @@ public class Home extends ActionBarActivity  implements TabHomeStudentFragment.O
             //Student menu --> student fragments
             switch (mDrawerSelectedItem) {
                 case 1: // Home
-
-
                     FragmentManager fragmentManager = getSupportFragmentManager();
-                    Fragment current = fragmentManager.findFragmentById(R.id.tab_Home_container);
-
                         //New Fragment
                         TabHomeStudentFragment homeFragment = TabHomeStudentFragment.newInstance();
                         // Insert the fragment by replacing any existing fragment
@@ -301,9 +282,7 @@ public class Home extends ActionBarActivity  implements TabHomeStudentFragment.O
                 case 2:
 
 
-                            fragmentManager = getSupportFragmentManager();
-                            current = fragmentManager.findFragmentById(R.id.tab_Home_container);
-
+                                fragmentManager = getSupportFragmentManager();
                                 Fragment fragment = ProfileManagement.newInstance();
 
                                 fragmentManager.beginTransaction()
@@ -333,7 +312,6 @@ public class Home extends ActionBarActivity  implements TabHomeStudentFragment.O
                     case 1 :
 
 
-
                                 FragmentManager fragmentManager =getSupportFragmentManager();
                                 Fragment current = fragmentManager.findFragmentById(R.id.tab_Home_container);
 
@@ -353,23 +331,18 @@ public class Home extends ActionBarActivity  implements TabHomeStudentFragment.O
                         mDrawerLayout.closeDrawers();
 
 
-
-
-
                         break;
 
 
 
                     case 4 :
 
-
-
                                  fragmentManager = getSupportFragmentManager();
                                  current = fragmentManager.findFragmentById(R.id.fragment_new_offer);
 
 
                                     //New Fragment
-                                    NewOffer fragment = NewOffer.newInstance();
+                                    NewOffer fragment = NewOffer.newInstance(true,true);
                                     // Insert the fragment by replacing any existing fragment
                                     // Insert the fragment by replacing any existing fragment
 
@@ -398,7 +371,21 @@ public class Home extends ActionBarActivity  implements TabHomeStudentFragment.O
    /*****************************************END TYPE SWITCH******************************/
     }
 
+    public void setOnBackPressedListener(OnBackPressedListener onBackPressedListener) {
+        this.onBackPressedListener = onBackPressedListener;
+    }
 
+    @Override
+    public void onBackPressed() {
+        if (onBackPressedListener != null)
+            onBackPressedListener.doBack();
 
+        if(getSupportFragmentManager().getBackStackEntryCount()>0) {
+            toolbar.setTitle("Home");
+
+            getSupportFragmentManager().popBackStackImmediate();
+        }
+        else  super.onBackPressed();
+    }
 
 }

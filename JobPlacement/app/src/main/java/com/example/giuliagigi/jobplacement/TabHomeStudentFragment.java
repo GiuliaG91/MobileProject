@@ -25,12 +25,13 @@ public class TabHomeStudentFragment extends Fragment {
     /**
      * *************For page viewer***************************
      */
+    View root;
     ViewPager pager;
     ViewPagerAdapter adapter;
     SlidingTabLayout tabs;
     CharSequence Titles[] = {"News", "Preferred","Applies"};
     int Numboftabs = 3;
-
+    GlobalData globalData;
     /***************************************************************/
 
 
@@ -60,33 +61,28 @@ public class TabHomeStudentFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
 
-
-        }
+       globalData =(GlobalData)getActivity().getApplication();
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_tab_home, container, false);
-    }
 
-    @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
+        // Inflate the layout for this fragment
+      root= inflater.inflate(R.layout.fragment_tab_home, container, false);
 
         /*************ViewPager***************************/
 
         // Creating The ViewPagerAdapter and Passing Fragment Manager, Titles fot the Tabs and Number Of Tabs.
-        adapter = new ViewPagerAdapter(getChildFragmentManager(), Titles, Numboftabs);
+        adapter = new ViewPagerAdapter(getChildFragmentManager(), Titles, Numboftabs );
+
         // Assigning ViewPager View and setting the adapter
-        pager = (ViewPager) view.findViewById(R.id.pager);
+        pager = (ViewPager) root.findViewById(R.id.pager);
         pager.setAdapter(adapter);
 
         // Assiging the Sliding Tab Layout View
-        tabs = (SlidingTabLayout) view.findViewById(R.id.tabs);
+        tabs = (SlidingTabLayout) root.findViewById(R.id.tabs);
         tabs.setDistributeEvenly(true); // To make the Tabs Fixed set this true, This makes the tabs Space Evenly in Available width
 
 
@@ -101,14 +97,27 @@ public class TabHomeStudentFragment extends Fragment {
         // Setting the ViewPager For the SlidingTabsLayout
         tabs.setViewPager(pager);
 
+      tabs.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+          @Override
+          public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 
+          }
+
+          @Override
+          public void onPageSelected(int position) {
+             globalData.setHome_student_position(position);
+          }
+
+          @Override
+          public void onPageScrollStateChanged(int state) {
+
+          }
+      });
         /****************************************************/
 
-
+        pager.setCurrentItem(globalData.getHome_student_position());
+        return root;
     }
-
-
-
 
     @Override
     public void onDetach() {
@@ -118,5 +127,7 @@ public class TabHomeStudentFragment extends Fragment {
 
     public interface OnFragmentInteractionListener {
     }
+
+
 
 }

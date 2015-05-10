@@ -6,9 +6,13 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBarActivity;
+import android.support.v7.widget.CardView;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -45,13 +49,14 @@ import java.util.Set;
  * Use the {@link NewOffer#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class NewOffer extends Fragment implements DatePickerFragment.OnDataSetListener{
-
+public class NewOffer extends Fragment implements DatePickerFragment.OnDataSetListener {
 
     private View root;
-
+    private Menu myMenu;
     private OnFragmentInteractionListener mListener;
 
+    private boolean editMode=true;
+    private boolean isNew=true;
 
    private EditText editDescriptionText=null;
    private TextView textView=null;
@@ -69,6 +74,11 @@ public class NewOffer extends Fragment implements DatePickerFragment.OnDataSetLi
     private Spinner termSpinner =null;
     private ImageButton addtag=null;
 
+    private String[] typeOfFields;
+    private String[] typeOfContracts;
+    private String[] salaries;
+    private String[] durations;
+
     private MultiAutoCompleteTextView tagsView=null;
 
      private Map<String,Tag> retriveTag=null;
@@ -77,9 +87,12 @@ public class NewOffer extends Fragment implements DatePickerFragment.OnDataSetLi
     GlobalData globalData=null;
 
 
-    public static NewOffer newInstance() {
+    public static NewOffer newInstance(boolean editMode,boolean isNew) {
         NewOffer fragment = new NewOffer();
-
+        Bundle args = new Bundle();
+        args.putBoolean("edit",editMode);
+        args.putBoolean("isNew",isNew);
+        fragment.setArguments(args);
         return fragment;
     }
 
@@ -87,9 +100,41 @@ public class NewOffer extends Fragment implements DatePickerFragment.OnDataSetLi
         // Required empty public constructor
     }
 
+    public void getInitArguments() {
+        editMode= getArguments().getBoolean("edit");
+        isNew=getArguments().getBoolean("isNew");
+    }
+
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+         setHasOptionsMenu(true);
+        setRetainInstance(true);
+        getInitArguments();
+    }
+
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        myMenu=menu;
+        menu.clear();
+        if(isNew==false) inflater.inflate(R.menu.menu_offer,menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_modify) {
+            editMode=true;
+            setResetEditMode();
+            item.setVisible(false);
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -118,16 +163,20 @@ public class NewOffer extends Fragment implements DatePickerFragment.OnDataSetLi
         salarySpinner = (Spinner) root.findViewById(R.id.spinnerSalary);
         termSpinner = (Spinner) root.findViewById(R.id.spinnerDuration);
 
-       tagsView = (MultiAutoCompleteTextView) root.findViewById(R.id.tagAutoComplete_tv);
 
-        String[] typeOfFields=getResources().getStringArray(R.array.new_offer_fragment_fields);
+        tagsView = (MultiAutoCompleteTextView) root.findViewById(R.id.tagAutoComplete_tv);
+
+
+
+
+       typeOfFields=getResources().getStringArray(R.array.new_offer_fragment_fields);
 
         fieldSpinner.setAdapter(new StringAdapter(typeOfFields));
 
-        String[] typeOfContracts=getResources().getStringArray(R.array.new_offer_fragment_typeOfContracts);
+        typeOfContracts=getResources().getStringArray(R.array.new_offer_fragment_typeOfContracts);
         contractSpinner.setAdapter(new StringAdapter(typeOfContracts));
 
-        String[] salaries=getResources().getStringArray(R.array.new_offer_fragment_salary_spinner_content);
+        salaries=getResources().getStringArray(R.array.new_offer_fragment_salary_spinner_content);
         salarySpinner.setAdapter(new StringAdapter(salaries));
 
         salarySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -146,21 +195,10 @@ public class NewOffer extends Fragment implements DatePickerFragment.OnDataSetLi
         });
 
 
-
-        String[] durations=getResources().getStringArray(R.array.new_offer_fragment_termContracts);
+        durations=getResources().getStringArray(R.array.new_offer_fragment_termContracts);
         termSpinner.setAdapter(new StringAdapter(durations));
 
-        termSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-                    termSpinner.setPrompt("Per favore scrivi");
-            }
-        });
 
            final Fragment tf=this;
 
@@ -222,7 +260,14 @@ public class NewOffer extends Fragment implements DatePickerFragment.OnDataSetLi
 
         editDescriptionText.addTextChangedListener(mTextEditorWatcher);
         editObject.addTextChangedListener(mobjectTextWhatcer);
-
+        if(isNew==false)
+        {
+            publish.setText(getResources().getString(R.string.new_offer_fragment_button_publish));
+        }
+        else
+        {
+            publish.setText(getResources().getString(R.string.new_offer_fragment_button_modify));
+        }
         publish.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -253,16 +298,12 @@ public class NewOffer extends Fragment implements DatePickerFragment.OnDataSetLi
         }
 
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this.getActivity(),
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this.getActivity(),
                 android.R.layout.simple_dropdown_item_1line, t);
 
        tagsView.setAdapter(adapter);
        tagsView.setTokenizer(new SpaceTokenizer());
         tagsView.setThreshold(1);
-
-
-
-
 
 
 
@@ -273,7 +314,7 @@ public class NewOffer extends Fragment implements DatePickerFragment.OnDataSetLi
                 if(support.add(tagsView.getText().toString().toLowerCase().trim())==false)
                 {
                     if(existent.add(tagsView.getText().toString().toLowerCase().trim())==true) {
-                        final GridLayout tagConntainer = (GridLayout) root.findViewById(R.id.tagContainder);
+                        final GridLayout tagContainer = (GridLayout) root.findViewById(R.id.tagContainder);
 
                         LayoutInflater inflater = (LayoutInflater) getActivity().getBaseContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                         View mytagView = inflater.inflate(R.layout.taglayout, null);
@@ -281,14 +322,14 @@ public class NewOffer extends Fragment implements DatePickerFragment.OnDataSetLi
                         mytagView.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                tagConntainer.removeView(v);
+                                tagContainer.removeView(v);
                                 Toast.makeText(getActivity(),"Removed",Toast.LENGTH_SHORT ).show();
                             }
                         });
 
                         TextView t = (TextView) mytagView.findViewById(R.id.tag_tv);
                         t.setText(tagsView.getText().toString());
-                        tagConntainer.addView(mytagView);
+                        tagContainer.addView(mytagView);
 
                         tagsView.setText("");
                         Toast.makeText(getActivity(),"Added",Toast.LENGTH_SHORT ).show();
@@ -301,11 +342,165 @@ public class NewOffer extends Fragment implements DatePickerFragment.OnDataSetLi
             }
         });
 
+
+
+
+        if(isNew==false)
+        {
+            CompanyOffer offer=globalData.getCurrentViewOffer();
+
+            editDescriptionText.setText(offer.getDescription());
+            textView.setEnabled(false);
+            editObject.setText(offer.getOfferObject());
+            editSalary.setText(offer.getSAlARY());
+
+            SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+            String date=dateFormat.format(offer.getValidity());
+
+            validity.setText(date);
+            publish.setText("Modify");
+            places.setText(offer.getnPositions().toString());
+            location.setText(offer.getLocation());
+            int i;
+            for(i=0;i<typeOfFields.length;i++)
+            {
+                if(typeOfFields[i].toLowerCase().trim().equals(offer.getWorkField().toLowerCase().trim()))
+                {
+                    fieldSpinner.setSelection(i);
+                    break;
+                }
+                fieldSpinner.setSelection(0);
+
+            }
+
+
+
+
+            for(i=0;i<typeOfContracts.length;i++)
+            {
+                if(typeOfContracts[i].toLowerCase().trim().equals(offer.getContract().toLowerCase().trim()))
+                {
+                    contractSpinner.setSelection(i);
+                    break;
+                }
+                contractSpinner.setSelection(0);
+            }
+
+
+
+            for(i=0;i<salaries.length;i++)
+            {
+                if(salaries[i].toLowerCase().trim().equals(offer.getSAlARY().toLowerCase().trim())) {
+                    salarySpinner.setSelection(i);
+                    break;
+                }
+                salarySpinner.setSelection(0);
+            }
+
+
+
+            for(i=0;i<durations.length;i++)
+            {
+                if(durations[i].toLowerCase().trim().equals(offer.getTerm().toLowerCase().trim()))
+                {
+                    termSpinner.setSelection(i);
+                    break;
+                }
+                termSpinner.setSelection(0);
+            }
+
+
+
+            /****TAGS*****/
+
+            final GridLayout tagContainer = (GridLayout) root.findViewById(R.id.tagContainder);
+            if(offer.getTags().isEmpty())
+            {
+                tagContainer.setVisibility(View.INVISIBLE);
+            }
+            else {
+                LayoutInflater tag_inflater = (LayoutInflater) getActivity().getBaseContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+
+                for (Tag tag : offer.getTags()) {
+
+                    View mytagView = tag_inflater.inflate(R.layout.taglayout, null);
+
+
+                    TextView tag_tv = (TextView) mytagView.findViewById(R.id.tag_tv);
+                    tag_tv.setText(tag.getTag());
+                    tagContainer.addView(mytagView);
+                }
+            }
+        }
+
+        setResetEditMode();
         return root;
 
     }
 
+        private void setResetEditMode() {
+            if (editMode == false) {
+                editDescriptionText.setEnabled(false);
+                textView.setEnabled(false);
+                editObject.setEnabled(false);
+                editSalary.setEnabled(false);
+                dateButton.setEnabled(false);
+                validity.setEnabled(false);
+                publish.setEnabled(false);
+                places.setEnabled(false);
+                location.setEnabled(false);
 
+                fieldSpinner.setEnabled(false);
+                contractSpinner.setEnabled(false);
+                salarySpinner.setEnabled(false);
+                termSpinner.setEnabled(false);
+
+                CardView cardView=(CardView)root.findViewById(R.id.card_AddTag);
+                cardView.setVisibility(View.INVISIBLE);
+                addtag.setEnabled(false);
+                addtag.setVisibility(View.INVISIBLE);
+                tagsView.setEnabled(false);
+                publish.setEnabled(false);
+                publish.setVisibility(View.INVISIBLE);
+            } else
+            {
+                editDescriptionText.setEnabled(true);
+                textView.setEnabled(true);
+                editObject.setEnabled(true);
+                editSalary.setEnabled(true);
+                dateButton.setEnabled(true);
+                validity.setEnabled(true);
+                publish.setEnabled(true);
+                places.setEnabled(true);
+                location.setEnabled(true);
+
+
+
+                fieldSpinner.setEnabled(true);
+                contractSpinner.setEnabled(true);
+                salarySpinner.setEnabled(true);
+                termSpinner.setEnabled(true);
+                CardView cardView=(CardView)root.findViewById(R.id.card_AddTag);
+                cardView.setVisibility(View.VISIBLE);
+                addtag.setVisibility(View.VISIBLE);
+                addtag.setEnabled(true);
+                tagsView.setEnabled(true);
+
+                GridLayout tagContainer = (GridLayout) root.findViewById(R.id.tagContainder);
+                if(tagContainer.getVisibility()==View.INVISIBLE)
+                {
+                    tagContainer.setVisibility(View.VISIBLE);
+                }
+
+                publish.setEnabled(true);
+                publish.setVisibility(View.VISIBLE);
+         if(myMenu!=null) {
+             myMenu.getItem(R.id.action_modify).setVisible(true);
+           }
+            }
+
+
+        }
 
 
 
@@ -402,8 +597,9 @@ public class NewOffer extends Fragment implements DatePickerFragment.OnDataSetLi
 
     public void publishOffer(View v) {
 
-            //Make all check
+        CompanyOffer offer;
 
+            //Make all check
             if(editObject.getText().length()==0 ||
                   fieldSpinner.getSelectedItemPosition()==0  ||
                     places.getText().length()==0 ||
@@ -450,8 +646,14 @@ else {
 
 
                 if (flag == 0){
-                    CompanyOffer offer = new CompanyOffer();
 
+                    if(isNew==true) {
+                      offer = new CompanyOffer();
+                    }
+                    else
+                    {
+                       offer = globalData.getCurrentViewOffer();
+                    }
                     offer.setObject(editObject.getText().toString());
                     offer.setWorkField(fieldSpinner.getSelectedItem().toString());
                     offer.setPositions(p);
@@ -505,14 +707,19 @@ else {
                     offer.saveInBackground();
                     Toast.makeText(getActivity(),"Done",Toast.LENGTH_SHORT ).show();
 
-                  ((ActionBarActivity) getActivity()).getSupportActionBar().setTitle("Home");
-                   getFragmentManager().popBackStackImmediate();
+                      editMode=false;
+                       setResetEditMode();
 
                 }
 
 
             }
 
+
+
         }
+
+
+
  }
 
