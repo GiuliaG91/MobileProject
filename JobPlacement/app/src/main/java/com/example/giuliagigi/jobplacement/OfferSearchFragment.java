@@ -55,8 +55,9 @@ public class OfferSearchFragment extends Fragment {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
+        super.onCreate(savedInstanceState);
+
 
     }
 
@@ -137,6 +138,7 @@ public class OfferSearchFragment extends Fragment {
     @Override
     public void onCreateOptionsMenu(
             Menu menu, MenuInflater inflater) {
+          menu.clear();
         inflater.inflate(R.menu.menu_search, menu);
     }
 

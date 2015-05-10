@@ -76,7 +76,7 @@ public class CompanyShowOfferFragment extends Fragment {
                 new ParseQueryAdapter.QueryFactory<CompanyOffer>() {
                     public ParseQuery create() {
                         Company c = ((GlobalData) getActivity().getApplication()).getCompanyFromUser();
-                        ParseQuery query = new ParseQuery("CompanyOffer");
+                        ParseQuery query = new ParseQuery("CompanyOffer").whereEqualTo("company",c);
                         return query;
                     }
                 };
@@ -108,7 +108,6 @@ public class CompanyShowOfferFragment extends Fragment {
                 }
 
             }
-
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
@@ -131,10 +130,10 @@ public class CompanyShowOfferFragment extends Fragment {
 
         @Override
         public void onLoaded(List<CompanyOffer> companyOffers, Exception e) {
-
-            adapter.updateMyDataset(companyOffers);
-            adapter.notifyDataSetChanged();
-
+            if(companyOffers!=null) {
+                adapter.updateMyDataset(companyOffers);
+                adapter.notifyDataSetChanged();
+            }//else nothing to do.... nothing has been found
         }
 
 

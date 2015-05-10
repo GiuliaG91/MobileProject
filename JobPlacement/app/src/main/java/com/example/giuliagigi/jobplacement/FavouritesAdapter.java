@@ -165,6 +165,32 @@ public class FavouritesAdapter extends RecyclerView.Adapter<FavouritesAdapter.Vi
         globalData.setCurrentOffer(mDataset.get(vh.getPosition()));
         //Pass Object to fragment
         FragmentManager fragmentManager = context.getSupportFragmentManager();
+        globalData.setFav_position(vh.getPosition());
+        //New Fragment
+        OfferDetail fragment=OfferDetail.newInstance();
+        // Insert the fragment by replacing any existing fragment
+        // Insert the fragment by replacing any existing fragment
+
+        fragmentManager.beginTransaction()
+                .replace(R.id.tab_Home_container, fragment)
+                .addToBackStack("PrefView")
+                .commit();
+
+        // Highlight the selected item, update the title, and close the drawer
+        // Highlight the selected item, update the title, and close the drawer
+        Toolbar toolbar= globalData.getToolbar();
+        toolbar.setTitle("Offer");
+
+
+    }
+
+    public void startItem(int position)
+    {
+
+
+        globalData.setCurrentOffer(mDataset.get(position));
+        //Pass Object to fragment
+        FragmentManager fragmentManager = context.getSupportFragmentManager();
 
         //New Fragment
         OfferDetail fragment=OfferDetail.newInstance();
@@ -180,6 +206,7 @@ public class FavouritesAdapter extends RecyclerView.Adapter<FavouritesAdapter.Vi
         // Highlight the selected item, update the title, and close the drawer
         Toolbar toolbar= globalData.getToolbar();
         toolbar.setTitle("Offer");
+
 
 
     }

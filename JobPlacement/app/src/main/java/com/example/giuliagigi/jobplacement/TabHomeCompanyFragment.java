@@ -22,6 +22,7 @@ import android.view.ViewGroup;
 public class TabHomeCompanyFragment extends Fragment {
 
     View root;
+    GlobalData globalData;
     /**
      * *************For page viewer***************************
      */
@@ -56,10 +57,7 @@ public class TabHomeCompanyFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-
-
-        }
+        globalData=(GlobalData)getActivity().getApplication();
     }
 
     @Override
@@ -92,9 +90,24 @@ public class TabHomeCompanyFragment extends Fragment {
         // Setting the ViewPager For the SlidingTabsLayout
         tabs.setViewPager(pager);
 
+          tabs.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+              @Override
+              public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 
+              }
+
+              @Override
+              public void onPageSelected(int position) {
+                    globalData.setHome_company_position(position);
+              }
+
+              @Override
+              public void onPageScrollStateChanged(int state) {
+
+              }
+          });
         /****************************************************/
-
+           pager.setCurrentItem(globalData.getHome_company_position());
         return root;
 
     }

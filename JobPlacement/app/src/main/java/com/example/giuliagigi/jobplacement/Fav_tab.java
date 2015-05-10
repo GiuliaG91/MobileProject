@@ -23,6 +23,16 @@ public class Fav_tab extends Fragment {
     private  FavouritesAdapter adapter;
     private LinearLayoutManager mLayoutManager;
 
+
+
+   public static Fav_tab newInstance(){
+       Fav_tab fragment=new Fav_tab();
+       return fragment;
+
+   }
+
+
+
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         root  = inflater.inflate(R.layout.fragment_offer_search,container,false);
 
@@ -50,4 +60,14 @@ public class Fav_tab extends Fragment {
         return root;
     }
 
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        int position=globalData.getFav_position();
+        if(position!=-1)
+        {
+            adapter.startItem(position);
+        }
+
+    }
 }

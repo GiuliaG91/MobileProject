@@ -2,7 +2,10 @@ package com.example.giuliagigi.jobplacement;
 
 
 import android.content.Context;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,12 +23,12 @@ import java.util.List;
 /**
  * Created by pietro on 05/05/2015.
  */
-public class ShowOffersAdapter extends RecyclerView.Adapter<ShowOffersAdapter.ViewHolder>
+// Company view of its offers
+public class ShowOffersAdapter extends RecyclerView.Adapter<ShowOffersAdapter.ViewHolder> implements View.OnClickListener
 {
-    private Context context;
+    private FragmentActivity context;
     private ArrayList<CompanyOffer> mDataset;
-
-
+    private GlobalData globalData;
     // Provide a reference to the views for each data item
     // Complex data items may need more than one view per item, and
     // you provide access to all the views for a data item in a view holder
@@ -50,17 +53,14 @@ public class ShowOffersAdapter extends RecyclerView.Adapter<ShowOffersAdapter.Vi
         }
     }
 
-   public ShowOffersAdapter(Context c)
+   public ShowOffersAdapter(FragmentActivity c)
    {
        context=c;
 
        mDataset=new ArrayList<>();
 
-
-
+        globalData=(GlobalData)c.getApplication();
    }
-
-
 
     // Create new views (invoked by the layout manager)
     @Override
@@ -70,7 +70,11 @@ public class ShowOffersAdapter extends RecyclerView.Adapter<ShowOffersAdapter.Vi
                 .inflate(R.layout.item_row_offers_company, parent, false);
         // set the view's size, margins, paddings and layout parameters
 
+        v.setClickable(true);
+        v.setOnClickListener(ShowOffersAdapter.this);
+
         ViewHolder vh = new ViewHolder(v);
+        v.setTag(vh);
         return vh;
     }
 
@@ -112,8 +116,38 @@ public class ShowOffersAdapter extends RecyclerView.Adapter<ShowOffersAdapter.Vi
 
     public void updateMyDataset(List<CompanyOffer> offers)
     {
-        mDataset.addAll(offers);
+        if(offers!=null)  mDataset.addAll(offers);
+    }
+
+
+
+    @Override
+    public void onClick(View v) {
+
+
+        ViewHolder vh=(ViewHolder)v.getTag();
+
+        globalData.setCurrentOffer(mDataset.get(vh.getPosition()));
+        //Pass Object to fragment
+        FragmentManager fragmentManager = context.getSupportFragmentManager();
+
+        //New Fragment
+       NewOffer fragment=NewOffer.newInstance(false,false);
+        // Insert the fragment by replacing any existing fragment
+        // Insert the fragment by replacing any existing fragment
+
+        fragmentManager.beginTransaction()
+                .replace(R.id.tab_Home_container, fragment)
+                .addToBackStack("OfferSearch")
+                .commit();
+
+        // Highlight the selected item, update the title, and close the drawer
+        // Highlight the selected item, update the title, and close the drawer
+        Toolbar toolbar= globalData.getToolbar();
+        toolbar.setTitle("Offer");
+
 
     }
+
 
 }
