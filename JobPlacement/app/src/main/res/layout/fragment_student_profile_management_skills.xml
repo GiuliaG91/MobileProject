@@ -9,54 +9,142 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#ffffff">
+        android:background="@color/tabsColor">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
-            <LinearLayout
-                android:id="@+id/student_languageList_container"
+
+
+            <android.support.v7.widget.CardView
+                xmlns:card_view="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/languages_card_view"
+                android:layout_gravity="center"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
+                android:layout_height="wrap_content"
+                card_view:cardCornerRadius="10dp"
+                card_view:cardMaxElevation="5dp"
+                android:layout_margin="3dp"
+                card_view:cardBackgroundColor="#ffffff">
 
-                <ListView
-                    android:id="@+id/skills_language_listview"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                <!--Languages -->
 
-                </ListView>
-                <Button
-                    android:id="@+id/skills_add_language"
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Add Language"/>
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:textAppearance="?android:textAppearanceMedium"
+                            android:layout_weight=".9"
+                            android:padding="10dp"
+                            android:text="Languages"
+                            />
+
+                        <Button
+                            android:id="@+id/skills_add_language"
+                            android:gravity="center"
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:layout_margin="5dp"
+                            android:padding="10dp"
+                            android:background="@drawable/ic_plus"/>
 
 
-            </LinearLayout>
+                    </LinearLayout>
 
+                        <LinearLayout
+                            android:id="@+id/student_languageList_container"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="vertical">
 
-            <LinearLayout
-                android:id="@+id/student_degreeList_container"
+                            <ListView
+                                android:id="@+id/skills_language_listview"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content">
+
+                            </ListView>
+
+                        </LinearLayout>
+
+                </LinearLayout>
+            </android.support.v7.widget.CardView>
+                <!-- end languages -->
+                <!-- degrees -->
+            <android.support.v7.widget.CardView
+                xmlns:card_view="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/degrees_card_view"
+                android:layout_gravity="center"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
+                android:layout_height="wrap_content"
+                card_view:cardCornerRadius="10dp"
+                card_view:cardMaxElevation="5dp"
+                android:layout_margin="3dp"
+                card_view:cardBackgroundColor="#ffffff">
 
-                <ListView
-                    android:id="@+id/skills_degree_listview"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                </ListView>
-                <Button
-                    android:id="@+id/skills_add_degree"
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Add Degree"/>
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:textAppearance="?android:textAppearanceMedium"
+                            android:layout_weight=".9"
+                            android:padding="10dp"
+                            android:text="Degrees"
+                            />
+
+                        <Button
+                            android:id="@+id/skills_add_degree"
+                            android:gravity="center"
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:layout_margin="5dp"
+                            android:padding="10dp"
+                            android:background="@drawable/ic_plus"/>
 
 
-            </LinearLayout>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/student_degreeList_container"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical">
+
+                        <ListView
+                            android:id="@+id/skills_degree_listview"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                        </ListView>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+            </android.support.v7.widget.CardView>
+
+                <!-- end degrees -->
+
+
+
+
         </LinearLayout>
     </ScrollView>
 
