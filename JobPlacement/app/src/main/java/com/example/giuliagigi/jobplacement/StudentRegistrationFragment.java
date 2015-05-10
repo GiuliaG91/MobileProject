@@ -1,8 +1,11 @@
 package com.example.giuliagigi.jobplacement;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +15,8 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
+
+import org.w3c.dom.Text;
 
 import java.util.Date;
 import java.util.Calendar;
@@ -30,6 +35,8 @@ public class StudentRegistrationFragment extends Fragment {
 
     private onInteractionListener hostActivity;
     private View root;
+    int day, month, year;
+    TextView birthPicker;
 
 
     /*------------- Constructors ----------------------------------------------*/
@@ -91,8 +98,10 @@ public class StudentRegistrationFragment extends Fragment {
             }
         });
 
-        degreeList.setAdapter(new StringAdapter(Degree.TYPES));
-        studiesList.setAdapter(new StringAdapter(Degree.STUDIES));
+
+
+        degreeList.setAdapter(new StringAdapterDegree(Degree.TYPES));
+        studiesList.setAdapter(new StringAdapterDegree(Degree.STUDIES));
 
         return root;
     }
@@ -119,12 +128,42 @@ public class StudentRegistrationFragment extends Fragment {
         CheckBox female = (CheckBox)root.findViewById(R.id.female_checkBox);
         Spinner degreeTypeList = (Spinner)root.findViewById(R.id.degree_list);
         Spinner degreeStudiesList = (Spinner)root.findViewById(R.id.studies_list);
-        DatePicker birthPicker = (DatePicker)root.findViewById(R.id.birth_datePicker);
+        birthPicker = (TextView)root.findViewById(R.id.birth_datePicker);
 
-        Date birth = null;
+
+        birthPicker.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+
+                final DatePicker picker = new DatePicker(getActivity());
+                picker.setCalendarViewShown(false);
+                builder.setTitle("Edit birth date");
+                builder.setView(picker);
+                builder.setPositiveButton("Save", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        day = picker.getDayOfMonth();
+                        month = picker.getMonth();
+                        year = picker.getYear();
+                        birthPicker.setText(day + "/" + month + "/" + year);
+                    }
+                });
+                builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                    }
+                });
+                builder.create().show();
+            }
+        });
+        Date date = null;
         Calendar c = GregorianCalendar.getInstance();
-        c.set(birthPicker.getYear(),birthPicker.getMonth(),birthPicker.getDayOfMonth());
-        birth = c.getTime();
+        c.set(day,month,year);
+        date = c.getTime();
+
 
         String degreeType = (String)degreeTypeList.getSelectedItem();
         String degreeStudies = (String)degreeStudiesList.getSelectedItem();
@@ -154,6 +193,8 @@ public class StudentRegistrationFragment extends Fragment {
             return null;
         if(degreeStudies == null)
             return null;
+        if(date == null)
+            return null;
 
         degree.setType(degreeType);
         degree.setStudies(degreeStudies);
@@ -164,18 +205,18 @@ public class StudentRegistrationFragment extends Fragment {
         newStudent.setSex(sex);
         newStudent.setName(name.getText().toString());
         newStudent.setSurname(surname.getText().toString());
-        newStudent.setBirth(birth);
+        newStudent.setBirth(date);
         newStudent.addDegree(degree);
         return newStudent;
     }
 
     public interface onInteractionListener {}
 
-    public class StringAdapter extends BaseAdapter {
+    protected class StringAdapterDegree extends BaseAdapter {
 
         public String[] stringArray;
 
-        public StringAdapter(String[] stringArray){
+        public StringAdapterDegree(String[] stringArray){
             super();
             this.stringArray = stringArray;
         }
@@ -199,12 +240,15 @@ public class StudentRegistrationFragment extends Fragment {
         public View getView(int position, View convertView, ViewGroup parent) {
 
             if(convertView == null)
-                convertView = getActivity().getLayoutInflater().inflate(R.layout.list_text_element,parent,false);
+                convertView = getActivity().getLayoutInflater().inflate(R.layout.spinner_item, parent, false);
 
-            TextView text = (TextView)convertView.findViewById(R.id.text_view);
-            text.setText(stringArray[position]);
+            TextView type = (TextView)convertView.findViewById(R.id.text_view);
+            type.setText(stringArray[position]);
             return convertView;
         }
     }
+
+
+
 
 }

@@ -1,127 +1,417 @@
-<FrameLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
     android:id="@+id/fragment_student_register_layout"
-    tools:context="com.example.giuliagigi.jobplacement.StudentRegistrationFragment">
+    tools:context="com.example.giuliagigi.jobplacement.StudentProfileManagementBasicsFragment">
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/scrollView">
+        android:layout_weight="1">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:padding="20dp"
-            android:id="@+id/containter_registration_fields">
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
-            <EditText
-                android:layout_width="fill_parent"
+        <!-- nome e cognome -->
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:padding="5dp"
+            android:layout_height="100dp">
+
+            <ImageView
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/student_name"
-                android:hint="name" />
-
-
-
-            <EditText
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/student_surname"
-                android:hint="surname" />
-
-            <EditText
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/student_mail"
-                android:inputType="textEmailAddress"
-                android:hint="mail" />
-
-            <EditText
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/student_password"
-                android:inputType="textVisiblePassword"
-                android:hint="password" />
+                android:id="@+id/identityIcon"
+                android:src="@drawable/ic_identity"
+                android:padding="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_gravity="center_vertical"/>
 
             <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:padding="5dp"
-                android:id="@+id/container_sex_checkboxs">
+                android:orientation="vertical"
+                android:layout_width="0dp"
+                android:layout_height="fill_parent"
+                android:layout_weight=".5"
+                android:paddingLeft="10dp">
 
                 <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:text="Sex:"
-                    android:id="@+id/sex_textView" />
+                    android:layout_width="fill_parent"
+                    android:layout_height="0dp"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:text="Name"
+                    android:textColor="@color/ColorPrimaryDark"
+                    android:id="@+id/student_registration_name_title"
+                    android:layout_weight=".3"
+                    android:paddingLeft="10dp"
+                    android:gravity="bottom"
+                    android:textSize="10sp" />
 
-                <CheckBox
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="M"
-                    android:id="@+id/male_checkBox"
-                    android:layout_gravity="center_horizontal" />
+                <EditText
+                    android:layout_width="fill_parent"
+                    android:layout_height="0dp"
+                    android:hint="Insert name"
+                    android:id="@+id/student_name"
+                    android:scrollHorizontally="true"
+                    android:layout_weight=".7"
+                    android:textColor="#ff000000"
+                    android:textSize="15dp"
+                    android:paddingLeft="10dp"
+                    android:paddingTop="5dp" />
 
-                <CheckBox
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="F"
-                    android:id="@+id/female_checkBox"
-                    android:layout_gravity="center_horizontal" />
             </LinearLayout>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="Degree:"
-                android:id="@+id/degree_textView" />
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="0dp"
+                android:layout_height="fill_parent"
+                android:layout_weight=".5"
+                android:paddingLeft="5dp">
 
-            <Spinner
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/degree_list" />
+                <TextView
+                    android:layout_width="fill_parent"
+                    android:layout_height="0dp"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:text="Surname"
+                    android:textColor="@color/ColorPrimaryDark"
+                    android:id="@+id/student_registration_surname_title"
+                    android:layout_weight=".3"
+                    android:paddingLeft="10dp"
+                    android:gravity="bottom"
+                    android:textSize="10sp" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="Studies:"
-                android:id="@+id/studies_textView" />
+                <EditText
+                    android:layout_width="fill_parent"
+                    android:layout_height="0dp"
+                    android:hint="Insert surname"
+                    android:id="@+id/student_surname"
+                    android:scrollHorizontally="true"
+                    android:layout_weight=".7"
+                    android:textColor="#ff000000"
+                    android:textSize="15dp"
+                    android:paddingLeft="10dp"
+                    android:paddingTop="5dp" />
 
-            <Spinner
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/studies_list" />
+            </LinearLayout>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="Birth Date:"
-                android:id="@+id/birth_textView" />
-
-            <DatePicker
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:calendarViewShown="false"
-                android:id="@+id/birth_datePicker" />
 
         </LinearLayout>
 
+        <!-- fine nome e cognome -->
+
+        <!-- gender area -->
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:padding="5dp"
+            android:layout_height="80dp">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/genderIcon"
+                android:padding="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_gender"/>
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="0dp"
+                android:layout_height="fill_parent"
+                android:layout_weight="1"
+                android:paddingLeft="10dp">
+
+                <TextView
+                    android:layout_width="fill_parent"
+                    android:layout_height="0dp"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:text="Sex"
+                    android:paddingLeft="10dp"
+                    android:textColor="@color/ColorPrimaryDark"
+                    android:id="@+id/container_sex_hint"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:textSize="10sp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:weightSum="2">
+
+                    <CheckBox
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="F"
+                        android:layout_weight="1"
+                        android:id="@+id/female_checkBox"
+                        android:textColor="#000000"
+                        android:layout_marginBottom="10dp"
+                        android:layout_gravity="center_horizontal" />
+                    <CheckBox
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="M"
+                        android:layout_weight="1"
+                        android:textColor="#000000"
+                        android:layout_marginBottom="10dp"
+                        android:id="@+id/male_checkBox"
+                        android:layout_gravity="center_horizontal" />
+
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+        <!-- end gender area -->
+            <!-- date area -->
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:padding="5dp"
+                android:layout_height="80dp">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/birth_icon"
+                    android:padding="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/ic_birth"/>
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="0dp"
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"
+                    android:paddingLeft="10dp">
+
+                    <TextView
+                        android:layout_width="fill_parent"
+                        android:layout_height="0dp"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:text="Birth date"
+                        android:id="@+id/birth_hint"
+                        android:layout_weight=".3"
+                        android:paddingLeft="10dp"
+                        android:textColor="@color/ColorPrimaryDark"
+                        android:gravity="bottom"
+                        android:textSize="10sp" />
+
+                    <TextView
+                        android:layout_width="fill_parent"
+                        android:layout_height="0dp"
+                        android:id="@+id/birth_datePicker"
+                        android:layout_weight=".7"
+                        android:textColor="#ff000000"
+                        android:text="Click to pick birth date"
+                        android:textSize="15dp"
+                        android:paddingLeft="10dp"
+                        android:paddingTop="10dp" />
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+            <!-- end date area -->
+            <!--Degree type and field-->
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:padding="5dp"
+                android:layout_height="80dp">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/degreeIcon"
+                    android:padding="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:src="@drawable/ic_degreebig"
+                    android:layout_gravity="center_vertical"/>
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="0dp"
+                    android:layout_height="fill_parent"
+                    android:layout_weight=".5"
+                    android:paddingLeft="10dp">
+
+                    <TextView
+                        android:layout_width="fill_parent"
+                        android:layout_height="0dp"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:text="Degree type"
+                        android:textColor="@color/ColorPrimaryDark"
+                        android:id="@+id/student_degreetype_title"
+                        android:layout_weight=".3"
+                        android:paddingLeft="10dp"
+                        android:gravity="bottom"
+                        android:textSize="10sp" />
+
+                    <Spinner
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight=".5"
+                        style="@style/spinner_style"
+                        android:id="@+id/degree_list" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="0dp"
+                    android:layout_height="fill_parent"
+                    android:layout_weight=".5"
+                    android:paddingLeft="10dp">
+
+                    <TextView
+                        android:layout_width="fill_parent"
+                        android:layout_height="0dp"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:text="Degree field"
+                        android:textColor="@color/ColorPrimaryDark"
+                        android:id="@+id/student_degrefield_title"
+                        android:layout_weight=".3"
+                        android:paddingLeft="10dp"
+                        android:gravity="bottom"
+                        android:textSize="10sp" />
+
+                    <Spinner
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight=".5"
+                        android:id="@+id/studies_list" />
+
+                </LinearLayout>
+
+
+
+            </LinearLayout>
+
+            <!--END Degree type and field-->
+        <!-- email area -->
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:padding="5dp"
+                android:layout_height="80dp">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/rowIcon"
+                    android:padding="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:src="@drawable/ic_email"
+                    android:layout_gravity="center"/>
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="0dp"
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"
+                    android:paddingLeft="10dp">
+
+                    <TextView
+                        android:layout_width="fill_parent"
+                        android:layout_height="0dp"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:text="Email"
+                        android:textColor="@color/ColorPrimaryDark"
+                        android:id="@+id/email_hint"
+                        android:layout_weight=".3"
+                        android:paddingLeft="10dp"
+                        android:gravity="bottom"
+                        android:textSize="10sp" />
+
+                    <EditText
+                        android:layout_width="fill_parent"
+                        android:layout_height="0dp"
+                        android:id="@+id/student_mail"
+                        android:inputType="textEmailAddress"
+                        android:layout_weight=".7"
+                        android:textColor="#ff000000"
+                        android:textSize="15dp"
+                        android:hint="Insert email"
+                        android:paddingLeft="10dp"
+                        android:paddingTop="5dp"
+                        android:enabled="false"/>
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+            <!-- end email area -->
+            <!-- password area -->
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:padding="5dp"
+                android:layout_height="80dp">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/passwordIcon"
+                    android:padding="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:src="@drawable/ic_changepass"
+                    android:layout_gravity="center"/>
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="0dp"
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"
+                    android:paddingLeft="10dp">
+
+                    <TextView
+                        android:layout_width="fill_parent"
+                        android:layout_height="0dp"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:text="Password"
+                        android:textColor="@color/ColorPrimaryDark"
+                        android:id="@+id/password_hint"
+                        android:layout_weight=".3"
+                        android:paddingLeft="10dp"
+                        android:gravity="bottom"
+                        android:textSize="10sp" />
+
+                    <EditText
+                        android:layout_width="fill_parent"
+                        android:layout_height="0dp"
+                        android:id="@+id/student_password"
+                        android:inputType="textVisiblePassword"
+                        android:layout_weight=".7"
+                        android:textColor="#ff000000"
+                        android:textSize="15dp"
+                        android:hint="Insert password"
+                        android:paddingLeft="10dp"
+                        android:paddingTop="5dp"
+                        android:enabled="false"/>
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+            <!-- end password area -->
+
+
+        </LinearLayout>
+
+
     </ScrollView>
 
-
-
-
-</FrameLayout>
-
-
-
-
-
+</LinearLayout>

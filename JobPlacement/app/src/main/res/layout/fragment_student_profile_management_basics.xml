@@ -25,7 +25,6 @@
                 android:id="@+id/basics_profilePhoto"
                 android:background="@drawable/user_icon">
 
-                <!-- A RecyclerView with some commonly used attributes -->
 
                 <LinearLayout
                     android:orientation="vertical"

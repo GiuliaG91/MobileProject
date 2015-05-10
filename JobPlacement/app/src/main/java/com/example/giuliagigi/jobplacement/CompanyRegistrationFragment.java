@@ -133,10 +133,10 @@ public class CompanyRegistrationFragment extends Fragment {
         public View getView(int position, View convertView, ViewGroup parent) {
 
             if(convertView == null)
-                convertView = getActivity().getLayoutInflater().inflate(R.layout.list_text_element,parent,false);
+                convertView = getActivity().getLayoutInflater().inflate(R.layout.spinner_item, parent, false);
 
-            TextView text = (TextView)convertView.findViewById(R.id.text_view);
-            text.setText(stringArray[position]);
+            TextView type = (TextView)convertView.findViewById(R.id.text_view);
+            type.setText(stringArray[position]);
             return convertView;
         }
     }

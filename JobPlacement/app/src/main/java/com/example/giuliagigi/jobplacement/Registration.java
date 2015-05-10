@@ -3,6 +3,7 @@ package com.example.giuliagigi.jobplacement;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.content.Intent;
+import android.graphics.Color;
 import android.support.v7.app.*;
 import android.os.Bundle;
 import android.util.Log;
@@ -161,6 +162,8 @@ public class Registration extends ActionBarActivity implements StudentRegistrati
             return convertView;
         }
     }
+
+
 
     private void registerNewAccount(final User newUser){
 

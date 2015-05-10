@@ -1,50 +1,262 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:id="@+id/fragment_company_register_layout"
+    tools:context="com.example.giuliagigi.jobplacement.StudentProfileManagementBasicsFragment">
 
-
-    <LinearLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:padding="20dp"
-        android:id="@+id/fragment_company_register_layout">
+        android:layout_weight="1">
 
-        <EditText
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/company_name"
-            android:hint="name" />
-
-        <EditText
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/company_fiscal_code"
-            android:hint="fiscal code" />
-
-        <EditText
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/company_mail"
-            android:inputType="textEmailAddress"
-            android:hint="mail" />
-
-        <EditText
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/company_password"
-            android:inputType="textVisiblePassword"
-            android:hint="password" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="Field:"
-            android:id="@+id/field_textView" />
-
-        <Spinner
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/fields_list" />
+            android:orientation="vertical">
 
-    </LinearLayout>
+            <!-- name area -->
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:padding="5dp"
+                android:layout_height="160dp">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/birth_icon"
+                    android:padding="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/ic_identity"/>
+
+                    <LinearLayout
+                        android:orientation="vertical"
+                        android:layout_width="0dp"
+                        android:layout_height="fill_parent"
+                        android:layout_weight="1"
+                        android:paddingLeft="10dp">
+
+                        <TextView
+                            android:layout_width="fill_parent"
+                            android:layout_height="0dp"
+                            android:textAppearance="?android:attr/textAppearanceSmall"
+                            android:text="Name"
+                            android:id="@+id/company_name_hint"
+                            android:layout_weight=".2"
+                            android:paddingLeft="10dp"
+                            android:textColor="@color/ColorPrimaryDark"
+                            android:gravity="bottom"
+                            android:textSize="10sp" />
+
+                        <EditText
+                            android:layout_width="fill_parent"
+                            android:layout_height="0dp"
+                            android:id="@+id/company_name"
+                            android:layout_weight=".3"
+                            android:hint="Insert name"
+                            android:textColor="#ff000000"
+                            android:textSize="15dp"
+                            android:paddingLeft="10dp"
+                            android:paddingTop="5dp" />
+
+                        <TextView
+                            android:layout_width="fill_parent"
+                            android:layout_height="0dp"
+                            android:textAppearance="?android:attr/textAppearanceSmall"
+                            android:text="VAT Number"
+                            android:id="@+id/company_vat_hint"
+                            android:layout_weight=".2"
+                            android:paddingLeft="10dp"
+                            android:textColor="@color/ColorPrimaryDark"
+                            android:gravity="bottom"
+                            android:textSize="10sp" />
+
+                        <EditText
+                            android:layout_width="fill_parent"
+                            android:layout_height="0dp"
+                            android:id="@+id/company_fiscal_code"
+                            android:layout_weight=".3"
+                            android:hint="Insert VAT Number"
+                            android:textColor="#ff000000"
+                            android:textSize="15dp"
+                            android:paddingLeft="10dp"
+                            android:paddingTop="5dp" />
+
+                    </LinearLayout>
+
+
+            </LinearLayout>
+
+            <!-- end date area -->
+
+            <!-- field area -->
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:padding="5dp"
+                android:layout_height="100dp">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/fieldIcon"
+                    android:padding="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:src="@drawable/ic_field"
+                    android:layout_gravity="center"/>
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="0dp"
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"
+                    android:paddingLeft="10dp">
+
+                    <TextView
+                        android:layout_width="fill_parent"
+                        android:layout_height="0dp"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:text="Field"
+                        android:textColor="@color/ColorPrimaryDark"
+                        android:id="@+id/field_hint"
+                        android:layout_weight=".3"
+                        android:paddingLeft="10dp"
+                        android:gravity="bottom"
+                        android:textSize="10sp" />
+
+                    <Spinner
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight=".5"
+                        android:id="@+id/fields_list" />
+
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+            <!-- end field area -->
+
+            <!-- email area -->
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:padding="5dp"
+                android:layout_height="80dp">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/rowIcon"
+                    android:padding="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:src="@drawable/ic_email"
+                    android:layout_gravity="center"/>
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="0dp"
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"
+                    android:paddingLeft="10dp">
+
+                    <TextView
+                        android:layout_width="fill_parent"
+                        android:layout_height="0dp"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:text="Email"
+                        android:textColor="@color/ColorPrimaryDark"
+                        android:id="@+id/email_hint"
+                        android:layout_weight=".3"
+                        android:paddingLeft="10dp"
+                        android:gravity="bottom"
+                        android:textSize="10sp" />
+
+                    <EditText
+                        android:layout_width="fill_parent"
+                        android:layout_height="0dp"
+                        android:id="@+id/company_mail"
+                        android:inputType="textEmailAddress"
+                        android:layout_weight=".7"
+                        android:textColor="#ff000000"
+                        android:textSize="15dp"
+                        android:hint="Insert email"
+                        android:paddingLeft="10dp"
+                        android:paddingTop="5dp"
+                        android:enabled="false"/>
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+            <!-- end email area -->
+            <!-- password area -->
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:padding="5dp"
+                android:layout_height="80dp">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/passwordIcon"
+                    android:padding="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:src="@drawable/ic_changepass"
+                    android:layout_gravity="center"/>
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="0dp"
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"
+                    android:paddingLeft="10dp">
+
+                    <TextView
+                        android:layout_width="fill_parent"
+                        android:layout_height="0dp"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:text="Password"
+                        android:textColor="@color/ColorPrimaryDark"
+                        android:id="@+id/password_hint"
+                        android:layout_weight=".3"
+                        android:paddingLeft="10dp"
+                        android:gravity="bottom"
+                        android:textSize="10sp" />
+
+                    <EditText
+                        android:layout_width="fill_parent"
+                        android:layout_height="0dp"
+                        android:id="@+id/company_password"
+                        android:inputType="textVisiblePassword"
+                        android:layout_weight=".7"
+                        android:textColor="#ff000000"
+                        android:textSize="15dp"
+                        android:hint="Insert password"
+                        android:paddingLeft="10dp"
+                        android:paddingTop="5dp"
+                        android:enabled="false"/>
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+            <!-- end password area -->
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</LinearLayout>

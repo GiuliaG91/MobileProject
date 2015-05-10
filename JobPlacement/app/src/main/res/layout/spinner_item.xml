@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="text"
-        android:textColor="@color/ColorPrimaryDark"
+        android:textSize="15dp"
         android:id="@+id/text_view" />
 
 </LinearLayout>
