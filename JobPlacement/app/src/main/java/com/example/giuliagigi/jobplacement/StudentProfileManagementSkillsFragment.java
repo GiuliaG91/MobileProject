@@ -17,10 +17,10 @@ public class StudentProfileManagementSkillsFragment extends ProfileManagementFra
     private static final String TITLE = "Skills";
 
     private Student currentUser;
-    Button addDegree;
+    Button addDegree, addLanguage,addCertificate;
     ArrayList<StudentProfileManagementDegreeFragment> degreeFragments;
-    Button addLanguage;
     ArrayList<StudentProfileManagementLanguageFragment> languageFragments;
+    ArrayList<StudentProfileManagementCertificateFragment> certificateFragments;
 
     /*----------------------- CONSTRUCTORS ------------------------------------------------------*/
 
@@ -46,6 +46,7 @@ public class StudentProfileManagementSkillsFragment extends ProfileManagementFra
         currentUser = (Student)application.getUserObject();
         degreeFragments = new ArrayList<StudentProfileManagementDegreeFragment>();
         languageFragments = new ArrayList<StudentProfileManagementLanguageFragment>();
+        certificateFragments = new ArrayList<StudentProfileManagementCertificateFragment>();
     }
 
     @Override
@@ -88,6 +89,20 @@ public class StudentProfileManagementSkillsFragment extends ProfileManagementFra
             }
         });
 
+        addCertificate = (Button)root.findViewById(R.id.skills_add_certificate);
+        addCertificate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                StudentProfileManagementCertificateFragment cmf = StudentProfileManagementCertificateFragment.newInstance(new Certificate());
+                FragmentTransaction ft = getFragmentManager().beginTransaction();
+                ft.add(R.id.student_certificateList_container,cmf);
+                ft.commit();
+                certificateFragments.add(cmf);
+            }
+        });
+
+
         return root;
     }
 
@@ -125,6 +140,21 @@ public class StudentProfileManagementSkillsFragment extends ProfileManagementFra
 
         }
 
+        max = Math.max(certificateFragments.size(),currentUser.getCertificates().size());
+        for(int j=0;j<max;j++){
+
+            if(j>=certificateFragments.size()){
+
+                StudentProfileManagementCertificateFragment cmf = StudentProfileManagementCertificateFragment.newInstance(currentUser.getCertificates().get(j));
+                certificateFragments.add(cmf);
+            }
+
+            FragmentTransaction ft = getFragmentManager().beginTransaction();
+            ft.add(R.id.student_certificateList_container, certificateFragments.get(j));
+            ft.commit();
+
+        }
+
         setEnable(host.isEditMode());
     }
 
@@ -146,6 +176,13 @@ public class StudentProfileManagementSkillsFragment extends ProfileManagementFra
             ft.commit();
         }
 
+        for(Fragment f: certificateFragments){
+
+            FragmentTransaction ft = getFragmentManager().beginTransaction();
+            ft.remove(f);
+            ft.commit();
+        }
+
     }
 
     @Override
@@ -155,6 +192,8 @@ public class StudentProfileManagementSkillsFragment extends ProfileManagementFra
         for(ProfileManagementFragment f: degreeFragments)
             host.removeOnActivityChangedListener(f);
         for (ProfileManagementFragment f: languageFragments)
+            host.removeOnActivityChangedListener(f);
+        for (ProfileManagementFragment f: certificateFragments)
             host.removeOnActivityChangedListener(f);
     }
 

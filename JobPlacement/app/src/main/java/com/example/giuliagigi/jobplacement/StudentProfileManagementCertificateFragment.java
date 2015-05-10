@@ -1,16 +1,27 @@
 package com.example.giuliagigi.jobplacement;
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import com.parse.DeleteCallback;
+import com.parse.ParseException;
+import com.parse.SaveCallback;
+
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 
 public class StudentProfileManagementCertificateFragment extends ProfileManagementFragment {
 
@@ -30,6 +41,8 @@ public class StudentProfileManagementCertificateFragment extends ProfileManageme
     private Button deleteButton;
     private int day,month,year;
     private String completeDescription;
+    private boolean isRemoved, dateChanged;
+    private Student currentUser;
 
     /* ----------------- CONTRUCTORS GETTERS SETTERS ---------------------------------------------*/
 
@@ -53,6 +66,8 @@ public class StudentProfileManagementCertificateFragment extends ProfileManageme
     public void onAttach(Activity activity) {
         super.onAttach(activity);
         isListenerAfterDetach = true;
+        isRemoved = false;
+        currentUser = (Student)application.getUserObject();
     }
 
     @Override
@@ -63,7 +78,7 @@ public class StudentProfileManagementCertificateFragment extends ProfileManageme
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(final LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
         root = inflater.inflate(R.layout.fragment_student_profile_management_certificate, container, false);
@@ -78,7 +93,7 @@ public class StudentProfileManagementCertificateFragment extends ProfileManageme
             title = certificate.getTitle();
             mark = certificate.getMark();
             completeDescription = certificate.getDescription();
-            if(completeDescription.length()>DESCRIPTION_PREVIEW_LENGTH)
+            if(completeDescription != null && completeDescription.length()>DESCRIPTION_PREVIEW_LENGTH)
                 description = completeDescription.substring(0,DESCRIPTION_PREVIEW_LENGTH) + "...";
             else
                 description = completeDescription;
@@ -127,13 +142,29 @@ public class StudentProfileManagementCertificateFragment extends ProfileManageme
 
                 AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
+                final EditText dialogDescriptionText = new EditText(getActivity());
+                dialogDescriptionText.setText(completeDescription);
+                builder.setView(dialogDescriptionText);
+
                 builder.setTitle("Insert a description");
                 builder.setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
 
-                        hasChanged = true;
-                        //TODO
+                        if(!dialogDescriptionText.getText().toString().equals(completeDescription)){
+
+                            hasChanged = true;
+                            dateChanged = true;
+                            completeDescription = dialogDescriptionText.getText().toString();
+                            String description;
+                            if(completeDescription != null && completeDescription.length()>DESCRIPTION_PREVIEW_LENGTH)
+                                description = completeDescription.substring(0,DESCRIPTION_PREVIEW_LENGTH) + "...";
+                            else
+                                description = completeDescription;
+
+                            descriptionText.setText(description);
+                        }
+
                     }
                 });
                 builder.setNegativeButton("Cancel",new DialogInterface.OnClickListener() {
@@ -153,7 +184,7 @@ public class StudentProfileManagementCertificateFragment extends ProfileManageme
 
                 builder.setTitle("Set a date");
 
-                DatePicker dateSelect = new DatePicker(getActivity());
+                final DatePicker dateSelect = new DatePicker(getActivity());
                 dateSelect.setCalendarViewShown(false);
                 builder.setView(dateSelect);
 
@@ -162,7 +193,10 @@ public class StudentProfileManagementCertificateFragment extends ProfileManageme
                     public void onClick(DialogInterface dialog, int which) {
 
                         hasChanged = true;
-                        //TODO
+                        day = dateSelect.getDayOfMonth();
+                        month = dateSelect.getMonth();
+                        year = dateSelect.getYear();
+                        datePicker.setText(day + "/" + month + "/" + year);
                     }
                 });
 
@@ -178,10 +212,26 @@ public class StudentProfileManagementCertificateFragment extends ProfileManageme
         deleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //TODO
+
+                isRemoved = true;
+                certificate.deleteEventually(new DeleteCallback() {
+                    @Override
+                    public void done(ParseException e) {
+
+                        if (e == null) {
+
+                            currentUser.removeCertificate(certificate);
+                            currentUser.saveEventually();
+                        }
+                    }
+                });
+
+                root.setVisibility(View.INVISIBLE);
+                //TODO: COMPLETELY REMOVE FRAGMENT
             }
         });
 
+        setEnable(host.isEditMode());
         return root;
     }
 
@@ -222,12 +272,41 @@ public class StudentProfileManagementCertificateFragment extends ProfileManageme
             visibility = View.INVISIBLE;
 
         deleteButton.setVisibility(visibility);
+        datePicker.setVisibility(visibility);
+        descriptionText.setVisibility(visibility);
     }
 
     @Override
     public void saveChanges() {
         super.saveChanges();
 
-        //TODO
+        if(!isRemoved){
+
+            if(dateChanged){
+
+                Date date = null;
+                Calendar c = GregorianCalendar.getInstance();
+                c.set(day,month,year);
+                date = c.getTime();
+                Log.println(Log.ASSERT, "CERTIFICATE FRAG", "DATE:" + date.toString());
+                certificate.setDate(date);
+            }
+
+            if(!titleText.getText().toString().equals(INSERT_FIELD)) certificate.setTitle(titleText.getText().toString());
+            if(!markText.getText().toString().equals(INSERT_FIELD)) certificate.setMark(markText.getText().toString());
+            if(completeDescription != null) certificate.setDescription(completeDescription);
+            certificate.setStudent(currentUser);
+
+            certificate.saveEventually(new SaveCallback() {
+                @Override
+                public void done(ParseException e) {
+
+                    if(e==null){
+                        currentUser.addCertificate(certificate);
+                        currentUser.saveEventually();
+                    }
+                }
+            });
+        }
     }
 }

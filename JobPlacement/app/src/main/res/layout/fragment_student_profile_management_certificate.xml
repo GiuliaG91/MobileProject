@@ -6,32 +6,63 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Title"
+        android:padding="10dp"
+        android:id="@+id/certificate_title_textView"/>
 
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="insert Title"
+        android:padding="10dp"
         android:id="@+id/certificate_title_text" />
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="insert a description"
+        android:text="Description"
+        android:padding="10dp"
+        android:id="@+id/certificate_description_textView"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
         android:padding="10dp"
         android:id="@+id/certificate_description_text"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Mark"
+        android:padding="10dp"
+        android:id="@+id/certificate_mark_textView"/>
 
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="insert Mark"
+        android:padding="10dp"
         android:id="@+id/certificate_mark_text" />
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="insert a date"
+        android:text="Mark"
+        android:padding="10dp"
+        android:id="@+id/certificate_date_textView"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
         android:padding="10dp"
         android:id="@+id/certificate_datePicker"/>
 
@@ -39,6 +70,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Delete"
+        android:padding="10dp"
         android:id="@+id/certificate_deleteButton"/>
 
 

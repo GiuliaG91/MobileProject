@@ -19,6 +19,7 @@ import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.parse.DeleteCallback;
 import com.parse.ParseException;
 import com.parse.SaveCallback;
 
@@ -158,17 +159,22 @@ public class StudentProfileManagementDegreeFragment extends ProfileManagementFra
             @Override
             public void onClick(View v) {
 
-                try {
-                    degree.delete();
-                    isRemoved = true;
-                    currentUser.removeDegree(degree);
-                    currentUser.saveEventually();
-                    root.setVisibility(View.INVISIBLE);
+                degree.deleteEventually(new DeleteCallback() {
+                    @Override
+                    public void done(ParseException e) {
 
-                } catch (ParseException e) {
-                    e.printStackTrace();
-                    Toast.makeText(getActivity(),"unable to delete",Toast.LENGTH_SHORT).show();
-                }
+                        if(e==null){
+
+                            currentUser.removeDegree(degree);
+                            currentUser.saveEventually();
+                        }
+                    }
+                });
+                isRemoved = true;
+
+                root.setVisibility(View.INVISIBLE);
+                //TODO completely delete the fragment
+
             }
         });
 
@@ -335,11 +341,11 @@ public class StudentProfileManagementDegreeFragment extends ProfileManagementFra
         degreeStudies.setEnabled(enable);
         degreeDate.setEnabled(enable);
 
-//        if(degree.getMark()!= null) {
-//            if (degree.getMark() == 110) {
-//                hasLoud.setEnabled(enable);
-//            } else hasLoud.setEnabled(false);
-//        }else hasLoud.setEnabled(false);
+        if(degree.getMark()!= null) {
+            if (degree.getMark() == 110) {
+                hasLoud.setEnabled(enable);
+            } else hasLoud.setEnabled(false);
+        }else hasLoud.setEnabled(false);
 
         int visibility;
         if(enable)
