@@ -29,6 +29,7 @@ public class Student extends User {
     protected static final String NATION_FIELD = "nation";
     protected static final String PHONE_FIELD = "phones";
     protected static final String LANGUAGE_FIELD = "languages";
+    protected static final String CERTIFICATE_FIELD = "certificates";
     protected static final String FAVOURITES_FIELD = "favourites";
     public static final String SEX_MALE = "Male";
     public static final String SEX_FEMALE = "Female";
@@ -44,6 +45,7 @@ public class Student extends User {
     protected String postalCode;
     protected String nation;
     protected ArrayList<Language> languages;
+    protected ArrayList<Certificate> certificates;
     protected ArrayList<CompanyOffer> favourites;
 
     public Student(){
@@ -63,6 +65,7 @@ public class Student extends User {
         phones = new ArrayList<Telephone>();
         languages = new ArrayList<Language>();
         favourites = new ArrayList<CompanyOffer>();
+        certificates = new ArrayList<Certificate>();
 
         isCached.put(NAME_FIELD,false);
         isCached.put(SURNAME_FIELD,false);
@@ -76,6 +79,7 @@ public class Student extends User {
         isCached.put(NATION_FIELD,false);
         isCached.put(LANGUAGE_FIELD,false);
         isCached.put(FAVOURITES_FIELD, false);
+        isCached.put(CERTIFICATE_FIELD,false);
     }
 
 
@@ -242,6 +246,36 @@ public class Student extends User {
         isCached.put(LANGUAGE_FIELD,true);
         return languages;
     }
+    public ArrayList<Certificate> getCertificates(){
+
+        if(isCached.get(CERTIFICATE_FIELD))
+            return certificates;
+
+        ArrayList<Certificate> certificates = new ArrayList<Certificate>();
+        List<Object> list = this.getList(CERTIFICATE_FIELD);
+
+        if(list!=null)
+            for(Object o:list){
+
+                if(o instanceof Certificate){
+
+                    Certificate c = (Certificate)o;
+
+                    try {
+                        c.fetchIfNeeded();
+                    }
+                    catch (ParseException e){
+                        e.printStackTrace();
+                    }
+
+                    certificates.add(c);
+                }
+            }
+
+        this.certificates = certificates;
+        isCached.put(CERTIFICATE_FIELD,true);
+        return certificates;
+    }
     public ArrayList<CompanyOffer> getFavourites( ){
 
         if(isCached.get(FAVOURITES_FIELD))
@@ -355,13 +389,22 @@ public class Student extends User {
         languages.remove(language);
         this.removeAll(LANGUAGE_FIELD,Arrays.asList(language));
     }
+    public void addCertificate(Certificate certificate){
+
+        certificates.add(certificate);
+        this.addUnique(CERTIFICATE_FIELD,certificate);
+    }
+    public void removeCertificate(Certificate certificate){
+
+        this.certificates.remove(certificate);
+        this.removeAll(CERTIFICATE_FIELD,Arrays.asList(certificate));
+    }
     public void addFavourites(CompanyOffer companyOffer){
 
         favourites.add(companyOffer);
         this.addUnique(FAVOURITES_FIELD,companyOffer);
 
     }
-
     public void removeFavourites(CompanyOffer companyOffer) {
         {
             favourites.remove(companyOffer);
@@ -387,6 +430,7 @@ public class Student extends User {
         getNation();
         getPhones();
         getLanguages();
+        getCertificates();
         getFavourites();
     }
 
