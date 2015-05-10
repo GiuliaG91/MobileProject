@@ -208,9 +208,9 @@
                         android:layout_width="fill_parent"
                         android:layout_height="0dp"
                         android:id="@+id/birth_datePicker"
+                        android:hint="Click to pick birth date"
                         android:layout_weight=".7"
                         android:textColor="#ff000000"
-                        android:text="Click to pick birth date"
                         android:textSize="15dp"
                         android:paddingLeft="10dp"
                         android:paddingTop="10dp" />
@@ -343,8 +343,7 @@
                         android:textSize="15dp"
                         android:hint="Insert email"
                         android:paddingLeft="10dp"
-                        android:paddingTop="5dp"
-                        android:enabled="false"/>
+                        android:paddingTop="5dp"/>
 
                 </LinearLayout>
 
@@ -398,8 +397,7 @@
                         android:textSize="15dp"
                         android:hint="Insert password"
                         android:paddingLeft="10dp"
-                        android:paddingTop="5dp"
-                        android:enabled="false"/>
+                        android:paddingTop="5dp"/>
 
                 </LinearLayout>
 

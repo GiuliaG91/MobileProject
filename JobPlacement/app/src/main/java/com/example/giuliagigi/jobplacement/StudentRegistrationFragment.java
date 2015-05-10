@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.app.Fragment;
+import android.text.format.Time;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -37,6 +38,7 @@ public class StudentRegistrationFragment extends Fragment {
     private View root;
     int day, month, year;
     TextView birthPicker;
+    Date date;
 
 
     /*------------- Constructors ----------------------------------------------*/
@@ -98,7 +100,44 @@ public class StudentRegistrationFragment extends Fragment {
             }
         });
 
+        birthPicker = (TextView)root.findViewById(R.id.birth_datePicker);
 
+        Time today = new Time(Time.getCurrentTimezone());
+        today.setToNow();
+        day = today.monthDay;
+        month = today.month;
+        year = today.year;
+        birthPicker.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+
+                final DatePicker picker = new DatePicker(getActivity());
+                picker.setCalendarViewShown(false);
+                builder.setTitle("Edit birth date");
+                builder.setView(picker);
+                builder.setPositiveButton("Save", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        day = picker.getDayOfMonth();
+                        month = picker.getMonth();
+                        year = picker.getYear();
+                        birthPicker.setText(day + "/" + month + "/" + year);
+                        Calendar c = GregorianCalendar.getInstance();
+                        c.set(day,month,year);
+                        date = c.getTime();
+                    }
+                });
+                builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                    }
+                });
+                builder.create().show();
+            }
+        });
 
         degreeList.setAdapter(new StringAdapterDegree(Degree.TYPES));
         studiesList.setAdapter(new StringAdapterDegree(Degree.STUDIES));
@@ -128,41 +167,6 @@ public class StudentRegistrationFragment extends Fragment {
         CheckBox female = (CheckBox)root.findViewById(R.id.female_checkBox);
         Spinner degreeTypeList = (Spinner)root.findViewById(R.id.degree_list);
         Spinner degreeStudiesList = (Spinner)root.findViewById(R.id.studies_list);
-        birthPicker = (TextView)root.findViewById(R.id.birth_datePicker);
-
-
-        birthPicker.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-
-                final DatePicker picker = new DatePicker(getActivity());
-                picker.setCalendarViewShown(false);
-                builder.setTitle("Edit birth date");
-                builder.setView(picker);
-                builder.setPositiveButton("Save", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        day = picker.getDayOfMonth();
-                        month = picker.getMonth();
-                        year = picker.getYear();
-                        birthPicker.setText(day + "/" + month + "/" + year);
-                    }
-                });
-                builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-
-                    }
-                });
-                builder.create().show();
-            }
-        });
-        Date date = null;
-        Calendar c = GregorianCalendar.getInstance();
-        c.set(day,month,year);
-        date = c.getTime();
 
 
         String degreeType = (String)degreeTypeList.getSelectedItem();

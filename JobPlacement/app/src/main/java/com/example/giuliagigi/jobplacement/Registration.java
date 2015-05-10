@@ -32,6 +32,7 @@ public class Registration extends ActionBarActivity implements StudentRegistrati
 
     private Fragment currentFragment;
     private GlobalData application;
+    private Button register;
 
     /* ---------------------- Standard callbacks ------------------------------------- */
 
@@ -76,7 +77,7 @@ public class Registration extends ActionBarActivity implements StudentRegistrati
             }
         });
 
-        Button register = (Button)findViewById(R.id.register_button);
+        register = (Button)findViewById(R.id.register_button);
         register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
