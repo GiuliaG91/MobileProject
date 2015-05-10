@@ -30,6 +30,7 @@ public class Student extends User {
     protected static final String PHONE_FIELD = "phones";
     protected static final String LANGUAGE_FIELD = "languages";
     protected static final String FAVOURITES_FIELD = "favourites";
+    protected static final String DESCRIPTION_FIELD = "description";
     public static final String SEX_MALE = "Male";
     public static final String SEX_FEMALE = "Female";
 
@@ -43,6 +44,7 @@ public class Student extends User {
     protected String city;
     protected String postalCode;
     protected String nation;
+    protected String description;
     protected ArrayList<Language> languages;
     protected ArrayList<CompanyOffer> favourites;
 
@@ -60,6 +62,7 @@ public class Student extends User {
         city = null;
         postalCode = null;
         nation = null;
+        description = null;
         phones = new ArrayList<Telephone>();
         languages = new ArrayList<Language>();
         favourites = new ArrayList<CompanyOffer>();
@@ -76,6 +79,7 @@ public class Student extends User {
         isCached.put(NATION_FIELD,false);
         isCached.put(LANGUAGE_FIELD,false);
         isCached.put(FAVOURITES_FIELD, false);
+        isCached.put(DESCRIPTION_FIELD, false);
     }
 
 
@@ -269,6 +273,15 @@ public class Student extends User {
         return favourites;
     }
 
+    public String getDescription() {
+        if(isCached.get(DESCRIPTION_FIELD))
+            return description;
+
+        description = this.getString(DESCRIPTION_FIELD);
+        isCached.put(DESCRIPTION_FIELD,true);
+        return description;
+    }
+
     /* END GETTER METHODS*/
 
     public void setName(String name){
@@ -368,6 +381,13 @@ public class Student extends User {
             this.removeAll(FAVOURITES_FIELD, Arrays.asList(companyOffer));
         }
     }
+
+    public void setDescription(String description){
+
+        this.description = description;
+        isCached.put(DESCRIPTION_FIELD,true);
+        this.put(DESCRIPTION_FIELD,description);
+    }
     /*END SETTER METHODS*/
 
 
@@ -388,6 +408,7 @@ public class Student extends User {
         getPhones();
         getLanguages();
         getFavourites();
+        getDescription();
     }
 
     public void printCacheContent(){

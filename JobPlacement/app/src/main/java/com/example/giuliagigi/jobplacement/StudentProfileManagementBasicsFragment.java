@@ -43,7 +43,7 @@ public class StudentProfileManagementBasicsFragment extends ProfileManagementFra
     private Student currentUser;
     private int day,month,year;
     private boolean birthDateChanged;
-    EditText nameText,surnameText, birthCityText, emailText;
+    EditText nameText,surnameText, birthCityText, emailText, descriptionText;
     TextView birthPicker;
     LinearLayout profilePhoto;
     CheckBox male,female;
@@ -152,9 +152,17 @@ public class StudentProfileManagementBasicsFragment extends ProfileManagementFra
             }
         });
 
+
+        descriptionText = (EditText)root.findViewById(R.id.student_description_et);
+        if(currentUser.getDescription() == null)
+            descriptionText.setText(INSERT_FIELD);
+        else
+            descriptionText.setText(currentUser.getDescription());
+
         textFields.add(nameText);
         textFields.add(surnameText);
         textFields.add(birthCityText);
+        textFields.add(descriptionText);
 
         OnFieldChangedListener hasChangedListener = new OnFieldChangedListener();
         for(EditText et:textFields)
@@ -274,6 +282,7 @@ public class StudentProfileManagementBasicsFragment extends ProfileManagementFra
         if(!nameText.getText().toString().equals(INSERT_FIELD)) currentUser.setName(nameText.getText().toString());
         if(!surnameText.getText().toString().equals(INSERT_FIELD)) currentUser.setSurname(surnameText.getText().toString());
         if(!birthCityText.getText().toString().equals(INSERT_FIELD)) currentUser.setBirthCity(birthCityText.getText().toString());
+        if(!descriptionText.getText().toString().equals(INSERT_FIELD)) currentUser.setDescription(descriptionText.getText().toString());
         currentUser.setSex(sex);
 
         if(birthDateChanged){
