@@ -98,6 +98,7 @@
                             android:layout_height="0dp"
                             android:textAppearance="?android:attr/textAppearanceSmall"
                             android:text="Email"
+                            android:textColor="@color/ColorPrimaryDark"
                             android:id="@+id/email_hint"
                             android:layout_weight="1"
                             android:paddingLeft="10dp"
@@ -152,6 +153,7 @@
                             android:textAppearance="?android:attr/textAppearanceSmall"
                             android:text="Sex"
                             android:paddingLeft="10dp"
+                            android:textColor="@color/ColorPrimaryDark"
                             android:id="@+id/container_sex_hint"
                             android:layout_weight="1"
                             android:gravity="center_vertical"
@@ -221,6 +223,7 @@
                             android:id="@+id/birth_hint"
                             android:layout_weight="1"
                             android:paddingLeft="10dp"
+                            android:textColor="@color/ColorPrimaryDark"
                             android:gravity="bottom"
                             android:textSize="10sp" />
 
@@ -273,6 +276,7 @@
                             android:id="@+id/student_birthCity_hint"
                             android:layout_weight="1"
                             android:paddingLeft="10dp"
+                            android:textColor="@color/ColorPrimaryDark"
                             android:gravity="bottom"
                             android:textSize="10sp" />
 

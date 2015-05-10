@@ -26,16 +26,17 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:id="@+id/telephone_number_text"
+        android:textAppearance="?android:textAppearanceSmall"
         android:layout_gravity="center_vertical"
         android:layout_weight=".5" />
 
     <Button
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight=".15"
-        android:text="-"
+
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:background="@drawable/ic_waste"
         android:id="@+id/telephone_remove_button"
         android:layout_gravity="center_vertical"
-        android:layout_margin="3dp"/>
+        android:layout_margin="10dp"/>
 
 </LinearLayout>

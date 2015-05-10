@@ -7,28 +7,103 @@
     android:padding="20dp"
     tools:context="com.example.giuliagigi.jobplacement.ProfileManagementAccountFragment">
 
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Change username"
-        android:id="@+id/account_changeUsername_button" />
 
-    <Button
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="change Password"
-        android:id="@+id/account_changePassword_button" />
+        android:orientation="horizontal"
+        android:padding="5dp">
 
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Re-Send verification eMail"
-        android:id="@+id/account_sendVerification_button" />
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_changeuser"
+            android:layout_gravity="center"
+            android:paddingRight="10dp"/>
 
-    <Button
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Change username"
+            android:layout_marginLeft="10dp"
+            android:background="@drawable/button_background"
+            android:textColor="@color/ColorPrimaryDark"
+            android:id="@+id/account_changeUsername_button"
+            />
+
+    </LinearLayout>
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Delete this account"
-        android:id="@+id/account_deleteAccount_button" />
+        android:orientation="horizontal"
+        android:padding="5dp">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_changepass"
+            android:layout_gravity="center"
+            android:paddingRight="10dp"/>
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="change Password"
+            android:layout_marginLeft="10dp"
+            android:background="@drawable/button_background"
+            android:textColor="@color/ColorPrimaryDark"
+            android:id="@+id/account_changePassword_button" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="5dp">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_sendemail"
+            android:layout_gravity="center"
+            android:paddingRight="10dp"/>
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:background="@drawable/button_background"
+            android:textColor="@color/ColorPrimaryDark"
+            android:text="Re-Send verification eMail"
+            android:id="@+id/account_sendVerification_button" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="5dp">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_waste"
+            android:layout_gravity="center"
+            android:paddingRight="10dp"/>
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:text="Delete this account"
+            android:background="@drawable/button_background"
+            android:textColor="@color/ColorPrimaryDark"
+            android:id="@+id/account_deleteAccount_button" />
+
+    </LinearLayout>
+
 
 </LinearLayout>

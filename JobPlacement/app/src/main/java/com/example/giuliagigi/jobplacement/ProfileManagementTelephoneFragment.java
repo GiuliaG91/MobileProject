@@ -188,6 +188,15 @@ public class ProfileManagementTelephoneFragment extends ProfileManagementFragmen
     protected void setEnable(boolean enable) {
         super.setEnable(enable);
 
+        int visibility;
+
+        if(enable)
+            visibility = View.VISIBLE;
+        else
+            visibility = View.INVISIBLE;
+
+        removeButton.setVisibility(visibility);
+
         typeSelector.setEnabled(enable);
         removeButton.setEnabled(enable);
     }
