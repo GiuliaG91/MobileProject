@@ -31,6 +31,7 @@ public class Student extends User {
     protected static final String LANGUAGE_FIELD = "languages";
     protected static final String CERTIFICATE_FIELD = "certificates";
     protected static final String FAVOURITES_FIELD = "favourites";
+    protected static final String DESCRIPTION_FIELD = "description";
     public static final String SEX_MALE = "Male";
     public static final String SEX_FEMALE = "Female";
 
@@ -44,6 +45,7 @@ public class Student extends User {
     protected String city;
     protected String postalCode;
     protected String nation;
+    protected String description;
     protected ArrayList<Language> languages;
     protected ArrayList<Certificate> certificates;
     protected ArrayList<CompanyOffer> favourites;
@@ -62,6 +64,7 @@ public class Student extends User {
         city = null;
         postalCode = null;
         nation = null;
+        description = null;
         phones = new ArrayList<Telephone>();
         languages = new ArrayList<Language>();
         favourites = new ArrayList<CompanyOffer>();
@@ -80,6 +83,7 @@ public class Student extends User {
         isCached.put(LANGUAGE_FIELD,false);
         isCached.put(FAVOURITES_FIELD, false);
         isCached.put(CERTIFICATE_FIELD,false);
+        isCached.put(DESCRIPTION_FIELD, false);
     }
 
 
@@ -190,6 +194,14 @@ public class Student extends User {
         nation = this.getString(NATION_FIELD);
         isCached.put(NATION_FIELD,true);
         return nation;
+    }
+    public String getDescription() {
+        if(isCached.get(DESCRIPTION_FIELD))
+            return description;
+
+        description = this.getString(DESCRIPTION_FIELD);
+        isCached.put(DESCRIPTION_FIELD,true);
+        return description;
     }
     public ArrayList<Telephone> getPhones(){
 
@@ -369,6 +381,12 @@ public class Student extends User {
         isCached.put(NATION_FIELD,true);
         this.put(NATION_FIELD,nation);
     }
+    public void setDescription(String description){
+
+        this.description = description;
+        isCached.put(DESCRIPTION_FIELD,true);
+        this.put(DESCRIPTION_FIELD,description);
+    }
     public void addPhone(Telephone phone){
 
         phones.add(phone);
@@ -428,6 +446,7 @@ public class Student extends User {
         getCity();
         getPostalCode();
         getNation();
+        getDescription();
         getPhones();
         getLanguages();
         getCertificates();
