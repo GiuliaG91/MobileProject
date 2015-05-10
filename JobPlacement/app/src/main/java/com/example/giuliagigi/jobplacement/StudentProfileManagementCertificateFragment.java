@@ -272,8 +272,8 @@ public class StudentProfileManagementCertificateFragment extends ProfileManageme
             visibility = View.INVISIBLE;
 
         deleteButton.setVisibility(visibility);
-        datePicker.setVisibility(visibility);
-        descriptionText.setVisibility(visibility);
+        datePicker.setEnabled(enable);
+        descriptionText.setEnabled(enable);
     }
 
     @Override
