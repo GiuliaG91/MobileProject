@@ -89,24 +89,54 @@ public class Registration extends ActionBarActivity implements StudentRegistrati
             public void onClick(View v) {
 
                 User user = null;
+                RegistrationException re = null;
 
                 if(findViewById(R.id.fragment_student_register_layout) != null){
                     Log.println(Log.ASSERT,"REGISTRATION","Trying to register a student");
                     StudentRegistrationFragment srf = (StudentRegistrationFragment)currentFragment;
-                    user = srf.retrieveRegistrationInfo();
+                    try {
+                        user = srf.retrieveRegistrationInfo();
+                    } catch (RegistrationException e) {
+                       re = e;
+                    }
                 }
                 else if(findViewById(R.id.fragment_company_register_layout)!= null){
                     Log.println(Log.ASSERT,"REGISTRATION","Trying to register a company");
                     CompanyRegistrationFragment crf = (CompanyRegistrationFragment)currentFragment;
-                    user = crf.retrieveRegistrationInfo();
+                    try {
+                        user = crf.retrieveRegistrationInfo();
+                    } catch (RegistrationException e) {
+                        re = e;
+                    }
                 }
 
-                if(user == null)
-                    Toast.makeText(getApplicationContext(),"missing informations",Toast.LENGTH_SHORT).show();
+                if(re == null){
+
+                    if(user == null)
+                        Toast.makeText(getApplicationContext(),"You must select a type of user to register",Toast.LENGTH_SHORT).show();
+
+                    else {
+
+                        Log.println(Log.ASSERT,"REGISTRATION","user: " + user.getMail() + ", " + user.getType());
+                        registerNewAccount(user);
+                    }
+
+                }
                 else {
 
-                    Log.println(Log.ASSERT,"REGISTRATION","user: " + user.getMail() + ", " + user.getType());
-                    registerNewAccount(user);
+                    switch (re.getCode()){
+
+                        case RegistrationException.MISSING_INFORMATIONS:
+
+                            Toast.makeText(getApplicationContext(),"missing informations",Toast.LENGTH_SHORT).show();
+                            break;
+                        case RegistrationException.MISMATCHING_PASSWORDS:
+
+                            Toast.makeText(getApplicationContext(),"mismatching passwords",Toast.LENGTH_SHORT).show();
+                            break;
+                        default:
+                            break;
+                    }
                 }
             }
         });
@@ -172,6 +202,8 @@ public class Registration extends ActionBarActivity implements StudentRegistrati
 
 
 
+    /* ------------------- REGISTRATION PROCEDURE ------------------------------------------------*/
+
     private void registerNewAccount(final User newUser){
 
 
@@ -195,11 +227,35 @@ public class Registration extends ActionBarActivity implements StudentRegistrati
 
                     Log.println(Log.ASSERT,"REGISTRATION", "signup fail");
                     e.printStackTrace();
-                    //TODO manage different kind of errors
                     Log.println(Log.ASSERT,"REGISTRATION","registration unsuccessful. displaying error message - " + e.getMessage());
-                    Toast.makeText(getApplicationContext(),"some error occurred",Toast.LENGTH_SHORT).show();
+
+                    switch (e.getCode()){
+
+                        case ParseException.EMAIL_TAKEN:
+
+                            Toast.makeText(getApplicationContext(),"The mail you are trying to use is already taken by another account",Toast.LENGTH_SHORT).show();
+                            break;
+
+                        case ParseException.INVALID_EMAIL_ADDRESS:
+
+                            Toast.makeText(getApplicationContext(),"The mail you are trying to use is not valid",Toast.LENGTH_SHORT).show();
+                            break;
+
+                        case ParseException.CONNECTION_FAILED:
+
+                            Toast.makeText(getApplicationContext(),"Connection to sever is unavailable, try later",Toast.LENGTH_SHORT).show();
+                            break;
+
+                        default:
+                            break;
+                    }
+
+
                 }
             }
         });
     }
+
+
+
 }

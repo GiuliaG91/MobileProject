@@ -17,6 +17,8 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.parse.ParseException;
+
 import org.w3c.dom.Text;
 
 import java.util.Date;
@@ -157,7 +159,7 @@ public class StudentRegistrationFragment extends Fragment {
 
 
     /* ----------------------------------- */
-    public Student retrieveRegistrationInfo() {
+    public Student retrieveRegistrationInfo() throws RegistrationException{
 
         EditText mail = (EditText)root.findViewById(R.id.student_mail);
         EditText password = (EditText)root.findViewById(R.id.student_password);
@@ -184,22 +186,28 @@ public class StudentRegistrationFragment extends Fragment {
         Student newStudent = new Student();
         Degree degree = new Degree();
 
+        RegistrationException re = new RegistrationException(RegistrationException.MISSING_INFORMATIONS);
         if(mail.getText().toString().trim().isEmpty())
-            return null;
-        if(password.getText().toString().isEmpty() || !password.getText().toString().equals(confirmPassword.getText().toString()))
-            return null;
+            throw re;
+        if(password.getText().toString().isEmpty())
+            throw re;
         if(sex == null)
-            return null;
+            throw re;
         if(name.getText().toString().isEmpty())
-            return null;
+            throw re;
         if(surname.getText().toString().isEmpty())
-            return null;
+            throw re;
         if(degreeType == null)
-            return null;
+            throw re;
         if(degreeStudies == null)
-            return null;
+            throw re;
         if(date == null)
-            return null;
+            throw re;
+
+        re = new RegistrationException(RegistrationException.MISMATCHING_PASSWORDS);
+
+        if(!password.getText().toString().equals(confirmPassword.getText().toString()))
+            throw re;
 
         degree.setType(degreeType);
         degree.setStudies(degreeStudies);

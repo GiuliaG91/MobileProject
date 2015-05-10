@@ -13,24 +13,11 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link com.example.giuliagigi.jobplacement.CompanyRegistrationFragment.OnInteractionListener} interface
- * to handle interaction events.
- * Use the {@link CompanyRegistrationFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class CompanyRegistrationFragment extends Fragment {
 
     private OnInteractionListener hostActivity;
     private View root;
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     * @return A new instance of fragment CompanyRegistrationFragment.
-     */
     public CompanyRegistrationFragment() {     super();    }
     public static CompanyRegistrationFragment newInstance() {
         CompanyRegistrationFragment fragment = new CompanyRegistrationFragment();
@@ -74,7 +61,7 @@ public class CompanyRegistrationFragment extends Fragment {
         hostActivity = null;
     }
 
-    public Company retrieveRegistrationInfo(){
+    public Company retrieveRegistrationInfo() throws RegistrationException{
 
         EditText mail = (EditText)root.findViewById(R.id.company_mail);
         EditText password = (EditText)root.findViewById(R.id.company_password);
@@ -87,12 +74,11 @@ public class CompanyRegistrationFragment extends Fragment {
 
         String type = User.TYPE_COMPANY;
 
-        if(mail.getText().toString().trim().isEmpty())
-            return null;
-        if(!password.getText().toString().equals(confirmPassword.getText().toString()) || password.getText().toString().isEmpty())
-            return null;
-        if(field == null)
-            return null;
+        if(mail.getText().toString().trim().isEmpty() || field == null || password.getText().toString().isEmpty() || fiscalCode.getText().toString().trim().isEmpty())
+            throw new RegistrationException(RegistrationException.MISSING_INFORMATIONS);
+
+        if(!password.getText().toString().equals(confirmPassword.getText().toString()))
+            throw new RegistrationException((RegistrationException.MISMATCHING_PASSWORDS));
 
         Company newCompany = new Company();
         newCompany.setName(name.getText().toString());
