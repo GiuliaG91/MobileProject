@@ -82,8 +82,9 @@
                         android:id="@+id/rowIcon"
                         android:paddingLeft="10dp"
                         android:layout_marginLeft="10dp"
+                        android:layout_marginBottom="10dp"
                         android:src="@drawable/ic_email"
-                        android:layout_gravity="center_vertical"/>
+                        android:layout_gravity="bottom"/>
 
                     <LinearLayout
                         android:orientation="vertical"
@@ -132,7 +133,8 @@
                         android:id="@+id/genderIcon"
                         android:paddingLeft="10dp"
                         android:layout_marginLeft="10dp"
-                        android:layout_gravity="center"
+                        android:layout_marginBottom="10dp"
+                        android:layout_gravity="bottom"
                         android:src="@drawable/ic_gender"/>
 
                     <LinearLayout
@@ -148,11 +150,11 @@
                             android:layout_width="fill_parent"
                             android:layout_height="0dp"
                             android:textAppearance="?android:attr/textAppearanceSmall"
-                            android:text="Small Text"
+                            android:text="Sex"
                             android:paddingLeft="10dp"
                             android:id="@+id/container_sex_hint"
                             android:layout_weight="1"
-                            android:gravity="bottom"
+                            android:gravity="center_vertical"
                             android:textSize="10sp" />
 
                         <LinearLayout
@@ -200,8 +202,9 @@
                         android:id="@+id/birth_icon"
                         android:paddingLeft="10dp"
                         android:layout_marginLeft="10dp"
+                        android:layout_marginBottom="10dp"
                         android:src="@drawable/ic_birth"
-                        android:layout_gravity="center_vertical"/>
+                        android:layout_gravity="bottom"/>
 
                     <LinearLayout
                         android:orientation="vertical"
@@ -251,8 +254,9 @@
                         android:id="@+id/birth_city_icon"
                         android:paddingLeft="10dp"
                         android:layout_marginLeft="10dp"
+                        android:layout_marginBottom="10dp"
                         android:src="@drawable/ic_birthcity"
-                        android:layout_gravity="center_vertical"/>
+                        android:layout_gravity="bottom"/>
 
                     <LinearLayout
                         android:orientation="vertical"

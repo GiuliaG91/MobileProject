@@ -63,7 +63,6 @@
                     android:text="Level"
                     android:id="@+id/language_level_area"
                     android:layout_weight=".5"
-                    android:paddingLeft="10dp"
                     android:gravity="bottom"
                     android:textSize="10sp" />
 
