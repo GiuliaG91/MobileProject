@@ -298,13 +298,7 @@ public class StudentProfileManagementBasicsFragment extends ProfileManagementFra
         }
 
         Log.println(Log.ASSERT,"BASICS", "now saving: " + currentUser.getObjectId());
-        currentUser.saveInBackground(new SaveCallback() {
-            @Override
-            public void done(ParseException e) {
-
-                Log.println(Log.ASSERT,"BASICS FRAG", "save: " + e);
-            }
-        });
+        currentUser.saveInBackground();
     }
 
 

@@ -137,8 +137,8 @@ public class StudentProfileManagementSkillsFragment extends ProfileManagementFra
                 public void onClick(View v) {
 
                     tagContainer.removeView(v);
-                    currentUser.removeTag(studentTags.get(tagTextView.getText().toString()));
-                    studentTags.remove(tagTextView.getText().toString());
+                    currentUser.removeTag(studentTags.get(tagTextView.getText().toString().trim()));
+                    studentTags.remove(tagTextView.getText().toString().trim());
                     tagViews.remove(mytagView);
                     Toast.makeText(getActivity(), "Removed", Toast.LENGTH_SHORT).show();
                     hasChanged = true;
@@ -182,6 +182,10 @@ public class StudentProfileManagementSkillsFragment extends ProfileManagementFra
                         LayoutInflater inflater = (LayoutInflater) getActivity().getBaseContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                         final View mytagView = inflater.inflate(R.layout.taglayout, null);
                         final TextView t = (TextView) mytagView.findViewById(R.id.tag_tv);
+
+                        tagContainer.addView(mytagView);
+                        tagViews.add(mytagView);
+                        studentTags.put(tagsText.getText().toString().trim(), application.getTags().get(tagsText.getText().toString().trim()));
                         t.setText(tagsText.getText().toString());
 
                         mytagView.setOnClickListener(new View.OnClickListener() {
@@ -189,16 +193,12 @@ public class StudentProfileManagementSkillsFragment extends ProfileManagementFra
                             public void onClick(View v) {
 
                                 tagContainer.removeView(v);
-                                currentUser.removeTag(studentTags.get(t.getText().toString()));
-                                studentTags.remove(t.getText().toString());
+                                currentUser.removeTag(studentTags.get(t.getText().toString().trim()));
+                                studentTags.remove(t.getText().toString().trim());
                                 tagViews.remove(mytagView);
                                 Toast.makeText(getActivity(), "Removed", Toast.LENGTH_SHORT).show();
                             }
                         });
-
-                        tagContainer.addView(mytagView);
-                        tagViews.add(mytagView);
-                        studentTags.put(tagsText.getText().toString(), application.getTags().get(tagsText.getText().toString()));
 
                         tagsText.setText("");
                         Toast.makeText(getActivity(),"Added",Toast.LENGTH_SHORT ).show();
