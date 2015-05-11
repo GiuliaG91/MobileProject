@@ -66,42 +66,6 @@ public class Company extends User {
         isCached.put(NAME_FIELD,true);
         return name;
     }
-
-    public ArrayList<Telephone> getPhones(){
-
-        ArrayList<Telephone> phones = new ArrayList<Telephone>();
-        List<Object> list = this.getList(PHONE_FIELD);
-
-        if(list != null)
-            for (Object o : list)
-                if (o instanceof Telephone){
-
-                    Telephone t = (Telephone)o;
-
-                    try {
-                        t.fetchIfNeeded();
-                    } catch (ParseException e) {
-                        e.printStackTrace();
-                    }
-
-                    phones.add(t);
-                }
-
-        this.phones = phones;
-        isCached.put(PHONE_FIELD,true);
-        return phones;
-    }
-    public void addPhone(Telephone phone){
-
-        phones.add(phone);
-        this.addUnique(PHONE_FIELD, phone);
-    }
-    public void removePhone(Telephone phone) {
-
-        phones.remove(phone);
-        this.removeAll(PHONE_FIELD, Arrays.asList(phone));
-    }
-
     public void setFiscalCode(String fc){
 
         this.fiscalCode = fc;
@@ -198,7 +162,6 @@ public class Company extends User {
         getName();
         getFiscalCode();
         getField();
-        getPhones();
         getOffices();
     }
 }

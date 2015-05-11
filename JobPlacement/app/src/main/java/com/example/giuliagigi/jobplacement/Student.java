@@ -203,33 +203,6 @@ public class Student extends User {
         isCached.put(DESCRIPTION_FIELD,true);
         return description;
     }
-    public ArrayList<Telephone> getPhones(){
-
-        if(isCached.get(PHONE_FIELD))
-            return phones;
-
-        ArrayList<Telephone> phones = new ArrayList<Telephone>();
-        List<Object> list = this.getList(PHONE_FIELD);
-
-        if(list != null)
-            for (Object o : list)
-                if (o instanceof Telephone){
-
-                    Telephone t = (Telephone)o;
-
-                    try {
-                        t.fetchIfNeeded();
-                    } catch (ParseException e) {
-                        e.printStackTrace();
-                    }
-
-                    phones.add(t);
-                }
-
-        this.phones = phones;
-        isCached.put(PHONE_FIELD,true);
-        return phones;
-    }
     public ArrayList<Language> getLanguages(){
 
         if(isCached.get(LANGUAGE_FIELD))
@@ -387,16 +360,6 @@ public class Student extends User {
         isCached.put(DESCRIPTION_FIELD,true);
         this.put(DESCRIPTION_FIELD,description);
     }
-//    public void addPhone(Telephone phone){
-//
-//        phones.add(phone);
-//        this.addUnique(PHONE_FIELD, phone);
-//    }
-//    public void removePhone(Telephone phone) {
-//
-//        phones.remove(phone);
-//        removeAll(PHONE_FIELD,Arrays.asList(phone));
-//    }
     public void addLanguage(Language language){
 
         languages.add(language);
@@ -447,7 +410,6 @@ public class Student extends User {
         getPostalCode();
         getNation();
         getDescription();
-        getPhones();
         getLanguages();
         getCertificates();
         getFavourites();
