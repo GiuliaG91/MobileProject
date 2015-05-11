@@ -128,7 +128,7 @@ public class StudentProfileManagementLanguageFragment extends ProfileManagementF
         for (EditText et : textFields)
             et.addTextChangedListener(hasChangedListener);
 
-        setEnable(host.isEditMode());
+//        setEnable(host.isEditMode());
         return root;
     }
 

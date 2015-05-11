@@ -117,7 +117,7 @@
         />
 
     <EditText
-        android:id="@+id/company_basics_email_area"
+        android:id="@+id/basics_email_area"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:editable="false"

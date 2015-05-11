@@ -147,7 +147,13 @@ public class ProfileManagementAccountFragment extends ProfileManagementFragment 
 
     @Override
     protected void setEnable(boolean enable) {
+
         super.setEnable(enable);
+
+        deleteAccount.setEnabled(enable);
+        changePassword.setEnabled(enable);
+        changeUsername.setEnabled(enable);
+        sendVerification.setEnabled(enable);
     }
 
     @Override

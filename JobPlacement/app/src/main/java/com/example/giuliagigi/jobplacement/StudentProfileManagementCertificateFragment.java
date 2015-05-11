@@ -231,7 +231,7 @@ public class StudentProfileManagementCertificateFragment extends ProfileManageme
             }
         });
 
-        setEnable(host.isEditMode());
+//        setEnable(host.isEditMode());
         return root;
     }
 

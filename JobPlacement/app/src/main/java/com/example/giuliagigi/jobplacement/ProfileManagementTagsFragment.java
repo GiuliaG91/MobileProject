@@ -157,7 +157,7 @@ public class ProfileManagementTagsFragment extends ProfileManagementFragment {
             }
         });
 
-        setEnable(host.isEditMode());
+//        setEnable(host.isEditMode());
 
         return root;
     }

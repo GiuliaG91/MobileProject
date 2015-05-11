@@ -27,14 +27,14 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 
 
-public class CompanyProfileManagementBasicsFragment extends ProfileManagementFragment {
+public class CompanyProfileManagementBasicsFragment extends ProfileManagementBasicsFragment {
 
     private static final String TITLE = "Overview";
 
     private Company currentUser;
     private EditText nameText,VATNumber;
     private TextView foundationDatePicker;
-    private LinearLayout profilePhoto;
+//    private LinearLayout profilePhoto;
     private int day,month,year;
     private boolean foundationDateChanged;
 
@@ -145,31 +145,31 @@ public class CompanyProfileManagementBasicsFragment extends ProfileManagementFra
             et.addTextChangedListener(hasChangedListener);
 
 
-        profilePhoto = (LinearLayout)root.findViewById(R.id.basics_profilePhoto);
+//        profilePhoto = (LinearLayout)root.findViewById(R.id.basics_profilePhoto);
+//
+//        if(currentUser.getProfilePhoto() != null) {
+//            Bitmap bmImg = currentUser.getProfilePhoto();
+//            BitmapDrawable background = new BitmapDrawable(bmImg);
+//            profilePhoto.setBackgroundDrawable(background);
+//        }
+//
+//        profilePhoto.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//
+//                Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+//                intent.setType("image/*");
+//                if(intent.resolveActivity(getActivity().getPackageManager()) != null){
+//                    startActivityForResult(intent,REQUEST_IMAGE_GET);
+//                }
+//            }
+//        });
+//
+//
+//        EditText emailText = (EditText)root.findViewById(R.id.basics_email_area);
+//        emailText.setText(currentUser.getMail());
 
-        if(currentUser.getProfilePhoto() != null) {
-            Bitmap bmImg = currentUser.getProfilePhoto();
-            BitmapDrawable background = new BitmapDrawable(bmImg);
-            profilePhoto.setBackgroundDrawable(background);
-        }
-
-        profilePhoto.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-                intent.setType("image/*");
-                if(intent.resolveActivity(getActivity().getPackageManager()) != null){
-                    startActivityForResult(intent,REQUEST_IMAGE_GET);
-                }
-            }
-        });
-
-
-        EditText emailText = (EditText)root.findViewById(R.id.company_basics_email_area);
-        emailText.setText(currentUser.getMail());
-
-        setEnable(host.isEditMode());
+//        setEnable(host.isEditMode());
         return root;
     }
 
@@ -190,31 +190,31 @@ public class CompanyProfileManagementBasicsFragment extends ProfileManagementFra
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        Log.println(Log.ASSERT,"BASICS FRAG", "onActivity result");
-
-        if(requestCode == REQUEST_IMAGE_GET && resultCode == Activity.RESULT_OK){
-
-            Uri photoUri = data.getData();
-            Bitmap photoBitmap = null;
-
-            try {
-                photoBitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(),photoUri);
-
-                if(photoBitmap == null)
-                    Log.println(Log.ASSERT,"PM FRAG", "photoBitmap null");
-                else{
-
-                    hasChanged = true;
-                    application.getUserObject().setProfilePhoto(photoBitmap);
-                    Bitmap bmImg = currentUser.getProfilePhoto();
-                    BitmapDrawable background = new BitmapDrawable(bmImg);
-                    profilePhoto.setBackgroundDrawable(background);
-                }
-
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
+//        Log.println(Log.ASSERT,"BASICS FRAG", "onActivity result");
+//
+//        if(requestCode == REQUEST_IMAGE_GET && resultCode == Activity.RESULT_OK){
+//
+//            Uri photoUri = data.getData();
+//            Bitmap photoBitmap = null;
+//
+//            try {
+//                photoBitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(),photoUri);
+//
+//                if(photoBitmap == null)
+//                    Log.println(Log.ASSERT,"PM FRAG", "photoBitmap null");
+//                else{
+//
+//                    hasChanged = true;
+//                    application.getUserObject().setProfilePhoto(photoBitmap);
+//                    Bitmap bmImg = currentUser.getProfilePhoto();
+//                    BitmapDrawable background = new BitmapDrawable(bmImg);
+//                    profilePhoto.setBackgroundDrawable(background);
+//                }
+//
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
+//        }
     }
 
 
@@ -250,13 +250,7 @@ public class CompanyProfileManagementBasicsFragment extends ProfileManagementFra
         currentUser.setFiscalCode(VATNumber.getText().toString());
 
         Log.println(Log.ASSERT,"BASICS", "saving user...");
-        currentUser.saveEventually(new SaveCallback() {
-            @Override
-            public void done(ParseException e) {
-                if(e == null)
-                    Log.println(Log.ASSERT,"BASICS", "user saved");
-            }
-        });
+        currentUser.saveEventually();
     }
 
 }

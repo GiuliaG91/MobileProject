@@ -5,10 +5,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
-import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -19,23 +16,18 @@ import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.parse.GetDataCallback;
 import com.parse.ParseException;
 import com.parse.SaveCallback;
 
-import java.io.File;
 import java.io.IOException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
-public class StudentProfileManagementBasicsFragment extends ProfileManagementFragment {
+public class StudentProfileManagementBasicsFragment extends ProfileManagementBasicsFragment {
 
     public static final String TITLE = "Overview";
 
@@ -44,7 +36,7 @@ public class StudentProfileManagementBasicsFragment extends ProfileManagementFra
     private boolean birthDateChanged;
     EditText nameText,surnameText, birthCityText, emailText, descriptionText;
     TextView birthPicker;
-    LinearLayout profilePhoto;
+//    LinearLayout profilePhoto;
     CheckBox male,female;
 
     public StudentProfileManagementBasicsFragment() {super();}
@@ -95,8 +87,8 @@ public class StudentProfileManagementBasicsFragment extends ProfileManagementFra
         else
             surnameText.setText(currentUser.getSurname());
 
-        emailText = (EditText)root.findViewById(R.id.student_email_et);
-        emailText.setText(currentUser.getMail());
+//        emailText = (EditText)root.findViewById(R.id.basics_email_area);
+//        emailText.setText(currentUser.getMail());
 
         birthCityText = (EditText)root.findViewById(R.id.student_birthCity_et);
         if(currentUser.getBirthCity() == null)
@@ -191,27 +183,27 @@ public class StudentProfileManagementBasicsFragment extends ProfileManagementFra
 
 
 
-        profilePhoto = (LinearLayout)root.findViewById(R.id.basics_profilePhoto);
+//        profilePhoto = (LinearLayout)root.findViewById(R.id.basics_profilePhoto);
+//
+//        if(currentUser.getProfilePhoto() != null) {
+//            Bitmap bmImg = currentUser.getProfilePhoto();
+//            BitmapDrawable background = new BitmapDrawable(bmImg);
+//            profilePhoto.setBackgroundDrawable(background);
+//        }
+//
+//        profilePhoto.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//
+//                Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+//                intent.setType("image/*");
+//                if(intent.resolveActivity(getActivity().getPackageManager()) != null){
+//                    startActivityForResult(intent,REQUEST_IMAGE_GET);
+//                }
+//            }
+//        });
 
-        if(currentUser.getProfilePhoto() != null) {
-            Bitmap bmImg = currentUser.getProfilePhoto();
-            BitmapDrawable background = new BitmapDrawable(bmImg);
-            profilePhoto.setBackgroundDrawable(background);
-        }
-
-        profilePhoto.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-                intent.setType("image/*");
-                if(intent.resolveActivity(getActivity().getPackageManager()) != null){
-                    startActivityForResult(intent,REQUEST_IMAGE_GET);
-                }
-            }
-        });
-
-        setEnable(host.isEditMode());
+//        setEnable(host.isEditMode());
         return root;
     }
 
@@ -225,31 +217,31 @@ public class StudentProfileManagementBasicsFragment extends ProfileManagementFra
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        Log.println(Log.ASSERT,"BASICS FRAG", "onActivity result");
-
-        if(requestCode == REQUEST_IMAGE_GET && resultCode == Activity.RESULT_OK){
-
-            Uri photoUri = data.getData();
-            Bitmap photoBitmap = null;
-
-            try {
-                photoBitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(),photoUri);
-
-                if(photoBitmap == null)
-                    Log.println(Log.ASSERT,"PM FRAG", "photoBitmap null");
-                else{
-
-                    hasChanged = true;
-                    application.getUserObject().setProfilePhoto(photoBitmap);
-                    Bitmap bmImg = currentUser.getProfilePhoto();
-                    BitmapDrawable background = new BitmapDrawable(bmImg);
-                    profilePhoto.setBackgroundDrawable(background);
-                }
-
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
+//        Log.println(Log.ASSERT,"BASICS FRAG", "onActivity result");
+//
+//        if(requestCode == REQUEST_IMAGE_GET && resultCode == Activity.RESULT_OK){
+//
+//            Uri photoUri = data.getData();
+//            Bitmap photoBitmap = null;
+//
+//            try {
+//                photoBitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(),photoUri);
+//
+//                if(photoBitmap == null)
+//                    Log.println(Log.ASSERT,"PM FRAG", "photoBitmap null");
+//                else{
+//
+//                    hasChanged = true;
+//                    application.getUserObject().setProfilePhoto(photoBitmap);
+//                    Bitmap bmImg = currentUser.getProfilePhoto();
+//                    BitmapDrawable background = new BitmapDrawable(bmImg);
+//                    profilePhoto.setBackgroundDrawable(background);
+//                }
+//
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
+//        }
     }
 
     /* ----------------------- AUXILIARY METHODS ----------------------------------------------- */
@@ -265,7 +257,7 @@ public class StudentProfileManagementBasicsFragment extends ProfileManagementFra
         male.setEnabled(enable);
         female.setEnabled(enable);
         birthPicker.setEnabled(enable);
-        profilePhoto.setEnabled(enable);
+//        profilePhoto.setEnabled(enable);
     }
 
 
@@ -297,8 +289,15 @@ public class StudentProfileManagementBasicsFragment extends ProfileManagementFra
             birthDateChanged = false;
         }
 
-        Log.println(Log.ASSERT,"BASICS", "now saving: " + currentUser.getObjectId());
-        currentUser.saveInBackground();
+        Log.println(Log.ASSERT,"BASICS", "now saving..." + currentUser.getObjectId());
+        currentUser.saveInBackground(new SaveCallback() {
+            @Override
+            public void done(ParseException e) {
+
+                if(e == null)
+                    Log.println(Log.ASSERT,"BASICS", "saved!");
+            }
+        });
     }
 
 
