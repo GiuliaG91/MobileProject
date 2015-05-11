@@ -1,10 +1,11 @@
 package com.example.giuliagigi.jobplacement;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
-import android.support.v4.app.DialogFragment;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.text.Editable;
@@ -15,6 +16,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -27,46 +29,65 @@ import com.parse.RequestPasswordResetCallback;
 
 public class Login extends ActionBarActivity {
 
+
+    private CheckBox rememberAccount;
+    private EditText mailText,passwordText;
+    private TextView registerLink,forgotPassword;
+    private Button loginButton;
+
+    private static final String SHAREDPREF_LATEST_MAIL = "shared_preferences_latest_mail";
+    private static final String SHAREDPREF_LATEST_PASSWORD = "shared_preferences_latest_password";
+    private static final String SHAREDPREF_LATEST_LOGIN_PREFERENCE = "shared_preferences_latest_login_preference";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login_layout);
 
-        final EditText mail = (EditText)findViewById(R.id.email_editText);
-        final EditText password = (EditText)findViewById(R.id.password_editText);
-        final Button login = (Button)findViewById(R.id.login_button);
-        final TextView registerLink = (TextView)findViewById(R.id.register_link);
-        final TextView forgotPassword = (TextView)findViewById(R.id.login_passwordReset_text);
+        mailText = (EditText)findViewById(R.id.email_editText);
+        passwordText = (EditText)findViewById(R.id.password_editText);
+        loginButton = (Button)findViewById(R.id.login_button);
+        registerLink = (TextView)findViewById(R.id.register_link);
+        forgotPassword = (TextView)findViewById(R.id.login_passwordReset_text);
+        rememberAccount = (CheckBox)findViewById(R.id.login_stayConnected_checkBox);
 
-        mail.addTextChangedListener(new TextWatcher() {
+
+        mailText.addTextChangedListener(new TextWatcher() {
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                login.setEnabled(!mail.getText().toString().trim().isEmpty() && !password.getText().toString().isEmpty());
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
             }
-            @Override
-            public void afterTextChanged(Editable s) {}
-        });
-
-        password.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                login.setEnabled(!mail.getText().toString().trim().isEmpty() && !password.getText().toString().isEmpty());
+                loginButton.setEnabled(!mailText.getText().toString().trim().isEmpty() && !passwordText.getText().toString().isEmpty());
             }
+
             @Override
-            public void afterTextChanged(Editable s) {}
+            public void afterTextChanged(Editable s) {
+            }
         });
 
-        login.setOnClickListener(new View.OnClickListener() {
+        passwordText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                loginButton.setEnabled(!mailText.getText().toString().trim().isEmpty() && !passwordText.getText().toString().isEmpty());
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+            }
+        });
+
+        loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                GlobalData gd = (GlobalData)getApplicationContext();
-                performLogin(mail.getText().toString(),password.getText().toString());
+                GlobalData gd = (GlobalData) getApplicationContext();
+                performLogin(mailText.getText().toString(), passwordText.getText().toString());
             }
         });
 
@@ -115,24 +136,38 @@ public class Login extends ActionBarActivity {
                 builder.create().show();
             }
         });
-    }
 
+
+        /* --- automatic login --- */
+        SharedPreferences sp = getPreferences(Context.MODE_PRIVATE);
+//        sp.edit().clear().commit(); // COMMENTARE PER DISABILITARE LOGIN AUTOMATICO
+        rememberAccount.setChecked(sp.getBoolean(SHAREDPREF_LATEST_LOGIN_PREFERENCE,false));
+
+        if(rememberAccount.isChecked()){
+
+            String latestMail = sp.getString(SHAREDPREF_LATEST_MAIL,"");
+            String latestPassword = sp.getString(SHAREDPREF_LATEST_PASSWORD,"");
+            Log.println(Log.ASSERT,"LOGIN","login with credentials: " + latestMail + " - " + latestPassword);
+
+            mailText.setText(latestMail);
+            passwordText.setText(latestPassword);
+            setEnable(false);
+
+            Toast.makeText(getApplicationContext(),"Logging in ...",Toast.LENGTH_SHORT).show();
+            performLogin(latestMail,latestPassword);
+        }
+
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_home, menu);
         return true;
     }
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
         }
@@ -140,9 +175,25 @@ public class Login extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private void performLogin(String mail, String password) {
+
+
+    /* ------------------ AUXILIARY METHODS ------------------------------------------------------*/
+
+    private void setEnable(boolean enable){
+
+        mailText.setEnabled(enable);
+        passwordText.setEnabled(enable);
+        loginButton.setEnabled(enable);
+        rememberAccount.setEnabled(enable);
+        registerLink.setEnabled(enable);
+        forgotPassword.setEnabled(enable);
+    }
+
+
+    private void performLogin(final String mail, final String password) {
 
         Log.println(Log.ASSERT,"LOGIN", "logging in");
+        setEnable(false);
 
         ParseUser.logInInBackground(mail, password, new LogInCallback() {
             @Override
@@ -154,6 +205,20 @@ public class Login extends ActionBarActivity {
                     Log.println(Log.ASSERT, "LOGIN", "login ok");
                     result = "login successful";
                     Toast.makeText(getApplicationContext(),result,Toast.LENGTH_SHORT).show();
+
+                    SharedPreferences sp = getPreferences(Context.MODE_PRIVATE);
+                    SharedPreferences.Editor editor = sp.edit();
+
+                    if(rememberAccount.isChecked()){
+
+                        Log.println(Log.ASSERT,"LOGIN", "asked to remember: " + mail + " - " + password);
+                        editor.putString(mail,password);
+                        editor.putString(SHAREDPREF_LATEST_MAIL,mail);
+                        editor.putString(SHAREDPREF_LATEST_PASSWORD,password);
+                    }
+
+                    editor.putBoolean(SHAREDPREF_LATEST_LOGIN_PREFERENCE,rememberAccount.isChecked());
+                    editor.apply();
 
                     /* caching profile infos */
                     GlobalData gd = (GlobalData)getApplicationContext();
@@ -169,6 +234,7 @@ public class Login extends ActionBarActivity {
                     Log.println(Log.ASSERT, "LOGIN", "login failed");
                     e.printStackTrace();
                     result = "invalid username or password";
+                    setEnable(true);
                     Toast.makeText(getApplicationContext(),result,Toast.LENGTH_SHORT).show();
                 }
             }

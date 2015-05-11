@@ -6,6 +6,26 @@
     android:orientation="vertical"
     tools:context="com.example.giuliagigi.jobplacement.ProfileManagementTagsFragment">
 
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="What is a tag?"
+            android:padding="20dp"
+            android:layout_gravity="center_vertical"/>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="i"
+            android:id="@+id/tagsFragment_tagExplanation_Button"/>
+
+        </LinearLayout>
+
     <android.support.v7.widget.CardView
         xmlns:card_view="http://schemas.android.com/apk/res-auto"
         android:id="@+id/tagsFragment_AddTag_cardView"
