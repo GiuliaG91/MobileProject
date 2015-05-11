@@ -15,9 +15,12 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.MultiAutoCompleteTextView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,25 +29,33 @@ import com.parse.ParseException;
 import com.parse.ParseUser;
 import com.parse.RequestPasswordResetCallback;
 
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
+
 
 public class Login extends ActionBarActivity {
 
 
     private CheckBox rememberAccount;
-    private EditText mailText,passwordText;
+    private EditText passwordText;
+    private MultiAutoCompleteTextView mailText;
     private TextView registerLink,forgotPassword;
     private Button loginButton;
 
     private static final String SHAREDPREF_LATEST_MAIL = "shared_preferences_latest_mail";
     private static final String SHAREDPREF_LATEST_PASSWORD = "shared_preferences_latest_password";
     private static final String SHAREDPREF_LATEST_LOGIN_PREFERENCE = "shared_preferences_latest_login_preference";
+    private static final String SHAREDPREF_MAIL_LIST = "shared_preferences_mail_list";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login_layout);
 
-        mailText = (EditText)findViewById(R.id.email_editText);
+        final SharedPreferences sp = getPreferences(Context.MODE_PRIVATE);
+
+        mailText = (MultiAutoCompleteTextView)findViewById(R.id.email_editText);
         passwordText = (EditText)findViewById(R.id.password_editText);
         loginButton = (Button)findViewById(R.id.login_button);
         registerLink = (TextView)findViewById(R.id.register_link);
@@ -67,6 +78,29 @@ public class Login extends ActionBarActivity {
             }
         });
 
+        String[] knownMailsList = new String[sp.getStringSet(SHAREDPREF_MAIL_LIST, new HashSet<String>()).size()];
+
+        int i = 0;
+        for(String mail: sp.getStringSet(SHAREDPREF_MAIL_LIST, new HashSet<String>()))
+            knownMailsList[i++] = mail;
+
+        final ArrayAdapter<String> adapter = new ArrayAdapter<String>(getApplicationContext(),
+                android.R.layout.simple_dropdown_item_1line, knownMailsList);
+
+        mailText.setAdapter(adapter);
+        mailText.setTokenizer(new SpaceTokenizer());
+        mailText.setThreshold(1);
+
+        mailText.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                String selectedMail = adapter.getItem(position);
+                String relatedPassword = sp.getString(selectedMail,"");
+                passwordText.setText(relatedPassword);
+            }
+        });
+
         passwordText.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -86,8 +120,7 @@ public class Login extends ActionBarActivity {
             @Override
             public void onClick(View v) {
 
-                GlobalData gd = (GlobalData) getApplicationContext();
-                performLogin(mailText.getText().toString(), passwordText.getText().toString());
+                performLogin(mailText.getText().toString().trim(), passwordText.getText().toString());
             }
         });
 
@@ -139,8 +172,6 @@ public class Login extends ActionBarActivity {
 
 
         /* --- automatic login --- */
-        SharedPreferences sp = getPreferences(Context.MODE_PRIVATE);
-//        sp.edit().clear().commit(); // COMMENTARE PER DISABILITARE LOGIN AUTOMATICO
         rememberAccount.setChecked(sp.getBoolean(SHAREDPREF_LATEST_LOGIN_PREFERENCE,false));
 
         if(rememberAccount.isChecked()){
@@ -151,10 +182,9 @@ public class Login extends ActionBarActivity {
 
             mailText.setText(latestMail);
             passwordText.setText(latestPassword);
-            setEnable(false);
 
-            Toast.makeText(getApplicationContext(),"Logging in ...",Toast.LENGTH_SHORT).show();
-            performLogin(latestMail,latestPassword);
+//            Toast.makeText(getApplicationContext(),"Logging in ...",Toast.LENGTH_SHORT).show();
+//            performLogin(latestMail,latestPassword); //COMMENTA PER DISABILITARE LOGIN AUTOMATICO
         }
 
     }
@@ -211,12 +241,14 @@ public class Login extends ActionBarActivity {
 
                     if(rememberAccount.isChecked()){
 
-                        Log.println(Log.ASSERT,"LOGIN", "asked to remember: " + mail + " - " + password);
-                        editor.putString(mail,password);
                         editor.putString(SHAREDPREF_LATEST_MAIL,mail);
                         editor.putString(SHAREDPREF_LATEST_PASSWORD,password);
                     }
 
+                    editor.putString(mail,password);
+                    Set<String> mailList = sp.getStringSet(SHAREDPREF_MAIL_LIST,new HashSet<String>());
+                    mailList.add(mail);
+                    editor.putStringSet(SHAREDPREF_MAIL_LIST,mailList);
                     editor.putBoolean(SHAREDPREF_LATEST_LOGIN_PREFERENCE,rememberAccount.isChecked());
                     editor.apply();
 

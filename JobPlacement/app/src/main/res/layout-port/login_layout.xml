@@ -34,7 +34,7 @@
         android:alpha=".8"
         android:background="#ffffff">
 
-        <EditText
+        <MultiAutoCompleteTextView
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:padding="20dp"
