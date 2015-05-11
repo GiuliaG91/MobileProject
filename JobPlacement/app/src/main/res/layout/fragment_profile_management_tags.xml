@@ -9,19 +9,37 @@
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="80dp"
+        android:gravity="center_horizontal"
+        android:padding="10dp">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/birth_city_icon"
+            android:paddingLeft="10dp"
+            android:src="@drawable/ic_question"
+            android:layout_gravity="center"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:text="What is a tag?"
-            android:padding="20dp"
+            android:textAppearance="?android:textAppearanceMedium"
+            android:textColor="@color/ColorPrimaryDark"
+            android:gravity="center"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
             android:layout_gravity="center_vertical"/>
 
         <Button
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:text="i"
+            android:layout_height="40dp"
+            android:text="Click for info!"
+            android:layout_gravity="center"
+            android:background="@drawable/button_background"
+            android:textAppearance="?android:textAppearanceSmall"
+            android:textColor="@color/ColorPrimaryDark"
             android:id="@+id/tagsFragment_tagExplanation_Button"/>
 
         </LinearLayout>
@@ -30,7 +48,8 @@
         xmlns:card_view="http://schemas.android.com/apk/res-auto"
         android:id="@+id/tagsFragment_AddTag_cardView"
         android:layout_gravity="center"
-        android:layout_width="350dp"
+        android:layout_width="match_parent"
+        android:layout_margin="10dp"
         android:layout_height="70dp"
         android:elevation="2dp"
         android:layout_marginTop="5dp">
@@ -49,6 +68,7 @@
                 android:id="@+id/tagsFragment_tagAutoComplete_text"
                 android:layout_weight="1"
                 android:background="@null"
+                android:paddingLeft="10dp"
                 android:backgroundTint="@android:color/white"
                 android:lines="1"
                 android:singleLine="true"/>
@@ -58,7 +78,7 @@
                 android:layout_height="fill_parent"
                 android:id="@+id/tagsFragment_addTagButton"
                 android:layout_weight="0.25"
-                android:background="@android:color/darker_gray"
+                android:background="@color/ColorPrimary"
                 android:src="@drawable/ic_plus_white" />
 
 
