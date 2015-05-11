@@ -11,7 +11,7 @@
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="100dp">
+        android:layout_height="80dp">
 
         <ImageView
             android:layout_width="wrap_content"
@@ -21,7 +21,7 @@
             android:layout_marginLeft="10dp"
             android:layout_marginBottom="10dp"
             android:src="@drawable/ic_mark"
-            android:layout_gravity="bottom"/>
+            android:layout_gravity="center"/>
 
         <LinearLayout
             android:orientation="vertical"
@@ -37,7 +37,7 @@
                 android:text="Title"
                 android:textColor="@color/ColorPrimaryDark"
                 android:id="@+id/title_hint"
-                android:layout_weight="1"
+                android:layout_weight=".3"
                 android:paddingLeft="10dp"
                 android:gravity="bottom"
                 android:textSize="10sp" />
@@ -46,7 +46,7 @@
                 android:layout_width="fill_parent"
                 android:layout_height="0dp"
                 android:id="@+id/certificate_title_text"
-                android:layout_weight="1"
+                android:layout_weight=".7"
                 android:textColor="#ff000000"
                 android:textSize="20dp"
                 android:paddingLeft="10dp"
@@ -59,11 +59,98 @@
 
     <!-- end title area -->
 
+
+
+    <!-- mark and date area -->
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="80dp">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/markIcon"
+            android:paddingLeft="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginBottom="10dp"
+            android:src="@drawable/ic_mark"
+            android:layout_gravity="center"/>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
+            android:paddingLeft="30dp">
+
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="0dp"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="Mark"
+                android:textColor="@color/ColorPrimaryDark"
+                android:id="@+id/mark_hint"
+                android:layout_weight=".3"
+                android:paddingLeft="10dp"
+                android:gravity="bottom"
+                android:textSize="10sp" />
+
+            <EditText
+                android:layout_width="fill_parent"
+                android:layout_height="0dp"
+                android:id="@+id/certificate_mark_text"
+                android:layout_weight=".7"
+                android:textColor="#ff000000"
+                android:textSize="20dp"
+                android:paddingLeft="10dp"
+                android:paddingTop="5dp"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
+            android:paddingLeft="10dp">
+
+
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="0dp"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="Date"
+                android:textColor="@color/ColorPrimaryDark"
+                android:id="@+id/date_hint"
+                android:layout_weight=".3"
+                android:paddingLeft="10dp"
+                android:gravity="bottom"
+                android:textSize="10sp"  />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:textColor="#000000"
+                android:layout_weight=".7"
+                android:textSize="20dp"
+                android:paddingLeft="10dp"
+                android:paddingTop="5dp"
+                android:id="@+id/certificate_datePicker" />
+            />
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+    <!-- end mark area -->
     <!-- description -->
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="200dp"
+        android:layout_height="80dp"
         android:orientation="horizontal">
 
         <ImageView
@@ -83,144 +170,28 @@
             android:layout_weight="1"
             android:paddingLeft="30dp">
 
+
             <TextView
-                android:layout_width="match_parent"
+                android:layout_width="fill_parent"
                 android:layout_height="0dp"
-                android:layout_weight=".1"
                 android:textAppearance="?android:attr/textAppearanceSmall"
                 android:text="Description"
+                android:textColor="@color/ColorPrimaryDark"
                 android:id="@+id/student_description_hint"
-                android:layout_marginTop="20dp"
-                android:textColor="@color/ColorPrimaryDark"
-                android:gravity="bottom"
-                android:textSize="10sp"  />
-
-            <android.support.v7.widget.CardView
-                xmlns:card_view="http://schemas.android.com/apk/res-auto"
-                android:id="@+id/phones_card_view"
-                android:layout_gravity="center"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight=".9"
-                card_view:cardCornerRadius="10dp"
-                card_view:cardMaxElevation="5dp"
-                android:layout_margin="3dp"
-                card_view:cardBackgroundColor="#ffffff">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:id="@+id/certificate_description_text"
-                    android:textColor="#000000"
-                    android:textSize="15dp"
-                    android:paddingLeft="10dp"
-                    android:paddingTop="5dp" />
-
-            </android.support.v7.widget.CardView>
-        </LinearLayout>
-    </LinearLayout>
-    <!-- end description -->
-
-    <!-- mark area -->
-
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="100dp">
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/markIcon"
-            android:paddingLeft="10dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginBottom="10dp"
-            android:src="@drawable/ic_mark"
-            android:layout_gravity="bottom"/>
-
-        <LinearLayout
-            android:orientation="vertical"
-            android:layout_width="0dp"
-            android:layout_height="fill_parent"
-            android:layout_weight="1"
-            android:paddingLeft="30dp">
-
-            <TextView
-                android:layout_width="fill_parent"
-                android:layout_height="0dp"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:text="Mark"
-                android:textColor="@color/ColorPrimaryDark"
-                android:id="@+id/mark_hint"
-                android:layout_weight="1"
-                android:paddingLeft="10dp"
-                android:gravity="bottom"
-                android:textSize="10sp" />
-
-            <EditText
-                android:layout_width="fill_parent"
-                android:layout_height="0dp"
-                android:id="@+id/certificate_mark_text"
-                android:layout_weight="1"
-                android:textColor="#ff000000"
-                android:textSize="20dp"
-                android:paddingLeft="10dp"
-                android:paddingTop="5dp"/>
-
-        </LinearLayout>
-
-
-    </LinearLayout>
-
-    <!-- end mark area -->
-
-    <!-- Certificate date -->
-
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="70dp"
-        >
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/certificateDateIcon"
-            android:src="@drawable/ic_calendar"
-            android:paddingLeft="10dp"
-            android:layout_marginLeft="10dp"
-            android:layout_gravity="center_vertical"/>
-
-        <LinearLayout
-            android:orientation="vertical"
-            android:layout_width="0dp"
-            android:layout_height="fill_parent"
-            android:layout_weight="1"
-            android:paddingLeft="30dp">
-
-
-            <TextView
-                android:layout_width="fill_parent"
-                android:layout_height="0dp"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:text="Date"
-                android:textColor="@color/ColorPrimaryDark"
-                android:id="@+id/date_hint"
-                android:layout_weight="1"
+                android:layout_weight=".3"
                 android:paddingLeft="10dp"
                 android:gravity="bottom"
                 android:textSize="10sp"  />
 
             <TextView
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="0dp"
                 android:textColor="#000000"
-                android:layout_weight="1"
+                android:layout_weight=".7"
                 android:textSize="20dp"
                 android:paddingLeft="10dp"
                 android:paddingTop="5dp"
-                android:id="@+id/certificate_datePicker" />
+                android:id="@+id/certificate_description_text" />
             />
 
         </LinearLayout>
@@ -235,9 +206,9 @@
             android:background="@drawable/ic_waste"/>
 
 
-    </LinearLayout>
 
-    <!--END certificate date-->
+    </LinearLayout>
+    <!-- end description -->
 
 
 </LinearLayout>

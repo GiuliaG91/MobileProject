@@ -3,6 +3,7 @@ package com.example.giuliagigi.jobplacement;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.Log;
@@ -140,39 +141,37 @@ public class StudentProfileManagementCertificateFragment extends ProfileManageme
             @Override
             public void onClick(View v) {
 
-                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+            View cardLayout = getActivity().getLayoutInflater().inflate(R.layout.card_description_element, null);
+            builder.setView(cardLayout);
+            final EditText dialogDescriptionText = (EditText)cardLayout.findViewById(R.id.description_text);
+            dialogDescriptionText.setText(completeDescription);
+            builder.setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
 
-                final EditText dialogDescriptionText = new EditText(getActivity());
-                dialogDescriptionText.setText(completeDescription);
-                builder.setView(dialogDescriptionText);
+                    if(!dialogDescriptionText.getText().toString().equals(completeDescription)){
 
-                builder.setTitle("Insert a description");
-                builder.setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
+                        hasChanged = true;
+                        dateChanged = true;
+                        completeDescription = dialogDescriptionText.getText().toString();
+                        String description;
+                        if(completeDescription != null && completeDescription.length()>DESCRIPTION_PREVIEW_LENGTH)
+                            description = completeDescription.substring(0,DESCRIPTION_PREVIEW_LENGTH) + "...";
+                        else
+                            description = completeDescription;
 
-                        if(!dialogDescriptionText.getText().toString().equals(completeDescription)){
-
-                            hasChanged = true;
-                            dateChanged = true;
-                            completeDescription = dialogDescriptionText.getText().toString();
-                            String description;
-                            if(completeDescription != null && completeDescription.length()>DESCRIPTION_PREVIEW_LENGTH)
-                                description = completeDescription.substring(0,DESCRIPTION_PREVIEW_LENGTH) + "...";
-                            else
-                                description = completeDescription;
-
-                            descriptionText.setText(description);
-                        }
-
+                        descriptionText.setText(description);
                     }
-                });
-                builder.setNegativeButton("Cancel",new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {}
-                });
 
-                builder.create().show();
+                }
+            });
+            builder.setNegativeButton("Cancel",new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {}
+            });
+
+            builder.create().show();
             }
         });
 
