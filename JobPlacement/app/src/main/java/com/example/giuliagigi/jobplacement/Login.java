@@ -154,6 +154,13 @@ public class Login extends ActionBarActivity {
                     Log.println(Log.ASSERT, "LOGIN", "login ok");
                     result = "login successful";
                     Toast.makeText(getApplicationContext(),result,Toast.LENGTH_SHORT).show();
+
+                    /* caching profile infos */
+                    GlobalData gd = (GlobalData)getApplicationContext();
+                    gd.getCurrentUser();
+                    gd.getUserObject();
+
+                    /* launch home activity */
                     Intent i = new Intent(getApplicationContext(),Home.class);
                     startActivity(i);
 

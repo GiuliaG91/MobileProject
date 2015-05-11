@@ -72,6 +72,10 @@ public class GlobalData extends Application {
         getTags();
     }
 
+
+
+    /* ------------------ USER METHODS -----------------------------------------------------------*/
+
     public ParseUserWrapper getCurrentUser() {
 
         if(currentUser == null)
@@ -110,8 +114,6 @@ public class GlobalData extends Application {
     }
     public User getUserObject(){
 
-        Log.println(Log.ASSERT,"GLOBAL DATA", "currentUser: " + currentUser.getEmail());
-
         if(currentUserObject == null){
 
             if(currentUser.getType().equals((User.TYPE_STUDENT))){
@@ -142,24 +144,8 @@ public class GlobalData extends Application {
         return currentUserObject;
     }
 
-    public void setToolbar(Toolbar t)
-    {
-        toolbar=t;
-    }
-    public Toolbar getToolbar()
-    {
-        return toolbar;
-    }
 
-
-    public void setCurrentOffer(CompanyOffer o)
-    {
-        currentViewOffer=o;
-    }
-    public CompanyOffer getCurrentViewOffer()
-    {
-        return currentViewOffer;
-    }
+    /* ------------------ TAGS CACHING -----------------------------------------------------------*/
 
     public HashMap<String,Tag> getTags(){
 
@@ -179,6 +165,34 @@ public class GlobalData extends Application {
 
         return tags;
     }
+
+
+
+
+
+
+    public void setToolbar(Toolbar t)
+    {
+        toolbar=t;
+    }
+    public Toolbar getToolbar()
+    {
+        return toolbar;
+    }
+
+
+    public void setCurrentOffer(CompanyOffer o)
+    {
+        currentViewOffer=o;
+    }
+    public CompanyOffer getCurrentViewOffer()
+    {
+        return currentViewOffer;
+    }
+
+
+
+
 
     /****************GETTER AND SETTER FOR STATES***********/
     public int getHome_student_position() {
