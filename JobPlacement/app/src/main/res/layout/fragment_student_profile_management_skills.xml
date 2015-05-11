@@ -207,57 +207,6 @@
                 </LinearLayout>
             </android.support.v7.widget.CardView>
 
-            <android.support.v7.widget.CardView
-                xmlns:card_view="http://schemas.android.com/apk/res-auto"
-                android:id="@+id/student_AddTag_cardView"
-                android:layout_gravity="center"
-                android:layout_width="350dp"
-                android:layout_height="70dp"
-                android:elevation="2dp"
-                android:layout_marginTop="5dp">
-
-
-                <LinearLayout
-                    android:orientation="horizontal"
-                    android:layout_width="fill_parent"
-                    android:layout_height="fill_parent">
-
-
-                    <MultiAutoCompleteTextView
-                        android:layout_width="0dp"
-                        android:layout_height="fill_parent"
-                        android:hint="@string/new_offer_fragment_hint_tags"
-                        android:id="@+id/student_tagAutoComplete_text"
-                        android:layout_weight="1"
-                        android:background="@null"
-                        android:backgroundTint="@android:color/white"
-                        android:lines="1"
-                        android:singleLine="true"/>
-
-                    <ImageButton
-                        android:layout_width="0dp"
-                        android:layout_height="fill_parent"
-                        android:id="@+id/student_addTagButton"
-                        android:layout_weight="0.25"
-                        android:background="@android:color/darker_gray"
-                        android:src="@drawable/ic_plus_white" />
-
-
-                </LinearLayout>
-
-
-
-            </android.support.v7.widget.CardView>
-
-            <GridLayout
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
-                android:columnCount="2"
-                android:id="@+id/student_tagContainer"
-                android:layout_marginLeft="5dp"
-                android:layout_marginRight="5dp"></GridLayout>>
-
-
 
         </LinearLayout>
     </ScrollView>

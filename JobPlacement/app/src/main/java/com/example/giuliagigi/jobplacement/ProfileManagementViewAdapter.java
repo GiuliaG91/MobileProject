@@ -32,6 +32,7 @@ public class ProfileManagementViewAdapter extends FragmentPagerAdapter{
                 fragments.add(CompanyProfileManagementRegistryFragment.newInstance());
             }
 
+            fragments.add(ProfileManagementTagsFragment.newInstance());
             fragments.add(ProfileManagementAccountFragment.newInstance());
 
         }

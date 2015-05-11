@@ -387,16 +387,16 @@ public class Student extends User {
         isCached.put(DESCRIPTION_FIELD,true);
         this.put(DESCRIPTION_FIELD,description);
     }
-    public void addPhone(Telephone phone){
-
-        phones.add(phone);
-        this.addUnique(PHONE_FIELD, phone);
-    }
-    public void removePhone(Telephone phone) {
-
-        phones.remove(phone);
-        removeAll(PHONE_FIELD,Arrays.asList(phone));
-    }
+//    public void addPhone(Telephone phone){
+//
+//        phones.add(phone);
+//        this.addUnique(PHONE_FIELD, phone);
+//    }
+//    public void removePhone(Telephone phone) {
+//
+//        phones.remove(phone);
+//        removeAll(PHONE_FIELD,Arrays.asList(phone));
+//    }
     public void addLanguage(Language language){
 
         languages.add(language);
