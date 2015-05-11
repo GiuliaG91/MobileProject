@@ -281,6 +281,37 @@ public class menuAdapter extends RecyclerView.Adapter<menuAdapter.ViewHolder> {
 
                           break;
 
+                      case TYPE_PROFILE:
+
+                          v.setOnClickListener(new View.OnClickListener() {
+                              @Override
+                              public void onClick(View v) {
+                                  FragmentManager fragmentManager = activity.getSupportFragmentManager();
+                                  Fragment current = fragmentManager.findFragmentById(R.id.tab_Home_container);
+
+                                  if(!(current instanceof ProfileManagement)) {
+
+                                      Fragment fragment = ProfileManagement.newInstance();
+
+                                      fragmentManager.beginTransaction()
+                                              .replace(R.id.tab_Home_container, fragment)
+                                              .commit();
+
+                                      // Highlight the selected item, update the title, and close the drawer
+                                      // Highlight the selected item, update the title, and close the drawer
+                                      TextView tv = (TextView) v.findViewById(R.id.rowText);
+
+                                      toolbar.setTitle(tv.getText());
+                                      mDrawerLayout.closeDrawers();
+                                      mCallbacks.setSelectedItem(TYPE_PROFILE);
+                                      gd.resetState();
+                                  }
+
+                              }
+                          });
+
+                          break;
+
 
 
                       case TYPE_COMPANIES :

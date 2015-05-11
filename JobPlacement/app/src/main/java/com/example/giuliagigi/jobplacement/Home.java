@@ -331,7 +331,21 @@ public class Home extends ActionBarActivity  implements TabHomeStudentFragment.O
 
                         break;
 
+                    case 2:
 
+                        Log.println(Log.ASSERT,"HOME", "open company profile");
+                        fragmentManager = getSupportFragmentManager();
+                        Fragment profileFragment = ProfileManagement.newInstance();
+
+                        fragmentManager.beginTransaction()
+                                .replace(R.id.tab_Home_container, profileFragment)
+                                .commit();
+
+
+                        toolbar.setTitle(TITLES[mDrawerSelectedItem]);
+                        mDrawerLayout.closeDrawers();
+
+                        break;
 
                     case 4 :
 

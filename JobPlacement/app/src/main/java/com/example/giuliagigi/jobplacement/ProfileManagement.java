@@ -148,26 +148,6 @@ public class ProfileManagement extends Fragment{
 
         for (ProfileManagementFragment f: fragments)
             f.onActivityResult(requestCode,resultCode,data);
-
-//        Log.println(Log.ASSERT,"PM FRAG", "onActivity result");
-//
-//        if(requestCode == REQUEST_IMAGE_GET && resultCode == Activity.RESULT_OK){
-//
-//            Uri photoUri = data.getData();
-//            Bitmap photoBitmap = null;
-//
-//            try {
-//                photoBitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(),photoUri);
-//
-//                if(photoBitmap == null)
-//                    Log.println(Log.ASSERT,"PM FRAG", "photoBitmap null");
-//                else
-//                    application.getUserObject().setProfilePhoto(photoBitmap);
-//
-//            } catch (IOException e) {
-//                e.printStackTrace();
-//            }
-//        }
     }
 
     public interface OnInteractionListener {
