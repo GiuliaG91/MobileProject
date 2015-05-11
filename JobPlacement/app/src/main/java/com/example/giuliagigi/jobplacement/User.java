@@ -211,7 +211,7 @@ public class User extends ParseObject{
             @Override
             public void done(ParseException e) {
 
-                Log.println(Log.ASSERT,"USER", "profile photo uplead completed");
+                Log.println(Log.ASSERT,"USER", "profile photo upload completed");
                 User.this.put(PROFILE_PHOTO_FIELD, photoFile);
                 Log.println(Log.ASSERT,"USER", "user updated");
             }

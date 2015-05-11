@@ -38,7 +38,6 @@ import java.util.GregorianCalendar;
 public class StudentProfileManagementBasicsFragment extends ProfileManagementFragment {
 
     public static final String TITLE = "Overview";
-    private static final int REQUEST_IMAGE_GET = 1;
 
     private Student currentUser;
     private int day,month,year;
@@ -240,6 +239,7 @@ public class StudentProfileManagementBasicsFragment extends ProfileManagementFra
                     Log.println(Log.ASSERT,"PM FRAG", "photoBitmap null");
                 else{
 
+                    hasChanged = true;
                     application.getUserObject().setProfilePhoto(photoBitmap);
                     Bitmap bmImg = currentUser.getProfilePhoto();
                     BitmapDrawable background = new BitmapDrawable(bmImg);

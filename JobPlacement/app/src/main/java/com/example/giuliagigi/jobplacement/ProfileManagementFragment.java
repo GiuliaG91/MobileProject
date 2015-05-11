@@ -21,6 +21,7 @@ public class ProfileManagementFragment extends Fragment implements OnActivityCha
 
     protected static final String INSERT_FIELD = "Insert";
     protected static final String TITLE = "None";
+    protected static final int REQUEST_IMAGE_GET = 1;
 
 
     protected OnInteractionListener host;

@@ -24,7 +24,6 @@ public class Company extends User {
     protected static final String  FIELD_FIELD = "Field";
     protected static final String  MISSION_FIELD = "Mission";
     protected static final String  DESCRIPTION_FIELD = "Description";
-    protected static final String PHONE_FIELD = "phones";
     protected static final String FOUNDATION_DATE_FIELD = "Foundation_Date";
     protected static final String OFFICES_FIELD = "offices";
 
