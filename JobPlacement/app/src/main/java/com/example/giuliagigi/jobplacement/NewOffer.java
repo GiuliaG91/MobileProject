@@ -34,6 +34,7 @@ import com.parse.ParseException;
 import com.parse.ParseQuery;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -140,23 +141,19 @@ public class NewOffer extends Fragment implements DatePickerFragment.OnDataSetLi
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
-        if(item.getItemId()==R.id.action_save)
-        {
-            if(isNew=true)
-            {
-                flag_create_publish=0;
+        if (item.getItemId() == R.id.action_save) {
+            if (isNew = true) {
+                flag_create_publish = 0;
                 createPublishOffer(getView());
-            }
-            else{
+            } else {
                 saveChanges();
             }
             buttonConfiguration();
 
 
         }
-   return  true;
+        return true;
     }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -464,8 +461,11 @@ public class NewOffer extends Fragment implements DatePickerFragment.OnDataSetLi
                 if (!globalData.getCurrentViewOffer().getPublished()) {
                     //created but not published -->   publish / modify / delete
                     button_a.setTitle(getString(R.string.new_offer_publish_button));
+                    button_a.setIcon(R.drawable.ic_create);
                     button_b.setTitle(getString(R.string.new_offer_modify_button));
+                    button_b.setIcon(R.drawable.ic_modify_white);
                     button_c.setTitle(getString(R.string.new_offer_delete_button));
+                    button_c.setIcon(R.drawable.ic_delete);
 
                     button_a.setOnClickListener(new View.OnClickListener() {
                         @Override
@@ -497,7 +497,9 @@ public class NewOffer extends Fragment implements DatePickerFragment.OnDataSetLi
                 } else {
                     //created and published -->   modify / delete
                     button_a.setTitle(getString(R.string.new_offer_modify_button));
+                    button_a.setIcon(R.drawable.ic_modify_white);
                     button_b.setTitle(getString(R.string.new_offer_delete_button));
+                    button_b.setIcon(R.drawable.ic_delete);
 
                     button_a.setOnClickListener(new View.OnClickListener() {
                         @Override
@@ -947,5 +949,39 @@ public class NewOffer extends Fragment implements DatePickerFragment.OnDataSetLi
         }
 
     }
+
+
+   private void saveState()
+   {
+       //Save all field in a boundle
+
+       Bundle boundle = new Bundle();
+       boundle.putString("objectOffer",editObject.getText().toString());
+       boundle.putString("workField",fieldSpinner.getSelectedItem().toString());
+       boundle.putString("places", places.getText().toString());
+       boundle.putString("contract",contractSpinner.getSelectedItem().toString());
+       boundle.putString("validity",validity.getText().toString());
+       boundle.putString("term",termSpinner.getSelectedItem().toString());
+       boundle.putString("location",location.getText().toString());
+       boundle.putString("salary",editSalary.getText().toString());
+       boundle.putString("description", editDescriptionText.getText().toString());
+       boundle.putString("objectOffer", editObject.getText().toString());
+
+       globalData.setOfferBundle(boundle);
+       ArrayList<Tag> tmp=new ArrayList<>();
+
+       final GridLayout tagContainer = (GridLayout) root.findViewById(R.id.tagContainder);
+
+       int n_tags = tagContainer.getChildCount();
+       for (int i = 0; i < n_tags; i++) {
+           View tv = tagContainer.getChildAt(i);
+           TextView t = (TextView) tv.findViewById(R.id.tag_tv);
+
+           Tag tag = retriveTag.get(t.getText().toString().toLowerCase().trim());
+           tmp.add(tag);
+
+       }
+       globalData.setTagBoundle(tmp);
+   }
 
 }
