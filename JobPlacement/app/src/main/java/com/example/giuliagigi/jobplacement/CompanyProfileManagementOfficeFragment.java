@@ -3,23 +3,37 @@ package com.example.giuliagigi.jobplacement;
 import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
+import android.location.Criteria;
+import android.location.LocationManager;
+import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapFragment;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.parse.ParseException;
 
 
-public class CompanyProfileManagementOfficeFragment extends ProfileManagementFragment {
+public class CompanyProfileManagementOfficeFragment extends ProfileManagementFragment
+        implements OnMapReadyCallback{
 
     private static final String TITLE = "Office";
 
@@ -33,6 +47,7 @@ public class CompanyProfileManagementOfficeFragment extends ProfileManagementFra
     private Company currentUser;
     private Spinner officeType;
     private EditText officeCity, officeAddress, officeCAP, officeNation;
+    private GoogleMap mMap;
 
     Button delete;
     private Office office;
@@ -53,7 +68,7 @@ public class CompanyProfileManagementOfficeFragment extends ProfileManagementFra
         this.office = office;
     }
 
-    @Override
+
     public String getTitle() {
         return TITLE;
     }
@@ -182,6 +197,16 @@ public class CompanyProfileManagementOfficeFragment extends ProfileManagementFra
         for(EditText et:textFields)
             et.addTextChangedListener(hasChangedListener);
 
+        SupportMapFragment mapFragment = (SupportMapFragment) getFragmentManager().findFragmentById(R.id.map);
+        GoogleMap googleMap = mapFragment.getMap();
+
+
+
+
+        //Intent searchAddress = new  Intent(Intent.ACTION_VIEW, Uri.parse("geo:0,0?q=" + address));
+        //startActivity(searchAddress);
+
+
 //        setEnable(host.isEditMode());
         return root;
     }
@@ -247,6 +272,10 @@ public class CompanyProfileManagementOfficeFragment extends ProfileManagementFra
     }
 
 
-
-
+    @Override
+    public void onMapReady(GoogleMap map) {
+        map.addMarker(new MarkerOptions()
+                .position(new LatLng(0, 0))
+                .title("Marker"));
+    }
 }

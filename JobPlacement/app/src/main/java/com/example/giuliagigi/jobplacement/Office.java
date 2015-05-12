@@ -1,9 +1,13 @@
 package com.example.giuliagigi.jobplacement;
 
+import android.location.Address;
+import android.location.Geocoder;
+
 import com.parse.ParseClassName;
 import com.parse.ParseObject;
 
 import java.util.Arrays;
+import java.util.List;
 
 /**
  * Created by GiuliaGiGi on 06/05/15.
