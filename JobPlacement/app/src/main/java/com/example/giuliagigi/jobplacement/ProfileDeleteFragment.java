@@ -97,16 +97,85 @@ public class ProfileDeleteFragment extends Fragment {
                         break;
                     }
 
-
-
                 if(!flag)
                     Toast.makeText(getActivity(),"You must specify at least one reason!", Toast.LENGTH_SHORT).show();
                 else {
 
                     Toast.makeText(getActivity(),"proceeding with account delete", Toast.LENGTH_SHORT).show();
+                    final String objectId = application.getUserObject().getObjectId();
 
-                    application.getUserObject().deleteInBackground();
-                    application.getCurrentUser().deleteInBackground();
+                    application.getUserObject().deleteInBackground(new DeleteCallback() {
+                        @Override
+                        public void done(ParseException e) {
+
+                            if(e==null){
+
+                                if(application.getCurrentUser().getType().equals(User.TYPE_STUDENT)){
+
+                                    ParseQuery<Student> studentQuery = ParseQuery.getQuery(Student.class);
+                                    studentQuery.whereEqualTo("objectId",objectId);
+                                    studentQuery.findInBackground(new FindCallback<Student>() {
+                                        @Override
+                                        public void done(List<Student> students, ParseException e) {
+
+                                            if(e == null){
+                                                if(students.isEmpty())
+                                                    completeAccountDeletion();
+                                                else
+                                                    Toast.makeText(getActivity(),"Your account wasn't deleted due to some reason. try later",Toast.LENGTH_SHORT).show();
+                                            }
+                                            else
+                                                Toast.makeText(getActivity(),"An error occured",Toast.LENGTH_SHORT).show();
+                                        }
+                                    });
+
+                                }
+                                else if(application.getCurrentUser().getType().equals(User.TYPE_COMPANY)){
+
+                                    ParseQuery<Company> companyQuery = ParseQuery.getQuery(Company.class);
+                                    companyQuery.whereEqualTo("objectId", objectId);
+                                    companyQuery.findInBackground(new FindCallback<Company>() {
+                                        @Override
+                                        public void done(List<Company> companies, ParseException e) {
+
+                                            if(e == null){
+                                                if(companies.isEmpty())
+                                                    completeAccountDeletion();
+                                                else
+                                                    Toast.makeText(getActivity(),"Your account wasn't deleted due to some reason. try later",Toast.LENGTH_SHORT).show();
+                                            }
+                                            else
+                                                Toast.makeText(getActivity(),"An error occured",Toast.LENGTH_SHORT).show();
+                                        }
+                                    });
+                                }
+                            }
+                            else
+                                Log.println(Log.ASSERT,"DELETE FRAG", "error: " + e.getMessage());
+                        }
+                    });
+
+
+                }
+            }
+        });
+
+        return root;
+    }
+
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+    }
+
+    private void completeAccountDeletion(){
+
+        application.getCurrentUser().deleteInBackground(new DeleteCallback() {
+            @Override
+            public void done(ParseException e) {
+
+                if(e == null){
 
                     Withdrawal w = new Withdrawal();
 
@@ -129,17 +198,11 @@ public class ProfileDeleteFragment extends Fragment {
                     Intent i = new Intent(getActivity().getApplicationContext(),Login.class);
                     startActivity(i);
                 }
+                else
+                    Toast.makeText(getActivity(),"An error occured. Your account info were deleted but you are still able to access.",Toast.LENGTH_SHORT).show();
             }
         });
 
-        return root;
+
     }
-
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
-    }
-
-
 }
