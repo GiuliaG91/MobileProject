@@ -235,7 +235,7 @@
                     android:id="@+id/degreeIcon"
                     android:padding="10dp"
                     android:layout_marginLeft="10dp"
-                    android:src="@drawable/ic_degreebig"
+                    android:src="@drawable/ic_degree"
                     android:layout_gravity="center_vertical"/>
 
                 <LinearLayout

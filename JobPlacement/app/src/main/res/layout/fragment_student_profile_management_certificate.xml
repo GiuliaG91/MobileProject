@@ -160,7 +160,7 @@
             android:paddingLeft="10dp"
             android:layout_marginLeft="10dp"
             android:layout_marginBottom="10dp"
-            android:src="@drawable/ic_descriptionsmall"
+            android:src="@drawable/ic_description"
             android:layout_gravity="center"/>
 
         <LinearLayout

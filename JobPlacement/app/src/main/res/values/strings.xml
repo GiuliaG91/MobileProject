@@ -146,6 +146,7 @@
 
 <!-- SHOW OFFER -->
     <string name="show_offer_fragment_tags">Tags:</string>
+    <string name="title_activity_geo_localization">Map</string>
 
 
 <!-- OFFER DETAIL BUTTON -->

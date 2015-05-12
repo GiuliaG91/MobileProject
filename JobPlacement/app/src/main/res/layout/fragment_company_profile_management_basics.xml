@@ -5,123 +5,279 @@
     android:orientation="vertical"
     tools:context="com.example.giuliagigi.jobplacement.CompanyProfileManagementBasicsFragment">
 
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="fill_parent"
-        android:layout_height="0dp"
-        android:layout_weight="0.3"
-        android:id="@+id/basics_profilePhoto"
-        android:background="@drawable/user_icon">
-
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1">
 
         <LinearLayout
-            android:orientation="vertical"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:gravity="bottom"
-            android:weightSum="1"
-            android:paddingBottom="20dp"
-            android:id="@+id/basics_name_surname_container">
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-            <EditText
+            <!-- Profile photo and name -->
+
+            <LinearLayout
+                android:orientation="horizontal"
                 android:layout_width="fill_parent"
                 android:layout_height="0dp"
-                android:layout_weight="0.2"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="Name"
-                android:id="@+id/company_name_area"
-                android:gravity="bottom"
-                android:paddingLeft="10dp"
-                android:paddingBottom="5dp"
-                android:textColor="#ffffff" />
+                android:layout_weight="0.3"
+                android:id="@+id/basics_profilePhoto"
+                android:background="@drawable/user_icon">
+
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:gravity="bottom"
+                    android:weightSum="1"
+                    android:paddingBottom="20dp"
+                    android:id="@+id/basics_name_surname_container">
+
+
+                    <EditText
+                        android:layout_width="fill_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="0.3"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:text="Name"
+                        android:gravity="bottom"
+                        android:id="@+id/company_name_area"
+                        android:paddingLeft="10dp"
+                        android:textColor="#ffffff"
+                        android:paddingTop="5dp" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <!-- END Profile photo and name -->
+
+            <!-- VAT number -->
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="100dp">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/VAT_icon"
+                    android:paddingLeft="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:src="@drawable/ic_vat"
+                    android:layout_gravity="bottom"/>
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="0dp"
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"
+                    android:paddingLeft="30dp">
+
+                    <TextView
+                        android:layout_width="fill_parent"
+                        android:layout_height="0dp"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:text="VAT Number"
+                        android:id="@+id/company_basics_VAT_area"
+                        android:layout_weight="1"
+                        android:paddingLeft="10dp"
+                        android:textColor="@color/ColorPrimaryDark"
+                        android:gravity="bottom"
+                        android:textSize="10sp" />
+
+                    <EditText
+                        android:layout_width="fill_parent"
+                        android:layout_height="0dp"
+                        android:id="@+id/company_basics_VAT_field"
+                        android:layout_weight="1"
+                        android:textColor="#ff000000"
+                        android:textSize="20dp"
+                        android:paddingLeft="10dp"
+                        android:paddingTop="5dp" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <!-- end birth city area -->
+
+            <!-- date area -->
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="100dp">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/birth_icon"
+                    android:paddingLeft="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:src="@drawable/ic_calendar"
+                    android:layout_gravity="bottom"/>
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="0dp"
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"
+                    android:paddingLeft="30dp">
+
+                    <TextView
+                        android:layout_width="fill_parent"
+                        android:layout_height="0dp"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:text="Foundation date"
+                        android:id="@+id/birth_hint"
+                        android:layout_weight="1"
+                        android:paddingLeft="10dp"
+                        android:textColor="@color/ColorPrimaryDark"
+                        android:gravity="bottom"
+                        android:textSize="10sp" />
+
+                    <EditText
+                        android:layout_width="fill_parent"
+                        android:layout_height="0dp"
+                        android:id="@+id/company_birth_et"
+                        android:layout_weight="1"
+                        android:textColor="#ff000000"
+                        android:textSize="20dp"
+                        android:paddingLeft="10dp"
+                        android:paddingTop="5dp" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <!-- end date area -->
+
+            <!-- email area -->
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="100dp">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/rowIcon"
+                    android:paddingLeft="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:src="@drawable/ic_email"
+                    android:layout_gravity="bottom"/>
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="0dp"
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"
+                    android:paddingLeft="30dp">
+
+                    <TextView
+                        android:layout_width="fill_parent"
+                        android:layout_height="0dp"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:text="Email address"
+                        android:textColor="@color/ColorPrimaryDark"
+                        android:id="@+id/email_hint"
+                        android:layout_weight="1"
+                        android:paddingLeft="10dp"
+                        android:gravity="bottom"
+                        android:textSize="10sp" />
+
+                    <EditText
+                        android:layout_width="fill_parent"
+                        android:layout_height="0dp"
+                        android:id="@+id/basics_email_area"
+                        android:layout_weight="1"
+                        android:textColor="#ff000000"
+                        android:textSize="20dp"
+                        android:paddingLeft="10dp"
+                        android:paddingTop="5dp"
+                        android:enabled="false"/>
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+            <!-- end email area -->
+            <!-- description -->
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/description_icon"
+                    android:paddingLeft="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:src="@drawable/ic_description"
+                    android:layout_gravity="center"/>
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="0dp"
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"
+                    android:paddingLeft="30dp">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight=".1"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:text="Short description"
+                        android:id="@+id/student_description_hint"
+                        android:paddingLeft="10dp"
+                        android:layout_marginTop="20dp"
+                        android:textColor="@color/ColorPrimaryDark"
+                        android:gravity="bottom"
+                        android:textSize="10sp"  />
+
+                    <android.support.v7.widget.CardView
+                        xmlns:card_view="http://schemas.android.com/apk/res-auto"
+                        android:id="@+id/description_card_view"
+                        android:layout_gravity="center"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight=".9"
+                        card_view:cardCornerRadius="10dp"
+                        card_view:cardMaxElevation="5dp"
+                        android:layout_margin="3dp"
+                        card_view:cardBackgroundColor="#ffffff">
+
+                        <EditText
+                            android:layout_width="fill_parent"
+                            android:layout_height="fill_parent"
+                            android:id="@+id/company_description_et"
+                            android:scrollbars="vertical"
+                            android:textColor="#000000"
+                            android:textSize="15dp"
+                            android:paddingLeft="10dp"
+                            android:paddingTop="5dp" />
+
+                    </android.support.v7.widget.CardView>
+                </LinearLayout>
+            </LinearLayout>
+            <!-- end description -->
+
 
         </LinearLayout>
 
-    </LinearLayout>
+    </ScrollView>
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="VAT Number:"
-        android:textSize="20dp"
-        android:id="@+id/company_basics_VAT_area"/>
-
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Insert"
-        android:textSize="20dp"
-        android:id="@+id/company_basics_VAT_field"
-        />
-
-    <!-- date area -->
-
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="100dp">
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/birth_icon"
-            android:paddingLeft="10dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginBottom="10dp"
-            android:src="@drawable/ic_birth"
-            android:layout_gravity="bottom"/>
-
-        <LinearLayout
-            android:orientation="vertical"
-            android:layout_width="0dp"
-            android:layout_height="fill_parent"
-            android:layout_weight="1"
-            android:paddingLeft="30dp">
-
-            <TextView
-                android:layout_width="fill_parent"
-                android:layout_height="0dp"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:text="Foundation date"
-                android:id="@+id/birth_hint"
-                android:layout_weight="1"
-                android:paddingLeft="10dp"
-                android:textColor="@color/ColorPrimaryDark"
-                android:gravity="bottom"
-                android:textSize="10sp" />
-
-            <TextView
-                android:layout_width="fill_parent"
-                android:layout_height="0dp"
-                android:id="@+id/company_birth_et"
-                android:layout_weight="1"
-                android:textColor="#ff000000"
-                android:textSize="20dp"
-                android:paddingLeft="10dp"
-                android:paddingTop="5dp" />
-
-        </LinearLayout>
-
-
-    </LinearLayout>
-
-    <!-- end date area -->
-
-    <TextView
-        android:id="@+id/company_basics_email_title"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="10dp"
-        android:text="Email address:"
-        android:textSize="20dp"
-        />
-
-    <EditText
-        android:id="@+id/basics_email_area"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:editable="false"
-        android:padding="20dp"
-        />
 
 </LinearLayout>
