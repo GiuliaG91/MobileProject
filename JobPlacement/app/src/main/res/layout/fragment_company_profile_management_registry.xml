@@ -7,6 +7,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+
+
         <LinearLayout
             android:id="@+id/company_offices_container"
             android:layout_width="match_parent"
@@ -14,22 +16,40 @@
             android:orientation="vertical"
             android:background="@color/tabsColor">
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/company_office_title"
+                    android:textAppearance="?android:textAppearanceMedium"
+                    android:layout_weight=".9"
+                    android:padding="10dp"
+                    android:text="Offices"
+                    android:textColor="@color/ColorPrimaryDark"
+                    />
+
+                <Button
+                    android:id="@+id/company_add_office"
+                    android:gravity="center"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_margin="5dp"
+                    android:padding="10dp"
+                    android:background="@drawable/ic_plus"/>
+
+
+            </LinearLayout>
+
             <ListView
                 android:id="@+id/company_office_listview"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
             </ListView>
-            <Button
-                android:id="@+id/company_add_office"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/ColorPrimary"
-                android:layout_margin="5dp"
-                android:textSize="15dp"
-                android:textStyle="bold"
-                android:textColor="@color/tabsColor"
-                android:text="Add Office"/>
 
         </LinearLayout>
     </ScrollView>

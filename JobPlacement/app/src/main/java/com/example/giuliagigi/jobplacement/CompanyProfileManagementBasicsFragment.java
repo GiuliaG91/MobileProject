@@ -32,7 +32,7 @@ public class CompanyProfileManagementBasicsFragment extends ProfileManagementBas
     private static final String TITLE = "Overview";
 
     private Company currentUser;
-    private EditText nameText,VATNumber;
+    private EditText nameText,VATNumber, descriptionText;
     private TextView foundationDatePicker;
 //    private LinearLayout profilePhoto;
     private int day,month,year;
@@ -136,6 +136,11 @@ public class CompanyProfileManagementBasicsFragment extends ProfileManagementBas
         });
 
 
+        descriptionText = (EditText)root.findViewById(R.id.company_description_et);
+        if(currentUser.getDescription() == null)
+            descriptionText.setText(INSERT_FIELD);
+        else
+            descriptionText.setText(currentUser.getDescription());
 
         textFields.add(nameText);
         textFields.add(VATNumber);

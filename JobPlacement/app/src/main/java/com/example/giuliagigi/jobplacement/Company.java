@@ -31,6 +31,7 @@ public class Company extends User {
     protected String fiscalCode;
     protected String field;
     protected Date foundationDate;
+    protected String description;
     protected ArrayList<Office> offices;
 
     public Company(){
@@ -41,6 +42,7 @@ public class Company extends User {
         fiscalCode = null;
         field = null;
         foundationDate = null;
+        description = null;
         offices = new ArrayList<Office>();
 
         isCached.put(NAME_FIELD,false);
@@ -48,6 +50,7 @@ public class Company extends User {
         isCached.put(FIELD_FIELD,false);
         isCached.put(FOUNDATION_DATE_FIELD,false);
         isCached.put(OFFICES_FIELD,false);
+        isCached.put(DESCRIPTION_FIELD, false);
     }
 
     public void setName(String name){
@@ -107,6 +110,15 @@ public class Company extends User {
         return foundationDate;
     }
 
+    public String getDescription() {
+        if (isCached.get(DESCRIPTION_FIELD))
+            return description;
+
+        description = this.getString(DESCRIPTION_FIELD);
+        isCached.put(DESCRIPTION_FIELD, true);
+        return description;
+    }
+
     public void setFoundation(Date foundation){
 
         this.foundationDate = foundation;
@@ -154,6 +166,13 @@ public class Company extends User {
         removeAll(OFFICES_FIELD,Arrays.asList(office));
     }
 
+    public void setDescription(String description){
+
+        this.description = description;
+        isCached.put(DESCRIPTION_FIELD,true);
+        this.put(DESCRIPTION_FIELD,description);
+    }
+
     @Override
     public void cacheData() {
         super.cacheData();
@@ -162,5 +181,7 @@ public class Company extends User {
         getFiscalCode();
         getField();
         getOffices();
+        getDescription();
+        getFoundation();
     }
 }
