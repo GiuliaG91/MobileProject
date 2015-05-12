@@ -14,6 +14,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.security.acl.LastOwnerException;
+
 
 /**
  * Created by pietro on 25/04/2015.
@@ -28,6 +30,7 @@ public class menuAdapter extends RecyclerView.Adapter<menuAdapter.ViewHolder> {
     private static final int TYPE_SEARCH=3;
     private static final int TYPE_COMPANIES=4;
     private static final int TYPE_MAILBOX=5;
+    private static final int TYPE_LOGOUT=6;
 
     private String mNavTitles[]; // String Array to store the passed titles Value from MainActivity.java
     private TypedArray ICONS;      // Int Array to store the passed icons resource value from MainActivity.java
@@ -58,17 +61,20 @@ public class menuAdapter extends RecyclerView.Adapter<menuAdapter.ViewHolder> {
             super(itemView);
             // Here we set the appropriate view in accordance with the the view type as passed when the holder object is created
 
-            if (ViewType == TYPE_HOME || ViewType == TYPE_PROFILE || ViewType == TYPE_SEARCH || ViewType == TYPE_COMPANIES || ViewType == TYPE_MAILBOX) {
-                textView = (TextView) itemView.findViewById(R.id.rowText); // Creating TextView object with the id of textView from item_row.xml
-                imageView = (ImageView) itemView.findViewById(R.id.rowIcon);// Creating ImageView object with the id of ImageView from item_row.xml
-                Holderid = 1;                                               // setting holder id as 1 as the object being populated are of type item row
-            } else {
-
-
+            if (ViewType == TYPE_HEADER) {
+                                                        // setting holder id as 1 as the object being populated are of type item row
                 Name = (TextView) itemView.findViewById(R.id.name);         // Creating Text View object from header.xml for name
                 email = (TextView) itemView.findViewById(R.id.email);       // Creating Text View object from header.xml for email
                 profile = (ImageView) itemView.findViewById(R.id.circleView);// Creating Image view object from header.xml for profile pic
                 Holderid = 0;                                                // Setting holder id = 0 as the object being populated are of type header view
+            }
+
+            else{
+
+                textView = (TextView) itemView.findViewById(R.id.rowText); // Creating TextView object with the id of textView from item_row.xml
+                imageView = (ImageView) itemView.findViewById(R.id.rowIcon);// Creating ImageView object with the id of ImageView from item_row.xml
+                Holderid = 1;
+
             }
         }
     }
@@ -93,7 +99,7 @@ public class menuAdapter extends RecyclerView.Adapter<menuAdapter.ViewHolder> {
     @Override
     public menuAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
-        if (viewType == TYPE_HOME || viewType == TYPE_PROFILE || viewType == TYPE_SEARCH || viewType == TYPE_COMPANIES || viewType == TYPE_MAILBOX ) {
+        if (!(viewType == TYPE_HEADER ) ) {
             View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_row, parent, false); //Inflating the layout
         switch (flag) {
 
@@ -235,6 +241,24 @@ public class menuAdapter extends RecyclerView.Adapter<menuAdapter.ViewHolder> {
 
 
                         break;
+
+
+                    case TYPE_LOGOUT :
+
+                        v.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+
+                                LogoutDialogFragment fragment = LogoutDialogFragment.newInstance();
+                                fragment.show(activity.getFragmentManager(), "Logout");
+
+                                mDrawerLayout.closeDrawers();
+                            }
+                        });
+
+
+                        break;
+
                     default:  break;
 
                 }
@@ -390,13 +414,31 @@ public class menuAdapter extends RecyclerView.Adapter<menuAdapter.ViewHolder> {
                           });
 
 
+                            break;
 
+                      case TYPE_LOGOUT :
+
+                          v.setOnClickListener(new View.OnClickListener() {
+                              @Override
+                              public void onClick(View v) {
+
+                                  LogoutDialogFragment fragment = LogoutDialogFragment.newInstance();
+                                  fragment.show(activity.getFragmentManager(), "Logout");
+
+                                  mDrawerLayout.closeDrawers();
+                              }
+                          });
+
+
+                          break;
+
+
+                      default: break;
                   }
 
 
                 break;
 /********************************************COMPANY******************************************************************/
-
 
             default :       break;  //caso default dello switch dei flag
 
@@ -469,6 +511,7 @@ public class menuAdapter extends RecyclerView.Adapter<menuAdapter.ViewHolder> {
         else if(position==3) return TYPE_SEARCH;
         else if(position==4) return TYPE_COMPANIES;  // for student is autocandidature for companies is new offer
         else if(position==5) return TYPE_MAILBOX;   // after it became mail box
+        else if(position==6) return TYPE_LOGOUT;
         return TYPE_HOME;
     }
 

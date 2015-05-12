@@ -2,6 +2,7 @@ package com.example.giuliagigi.jobplacement;
 
 import com.parse.ParseClassName;
 import com.parse.ParseObject;
+import com.parse.ParseRelation;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -30,6 +31,7 @@ public class CompanyOffer extends ParseObject {
 
     private static final String TAGS_FIELD=  "tags";
     private static final String APPLIES_FIELD="applies";
+    private static final String PUBLISH_FIELD="publish";
 
 
     public CompanyOffer(){
@@ -38,6 +40,7 @@ public class CompanyOffer extends ParseObject {
 
 
     /*GETTER*/
+    public Boolean getPublished(){return this.getBoolean(PUBLISH_FIELD);}
 
     public String getOfferObject() {
         return this.getString(OBJECT_FIELD);
@@ -75,7 +78,7 @@ public class CompanyOffer extends ParseObject {
 
     public Company getCompany() {return (Company)this.get(COMPANY_FIELD);}
 
-    public ArrayList<Tag> getTags( ){
+ /*   public ArrayList<Tag> getTags( ){
 
         ArrayList<Tag> tags = new ArrayList<Tag>();
         List<Object> list = this.getList(TAGS_FIELD);
@@ -97,7 +100,7 @@ public class CompanyOffer extends ParseObject {
         return tags;
     }
 
-    public ArrayList<Student> getStudents( ){
+  public ArrayList<Student> getStudents( ){
 
         ArrayList<Student> students = new ArrayList<Student>();
         List<Object> list = this.getList(APPLIES_FIELD);
@@ -117,6 +120,32 @@ public class CompanyOffer extends ParseObject {
             }
 
         return students;
+    }*/
+
+    public List<Tag> getTags( ){
+
+        ParseRelation<Tag> tmp= getRelation(TAGS_FIELD);
+        List<Tag> result= null;
+        try {
+            result = tmp.getQuery().find();
+        } catch (com.parse.ParseException e) {
+            e.printStackTrace();
+        }
+
+        return result;
+    }
+
+       public List<Student> getStudents( ){
+
+        ParseRelation<Student> students = getRelation(APPLIES_FIELD);
+          List<Student> result= null;
+           try {
+               result = students.getQuery().find();
+           } catch (com.parse.ParseException e) {
+               e.printStackTrace();
+           }
+
+        return result;
     }
 
     /***************END GETTER****************/
@@ -166,14 +195,19 @@ public class CompanyOffer extends ParseObject {
         this.put(COMPANY_FIELD,company);
     }
 
-    public void addTag(Tag t){ this.addUnique(TAGS_FIELD, Arrays.asList(t));}
+    public void addTag(Tag t){ //this.addUnique(TAGS_FIELD, Arrays.asList(t));
+        getRelation(TAGS_FIELD).add(t);
+     }
 
     public void addStudent(Student student)
     {
-        this.addUnique(APPLIES_FIELD,Arrays.asList(student));
+      getRelation(APPLIES_FIELD).add(student);
     }
 
-
+    public void setPublishField(Boolean bool)
+    {
+        this.put(PUBLISH_FIELD,bool);
+    }
 
     /*END SETTER METHODS*/
 

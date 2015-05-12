@@ -39,7 +39,7 @@ public class ViewPagerAdapter extends FragmentPagerAdapter {
         }
         else if(position == 2)
         {
-           Home_tab tab3=Home_tab.newInstance();
+          Applies_Tab tab3=Applies_Tab.newInstance();
             return tab3;
         }
 

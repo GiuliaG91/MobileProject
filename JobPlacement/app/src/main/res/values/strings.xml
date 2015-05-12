@@ -44,6 +44,7 @@
         <item>Search</item>
         <item>AutoCandidate</item>
         <item>MessageBox</item>
+        <item>Logout</item>
     </string-array>
 
     <string-array name="Menu_items_Company">
@@ -52,6 +53,7 @@
         <item>Search</item>
         <item>NewOffer</item>
         <item>MessageBox</item>
+        <item>Logout</item>
     </string-array>
 
     <!-- Student fragment strings: -->
@@ -146,6 +148,16 @@
     <string name="show_offer_fragment_tags">Tags:</string>
 
 
+<!-- OFFER DETAIL BUTTON -->
+
+    <string name="offer_detail_apply_button">Apply</string>
+    <string name="offer_detail_contact_button">Contact company</string>
+
+ <!-- New Offer Button -->
+    <string name="new_offer_create_button">Create</string>
+    <string name="new_offer_publish_button">Publish</string>
+    <string name="new_offer_modify_button">Modify</string>
+    <string name="new_offer_delete_button">Delete</string>
 
 
 

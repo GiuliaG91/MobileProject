@@ -1,4 +1,5 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fab="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -6,10 +7,12 @@
     android:id="@+id/fragment_new_offer"
     tools:context="com.example.giuliagigi.jobplacement.NewOffer">
 
-
+<FrameLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
     <ScrollView
         android:layout_width="fill_parent"
-        android:layout_height="0dp"
+        android:layout_height="fill_parent"
         android:id="@+id/OfferScrollView"
         android:layout_weight="1">
 
@@ -21,7 +24,7 @@
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="fill_parent"
-            android:layout_height="100dp">
+            android:layout_height="80dp">
 
 
                 <ImageView
@@ -30,7 +33,7 @@
                     android:id="@+id/rowIcon"
                     android:paddingLeft="16dp"
                     android:layout_gravity="center"
-                    android:src="@drawable/ic_offer"/>
+                    android:src="@drawable/ic_objectoffer"/>
 
                 <LinearLayout
                     android:orientation="vertical"
@@ -70,7 +73,7 @@
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="fill_parent"
-        android:layout_height="100dp">
+        android:layout_height="80dp">
 
 
         <ImageView
@@ -79,7 +82,7 @@
             android:id="@+id/rowIcon1"
             android:paddingLeft="16dp"
             android:layout_gravity="center"
-            android:src="@drawable/ic_offer"/>
+            android:src="@drawable/ic_field"/>
 
         <LinearLayout
             android:orientation="vertical"
@@ -118,7 +121,7 @@
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="fill_parent"
-        android:layout_height="100dp">
+        android:layout_height="80dp">
 
 
         <ImageView
@@ -127,7 +130,7 @@
             android:id="@+id/rowIcon2"
             android:paddingLeft="16dp"
             android:layout_gravity="center"
-            android:src="@drawable/ic_offer"/>
+            android:src="@drawable/ic_places"/>
 
         <LinearLayout
             android:orientation="vertical"
@@ -174,7 +177,7 @@
     <LinearLayout
     android:orientation="horizontal"
     android:layout_width="fill_parent"
-    android:layout_height="100dp">
+    android:layout_height="80dp">
 
 
     <ImageView
@@ -183,7 +186,7 @@
         android:id="@+id/rowIcon3"
         android:paddingLeft="16dp"
         android:layout_gravity="center"
-        android:src="@drawable/ic_offer"/>
+        android:src="@drawable/ic_validity"/>
 
     <LinearLayout
         android:orientation="vertical"
@@ -246,7 +249,7 @@
     <LinearLayout
     android:orientation="horizontal"
     android:layout_width="fill_parent"
-    android:layout_height="100dp">
+    android:layout_height="80dp">
 
 
     <ImageView
@@ -255,7 +258,7 @@
         android:id="@+id/rowIcon4"
         android:paddingLeft="16dp"
         android:layout_gravity="center"
-        android:src="@drawable/ic_offer"/>
+        android:src="@drawable/ic_contract"/>
 
     <LinearLayout
         android:orientation="vertical"
@@ -294,7 +297,7 @@
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="fill_parent"
-        android:layout_height="100dp">
+        android:layout_height="80dp">
 
 
         <ImageView
@@ -303,7 +306,7 @@
             android:id="@+id/rowIcon5"
             android:paddingLeft="16dp"
             android:layout_gravity="center"
-            android:src="@drawable/ic_offer"/>
+            android:src="@drawable/ic_term"/>
 
         <LinearLayout
             android:orientation="vertical"
@@ -355,7 +358,7 @@
             android:id="@+id/rowIcon6"
             android:paddingLeft="16dp"
             android:layout_gravity="center"
-            android:src="@drawable/ic_offer"/>
+            android:src="@drawable/ic_location"/>
 
         <LinearLayout
             android:orientation="vertical"
@@ -400,7 +403,7 @@
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="fill_parent"
-        android:layout_height="100dp">
+        android:layout_height="80dp">
 
 
         <ImageView
@@ -409,7 +412,7 @@
             android:id="@+id/rowIcon7"
             android:paddingLeft="16dp"
             android:layout_gravity="center"
-            android:src="@drawable/ic_offer"/>
+            android:src="@drawable/ic_salary"/>
 
         <LinearLayout
             android:orientation="vertical"
@@ -584,13 +587,49 @@
     </ScrollView>
 
 
-<Button
-    android:layout_width="fill_parent"
-    android:layout_height="50dp"
-    android:layout_marginRight="10dp"
-    android:layout_marginLeft="10dp"
-    android:layout_marginBottom="5dp"
-    android:id="@+id/publishOfferbutton"
-    android:background="@color/tabsScrollColor"
-    android:textColor="@android:color/white"/>
+    <com.getbase.floatingactionbutton.FloatingActionsMenu
+        android:id="@+id/multiple_actions"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_gravity="right|bottom"
+        fab:fab_addButtonColorNormal="@color/ColorPrimary"
+        fab:fab_addButtonColorPressed="@color/ColorPrimaryDark"
+        fab:fab_labelStyle="@style/menu_labels_style"
+        android:layout_marginBottom="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginEnd="16dp">
+
+        <com.getbase.floatingactionbutton.FloatingActionButton
+            android:id="@+id/action_c"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            fab:fab_colorNormal="@color/ColorPrimary"
+            fab:fab_title="@string/offer_detail_contact_button"
+            fab:fab_colorPressed="@color/ColorPrimaryDark"/>
+
+        <com.getbase.floatingactionbutton.FloatingActionButton
+            android:id="@+id/action_b"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            fab:fab_colorNormal="@color/ColorPrimary"
+            fab:fab_title="@string/offer_detail_apply_button"
+            fab:fab_colorPressed="@color/ColorPrimaryDark"/>
+
+        <com.getbase.floatingactionbutton.FloatingActionButton
+            android:id="@+id/action_a"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            fab:fab_colorNormal="@color/ColorPrimary"
+            fab:fab_title="@string/offer_detail_apply_button"
+            fab:fab_colorPressed="@color/ColorPrimaryDark"/>
+
+
+
+
+    </com.getbase.floatingactionbutton.FloatingActionsMenu>
+
+</FrameLayout>
 </LinearLayout>

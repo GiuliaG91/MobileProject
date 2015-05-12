@@ -28,6 +28,8 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.getbase.floatingactionbutton.FloatingActionButton;
+import com.getbase.floatingactionbutton.FloatingActionsMenu;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
 
@@ -52,11 +54,13 @@ import java.util.Set;
 public class NewOffer extends Fragment implements DatePickerFragment.OnDataSetListener {
 
     private View root;
-    private Menu myMenu;
     private OnFragmentInteractionListener mListener;
+    private MenuItem buttonSave=null;
 
     private boolean editMode=true;
     private boolean isNew=true;
+    private boolean published=false; //default
+    private int flag_create_publish=-1; // 0 create 1 publish
 
    private EditText editDescriptionText=null;
    private TextView textView=null;
@@ -64,7 +68,13 @@ public class NewOffer extends Fragment implements DatePickerFragment.OnDataSetLi
    private  EditText editSalary=null;
    private Button dateButton=null;
    private TextView validity=null;
-   private Button publish=null;
+    //Button and its children
+
+    private FloatingActionButton button_a=null;
+    private FloatingActionButton button_b=null;
+    private FloatingActionButton button_c=null;
+    private FloatingActionsMenu actionMenu=null;
+
    private EditText places=null;
     private EditText location=null;
 
@@ -110,31 +120,41 @@ public class NewOffer extends Fragment implements DatePickerFragment.OnDataSetLi
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
          setHasOptionsMenu(true);
-        setRetainInstance(true);
-        getInitArguments();
+         setRetainInstance(true);
+         getInitArguments();
     }
-
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        myMenu=menu;
         menu.clear();
-        if(isNew==false) inflater.inflate(R.menu.menu_offer,menu);
+        inflater.inflate(R.menu.menu_offer, menu);
+        buttonSave=(MenuItem)menu.findItem(R.id.action_save);
+        if(editMode==false)
+        {
+            buttonSave.setVisible(false);
+            buttonSave.setEnabled(false);
+        }
     }
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
-        int id = item.getItemId();
+        if(item.getItemId()==R.id.action_save)
+        {
+            if(isNew=true)
+            {
+                flag_create_publish=0;
+                createPublishOffer(getView());
+            }
+            else{
+                saveChanges();
+            }
+            buttonConfiguration();
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_modify) {
-            editMode=true;
-            setResetEditMode();
-            item.setVisible(false);
+
         }
-
-        return super.onOptionsItemSelected(item);
+   return  true;
     }
 
     @Override
@@ -153,7 +173,10 @@ public class NewOffer extends Fragment implements DatePickerFragment.OnDataSetLi
         editSalary=(EditText)root.findViewById(R.id.offerSalary);
         dateButton=(Button)root.findViewById(R.id.dateButton);
         validity=(TextView)root.findViewById(R.id.validity_tv);
-        publish=(Button)root.findViewById(R.id.publishOfferbutton);
+        button_a=(FloatingActionButton)root.findViewById(R.id.action_a);
+        button_b=(FloatingActionButton)root.findViewById(R.id.action_b);
+        button_c=(FloatingActionButton)root.findViewById(R.id.action_c);
+        actionMenu=(FloatingActionsMenu)root.findViewById(R.id.multiple_actions);
         places=(EditText)root.findViewById(R.id.offerAvailability);
         location=(EditText)root.findViewById(R.id.offerLocation);
         addtag=(ImageButton)root.findViewById(R.id.addTagButton);
@@ -165,9 +188,6 @@ public class NewOffer extends Fragment implements DatePickerFragment.OnDataSetLi
 
 
         tagsView = (MultiAutoCompleteTextView) root.findViewById(R.id.tagAutoComplete_tv);
-
-
-
 
        typeOfFields=getResources().getStringArray(R.array.new_offer_fragment_fields);
 
@@ -260,20 +280,10 @@ public class NewOffer extends Fragment implements DatePickerFragment.OnDataSetLi
 
         editDescriptionText.addTextChangedListener(mTextEditorWatcher);
         editObject.addTextChangedListener(mobjectTextWhatcer);
-        if(isNew==false)
-        {
-            publish.setText(getResources().getString(R.string.new_offer_fragment_button_publish));
-        }
-        else
-        {
-            publish.setText(getResources().getString(R.string.new_offer_fragment_button_modify));
-        }
-        publish.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        publishOffer(v);
-                    }
-                });
+
+
+
+
 
         //multiautocompletetextview
         ParseQuery<Tag> query=ParseQuery.getQuery("Tag");
@@ -358,7 +368,6 @@ public class NewOffer extends Fragment implements DatePickerFragment.OnDataSetLi
             String date=dateFormat.format(offer.getValidity());
 
             validity.setText(date);
-            publish.setText("Modify");
             places.setText(offer.getnPositions().toString());
             location.setText(offer.getLocation());
             int i;
@@ -372,8 +381,6 @@ public class NewOffer extends Fragment implements DatePickerFragment.OnDataSetLi
                 fieldSpinner.setSelection(0);
 
             }
-
-
 
 
             for(i=0;i<typeOfContracts.length;i++)
@@ -414,6 +421,8 @@ public class NewOffer extends Fragment implements DatePickerFragment.OnDataSetLi
             /****TAGS*****/
 
             final GridLayout tagContainer = (GridLayout) root.findViewById(R.id.tagContainder);
+            tagContainer.setEnabled(false);
+
             if(offer.getTags().isEmpty())
             {
                 tagContainer.setVisibility(View.INVISIBLE);
@@ -424,7 +433,7 @@ public class NewOffer extends Fragment implements DatePickerFragment.OnDataSetLi
                 for (Tag tag : offer.getTags()) {
 
                     View mytagView = tag_inflater.inflate(R.layout.taglayout, null);
-
+                    mytagView.setEnabled(false);
 
                     TextView tag_tv = (TextView) mytagView.findViewById(R.id.tag_tv);
                     tag_tv.setText(tag.getTag());
@@ -438,15 +447,130 @@ public class NewOffer extends Fragment implements DatePickerFragment.OnDataSetLi
 
     }
 
+    private void buttonConfiguration() {
+
+        if (editMode == false) {
+
+            actionMenu.setEnabled(true);
+            actionMenu.setVisibility(View.VISIBLE);
+
+       if(buttonSave!=null)
+       {buttonSave.setVisible(false);
+           buttonSave.setEnabled(false);}
+
+            //already created
+            if (isNew == false) {
+                //we need to check if is published or not
+                if (!globalData.getCurrentViewOffer().getPublished()) {
+                    //created but not published -->   publish / modify / delete
+                    button_a.setTitle(getString(R.string.new_offer_publish_button));
+                    button_b.setTitle(getString(R.string.new_offer_modify_button));
+                    button_c.setTitle(getString(R.string.new_offer_delete_button));
+
+                    button_a.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            flag_create_publish = 1;
+                            createPublishOffer(v);
+                        }
+                    });
+
+
+                    button_b.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            editMode = true;
+                            setResetEditMode();
+                        }
+                    });
+
+                    button_c.setEnabled(true);
+                    button_c.setVisibility(View.VISIBLE);
+
+                    button_c.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            //deleteOffer(v);
+                        }
+                    });
+
+                } else {
+                    //created and published -->   modify / delete
+                    button_a.setTitle(getString(R.string.new_offer_modify_button));
+                    button_b.setTitle(getString(R.string.new_offer_delete_button));
+
+                    button_a.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            editMode = true;
+                            setResetEditMode();
+                        }
+                    });
+
+
+                    button_b.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            //deleteOffer(v);
+                        }
+                    });
+
+                    button_c.setEnabled(false);
+                    button_c.setVisibility(View.INVISIBLE);
+
+                }
+            }
+            //Is new
+          /*  else { //never visible
+                //created but not published -->   publish / modify / delete
+             button_a.setTitle(getString(R.string.new_offer_create_button));
+                button_b.setTitle(getString(R.string.new_offer_publish_button));
+
+
+                button_a.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        flag_create_publish = 0;
+                        createPublishOffer(v);
+                    }
+                });
+
+
+                button_b.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        flag_create_publish = 1;
+                        createPublishOffer(v);
+                    }
+                });
+                button_c.setEnabled(false);
+                button_c.setVisibility(View.INVISIBLE);
+
+            }*/
+
+        }
+        //editMode
+        else {
+            actionMenu.setEnabled(false);
+            actionMenu.setVisibility(View.INVISIBLE);
+
+            if (buttonSave != null) {
+                buttonSave.setEnabled(true);
+                buttonSave.setVisible(true);
+            }
+        }
+    }
+
+
         private void setResetEditMode() {
             if (editMode == false) {
+
                 editDescriptionText.setEnabled(false);
                 textView.setEnabled(false);
                 editObject.setEnabled(false);
                 editSalary.setEnabled(false);
                 dateButton.setEnabled(false);
                 validity.setEnabled(false);
-                publish.setEnabled(false);
                 places.setEnabled(false);
                 location.setEnabled(false);
 
@@ -460,8 +584,12 @@ public class NewOffer extends Fragment implements DatePickerFragment.OnDataSetLi
                 addtag.setEnabled(false);
                 addtag.setVisibility(View.INVISIBLE);
                 tagsView.setEnabled(false);
-                publish.setEnabled(false);
-                publish.setVisibility(View.INVISIBLE);
+                final GridLayout tagContainer = (GridLayout) root.findViewById(R.id.tagContainder);
+                    tagContainer.setEnabled(false);
+                //Gestione bottoni
+                    buttonConfiguration();
+
+
             } else
             {
                 editDescriptionText.setEnabled(true);
@@ -470,7 +598,6 @@ public class NewOffer extends Fragment implements DatePickerFragment.OnDataSetLi
                 editSalary.setEnabled(true);
                 dateButton.setEnabled(true);
                 validity.setEnabled(true);
-                publish.setEnabled(true);
                 places.setEnabled(true);
                 location.setEnabled(true);
 
@@ -491,15 +618,9 @@ public class NewOffer extends Fragment implements DatePickerFragment.OnDataSetLi
                 {
                     tagContainer.setVisibility(View.VISIBLE);
                 }
-
-                publish.setEnabled(true);
-                publish.setVisibility(View.VISIBLE);
-         if(myMenu!=null) {
-             myMenu.getItem(R.id.action_modify).setVisible(true);
-           }
+                tagContainer.setEnabled(false);
+                buttonConfiguration();
             }
-
-
         }
 
 
@@ -535,8 +656,7 @@ public class NewOffer extends Fragment implements DatePickerFragment.OnDataSetLi
 
         dateFormat.format(gc.getTime());
 
-
-      validity.setText(dateFormat.format(gc.getTime()).toString());
+       validity.setText(dateFormat.format(gc.getTime()).toString());
 
     }
 
@@ -595,12 +715,13 @@ public class NewOffer extends Fragment implements DatePickerFragment.OnDataSetLi
         }
     }
 
-    public void publishOffer(View v) {
+
+  /****************ON CLICK LISTENER*********/
+    public void createPublishOffer(View v) {
 
         CompanyOffer offer;
-
             //Make all check
-            if(editObject.getText().length()==0 ||
+                  if(editObject.getText().length()==0 ||
                   fieldSpinner.getSelectedItemPosition()==0  ||
                     places.getText().length()==0 ||
                     validity.getText().length()==0 ||
@@ -608,14 +729,12 @@ public class NewOffer extends Fragment implements DatePickerFragment.OnDataSetLi
                     termSpinner.getSelectedItemPosition() ==0
                     )
             {
-
             Toast.makeText(getActivity(),"Missing field",Toast.LENGTH_SHORT ).show();
             }
 
          //Check for wrong thinks
 
-
-else {
+       else {
                 int flag = 0;
                 Integer p= null;
                 Integer s=null;
@@ -654,12 +773,23 @@ else {
                     {
                        offer = globalData.getCurrentViewOffer();
                     }
+
                     offer.setObject(editObject.getText().toString());
                     offer.setWorkField(fieldSpinner.getSelectedItem().toString());
                     offer.setPositions(p);
                     offer.setContract(contractSpinner.getSelectedItem().toString());
                     offer.setValidity(d);
                     offer.setTerm(termSpinner.getSelectedItem().toString());
+
+                    if(flag_create_publish==0)
+                    {
+                        offer.setPublishField(false);
+                    }
+                    else
+                    {
+                        offer.setPublishField(true);
+                    }
+
                     GlobalData gd=(GlobalData)getActivity().getApplication();
 
                     Company company=(Company)gd.getUserObject();
@@ -707,19 +837,115 @@ else {
                     offer.saveInBackground();
                     Toast.makeText(getActivity(),"Done",Toast.LENGTH_SHORT ).show();
 
-                      editMode=false;
+                        editMode=false;
                        setResetEditMode();
-
                 }
 
-
             }
-
-
 
         }
 
 
+    public void saveChanges() {
+        CompanyOffer offer;
+        //Make all check
+        if (editObject.getText().length() == 0 ||
+                fieldSpinner.getSelectedItemPosition() == 0 ||
+                places.getText().length() == 0 ||
+                validity.getText().length() == 0 ||
+                contractSpinner.getSelectedItemPosition() == 0 ||
+                termSpinner.getSelectedItemPosition() == 0
+                ) {
+            Toast.makeText(getActivity(), "Missing field", Toast.LENGTH_SHORT).show();
+        }
 
- }
+        //Check for wrong thinks
 
+        else {
+            int flag = 0;
+            Integer p = null;
+            Integer s = null;
+            Date d = null;
+            try {
+                p = Integer.parseInt(places.getText().toString());
+                SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+
+                d = dateFormat.parse(validity.getText().toString());
+                Date today = Calendar.getInstance().getTime();
+                if (d.compareTo(today) <= 0) {
+                    Toast.makeText(getActivity(), "Can't set this date", Toast.LENGTH_SHORT).show();
+
+                    throw new Exception();
+                }
+
+                if (salarySpinner.getSelectedItemPosition() != 0) {
+                    s = Integer.parseInt(editSalary.getText().toString());
+                }
+
+            } catch (Exception e) {
+
+                flag = 1;
+                Toast.makeText(getActivity(), "Wrong data", Toast.LENGTH_SHORT).show();
+            }
+            offer = globalData.getCurrentViewOffer();
+
+
+            offer.setObject(editObject.getText().toString());
+            offer.setWorkField(fieldSpinner.getSelectedItem().toString());
+            offer.setPositions(p);
+            offer.setContract(contractSpinner.getSelectedItem().toString());
+            offer.setValidity(d);
+            offer.setTerm(termSpinner.getSelectedItem().toString());
+
+            if (flag_create_publish == 0) {
+                offer.setPublishField(false);
+            } else {
+                offer.setPublishField(true);
+            }
+
+            GlobalData gd = (GlobalData) getActivity().getApplication();
+
+            Company company = (Company) gd.getUserObject();
+
+            offer.setCompany(company);
+
+
+            if (salarySpinner.getSelectedItemPosition() != 0) {
+                offer.setSalary(editSalary.getText().toString());
+            } else {
+                offer.setSalary("To be defined");
+            }
+
+            if (location.getText().length() == 0) {
+                offer.setLocation("");
+            } else {
+                offer.setLocation(location.getText().toString());
+            }
+
+            if (editDescriptionText.getText().length() == 0) {
+                offer.setDescription("");
+            } else {
+                offer.setDescription(editDescriptionText.getText().toString());
+            }
+
+            final GridLayout tagContainer = (GridLayout) root.findViewById(R.id.tagContainder);
+
+            int n_tags = tagContainer.getChildCount();
+            for (int i = 0; i < n_tags; i++) {
+                View tv = tagContainer.getChildAt(i);
+                TextView t = (TextView) tv.findViewById(R.id.tag_tv);
+
+                Tag tag = retriveTag.get(t.getText().toString().toLowerCase().trim());
+                offer.addTag(tag);
+
+            }
+            offer.saveInBackground();
+            Toast.makeText(getActivity(), "Done", Toast.LENGTH_SHORT).show();
+
+            editMode = false;
+            setResetEditMode();
+        }
+
+    }
+
+}

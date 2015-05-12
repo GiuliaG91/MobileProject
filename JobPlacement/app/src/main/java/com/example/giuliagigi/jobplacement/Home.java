@@ -397,7 +397,16 @@ public class Home extends ActionBarActivity  implements TabHomeStudentFragment.O
 
             getSupportFragmentManager().popBackStackImmediate();
         }
-        else  super.onBackPressed();
+
+        else  {
+             //make an instance of logout dialog
+            // Create and show the dialog.
+            LogoutDialogFragment newFragment = LogoutDialogFragment.newInstance();
+            newFragment.show(getFragmentManager(),"Logout");
+
+
+
+        }
     }
 
 }

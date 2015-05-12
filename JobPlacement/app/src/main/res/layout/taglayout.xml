@@ -1,16 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content" android:layout_height="wrap_content"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
     android:padding="10dp">
 
-    <TextView
-        android:layout_width="150dp"
-        android:layout_height="50dp"
-        android:text="New Text"
-        android:id="@+id/tag_tv"
-        android:gravity="center"
-        android:background="#ff64b5f6"
-        android:alpha="0.5"
-        android:textColor="#ff000000"
-        android:drawableLeft="@drawable/ic_cross_white"/>
+
+    <android.support.v7.widget.CardView
+        xmlns:card_view="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/card_view"
+        android:layout_gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        card_view:cardBackgroundColor="@color/ColorPrimary"
+        card_view:cardCornerRadius="4dp">
+
+        <TextView
+            android:layout_width="150dp"
+            android:layout_height="50dp"
+            android:text="New Text"
+            android:id="@+id/tag_tv"
+            android:gravity="center"
+            android:textColor="#ffffffff"
+            android:drawableLeft="@drawable/ic_cross_white"/>
+
+    </android.support.v7.widget.CardView>
+
+
 </RelativeLayout>

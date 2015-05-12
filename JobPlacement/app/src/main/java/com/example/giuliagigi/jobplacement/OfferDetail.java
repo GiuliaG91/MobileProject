@@ -10,17 +10,23 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 
 
 /**
@@ -35,6 +41,7 @@ public class OfferDetail extends Fragment {
     GlobalData globalData;
     Company company;
    FragmentActivity activity;
+
 
     // TODO: Rename and change types and number of parameters
     public static OfferDetail newInstance() {
@@ -64,6 +71,7 @@ public class OfferDetail extends Fragment {
 
     }
 
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -76,58 +84,74 @@ public class OfferDetail extends Fragment {
         LinearLayout linearLayout=(LinearLayout)root.findViewById(R.id.object_row);
         TextView hint=(TextView)linearLayout.findViewById(R.id.hint_tv);
         TextView content=(TextView)linearLayout.findViewById(R.id.content_tv);
+        ImageView icon=(ImageView)linearLayout.findViewById(R.id.rowIcon);
         hint.setText("Object");
         content.setText(offer.getOfferObject());
+        icon.setImageDrawable(getResources().getDrawable(R.drawable.ic_objectoffer));
 
         //set mission
          linearLayout=(LinearLayout)root.findViewById(R.id.mission_row);
          hint=(TextView)linearLayout.findViewById(R.id.hint_tv);
          content=(TextView)linearLayout.findViewById(R.id.content_tv);
+        icon=(ImageView)linearLayout.findViewById(R.id.rowIcon);
         hint.setText("Mission");
         content.setText(offer.getOfferObject());
+        icon.setImageDrawable(getResources().getDrawable(R.drawable.ic_mission));
 
         //set field
         linearLayout=(LinearLayout)root.findViewById(R.id.field_row);
         hint=(TextView)linearLayout.findViewById(R.id.hint_tv);
         content=(TextView)linearLayout.findViewById(R.id.content_tv);
+        icon=(ImageView)linearLayout.findViewById(R.id.rowIcon);
         hint.setText("Field");
         content.setText(offer.getWorkField());
+        icon.setImageDrawable(getResources().getDrawable(R.drawable.ic_field));
 
         //set places
         linearLayout=(LinearLayout)root.findViewById(R.id.places_row);
         hint=(TextView)linearLayout.findViewById(R.id.hint_tv);
         content=(TextView)linearLayout.findViewById(R.id.content_tv);
+        icon=(ImageView)linearLayout.findViewById(R.id.rowIcon);
         hint.setText("Places");
         content.setText(String.valueOf(offer.getnPositions()));
+        icon.setImageDrawable(getResources().getDrawable(R.drawable.ic_places));
 
         //set validity
         linearLayout=(LinearLayout)root.findViewById(R.id.validity_row);
         hint=(TextView)linearLayout.findViewById(R.id.hint_tv);
         content=(TextView)linearLayout.findViewById(R.id.content_tv);
+        icon=(ImageView)linearLayout.findViewById(R.id.rowIcon);
         hint.setText("Validity");
         SimpleDateFormat dateformat=new SimpleDateFormat("dd/MM/yyyy");
         String date=dateformat.format(offer.getValidity());
         content.setText(date);
+        icon.setImageDrawable(getResources().getDrawable(R.drawable.ic_validity));
 
         //set contract
         linearLayout=(LinearLayout)root.findViewById(R.id.contract_row);
         hint=(TextView)linearLayout.findViewById(R.id.hint_tv);
         content=(TextView)linearLayout.findViewById(R.id.content_tv);
+        icon=(ImageView)linearLayout.findViewById(R.id.rowIcon);
         hint.setText("Contract");
         content.setText(offer.getContract());
+        icon.setImageDrawable(getResources().getDrawable(R.drawable.ic_contract));
 
         //set term
         linearLayout=(LinearLayout)root.findViewById(R.id.term_row);
         hint=(TextView)linearLayout.findViewById(R.id.hint_tv);
         content=(TextView)linearLayout.findViewById(R.id.content_tv);
+        icon=(ImageView)linearLayout.findViewById(R.id.rowIcon);
         hint.setText("Term");
         content.setText(offer.getTerm());
+        icon.setImageDrawable(getResources().getDrawable(R.drawable.ic_term));
 
         //set location
         linearLayout=(LinearLayout)root.findViewById(R.id.location_row);
         hint=(TextView)linearLayout.findViewById(R.id.hint_tv);
         content=(TextView)linearLayout.findViewById(R.id.content_tv);
+        icon=(ImageView)linearLayout.findViewById(R.id.rowIcon);
         hint.setText("Location");
+        icon.setImageDrawable(getResources().getDrawable(R.drawable.ic_location));
 
         if(offer.getLocation()!=null && !offer.getLocation().equals(""))
         content.setText(offer.getOfferObject());
@@ -137,9 +161,10 @@ public class OfferDetail extends Fragment {
         linearLayout=(LinearLayout)root.findViewById(R.id.salary_row);
         hint=(TextView)linearLayout.findViewById(R.id.hint_tv);
         content=(TextView)linearLayout.findViewById(R.id.content_tv);
-
+        icon=(ImageView)linearLayout.findViewById(R.id.rowIcon);
+        hint.setText("Salary:");
         content.setText(offer.getSAlARY());
-
+        icon.setImageDrawable(getResources().getDrawable(R.drawable.ic_salary));
 
         ImageView logo=(ImageView)root.findViewById(R.id.circleView_logo);
         TextView companyName=(TextView)root.findViewById(R.id.company_name_tv);
@@ -150,6 +175,48 @@ public class OfferDetail extends Fragment {
 
         companyName.setText(company.getName());
         companyName.setText(company.getMail());
+
+
+        /*Attach on click listener to button menu */
+
+        final FloatingActionButton applyButton=(FloatingActionButton)root.findViewById(R.id.action_apply);
+
+        applyButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Student s = globalData.getStudentFromUser();
+                // if is possible perform apply
+                if (!offer.getStudents().contains(s)) {
+                    if (offer.getnPositions() > 0 && offer.getValidity().after(Calendar.getInstance().getTime())) {
+                        //Set apply
+
+                        offer.addStudent(s);
+                        offer.setPositions(offer.getnPositions() - 1);
+
+                        offer.saveInBackground();
+                        //todo notify company
+
+                        Toast.makeText(getActivity(), "Done", Toast.LENGTH_SHORT).show();
+
+                       } else {
+                        Toast.makeText(getActivity(), "Can't perform apply", Toast.LENGTH_SHORT).show();
+                            }
+                }
+                else {
+                    Toast.makeText(getActivity(), "You are already applied", Toast.LENGTH_SHORT).show();
+                    }
+            }
+        });
+
+        final FloatingActionButton contactButton=(FloatingActionButton)root.findViewById(R.id.action_contact_company);
+        contactButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                //write a new mail
+
+            }
+        });
 
 
         return root;

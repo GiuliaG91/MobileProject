@@ -10,8 +10,8 @@
         app:showAsAction="never" />
 
 
-    <item android:id="@+id/action_modify"
-        android:icon="@drawable/ic_modify_white"
+    <item android:id="@+id/action_save"
+        android:icon="@drawable/ic_save_white"
         android:title="@string/action_modify"
         app:showAsAction="always"/>
 
