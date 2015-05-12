@@ -256,10 +256,15 @@
 
             <!--END Office type and delete button-->
 
-            <fragment xmlns:android="http://schemas.android.com/apk/res/android"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="200dp" android:id="@+id/map"
-                android:name="com.google.android.gms.maps.SupportMapFragment" />
+                android:layout_height="200dp"
+                android:orientation="vertical"
+                android:id="@+id/office_map_container">
+
+                <!--map container -->
+
+                </LinearLayout>
 
         </LinearLayout>
 

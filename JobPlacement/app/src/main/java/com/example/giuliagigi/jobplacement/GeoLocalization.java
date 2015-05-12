@@ -1,103 +1,96 @@
 package com.example.giuliagigi.jobplacement;
 
-import android.support.v4.app.FragmentActivity;
-import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 
+import android.app.Activity;
+import android.location.Address;
+import android.location.Geocoder;
+import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
+import android.widget.EditText;
+
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
+
 public class GeoLocalization extends FragmentActivity {
 
-    private GoogleMap mMap; // Might be null if Google Play services APK is not available.
-    static final LatLng TutorialsPoint = new LatLng(21 , 57);
+    static final LatLng TutorialsPoint = new LatLng(45 , 8);
     private GoogleMap googleMap;
-    private static View view;
-    private static Double latitude, longitude;
+    protected GlobalData application;
+    private Company currentUser;
+    private double longitude;
+    private double latitude;
+    private LatLng pos;
+    private Office office;
 
 
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        if (container == null) {
-            return null;
-        }
-        view = (LinearLayout) inflater.inflate(R.layout.activity_geo_localization, container, false);
-        // Passing harcoded values for latitude & longitude. Please change as per your need. This is just used to drop a Marker on the Map
-        latitude = 26.78;
-        longitude = 72.56;
 
-        setUpMapIfNeeded(); // For setting up the MapFragment
-
-        return view;
+    public static GeoLocalization newInstance(Office office) {
+        GeoLocalization fragment = new GeoLocalization();
+        Bundle args = new Bundle();
+        fragment.setOffice(office);
+        return fragment;
     }
+
+    public void setOffice(Office office){
+        this.office = office;
+    }
+
+    public void onAttach(Activity activity) {
+
+        application = (GlobalData)activity.getApplicationContext();
+        currentUser = (Company)application.getUserObject();
+    }
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_geo_localization);
+
         try {
             if (googleMap == null) {
-                googleMap = ((MapFragment) getFragmentManager().
-                        findFragmentById(R.id.map)).getMap();
+                googleMap = ((MapFragment) getFragmentManager(). findFragmentById(R.id.map)).getMap();
             }
             googleMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
-            Marker TP = googleMap.addMarker(new MarkerOptions().
-                    position(TutorialsPoint).title("TutorialsPoint"));
+
 
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-    }
+        String addressStr = office.getOfficeCity()+" " +office.getOfficeAddress();
+        //String addressStr = "Sainta Augustine,FL,4405 Avenue A";
+        Geocoder geoCoder = new Geocoder(this);
+        /*
+        try {
+            List<Address> addresses =  geoCoder.getFromLocationName(addressStr, 1);
+            if (addresses.size() >  0) {
+                latitude = addresses.get(0).getLatitude();
+                longtitude = addresses.get(0).getLongitude(); }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        setUpMapIfNeeded();
-    }
-
-    /**
-     * Sets up the map if it is possible to do so (i.e., the Google Play services APK is correctly
-     * installed) and the map has not already been instantiated.. This will ensure that we only ever
-     * call {@link #setUpMap()} once when {@link #mMap} is not null.
-     * <p/>
-     * If it isn't installed {@link SupportMapFragment} (and
-     * {@link com.google.android.gms.maps.MapView MapView}) will show a prompt for the user to
-     * install/update the Google Play services APK on their device.
-     * <p/>
-     * A user can return to this FragmentActivity after following the prompt and correctly
-     * installing/updating/enabling the Google Play services. Since the FragmentActivity may not
-     * have been completely destroyed during this process (it is likely that it would only be
-     * stopped or paused), {@link #onCreate(Bundle)} may not be called again so we should call this
-     * method in {@link #onResume()} to guarantee that it will be called.
-     */
-    private void setUpMapIfNeeded() {
-        // Do a null check to confirm that we have not already instantiated the map.
-        if (mMap == null) {
-            // Try to obtain the map from the SupportMapFragment.
-            mMap = ((SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map))
-                    .getMap();
-            // Check if we were successful in obtaining the map.
-            if (mMap != null) {
-                setUpMap();
-            }
+        }  catch (IOException e) {
+            e.printStackTrace();
         }
+        */
+        latitude = 45.00;
+        longitude = 8.00;
+
+        pos = new LatLng(latitude, longitude);
+        googleMap.addMarker(new MarkerOptions().position(pos));
+        googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(pos,100));
+
+
     }
 
-    /**
-     * This is where we can add markers or lines, add listeners or move the camera. In this case, we
-     * just add a marker near Africa.
-     * <p/>
-     * This should only be called once and when we are sure that {@link #mMap} is not null.
-     */
-    private void setUpMap() {
-        mMap.addMarker(new MarkerOptions().position(new LatLng(0, 0)).title("Marker"));
-    }
 }

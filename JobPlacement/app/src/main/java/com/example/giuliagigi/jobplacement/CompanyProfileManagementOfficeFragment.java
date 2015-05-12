@@ -11,6 +11,7 @@ import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,6 +24,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -47,7 +49,8 @@ public class CompanyProfileManagementOfficeFragment extends ProfileManagementFra
     private Company currentUser;
     private Spinner officeType;
     private EditText officeCity, officeAddress, officeCAP, officeNation;
-    private GoogleMap mMap;
+    private GoogleMap map;
+    SupportMapFragment mapFragment;
 
     Button delete;
     private Office office;
@@ -84,6 +87,7 @@ public class CompanyProfileManagementOfficeFragment extends ProfileManagementFra
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         if (getArguments() != null) {
         }
     }
@@ -197,12 +201,10 @@ public class CompanyProfileManagementOfficeFragment extends ProfileManagementFra
         for(EditText et:textFields)
             et.addTextChangedListener(hasChangedListener);
 
-        SupportMapFragment mapFragment = (SupportMapFragment) getFragmentManager().findFragmentById(R.id.map);
-        GoogleMap googleMap = mapFragment.getMap();
 
 
-
-
+        LinearLayout map_container = (LinearLayout)root.findViewById(R.id.office_map_container);
+        inflater.inflate(R.layout.activity_geo_localization, map_container);
         //Intent searchAddress = new  Intent(Intent.ACTION_VIEW, Uri.parse("geo:0,0?q=" + address));
         //startActivity(searchAddress);
 
@@ -275,7 +277,7 @@ public class CompanyProfileManagementOfficeFragment extends ProfileManagementFra
     @Override
     public void onMapReady(GoogleMap map) {
         map.addMarker(new MarkerOptions()
-                .position(new LatLng(0, 0))
+                .position(new LatLng(45, 8))
                 .title("Marker"));
     }
 }

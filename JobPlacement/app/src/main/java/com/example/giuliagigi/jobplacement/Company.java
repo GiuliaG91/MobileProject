@@ -1,5 +1,6 @@
 package com.example.giuliagigi.jobplacement;
 
+import com.parse.Parse;
 import com.parse.ParseClassName;
 import com.parse.ParseException;
 import com.parse.ParseObject;
@@ -184,4 +185,6 @@ public class Company extends User {
         getDescription();
         getFoundation();
     }
+
+
 }
