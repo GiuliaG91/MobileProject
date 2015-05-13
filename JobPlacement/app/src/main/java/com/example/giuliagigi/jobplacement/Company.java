@@ -1,9 +1,11 @@
 package com.example.giuliagigi.jobplacement;
 
+import com.parse.FindCallback;
 import com.parse.Parse;
 import com.parse.ParseClassName;
 import com.parse.ParseException;
 import com.parse.ParseObject;
+import com.parse.ParseRelation;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -132,26 +134,35 @@ public class Company extends User {
         if(isCached.get(OFFICES_FIELD))
             return this.offices;
 
-        ArrayList<Office> offices = new ArrayList<Office>();
-        List<Object> list = this.getList(OFFICES_FIELD);
 
-        if(list!=null)
-            for (Object o : list) {
+        ParseRelation<Office> tmp = getRelation(OFFICES_FIELD);
+        tmp.getQuery().findInBackground(new FindCallback<Office>() {
+            @Override
+            public void done(List<Office> results, ParseException e) {
 
-                if(o instanceof Office){
-                    Office d =(Office)o;
-
-                    try {
-                        d.fetchIfNeeded();
-                    } catch (ParseException e) {
-                        e.printStackTrace();
-                    }
-
-                    offices.add(d);
-                }
+                if(results!= null)
+                    for(Office o:results)
+                        offices.add(o);
             }
+        });
+//        List<Object> list = this.getList(OFFICES_FIELD);
+//
+//        if(list!=null)
+//            for (Object o : list) {
+//
+//                if(o instanceof Office){
+//                    Office d =(Office)o;
+//
+//                    try {
+//                        d.fetchIfNeeded();
+//                    } catch (ParseException e) {
+//                        e.printStackTrace();
+//                    }
+//
+//                    offices.add(d);
+//                }
+//            }
 
-        this.offices = offices;
         isCached.put(OFFICES_FIELD, true);
         return offices;
     }
@@ -159,12 +170,14 @@ public class Company extends User {
     public void addOffice(Office office){
 
         offices.add(office);
-        this.addUnique(OFFICES_FIELD, office);
+        getRelation(OFFICES_FIELD).add(office);
+//        this.addUnique(OFFICES_FIELD, office);
     }
     public void removeOffice(Office office){
 
         offices.remove(office);
-        removeAll(OFFICES_FIELD,Arrays.asList(office));
+        getRelation(OFFICES_FIELD).remove(office);
+//        removeAll(OFFICES_FIELD,Arrays.asList(office));
     }
 
     public void setDescription(String description){
