@@ -3,6 +3,7 @@ package com.example.giuliagigi.jobplacement;
 import android.app.Activity;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -10,6 +11,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
@@ -17,6 +19,7 @@ import android.widget.Toast;
 import com.parse.ParseQuery;
 import com.parse.ParseQueryAdapter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -28,7 +31,7 @@ import java.util.List;
  * Use the {@link OfferSearchFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class OfferSearchFragment extends Fragment {
+public class OfferSearchFragment extends Fragment implements FilterFragment.addFilter{
 
 
     View root;
@@ -41,6 +44,14 @@ public class OfferSearchFragment extends Fragment {
     private boolean loading = true;
 
     private OnFragmentInteractionListener mListener;
+
+    List<String> tag_list=new ArrayList<>();
+    List<String> contract_list=new ArrayList<>();
+    List<String> term_list=new ArrayList<>();
+    List<String> field_list=new ArrayList<>();
+    List<String> location_list=new ArrayList<>();
+    List<String> salary_list=new ArrayList<>();
+
 
 
     public static OfferSearchFragment newInstance() {
@@ -78,52 +89,12 @@ public class OfferSearchFragment extends Fragment {
         mRecyclerView.addItemDecoration(new DividerItemDecoration(this.getActivity(), DividerItemDecoration.VERTICAL_LIST));
         mRecyclerView.setLayoutManager(mLayoutManager);
 
-        /*ParseQueryAdapeter */
-
-        // Instantiate a QueryFactory to define the ParseQuery to be used for fetching items in this
-        // Adapter.
-        ParseQueryAdapter.QueryFactory<CompanyOffer> factory =
-                new ParseQueryAdapter.QueryFactory<CompanyOffer>() {
-                    public ParseQuery create() {
-
-                        ParseQuery query = new ParseQuery("CompanyOffer");
-                        return query;
-                    }
-                };
-
-        // Pass the factory into the ParseQueryAdapter's constructor.
-
-        queryAdapter=new ParseQueryAdapter<>(getActivity(),factory);
-        queryAdapter.setObjectsPerPage(15);
-        queryAdapter.addOnQueryLoadListener(new OnQueryLoadListener());
-
-
-        adapter = new OfferSearchAdapter(this.getActivity());
+        adapter = new OfferSearchAdapter(this.getActivity(),mRecyclerView);
 
         /*********************/
 
         // specify an adapter
         mRecyclerView.setAdapter(adapter);
-
-        mRecyclerView.setOnScrollListener(new RecyclerView.OnScrollListener() {
-            @Override
-            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-
-                int total=   mLayoutManager.getItemCount();
-                if(mLayoutManager.findLastVisibleItemPosition()==total-1)
-                {
-                    queryAdapter.loadNextPage();
-                }
-
-            }
-
-            @Override
-            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-                super.onScrolled(recyclerView, dx, dy);
-            }
-        });
-
-        queryAdapter.loadObjects();
 
         return root;
     }
@@ -143,6 +114,20 @@ public class OfferSearchFragment extends Fragment {
     }
 
     @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        if(item.getItemId()== R.id.action_filter)
+        {
+            FilterFragment newFragment = FilterFragment.newInstance();
+            newFragment.setTargetFragment(this,0);
+            newFragment.show(getChildFragmentManager(), "dialog");
+
+
+        }
+        return true;
+    }
+
+    @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
         try {
@@ -157,6 +142,13 @@ public class OfferSearchFragment extends Fragment {
     public void onDetach() {
         super.onDetach();
         mListener = null;
+    }
+
+    @Override
+    public void addFilter(List<String> tag_list, List<String> contract_list, List<String> term_list, List<String> field_list, List<String> location_list, List<String> salary_list) {
+                adapter.setFactory(tag_list,contract_list,term_list,field_list,location_list,salary_list);
+                adapter.setAdapter();
+               adapter.notifyDataSetChanged();
     }
 
     /**
@@ -174,22 +166,6 @@ public class OfferSearchFragment extends Fragment {
         public void onFragmentInteraction(Uri uri);
     }
 
-    public class OnQueryLoadListener implements ParseQueryAdapter.OnQueryLoadListener<CompanyOffer> {
-
-        public void onLoading() {
-//rotellina
-        }
-
-        @Override
-        public void onLoaded(List<CompanyOffer> companyOffers, Exception e) {
-
-            adapter.updateMyDataset(companyOffers);
-            adapter.notifyDataSetChanged();
-
-        }
-
-
-    }
 
 
 }
