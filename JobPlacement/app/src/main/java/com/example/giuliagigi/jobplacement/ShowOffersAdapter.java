@@ -29,6 +29,11 @@ public class ShowOffersAdapter extends RecyclerView.Adapter<ShowOffersAdapter.Vi
     private FragmentActivity context;
     private ArrayList<CompanyOffer> mDataset;
     private GlobalData globalData;
+
+    //Ha messo il parse query qui
+    //prvate Parsequery bla bla
+
+
     // Provide a reference to the views for each data item
     // Complex data items may need more than one view per item, and
     // you provide access to all the views for a data item in a view holder

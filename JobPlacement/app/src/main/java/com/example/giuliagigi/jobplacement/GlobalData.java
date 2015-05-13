@@ -1,6 +1,7 @@
 package com.example.giuliagigi.jobplacement;
 
 import android.app.Application;
+import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 
@@ -41,6 +42,13 @@ public class GlobalData extends Application {
     private int fav_position=-1;      //default
     private int applies_position=-1;   //default
     /***************************************/
+
+    /**************NEW OFFER BUNDLE**********/
+    private Bundle offerBundle;
+
+    private ArrayList<Tag> tagBoundle=new ArrayList<>();
+    /******************************************/
+
 
     @Override
     public void onCreate() {
@@ -230,6 +238,26 @@ public class GlobalData extends Application {
     public void resetState(){
         fav_position=-1;
     }
+
+
+    /***********************************************************/
+
+    public Bundle getOfferBundle() {
+        return offerBundle;
+    }
+
+    public void setOfferBundle(Bundle offerBundle) {
+        this.offerBundle = offerBundle;
+    }
+
+    public ArrayList<Tag> getTagBoundle() {
+        return tagBoundle;
+    }
+
+    public void setTagBoundle(ArrayList<Tag> tagBoundle) {
+        this.tagBoundle = tagBoundle;
+    }
+
 
 }
 

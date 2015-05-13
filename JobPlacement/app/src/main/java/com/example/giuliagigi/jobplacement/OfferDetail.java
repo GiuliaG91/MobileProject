@@ -180,7 +180,7 @@ public class OfferDetail extends Fragment {
         /*Attach on click listener to button menu */
 
         final FloatingActionButton applyButton=(FloatingActionButton)root.findViewById(R.id.action_apply);
-
+        applyButton.setIcon(R.drawable.ic_apply);
         applyButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -209,6 +209,7 @@ public class OfferDetail extends Fragment {
         });
 
         final FloatingActionButton contactButton=(FloatingActionButton)root.findViewById(R.id.action_contact_company);
+        contactButton.setIcon(R.drawable.ic_mail);
         contactButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
