@@ -2,8 +2,10 @@ package com.example.giuliagigi.jobplacement;
 
 import android.util.Log;
 
+import com.parse.FindCallback;
 import com.parse.ParseClassName;
 import com.parse.ParseException;
+import com.parse.ParseRelation;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -110,26 +112,17 @@ public class Student extends User {
         if(isCached.get(DEGREES_FIELD))
             return this.degrees;
 
-        ArrayList<Degree> degrees = new ArrayList<Degree>();
-        List<Object> list = this.getList(DEGREES_FIELD);
+        ParseRelation<Degree> tmp= getRelation(DEGREES_FIELD);
+        tmp.getQuery().findInBackground(new FindCallback<Degree>() {
+            @Override
+            public void done(List<Degree> degreesList, ParseException e) {
 
-        if(list!=null)
-            for (Object o : list) {
-
-                if(o instanceof Degree){
-                    Degree d =(Degree)o;
-
-                    try {
-                        d.fetchIfNeeded();
-                    } catch (ParseException e) {
-                        e.printStackTrace();
-                    }
-
-                    degrees.add(d);
-                }
+                if(degreesList!= null)
+                    for(Degree d:degreesList)
+                        degrees.add(d);
             }
+        });
 
-        this.degrees = degrees;
         isCached.put(DEGREES_FIELD, true);
         return degrees;
     }
@@ -208,26 +201,18 @@ public class Student extends User {
         if(isCached.get(LANGUAGE_FIELD))
             return languages;
 
-        ArrayList<Language> languages = new ArrayList<Language>();
-        List<Object> list = this.getList(LANGUAGE_FIELD);
+        ParseRelation<Language> tmp= getRelation(LANGUAGE_FIELD);
 
-        if(list!=null)
-            for (Object o : list) {
+        tmp.getQuery().findInBackground(new FindCallback<Language>() {
+            @Override
+            public void done(List<Language> languagesList, ParseException e) {
 
-                if(o instanceof Language){
-                    Language l =(Language)o;
-
-                    try {
-                        l.fetchIfNeeded();
-                    } catch (ParseException e) {
-                        e.printStackTrace();
-                    }
-
-                    languages.add(l);
-                }
+                if(languagesList!= null)
+                    for(Language l:languagesList)
+                        languages.add(l);
             }
+        });
 
-        this.languages = languages;
         isCached.put(LANGUAGE_FIELD,true);
         return languages;
     }
@@ -236,28 +221,17 @@ public class Student extends User {
         if(isCached.get(CERTIFICATE_FIELD))
             return certificates;
 
-        ArrayList<Certificate> certificates = new ArrayList<Certificate>();
-        List<Object> list = this.getList(CERTIFICATE_FIELD);
+        ParseRelation<Certificate> tmp = getRelation(CERTIFICATE_FIELD);
+        tmp.getQuery().findInBackground(new FindCallback<Certificate>() {
+            @Override
+            public void done(List<Certificate> results, ParseException e) {
 
-        if(list!=null)
-            for(Object o:list){
-
-                if(o instanceof Certificate){
-
-                    Certificate c = (Certificate)o;
-
-                    try {
-                        c.fetchIfNeeded();
-                    }
-                    catch (ParseException e){
-                        e.printStackTrace();
-                    }
-
-                    certificates.add(c);
-                }
+                if(results!=null)
+                    for(Certificate c:results)
+                        certificates.add(c);
             }
+        });
 
-        this.certificates = certificates;
         isCached.put(CERTIFICATE_FIELD,true);
         return certificates;
     }
@@ -266,24 +240,17 @@ public class Student extends User {
         if(isCached.get(FAVOURITES_FIELD))
             return favourites;
 
-        ArrayList<CompanyOffer> favourites = new ArrayList<>();
-        List<Object> list = this.getList(FAVOURITES_FIELD);
+        ParseRelation<CompanyOffer> tmp = getRelation(FAVOURITES_FIELD);
+        tmp.getQuery().findInBackground(new FindCallback<CompanyOffer>() {
+            @Override
+            public void done(List<CompanyOffer> results, ParseException e) {
 
-        if(list!= null)
-            for(Object o:list){
-                if(o instanceof CompanyOffer){
-
-                    CompanyOffer c = (CompanyOffer)o;
-                    try {
-                        c.fetchIfNeeded();
-                    } catch (ParseException e) {
-                        e.printStackTrace();
-                    }
-                    favourites.add(c);
-                }
+                if(results!= null)
+                    for(CompanyOffer co: results)
+                        favourites.add(co);
             }
+        });
 
-        this.favourites = favourites;
         isCached.put(FAVOURITES_FIELD,true);
         return favourites;
     }
@@ -305,12 +272,12 @@ public class Student extends User {
     public void addDegree(Degree degree){
 
         degrees.add(degree);
-        this.addUnique(DEGREES_FIELD, degree);
+        getRelation(DEGREES_FIELD).add(degree);
     }
     public void removeDegree(Degree degree){
 
         degrees.remove(degree);
-        removeAll(DEGREES_FIELD,Arrays.asList(degree));
+        getRelation(DEGREES_FIELD).remove(degree);
     }
     public void setSex(String sex){
 
@@ -363,33 +330,33 @@ public class Student extends User {
     public void addLanguage(Language language){
 
         languages.add(language);
-        this.addUnique(LANGUAGE_FIELD, language);
+        getRelation(LANGUAGE_FIELD).add(language);
     }
     public void removeLanguage(Language language) {
 
         languages.remove(language);
-        this.removeAll(LANGUAGE_FIELD,Arrays.asList(language));
+        getRelation(LANGUAGE_FIELD).remove(language);
     }
     public void addCertificate(Certificate certificate){
 
         certificates.add(certificate);
-        this.addUnique(CERTIFICATE_FIELD,certificate);
+        getRelation(CERTIFICATE_FIELD).add(certificate);
     }
     public void removeCertificate(Certificate certificate){
 
         this.certificates.remove(certificate);
-        this.removeAll(CERTIFICATE_FIELD,Arrays.asList(certificate));
+        getRelation(CERTIFICATE_FIELD).remove(certificate);
     }
     public void addFavourites(CompanyOffer companyOffer){
 
         favourites.add(companyOffer);
-        this.addUnique(FAVOURITES_FIELD,companyOffer);
+        getRelation(FAVOURITES_FIELD).add(companyOffer);
 
     }
     public void removeFavourites(CompanyOffer companyOffer) {
         {
             favourites.remove(companyOffer);
-            this.removeAll(FAVOURITES_FIELD, Arrays.asList(companyOffer));
+            getRelation(FAVOURITES_FIELD).remove(companyOffer);
         }
     }
     /*END SETTER METHODS*/

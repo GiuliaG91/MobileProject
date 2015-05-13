@@ -13,6 +13,7 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,6 +33,7 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.parse.ParseException;
+import com.parse.SaveCallback;
 
 
 public class CompanyProfileManagementOfficeFragment extends ProfileManagementFragment
@@ -239,16 +241,27 @@ public class CompanyProfileManagementOfficeFragment extends ProfileManagementFra
 
         if(!isRemoved){
 
-            currentUser.addOffice(office);
-            currentUser.saveEventually();
-
             office.setOfficeType((String) officeType.getSelectedItem());
             if(!officeCity.getText().toString().equals(INSERT_FIELD)) office.setOfficeCity(officeCity.getText().toString());
             if(!officeAddress.getText().toString().equals(INSERT_FIELD)) office.setOfficeAddress(officeAddress.getText().toString());
             if(!officeCAP.getText().toString().equals(INSERT_FIELD)) office.setOfficeCAP(officeCAP.getText().toString());
             if(!officeNation.getText().toString().equals(INSERT_FIELD)) office.setOfficeNation(officeNation.getText().toString());
             office.setCompany(currentUser);
-            office.saveEventually();
+            office.saveEventually(new SaveCallback() {
+                @Override
+                public void done(ParseException e) {
+
+                    if(e==null){
+
+                        Log.println(Log.ASSERT,"OFFICE FRAG", "office saved. Updating company");
+                        currentUser.addOffice(office);
+                        currentUser.saveEventually();
+                    }
+                    else
+                        Log.println(Log.ASSERT,"OFFICE FRAG","error saving office");
+
+                }
+            });
         }
 
     }

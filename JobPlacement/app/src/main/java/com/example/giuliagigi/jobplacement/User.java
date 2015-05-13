@@ -8,11 +8,13 @@ import android.net.Uri;
 import android.provider.MediaStore;
 import android.util.Log;
 
+import com.parse.FindCallback;
 import com.parse.GetDataCallback;
 import com.parse.ParseClassName;
 import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.ParseObject;
+import com.parse.ParseRelation;
 import com.parse.ProgressCallback;
 import com.parse.SaveCallback;
 
@@ -103,37 +105,51 @@ public class User extends ParseObject{
     public void addPhone(Telephone phone){
 
         phones.add(phone);
-        this.addUnique(PHONE_FIELD, phone);
+        getRelation(PHONE_FIELD).add(phone);
+//        this.addUnique(PHONE_FIELD, phone);
     }
     public void removePhone(Telephone phone) {
 
         phones.remove(phone);
-        this.removeAll(PHONE_FIELD, Arrays.asList(phone));
+        getRelation(PHONE_FIELD).remove(phone);
+//        this.removeAll(PHONE_FIELD, Arrays.asList(phone));
     }
     public ArrayList<Telephone> getPhones(){
 
         if(isCached.get(PHONE_FIELD))
             return phones;
 
-        ArrayList<Telephone> phones = new ArrayList<Telephone>();
-        List<Object> list = this.getList(PHONE_FIELD);
 
-        if(list != null)
-            for (Object o : list)
-                if (o instanceof Telephone){
+        ParseRelation<Telephone> tmp = getRelation(PHONE_FIELD);
+        tmp.getQuery().findInBackground(new FindCallback<Telephone>() {
+            @Override
+            public void done(List<Telephone> results, ParseException e) {
 
-                    Telephone t = (Telephone)o;
+                if(results!= null)
+                    for(Telephone t:results)
+                        phones.add(t);
+            }
+        });
 
-                    try {
-                        t.fetchIfNeeded();
-                    } catch (ParseException e) {
-                        e.printStackTrace();
-                    }
-
-                    phones.add(t);
-                }
-
-        this.phones = phones;
+//        ArrayList<Telephone> phones = new ArrayList<Telephone>();
+//        List<Object> list = this.getList(PHONE_FIELD);
+//
+//        if(list != null)
+//            for (Object o : list)
+//                if (o instanceof Telephone){
+//
+//                    Telephone t = (Telephone)o;
+//
+//                    try {
+//                        t.fetchIfNeeded();
+//                    } catch (ParseException e) {
+//                        e.printStackTrace();
+//                    }
+//
+//                    phones.add(t);
+//                }
+//
+//        this.phones = phones;
         isCached.put(PHONE_FIELD,true);
         return phones;
     }
@@ -141,34 +157,47 @@ public class User extends ParseObject{
     public void addTag(Tag tag){
 
         tags.put(tag.getTag(),tag);
-        this.addUnique(TAG_FIELD,tag);
+        getRelation(TAG_FIELD).add(tag);
+//        this.addUnique(TAG_FIELD,tag);
     }
     public void removeTag(Tag tag){
 
         tags.remove(tag.getTag());
-        removeAll(TAG_FIELD, Arrays.asList(tag));
+        getRelation(TAG_FIELD).remove(tag);
+//        removeAll(TAG_FIELD, Arrays.asList(tag));
     }
     public HashMap<String,Tag> getTags(){
 
         if(isCached.get(TAG_FIELD))
             return tags;
 
-        List<Object> list = getList(TAG_FIELD);
 
-        if(list!=null)
-            for(Object o:list)
-                if(o instanceof Tag){
+        ParseRelation<Tag> tmp = getRelation(TAG_FIELD);
+        tmp.getQuery().findInBackground(new FindCallback<Tag>() {
+            @Override
+            public void done(List<Tag> results, ParseException e) {
 
-                    Tag t = (Tag)o;
-
-                    try {
-                        t.fetchIfNeeded();
-                    } catch (ParseException e) {
-                        e.printStackTrace();
-                    }
-
-                    tags.put(t.getTag(),t);
-                }
+                if(results!= null)
+                    for(Tag t:results)
+                        tags.put(t.getTag(),t);
+            }
+        });
+//        List<Object> list = getList(TAG_FIELD);
+//
+//        if(list!=null)
+//            for(Object o:list)
+//                if(o instanceof Tag){
+//
+//                    Tag t = (Tag)o;
+//
+//                    try {
+//                        t.fetchIfNeeded();
+//                    } catch (ParseException e) {
+//                        e.printStackTrace();
+//                    }
+//
+//                    tags.put(t.getTag(),t);
+//                }
 
         isCached.put(TAG_FIELD,true);
         return tags;

@@ -169,6 +169,10 @@ public class ProfileDeleteFragment extends Fragment {
         super.onDetach();
     }
 
+
+
+    /* --------------- AUXILIARY METHODS ---------------------------------------------------------*/
+
     private void completeAccountDeletion(){
 
         application.getCurrentUser().deleteInBackground(new DeleteCallback() {
