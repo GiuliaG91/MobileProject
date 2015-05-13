@@ -69,7 +69,6 @@ public class Applies_Tab extends Fragment {
         query.findInBackground(new FindCallback<CompanyOffer>() {
             @Override
             public void done(List<CompanyOffer> list, ParseException e) {
-                Toast.makeText(getActivity(), "Cazzo la chiamo", Toast.LENGTH_SHORT).show();
                 adapter.updateDataset(list);
             }
         });

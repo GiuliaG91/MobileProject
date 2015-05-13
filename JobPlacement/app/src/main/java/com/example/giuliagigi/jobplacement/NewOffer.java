@@ -58,6 +58,9 @@ public class NewOffer extends Fragment implements DatePickerFragment.OnDataSetLi
     private OnFragmentInteractionListener mListener;
     private MenuItem buttonSave=null;
 
+    Company company=null;
+    GlobalData globalData=null;
+
     private boolean editMode=true;
     private boolean isNew=true;
     private boolean published=false; //default
@@ -94,8 +97,7 @@ public class NewOffer extends Fragment implements DatePickerFragment.OnDataSetLi
 
      private Map<String,Tag> retriveTag=null;
 
-    Company company=null;
-    GlobalData globalData=null;
+
 
 
     public static NewOffer newInstance(boolean editMode,boolean isNew) {
@@ -318,7 +320,7 @@ public class NewOffer extends Fragment implements DatePickerFragment.OnDataSetLi
             @Override
             public void onClick(View v) {
 
-                if(support.add(tagsView.getText().toString().toLowerCase().trim())==false)
+                if(support.contains((String)tagsView.getText().toString().toLowerCase().trim()))
                 {
                     if(existent.add(tagsView.getText().toString().toLowerCase().trim())==true) {
                         final GridLayout tagContainer = (GridLayout) root.findViewById(R.id.tagContainder);
@@ -522,33 +524,6 @@ public class NewOffer extends Fragment implements DatePickerFragment.OnDataSetLi
 
                 }
             }
-            //Is new
-          /*  else { //never visible
-                //created but not published -->   publish / modify / delete
-             button_a.setTitle(getString(R.string.new_offer_create_button));
-                button_b.setTitle(getString(R.string.new_offer_publish_button));
-
-
-                button_a.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        flag_create_publish = 0;
-                        createPublishOffer(v);
-                    }
-                });
-
-
-                button_b.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        flag_create_publish = 1;
-                        createPublishOffer(v);
-                    }
-                });
-                button_c.setEnabled(false);
-                button_c.setVisibility(View.INVISIBLE);
-
-            }*/
 
         }
         //editMode
