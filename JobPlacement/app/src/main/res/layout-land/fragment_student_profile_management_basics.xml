@@ -1,0 +1,372 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal"
+    android:id="@+id/frag_student__profile_management_basics"
+    tools:context="com.example.giuliagigi.jobplacement.StudentProfileManagementBasicsFragment">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.4"
+                android:id="@+id/basics_profilePhoto"
+                android:background="@drawable/user_icon">
+
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:gravity="bottom"
+                    android:weightSum="1"
+                    android:paddingBottom="20dp"
+                    android:id="@+id/basics_name_surname_container">
+
+                    <EditText
+                        android:layout_width="fill_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="0.2"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:text="Name"
+                        android:id="@+id/student_name_area"
+                        android:gravity="bottom"
+                        android:paddingLeft="10dp"
+                        android:paddingBottom="5dp"
+                        android:textColor="#ffffff" />
+
+                    <EditText
+                        android:layout_width="fill_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="0.2"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:text="Surname"
+                        android:gravity="bottom"
+                        android:id="@+id/student_surname_area"
+                        android:paddingLeft="10dp"
+                        android:textColor="#ffffff"
+                        android:paddingTop="5dp" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+
+            <ScrollView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight=".6">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <!-- email area -->
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/rowIcon"
+                        android:paddingLeft="10dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginBottom="10dp"
+                        android:src="@drawable/ic_email"
+                        android:layout_gravity="bottom"/>
+
+                    <LinearLayout
+                        android:orientation="vertical"
+                        android:layout_width="0dp"
+                        android:layout_height="fill_parent"
+                        android:layout_weight="1"
+                        android:paddingLeft="30dp">
+
+                        <TextView
+                            android:layout_width="fill_parent"
+                            android:layout_height="0dp"
+                            android:textAppearance="?android:attr/textAppearanceSmall"
+                            android:text="Email"
+                            android:textColor="@color/ColorPrimaryDark"
+                            android:id="@+id/email_hint"
+                            android:layout_weight="1"
+                            android:paddingLeft="10dp"
+                            android:gravity="bottom"
+                            android:textSize="10sp" />
+
+                        <EditText
+                            android:layout_width="fill_parent"
+                            android:layout_height="0dp"
+                            android:id="@+id/basics_email_area"
+                            android:layout_weight="1"
+                            android:textColor="#ff000000"
+                            android:textSize="20dp"
+                            android:paddingLeft="10dp"
+                            android:paddingTop="5dp"
+                            android:enabled="false"/>
+
+                    </LinearLayout>
+
+
+                </LinearLayout>
+
+                <!-- end email area -->
+
+                <!-- gender area -->
+                <LinearLayout
+                    android:orientation="horizontal" android:layout_width="match_parent"
+                    android:layout_height="100dp">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/genderIcon"
+                        android:paddingLeft="10dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginBottom="10dp"
+                        android:layout_gravity="bottom"
+                        android:src="@drawable/ic_gender"/>
+
+                    <LinearLayout
+                        android:orientation="vertical"
+                        android:layout_width="0dp"
+                        android:layout_height="fill_parent"
+                        android:layout_weight="1"
+                        android:paddingLeft="30dp">
+
+
+
+                        <TextView
+                            android:layout_width="fill_parent"
+                            android:layout_height="0dp"
+                            android:textAppearance="?android:attr/textAppearanceSmall"
+                            android:text="Sex"
+                            android:paddingLeft="10dp"
+                            android:textColor="@color/ColorPrimaryDark"
+                            android:id="@+id/container_sex_hint"
+                            android:layout_weight="1"
+                            android:gravity="center_vertical"
+                            android:textSize="10sp" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:weightSum="2">
+
+                            <CheckBox
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="F"
+                                android:layout_weight="1"
+                                android:id="@+id/female_checkBox"
+                                android:textColor="#000000"
+                                android:layout_gravity="center_horizontal" />
+                            <CheckBox
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="M"
+                                android:layout_weight="1"
+                                android:textColor="#000000"
+                                android:id="@+id/male_checkBox"
+                                android:layout_gravity="center_horizontal" />
+
+
+
+                        </LinearLayout>
+                    </LinearLayout>
+
+
+                </LinearLayout>
+                <!-- end gender area -->
+                <!-- date area -->
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/birth_icon"
+                        android:paddingLeft="10dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginBottom="10dp"
+                        android:src="@drawable/ic_birth"
+                        android:layout_gravity="bottom"/>
+
+                    <LinearLayout
+                        android:orientation="vertical"
+                        android:layout_width="0dp"
+                        android:layout_height="fill_parent"
+                        android:layout_weight="1"
+                        android:paddingLeft="30dp">
+
+                        <TextView
+                            android:layout_width="fill_parent"
+                            android:layout_height="0dp"
+                            android:textAppearance="?android:attr/textAppearanceSmall"
+                            android:text="Birth date"
+                            android:id="@+id/birth_hint"
+                            android:layout_weight="1"
+                            android:paddingLeft="10dp"
+                            android:textColor="@color/ColorPrimaryDark"
+                            android:gravity="bottom"
+                            android:textSize="10sp" />
+
+                        <EditText
+                            android:layout_width="fill_parent"
+                            android:layout_height="0dp"
+                            android:id="@+id/student_birth_et"
+                            android:layout_weight="1"
+                            android:textColor="#ff000000"
+                            android:textSize="20dp"
+                            android:paddingLeft="10dp"
+                            android:paddingTop="5dp" />
+
+                    </LinearLayout>
+
+
+                </LinearLayout>
+
+                <!-- end date area -->
+
+                <!-- birth city area -->
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/birth_city_icon"
+                        android:paddingLeft="10dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginBottom="10dp"
+                        android:src="@drawable/ic_birthcity"
+                        android:layout_gravity="bottom"/>
+
+                    <LinearLayout
+                        android:orientation="vertical"
+                        android:layout_width="0dp"
+                        android:layout_height="fill_parent"
+                        android:layout_weight="1"
+                        android:paddingLeft="30dp">
+
+                        <TextView
+                            android:layout_width="fill_parent"
+                            android:layout_height="0dp"
+                            android:textAppearance="?android:attr/textAppearanceSmall"
+                            android:text="Birth city"
+                            android:id="@+id/student_birthCity_hint"
+                            android:layout_weight="1"
+                            android:paddingLeft="10dp"
+                            android:textColor="@color/ColorPrimaryDark"
+                            android:gravity="bottom"
+                            android:textSize="10sp" />
+
+                        <EditText
+                            android:layout_width="fill_parent"
+                            android:layout_height="0dp"
+                            android:id="@+id/student_birthCity_et"
+                            android:layout_weight="1"
+                            android:textColor="#ff000000"
+                            android:textSize="20dp"
+                            android:paddingLeft="10dp"
+                            android:paddingTop="5dp" />
+
+                    </LinearLayout>
+
+
+                </LinearLayout>
+
+                <!-- end birth city area -->
+                <!-- description -->
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/description_icon"
+                        android:paddingLeft="10dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginBottom="10dp"
+                        android:src="@drawable/ic_description"
+                        android:layout_gravity="center"/>
+
+                    <LinearLayout
+                        android:orientation="vertical"
+                        android:layout_width="0dp"
+                        android:layout_height="fill_parent"
+                        android:layout_weight="1"
+                        android:paddingLeft="30dp">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight=".1"
+                            android:textAppearance="?android:attr/textAppearanceSmall"
+                            android:text="Short description"
+                            android:id="@+id/student_description_hint"
+                            android:paddingLeft="10dp"
+                            android:layout_marginTop="20dp"
+                            android:textColor="@color/ColorPrimaryDark"
+                            android:gravity="bottom"
+                            android:textSize="10sp"  />
+
+                        <android.support.v7.widget.CardView
+                            xmlns:card_view="http://schemas.android.com/apk/res-auto"
+                            android:id="@+id/phones_card_view"
+                            android:layout_gravity="center"
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight=".9"
+                            card_view:cardCornerRadius="10dp"
+                            card_view:cardMaxElevation="5dp"
+                            android:layout_margin="3dp"
+                            card_view:cardBackgroundColor="#ffffff">
+
+                            <EditText
+                                android:layout_width="fill_parent"
+                                android:layout_height="fill_parent"
+                                android:id="@+id/student_description_et"
+                                android:scrollbars="vertical"
+                                android:textColor="#000000"
+                                android:textSize="15dp"
+                                android:paddingLeft="10dp"
+                                android:paddingTop="5dp" />
+
+                        </android.support.v7.widget.CardView>
+                    </LinearLayout>
+                </LinearLayout>
+                <!-- end description -->
+
+
+            </LinearLayout>
+
+            </ScrollView>
+
+            </LinearLayout>
+
+
+
+
+</LinearLayout>
