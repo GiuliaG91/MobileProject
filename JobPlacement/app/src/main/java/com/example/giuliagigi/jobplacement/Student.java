@@ -5,6 +5,7 @@ import android.util.Log;
 import com.parse.FindCallback;
 import com.parse.ParseClassName;
 import com.parse.ParseException;
+import com.parse.ParseGeoPoint;
 import com.parse.ParseRelation;
 
 import java.util.ArrayList;
@@ -33,6 +34,7 @@ public class Student extends User {
     protected static final String CERTIFICATE_FIELD = "certificates";
     protected static final String FAVOURITES_FIELD = "favourites";
     protected static final String DESCRIPTION_FIELD = "description";
+    protected static final String ADDRESS_LOCATION_FIELD = "address_location";
     public static final String SEX_MALE = "Male";
     public static final String SEX_FEMALE = "Female";
 
@@ -47,6 +49,7 @@ public class Student extends User {
     protected String postalCode;
     protected String nation;
     protected String description;
+    protected ParseGeoPoint addressLocation;
     protected ArrayList<Language> languages;
     protected ArrayList<Certificate> certificates;
     protected ArrayList<CompanyOffer> favourites;
@@ -66,6 +69,7 @@ public class Student extends User {
         postalCode = null;
         nation = null;
         description = null;
+        addressLocation = null;
         phones = new ArrayList<Telephone>();
         languages = new ArrayList<Language>();
         favourites = new ArrayList<CompanyOffer>();
@@ -85,6 +89,7 @@ public class Student extends User {
         isCached.put(FAVOURITES_FIELD, false);
         isCached.put(CERTIFICATE_FIELD,false);
         isCached.put(DESCRIPTION_FIELD, false);
+        isCached.put(ADDRESS_LOCATION_FIELD,false);
     }
 
 
@@ -254,6 +259,16 @@ public class Student extends User {
         return favourites;
     }
 
+    public ParseGeoPoint getAddressLocation(){
+
+        if(isCached.get(ADDRESS_LOCATION_FIELD))
+            return addressLocation;
+
+        addressLocation = (ParseGeoPoint)get(ADDRESS_LOCATION_FIELD);
+        isCached.put(ADDRESS_LOCATION_FIELD,true);
+        return addressLocation;
+    }
+
     /* END GETTER METHODS*/
 
     public void setName(String name){
@@ -358,6 +373,16 @@ public class Student extends User {
             getRelation(FAVOURITES_FIELD).remove(companyOffer);
         }
     }
+    public void setAddressLocation(ParseGeoPoint addressLocation){
+
+        this.addressLocation = addressLocation;
+        isCached.put(ADDRESS_LOCATION_FIELD,true);
+
+        if(addressLocation == null)
+            remove(ADDRESS_LOCATION_FIELD);
+        else
+            put(ADDRESS_LOCATION_FIELD,addressLocation);
+    }
     /*END SETTER METHODS*/
 
 
@@ -379,6 +404,7 @@ public class Student extends User {
         getLanguages();
         getCertificates();
         getFavourites();
+        getAddressLocation();
     }
 
     public void printCacheContent(){

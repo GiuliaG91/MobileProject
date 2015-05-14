@@ -270,8 +270,24 @@ public class CompanyProfileManagementOfficeFragment extends ProfileManagementFra
                 String geoAddress = officeNation.getText().toString() + ", " + officeCity.getText().toString();
                 if(!officeAddress.getText().toString().equals(INSERT_FIELD))
                     geoAddress += ", " + officeAddress.getText().toString();
+                else
+                    Toast.makeText(getActivity(),"To get a better geographical localization, consider adding your address",Toast.LENGTH_SHORT).show();
 
-                setMapLocation(geoAddress);
+                try {
+
+                    Address a = geoloc.setMapLocation(geoAddress);
+                    if(a!=null)
+                        office.setLocation(new ParseGeoPoint(a.getLatitude(),a.getLongitude()));
+                    else {
+                        Toast.makeText(getActivity(),"Unfortunately, your addres doesn't match with a Google Maps address",Toast.LENGTH_SHORT).show();
+                        office.setLocation(null);
+                    }
+
+                } catch (IOException e) {
+
+                    e.printStackTrace();
+                    Toast.makeText(getActivity(),"Due to an error, it was not possible to save your geographical location",Toast.LENGTH_SHORT).show();
+                }
             }
             else
                 Toast.makeText(getActivity(),"You must specify at least office country and city to get a physic location", Toast.LENGTH_SHORT).show();
@@ -330,141 +346,6 @@ public class CompanyProfileManagementOfficeFragment extends ProfileManagementFra
 
         if(office.getLocation()!=null)
             geoloc.setMarkerPosition(new LatLng(office.getLocation().getLatitude(),office.getLocation().getLongitude()));
-    }
-
-
-
-    private void setMapLocation(String geoAddress){
-
-        Log.println(Log.ASSERT,"OFFICE FRAG", "setting map location");
-
-        List<Address> addressList;
-        Geocoder geocoder = new Geocoder(getActivity());
-        try {
-            addressList = geocoder.getFromLocationName(geoAddress,5);
-        } catch (IOException e) {
-            e.printStackTrace();
-            Log.println(Log.ASSERT,"OFFICE FRAG", "IOException during setMapLocation");
-            return;
-        }
-
-        if(addressList.isEmpty()){
-
-            Toast.makeText(getActivity(),"The address you specified doen't match with any location on GoogleMaps." +
-                    "Are you sure it is correct?",Toast.LENGTH_SHORT).show();
-            return;
-        }
-
-
-        if(addressList.size() == 1){
-
-            Log.println(Log.ASSERT,"OFFICE FRAG", "only one address found on maps");
-            Address a = addressList.get(0);
-            geoloc.setMarkerPosition(new LatLng(a.getLatitude(), a.getLongitude()));
-            office.setLocation(new ParseGeoPoint(a.getLatitude(),a.getLongitude()));
-        }
-        else if(addressList.size()>1){
-
-            Log.println(Log.ASSERT,"OFFICE FRAG", "more than one address found on maps");
-            final AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-
-            Address[] addressArray = new Address[addressList.size()];
-            int i=0;
-            for(Address a:addressList)
-                addressArray[i++] = a;
-
-            ListView addressListView = new ListView(getActivity());
-            final AddressAdapter adapter = new AddressAdapter(addressArray);
-            final Address[] selected = new Address[1];
-
-            addressListView.setAdapter(adapter);
-            addressListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                @Override
-                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-                    selected[0] = adapter.getItem(position);
-                    geoloc.setMarkerPosition(new LatLng(selected[0].getLatitude(), selected[0].getLongitude()));
-                }
-            });
-
-            builder.setTitle("Select a location for " + officeCity.getText().toString() + " office");
-            builder.setView(addressListView);
-            builder.setPositiveButton("Confirm",new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-
-                    Address a;
-
-                    if(selected[0]!=null)
-                        a = selected[0];
-                    else
-                        a = adapter.getItem(0);
-
-                    geoloc.setMarkerPosition(new LatLng(selected[0].getLatitude(),selected[0].getLongitude()));
-                    office.setLocation(new ParseGeoPoint(selected[0].getLatitude(),selected[0].getLongitude()));
-                }
-            });
-
-            builder.create().show();
-        }
-
-        Log.println(Log.ASSERT,"OFFICE FRAG", "setting map location finished");
-    }
-
-
-
-
-    private class AddressAdapter extends BaseAdapter{
-
-        Address[] addresses;
-        ArrayList<View> addressViews;
-        public AddressAdapter(Address[] addresses){
-
-            super();
-            this.addresses = addresses;
-            addressViews = new ArrayList<View>();
-
-            for (Address a:addresses){
-
-                TextView tv = new TextView(getActivity());
-                tv.setText(a.getCountryName() + " - " + a.getLocality() + " - " + a.getSubLocality());
-                addressViews.add(tv);
-            }
-
-            for (View v:addressViews)
-                v.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-
-                        v.setBackgroundColor(Color.RED);
-                        for (View other:addressViews)
-                            if(other!=v)
-                                other.setBackgroundColor(Color.WHITE);
-                    }
-                });
-
-        }
-
-        @Override
-        public int getCount() {
-            return addresses.length;
-        }
-
-        @Override
-        public Address getItem(int position) {
-            return addresses[position];
-        }
-
-        @Override
-        public long getItemId(int position) {
-            return position;
-        }
-
-        @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
-
-            return addressViews.get(position);
-        }
     }
 
 

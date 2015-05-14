@@ -77,7 +77,10 @@ public class Office extends ParseObject {
 
     public void setLocation(ParseGeoPoint location){
 
-        put(OFFICE_LOCATION,location);
+        if(location == null)
+            remove(OFFICE_LOCATION);
+        else
+            put(OFFICE_LOCATION,location);
     }
     public ParseGeoPoint getLocation(){
 

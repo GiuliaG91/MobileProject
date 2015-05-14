@@ -6,28 +6,21 @@ import android.location.Address;
 import android.location.Geocoder;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
+import android.widget.Toast;
 
-import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.BitmapDescriptorFactory;
-import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 
@@ -36,7 +29,6 @@ public class GeoLocalization extends SupportMapFragment{
     private GoogleMap googleMap;
     protected GlobalData application;
     private Marker currentLocation;
-    private boolean isMapReady;
     private OnMapReadyCallback host;
 
 
@@ -53,6 +45,8 @@ public class GeoLocalization extends SupportMapFragment{
         this.host = host;
     }
 
+
+
     /* ----------------- STANDARD CALLBACKS ------------------------------------------------------*/
 
     public void onAttach(Activity activity) {
@@ -60,7 +54,6 @@ public class GeoLocalization extends SupportMapFragment{
         super.onAttach(activity);
         application = (GlobalData)activity.getApplicationContext();
         currentLocation = null;
-        isMapReady = false;
     }
 
     @Override
@@ -111,7 +104,30 @@ public class GeoLocalization extends SupportMapFragment{
         googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(pos,11.0f));
     }
 
-    public boolean isMapReady(){
-        return isMapReady;
+
+
+    public Address setMapLocation(String geoAddress) throws IOException{
+
+        Log.println(Log.ASSERT,"OFFICE FRAG", "setting map location");
+
+        List<Address> addressList;
+
+        Geocoder geocoder = new Geocoder(getActivity());
+        addressList = geocoder.getFromLocationName(geoAddress,5);
+
+        if(addressList.isEmpty())
+            return null;
+        else {
+
+            Log.println(Log.ASSERT,"OFFICE FRAG", "only one address found on maps");
+            Address a = addressList.get(0);
+            setMarkerPosition(new LatLng(a.getLatitude(), a.getLongitude()));
+
+            Log.println(Log.ASSERT,"OFFICE FRAG", "setting map location finished");
+
+            return a;
+        }
+
     }
+
 }

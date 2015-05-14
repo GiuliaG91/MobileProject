@@ -1,8 +1,11 @@
 package com.example.giuliagigi.jobplacement;
 
 import android.app.Activity;
+import android.location.Address;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,18 +13,28 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.LatLng;
+import com.parse.ParseGeoPoint;
+
+import java.io.IOException;
 import java.util.ArrayList;
 
-public class StudentProfileManagementRegistryFragment extends ProfileManagementFragment {
+public class StudentProfileManagementRegistryFragment extends ProfileManagementFragment implements OnMapReadyCallback{
 
 
     private static final String TITLE = "Registry";
 
     private Student currentUser;
+    private boolean addressChanged;
     private EditText addressText,cityText,postalText,nationText;
     private Button phonePlus;
     private LinearLayout phonesContainer;
+    private GeoLocalization geoloc;
+
     private ArrayList<ProfileManagementTelephoneFragment> telephoneFragments;
 
     public StudentProfileManagementRegistryFragment() {super();}
@@ -45,6 +58,7 @@ public class StudentProfileManagementRegistryFragment extends ProfileManagementF
         Log.println(Log.ASSERT,"REGISTRY FRAG", "onAttach");
         currentUser = (Student)application.getUserObject();
         telephoneFragments = new ArrayList<ProfileManagementTelephoneFragment>();
+        addressChanged = false;
     }
 
     @Override
@@ -59,6 +73,9 @@ public class StudentProfileManagementRegistryFragment extends ProfileManagementF
                              Bundle savedInstanceState) {
 
         root = inflater.inflate(R.layout.fragment_student_profile_management_registry, container, false);
+
+        geoloc = (GeoLocalization)getChildFragmentManager().findFragmentById(R.id.office_map_fragment);
+        geoloc.setOnMapReadyCallback(this);
 
         addressText = (EditText)root.findViewById(R.id.student_address_area);
         if(currentUser.getAddress() == null){
@@ -90,14 +107,19 @@ public class StudentProfileManagementRegistryFragment extends ProfileManagementF
 
         phonesContainer = (LinearLayout)root.findViewById(R.id.student_phones_container);
 
-        OnFieldChangedListener hasChangedListener = new OnFieldChangedListener();
         textFields.add(addressText);
         textFields.add(cityText);
         textFields.add(postalText);
         textFields.add(nationText);
 
+        OnFieldChangedListener hasChangedListener = new OnFieldChangedListener();
         for(EditText et: textFields)
             et.addTextChangedListener(hasChangedListener);
+
+        OnAddressChangedListener addressListener = new OnAddressChangedListener();
+        addressText.addTextChangedListener(addressListener);
+        cityText.addTextChangedListener(addressListener);
+        nationText.addTextChangedListener(addressListener);
 
         phonePlus = (Button)root.findViewById(R.id.student_phones_plusButton);
         phonePlus.setOnClickListener(new View.OnClickListener() {
@@ -177,8 +199,64 @@ public class StudentProfileManagementRegistryFragment extends ProfileManagementF
         if(!cityText.getText().toString().equals(INSERT_FIELD))     currentUser.setCity(cityText.getText().toString());
         if(!postalText.getText().toString().equals(INSERT_FIELD))   currentUser.setPostalCode(postalText.getText().toString());
         if(!nationText.getText().toString().equals(INSERT_FIELD))   currentUser.setNation(nationText.getText().toString());
-        
+
+        if(addressChanged && !nationText.getText().toString().equals(INSERT_FIELD) && !cityText.getText().toString().equals(INSERT_FIELD)){
+
+            String geoAddress = nationText.getText().toString() + ", " + cityText.getText().toString();
+
+            if(!addressText.getText().toString().equals(INSERT_FIELD))
+                geoAddress = geoAddress + ", " + addressText.getText().toString();
+            else
+                Toast.makeText(getActivity(), "To get a better geographical localization, consider adding your address", Toast.LENGTH_SHORT).show();
+
+            try {
+                Address a = geoloc.setMapLocation(geoAddress);
+                if(a!= null)
+                    currentUser.setAddressLocation(new ParseGeoPoint(a.getLatitude(),a.getLongitude()));
+                else{
+                    Toast.makeText(getActivity(),"Unfortunately, your addres doesn't match with a Google Maps address",Toast.LENGTH_SHORT).show();
+                    currentUser.setAddressLocation(null);
+                }
+
+            } catch (IOException e) {
+                e.printStackTrace();
+                Toast.makeText(getActivity(),"Due to an error, it was not possible to save your geographical location",Toast.LENGTH_SHORT).show();
+            }
+
+        }
+        else
+            Toast.makeText(getActivity(),"You must specify at least office country and city to get a physic location", Toast.LENGTH_SHORT).show();
+
         currentUser.saveEventually();
 
+    }
+
+
+    /* ------------------------------ MAPS METHODS ------------------------------------------------*/
+
+
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+
+        Log.println(Log.ASSERT,"OFFICE FRAG", "Map was created. Setting marker position");
+        if(currentUser.getAddressLocation()!=null)
+            geoloc.setMarkerPosition(new LatLng(currentUser.getAddressLocation().getLatitude(),currentUser.getAddressLocation().getLongitude()));
+    }
+
+
+    private class OnAddressChangedListener implements TextWatcher {
+
+        @Override
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+
+        @Override
+        public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            hasChanged = true;
+            addressChanged = true;
+        }
+
+        @Override
+        public void afterTextChanged(Editable s) {}
     }
 }
