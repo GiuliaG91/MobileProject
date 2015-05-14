@@ -98,7 +98,7 @@ public class TabHomeCompanyFragment extends Fragment {
 
               @Override
               public void onPageSelected(int position) {
-                    globalData.setHome_company_position(position);
+
               }
 
               @Override
@@ -107,7 +107,7 @@ public class TabHomeCompanyFragment extends Fragment {
               }
           });
         /****************************************************/
-           pager.setCurrentItem(globalData.getHome_company_position());
+        // pager.setCurrentItem(globalData.getHome_company_position());
         return root;
 
     }

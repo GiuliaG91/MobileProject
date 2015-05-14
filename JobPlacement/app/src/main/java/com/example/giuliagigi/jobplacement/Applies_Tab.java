@@ -79,11 +79,11 @@ public class Applies_Tab extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        int position=globalData.getFav_position();
+      /*  int position=globalData.getFav_position();
         if(position!=-1)
         {
             adapter.startItem(position);
-        }
+        }*/
 
     }
 

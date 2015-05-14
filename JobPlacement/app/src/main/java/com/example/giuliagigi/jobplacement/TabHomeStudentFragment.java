@@ -105,7 +105,7 @@ public class TabHomeStudentFragment extends Fragment {
 
           @Override
           public void onPageSelected(int position) {
-             globalData.setHome_student_position(position);
+
           }
 
           @Override
@@ -115,7 +115,7 @@ public class TabHomeStudentFragment extends Fragment {
       });
         /****************************************************/
 
-        pager.setCurrentItem(globalData.getHome_student_position());
+
         return root;
     }
 

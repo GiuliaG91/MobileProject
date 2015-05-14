@@ -165,7 +165,6 @@ public class FavouritesAdapter extends RecyclerView.Adapter<FavouritesAdapter.Vi
         globalData.setCurrentOffer(mDataset.get(vh.getPosition()));
         //Pass Object to fragment
         FragmentManager fragmentManager = context.getSupportFragmentManager();
-        globalData.setFav_position(vh.getPosition());
         //New Fragment
         OfferDetail fragment=OfferDetail.newInstance();
         // Insert the fragment by replacing any existing fragment

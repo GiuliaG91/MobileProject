@@ -37,6 +37,7 @@ public class Student extends User {
     protected static final String ADDRESS_LOCATION_FIELD = "address_location";
     public static final String SEX_MALE = "Male";
     public static final String SEX_FEMALE = "Female";
+    public static final String COMPANIES_FIELD="companies";
 
     protected String name;
     protected String surname;
@@ -53,6 +54,7 @@ public class Student extends User {
     protected ArrayList<Language> languages;
     protected ArrayList<Certificate> certificates;
     protected ArrayList<CompanyOffer> favourites;
+    protected ArrayList<Company> companies;
 
     public Student(){
 
@@ -74,6 +76,7 @@ public class Student extends User {
         languages = new ArrayList<Language>();
         favourites = new ArrayList<CompanyOffer>();
         certificates = new ArrayList<Certificate>();
+        companies=new ArrayList<>();
 
         isCached.put(NAME_FIELD,false);
         isCached.put(SURNAME_FIELD,false);
@@ -90,6 +93,7 @@ public class Student extends User {
         isCached.put(CERTIFICATE_FIELD,false);
         isCached.put(DESCRIPTION_FIELD, false);
         isCached.put(ADDRESS_LOCATION_FIELD,false);
+        isCached.put(COMPANIES_FIELD, false);
     }
 
 
@@ -269,6 +273,22 @@ public class Student extends User {
         return addressLocation;
     }
 
+    public List<Company> getCompanies( ){
+
+        if(isCached.get(COMPANIES_FIELD))
+            return companies;
+
+        ParseRelation<Company> tmp= getRelation(COMPANIES_FIELD);
+        List<Company> result= null;
+        try {
+            result = tmp.getQuery().find();
+        } catch (com.parse.ParseException e) {
+            e.printStackTrace();
+        }
+        isCached.put(COMPANIES_FIELD,true);
+        return result;
+    }
+
     /* END GETTER METHODS*/
 
     public void setName(String name){
@@ -296,8 +316,8 @@ public class Student extends User {
     public void setSex(String sex){
 
         this.sex = sex;
-        isCached.put(SEX_FIELD,true);
-        this.put(SEX_FIELD,sex);
+        isCached.put(SEX_FIELD, true);
+        this.put(SEX_FIELD, sex);
     }
     public void setBirth(Date birth){
 
@@ -383,6 +403,16 @@ public class Student extends User {
         else
             put(ADDRESS_LOCATION_FIELD,addressLocation);
     }
+    public void addCompany(Company c)
+    {
+        companies.add(c);
+        getRelation(COMPANIES_FIELD).add(c);
+    }
+    public void removeCompany(Company c)
+    {
+        companies.remove(c);
+        getRelation(COMPANIES_FIELD).remove(c);
+    }
     /*END SETTER METHODS*/
 
 
@@ -405,6 +435,7 @@ public class Student extends User {
         getCertificates();
         getFavourites();
         getAddressLocation();
+        getCompanies();
     }
 
     public void printCacheContent(){

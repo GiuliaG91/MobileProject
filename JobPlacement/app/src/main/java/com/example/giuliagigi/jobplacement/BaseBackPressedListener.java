@@ -26,12 +26,11 @@ public class BaseBackPressedListener implements OnBackPressedListener {
         if (current instanceof OfferDetail) {
 
           //  Toast.makeText(activity," Ero in offerDetail",Toast.LENGTH_SHORT).show();
-            globalData.resetState();
+
         }
         if(current instanceof OfferSearchFragment)
         {
            // Toast.makeText(activity,"Ero in ricerca",Toast.LENGTH_SHORT).show();
-            globalData.resetState();
             globalData.getOfferFilterStatus().setValid(false);
         }
 

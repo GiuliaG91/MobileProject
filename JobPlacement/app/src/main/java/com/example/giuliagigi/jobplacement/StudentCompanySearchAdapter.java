@@ -1,6 +1,6 @@
 package com.example.giuliagigi.jobplacement;
 
-
+import android.graphics.Bitmap;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.RecyclerView;
@@ -13,7 +13,6 @@ import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-
 import com.parse.ParseQuery;
 import com.parse.ParseQueryAdapter;
 
@@ -24,56 +23,56 @@ import java.util.List;
 import java.util.Set;
 
 /**
- * Created by pietro on 07/05/2015.
+ * Created by pietro on 14/05/2015.
  */
-
-public class OfferSearchAdapter extends RecyclerView.Adapter<OfferSearchAdapter.ViewHolder> implements View.OnClickListener {
+public class StudentCompanySearchAdapter extends RecyclerView.Adapter<StudentCompanySearchAdapter.ViewHolder> implements View.OnClickListener {
 
 
     private FragmentActivity context;
-    private ArrayList<CompanyOffer> mDataset;
+    private ArrayList<Company> mDataset;
     private GlobalData globalData;
     private Student student;
-    private Set<CompanyOffer> supportSet;
+    private Set<Company> supportSet;
+    private StudentCompanySearchFragment currentFragment;
 
-
-    private ParseQueryAdapter<CompanyOffer> parseAdapter;
-    private ParseQueryAdapter.QueryFactory<CompanyOffer> factory;
+    private ParseQueryAdapter<Company> parseAdapter;
+    private ParseQueryAdapter.QueryFactory<Company> factory;
 
     private ViewGroup parseParent;
-    OfferSearchAdapter offerSearchAdapter = this;
+    StudentCompanySearchAdapter studentCompanySearchAdapter=this;
 
 
-    public OfferSearchAdapter(FragmentActivity c, ViewGroup parentIn) {
+    public StudentCompanySearchAdapter(FragmentActivity c, ViewGroup parentIn , StudentCompanySearchFragment fragment) {
         parseParent = parentIn;
         context = c;
+        currentFragment=fragment;
         mDataset = new ArrayList<>();
         globalData = (GlobalData) context.getApplication();
         student = globalData.getStudentFromUser();
         supportSet = new HashSet<>();
 
-        if(globalData.getOfferFilterStatus().isValid())
+     /*   if(globalData.getOfferFilterStatus().isValid())
         {
             OfferFilterStatus status=globalData.getOfferFilterStatus();
             setFactory(status.getTag_list(),status.getContract_list(),status.getTerm_list(),status.getField_list(),status.getLocation_list(),
-                        status.getSalary_list());
+                    status.getSalary_list());
         }
         else {
-
-            factory = new ParseQueryAdapter.QueryFactory<CompanyOffer>() {
+*/
+            factory = new ParseQueryAdapter.QueryFactory<Company>() {
                 @Override
-                public ParseQuery<CompanyOffer> create() {
-                    ParseQuery query = new ParseQuery("CompanyOffer");
-                    query.whereEqualTo("publish",true);
+                public ParseQuery<Company> create() {
+                    ParseQuery query = new ParseQuery("Company");
                     return query;
                 }
             };
 
-        }
-     setAdapter();
+        setAdapter();
 
 
     }
+
+    /************************************************   query adapter things **********************/
 
 
     public void setFactory(final List<Tag> tag_list,
@@ -86,12 +85,12 @@ public class OfferSearchAdapter extends RecyclerView.Adapter<OfferSearchAdapter.
 
 
 
-        factory=new ParseQueryAdapter.QueryFactory<CompanyOffer>() {
+        factory=new ParseQueryAdapter.QueryFactory<Company>() {
             @Override
-            public ParseQuery<CompanyOffer> create() {
-                ParseQuery query = new ParseQuery("CompanyOffer");
-                query.whereEqualTo("publish",true);
-               if(!tag_list.isEmpty())
+            public ParseQuery<Company> create() {
+                ParseQuery query = new ParseQuery("Company");
+                /*
+                if(!tag_list.isEmpty())
                 {
                     query.whereContainedIn("tags",tag_list);
                 }
@@ -121,7 +120,7 @@ public class OfferSearchAdapter extends RecyclerView.Adapter<OfferSearchAdapter.
                     }
                     else if (type==2) //more then
                     {
-                      query.whereGreaterThan("salary",sal);
+                        query.whereGreaterThan("salary",sal);
                     }
                     else if(type == 3) //equal to
                     {
@@ -131,65 +130,52 @@ public class OfferSearchAdapter extends RecyclerView.Adapter<OfferSearchAdapter.
                     }
                 }
 
-
+*/
 
                 return query;
             }
         };
-
-
-
-
     }
 
     public void setAdapter(){
 
         mDataset.clear();
-        parseAdapter = new ParseQueryAdapter<CompanyOffer>(context,factory) {
+        parseAdapter = new ParseQueryAdapter<Company>(context,factory) {
 
 
             @Override
-            public View getItemView(final CompanyOffer object, View v, final ViewGroup parent) {
+            public View getItemView(final Company object, View v, final ViewGroup parent) {
                 if (v == null) {
-                    v = LayoutInflater.from(parent.getContext()).inflate(R.layout.favourites_row, parent, false);
+                    v = LayoutInflater.from(parent.getContext()).inflate(R.layout.company_row, parent, false);
                 }
                 super.getItemView(object, v, parent);
 
 
                 mDataset.add(object);
                 ImageView logo = (ImageView) v.findViewById(R.id.logo_img);
-                TextView object_tv = (TextView) v.findViewById(R.id.objectOffer_tv);
-                TextView descriprion = (TextView) v.findViewById(R.id.description_tv);
-                TextView date = (TextView) v.findViewById(R.id.date_row_tv);
+                TextView companyName = (TextView) v.findViewById(R.id.company_name_tv);
+                TextView companyMail = (TextView) v.findViewById(R.id.Company_mail_tv );
                 CheckBox pref = (CheckBox) v.findViewById(R.id.star);
 
-             /*  Bitmap img=object.getCompany().getProfilePhoto();
+                Bitmap img=null;
+                try{
+                    img=object.getProfilePhoto();
+
+                }catch (Exception e){
+                    img=null;
+                }
+
                 if(img!=null) {
                     logo.setImageBitmap(img);
-                }else*/
+                }else
                 logo.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_profile));
-                object_tv.setText(object.getOfferObject());
-                descriprion.setText(object.getDescription());
+                companyName.setText(object.getName());
+                companyMail.setText(object.getMail());
 
 
-                String des = object.getDescription();
-
-                if (des == null || des.equals("")) {
-                    descriprion.setText("...");
-                } else {
-
-                    if (des.length() < 30) {
-                        descriprion.setText(des + "...");
-                    } else {
-                        descriprion.setText(des.substring(0, 29) + "...");
-                    }
-                }
-                SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-                String d = dateFormat.format(object.getValidity());
-                date.setText(d);
 
                 supportSet.clear();
-                supportSet.addAll(student.getFavourites());
+                supportSet.addAll(student.getCompanies());
 
                 if (supportSet.add(object) == false) {
                     pref.setChecked(true);
@@ -202,11 +188,11 @@ public class OfferSearchAdapter extends RecyclerView.Adapter<OfferSearchAdapter.
 
                         if (isChecked) {
                             //add this offer to pref
-                            student.addFavourites(object);
+                            student.addCompany(object);
                             student.saveInBackground();
                         } else {
                             //delete this offer from pref
-                            student.removeFavourites(object);
+                            student.removeCompany(object);
                             student.saveInBackground();
 
                         }
@@ -228,12 +214,15 @@ public class OfferSearchAdapter extends RecyclerView.Adapter<OfferSearchAdapter.
 
     }
 
+
+
+/***************************************************************************************************/
     @Override
-    public OfferSearchAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public StudentCompanySearchAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.favourites_row, parent, false);
+                .inflate(R.layout.company_row, parent, false);
         v.setClickable(true);
-        v.setOnClickListener(OfferSearchAdapter.this);
+        v.setOnClickListener(StudentCompanySearchAdapter.this);
 
         ViewHolder vh = new ViewHolder(v);
         return vh;
@@ -249,16 +238,15 @@ public class OfferSearchAdapter extends RecyclerView.Adapter<OfferSearchAdapter.
         return parseAdapter.getCount();
     }
 
-
     @Override
     public void onClick(View v) {
 
 
         ViewHolder vh=(ViewHolder)v.getTag();
 
-        globalData.setCurrentOffer(mDataset.get(vh.getPosition()));
+        //globalData.setCurrentOffer(mDataset.get(vh.getPosition()));
         //Pass Object to fragment
-        FragmentManager fragmentManager = context.getSupportFragmentManager();
+        FragmentManager fragmentManager = currentFragment.getChildFragmentManager();
 
         //New Fragment
         OfferDetail fragment=OfferDetail.newInstance();
@@ -278,14 +266,14 @@ public class OfferSearchAdapter extends RecyclerView.Adapter<OfferSearchAdapter.
 
     }
 
-    public class OnQueryLoadListener implements ParseQueryAdapter.OnQueryLoadListener<CompanyOffer> {
+    public class OnQueryLoadListener implements ParseQueryAdapter.OnQueryLoadListener<Company> {
 
         public void onLoading() {
 
         }
 
-        public void onLoaded(List<CompanyOffer> objects, Exception e) {
-            offerSearchAdapter.notifyDataSetChanged();
+        public void onLoaded(List<Company> objects, Exception e) {
+            studentCompanySearchAdapter.notifyDataSetChanged();
         }
     }
 
@@ -305,4 +293,5 @@ public class OfferSearchAdapter extends RecyclerView.Adapter<OfferSearchAdapter.
 
 
     }
+
 }
