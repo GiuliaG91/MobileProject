@@ -190,8 +190,7 @@
                         android:textSize="15dp"
                         android:hint="Insert email"
                         android:paddingLeft="10dp"
-                        android:paddingTop="5dp"
-                        android:enabled="false"/>
+                        android:paddingTop="5dp"/>
 
                 </LinearLayout>
 
@@ -245,8 +244,7 @@
                         android:textSize="15dp"
                         android:hint="Insert password"
                         android:paddingLeft="10dp"
-                        android:paddingTop="5dp"
-                        android:enabled="false"/>
+                        android:paddingTop="5dp"/>
 
                     <TextView
                         android:layout_width="fill_parent"
@@ -270,8 +268,7 @@
                         android:textSize="15dp"
                         android:hint="Confirm password"
                         android:paddingLeft="10dp"
-                        android:paddingTop="5dp"
-                        android:enabled="false"/>
+                        android:paddingTop="5dp"/>
 
                 </LinearLayout>
 
