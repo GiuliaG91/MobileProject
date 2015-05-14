@@ -52,6 +52,15 @@ public class ParseUserWrapper extends ParseUser {
         this.put(TYPE_FIELD, type);
     }
 
+    public User getUser(){
+
+        return (User)get(USER_FIELD);
+    }
+    public void setUser(User user){
+
+        put(USER_FIELD,user);
+    }
+
     public boolean isEmailVerified(){
         return this.getBoolean(EMAIL_VERIFIED_FIELD);
     }

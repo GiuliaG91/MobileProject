@@ -190,8 +190,7 @@
                         android:textSize="15dp"
                         android:hint="Insert email"
                         android:paddingLeft="10dp"
-                        android:paddingTop="5dp"
-                        android:enabled="false"/>
+                        android:paddingTop="5dp"/>
 
                 </LinearLayout>
 
@@ -239,14 +238,13 @@
                         android:layout_width="fill_parent"
                         android:layout_height="0dp"
                         android:id="@+id/company_password"
-                        android:inputType="textVisiblePassword"
+                        android:inputType="textPassword"
                         android:layout_weight=".7"
                         android:textColor="#ff000000"
                         android:textSize="15dp"
                         android:hint="Insert password"
                         android:paddingLeft="10dp"
-                        android:paddingTop="5dp"
-                        android:enabled="false"/>
+                        android:paddingTop="5dp"/>
 
                     <TextView
                         android:layout_width="fill_parent"
@@ -264,14 +262,13 @@
                         android:layout_width="fill_parent"
                         android:layout_height="0dp"
                         android:id="@+id/company_confirmPassword"
-                        android:inputType="textVisiblePassword"
+                        android:inputType="textPassword"
                         android:layout_weight=".7"
                         android:textColor="#ff000000"
                         android:textSize="15dp"
                         android:hint="Confirm password"
                         android:paddingLeft="10dp"
-                        android:paddingTop="5dp"
-                        android:enabled="false"/>
+                        android:paddingTop="5dp"/>
 
                 </LinearLayout>
 

@@ -106,13 +106,11 @@ public class User extends ParseObject{
 
         phones.add(phone);
         getRelation(PHONE_FIELD).add(phone);
-//        this.addUnique(PHONE_FIELD, phone);
     }
     public void removePhone(Telephone phone) {
 
         phones.remove(phone);
         getRelation(PHONE_FIELD).remove(phone);
-//        this.removeAll(PHONE_FIELD, Arrays.asList(phone));
     }
     public ArrayList<Telephone> getPhones(){
 
@@ -131,25 +129,6 @@ public class User extends ParseObject{
             }
         });
 
-//        ArrayList<Telephone> phones = new ArrayList<Telephone>();
-//        List<Object> list = this.getList(PHONE_FIELD);
-//
-//        if(list != null)
-//            for (Object o : list)
-//                if (o instanceof Telephone){
-//
-//                    Telephone t = (Telephone)o;
-//
-//                    try {
-//                        t.fetchIfNeeded();
-//                    } catch (ParseException e) {
-//                        e.printStackTrace();
-//                    }
-//
-//                    phones.add(t);
-//                }
-//
-//        this.phones = phones;
         isCached.put(PHONE_FIELD,true);
         return phones;
     }
@@ -158,13 +137,11 @@ public class User extends ParseObject{
 
         tags.put(tag.getTag(),tag);
         getRelation(TAG_FIELD).add(tag);
-//        this.addUnique(TAG_FIELD,tag);
     }
     public void removeTag(Tag tag){
 
         tags.remove(tag.getTag());
         getRelation(TAG_FIELD).remove(tag);
-//        removeAll(TAG_FIELD, Arrays.asList(tag));
     }
     public HashMap<String,Tag> getTags(){
 
@@ -182,22 +159,6 @@ public class User extends ParseObject{
                         tags.put(t.getTag(),t);
             }
         });
-//        List<Object> list = getList(TAG_FIELD);
-//
-//        if(list!=null)
-//            for(Object o:list)
-//                if(o instanceof Tag){
-//
-//                    Tag t = (Tag)o;
-//
-//                    try {
-//                        t.fetchIfNeeded();
-//                    } catch (ParseException e) {
-//                        e.printStackTrace();
-//                    }
-//
-//                    tags.put(t.getTag(),t);
-//                }
 
         isCached.put(TAG_FIELD,true);
         return tags;

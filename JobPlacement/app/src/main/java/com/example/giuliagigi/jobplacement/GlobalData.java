@@ -1,6 +1,7 @@
 package com.example.giuliagigi.jobplacement;
 
 import android.app.Application;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -35,6 +36,7 @@ public class GlobalData extends Application {
     CompanyOffer currentViewOffer;
     private HashMap<String,Tag> tags;
     private HashMap<String,Boolean> isCached;
+    private SharedPreferences loginPreferences;
 
     /*********STATE OF PAGES***************/
     private int home_student_position=0; //default
@@ -87,70 +89,126 @@ public class GlobalData extends Application {
 
     public ParseUserWrapper getCurrentUser() {
 
-        if(currentUser == null)
-            currentUser = (ParseUserWrapper)ParseUser.getCurrentUser();
+        currentUser = (ParseUserWrapper)ParseUser.getCurrentUser();
+
+        if(currentUser!=null)
+            try {
+                currentUserObject = currentUser.getUser().fetchIfNeeded();
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+
         return  currentUser;
     }
     public Student getStudentFromUser(){
 
-        if(currentUser.getType().equals(User.TYPE_COMPANY))
+        getCurrentUser();
+
+        if(currentUser==null)
             return null;
-
-        ParseQuery<Student> studentQuery = ParseQuery.getQuery(Student.class);
-        studentQuery.whereEqualTo(User.MAIL_FIELD,currentUser.getEmail());
-        Student result = null;
-        try {
-            result = (Student)studentQuery.find().get(0);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        return result;
-    }
-    public Company getCompanyFromUser(){
-
-        if(currentUser.getType().equals(User.TYPE_STUDENT))
-            return null;
-
-        ParseQuery<Company> companyQuery = ParseQuery.getQuery(Company.class);
-        companyQuery.whereEqualTo(User.MAIL_FIELD,currentUser.getEmail());
-        Company result = null;
-        try {
-            result = (Company)companyQuery.find().get(0);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        return result;
-    }
-    public User getUserObject(){
 
         if(currentUserObject == null){
 
-            if(currentUser.getType().equals((User.TYPE_STUDENT))){
-
-                ParseQuery<Student> studentQuery = ParseQuery.getQuery(Student.class);
-                studentQuery.whereEqualTo(User.MAIL_FIELD,currentUser.getEmail());
-                try {
-                    currentUserObject = studentQuery.find().get(0);
-                } catch (ParseException e) {
-                    e.printStackTrace();
-                }
-            }
-            else {
-
-                ParseQuery<Company> companyQuery = ParseQuery.getQuery(Company.class);
-                companyQuery.whereEqualTo(User.MAIL_FIELD,currentUser.getEmail());
-                try {
-                    currentUserObject = companyQuery.find().get(0);
-                } catch (ParseException e) {
-                    e.printStackTrace();
-                }
+            try {
+                currentUserObject = getCurrentUser().getUser().fetchIfNeeded();
+            } catch (ParseException e) {
+                e.printStackTrace();
+                Log.println(Log.ASSERT,"GLOBAL DATA", "error fetching user info");
+                return null;
             }
         }
 
-        if(currentUserObject.isCachingNeeded())
-            currentUserObject.cacheData();
+        return (Student)currentUserObject;
 
-        return currentUserObject;
+
+
+//        if(currentUser.getType().equals(User.TYPE_COMPANY))
+//            return null;
+//
+//        ParseQuery<Student> studentQuery = ParseQuery.getQuery(Student.class);
+//        studentQuery.whereEqualTo(User.MAIL_FIELD,currentUser.getEmail());
+//        Student result = null;
+//        try {
+//            result = (Student)studentQuery.find().get(0);
+//        } catch (ParseException e) {
+//            e.printStackTrace();
+//        }
+//        return result;
+    }
+    public Company getCompanyFromUser(){
+
+        getCurrentUser();
+        if (currentUser == null)
+            return null;
+
+        if(currentUserObject == null){
+
+            try {
+                currentUserObject = getCurrentUser().getUser().fetchIfNeeded();
+            } catch (ParseException e) {
+                e.printStackTrace();
+                Log.println(Log.ASSERT,"GLOBAL DATA", "error fetching user info");
+                return null;
+            }
+        }
+
+
+        return (Company)currentUserObject;
+//        if(currentUser.getType().equals(User.TYPE_STUDENT))
+//            return null;
+//
+//        ParseQuery<Company> companyQuery = ParseQuery.getQuery(Company.class);
+//        companyQuery.whereEqualTo(User.MAIL_FIELD, currentUser.getEmail());
+//        Company result = null;
+//        try {
+//            result = (Company)companyQuery.find().get(0);
+//        } catch (ParseException e) {
+//            e.printStackTrace();
+//        }
+//        return result;
+    }
+    public User getUserObject(){
+
+        if(getCurrentUser().getType().equals(User.TYPE_STUDENT))
+            return getStudentFromUser();
+        else
+            return getCompanyFromUser();
+
+//        if(currentUser == null)
+//            return null;
+
+//        if(currentUserObject == null){
+//
+//            if(currentUser.getType().equals((User.TYPE_STUDENT))){
+//
+//                ParseQuery<Student> studentQuery = ParseQuery.getQuery(Student.class);
+//                studentQuery.whereEqualTo(User.MAIL_FIELD,currentUser.getEmail());
+//                    studentQuery.findInBackground(new FindCallback<Student>() {
+//                        @Override
+//                        public void done(List<Student> students, ParseException e) {
+//
+//                            if(e == null)
+//                                if(students!= null)
+//                                    currentUserObject = students.get(0);
+//                        }
+//                    });
+//            }
+//            else {
+//
+//                ParseQuery<Company> companyQuery = ParseQuery.getQuery(Company.class);
+//                companyQuery.whereEqualTo(User.MAIL_FIELD,currentUser.getEmail());
+//                try {
+//                    currentUserObject = companyQuery.find().get(0);
+//                } catch (ParseException e) {
+//                    e.printStackTrace();
+//                }
+//            }
+//        }
+//
+//        if(currentUserObject.isCachingNeeded())
+//            currentUserObject.cacheData();
+//
+//        return currentUserObject;
     }
 
 
@@ -176,6 +234,17 @@ public class GlobalData extends Application {
     }
 
 
+    /* ----------------------- MANAGING PREFERENCES ---------------------------------------------*/
+
+    public SharedPreferences getLoginPreferences(){
+
+        return loginPreferences;
+    }
+
+    public void setLoginPreferences(SharedPreferences loginPreferences){
+
+        this.loginPreferences = loginPreferences;
+    }
 
 
 
