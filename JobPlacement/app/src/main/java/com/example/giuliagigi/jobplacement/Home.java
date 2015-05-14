@@ -35,7 +35,7 @@ import java.util.ArrayList;
 
 public class Home extends ActionBarActivity  implements TabHomeStudentFragment.OnFragmentInteractionListener ,TabHomeCompanyFragment.OnFragmentInteractionListener, NewOffer.OnFragmentInteractionListener,
                                                 ProfileManagementFragment.OnInteractionListener, ProfileManagement.OnInteractionListener , menuAdapter.SetSelectedItem ,
-                                                  OfferSearchFragment.OnFragmentInteractionListener
+                                                  OfferSearchFragment.OnFragmentInteractionListener , StudentCompanySearchFragment.OnFragmentInteractionListener
 {
     private Toolbar toolbar;   // Declaring the Toolbar Object
 

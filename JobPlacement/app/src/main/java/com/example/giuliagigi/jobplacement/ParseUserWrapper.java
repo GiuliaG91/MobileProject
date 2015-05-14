@@ -19,6 +19,8 @@ public class ParseUserWrapper extends ParseUser {
     public static final String TYPE_STUDENT = "Student";
     public static final String TYPE_COMPANY = "Company";
     public static final String USER_FIELD = "user";
+    private static final String STUDENT_FIELD = "student";
+    private static final String COMPANY_FIELD = "company";
     protected static final String EMAIL_VERIFIED_FIELD = "emailVerified";
 
     public static final String[] TYPES = new String[]{TYPE_STUDENT,TYPE_COMPANY};
@@ -54,11 +56,47 @@ public class ParseUserWrapper extends ParseUser {
 
     public User getUser(){
 
-        return (User)get(USER_FIELD);
+        if(getType().equals(User.TYPE_STUDENT))
+            return (User)get(STUDENT_FIELD);
+        else if (getType().equals(User.TYPE_COMPANY))
+            return (User)get(COMPANY_FIELD);
+
+        return null;
+
     }
     public void setUser(User user){
 
-        put(USER_FIELD,user);
+        if(getType().equals(User.TYPE_STUDENT)){
+
+            Student studentUser;
+            try {
+                studentUser = (Student)user;
+            }
+            catch (ClassCastException e){
+
+                e.printStackTrace();
+                return;
+            }
+            put(STUDENT_FIELD,studentUser);
+
+        }
+        else if(getType().equals(User.TYPE_COMPANY)){
+
+            Company companyUser;
+
+            try{
+
+                companyUser = (Company)user;
+            }
+            catch (ClassCastException e){
+
+                e.printStackTrace();
+                return;
+            }
+
+            put(COMPANY_FIELD,companyUser);
+
+        }
     }
 
     public boolean isEmailVerified(){

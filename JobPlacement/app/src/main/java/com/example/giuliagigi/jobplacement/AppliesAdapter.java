@@ -21,8 +21,6 @@ import java.util.List;
  */
 public class AppliesAdapter extends RecyclerView.Adapter<AppliesAdapter.ViewHolder> implements View.OnClickListener{
 
-
-
     private FragmentActivity context;
     private ArrayList<CompanyOffer> mDataset;
     private GlobalData globalData;
@@ -126,7 +124,7 @@ public class AppliesAdapter extends RecyclerView.Adapter<AppliesAdapter.ViewHold
         globalData.setCurrentOffer(mDataset.get(vh.getPosition()));
         //Pass Object to fragment
         FragmentManager fragmentManager = context.getSupportFragmentManager();
-        globalData.setFav_position(vh.getPosition());
+
         //New Fragment
         OfferDetail fragment=OfferDetail.newInstance();
         // Insert the fragment by replacing any existing fragment
@@ -145,7 +143,7 @@ public class AppliesAdapter extends RecyclerView.Adapter<AppliesAdapter.ViewHold
 
     }
 
-    public void startItem(int position)
+ /*   public void startItem(int position)
     {
 
 
@@ -169,7 +167,7 @@ public class AppliesAdapter extends RecyclerView.Adapter<AppliesAdapter.ViewHold
         toolbar.setTitle("Offer");
 
     }
-
+*/
     public void updateDataset(List<CompanyOffer> off)
     {
         mDataset.addAll(off);

@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:orientation="horizontal"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content">
+
+    <android.support.v7.widget.CardView
+        xmlns:card_view="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/card_view"
+        android:layout_gravity="center"
+        android:layout_width="fill_parent"
+        android:layout_height="150dp"
+        card_view:cardCornerRadius="5dp"
+        android:layout_margin="5dp">
+
+
+<LinearLayout
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical">
+
+  <LinearLayout
+      android:layout_width="fill_parent"
+      android:layout_height="0dp"
+      android:layout_weight="1"
+      android:orientation="horizontal">
+
+    <ImageView
+        android:layout_width="0dp"
+        android:layout_height="fill_parent"
+        android:layout_weight="0.5"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="5dp"
+        android:id="@+id/logo_img"
+        android:src="@drawable/ic_profile"/>
+
+      <TextView
+          android:layout_width="0dp"
+          android:layout_height="fill_parent"
+          android:layout_weight="1"
+          android:textSize="25sp"
+          android:id="@+id/company_name_tv"
+          android:gravity="center"
+          android:layout_marginTop="5dp"
+          android:text="prova" />
+
+
+   </LinearLayout>
+
+ <LinearLayout
+     android:layout_width="fill_parent"
+     android:layout_height="0dp"
+     android:layout_weight="1"
+     android:orientation="horizontal">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="0dp"
+        android:layout_height="fill_parent"
+        android:layout_weight="1"
+        android:paddingLeft="5dp">
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="0dp"
+            android:text="New Text"
+            android:id="@+id/Company_mail_tv"
+            android:layout_weight="1"
+            android:gravity="bottom"
+            android:textColor="#ff000000"
+            android:textSize="20dp"
+            android:paddingBottom="5dp" />
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="0dp"
+            android:text="Small Text"
+            android:id="@+id/CompanyField_tv"
+            android:layout_weight="1"
+            android:paddingTop="5dp" />
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="0dp"
+        android:layout_height="fill_parent"
+        android:layout_weight="0.5">
+
+
+        <CheckBox
+            android:id="@+id/star"
+            android:layout_width="fill_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:clickable="true"
+            android:focusable="true"
+            android:button="@drawable/star"
+            android:layout_marginLeft="30dp"
+            android:layout_marginBottom="5dp"
+            android:checked="false"/>
+    </LinearLayout>
+ </LinearLayout>
+
+</LinearLayout>
+ </android.support.v7.widget.CardView>
+</LinearLayout>
+
+

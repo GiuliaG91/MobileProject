@@ -3,25 +3,21 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
+    android:orientation="horizontal"
     android:id="@+id/frag_student__profile_management_basics"
     tools:context="com.example.giuliagigi.jobplacement.StudentProfileManagementBasicsFragment">
 
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="1">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:orientation="horizontal">
 
             <LinearLayout
                 android:orientation="horizontal"
-                android:layout_width="fill_parent"
-                android:layout_height="0dp"
-                android:layout_weight="0.3"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.4"
                 android:id="@+id/basics_profilePhoto"
                 android:background="@drawable/user_icon">
 
@@ -62,11 +58,16 @@
 
             </LinearLayout>
 
+
+            <ScrollView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight=".6">
+
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:orientation="vertical"
-                android:layout_weight="0.7">
+                android:layout_height="match_parent"
+                android:orientation="vertical">
 
                 <!-- email area -->
 
@@ -189,7 +190,6 @@
 
                 </LinearLayout>
                 <!-- end gender area -->
-
                 <!-- date area -->
 
                 <LinearLayout
@@ -271,7 +271,7 @@
                             android:layout_width="fill_parent"
                             android:layout_height="0dp"
                             android:textAppearance="?android:attr/textAppearanceSmall"
-                            android:text="@string/string_student_fragment_birth_city_title"
+                            android:text="@string/string_student_fragment_birth_title"
                             android:id="@+id/student_birthCity_hint"
                             android:layout_weight="1"
                             android:paddingLeft="10dp"
@@ -359,11 +359,13 @@
                 </LinearLayout>
                 <!-- end description -->
 
+
             </LinearLayout>
 
-        </LinearLayout>
+            </ScrollView>
 
-    </ScrollView>
+            </LinearLayout>
+
 
 
 

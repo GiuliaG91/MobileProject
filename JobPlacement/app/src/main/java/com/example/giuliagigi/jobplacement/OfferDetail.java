@@ -35,7 +35,7 @@ import java.util.Calendar;
  * Use the {@link OfferDetail#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class OfferDetail extends Fragment {
+public class OfferDetail extends  Fragment {
 
     View root;
     CompanyOffer offer;

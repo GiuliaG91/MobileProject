@@ -262,7 +262,11 @@
                 android:orientation="vertical"
                 android:id="@+id/office_map_container">
 
-                <!--map container -->
+                <fragment
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    class="com.example.giuliagigi.jobplacement.GeoLocalization"
+                    android:id="@+id/office_map_fragment"/>
 
                 </LinearLayout>
 

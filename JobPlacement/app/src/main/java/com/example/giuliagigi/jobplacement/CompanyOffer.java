@@ -78,49 +78,6 @@ public class CompanyOffer extends ParseObject {
 
     public Company getCompany() {return (Company)this.get(COMPANY_FIELD);}
 
- /*   public ArrayList<Tag> getTags( ){
-
-        ArrayList<Tag> tags = new ArrayList<Tag>();
-        List<Object> list = this.getList(TAGS_FIELD);
-
-        if(list!= null)
-            for(Object o:list){
-                if(o instanceof Tag){
-
-                    Tag t = (Tag)o;
-                    try {
-                        t.fetchIfNeeded();
-                    } catch (com.parse.ParseException e) {
-                        e.printStackTrace();
-                    }
-                    tags.add(t);
-                }
-            }
-
-        return tags;
-    }
-
-  public ArrayList<Student> getStudents( ){
-
-        ArrayList<Student> students = new ArrayList<Student>();
-        List<Object> list = this.getList(APPLIES_FIELD);
-
-        if(list!= null)
-            for(Object o:list){
-                if(o instanceof Student){
-
-                    Student s = (Student)o;
-                    try {
-                        s.fetchIfNeeded();
-                    } catch (com.parse.ParseException e) {
-                        e.printStackTrace();
-                    }
-                    students.add(s);
-                }
-            }
-
-        return students;
-    }*/
 
     public List<Tag> getTags( ){
 
