@@ -73,7 +73,7 @@ public class GeoLocalization extends SupportMapFragment{
     public void onViewCreated(View root, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(root, savedInstanceState);
         Log.println(Log.ASSERT,"GEOLOC","onViewCreated");
-        //SupportMapFragment map = (SupportMapFragment)getActivity().getSupportFragmentManager().findFragmentById(R.id.map);
+
         getMapAsync(new OnMapReadyCallback() {
             @Override
             public void onMapReady(GoogleMap googleMap) {
@@ -83,9 +83,12 @@ public class GeoLocalization extends SupportMapFragment{
                 else{
 
                     GeoLocalization.this.googleMap = googleMap;
-                    host.onMapReady(googleMap);
-                }
 
+                    if(host == null)
+                        Log.println(Log.ASSERT,"GEOLOC","ERROR: map fragment doesn't have a OnMapReadyCallback object linked to it!!");
+                    else
+                        host.onMapReady(googleMap);
+                }
             }
         });
     }
