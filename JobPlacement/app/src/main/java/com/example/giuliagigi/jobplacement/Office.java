@@ -4,6 +4,7 @@ import android.location.Address;
 import android.location.Geocoder;
 
 import com.parse.ParseClassName;
+import com.parse.ParseGeoPoint;
 import com.parse.ParseObject;
 
 import java.util.Arrays;
@@ -25,6 +26,7 @@ public class Office extends ParseObject {
     public static final String OFFICE_NATION_FIELD = "nation";
     public static final String OFFICE_TYPE_FIELD = "officeType";
     public static final String OFFICE_COMPANY_FIELD = "company";
+    public static final String OFFICE_LOCATION = "location";
 
     public Office(){
         super();
@@ -71,6 +73,15 @@ public class Office extends ParseObject {
     }
     public Company getCompany(){
         return (Company)get(OFFICE_COMPANY_FIELD);
+    }
+
+    public void setLocation(ParseGeoPoint location){
+
+        put(OFFICE_LOCATION,location);
+    }
+    public ParseGeoPoint getLocation(){
+
+        return (ParseGeoPoint)get(OFFICE_LOCATION);
     }
 
     public static int getTypeID(String type){

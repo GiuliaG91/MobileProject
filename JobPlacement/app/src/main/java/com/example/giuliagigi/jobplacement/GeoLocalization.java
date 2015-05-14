@@ -33,33 +33,19 @@ import java.util.List;
 
 public class GeoLocalization extends SupportMapFragment{
 
-    static final LatLng TutorialsPoint = new LatLng(45 , 8);
     private GoogleMap googleMap;
-    private View root;
     protected GlobalData application;
-    private Company currentUser;
-    private double longitude;
-    private double latitude;
-    private LatLng position;
-    private Office office;
+    private Marker currentLocation;
 
 
-    public GeoLocalization(){
-        super();
-    }
-    public static GeoLocalization newInstance(Office office) {
+
+    public GeoLocalization(){ super(); }
+    public static GeoLocalization newInstance() {
         GeoLocalization fragment = new GeoLocalization();
         Bundle args = new Bundle();
         fragment.setArguments(args);
-        fragment.setOffice(office);
         return fragment;
     }
-
-    public void setOffice(Office office){
-        this.office = office;
-    }
-
-
 
     /* ----------------- STANDARD CALLBACKS ------------------------------------------------------*/
 
@@ -67,7 +53,7 @@ public class GeoLocalization extends SupportMapFragment{
 
         super.onAttach(activity);
         application = (GlobalData)activity.getApplicationContext();
-        currentUser = (Company)application.getUserObject();
+        currentLocation = null;
     }
 
     @Override
@@ -89,70 +75,30 @@ public class GeoLocalization extends SupportMapFragment{
                     Log.println(Log.ASSERT, "GEOLOC", "map object is null");
                 else
                     GeoLocalization.this.googleMap = googleMap;
-
-                latitude = 45.285f;
-                longitude = 8.0785f;
-                setMarkerPosition(new LatLng(latitude, longitude));
             }
         });
-
-
-
     }
-
-
-    public void setMarkerPosition(LatLng pos){
-
-        googleMap.addMarker(new MarkerOptions().position(pos));
-        googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(pos,9.0f));
-
-    }
-
-    /*
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_geo_localization);
-
-        try {
-            if (googleMap == null) {
-                googleMap = ((MapFragment) getFragmentManager(). findFragmentById(R.id.map)).getMap();
-            }
-            googleMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
-
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        String addressStr = office.getOfficeCity()+" " +office.getOfficeAddress();
-        //String addressStr = "Sainta Augustine,FL,4405 Avenue A";
-        Geocoder geoCoder = new Geocoder(this);
-
-        try {
-            List<Address> addresses =  geoCoder.getFromLocationName(addressStr, 1);
-            if (addresses.size() >  0) {
-                latitude = addresses.get(0).getLatitude();
-                longtitude = addresses.get(0).getLongitude(); }
-
-        }  catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        latitude = 45.00;
-        longitude = 8.00;
-
-        pos = new LatLng(latitude, longitude);
-        googleMap.addMarker(new MarkerOptions().position(pos));
-        googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(pos,100));
-
-
-    }*/
 
     @Override
     public void onDetach() {
         super.onDetach();
     }
+
+
+
+    /* ----------------------- AUXILIARY METHODS -------------------------------------------------*/
+
+    public void setMarkerPosition(LatLng pos){
+
+        if(currentLocation != null)
+            currentLocation.remove();
+
+        currentLocation = googleMap.addMarker(new MarkerOptions().position(pos));
+        googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(pos,11.0f));
+    }
+
+
+
 
 
 }
