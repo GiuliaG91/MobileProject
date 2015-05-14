@@ -247,23 +247,9 @@ public class Registration extends ActionBarActivity implements StudentRegistrati
                                                 newStudentDegree.saveEventually();
                                                 newParseUser.setUser(newUser);
                                                 newParseUser.saveEventually();
+                                                saveLoginPreferences(newUser);
 
-                                                /* saving credentials for next automatic login */
-                                                SharedPreferences sp = application.getLoginPreferences();
-                                                if (sp != null) {
-
-                                                    SharedPreferences.Editor editor = sp.edit();
-                                                    editor.putBoolean(Login.SHAREDPREF_LATEST_LOGIN_PREFERENCE, true);
-                                                    Set<String> knownMails = sp.getStringSet(Login.SHAREDPREF_MAIL_LIST, new HashSet<String>());
-                                                    knownMails.add(newUser.getMail());
-                                                    editor.putStringSet(Login.SHAREDPREF_MAIL_LIST, knownMails);
-                                                    editor.putString(newUser.getMail(), newUser.getPassword());
-                                                    editor.putString(Login.SHAREDPREF_LATEST_MAIL, newUser.getMail());
-                                                    editor.putString(Login.SHAREDPREF_LATEST_PASSWORD, newUser.getPassword());
-                                                    editor.commit();
-
-                                                    startActivity(new Intent(getApplicationContext(),Login.class));
-                                                }
+                                                startActivity(new Intent(getApplicationContext(),Login.class));
                                             } else
                                                 Log.println(Log.ASSERT, "SIGNUP", "error while saving user object: " + e.getMessage());
                                         }
@@ -271,6 +257,19 @@ public class Registration extends ActionBarActivity implements StudentRegistrati
 
                                 } else
                                     Log.println(Log.ASSERT, "SIGNUP", "error saving degree");
+                            }
+                        });
+                    }
+                    else if(newUser.getType().equals(User.TYPE_COMPANY)){
+
+                        newUser.saveInBackground(new SaveCallback() {
+                            @Override
+                            public void done(ParseException e) {
+
+                                newParseUser.setUser(newUser);
+                                newParseUser.saveInBackground();
+                                saveLoginPreferences(newUser);
+                                startActivity(new Intent(getApplicationContext(),Login.class));
                             }
                         });
                     }
@@ -309,6 +308,28 @@ public class Registration extends ActionBarActivity implements StudentRegistrati
         });
     }
 
+
+    /* --------------- SAVING LOGIN PREFERENCES -------------------------------------------------- */
+
+    private void saveLoginPreferences(User newUser){
+
+        /* saving credentials for next automatic login */
+        SharedPreferences sp = application.getLoginPreferences();
+        if (sp != null) {
+
+            SharedPreferences.Editor editor = sp.edit();
+            editor.putBoolean(Login.SHAREDPREF_LATEST_LOGIN_PREFERENCE, true);
+            Set<String> knownMails = sp.getStringSet(Login.SHAREDPREF_MAIL_LIST, new HashSet<String>());
+            knownMails.add(newUser.getMail());
+            editor.putStringSet(Login.SHAREDPREF_MAIL_LIST, knownMails);
+            editor.putString(newUser.getMail(), newUser.getPassword());
+            editor.putString(Login.SHAREDPREF_LATEST_MAIL, newUser.getMail());
+            editor.putString(Login.SHAREDPREF_LATEST_PASSWORD, newUser.getPassword());
+            editor.commit();
+
+
+        }
+    }
 
 
 }

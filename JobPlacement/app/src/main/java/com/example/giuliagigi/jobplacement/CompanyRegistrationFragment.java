@@ -69,10 +69,6 @@ public class CompanyRegistrationFragment extends Fragment {
         EditText fiscalCode = (EditText)root.findViewById(R.id.company_fiscal_code);
         EditText name = (EditText)root.findViewById(R.id.company_name);
 
-        mail.setEnabled(true);
-        password.setEnabled(true);
-        confirmPassword.setEnabled(true);
-
         Spinner fieldsList = (Spinner)root.findViewById(R.id.fields_list);
         String field = (String)fieldsList.getSelectedItem();
 

@@ -89,7 +89,7 @@ public class OfferSearchFragment extends Fragment implements FilterFragment.addF
         mRecyclerView.addItemDecoration(new DividerItemDecoration(this.getActivity(), DividerItemDecoration.VERTICAL_LIST));
         mRecyclerView.setLayoutManager(mLayoutManager);
 
-        adapter = new OfferSearchAdapter(this.getActivity(),mRecyclerView);
+        adapter = new OfferSearchAdapter(this.getActivity());
 
         /*********************/
 
@@ -146,8 +146,8 @@ public class OfferSearchFragment extends Fragment implements FilterFragment.addF
 
     @Override
     public void addFilter(List<String> tag_list, List<String> contract_list, List<String> term_list, List<String> field_list, List<String> location_list, List<String> salary_list) {
-                adapter.setFactory(tag_list,contract_list,term_list,field_list,location_list,salary_list);
-                adapter.setAdapter();
+//               adapter.setFactory(tag_list,contract_list,term_list,field_list,location_list,salary_list);
+//               adapter.setAdapter();
                adapter.notifyDataSetChanged();
     }
 
