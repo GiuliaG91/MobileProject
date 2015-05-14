@@ -262,14 +262,22 @@ public class Registration extends ActionBarActivity implements StudentRegistrati
                     }
                     else if(newUser.getType().equals(User.TYPE_COMPANY)){
 
+
+                        Log.println(Log.ASSERT,"SIGNUP","registrating company");
                         newUser.saveInBackground(new SaveCallback() {
                             @Override
                             public void done(ParseException e) {
 
-                                newParseUser.setUser(newUser);
-                                newParseUser.saveInBackground();
-                                saveLoginPreferences(newUser);
-                                startActivity(new Intent(getApplicationContext(),Login.class));
+                                if(e == null){
+
+                                    newParseUser.setUser(newUser);
+                                    newParseUser.saveEventually();
+                                    saveLoginPreferences(newUser);
+                                    startActivity(new Intent(getApplicationContext(),Login.class));
+                                }
+                                else
+                                    Log.println(Log.ASSERT, "SIGNUP", "error while saving user object: " + e.getMessage());
+
                             }
                         });
                     }
