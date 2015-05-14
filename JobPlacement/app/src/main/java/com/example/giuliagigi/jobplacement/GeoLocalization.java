@@ -36,6 +36,8 @@ public class GeoLocalization extends SupportMapFragment{
     private GoogleMap googleMap;
     protected GlobalData application;
     private Marker currentLocation;
+    private boolean isMapReady;
+    private OnMapReadyCallback host;
 
 
 
@@ -47,6 +49,10 @@ public class GeoLocalization extends SupportMapFragment{
         return fragment;
     }
 
+    public void setOnMapReadyCallback(OnMapReadyCallback host){
+        this.host = host;
+    }
+
     /* ----------------- STANDARD CALLBACKS ------------------------------------------------------*/
 
     public void onAttach(Activity activity) {
@@ -54,6 +60,7 @@ public class GeoLocalization extends SupportMapFragment{
         super.onAttach(activity);
         application = (GlobalData)activity.getApplicationContext();
         currentLocation = null;
+        isMapReady = false;
     }
 
     @Override
@@ -73,8 +80,12 @@ public class GeoLocalization extends SupportMapFragment{
 
                 if (googleMap == null)
                     Log.println(Log.ASSERT, "GEOLOC", "map object is null");
-                else
+                else{
+
                     GeoLocalization.this.googleMap = googleMap;
+                    host.onMapReady(googleMap);
+                }
+
             }
         });
     }
@@ -97,8 +108,7 @@ public class GeoLocalization extends SupportMapFragment{
         googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(pos,11.0f));
     }
 
-
-
-
-
+    public boolean isMapReady(){
+        return isMapReady;
+    }
 }
