@@ -205,8 +205,16 @@ public class CompanyProfileManagementOfficeFragment extends ProfileManagementFra
 
 
 
-        LinearLayout map_container = (LinearLayout)root.findViewById(R.id.office_map_container);
-        inflater.inflate(R.layout.activity_geo_localization, map_container);
+        //LinearLayout map_container = (LinearLayout)root.findViewById(R.id.office_map_container);
+        /*GeoLocalization geoLoc = GeoLocalization.newInstance(office);
+        FragmentTransaction ft = getChildFragmentManager().beginTransaction();
+        ft.add(R.id.office_map_container, geoLoc);
+        ft.commit();*/
+
+        GeoLocalization geoloc = (GeoLocalization)getActivity().getSupportFragmentManager().findFragmentById(R.id.office_map_fragment);
+
+
+        Log.println(Log.ASSERT,"OFFICE FRAG","correctly added map section");
         //Intent searchAddress = new  Intent(Intent.ACTION_VIEW, Uri.parse("geo:0,0?q=" + address));
         //startActivity(searchAddress);
 
