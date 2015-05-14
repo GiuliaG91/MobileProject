@@ -1,7 +1,9 @@
 package com.example.giuliagigi.jobplacement;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -20,7 +22,9 @@ import com.parse.ParseException;
 import com.parse.ParseQuery;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 
 public class ProfileDeleteFragment extends Fragment {
@@ -175,6 +179,15 @@ public class ProfileDeleteFragment extends Fragment {
 
     private void completeAccountDeletion(){
 
+        SharedPreferences sp = getActivity().getPreferences(Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sp.edit();
+
+        Set<String> knownMails = sp.getStringSet(Login.SHAREDPREF_MAIL_LIST, new HashSet<String>());
+        knownMails.remove(application.getCurrentUser().getEmail());
+        editor.putStringSet(Login.SHAREDPREF_MAIL_LIST,knownMails);
+        editor.remove(application.getCurrentUser().getEmail());
+        editor.apply();
+
         application.getCurrentUser().deleteInBackground(new DeleteCallback() {
             @Override
             public void done(ParseException e) {
@@ -198,6 +211,8 @@ public class ProfileDeleteFragment extends Fragment {
                         w.setHints(hints.getText().toString());
 
                     w.saveEventually();
+
+
 
                     Intent i = new Intent(getActivity().getApplicationContext(),Login.class);
                     startActivity(i);

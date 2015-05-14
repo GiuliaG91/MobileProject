@@ -3,6 +3,7 @@ package com.example.giuliagigi.jobplacement;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.support.v7.app.*;
 import android.os.Bundle;
@@ -22,10 +23,13 @@ import android.widget.Toast;
 
 import com.parse.DeleteCallback;
 import com.parse.ParseException;
+import com.parse.SaveCallback;
 import com.parse.SignUpCallback;
 
 import java.util.Arrays;
 import java.util.Currency;
+import java.util.HashSet;
+import java.util.Set;
 
 
 public class Registration extends ActionBarActivity implements StudentRegistrationFragment.onInteractionListener, CompanyRegistrationFragment.OnInteractionListener {
@@ -220,14 +224,63 @@ public class Registration extends ActionBarActivity implements StudentRegistrati
 
                     Log.println(Log.ASSERT,"REGISTRATION", "signup ok");
                     Log.println(Log.ASSERT,"REGISTRATION","registration successful. Redirect to login activity");
-                    newUser.saveInBackground();
-                    startActivity(new Intent(getApplicationContext(),Login.class));
+
+                    if(newUser.getType().equals(User.TYPE_STUDENT)){
+
+                        /*necessary saving degree before saving student*/
+                        Student newStudent = (Student)newUser;
+                        final Degree newStudentDegree = newStudent.getDegrees().get(0);
+                        newStudentDegree.saveInBackground(new SaveCallback() {
+                            @Override
+                            public void done(ParseException e) {
+
+                                if (e == null) {
+
+                                    Log.println(Log.ASSERT, "SIGNUP", "Degree saved. proceeding to save user");
+                                    newUser.saveInBackground(new SaveCallback() {
+                                        @Override
+                                        public void done(ParseException e) {
+
+                                            if (e == null) {
+
+                                                newStudentDegree.setStudent((Student)newUser);
+                                                newStudentDegree.saveEventually();
+                                                newParseUser.setUser(newUser);
+                                                newParseUser.saveEventually();
+
+                                                /* saving credentials for next automatic login */
+                                                SharedPreferences sp = application.getLoginPreferences();
+                                                if (sp != null) {
+
+                                                    SharedPreferences.Editor editor = sp.edit();
+                                                    editor.putBoolean(Login.SHAREDPREF_LATEST_LOGIN_PREFERENCE, true);
+                                                    Set<String> knownMails = sp.getStringSet(Login.SHAREDPREF_MAIL_LIST, new HashSet<String>());
+                                                    knownMails.add(newUser.getMail());
+                                                    editor.putStringSet(Login.SHAREDPREF_MAIL_LIST, knownMails);
+                                                    editor.putString(newUser.getMail(), newUser.getPassword());
+                                                    editor.putString(Login.SHAREDPREF_LATEST_MAIL, newUser.getMail());
+                                                    editor.putString(Login.SHAREDPREF_LATEST_PASSWORD, newUser.getPassword());
+                                                    editor.commit();
+
+                                                    startActivity(new Intent(getApplicationContext(),Login.class));
+                                                }
+                                            } else
+                                                Log.println(Log.ASSERT, "SIGNUP", "error while saving user object: " + e.getMessage());
+                                        }
+                                    });
+
+                                } else
+                                    Log.println(Log.ASSERT, "SIGNUP", "error saving degree");
+                            }
+                        });
+                    }
+
                 }
                 else {
 
                     Log.println(Log.ASSERT,"REGISTRATION", "signup fail");
                     e.printStackTrace();
-                    Log.println(Log.ASSERT,"REGISTRATION","registration unsuccessful. displaying error message - " + e.getMessage());
+                    Log.println(Log.ASSERT, "REGISTRATION", "registration unsuccessful. displaying error message - " + e.getMessage());
 
                     switch (e.getCode()){
 

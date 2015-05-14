@@ -29,7 +29,6 @@ public class Student extends User {
     protected static final String CITY_FIELD = "city";
     protected static final String POSTAL_CODE_FIELD = "postalCode";
     protected static final String NATION_FIELD = "nation";
-    protected static final String PHONE_FIELD = "phones";
     protected static final String LANGUAGE_FIELD = "languages";
     protected static final String CERTIFICATE_FIELD = "certificates";
     protected static final String FAVOURITES_FIELD = "favourites";

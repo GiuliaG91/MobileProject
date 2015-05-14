@@ -42,18 +42,23 @@ public class Login extends ActionBarActivity {
     private MultiAutoCompleteTextView mailText;
     private TextView registerLink,forgotPassword;
     private Button loginButton;
+    private GlobalData application;
 
-    private static final String SHAREDPREF_LATEST_MAIL = "shared_preferences_latest_mail";
-    private static final String SHAREDPREF_LATEST_PASSWORD = "shared_preferences_latest_password";
-    private static final String SHAREDPREF_LATEST_LOGIN_PREFERENCE = "shared_preferences_latest_login_preference";
-    private static final String SHAREDPREF_MAIL_LIST = "shared_preferences_mail_list";
+    public static final String SHAREDPREF_LATEST_MAIL = "shared_preferences_latest_mail";
+    public static final String SHAREDPREF_LATEST_PASSWORD = "shared_preferences_latest_password";
+    public static final String SHAREDPREF_LATEST_LOGIN_PREFERENCE = "shared_preferences_latest_login_preference";
+    public static final String SHAREDPREF_MAIL_LIST = "shared_preferences_mail_list";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login_layout);
 
+        application = (GlobalData)getApplicationContext();
+
         final SharedPreferences sp = getPreferences(Context.MODE_PRIVATE);
+        application.setLoginPreferences(sp);
+//        sp.edit().clear().apply(); // pulisce le Shared Preferences
 
         mailText = (MultiAutoCompleteTextView)findViewById(R.id.email_editText);
         passwordText = (EditText)findViewById(R.id.password_editText);
@@ -183,8 +188,8 @@ public class Login extends ActionBarActivity {
             mailText.setText(latestMail);
             passwordText.setText(latestPassword);
 
-//            Toast.makeText(getApplicationContext(),"Logging in ...",Toast.LENGTH_SHORT).show();
-//            performLogin(latestMail,latestPassword); //COMMENTA PER DISABILITARE LOGIN AUTOMATICO
+            Toast.makeText(getApplicationContext(),"Logging in ...",Toast.LENGTH_SHORT).show();
+            performLogin(latestMail,latestPassword); //COMMENTA PER DISABILITARE LOGIN AUTOMATICO
         }
 
     }
@@ -252,10 +257,10 @@ public class Login extends ActionBarActivity {
                     editor.putBoolean(SHAREDPREF_LATEST_LOGIN_PREFERENCE,rememberAccount.isChecked());
                     editor.apply();
 
-                    /* caching profile infos */
-                    GlobalData gd = (GlobalData)getApplicationContext();
-                    gd.getCurrentUser();
-                    gd.getUserObject();
+//                    /* caching profile infos */
+//                    GlobalData gd = (GlobalData)getApplicationContext();
+//                    gd.getCurrentUser();
+//                    gd.getUserObject();
 
                     /* launch home activity */
                     Intent i = new Intent(getApplicationContext(),Home.class);
