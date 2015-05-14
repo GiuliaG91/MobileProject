@@ -14,6 +14,7 @@ import android.location.Geocoder;
 import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -50,7 +51,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class CompanyProfileManagementOfficeFragment extends ProfileManagementFragment{
+public class CompanyProfileManagementOfficeFragment extends ProfileManagementFragment implements OnMapReadyCallback{
 
     private static final String TITLE = "Office";
 
@@ -156,8 +157,7 @@ public class CompanyProfileManagementOfficeFragment extends ProfileManagementFra
         root = inflater.inflate(R.layout.fragment_office_management, container, false);
 
         geoloc = (GeoLocalization)getChildFragmentManager().findFragmentById(R.id.office_map_fragment);
-        if(office.getLocation()!=null)
-            geoloc.setMarkerPosition(new LatLng(office.getLocation().getLatitude(),office.getLocation().getLongitude()));
+        geoloc.setOnMapReadyCallback(this);
 
         officeType = (Spinner)root.findViewById(R.id.office_management_spinnerType);
         officeType.setAdapter(new StringAdapter(Office.TYPES));
@@ -282,14 +282,13 @@ public class CompanyProfileManagementOfficeFragment extends ProfileManagementFra
                 @Override
                 public void done(ParseException e) {
 
-                    if(e==null){
+                    if (e == null) {
 
-                        Log.println(Log.ASSERT,"OFFICE FRAG", "office saved. Updating company");
+                        Log.println(Log.ASSERT, "OFFICE FRAG", "office saved. Updating company");
                         currentUser.addOffice(office);
                         currentUser.saveEventually();
-                    }
-                    else
-                        Log.println(Log.ASSERT,"OFFICE FRAG","error saving office");
+                    } else
+                        Log.println(Log.ASSERT, "OFFICE FRAG", "error saving office");
 
                 }
             });
@@ -322,6 +321,18 @@ public class CompanyProfileManagementOfficeFragment extends ProfileManagementFra
 
 
     /* ------------------------------ MAPS METHODS ------------------------------------------------*/
+
+
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+
+        Log.println(Log.ASSERT,"OFFICE FRAG", "Map was created. Setting marker position");
+
+        if(office.getLocation()!=null)
+            geoloc.setMarkerPosition(new LatLng(office.getLocation().getLatitude(),office.getLocation().getLongitude()));
+    }
+
+
 
     private void setMapLocation(String geoAddress){
 
@@ -399,6 +410,8 @@ public class CompanyProfileManagementOfficeFragment extends ProfileManagementFra
 
         Log.println(Log.ASSERT,"OFFICE FRAG", "setting map location finished");
     }
+
+
 
 
     private class AddressAdapter extends BaseAdapter{
