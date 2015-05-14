@@ -5,6 +5,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -31,27 +32,16 @@ import java.util.List;
  * Use the {@link OfferSearchFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class OfferSearchFragment extends Fragment implements FilterFragment.addFilter{
+public class OfferSearchFragment extends Fragment{
 
 
     View root;
+    FragmentActivity activity;
     private RecyclerView mRecyclerView;
-    private  OfferSearchAdapter adapter;
+    private OfferSearchAdapter adapter;
     private LinearLayoutManager mLayoutManager;
-    private ParseQueryAdapter<CompanyOffer> queryAdapter;
-    ParseQueryAdapter.OnQueryLoadListener<CompanyOffer> listener;
-
-    private boolean loading = true;
 
     private OnFragmentInteractionListener mListener;
-
-    List<String> tag_list=new ArrayList<>();
-    List<String> contract_list=new ArrayList<>();
-    List<String> term_list=new ArrayList<>();
-    List<String> field_list=new ArrayList<>();
-    List<String> location_list=new ArrayList<>();
-    List<String> salary_list=new ArrayList<>();
-
 
 
     public static OfferSearchFragment newInstance() {
@@ -76,6 +66,12 @@ public class OfferSearchFragment extends Fragment implements FilterFragment.addF
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+
+
+        activity = getActivity();
+        ((Home) activity).setOnBackPressedListener(new BaseBackPressedListener(activity));
+
+
         root = inflater.inflate(R.layout.fragment_offer_search, container, false);
 
         mRecyclerView = (RecyclerView) root.findViewById(R.id.recycler_view_offer_search);
@@ -89,7 +85,7 @@ public class OfferSearchFragment extends Fragment implements FilterFragment.addF
         mRecyclerView.addItemDecoration(new DividerItemDecoration(this.getActivity(), DividerItemDecoration.VERTICAL_LIST));
         mRecyclerView.setLayoutManager(mLayoutManager);
 
-        adapter = new OfferSearchAdapter(this.getActivity(),mRecyclerView);
+        adapter = new OfferSearchAdapter(this.getActivity(), mRecyclerView);
 
         /*********************/
 
@@ -109,17 +105,15 @@ public class OfferSearchFragment extends Fragment implements FilterFragment.addF
     @Override
     public void onCreateOptionsMenu(
             Menu menu, MenuInflater inflater) {
-          menu.clear();
+        menu.clear();
         inflater.inflate(R.menu.menu_search, menu);
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
-        if(item.getItemId()== R.id.action_filter)
-        {
+        if (item.getItemId() == R.id.action_filter) {
             FilterFragment newFragment = FilterFragment.newInstance();
-            newFragment.setTargetFragment(this,0);
             newFragment.show(getChildFragmentManager(), "dialog");
 
 
@@ -144,12 +138,6 @@ public class OfferSearchFragment extends Fragment implements FilterFragment.addF
         mListener = null;
     }
 
-    @Override
-    public void addFilter(List<String> tag_list, List<String> contract_list, List<String> term_list, List<String> field_list, List<String> location_list, List<String> salary_list) {
-                adapter.setFactory(tag_list,contract_list,term_list,field_list,location_list,salary_list);
-                adapter.setAdapter();
-               adapter.notifyDataSetChanged();
-    }
 
     /**
      * This interface must be implemented by activities that contain this
@@ -166,6 +154,10 @@ public class OfferSearchFragment extends Fragment implements FilterFragment.addF
         public void onFragmentInteraction(Uri uri);
     }
 
+    public void addFiters(List<Tag> tag_list, List<String> contract_list, List<String> term_list, List<String> field_list, List<String> location_list, List<String> salary_list) {
+        adapter.setFactory(tag_list, contract_list, term_list, field_list, location_list, salary_list);
+        adapter.setAdapter();
+        adapter.notifyDataSetChanged();
 
-
+    }
 }

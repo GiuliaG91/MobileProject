@@ -1,9 +1,10 @@
 package com.example.giuliagigi.jobplacement;
 
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
-import android.support.v7.widget.CardView;
+import android.support.v4.app.FragmentActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +13,7 @@ import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.GridLayout;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.MultiAutoCompleteTextView;
@@ -35,23 +37,25 @@ import java.util.Set;
  */
 public class FilterFragment extends DialogFragment {
 
+
     View root;
-    private addFilter mCallback;
+    // private addFilter mCallback;
 
-    GlobalData globalData=null;
+    GlobalData globalData = null;
 
-    private EditText editSalary=null;
+    private EditText editSalary = null;
 
     private Spinner fieldSpinner = null;
     private Spinner contractSpinner = null;
     private Spinner salarySpinner = null;
-    private Spinner termSpinner =null;
+    private Spinner termSpinner = null;
 
-    private ImageButton addtagsButton=null;
-    private ImageButton addfieldButton=null;
-    private ImageButton addcontractButton=null;
-    private ImageButton addtermsButton=null;
-    private ImageButton addlocationButton=null;
+    private ImageButton addtagsButton = null;
+    private ImageButton addfieldButton = null;
+    private ImageButton addcontractButton = null;
+    private ImageButton addtermsButton = null;
+    private ImageButton addlocationButton = null;
+    private ImageButton remove = null;
 
     private Button okButton;
     private Button cancelButton;
@@ -62,11 +66,11 @@ public class FilterFragment extends DialogFragment {
     private String[] salaries;
     private String[] durations;
 
-    private MultiAutoCompleteTextView tagsView=null;
-    private MultiAutoCompleteTextView location=null;
+    private MultiAutoCompleteTextView tagsView = null;
+    private MultiAutoCompleteTextView location = null;
 
-    private Map<String,Tag> retriveTag=null;
-    private  Set<String> correct;
+    private Map<String, Tag> retriveTag = null;
+    private Set<String> correct;
 
     private Set<String> supportTag;
     private Set<String> supportField;
@@ -74,12 +78,26 @@ public class FilterFragment extends DialogFragment {
     private Set<String> supportContract;
     private Set<String> supportLocation;
 
+    /**
+     * ************************FILTERS******************
+     */
+    List<Tag> tag_list = null;
+    List<String> contract_list = null;
+    List<String> term_list = null;
+    List<String> field_list = null;
+    List<String> location_list = null;
+    List<String> salary_list = null;
 
-    public FilterFragment(){}
+    /**
+     * ***********************************************
+     */
 
-    public static FilterFragment newInstance()
-    {
-        FilterFragment fragment=new FilterFragment();
+
+    public FilterFragment() {
+    }
+
+    public static FilterFragment newInstance() {
+        FilterFragment fragment = new FilterFragment();
         return fragment;
     }
 
@@ -88,54 +106,61 @@ public class FilterFragment extends DialogFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        supportTag=new HashSet<>();
-        supportContract=new HashSet<>();
-        supportField=new HashSet<>();
-        supportLocation=new HashSet<>();
-        supportTerm=new HashSet<>();
+        supportTag = new HashSet<>();
+        supportContract = new HashSet<>();
+        supportField = new HashSet<>();
+        supportLocation = new HashSet<>();
+        supportTerm = new HashSet<>();
 
-        mCallback=(addFilter)getTargetFragment();
+
+        tag_list = new ArrayList<>();
+        contract_list = new ArrayList<>();
+        term_list = new ArrayList<>();
+        field_list = new ArrayList<>();
+        location_list = new ArrayList<>();
+        salary_list = new ArrayList<>();
+
 
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        globalData=(GlobalData)getActivity().getApplication();
+        globalData = (GlobalData) getActivity().getApplication();
 
 
-
-      root=inflater.inflate(R.layout.fragment_filter,container,false);
+        root = inflater.inflate(R.layout.fragment_filter, container, false);
 
         //addbuttons
 
-        addtagsButton=(ImageButton)root.findViewById(R.id.filter_tag_add);
-        addfieldButton=(ImageButton)root.findViewById(R.id.filter_field_add);
-        addcontractButton=(ImageButton)root.findViewById(R.id.filter_contract_add);
-        addtermsButton=(ImageButton)root.findViewById(R.id.filter_term_add);
-        addlocationButton=(ImageButton)root.findViewById(R.id.filter_location_add);
+        addtagsButton = (ImageButton) root.findViewById(R.id.filter_tag_add);
+        addfieldButton = (ImageButton) root.findViewById(R.id.filter_field_add);
+        addcontractButton = (ImageButton) root.findViewById(R.id.filter_contract_add);
+        addtermsButton = (ImageButton) root.findViewById(R.id.filter_term_add);
+        addlocationButton = (ImageButton) root.findViewById(R.id.filter_location_add);
+        remove = (ImageButton) root.findViewById(R.id.filter_remove);
 
-        okButton=(Button)root.findViewById(R.id.ok_button);
-        cancelButton=(Button)root.findViewById(R.id.cancel_button);
+        okButton = (Button) root.findViewById(R.id.ok_button);
+        cancelButton = (Button) root.findViewById(R.id.cancel_button);
 
         //set all possible filters
-        editSalary=(EditText)root.findViewById(R.id.filter_edit_salary);
+        editSalary = (EditText) root.findViewById(R.id.filter_edit_salary);
         fieldSpinner = (Spinner) root.findViewById(R.id.filter_field_spinner);
         contractSpinner = (Spinner) root.findViewById(R.id.filter_contract_spinner);
         salarySpinner = (Spinner) root.findViewById(R.id.filter_salary_spinner);
         termSpinner = (Spinner) root.findViewById(R.id.filter_term_spinner);
         //MultiAutoCompletetextview
         tagsView = (MultiAutoCompleteTextView) root.findViewById(R.id.filter_tag_complete_tv);
-        location=(MultiAutoCompleteTextView)root.findViewById(R.id.filter_location_complete_tv);
+        location = (MultiAutoCompleteTextView) root.findViewById(R.id.filter_location_complete_tv);
 
 
-        typeOfFields=getResources().getStringArray(R.array.new_offer_fragment_fields);
+        typeOfFields = getResources().getStringArray(R.array.new_offer_fragment_fields);
         fieldSpinner.setAdapter(new StringAdapter(typeOfFields));
 
-        typeOfContracts=getResources().getStringArray(R.array.new_offer_fragment_typeOfContracts);
+        typeOfContracts = getResources().getStringArray(R.array.new_offer_fragment_typeOfContracts);
         contractSpinner.setAdapter(new StringAdapter(typeOfContracts));
 
-        salaries=getResources().getStringArray(R.array.filter_salary);
+        salaries = getResources().getStringArray(R.array.filter_salary);
         salarySpinner.setAdapter(new StringAdapter(salaries));
 
         salarySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -155,30 +180,29 @@ public class FilterFragment extends DialogFragment {
         });
 
 
-        durations=getResources().getStringArray(R.array.new_offer_fragment_termContracts);
+        durations = getResources().getStringArray(R.array.new_offer_fragment_termContracts);
         termSpinner.setAdapter(new StringAdapter(durations));
 
 
         //multiautocompletetextview
-        ParseQuery<Tag> query=ParseQuery.getQuery("Tag");
-        List<Tag> tags=null;
+        ParseQuery<Tag> query = ParseQuery.getQuery("Tag");
+        List<Tag> tags = null;
         try {
-            tags= query.find();
+            tags = query.find();
         } catch (ParseException e) {
             e.printStackTrace();
         }
 
-        String[] t=new String[tags.size()];
+        String[] t = new String[tags.size()];
 
-       correct=new HashSet<String>();
-        retriveTag=new HashMap<>();
+        correct = new HashSet<String>();
+        retriveTag = new HashMap<>();
 
 
-        for(int i=0;i<tags.size();i++)
-        {
-            t[i]=tags.get(i).getTag();
-            retriveTag.put(tags.get(i).getTag().toLowerCase().trim(),tags.get(i));
-            correct.add(tags.get(i).getTag().toLowerCase().trim());
+        for (int i = 0; i < tags.size(); i++) {
+            t[i] = tags.get(i).getTag();
+            retriveTag.put(tags.get(i).getTag(), tags.get(i));
+            correct.add(tags.get(i).getTag().trim());
         }
 
 
@@ -188,7 +212,6 @@ public class FilterFragment extends DialogFragment {
         tagsView.setAdapter(adapter);
         tagsView.setTokenizer(new SpaceTokenizer());
         tagsView.setThreshold(1);
-
 
 
         addtagsButton.setOnClickListener(new View.OnClickListener() {
@@ -226,6 +249,13 @@ public class FilterFragment extends DialogFragment {
             }
         });
 
+        remove.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                removeFilters(v);
+            }
+        });
+
         okButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -239,92 +269,263 @@ public class FilterFragment extends DialogFragment {
                 getDialog().dismiss();
             }
         });
-
+        checkStatus();
 
         return root;
     }
 
-  /****************************Aggiunta e rimozione filtri******************/
-    public void  onClickTag(View v)
-    {
-        LinearLayout container=(LinearLayout)root.findViewById(R.id.filter_tag_container);
-        String filter=tagsView.getText().toString().toLowerCase().trim();
-        if(correct.contains((String)filter)) {
+    /**
+     * *******Controllo dello stato dei filtri***************
+     */
+    private void checkStatus() {
+
+        if (globalData.getOfferFilterStatus().isValid()) {
+
+            tag_list = globalData.getOfferFilterStatus().getTag_list();
+            contract_list = globalData.getOfferFilterStatus().getContract_list();
+            term_list = globalData.getOfferFilterStatus().getTerm_list();
+            field_list = globalData.getOfferFilterStatus().getField_list();
+            location_list = globalData.getOfferFilterStatus().getLocation_list();
+            salary_list = globalData.getOfferFilterStatus().getSalary_list();
+
+            final GridLayout container = (GridLayout) root.findViewById(R.id.filter_tag_container);
+
+            for (int i = 0; i < tag_list.size(); i++) {
+                LayoutInflater inflater = (LayoutInflater) getActivity().getBaseContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                View mytagView = inflater.inflate(R.layout.taglayout, null);
+
+                mytagView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        container.removeView(v);
+                        Toast.makeText(getActivity(), "Removed", Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+                TextView t = (TextView) mytagView.findViewById(R.id.tag_tv);
+                t.setText(tag_list.get(i).getTag());
+                container.addView(mytagView);
+            }
+
+
+            final GridLayout fieldContainer = (GridLayout) root.findViewById(R.id.filter_field_container);
+            for (int i = 0; i < field_list.size(); i++) {
+                LayoutInflater inflater = (LayoutInflater) getActivity().getBaseContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                View mytagView = inflater.inflate(R.layout.taglayout, null);
+
+                mytagView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        fieldContainer.removeView(v);
+                        Toast.makeText(getActivity(), "Removed", Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+                TextView t = (TextView) mytagView.findViewById(R.id.tag_tv);
+                t.setText(field_list.get(i));
+                fieldContainer.addView(mytagView);
+            }
+
+            final GridLayout termContainer = (GridLayout) root.findViewById(R.id.filter_term_container);
+            for (int i = 0; i < term_list.size(); i++) {
+                LayoutInflater inflater = (LayoutInflater) getActivity().getBaseContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                View mytagView = inflater.inflate(R.layout.taglayout, null);
+
+                mytagView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        termContainer.removeView(v);
+                        Toast.makeText(getActivity(), "Removed", Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+                TextView t = (TextView) mytagView.findViewById(R.id.tag_tv);
+                t.setText(term_list.get(i));
+                termContainer.addView(mytagView);
+            }
+
+            final GridLayout contractContainer = (GridLayout) root.findViewById(R.id.filter_contract_container);
+            for (int i = 0; i < contract_list.size(); i++) {
+                LayoutInflater inflater = (LayoutInflater) getActivity().getBaseContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                View mytagView = inflater.inflate(R.layout.taglayout, null);
+
+                mytagView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        contractContainer.removeView(v);
+                        Toast.makeText(getActivity(), "Removed", Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+                TextView t = (TextView) mytagView.findViewById(R.id.tag_tv);
+                t.setText(contract_list.get(i));
+                contractContainer.addView(mytagView);
+            }
+
+            final GridLayout locationContainer = (GridLayout) root.findViewById(R.id.filter_location_container);
+            for (int i = 0; i < location_list.size(); i++) {
+                LayoutInflater inflater = (LayoutInflater) getActivity().getBaseContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                View mytagView = inflater.inflate(R.layout.taglayout, null);
+
+                mytagView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        locationContainer.removeView(v);
+                        Toast.makeText(getActivity(), "Removed", Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+                TextView t = (TextView) mytagView.findViewById(R.id.tag_tv);
+                t.setText(location_list.get(i));
+                locationContainer.addView(mytagView);
+            }
+
+
+            if (!salary_list.isEmpty()) {
+                Integer pos = Integer.parseInt(salary_list.get(0));
+                salarySpinner.setSelection(pos);
+                editSalary.setText(salary_list.get(1));
+
+            }
+
+
+        }
+    }
+
+
+    /**
+     * *************************Aggiunta e rimozione filtri*****************
+     */
+    public void onClickTag(View v) {
+        final GridLayout container = (GridLayout) root.findViewById(R.id.filter_tag_container);
+        String filter = tagsView.getText().toString().trim();
+        if (correct.contains(filter)) {
             if (!supportTag.add(filter)) {
                 Toast.makeText(getActivity(), "Filter already added", Toast.LENGTH_SHORT).show();
             } else {
-                TextView tv = new TextView(getActivity());
-                tv.setText(filter);
-                container.addView(tv);
+
+
+                LayoutInflater inflater = (LayoutInflater) getActivity().getBaseContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                View mytagView = inflater.inflate(R.layout.taglayout, null);
+
+                mytagView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        container.removeView(v);
+                        Toast.makeText(getActivity(), "Removed", Toast.LENGTH_SHORT).show();
+                        globalData.getOfferFilterStatus().setFilters(tag_list, contract_list, term_list, field_list, location_list, salary_list);
+                    }
+                });
+
+                TextView t = (TextView) mytagView.findViewById(R.id.tag_tv);
+                t.setText(filter);
+                container.addView(mytagView);
+
             }
 
+        } else {
+            Toast.makeText(getActivity(), "Wrong tag", Toast.LENGTH_SHORT).show();
         }
-        else {      Toast.makeText(getActivity(), "Wrong tag", Toast.LENGTH_SHORT).show();}
+        tagsView.clearComposingText();
+        ;
     }
-    public void  onClickterm(View v)
-    {
-        LinearLayout container=(LinearLayout)root.findViewById(R.id.filter_term_container);
-        if(termSpinner.getSelectedItemPosition()==0)
-        {
-            Toast.makeText(getActivity(), "Please choose a term if you want", Toast.LENGTH_SHORT).show();
-        }
-        else {
 
-            String filter = termSpinner.getSelectedItem().toString().toLowerCase().trim();
+    public void onClickterm(View v) {
+        final GridLayout container = (GridLayout) root.findViewById(R.id.filter_term_container);
+        if (termSpinner.getSelectedItemPosition() == 0) {
+            Toast.makeText(getActivity(), "Please choose a term if you want", Toast.LENGTH_SHORT).show();
+        } else {
+
+            String filter = termSpinner.getSelectedItem().toString().trim();
             if (!supportTerm.add(filter)) {
                 Toast.makeText(getActivity(), "Filter already added", Toast.LENGTH_SHORT).show();
             } else {
-                TextView tv = new TextView(getActivity());
-                tv.setText(filter);
-                container.addView(tv);
+
+                LayoutInflater inflater = (LayoutInflater) getActivity().getBaseContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                View mytagView = inflater.inflate(R.layout.taglayout, null);
+
+                mytagView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        container.removeView(v);
+                        Toast.makeText(getActivity(), "Removed", Toast.LENGTH_SHORT).show();
+                        globalData.getOfferFilterStatus().setFilters(tag_list, contract_list, term_list, field_list, location_list, salary_list);
+                    }
+                });
+
+                TextView t = (TextView) mytagView.findViewById(R.id.tag_tv);
+                t.setText(filter);
+                container.addView(mytagView);
             }
         }
-
+        salarySpinner.setSelection(0);
     }
-    public void  onClickContract(View v)
-    {
-        LinearLayout container=(LinearLayout)root.findViewById(R.id.filter_contract_container);
-        if(contractSpinner.getSelectedItemPosition()==0)
-        {
-            Toast.makeText(getActivity(), "Please choose a contract if you want", Toast.LENGTH_SHORT).show();
-        }
-        else {
 
-            String filter = contractSpinner.getSelectedItem().toString().toLowerCase().trim();
+    public void onClickContract(View v) {
+        final GridLayout container = (GridLayout) root.findViewById(R.id.filter_contract_container);
+        if (contractSpinner.getSelectedItemPosition() == 0) {
+            Toast.makeText(getActivity(), "Please choose a contract if you want", Toast.LENGTH_SHORT).show();
+        } else {
+
+            String filter = contractSpinner.getSelectedItem().toString().trim();
             if (!supportContract.add(filter)) {
                 Toast.makeText(getActivity(), "Filter already added", Toast.LENGTH_SHORT).show();
             } else {
-                TextView tv = new TextView(getActivity());
-                tv.setText(filter);
-                container.addView(tv);
+
+                LayoutInflater inflater = (LayoutInflater) getActivity().getBaseContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                View mytagView = inflater.inflate(R.layout.taglayout, null);
+
+                mytagView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        container.removeView(v);
+                        Toast.makeText(getActivity(), "Removed", Toast.LENGTH_SHORT).show();
+                        globalData.getOfferFilterStatus().setFilters(tag_list, contract_list, term_list, field_list, location_list, salary_list);
+                    }
+                });
+
+                TextView t = (TextView) mytagView.findViewById(R.id.tag_tv);
+                t.setText(filter);
+                container.addView(mytagView);
             }
         }
-
+        contractSpinner.setSelection(0);
     }
-    public void  onClickfield(View v)
-    {
-        LinearLayout container=(LinearLayout)root.findViewById(R.id.filter_field_container);
-        if(fieldSpinner.getSelectedItemPosition()==0)
-        {
-            Toast.makeText(getActivity(), "Please choose a term if you want", Toast.LENGTH_SHORT).show();
-        }
-        else {
 
-            String filter = fieldSpinner.getSelectedItem().toString().toLowerCase().trim();
+    public void onClickfield(View v) {
+        final GridLayout container = (GridLayout) root.findViewById(R.id.filter_field_container);
+        if (fieldSpinner.getSelectedItemPosition() == 0) {
+            Toast.makeText(getActivity(), "Please choose a term if you want", Toast.LENGTH_SHORT).show();
+        } else {
+
+            String filter = fieldSpinner.getSelectedItem().toString().trim();
             if (!supportField.add(filter)) {
                 Toast.makeText(getActivity(), "Filter already added", Toast.LENGTH_SHORT).show();
             } else {
-                TextView tv = new TextView(getActivity());
-                tv.setText(filter);
-                container.addView(tv);
+                LayoutInflater inflater = (LayoutInflater) getActivity().getBaseContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                View mytagView = inflater.inflate(R.layout.taglayout, null);
+
+                mytagView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        container.removeView(v);
+                        Toast.makeText(getActivity(), "Removed", Toast.LENGTH_SHORT).show();
+                        globalData.getOfferFilterStatus().setFilters(tag_list, contract_list, term_list, field_list, location_list, salary_list);
+                    }
+                });
+
+                TextView t = (TextView) mytagView.findViewById(R.id.tag_tv);
+                t.setText(filter);
+                container.addView(mytagView);
             }
         }
+        fieldSpinner.setSelection(0);
     }
-    public void  onClickLocation(View v)
-    {
+
+    public void onClickLocation(View v) {
 
       /*  LinearLayout container=(LinearLayout)root.findViewById(R.id.filter_tag_container);
-        String filter=tagsView.getText().toString().toLowerCase().trim();
+        String filter=tagsView.getText().toString().trim();
         if(!supportTag.add(filter))
         {
             Toast.makeText(getActivity(),"Tag already present" , Toast.LENGTH_SHORT).show();
@@ -334,83 +535,121 @@ public class FilterFragment extends DialogFragment {
             TextView tv=new TextView(getActivity());
             tv.setText(filter);
             container.addView(tv);
-        }*/
+        }
+
+        */
     }
 
-    public void applyFilters(View v)
-    {
-        List<String> tag_list=new ArrayList<>();
-        List<String> contract_list=new ArrayList<>();
-        List<String> term_list=new ArrayList<>();
-        List<String> field_list=new ArrayList<>();
-        List<String> location_list=new ArrayList<>();
-        List<String> salary_list=new ArrayList<>();
+    /**
+     * *******************APPLY FILTERS*******************************
+     */
 
-        LinearLayout tagcontainer=(LinearLayout)root.findViewById(R.id.filter_tag_container);
-        if(tagcontainer.getChildCount()>0)
-        {
-            for(int i=0;i<tagcontainer.getChildCount();i++)
-            {
-                TextView tv=(TextView)tagcontainer.getChildAt(i);
-                tag_list.add(tv.getText().toString());
+    public void applyFilters(View v) {
+
+        GridLayout container = (GridLayout) root.findViewById(R.id.filter_tag_container);
+        if (container.getChildCount() > 0) {
+            for (int i = 0; i < container.getChildCount(); i++) {
+                View tv = container.getChildAt(i);
+                TextView t = (TextView) tv.findViewById(R.id.tag_tv);
+                tag_list.add(retriveTag.get(t.getText().toString().trim()));
             }
         }
 
-        tagcontainer=(LinearLayout)root.findViewById(R.id.filter_field_container);
-        if(tagcontainer.getChildCount()>0)
-        {
-            for(int i=0;i<tagcontainer.getChildCount();i++)
-            {
-                TextView tv=(TextView)tagcontainer.getChildAt(i);
-                field_list.add(tv.getText().toString());
+        container = (GridLayout) root.findViewById(R.id.filter_field_container);
+        if (container.getChildCount() > 0) {
+            for (int i = 0; i < container.getChildCount(); i++) {
+                View tv = container.getChildAt(i);
+                TextView t = (TextView) tv.findViewById(R.id.tag_tv);
+                field_list.add(t.getText().toString());
             }
         }
 
-        tagcontainer=(LinearLayout)root.findViewById(R.id.filter_term_container);
-        if(tagcontainer.getChildCount()>0)
-        {
-            for(int i=0;i<tagcontainer.getChildCount();i++)
-            {
-                TextView tv=(TextView)tagcontainer.getChildAt(i);
-                term_list.add(tv.getText().toString());
+        container = (GridLayout) root.findViewById(R.id.filter_term_container);
+        if (container.getChildCount() > 0) {
+            for (int i = 0; i < container.getChildCount(); i++) {
+                View tv = container.getChildAt(i);
+                TextView t = (TextView) tv.findViewById(R.id.tag_tv);
+                term_list.add(t.getText().toString().trim());
             }
         }
 
-        tagcontainer=(LinearLayout)root.findViewById(R.id.filter_contract_container);
-        if(tagcontainer.getChildCount()>0)
-        {
-            for(int i=0;i<tagcontainer.getChildCount();i++)
-            {
-                TextView tv=(TextView)tagcontainer.getChildAt(i);
-                contract_list.add(tv.getText().toString());
+        container = (GridLayout) root.findViewById(R.id.filter_contract_container);
+        if (container.getChildCount() > 0) {
+            for (int i = 0; i < container.getChildCount(); i++) {
+                View tv = container.getChildAt(i);
+                TextView t = (TextView) tv.findViewById(R.id.tag_tv);
+                contract_list.add(t.getText().toString().trim());
             }
         }
 
-        tagcontainer=(LinearLayout)root.findViewById(R.id.filter_location_container);
-        if(tagcontainer.getChildCount()>0)
-        {
-            for(int i=0;i<tagcontainer.getChildCount();i++)
-            {
-                TextView tv=(TextView)tagcontainer.getChildAt(i);
-                location_list.add(tv.getText().toString().toLowerCase().trim());
+        container = (GridLayout) root.findViewById(R.id.filter_location_container);
+        if (container.getChildCount() > 0) {
+            for (int i = 0; i < container.getChildCount(); i++) {
+                View tv = container.getChildAt(i);
+                TextView t = (TextView) tv.findViewById(R.id.tag_tv);
+                location_list.add(t.getText().toString().toLowerCase().trim());
             }
         }
 
-        Integer pos=salarySpinner.getSelectedItemPosition();
-        if(pos!=0)
-        {
+        Integer pos = salarySpinner.getSelectedItemPosition();
+        if (pos != 0) {
 
             salary_list.add(String.valueOf(pos));
             salary_list.add(editSalary.getText().toString());
         }
+        globalData.getOfferFilterStatus().setFilters(tag_list, contract_list, term_list, field_list, location_list, salary_list);
+        globalData.getOfferFilterStatus().setValid(true);
 
-
-            mCallback.addFilter(tag_list,contract_list,term_list,field_list,location_list,salary_list);
-            getDialog().dismiss();
+        OfferSearchFragment fragment = (OfferSearchFragment) this.getParentFragment();
+        fragment.addFiters(tag_list, contract_list, term_list, field_list, location_list, salary_list);
+        getDialog().dismiss();
     }
 
 
-/******************************STRING ADAPTER**************************/
+    public void removeFilters(View v) {
+
+        GridLayout container = (GridLayout) root.findViewById(R.id.filter_tag_container);
+        container.removeAllViews();
+
+
+        container = (GridLayout) root.findViewById(R.id.filter_field_container);
+        container.removeAllViews();
+        fieldSpinner.setSelection(0);
+
+        container = (GridLayout) root.findViewById(R.id.filter_term_container);
+        container.removeAllViews();
+        termSpinner.setSelection(0);
+
+        container = (GridLayout) root.findViewById(R.id.filter_contract_container);
+        container.removeAllViews();
+        contractSpinner.setSelection(0);
+
+        container = (GridLayout) root.findViewById(R.id.filter_location_container);
+        container.removeAllViews();
+
+
+        salarySpinner.setSelection(0);
+        editSalary.clearComposingText();
+
+
+        /*clear list*/
+
+        tag_list.clear();
+        contract_list.clear();
+        term_list.clear();
+        field_list.clear();
+        location_list.clear();
+        salary_list.clear();
+
+        //no filters
+        globalData.getOfferFilterStatus().setValid(false);
+
+    }
+
+
+    /**
+     * ***************************STRING ADAPTER*************************
+     */
     public class StringAdapter extends BaseAdapter {
 
         public String[] stringArray;
@@ -438,25 +677,14 @@ public class FilterFragment extends DialogFragment {
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
 
-            if(convertView == null)
-                convertView = getActivity().getLayoutInflater().inflate(R.layout.list_text_element,parent,false);
+            if (convertView == null)
+                convertView = getActivity().getLayoutInflater().inflate(R.layout.list_text_element, parent, false);
 
-            TextView text = (TextView)convertView.findViewById(R.id.text_view);
+            TextView text = (TextView) convertView.findViewById(R.id.text_view);
             text.setTextSize(15);
             text.setText(stringArray[position]);
             return convertView;
         }
-    }
-
-    public interface addFilter
-    {
-        void addFilter( List<String> tag_list,
-        List<String> contract_list,
-        List<String> term_list,
-        List<String> field_list,
-        List<String> location_list,
-        List<String> salary_list);
-
     }
 
 }

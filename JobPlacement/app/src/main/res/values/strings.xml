@@ -169,6 +169,7 @@
     <string name="filter_Field">Work Field</string>
     <string name="filter_Location">Location</string>
     <string name="filter_Salary">Salary</string>
+    <string name="filter_Remove">Remove All Filters</string>
 
     <string-array name="filter_salary">
         <item>All types</item>

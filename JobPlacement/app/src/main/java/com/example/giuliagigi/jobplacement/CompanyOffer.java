@@ -68,8 +68,8 @@ public class CompanyOffer extends ParseObject {
         return this.getString(LOCATION_FIELD);
     }
 
-    public String getSAlARY() {
-        return this.getString(SAlARY_FIELD);
+    public Integer getSAlARY() {
+        return this.getInt(SAlARY_FIELD);
     }
 
     public String getDescription() {
@@ -182,7 +182,7 @@ public class CompanyOffer extends ParseObject {
 
         this.put(LOCATION_FIELD,location);
     }
-    public void setSalary(String salay){
+    public void setSalary(int salay){
 
         this.put(SAlARY_FIELD,salay);
     }

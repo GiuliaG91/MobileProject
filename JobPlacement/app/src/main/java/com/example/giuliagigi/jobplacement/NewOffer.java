@@ -202,7 +202,9 @@ public class NewOffer extends Fragment implements DatePickerFragment.OnDataSetLi
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 if (position == 0) {
+                    editSalary.clearComposingText();;
                     editSalary.setEnabled(false);
+
                 } else {
                     editSalary.setEnabled(true);
                 }
@@ -396,7 +398,7 @@ public class NewOffer extends Fragment implements DatePickerFragment.OnDataSetLi
 
             for(i=0;i<salaries.length;i++)
             {
-                if(salaries[i].toLowerCase().trim().equals(offer.getSAlARY().toLowerCase().trim())) {
+                if(salaries[i].toLowerCase().trim().equals(String.valueOf(offer.getSAlARY()).trim())) {
                     salarySpinner.setSelection(i);
                     break;
                 }
@@ -776,11 +778,12 @@ public class NewOffer extends Fragment implements DatePickerFragment.OnDataSetLi
 
                     if(salarySpinner.getSelectedItemPosition()!=0)
                     {
-                        offer.setSalary(editSalary.getText().toString());
+                        Integer salary=Integer.parseInt(editSalary.getText().toString());
+                        offer.setSalary(salary);
                     }
                     else
                     {
-                        offer.setSalary("To be defined");
+                        offer.setSalary(-1);
                     }
 
                     if(location.getText().length()==0)
@@ -888,9 +891,10 @@ public class NewOffer extends Fragment implements DatePickerFragment.OnDataSetLi
 
 
             if (salarySpinner.getSelectedItemPosition() != 0) {
-                offer.setSalary(editSalary.getText().toString());
+                int salary=Integer.parseInt(editSalary.getText().toString());
+                offer.setSalary(salary);
             } else {
-                offer.setSalary("To be defined");
+                offer.setSalary(-1);
             }
 
             if (location.getText().length() == 0) {

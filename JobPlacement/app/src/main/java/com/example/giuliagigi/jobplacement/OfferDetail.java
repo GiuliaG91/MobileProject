@@ -1,6 +1,7 @@
 package com.example.giuliagigi.jobplacement;
 
 
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -40,7 +41,7 @@ public class OfferDetail extends Fragment {
     CompanyOffer offer;
     GlobalData globalData;
     Company company;
-   FragmentActivity activity;
+    FragmentActivity activity;
 
 
     // TODO: Rename and change types and number of parameters
@@ -163,18 +164,34 @@ public class OfferDetail extends Fragment {
         content=(TextView)linearLayout.findViewById(R.id.content_tv);
         icon=(ImageView)linearLayout.findViewById(R.id.rowIcon);
         hint.setText("Salary:");
-        content.setText(offer.getSAlARY());
+        Integer salary=offer.getSAlARY();
+        if(salary!=-1) {
+            content.setText(String.valueOf(salary).trim());
+        }
+        else
+        {
+            content.setText("To be defined");
+        }
         icon.setImageDrawable(getResources().getDrawable(R.drawable.ic_salary));
 
         ImageView logo=(ImageView)root.findViewById(R.id.circleView_logo);
         TextView companyName=(TextView)root.findViewById(R.id.company_name_tv);
-        TextView companyMail=(TextView)root.findViewById(R.id.company_mail);
+        TextView companyMail=(TextView)root.findViewById(R.id.Company_email);
 
         TextView description=(TextView)root.findViewById(R.id.DescriptionText_tv);
         description.setText(offer.getDescription());
 
+        Bitmap img=null;
+        try {
+          img = company.getProfilePhoto();
+        }catch (Exception e)
+        {img =null;}
+        if(img!=null)
+        {
+            logo.setImageBitmap(img);
+        }
         companyName.setText(company.getName());
-        companyName.setText(company.getMail());
+        companyMail.setText(company.getMail());
 
 
         /*Attach on click listener to button menu */

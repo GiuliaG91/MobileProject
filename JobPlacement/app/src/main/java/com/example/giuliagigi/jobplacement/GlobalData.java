@@ -45,10 +45,11 @@ public class GlobalData extends Application {
 
     /**************NEW OFFER BUNDLE**********/
     private Bundle offerBundle;
-
     private ArrayList<Tag> tagBoundle=new ArrayList<>();
     /******************************************/
-
+    /************FILTERS***************/
+    private OfferFilterStatus offerFilterStatus=new OfferFilterStatus();
+    /***********************************/
 
     @Override
     public void onCreate() {
@@ -165,9 +166,9 @@ public class GlobalData extends Application {
             @Override
             public void done(List<Tag> tagList, ParseException e) {
 
-                for(Tag t:tagList)
-                    tags.put(t.getTag(),t);
-                isCached.put("tag",true);
+                for (Tag t : tagList)
+                    tags.put(t.getTag(), t);
+                isCached.put("tag", true);
             }
         });
 
@@ -234,6 +235,7 @@ public class GlobalData extends Application {
     public void setApplies_position(int applies_position) {
         this.applies_position = applies_position;
     }
+
     //item_view state
     public void resetState(){
         fav_position=-1;
@@ -258,6 +260,9 @@ public class GlobalData extends Application {
         this.tagBoundle = tagBoundle;
     }
 
+    public OfferFilterStatus getOfferFilterStatus() {
+        return offerFilterStatus;
+    }
 
 }
 
