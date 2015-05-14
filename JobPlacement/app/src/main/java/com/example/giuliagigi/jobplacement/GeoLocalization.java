@@ -90,8 +90,8 @@ public class GeoLocalization extends SupportMapFragment{
                 else
                     GeoLocalization.this.googleMap = googleMap;
 
-                latitude = 45;
-                longitude = 8;
+                latitude = 45.285f;
+                longitude = 8.0785f;
                 setMarkerPosition(new LatLng(latitude, longitude));
             }
         });
@@ -101,10 +101,10 @@ public class GeoLocalization extends SupportMapFragment{
     }
 
 
-    private void setMarkerPosition(LatLng pos){
+    public void setMarkerPosition(LatLng pos){
 
         googleMap.addMarker(new MarkerOptions().position(pos));
-        googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(pos,18.0f));
+        googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(pos,9.0f));
 
     }
 

@@ -1,12 +1,16 @@
 package com.example.giuliagigi.jobplacement;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.Application;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
+import android.location.Address;
 import android.location.Criteria;
+import android.location.Geocoder;
 import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Bundle;
@@ -17,10 +21,12 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -35,9 +41,11 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.parse.ParseException;
 import com.parse.SaveCallback;
 
+import java.io.IOException;
+import java.util.List;
 
-public class CompanyProfileManagementOfficeFragment extends ProfileManagementFragment
-        implements OnMapReadyCallback{
+
+public class CompanyProfileManagementOfficeFragment extends ProfileManagementFragment{
 
     private static final String TITLE = "Office";
 
@@ -50,6 +58,7 @@ public class CompanyProfileManagementOfficeFragment extends ProfileManagementFra
 
     private Company currentUser;
     private Spinner officeType;
+    private GeoLocalization geoloc;
     private EditText officeCity, officeAddress, officeCAP, officeNation;
     private GoogleMap map;
     SupportMapFragment mapFragment;
@@ -203,23 +212,10 @@ public class CompanyProfileManagementOfficeFragment extends ProfileManagementFra
         for(EditText et:textFields)
             et.addTextChangedListener(hasChangedListener);
 
+        geoloc = (GeoLocalization)getChildFragmentManager().findFragmentById(R.id.office_map_fragment);
+        if(geoloc == null)
+            Log.println(Log.ASSERT,"OFFICE FRAG", "geoloc is null");
 
-
-        //LinearLayout map_container = (LinearLayout)root.findViewById(R.id.office_map_container);
-        /*GeoLocalization geoLoc = GeoLocalization.newInstance(office);
-        FragmentTransaction ft = getChildFragmentManager().beginTransaction();
-        ft.add(R.id.office_map_container, geoLoc);
-        ft.commit();*/
-
-        GeoLocalization geoloc = (GeoLocalization)getActivity().getSupportFragmentManager().findFragmentById(R.id.office_map_fragment);
-
-
-        Log.println(Log.ASSERT,"OFFICE FRAG","correctly added map section");
-        //Intent searchAddress = new  Intent(Intent.ACTION_VIEW, Uri.parse("geo:0,0?q=" + address));
-        //startActivity(searchAddress);
-
-
-//        setEnable(host.isEditMode());
         return root;
     }
 
@@ -241,6 +237,10 @@ public class CompanyProfileManagementOfficeFragment extends ProfileManagementFra
         }
 
     }
+
+
+
+    /* ------------------- AUXILIARY METHODS -----------------------------------------------------*/
 
     @Override
     public void saveChanges(){
@@ -264,12 +264,26 @@ public class CompanyProfileManagementOfficeFragment extends ProfileManagementFra
                         Log.println(Log.ASSERT,"OFFICE FRAG", "office saved. Updating company");
                         currentUser.addOffice(office);
                         currentUser.saveEventually();
+
+                        /* convert to geoLocation */
+                        if(!officeNation.getText().toString().equals(INSERT_FIELD) && !officeCity.getText().toString().equals(INSERT_FIELD)){
+
+                            String geoAddress = officeNation.getText().toString() + ", " + officeCity.getText().toString();
+                            if(!officeAddress.getText().toString().equals(INSERT_FIELD))
+                                geoAddress += ", " + officeAddress.getText().toString();
+
+                            setMapLocation(geoAddress);
+                        }
+                        else
+                            Toast.makeText(getActivity(),"You must specify at least office country and city to get a physic location", Toast.LENGTH_SHORT).show();
                     }
                     else
                         Log.println(Log.ASSERT,"OFFICE FRAG","error saving office");
 
                 }
             });
+
+
         }
 
     }
@@ -295,10 +309,39 @@ public class CompanyProfileManagementOfficeFragment extends ProfileManagementFra
     }
 
 
-    @Override
-    public void onMapReady(GoogleMap map) {
-        map.addMarker(new MarkerOptions()
-                .position(new LatLng(45, 8))
-                .title("Marker"));
+    private void setMapLocation(String geoAddress){
+
+        List<Address> addressList;
+        Geocoder geocoder = new Geocoder(getActivity());
+        try {
+            addressList = geocoder.getFromLocationName(geoAddress,5);
+        } catch (IOException e) {
+            e.printStackTrace();
+            Log.println(Log.ASSERT,"OFFICE FRAG", "IOException during setMapLocation");
+            return;
+        }
+
+        final AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+
+        Address[] addressArray = new Address[addressList.size()];
+        int i=0;
+        for(Address a:addressList)
+            addressArray[i++] = a;
+
+        ListView addressListView = new ListView(getActivity());
+        final ArrayAdapter<Address> adapter = new ArrayAdapter<Address>(getActivity(),android.R.layout.simple_dropdown_item_1line,addressArray);
+        addressListView.setAdapter(adapter);
+        addressListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                final Address selected = adapter.getItem(position);
+                geoloc.setMarkerPosition(new LatLng(selected.getLatitude(), selected.getLongitude()));
+            }
+        });
+
+        builder.setTitle("Select a location for " + officeCity.getText().toString() + " office");
+        builder.setView(addressListView);
+        builder.create().show();
     }
 }
