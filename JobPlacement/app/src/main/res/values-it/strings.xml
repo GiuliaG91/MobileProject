@@ -57,46 +57,46 @@
     </string-array>
 
     <!-- Student fragment strings: -->
-    <string name="string_student_fragment_name_title">Name:</string>
-    <string name="string_student_fragment_surname_title">Surname:</string>
-    <string name="string_student_fragment_sex_title">Sex:</string>
-    <string name="string_student_fragment_birth_title">Date of birth:</string>
-    <string name="string_student_fragment_birth_city_title">Birth city:</string>
-    <string name="string_student_fragment_email_title">Email address:</string>
-    <string name="string_student_fragment_description">Short description:</string>
-    <string name="string_student_fragment_address">Address:</string>
-    <string name="string_student_fragment_cap">Postal code:</string>
-    <string name="string_student_fragment_city">City:</string>
-    <string name="string_student_fragment_nation">Nation:</string>
-    <string name="string_student_fragment_phones">Phones:</string>
-    <string name="string_student_fragment_languages">Languages:</string>
-    <string name="string_student_fragment_languages_title">Language:</string>
-    <string name="string_student_fragment_language_level">Level:</string>
+    <string name="string_student_fragment_name_title">Nome:</string>
+    <string name="string_student_fragment_surname_title">Cognome:</string>
+    <string name="string_student_fragment_sex_title">Sesso:</string>
+    <string name="string_student_fragment_birth_title">Data di nascita:</string>
+    <string name="string_student_fragment_birth_city_title">Città di nascita:</string>
+    <string name="string_student_fragment_email_title">Indirizzo email:</string>
+    <string name="string_student_fragment_description">Breve descrizione:</string>
+    <string name="string_student_fragment_address">Indirizzo:</string>
+    <string name="string_student_fragment_cap">CAP:</string>
+    <string name="string_student_fragment_city">Città:</string>
+    <string name="string_student_fragment_nation">Nazione:</string>
+    <string name="string_student_fragment_phones">Telefoni:</string>
+    <string name="string_student_fragment_languages">Lingue:</string>
+    <string name="string_student_fragment_languages_title">Lingua:</string>
+    <string name="string_student_fragment_language_level">Livello:</string>
 
 
     <!-- Degree fragment strings: -->
-    <string name="string_degree_fragment_degree_type_title">Degree type:</string>
-    <string name="string_degree_fragment_degree_field_title">Field of study:</string>
-    <string name="string_degree_fragment_degree_mark_title">Mark:</string>
-    <string name="string_degree_fragment_degree_loud_title">Loud:</string>
-    <string name="string_degree_fragment_degree_date_title">Degree date:</string>
+    <string name="string_degree_fragment_degree_type_title">Tipo di laurea:</string>
+    <string name="string_degree_fragment_degree_field_title">Campo di studio:</string>
+    <string name="string_degree_fragment_degree_mark_title">Voto:</string>
+    <string name="string_degree_fragment_degree_loud_title">Lode:</string>
+    <string name="string_degree_fragment_degree_date_title">Data conseguimento titolo:</string>
 
     <!-- Certificate fragment strings: -->
-    <string name="string_certificate_fragment_area">Certificates:</string>
-    <string name="string_certificate_fragment_mark">Mark:</string>
-    <string name="string_certificate_fragment_date">Date:</string>
-    <string name="string_certificate_fragment_description">Certificate description:</string>
+    <string name="string_certificate_fragment_area">Certificati:</string>
+    <string name="string_certificate_fragment_mark">Voto:</string>
+    <string name="string_certificate_fragment_date">Data conseguimento:</string>
+    <string name="string_certificate_fragment_description">Descrizione del certificato:</string>
 
     <!-- Tags area -->
-    <string name="string_tags_what_is">What is a tag?</string>
-    <string name="string_tags_info">Click for info!</string>
-    <string name="string_tags_insert">Insert tag</string>
+    <string name="string_tags_what_is">Cos\'è un tag?</string>
+    <string name="string_tags_info">Clicca per saperne di più!</string>
+    <string name="string_tags_insert">Inserisci tag</string>
 
     <!-- Account area -->
-    <string name="string_account_change_username">Change username</string>
-    <string name="string_account_change_password">Change password</string>
-    <string name="string_account_resend_mail">Re-send verification mail</string>
-    <string name="string_account_delete">Delete this account</string>
+    <string name="string_account_change_username">Modifica lo username</string>
+    <string name="string_account_change_password">Modifica la password</string>
+    <string name="string_account_resend_mail">Re-invia la mail di verifica</string>
+    <string name="string_account_delete">Elimina questo account</string>
 
 
     

@@ -15,6 +15,7 @@ import android.widget.TextView;
 
 public class CompanyRegistrationFragment extends Fragment {
 
+
     private OnInteractionListener hostActivity;
     private View root;
 
@@ -48,6 +49,7 @@ public class CompanyRegistrationFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
         root = inflater.inflate(R.layout.fragment_company_registration, container, false);
 
         Spinner fields = (Spinner)root.findViewById(R.id.fields_list);
