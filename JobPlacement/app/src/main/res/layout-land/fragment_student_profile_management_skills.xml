@@ -47,7 +47,7 @@
                             android:textColor="@color/ColorPrimaryDark"
                             android:layout_weight=".9"
                             android:padding="10dp"
-                            android:text="Languages"
+                            android:text="@string/string_student_fragment_languages"
                             />
 
                         <Button
@@ -110,7 +110,7 @@
                             android:textAppearance="?android:textAppearanceMedium"
                             android:layout_weight=".9"
                             android:padding="10dp"
-                            android:text="Degrees"
+                            android:text="@string/string_student_fragment_degrees"
                             android:textColor="@color/ColorPrimaryDark"
                             />
 
@@ -175,7 +175,7 @@
                             android:textAppearance="?android:textAppearanceMedium"
                             android:layout_weight=".9"
                             android:padding="10dp"
-                            android:text="Certificates"
+                            android:text="@string/string_certificate_fragment_area"
                             android:textColor="@color/ColorPrimaryDark"
                             />
 

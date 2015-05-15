@@ -57,6 +57,10 @@
     </string-array>
 
     <!-- Student fragment strings: -->
+    <string name="string_password">Password:</string>
+    <string name="string_confirm_password">Conferma password:</string>
+    <string name="string_date_hint">Clicca per selezionare la data</string>
+    <string name="string_insert">Inserisci:</string>
     <string name="string_student_fragment_name_title">Nome:</string>
     <string name="string_student_fragment_surname_title">Cognome:</string>
     <string name="string_student_fragment_sex_title">Sesso:</string>
@@ -69,6 +73,7 @@
     <string name="string_student_fragment_city">Città:</string>
     <string name="string_student_fragment_nation">Nazione:</string>
     <string name="string_student_fragment_phones">Telefoni:</string>
+    <string name="string_student_fragment_degrees">Lauree:</string>
     <string name="string_student_fragment_languages">Lingue:</string>
     <string name="string_student_fragment_languages_title">Lingua:</string>
     <string name="string_student_fragment_language_level">Livello:</string>
@@ -83,6 +88,7 @@
 
     <!-- Certificate fragment strings: -->
     <string name="string_certificate_fragment_area">Certificati:</string>
+    <string name="string_certificate_fragment_name">Titolo:</string>
     <string name="string_certificate_fragment_mark">Voto:</string>
     <string name="string_certificate_fragment_date">Data conseguimento:</string>
     <string name="string_certificate_fragment_description">Descrizione del certificato:</string>
