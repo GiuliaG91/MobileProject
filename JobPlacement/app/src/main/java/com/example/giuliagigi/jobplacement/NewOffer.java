@@ -31,7 +31,12 @@ import android.widget.Toast;
 import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.getbase.floatingactionbutton.FloatingActionsMenu;
 import com.parse.ParseException;
+import com.parse.ParseInstallation;
+import com.parse.ParseObject;
+import com.parse.ParsePush;
 import com.parse.ParseQuery;
+import com.parse.ParseUser;
+import com.parse.SaveCallback;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -769,7 +774,7 @@ public class NewOffer extends Fragment implements DatePickerFragment.OnDataSetLi
                         offer.setPublishField(true);
                     }
 
-                    GlobalData gd=(GlobalData)getActivity().getApplication();
+                    final GlobalData gd=(GlobalData)getActivity().getApplication();
 
                     Company company=(Company)gd.getUserObject();
 
@@ -814,7 +819,25 @@ public class NewOffer extends Fragment implements DatePickerFragment.OnDataSetLi
                         offer.addTag(tag);
 
                     }
-                    offer.saveInBackground();
+                    offer.saveInBackground(new SaveCallback() {
+                        @Override
+                        public void done(ParseException e) {
+
+                            /* Invio notifica push a studenti */
+                            ParseQuery<ParseUser> userQuery = ParseUser.getQuery();
+                            userQuery.whereEqualTo(ParseUserWrapper.TYPE_FIELD,User.TYPE_STUDENT);
+
+                            ParseQuery pushQuery = ParseInstallation.getQuery();
+                            pushQuery.whereMatchesQuery("user", userQuery);
+
+                            ParsePush push = new ParsePush();
+                            push.setQuery(pushQuery);
+                            push.setMessage("The company " + ((Company)gd.getUserObject()).getName() + "has published a new offer");
+                            push.sendInBackground();
+                        }
+                    });
+
+
                     Toast.makeText(getActivity(),"Done",Toast.LENGTH_SHORT ).show();
 
                         editMode=false;

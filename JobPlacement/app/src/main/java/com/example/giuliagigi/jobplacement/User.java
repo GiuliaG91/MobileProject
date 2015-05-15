@@ -35,7 +35,7 @@ import java.util.List;
 public class User extends ParseObject{
 
     protected static final String MAIL_FIELD = "mail";
-    private static final String TYPE_FIELD = "type";
+    public static final String TYPE_FIELD = "type";
     protected static final String PHONE_FIELD = "phones";
     protected static final String TAG_FIELD = "tags";
     protected static final String PROFILE_PHOTO_FIELD = "profilePhoto";

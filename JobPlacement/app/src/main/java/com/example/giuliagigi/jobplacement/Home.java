@@ -36,7 +36,8 @@ import java.util.ArrayList;
 public class Home extends ActionBarActivity  implements TabHomeStudentFragment.OnFragmentInteractionListener ,TabHomeCompanyFragment.OnFragmentInteractionListener, NewOffer.OnFragmentInteractionListener,
                                                 ProfileManagementFragment.OnInteractionListener, ProfileManagement.OnInteractionListener , menuAdapter.SetSelectedItem ,
                                                   OfferSearchFragment.OnFragmentInteractionListener , StudentCompanySearchFragment.OnFragmentInteractionListener,
-                                                    CompanyStudentSearchFragment.OnFragmentInteractionListener
+                                                    CompanyStudentSearchFragment.OnFragmentInteractionListener, MailBoxFragment.OnFragmentInteractionListener
+
 {
     private Toolbar toolbar;   // Declaring the Toolbar Object
 
@@ -296,6 +297,23 @@ public class Home extends ActionBarActivity  implements TabHomeStudentFragment.O
                     break;
 
 
+
+                case 5:   //MessageBox
+                    fragmentManager = getSupportFragmentManager();
+
+                    MailBoxFragment mailBoxFragment = MailBoxFragment.newInstance();
+
+                    fragmentManager.beginTransaction()
+                            .replace(R.id.tab_Home_container, mailBoxFragment)
+                            .commit();
+
+
+                    toolbar.setTitle(TITLES[mDrawerSelectedItem]);
+                    mDrawerLayout.closeDrawers();
+
+                    break;
+
+
                 default:
                     break;
 
@@ -371,7 +389,19 @@ public class Home extends ActionBarActivity  implements TabHomeStudentFragment.O
                         break;
 
 
+                    case 5:      // MessageBox
+                        fragmentManager = getSupportFragmentManager();
 
+                        MailBoxFragment mailBoxFragment = MailBoxFragment.newInstance();
+
+                        fragmentManager.beginTransaction()
+                                .replace(R.id.tab_Home_container, mailBoxFragment)
+                                .commit();
+
+                        toolbar.setTitle(TITLES[mDrawerSelectedItem]);
+                        mDrawerLayout.closeDrawers();
+
+                        break;
 
 
 

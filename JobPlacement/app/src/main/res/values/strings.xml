@@ -209,4 +209,42 @@
     </string-array>
 
 
+    <!-- aggiunti da Sivlia -->
+
+    <string name="new_message">Create new message</string>
+    <string name="new_message_toolbar_title">New Message</string>
+    <string name="sender">From:</string>
+    <string name="recipient">To:</string>
+    <string name="recipients">Recipients</string>
+    <string name="date">Date:</string>
+    <string name="object">Object:</string>
+    <string name="object1">Object</string>
+    <string name="body">Body:</string>
+    <string name="send">Send</string>
+
+    <string name="message_sent">The message was sent correctly!</string>
+    <string name="message_emails_wrong">The following recipients were not registered in the application:</string>
+
+    <!-- Months -->
+    <string-array name="months">
+        <item>January</item>
+        <item>February</item>
+        <item>March</item>
+        <item>April</item>
+        <item>May</item>
+        <item>June</item>
+        <item>July</item>
+        <item>August</item>
+        <item>September</item>
+        <item>October</item>
+        <item>November</item>
+        <item>December</item>
+    </string-array>
+
+    <string name="delete_messages">Delete Messages</string>
+    <string name="respond_message">Respond</string>
+    <string name="on">On</string>
+    <string name="wrote">wrote</string>
+
+
 </resources>

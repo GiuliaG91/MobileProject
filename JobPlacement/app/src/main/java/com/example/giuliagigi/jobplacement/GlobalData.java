@@ -37,6 +37,7 @@ public class GlobalData extends Application {
     private HashMap<String,Tag> tags;
     private HashMap<String,Boolean> isCached;
     private SharedPreferences loginPreferences;
+    private InboxMessage currentViewMessage;
 
 
     /**************NEW OFFER BUNDLE**********/
@@ -51,8 +52,9 @@ public class GlobalData extends Application {
     public void onCreate() {
         super.onCreate();
 
-        currentUser = null;
+//        currentUser = null;
         currentUserObject = null;
+        currentViewMessage = null;
 
         // Enable Local Datastore.
         Parse.enableLocalDatastore(this);
@@ -68,8 +70,11 @@ public class GlobalData extends Application {
         ParseObject.registerSubclass(Tag.class);
         ParseObject.registerSubclass(Withdrawal.class);
         ParseObject.registerSubclass(Certificate.class);
+        ParseObject.registerSubclass(InboxMessage.class);
 
         Parse.initialize(this, "EICiUy2eT7CZPXw8N6I1p6lE4844svLI73JTc2QY", "8I9HZ7AgMHgeIxQKk8k653jNBvBCz57nRuSH73pA");
+
+        getCurrentUser();
 
         isCached = new HashMap<String,Boolean>();
         tags = new HashMap<String,Tag>();
@@ -222,6 +227,17 @@ public class GlobalData extends Application {
 
     public OfferFilterStatus getOfferFilterStatus() {
         return offerFilterStatus;
+    }
+
+
+    /* ---------------- INBOX MESSAGES -----------------------------------------------------------*/
+
+    public InboxMessage getCurrentViewMessage(){
+        return currentViewMessage;
+    }
+
+    public void setCurrentViewMessage(InboxMessage m){
+        this.currentViewMessage = m;
     }
 
 }
