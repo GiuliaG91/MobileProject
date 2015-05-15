@@ -1,9 +1,7 @@
 package com.example.giuliagigi.jobplacement;
 
-import android.app.ActionBar;
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.Dialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.Log;
@@ -13,7 +11,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.parse.DeleteCallback;
@@ -43,16 +40,17 @@ public class StudentProfileManagementCertificateFragment extends ProfileManageme
     private int day,month,year;
     private String completeDescription;
     private boolean isRemoved, dateChanged;
-    private Student currentUser;
+    private Student student;
 
     /* ----------------- CONTRUCTORS GETTERS SETTERS ---------------------------------------------*/
 
     public StudentProfileManagementCertificateFragment() {}
-    public static StudentProfileManagementCertificateFragment newInstance(Certificate certificate) {
+    public static StudentProfileManagementCertificateFragment newInstance(Certificate certificate,Student student) {
         StudentProfileManagementCertificateFragment fragment = new StudentProfileManagementCertificateFragment();
         Bundle args = new Bundle();
         fragment.setArguments(args);
         fragment.setCertificate(certificate);
+        fragment.setStudent(student);
         return fragment;
     }
 
@@ -60,6 +58,10 @@ public class StudentProfileManagementCertificateFragment extends ProfileManageme
         this.certificate = certificate;
     }
 
+    public void setStudent(Student student){
+
+        this.student = student;
+    }
 
     /* ----------------- STANDARD CALLBACKS ------------------------------------------------------*/
 
@@ -68,7 +70,6 @@ public class StudentProfileManagementCertificateFragment extends ProfileManageme
         super.onAttach(activity);
         isListenerAfterDetach = true;
         isRemoved = false;
-        currentUser = (Student)application.getUserObject();
     }
 
     @Override
@@ -219,8 +220,8 @@ public class StudentProfileManagementCertificateFragment extends ProfileManageme
 
                         if (e == null) {
 
-                            currentUser.removeCertificate(certificate);
-                            currentUser.saveEventually();
+                            student.removeCertificate(certificate);
+                            student.saveEventually();
                         }
                     }
                 });
@@ -294,15 +295,15 @@ public class StudentProfileManagementCertificateFragment extends ProfileManageme
             if(!titleText.getText().toString().equals(INSERT_FIELD)) certificate.setTitle(titleText.getText().toString());
             if(!markText.getText().toString().equals(INSERT_FIELD)) certificate.setMark(markText.getText().toString());
             if(completeDescription != null) certificate.setDescription(completeDescription);
-            certificate.setStudent(currentUser);
+            certificate.setStudent(student);
 
             certificate.saveEventually(new SaveCallback() {
                 @Override
                 public void done(ParseException e) {
 
                     if(e==null){
-                        currentUser.addCertificate(certificate);
-                        currentUser.saveEventually();
+                        student.addCertificate(certificate);
+                        student.saveEventually();
                     }
                 }
             });

@@ -60,7 +60,6 @@ public class Home extends ActionBarActivity  implements TabHomeStudentFragment.O
 
     private boolean isEditMode;
     private GlobalData application;
-    private ProfileManagementFragment currentFragment;
     private ArrayList<OnActivityChangedListener> listeners;
 
 
@@ -280,13 +279,13 @@ public class Home extends ActionBarActivity  implements TabHomeStudentFragment.O
 
                 case 2:
 
+                    GlobalData gd = (GlobalData)getApplicationContext();
+                    fragmentManager = getSupportFragmentManager();
+                    Fragment fragment = ProfileManagement.newInstance(true,gd.getUserObject());
 
-                                fragmentManager = getSupportFragmentManager();
-                                Fragment fragment = ProfileManagement.newInstance();
-
-                                fragmentManager.beginTransaction()
-                                        .replace(R.id.tab_Home_container, fragment)
-                                        .commit();
+                    fragmentManager.beginTransaction()
+                        .replace(R.id.tab_Home_container, fragment)
+                        .commit();
 
 
                     toolbar.setTitle(TITLES[mDrawerSelectedItem]);
@@ -311,18 +310,18 @@ public class Home extends ActionBarActivity  implements TabHomeStudentFragment.O
                     case 1 :
 
 
-                                FragmentManager fragmentManager =getSupportFragmentManager();
-                                Fragment current = fragmentManager.findFragmentById(R.id.tab_Home_container);
+                        FragmentManager fragmentManager =getSupportFragmentManager();
+                        Fragment current = fragmentManager.findFragmentById(R.id.tab_Home_container);
 
 
                                     //New Fragment
-                                    TabHomeCompanyFragment homeFragment = TabHomeCompanyFragment.newInstance();
-                                    // Insert the fragment by replacing any existing fragment
+                        TabHomeCompanyFragment homeFragment = TabHomeCompanyFragment.newInstance();
+                        // Insert the fragment by replacing any existing fragment
                                     // Insert the fragment by replacing any existing fragment
 
-                                    fragmentManager.beginTransaction()
-                                            .replace(R.id.tab_Home_container, homeFragment)
-                                            .commit();
+                        fragmentManager.beginTransaction()
+                          .replace(R.id.tab_Home_container, homeFragment)
+                          .commit();
 
 
 
@@ -334,9 +333,11 @@ public class Home extends ActionBarActivity  implements TabHomeStudentFragment.O
 
                     case 2:
 
+                        GlobalData gd = (GlobalData)getApplicationContext();
+
                         Log.println(Log.ASSERT,"HOME", "open company profile");
                         fragmentManager = getSupportFragmentManager();
-                        Fragment profileFragment = ProfileManagement.newInstance();
+                        Fragment profileFragment = ProfileManagement.newInstance(true,gd.getUserObject());
 
                         fragmentManager.beginTransaction()
                                 .replace(R.id.tab_Home_container, profileFragment)

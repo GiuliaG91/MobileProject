@@ -1,33 +1,21 @@
 package com.example.giuliagigi.jobplacement;
 
 import android.app.Activity;
-import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.GridLayout;
-import android.widget.ImageButton;
-import android.widget.MultiAutoCompleteTextView;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Set;
 
 public class StudentProfileManagementSkillsFragment extends ProfileManagementFragment {
 
     private static final String TITLE = "Skills";
 
-    private Student currentUser;
+    private Student student;
     Button addDegree, addLanguage,addCertificate;
     ArrayList<StudentProfileManagementDegreeFragment> degreeFragments;
     ArrayList<StudentProfileManagementLanguageFragment> languageFragments;
@@ -36,10 +24,11 @@ public class StudentProfileManagementSkillsFragment extends ProfileManagementFra
     /*----------------------- CONSTRUCTORS ------------------------------------------------------*/
 
     public StudentProfileManagementSkillsFragment() {super();}
-    public static StudentProfileManagementSkillsFragment newInstance() {
+    public static StudentProfileManagementSkillsFragment newInstance(Student student) {
         StudentProfileManagementSkillsFragment fragment = new StudentProfileManagementSkillsFragment();
         Bundle args = new Bundle();
         fragment.setArguments(args);
+        fragment.setStudent(student);
         return fragment;
     }
 
@@ -48,13 +37,18 @@ public class StudentProfileManagementSkillsFragment extends ProfileManagementFra
         return TITLE;
     }
 
+    public void setStudent(Student student){
+
+        this.student = student;
+    }
+
     /*----------------------- STANDARD CALLBACKS -------------------------------------------------*/
 
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
 
-        currentUser = (Student)application.getUserObject();
+        student = (Student)application.getUserObject();
         degreeFragments = new ArrayList<StudentProfileManagementDegreeFragment>();
         languageFragments = new ArrayList<StudentProfileManagementLanguageFragment>();
         certificateFragments = new ArrayList<StudentProfileManagementCertificateFragment>();
@@ -79,7 +73,7 @@ public class StudentProfileManagementSkillsFragment extends ProfileManagementFra
             @Override
             public void onClick(View v) {
 
-                StudentProfileManagementDegreeFragment dmf = StudentProfileManagementDegreeFragment.newInstance(new Degree());
+                StudentProfileManagementDegreeFragment dmf = StudentProfileManagementDegreeFragment.newInstance(new Degree(), student);
                 FragmentTransaction ft = getFragmentManager().beginTransaction();
                 ft.add(R.id.student_degreeList_container,dmf);
                 ft.commit();
@@ -92,7 +86,7 @@ public class StudentProfileManagementSkillsFragment extends ProfileManagementFra
             @Override
             public void onClick(View v) {
 
-                StudentProfileManagementLanguageFragment lmf = StudentProfileManagementLanguageFragment.newInstance(new Language());
+                StudentProfileManagementLanguageFragment lmf = StudentProfileManagementLanguageFragment.newInstance(new Language(), student);
                 FragmentTransaction ft = getFragmentManager().beginTransaction();
                 ft.add(R.id.student_languageList_container,lmf);
                 ft.commit();
@@ -105,7 +99,7 @@ public class StudentProfileManagementSkillsFragment extends ProfileManagementFra
             @Override
             public void onClick(View v) {
 
-                StudentProfileManagementCertificateFragment cmf = StudentProfileManagementCertificateFragment.newInstance(new Certificate());
+                StudentProfileManagementCertificateFragment cmf = StudentProfileManagementCertificateFragment.newInstance(new Certificate(), student);
                 FragmentTransaction ft = getFragmentManager().beginTransaction();
                 ft.add(R.id.student_certificateList_container,cmf);
                 ft.commit();
@@ -120,12 +114,12 @@ public class StudentProfileManagementSkillsFragment extends ProfileManagementFra
     public void onResume() {
         super.onResume();
 
-        int max = Math.max(degreeFragments.size(),currentUser.getDegrees().size());
+        int max = Math.max(degreeFragments.size(), student.getDegrees().size());
         for(int i=0;i<max;i++){
 
             if(i>=degreeFragments.size()){
 
-                StudentProfileManagementDegreeFragment dmf = StudentProfileManagementDegreeFragment.newInstance(currentUser.getDegrees().get(i));
+                StudentProfileManagementDegreeFragment dmf = StudentProfileManagementDegreeFragment.newInstance(student.getDegrees().get(i), student);
                 degreeFragments.add(dmf);
             }
 
@@ -135,12 +129,12 @@ public class StudentProfileManagementSkillsFragment extends ProfileManagementFra
 
         }
 
-        max = Math.max(languageFragments.size(),currentUser.getLanguages().size());
+        max = Math.max(languageFragments.size(), student.getLanguages().size());
         for(int j=0;j<max;j++){
 
             if(j>=languageFragments.size()){
 
-                StudentProfileManagementLanguageFragment lmf = StudentProfileManagementLanguageFragment.newInstance(currentUser.getLanguages().get(j));
+                StudentProfileManagementLanguageFragment lmf = StudentProfileManagementLanguageFragment.newInstance(student.getLanguages().get(j), student);
                 languageFragments.add(lmf);
             }
 
@@ -150,12 +144,12 @@ public class StudentProfileManagementSkillsFragment extends ProfileManagementFra
 
         }
 
-        max = Math.max(certificateFragments.size(),currentUser.getCertificates().size());
+        max = Math.max(certificateFragments.size(), student.getCertificates().size());
         for(int j=0;j<max;j++){
 
             if(j>=certificateFragments.size()){
 
-                StudentProfileManagementCertificateFragment cmf = StudentProfileManagementCertificateFragment.newInstance(currentUser.getCertificates().get(j));
+                StudentProfileManagementCertificateFragment cmf = StudentProfileManagementCertificateFragment.newInstance(student.getCertificates().get(j), student);
                 certificateFragments.add(cmf);
             }
 

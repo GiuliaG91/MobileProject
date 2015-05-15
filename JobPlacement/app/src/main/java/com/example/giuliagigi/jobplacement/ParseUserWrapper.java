@@ -56,14 +56,16 @@ public class ParseUserWrapper extends ParseUser {
 
     public User getUser(){
 
+        Log.println(Log.ASSERT,"PARSE USER", "getting user object");
         if(getType().equals(User.TYPE_STUDENT))
             return (User)get(STUDENT_FIELD);
         else if (getType().equals(User.TYPE_COMPANY))
             return (User)get(COMPANY_FIELD);
 
+        Log.println(Log.ASSERT,"PARSE USER", "unknown type. Returning null");
         return null;
-
     }
+
     public void setUser(User user){
 
         if(getType().equals(User.TYPE_STUDENT)){

@@ -16,24 +16,29 @@ public class ProfileManagementViewAdapter extends FragmentPagerAdapter{
         ArrayList<ProfileManagementFragment> fragments;
 
         // Build a Constructor and assign the passed Values to appropriate values in the class
-        public ProfileManagementViewAdapter(FragmentManager fm, String userType) {
+        public ProfileManagementViewAdapter(FragmentManager fm, User user, boolean editable) {
             super(fm);
             fragments = new ArrayList<ProfileManagementFragment>();
 
-            if(userType.equals(User.TYPE_STUDENT)){
+            if(user.getType().equals(User.TYPE_STUDENT)){
 
-                fragments.add(StudentProfileManagementBasicsFragment.newInstance());
-                fragments.add(StudentProfileManagementSkillsFragment.newInstance());
-                fragments.add(StudentProfileManagementRegistryFragment.newInstance());
+                Student student = (Student)user;
+                fragments.add(StudentProfileManagementBasicsFragment.newInstance(student));
+                fragments.add(StudentProfileManagementSkillsFragment.newInstance(student));
+                fragments.add(StudentProfileManagementRegistryFragment.newInstance(student));
             }
-            else {
+            else if(user.getType().equals(User.TYPE_COMPANY)) {
 
-                fragments.add(CompanyProfileManagementBasicsFragment.newInstance());
-                fragments.add(CompanyProfileManagementRegistryFragment.newInstance());
+                Company company = (Company)user;
+                fragments.add(CompanyProfileManagementBasicsFragment.newInstance(company));
+                fragments.add(CompanyProfileManagementRegistryFragment.newInstance(company));
             }
 
-            fragments.add(ProfileManagementTagsFragment.newInstance());
-            fragments.add(ProfileManagementAccountFragment.newInstance());
+            if(editable){
+
+                fragments.add(ProfileManagementTagsFragment.newInstance(user));
+                fragments.add(ProfileManagementAccountFragment.newInstance(user));
+            }
 
         }
 

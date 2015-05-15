@@ -153,7 +153,7 @@ public class menuAdapter extends RecyclerView.Adapter<menuAdapter.ViewHolder> {
 
                                 if(!(current instanceof ProfileManagement)) {
 
-                                    Fragment fragment = ProfileManagement.newInstance();
+                                    Fragment fragment = ProfileManagement.newInstance(true,gd.getUserObject());
 
                                     fragmentManager.beginTransaction()
                                             .replace(R.id.tab_Home_container, fragment)
@@ -352,7 +352,7 @@ public class menuAdapter extends RecyclerView.Adapter<menuAdapter.ViewHolder> {
 
                                   if(!(current instanceof ProfileManagement)) {
 
-                                      Fragment fragment = ProfileManagement.newInstance();
+                                      Fragment fragment = ProfileManagement.newInstance(true,gd.getUserObject());
 
                                       fragmentManager.beginTransaction()
                                               .replace(R.id.tab_Home_container, fragment)

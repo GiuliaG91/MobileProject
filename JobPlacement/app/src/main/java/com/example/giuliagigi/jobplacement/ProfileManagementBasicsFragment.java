@@ -21,16 +21,16 @@ public class ProfileManagementBasicsFragment extends ProfileManagementFragment {
 
     private static final String TITLE = "Overview";
     protected LinearLayout profilePhoto;
-    private User currentUser;
 
 
     /* ---------------------- CONSTRUCTORS GETTERS SETTERS ---------------------------------------*/
 
     public ProfileManagementBasicsFragment() {}
-    public static ProfileManagementBasicsFragment newInstance() {
+    public static ProfileManagementBasicsFragment newInstance(User user) {
         ProfileManagementBasicsFragment fragment = new ProfileManagementBasicsFragment();
         Bundle args = new Bundle();
         fragment.setArguments(args);
+        fragment.setUser(user);
         return fragment;
     }
 
@@ -39,15 +39,17 @@ public class ProfileManagementBasicsFragment extends ProfileManagementFragment {
         return TITLE;
     }
 
+    public void setUser(User user){
 
+        Log.println(Log.ASSERT,"PM FRAG","setting user" + user);
+        this.user = user;
+    }
 
     /* ---------------------------- STANDARD CALLBACKS -------------------------------------------*/
 
     @Override
     public void onAttach(Activity activity) {
-
         super.onAttach(activity);
-        currentUser = application.getUserObject();
     }
 
     @Override
@@ -60,34 +62,6 @@ public class ProfileManagementBasicsFragment extends ProfileManagementFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-
-//        root = inflater.inflate(R.layout.fragment_profile_management_basics, container, false);
-//
-//        profilePhoto = (LinearLayout)root.findViewById(R.id.basics_profilePhoto);
-//
-//        if(currentUser.getProfilePhoto() != null) {
-//            Bitmap bmImg = currentUser.getProfilePhoto();
-//            BitmapDrawable background = new BitmapDrawable(bmImg);
-//            profilePhoto.setBackgroundDrawable(background);
-//        }
-//
-//        profilePhoto.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//
-//                Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-//                intent.setType("image/*");
-//                if(intent.resolveActivity(getActivity().getPackageManager()) != null){
-//                    startActivityForResult(intent,REQUEST_IMAGE_GET);
-//                }
-//            }
-//        });
-//
-//        EditText emailText = (EditText)root.findViewById(R.id.basics_email_area);
-//        emailText.setText(currentUser.getMail());
-//
-//        setEnable(host.isEditMode());
 
         return inflater.inflate(R.layout.fragment_profile_management_basics, container, false);
     }
@@ -96,6 +70,7 @@ public class ProfileManagementBasicsFragment extends ProfileManagementFragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
 
+        Log.println(Log.ASSERT,"BASICS", "onViewCreated start");
         setBasicsView();
         setEnable(host.isEditMode());
         super.onViewCreated(view, savedInstanceState);
@@ -126,7 +101,7 @@ public class ProfileManagementBasicsFragment extends ProfileManagementFragment {
 
                     hasChanged = true;
                     application.getUserObject().setProfilePhoto(photoBitmap);
-                    Bitmap bmImg = currentUser.getProfilePhoto();
+                    Bitmap bmImg = user.getProfilePhoto();
                     BitmapDrawable background = new BitmapDrawable(bmImg);
                     profilePhoto.setBackgroundDrawable(background);
                 }
@@ -157,8 +132,8 @@ public class ProfileManagementBasicsFragment extends ProfileManagementFragment {
 
         profilePhoto = (LinearLayout)root.findViewById(R.id.basics_profilePhoto);
 
-        if(currentUser.getProfilePhoto() != null) {
-            Bitmap bmImg = currentUser.getProfilePhoto();
+        if(user.getProfilePhoto() != null) {
+            Bitmap bmImg = user.getProfilePhoto();
             BitmapDrawable background = new BitmapDrawable(bmImg);
             profilePhoto.setBackgroundDrawable(background);
         }
@@ -176,6 +151,6 @@ public class ProfileManagementBasicsFragment extends ProfileManagementFragment {
         });
 
         EditText emailText = (EditText)root.findViewById(R.id.basics_email_area);
-        emailText.setText(currentUser.getMail());
+        emailText.setText(user.getMail());
     }
 }

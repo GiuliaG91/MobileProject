@@ -2,7 +2,6 @@ package com.example.giuliagigi.jobplacement;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,7 +21,7 @@ public class StudentProfileManagementLanguageFragment extends ProfileManagementF
     private static String BUNDLE_LEVEL = "bundle_level";
     private static String BUNDLE_HASCHANGED = "bundle_recycled";
 
-    private Student currentUser;
+    private Student student;
     private Spinner languageLevel;
     private EditText languageDesc;
     Button  delete;
@@ -33,11 +32,12 @@ public class StudentProfileManagementLanguageFragment extends ProfileManagementF
     /* ----------------- CONSTRUCTORS GETTERS SETTERS ------------------------------------------- */
 
     public StudentProfileManagementLanguageFragment() { super(); }
-    public static StudentProfileManagementLanguageFragment newInstance(Language language) {
+    public static StudentProfileManagementLanguageFragment newInstance(Language language,Student student) {
         StudentProfileManagementLanguageFragment fragment = new StudentProfileManagementLanguageFragment();
         Bundle args = new Bundle();
         fragment.setArguments(args);
         fragment.setLanguage(language);
+        fragment.setStudent(student);
         return fragment;
     }
 
@@ -50,12 +50,16 @@ public class StudentProfileManagementLanguageFragment extends ProfileManagementF
         return TITLE;
     }
 
+    public void setStudent(Student student){
+
+        this.student = student;
+    }
+
     /* ----------------- STANDARD CALLBACKS ---------------------------------------------------- */
 
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-        currentUser = (Student)application.getUserObject();
         isListenerAfterDetach = true;
         isRemoved = false;
     }
@@ -105,8 +109,8 @@ public class StudentProfileManagementLanguageFragment extends ProfileManagementF
                 try {
                     language.delete();
                     isRemoved = true;
-                    currentUser.removeLanguage(language);
-                    currentUser.saveEventually();
+                    student.removeLanguage(language);
+                    student.saveEventually();
                     root.setVisibility(View.INVISIBLE);
 
                 } catch (ParseException e) {
@@ -156,15 +160,15 @@ public class StudentProfileManagementLanguageFragment extends ProfileManagementF
 
             language.setLevel((String) languageLevel.getSelectedItem());
             if(!languageDesc.getText().toString().equals(INSERT_FIELD)) language.setDescription((String) languageDesc.getText().toString());
-            language.setStudent(currentUser);
+            language.setStudent(student);
             language.saveEventually(new SaveCallback() {
                 @Override
                 public void done(ParseException e) {
 
                     if(e==null){
 
-                        currentUser.addLanguage(language);
-                        currentUser.saveEventually();
+                        student.addLanguage(language);
+                        student.saveEventually();
                     }
 
                 }

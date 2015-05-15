@@ -12,7 +12,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.google.android.gms.maps.GoogleMap;
@@ -28,20 +27,23 @@ public class StudentProfileManagementRegistryFragment extends ProfileManagementF
 
     private static final String TITLE = "Registry";
 
-    private Student currentUser;
+    private Student student;
     private boolean addressChanged;
     private EditText addressText,cityText,postalText,nationText;
     private Button phonePlus;
-    private LinearLayout phonesContainer;
     private GeoLocalization geoloc;
 
     private ArrayList<ProfileManagementTelephoneFragment> telephoneFragments;
 
+
+    /* ----------------- CONTRUCTORS GETTERS SETTERS ---------------------------------------------*/
+
     public StudentProfileManagementRegistryFragment() {super();}
-    public static StudentProfileManagementRegistryFragment newInstance() {
+    public static StudentProfileManagementRegistryFragment newInstance(Student student) {
         StudentProfileManagementRegistryFragment fragment = new StudentProfileManagementRegistryFragment();
         Bundle args = new Bundle();
         fragment.setArguments(args);
+        fragment.setStudent(student);
         return fragment;
     }
 
@@ -50,13 +52,19 @@ public class StudentProfileManagementRegistryFragment extends ProfileManagementF
         return TITLE;
     }
 
+    public void setStudent(Student student){
+
+        this.student = student;
+    }
+
+
+    /* ----------------- STANDARD CALLBACKS ------------------------------------------------------*/
+
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
 
-
         Log.println(Log.ASSERT,"REGISTRY FRAG", "onAttach");
-        currentUser = (Student)application.getUserObject();
         telephoneFragments = new ArrayList<ProfileManagementTelephoneFragment>();
         addressChanged = false;
     }
@@ -78,34 +86,32 @@ public class StudentProfileManagementRegistryFragment extends ProfileManagementF
         geoloc.setOnMapReadyCallback(this);
 
         addressText = (EditText)root.findViewById(R.id.student_address_area);
-        if(currentUser.getAddress() == null){
+        if(student.getAddress() == null){
             addressText.setText(INSERT_FIELD);
         }else{
-            addressText.setText(currentUser.getAddress());
+            addressText.setText(student.getAddress());
         }
 
         cityText = (EditText)root.findViewById(R.id.student_city_area);
-        if(currentUser.getCity() == null){
+        if(student.getCity() == null){
             cityText.setText(INSERT_FIELD);
         }else{
-            cityText.setText(currentUser.getCity());
+            cityText.setText(student.getCity());
         }
 
         postalText = (EditText)root.findViewById(R.id.student_CAP_area);
-        if(currentUser.getPostalCode() == null){
+        if(student.getPostalCode() == null){
             postalText.setText(INSERT_FIELD);
         }else{
-            postalText.setText(currentUser.getPostalCode());
+            postalText.setText(student.getPostalCode());
         }
 
         nationText = (EditText)root.findViewById(R.id.student_nation_area);
-        if(currentUser.getNation() == null){
+        if(student.getNation() == null){
             nationText.setText(INSERT_FIELD);
         }else{
-            nationText.setText(currentUser.getNation());
+            nationText.setText(student.getNation());
         }
-
-        phonesContainer = (LinearLayout)root.findViewById(R.id.student_phones_container);
 
         textFields.add(addressText);
         textFields.add(cityText);
@@ -126,7 +132,7 @@ public class StudentProfileManagementRegistryFragment extends ProfileManagementF
             @Override
             public void onClick(View v) {
 
-                ProfileManagementTelephoneFragment tf = ProfileManagementTelephoneFragment.newInstance(new Telephone());
+                ProfileManagementTelephoneFragment tf = ProfileManagementTelephoneFragment.newInstance(new Telephone(), student);
                 FragmentTransaction ft = getFragmentManager().beginTransaction();
                 ft.add(R.id.student_phones_container,tf);
                 ft.commit();
@@ -141,12 +147,12 @@ public class StudentProfileManagementRegistryFragment extends ProfileManagementF
     public void onResume() {
         super.onResume();
 
-        int max = Math.max(telephoneFragments.size(),currentUser.getPhones().size());
+        int max = Math.max(telephoneFragments.size(), student.getPhones().size());
         for(int i=0;i<max;i++){
 
             if(i>=telephoneFragments.size()){
 
-                ProfileManagementTelephoneFragment tf  = ProfileManagementTelephoneFragment.newInstance(currentUser.getPhones().get(i));
+                ProfileManagementTelephoneFragment tf  = ProfileManagementTelephoneFragment.newInstance(student.getPhones().get(i), student);
                 telephoneFragments.add(tf);
             }
 
@@ -195,10 +201,10 @@ public class StudentProfileManagementRegistryFragment extends ProfileManagementF
     public void saveChanges() {
         super.saveChanges();
 
-        if(!addressText.getText().toString().equals(INSERT_FIELD))  currentUser.setAddress(addressText.getText().toString());
-        if(!cityText.getText().toString().equals(INSERT_FIELD))     currentUser.setCity(cityText.getText().toString());
-        if(!postalText.getText().toString().equals(INSERT_FIELD))   currentUser.setPostalCode(postalText.getText().toString());
-        if(!nationText.getText().toString().equals(INSERT_FIELD))   currentUser.setNation(nationText.getText().toString());
+        if(!addressText.getText().toString().equals(INSERT_FIELD))  student.setAddress(addressText.getText().toString());
+        if(!cityText.getText().toString().equals(INSERT_FIELD))     student.setCity(cityText.getText().toString());
+        if(!postalText.getText().toString().equals(INSERT_FIELD))   student.setPostalCode(postalText.getText().toString());
+        if(!nationText.getText().toString().equals(INSERT_FIELD))   student.setNation(nationText.getText().toString());
 
         if(addressChanged && !nationText.getText().toString().equals(INSERT_FIELD) && !cityText.getText().toString().equals(INSERT_FIELD)){
 
@@ -212,10 +218,10 @@ public class StudentProfileManagementRegistryFragment extends ProfileManagementF
             try {
                 Address a = geoloc.setMapLocation(geoAddress);
                 if(a!= null)
-                    currentUser.setAddressLocation(new ParseGeoPoint(a.getLatitude(),a.getLongitude()));
+                    student.setAddressLocation(new ParseGeoPoint(a.getLatitude(),a.getLongitude()));
                 else{
                     Toast.makeText(getActivity(),"Unfortunately, your addres doesn't match with a Google Maps address",Toast.LENGTH_SHORT).show();
-                    currentUser.setAddressLocation(null);
+                    student.setAddressLocation(null);
                 }
 
             } catch (IOException e) {
@@ -227,7 +233,7 @@ public class StudentProfileManagementRegistryFragment extends ProfileManagementF
         else
             Toast.makeText(getActivity(),"You must specify at least office country and city to get a physic location", Toast.LENGTH_SHORT).show();
 
-        currentUser.saveEventually();
+        student.saveEventually();
 
     }
 
@@ -239,8 +245,8 @@ public class StudentProfileManagementRegistryFragment extends ProfileManagementF
     public void onMapReady(GoogleMap googleMap) {
 
         Log.println(Log.ASSERT,"OFFICE FRAG", "Map was created. Setting marker position");
-        if(currentUser.getAddressLocation()!=null)
-            geoloc.setMarkerPosition(new LatLng(currentUser.getAddressLocation().getLatitude(),currentUser.getAddressLocation().getLongitude()));
+        if(student.getAddressLocation()!=null)
+            geoloc.setMarkerPosition(new LatLng(student.getAddressLocation().getLatitude(), student.getAddressLocation().getLongitude()));
     }
 
 

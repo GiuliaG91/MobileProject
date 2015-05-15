@@ -257,10 +257,10 @@ public class Login extends ActionBarActivity {
                     editor.putBoolean(SHAREDPREF_LATEST_LOGIN_PREFERENCE,rememberAccount.isChecked());
                     editor.apply();
 
-//                    /* caching profile infos */
-//                    GlobalData gd = (GlobalData)getApplicationContext();
-//                    gd.getCurrentUser();
-//                    gd.getUserObject();
+                    /* caching profile infos */
+                    GlobalData gd = (GlobalData)getApplicationContext();
+                    gd.getCurrentUser();
+                    gd.getUserObject();
 
                     /* launch home activity */
                     Intent i = new Intent(getApplicationContext(),Home.class);

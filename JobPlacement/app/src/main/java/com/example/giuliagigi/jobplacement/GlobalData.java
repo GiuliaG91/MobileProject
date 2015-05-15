@@ -91,6 +91,8 @@ public class GlobalData extends Application {
             } catch (ParseException e) {
                 e.printStackTrace();
             }
+        else
+            Log.println(Log.ASSERT,"GLOBAL DATA", "currentUser is null");
 
         return  currentUser;
     }
@@ -113,22 +115,8 @@ public class GlobalData extends Application {
         }
 
         return (Student)currentUserObject;
-
-
-
-//        if(currentUser.getType().equals(User.TYPE_COMPANY))
-//            return null;
-//
-//        ParseQuery<Student> studentQuery = ParseQuery.getQuery(Student.class);
-//        studentQuery.whereEqualTo(User.MAIL_FIELD,currentUser.getEmail());
-//        Student result = null;
-//        try {
-//            result = (Student)studentQuery.find().get(0);
-//        } catch (ParseException e) {
-//            e.printStackTrace();
-//        }
-//        return result;
     }
+
     public Company getCompanyFromUser(){
 
         getCurrentUser();
@@ -146,63 +134,15 @@ public class GlobalData extends Application {
             }
         }
 
-
         return (Company)currentUserObject;
-//        if(currentUser.getType().equals(User.TYPE_STUDENT))
-//            return null;
-//
-//        ParseQuery<Company> companyQuery = ParseQuery.getQuery(Company.class);
-//        companyQuery.whereEqualTo(User.MAIL_FIELD, currentUser.getEmail());
-//        Company result = null;
-//        try {
-//            result = (Company)companyQuery.find().get(0);
-//        } catch (ParseException e) {
-//            e.printStackTrace();
-//        }
-//        return result;
     }
+
     public User getUserObject(){
 
         if(getCurrentUser().getType().equals(User.TYPE_STUDENT))
             return getStudentFromUser();
         else
             return getCompanyFromUser();
-
-//        if(currentUser == null)
-//            return null;
-
-//        if(currentUserObject == null){
-//
-//            if(currentUser.getType().equals((User.TYPE_STUDENT))){
-//
-//                ParseQuery<Student> studentQuery = ParseQuery.getQuery(Student.class);
-//                studentQuery.whereEqualTo(User.MAIL_FIELD,currentUser.getEmail());
-//                    studentQuery.findInBackground(new FindCallback<Student>() {
-//                        @Override
-//                        public void done(List<Student> students, ParseException e) {
-//
-//                            if(e == null)
-//                                if(students!= null)
-//                                    currentUserObject = students.get(0);
-//                        }
-//                    });
-//            }
-//            else {
-//
-//                ParseQuery<Company> companyQuery = ParseQuery.getQuery(Company.class);
-//                companyQuery.whereEqualTo(User.MAIL_FIELD,currentUser.getEmail());
-//                try {
-//                    currentUserObject = companyQuery.find().get(0);
-//                } catch (ParseException e) {
-//                    e.printStackTrace();
-//                }
-//            }
-//        }
-//
-//        if(currentUserObject.isCachingNeeded())
-//            currentUserObject.cacheData();
-//
-//        return currentUserObject;
     }
 
 

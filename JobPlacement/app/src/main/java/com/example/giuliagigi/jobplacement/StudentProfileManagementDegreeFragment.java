@@ -6,7 +6,6 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.text.format.Time;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,7 +22,6 @@ import com.parse.DeleteCallback;
 import com.parse.ParseException;
 import com.parse.SaveCallback;
 
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -42,7 +40,7 @@ public class StudentProfileManagementDegreeFragment extends ProfileManagementFra
     private static String BUNDLE_DATE_YEAR = "bundle_date_year";
     private static String BUNDLE_HASCHANGED = "bundle_recycled";
 
-    private Student currentUser;
+    private Student student;
     private Spinner degreeType, degreeStudies;
     private EditText degreeMark;
     private TextView degreeDate;
@@ -57,11 +55,12 @@ public class StudentProfileManagementDegreeFragment extends ProfileManagementFra
     public StudentProfileManagementDegreeFragment() {
         super();
     }
-    public static StudentProfileManagementDegreeFragment newInstance(Degree degree) {
+    public static StudentProfileManagementDegreeFragment newInstance(Degree degree,Student student) {
         StudentProfileManagementDegreeFragment fragment = new StudentProfileManagementDegreeFragment();
         Bundle args = new Bundle();
         fragment.setArguments(args);
         fragment.setDegree(degree);
+        fragment.setStudent(student);
         return fragment;
 
     }
@@ -74,12 +73,16 @@ public class StudentProfileManagementDegreeFragment extends ProfileManagementFra
         return TITLE;
     }
 
+    public void setStudent(Student student){
+
+        this.student = student;
+    }
+
     /* ---------- STANDARD CALLBACKS -------------------------------------------------------*/
 
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-        currentUser = (Student)application.getUserObject();
         isListenerAfterDetach = true;
         isRemoved = false;
         degreeDateChanged = false;
@@ -165,8 +168,8 @@ public class StudentProfileManagementDegreeFragment extends ProfileManagementFra
 
                         if(e==null){
 
-                            currentUser.removeDegree(degree);
-                            currentUser.saveEventually();
+                            student.removeDegree(degree);
+                            student.saveEventually();
                         }
                     }
                 });
@@ -315,16 +318,16 @@ public class StudentProfileManagementDegreeFragment extends ProfileManagementFra
                 degree.setDegreeDate(date);
             }
             degree.setLoud(hasLoud.isChecked());
-            degree.setStudent(currentUser);
+            degree.setStudent(student);
             degree.saveEventually(new SaveCallback() {
                 @Override
                 public void done(ParseException e) {
 
                     if(e == null){
 
-                        Log.println(Log.ASSERT,"DEGREE FRAG","degree saved successfully. Adding to user");
-                        currentUser.addDegree(degree);
-                        currentUser.saveEventually();
+                        Log.println(Log.ASSERT,"DEGREE FRAG","degree saved successfully. Adding...");
+                        student.addDegree(degree);
+                        student.saveEventually();
                     }
                 }
             });

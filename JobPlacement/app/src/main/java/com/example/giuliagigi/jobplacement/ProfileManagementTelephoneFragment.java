@@ -7,7 +7,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -26,7 +25,6 @@ public class ProfileManagementTelephoneFragment extends ProfileManagementFragmen
     private static String BUNDLE_HASCHANGED = "bundle_hasChanged";
 
     private Telephone telephone;
-    private User currentUser = null;
     private Spinner typeSelector;
     private Button removeButton;
     private boolean isRemoved;
@@ -35,11 +33,12 @@ public class ProfileManagementTelephoneFragment extends ProfileManagementFragmen
 
     /* ------------------- CONSTRUCTOR GETTERS SETTERS ------------------------------------------*/
     public ProfileManagementTelephoneFragment() { super(); }
-    public static ProfileManagementTelephoneFragment newInstance(Telephone telephone) {
+    public static ProfileManagementTelephoneFragment newInstance(Telephone telephone, User user) {
         ProfileManagementTelephoneFragment fragment = new ProfileManagementTelephoneFragment();
         Bundle args = new Bundle();
         fragment.setArguments(args);
         fragment.setTelephone(telephone);
+        fragment.setUser(user);
         return fragment;
     }
 
@@ -52,6 +51,12 @@ public class ProfileManagementTelephoneFragment extends ProfileManagementFragmen
         return TITLE;
     }
 
+    public void setUser(User user){
+
+        Log.println(Log.ASSERT,"PM FRAG","setting user" + user);
+        this.user = user;
+    }
+
     /* ------------------- STANDARD CALLBACKS ---------------------------------------------------*/
 
     @Override
@@ -59,7 +64,6 @@ public class ProfileManagementTelephoneFragment extends ProfileManagementFragmen
         super.onAttach(activity);
         isListenerAfterDetach = true;
         isRemoved = false;
-        currentUser = application.getUserObject();
     }
 
     @Override
@@ -106,8 +110,8 @@ public class ProfileManagementTelephoneFragment extends ProfileManagementFragmen
                 try {
                     telephone.delete();
                     isRemoved = true;
-                    currentUser.removePhone(telephone);
-                    currentUser.saveEventually();
+                    user.removePhone(telephone);
+                    user.saveEventually();
                     root.setVisibility(View.INVISIBLE);
 
                 } catch (ParseException e) {
@@ -167,7 +171,7 @@ public class ProfileManagementTelephoneFragment extends ProfileManagementFragmen
             }
             phoneIcon.setBackgroundDrawable(new_image);
             */
-            telephone.setUser(currentUser);
+            telephone.setUser(user);
             telephone.saveEventually(new SaveCallback() {
                 @Override
                 public void done(ParseException e) {
@@ -175,8 +179,8 @@ public class ProfileManagementTelephoneFragment extends ProfileManagementFragmen
                     if(e == null){
 
                         Log.println(Log.ASSERT,"TELEPHONE FRAG", "phone saved. updating user");
-                        currentUser.addPhone(telephone);
-                        currentUser.saveEventually();
+                        user.addPhone(telephone);
+                        user.saveEventually();
                     }
                 }
             });

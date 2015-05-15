@@ -1,54 +1,27 @@
 package com.example.giuliagigi.jobplacement;
 
 import android.app.Activity;
-import android.app.AlertDialog;
-import android.app.Application;
-import android.content.Context;
-import android.content.DialogInterface;
-import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.Typeface;
 import android.location.Address;
-import android.location.Criteria;
-import android.location.Geocoder;
-import android.location.LocationManager;
-import android.net.Uri;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.MarkerOptions;
 import com.parse.ParseException;
 import com.parse.ParseGeoPoint;
 import com.parse.SaveCallback;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 
 public class CompanyProfileManagementOfficeFragment extends ProfileManagementFragment implements OnMapReadyCallback{
@@ -68,7 +41,7 @@ public class CompanyProfileManagementOfficeFragment extends ProfileManagementFra
     Button delete;
 
     private Office office;
-    private Company currentUser;
+    private Company company;
 
     private boolean addressChanged;
     private boolean isRemoved;
@@ -76,16 +49,22 @@ public class CompanyProfileManagementOfficeFragment extends ProfileManagementFra
     public CompanyProfileManagementOfficeFragment() {
         super();
     }
-    public static CompanyProfileManagementOfficeFragment newInstance(Office office) {
+    public static CompanyProfileManagementOfficeFragment newInstance(Office office, Company company) {
         CompanyProfileManagementOfficeFragment fragment = new CompanyProfileManagementOfficeFragment();
         Bundle args = new Bundle();
         fragment.setArguments(args);
         fragment.setOffice(office);
+        fragment.setCompany(company);
         return fragment;
     }
 
     public void setOffice(Office office){
         this.office = office;
+    }
+
+    public void setCompany(Company company){
+
+        this.company = company;
     }
 
 
@@ -96,7 +75,6 @@ public class CompanyProfileManagementOfficeFragment extends ProfileManagementFra
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-        currentUser = (Company)application.getUserObject();
         isListenerAfterDetach = true;
         isRemoved = false;
         addressChanged = false;
@@ -171,8 +149,8 @@ public class CompanyProfileManagementOfficeFragment extends ProfileManagementFra
                 try {
                     office.delete();
                     isRemoved = true;
-                    currentUser.removeOffice(office);
-                    currentUser.saveEventually();
+                    company.removeOffice(office);
+                    company.saveEventually();
                     root.setVisibility(View.INVISIBLE);
 
                 } catch (ParseException e) {
@@ -261,7 +239,7 @@ public class CompanyProfileManagementOfficeFragment extends ProfileManagementFra
             if(!officeAddress.getText().toString().equals(INSERT_FIELD)) office.setOfficeAddress(officeAddress.getText().toString());
             if(!officeCAP.getText().toString().equals(INSERT_FIELD)) office.setOfficeCAP(officeCAP.getText().toString());
             if(!officeNation.getText().toString().equals(INSERT_FIELD)) office.setOfficeNation(officeNation.getText().toString());
-            office.setCompany(currentUser);
+            office.setCompany(company);
 
             if(addressChanged &&
                     !officeNation.getText().toString().equals(INSERT_FIELD) &&
@@ -301,8 +279,8 @@ public class CompanyProfileManagementOfficeFragment extends ProfileManagementFra
                     if (e == null) {
 
                         Log.println(Log.ASSERT, "OFFICE FRAG", "office saved. Updating company");
-                        currentUser.addOffice(office);
-                        currentUser.saveEventually();
+                        company.addOffice(office);
+                        company.saveEventually();
                     } else
                         Log.println(Log.ASSERT, "OFFICE FRAG", "error saving office");
 

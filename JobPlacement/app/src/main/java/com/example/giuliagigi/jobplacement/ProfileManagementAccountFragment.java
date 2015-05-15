@@ -16,15 +16,15 @@ public class ProfileManagementAccountFragment extends ProfileManagementFragment 
 
     private static String TITLE = "Account";
 
-    private User currentUser;
     private Button deleteAccount, sendVerification, changeUsername, changePassword;
 
 
     public ProfileManagementAccountFragment() {}
-    public static ProfileManagementAccountFragment newInstance() {
+    public static ProfileManagementAccountFragment newInstance(User user) {
         ProfileManagementAccountFragment fragment = new ProfileManagementAccountFragment();
         Bundle args = new Bundle();
         fragment.setArguments(args);
+        fragment.setUser(user);
         return fragment;
     }
 
@@ -33,13 +33,18 @@ public class ProfileManagementAccountFragment extends ProfileManagementFragment 
         return TITLE;
     }
 
+    public void setUser(User user){
+
+        Log.println(Log.ASSERT,"PM FRAG","setting user" + user);
+        this.user = user;
+    }
+
     /* -------------- STANDARD CALLBACKS ------------------------------------------------------- */
 
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
 
-        currentUser = application.getUserObject();
     }
 
     @Override

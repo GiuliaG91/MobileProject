@@ -1,7 +1,6 @@
 package com.example.giuliagigi.jobplacement;
 
 import android.app.Activity;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -17,18 +16,21 @@ public class CompanyProfileManagementRegistryFragment extends ProfileManagementF
 
     private static final String TITLE = "Registry";
 
-    private Company currentUser;
+    private Company company;
     Button addOffice;
     ArrayList<CompanyProfileManagementOfficeFragment> officeFragments;
 
 
+    /* ---------------------- CONSTRUCTORS GETTERS SETTERS ---------------------------------------*/
+
     public CompanyProfileManagementRegistryFragment() {
         super();
     }
-    public static CompanyProfileManagementRegistryFragment newInstance() {
+    public static CompanyProfileManagementRegistryFragment newInstance(Company company) {
         CompanyProfileManagementRegistryFragment fragment = new CompanyProfileManagementRegistryFragment();
         Bundle args = new Bundle();
         fragment.setArguments(args);
+        fragment.setCompany(company);
         return fragment;
     }
 
@@ -37,11 +39,17 @@ public class CompanyProfileManagementRegistryFragment extends ProfileManagementF
         return TITLE;
     }
 
+    public void setCompany(Company company){
+
+        this.company = company;
+    }
+
+    /*------------- STANDARD CALLBACKS ------------------------------------------------------------*/
+
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
 
-        currentUser = (Company)application.getUserObject();
         officeFragments = new ArrayList<CompanyProfileManagementOfficeFragment>();
     }
 
@@ -63,7 +71,7 @@ public class CompanyProfileManagementRegistryFragment extends ProfileManagementF
             @Override
             public void onClick(View v) {
 
-                CompanyProfileManagementOfficeFragment dmf = CompanyProfileManagementOfficeFragment.newInstance(new Office());
+                CompanyProfileManagementOfficeFragment dmf = CompanyProfileManagementOfficeFragment.newInstance(new Office(), company);
                 FragmentTransaction ft = getFragmentManager().beginTransaction();
                 ft.add(R.id.company_offices_container,dmf);
                 ft.commit();
@@ -92,12 +100,12 @@ public class CompanyProfileManagementRegistryFragment extends ProfileManagementF
     public void onResume() {
         super.onResume();
 
-        int max = Math.max(officeFragments.size(),currentUser.getOffices().size());
+        int max = Math.max(officeFragments.size(), company.getOffices().size());
         for(int i=0;i<max;i++){
 
             if(i>=officeFragments.size()){
 
-                CompanyProfileManagementOfficeFragment dmf = CompanyProfileManagementOfficeFragment.newInstance(currentUser.getOffices().get(i));
+                CompanyProfileManagementOfficeFragment dmf = CompanyProfileManagementOfficeFragment.newInstance(company.getOffices().get(i), company);
                 officeFragments.add(dmf);
             }
 
