@@ -22,10 +22,12 @@ import com.parse.DeleteCallback;
 import com.parse.ParseException;
 import com.parse.SaveCallback;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
-
+import java.util.Locale;
 
 
 public class StudentProfileManagementDegreeFragment extends ProfileManagementFragment {
@@ -48,6 +50,7 @@ public class StudentProfileManagementDegreeFragment extends ProfileManagementFra
     Button delete;
     private Degree degree;
     private boolean isRemoved, degreeDateChanged;
+    private Date dateDegree;
     private int day,month,year;
 
     /* ---------- CONSTRUCTORS, GETTERS, SETTERS ----------------------------------------------*/
@@ -213,8 +216,11 @@ public class StudentProfileManagementDegreeFragment extends ProfileManagementFra
         degreeDate = (TextView)root.findViewById(R.id.degree_management_datePicker);
         if(degree.getDegreeDate() == null)
             degreeDate.setText(INSERT_FIELD);
-        else
-            degreeDate.setText(date);
+        else {
+            DateFormat df = SimpleDateFormat.getDateInstance(SimpleDateFormat.MEDIUM, Locale.getDefault());
+            degreeDate.setText(df.format(degree.getDegreeDate()));
+        }
+
 
         degreeDate.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -228,9 +234,18 @@ public class StudentProfileManagementDegreeFragment extends ProfileManagementFra
                 builder.setPositiveButton("Save", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        degreeDate.setText(picker.getDayOfMonth() + "/" + picker.getMonth() + "/" + picker.getYear());
-                        degreeDateChanged = true;
                         hasChanged = true;
+                        int day = picker.getDayOfMonth();
+                        int month = picker.getMonth();
+                        int year = picker.getYear();
+                        Calendar c=Calendar.getInstance();
+                        c.set(Calendar.DATE,day);
+                        c.set(Calendar.MONTH, month);
+                        c.set(Calendar.YEAR, year);
+                        DateFormat df= SimpleDateFormat.getDateInstance(SimpleDateFormat.MEDIUM, Locale.getDefault());
+                        degreeDate.setText(df.format(c.getTime()));
+                        dateDegree = c.getTime();
+//                        birthPicker.setText(String.format("%2d/%2d/%4d", day, month, year));
                     }
                 });
                 builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -310,12 +325,8 @@ public class StudentProfileManagementDegreeFragment extends ProfileManagementFra
 
             if(degreeDateChanged) {
 
-                Date date = null;
-                Calendar c = GregorianCalendar.getInstance();
-                c.set(day,month,year);
-                date = c.getTime();
-                Log.println(Log.ASSERT, "BASICS", "DATE:" + date.toString());
-                degree.setDegreeDate(date);
+
+                degree.setDegreeDate(dateDegree);
             }
             degree.setLoud(hasLoud.isChecked());
             degree.setStudent(student);

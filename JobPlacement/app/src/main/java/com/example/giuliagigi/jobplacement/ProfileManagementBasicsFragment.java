@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import java.io.IOException;
@@ -20,7 +21,7 @@ import java.io.IOException;
 public class ProfileManagementBasicsFragment extends ProfileManagementFragment {
 
     private static final String TITLE = "Overview";
-    protected LinearLayout profilePhoto;
+    protected ImageView profilePhoto;
 
 
     /* ---------------------- CONSTRUCTORS GETTERS SETTERS ---------------------------------------*/
@@ -130,7 +131,7 @@ public class ProfileManagementBasicsFragment extends ProfileManagementFragment {
 
     protected void setBasicsView(){
 
-        profilePhoto = (LinearLayout)root.findViewById(R.id.basics_profilePhoto);
+        profilePhoto = (ImageView)root.findViewById(R.id.basics_profilePhoto);
 
         if(user.getProfilePhoto() != null) {
             Bitmap bmImg = user.getProfilePhoto();

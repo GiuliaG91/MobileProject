@@ -13,9 +13,12 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.Locale;
 
 
 public class CompanyProfileManagementBasicsFragment extends ProfileManagementBasicsFragment {
@@ -25,7 +28,7 @@ public class CompanyProfileManagementBasicsFragment extends ProfileManagementBas
     private EditText nameText,VATNumber, descriptionText;
     private TextView foundationDatePicker;
 //    private LinearLayout profilePhoto;
-    private int day,month,year;
+    private Date date;
     private boolean foundationDateChanged;
     private Company company;
 
@@ -86,11 +89,8 @@ public class CompanyProfileManagementBasicsFragment extends ProfileManagementBas
 
         foundationDatePicker = (TextView)root.findViewById(R.id.company_birth_et);
         if(company.getFoundation()!= null){
-
-            day = company.getFoundation().getDay();
-            month = company.getFoundation().getMonth();
-            year = company.getFoundation().getYear() + 1900;
-            foundationDatePicker.setText(day + "/" + month + "/" + year);
+            DateFormat df=SimpleDateFormat.getDateInstance(SimpleDateFormat.MEDIUM,Locale.getDefault());
+            foundationDatePicker.setText(df.format(company.getFoundation()));
         }
         else
             foundationDatePicker.setText(INSERT_FIELD);
@@ -101,6 +101,9 @@ public class CompanyProfileManagementBasicsFragment extends ProfileManagementBas
 
                 AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
+
+
+
                 final DatePicker picker = new DatePicker(getActivity());
                 picker.setCalendarViewShown(false);
                 builder.setTitle("Edit birth date");
@@ -109,11 +112,16 @@ public class CompanyProfileManagementBasicsFragment extends ProfileManagementBas
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         hasChanged = true;
-                        foundationDateChanged = true;
-                        day = picker.getDayOfMonth();
-                        month = picker.getMonth();
-                        year = picker.getYear();
-                        foundationDatePicker.setText(day + "/" + month + "/" + year);
+                        int day = picker.getDayOfMonth();
+                        int month = picker.getMonth();
+                        int year = picker.getYear();
+                        Calendar c=Calendar.getInstance();
+                        c.set(Calendar.DATE,day);
+                        c.set(Calendar.MONTH, month);
+                        c.set(Calendar.YEAR, year);
+                        DateFormat df= SimpleDateFormat.getDateInstance(SimpleDateFormat.MEDIUM, Locale.getDefault());
+                        foundationDatePicker.setText(df.format(c.getTime()));
+                        date=c.getTime();
                     }
                 });
                 builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -178,13 +186,7 @@ public class CompanyProfileManagementBasicsFragment extends ProfileManagementBas
         super.saveChanges();
 
         if(foundationDateChanged){
-
-            Date foundation = null;
-            Calendar c = GregorianCalendar.getInstance();
-            c.set(day,month,year);
-            foundation = c.getTime();
-
-            company.setFoundation(foundation);
+            company.setFoundation(date);
             foundationDateChanged = false;
         }
 

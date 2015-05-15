@@ -18,16 +18,19 @@ import android.widget.TextView;
 import com.parse.ParseException;
 import com.parse.SaveCallback;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+import java.util.Locale;
 
 public class StudentProfileManagementBasicsFragment extends ProfileManagementBasicsFragment {
 
     public static final String TITLE = "Overview";
 
     private Student student;
-    private int day,month,year;
+    private Date date;
     private boolean birthDateChanged;
     EditText nameText,surnameText, birthCityText, emailText, descriptionText;
     TextView birthPicker;
@@ -106,10 +109,8 @@ public class StudentProfileManagementBasicsFragment extends ProfileManagementBas
 
         else{
 
-            day = student.getBirth().getDay();
-            month = student.getBirth().getMonth();
-            year = student.getBirth().getYear() + 1900;
-            birthPicker.setText(day + "/" + month + "/" + year);
+            DateFormat df=SimpleDateFormat.getDateInstance(SimpleDateFormat.MEDIUM,Locale.getDefault());
+            birthPicker.setText(df.format(student.getBirth()));
         }
 
 
@@ -128,10 +129,17 @@ public class StudentProfileManagementBasicsFragment extends ProfileManagementBas
                     public void onClick(DialogInterface dialog, int which) {
                         hasChanged = true;
                         birthDateChanged = true;
-                        day = picker.getDayOfMonth();
-                        month = picker.getMonth();
-                        year = picker.getYear();
-                        birthPicker.setText(day + "/" + month + "/" + year);
+                        int day = picker.getDayOfMonth();
+                        int month = picker.getMonth();
+                        int year = picker.getYear();
+                        Calendar c=Calendar.getInstance();
+                        c.set(Calendar.DATE,day);
+                        c.set(Calendar.MONTH, month);
+                        c.set(Calendar.YEAR, year);
+                        DateFormat df=SimpleDateFormat.getDateInstance( SimpleDateFormat.MEDIUM, Locale.getDefault());
+                        birthPicker.setText(df.format(c.getTime()));
+                        date=c.getTime();
+//                        birthPicker.setText(String.format("%2d/%2d/%4d", day, month, year));
                     }
                 });
                 builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -238,10 +246,6 @@ public class StudentProfileManagementBasicsFragment extends ProfileManagementBas
 
         if(birthDateChanged){
 
-            Date date = null;
-            Calendar c = GregorianCalendar.getInstance();
-            c.set(day,month,year);
-            date = c.getTime();
 
             Log.println(Log.ASSERT,"Basics", "data: " + date.toString());
             student.setBirth(date);
