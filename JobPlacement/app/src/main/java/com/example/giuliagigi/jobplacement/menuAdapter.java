@@ -213,7 +213,7 @@ public class menuAdapter extends RecyclerView.Adapter<menuAdapter.ViewHolder> {
 
 
                                 FragmentManager fragmentManager = activity.getSupportFragmentManager();
-                                Fragment current = fragmentManager.findFragmentById(R.id.fragment_new_offer);
+                                Fragment current = fragmentManager.findFragmentById(R.id.tab_Home_container);
 
                                 if (!(current instanceof StudentCompanySearchFragment)) {
                                     //New Fragment
@@ -373,10 +373,84 @@ public class menuAdapter extends RecyclerView.Adapter<menuAdapter.ViewHolder> {
 
                           break;
 
+                      case TYPE_SEARCH :
+
+                          v.setOnClickListener(new View.OnClickListener() {
+                              @Override
+                              public void onClick(View v) {
 
 
+                                  FragmentManager fragmentManager = activity.getSupportFragmentManager();
+                                  Fragment current = fragmentManager.findFragmentById(R.id.tab_Home_container);
+
+                                  if (!(current instanceof CompanyStudentSearchFragment)) {
+                                      //New Fragment
+                                      CompanyStudentSearchFragment fragment = CompanyStudentSearchFragment.newInstance();
+                                      // Insert the fragment by replacing any existing fragment
+                                      // Insert the fragment by replacing any existing fragment
+
+                                      fragmentManager.beginTransaction()
+                                              .replace(R.id.tab_Home_container, fragment)
+                                              .addToBackStack("Home")
+                                              .commit();
+
+                                      // Highlight the selected item, update the title, and close the drawer
+                                      // Highlight the selected item, update the title, and close the drawer
+                                      TextView tv = (TextView) v.findViewById(R.id.rowText);
+
+                                      toolbar.setTitle(tv.getText());
+                                      mDrawerLayout.closeDrawers();
+                                      mCallbacks.setSelectedItem(TYPE_COMPANIES);
+
+                                  }
+                                  mDrawerLayout.closeDrawers();
+                              }
 
 
+                          });
+
+
+                          break;
+
+                      case TYPE_COMPANIES :
+
+
+                          v.setOnClickListener(new View.OnClickListener() {
+                              @Override
+                              public void onClick(View v) {
+
+
+                                  FragmentManager fragmentManager = activity.getSupportFragmentManager();
+                                  Fragment current = fragmentManager.findFragmentById(R.id.tab_Home_container);
+
+                                  if (!(current instanceof NewOffer)) {
+                                      //New Fragment
+                                      NewOffer fragment = NewOffer.newInstance(true,true);
+                                      // Insert the fragment by replacing any existing fragment
+                                      // Insert the fragment by replacing any existing fragment
+
+                                      fragmentManager.beginTransaction()
+                                              .replace(R.id.tab_Home_container, fragment)
+                                              .addToBackStack("Home")
+                                              .commit();
+
+                                      // Highlight the selected item, update the title, and close the drawer
+                                      // Highlight the selected item, update the title, and close the drawer
+                                      TextView tv = (TextView) v.findViewById(R.id.rowText);
+
+                                      toolbar.setTitle(tv.getText());
+                                      mDrawerLayout.closeDrawers();
+                                      mCallbacks.setSelectedItem(TYPE_COMPANIES);
+
+                                  }
+                                  mDrawerLayout.closeDrawers();
+                              }
+
+
+                          });
+
+
+                          break;
                       case  TYPE_MAILBOX :
 
                           v.setOnClickListener(new View.OnClickListener() {

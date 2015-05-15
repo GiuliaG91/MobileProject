@@ -21,35 +21,36 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.SimpleTimeZone;
 
 /**
- * Created by pietro on 14/05/2015.
+ * Created by pietro on 15/05/2015.
  */
-public class StudentCompanySearchAdapter extends RecyclerView.Adapter<StudentCompanySearchAdapter.ViewHolder> implements View.OnClickListener {
+public class CompanyStudentSearchAdapter extends RecyclerView.Adapter<CompanyStudentSearchAdapter.ViewHolder> implements View.OnClickListener {
+
 
 
     private FragmentActivity context;
-    private ArrayList<Company> mDataset;
+    private ArrayList<Student> mDataset;
     private GlobalData globalData;
-    private Student student;
-    private Set<Company> supportSet;
-    private StudentCompanySearchFragment currentFragment;
+    private Company company;
+    private Set<Student> supportSet;
+    private CompanyStudentSearchFragment currentFragment;
 
-    private ParseQueryAdapter<Company> parseAdapter;
-    private ParseQueryAdapter.QueryFactory<Company> factory;
+    private ParseQueryAdapter<Student> parseAdapter;
+    private ParseQueryAdapter.QueryFactory<Student> factory;
 
     private ViewGroup parseParent;
+    CompanyStudentSearchAdapter companyStudentSearchAdapter=this;
 
-    StudentCompanySearchAdapter studentCompanySearchAdapter=this;
 
-
-    public StudentCompanySearchAdapter(FragmentActivity c, ViewGroup parentIn , StudentCompanySearchFragment fragment) {
+    public CompanyStudentSearchAdapter(FragmentActivity c, ViewGroup parentIn ,CompanyStudentSearchFragment fragment) {
         parseParent = parentIn;
         context = c;
         currentFragment=fragment;
         mDataset = new ArrayList<>();
         globalData = (GlobalData) context.getApplication();
-        student=globalData.getStudentFromUser();
+        company=globalData.getCompanyFromUser();
         supportSet = new HashSet<>();
 
      /*   if(globalData.getOfferFilterStatus().isValid())
@@ -60,13 +61,13 @@ public class StudentCompanySearchAdapter extends RecyclerView.Adapter<StudentCom
         }
         else {
 */
-            factory = new ParseQueryAdapter.QueryFactory<Company>() {
-                @Override
-                public ParseQuery<Company> create() {
-                    ParseQuery query = new ParseQuery("Company");
-                    return query;
-                }
-            };
+        factory = new ParseQueryAdapter.QueryFactory<Student>() {
+            @Override
+            public ParseQuery<Student> create() {
+                ParseQuery query = new ParseQuery("Student");
+                return query;
+            }
+        };
 
         setAdapter();
 
@@ -86,10 +87,10 @@ public class StudentCompanySearchAdapter extends RecyclerView.Adapter<StudentCom
 
 
 
-        factory=new ParseQueryAdapter.QueryFactory<Company>() {
+        factory=new ParseQueryAdapter.QueryFactory<Student>() {
             @Override
-            public ParseQuery<Company> create() {
-                ParseQuery query = new ParseQuery("Company");
+            public ParseQuery<Student> create() {
+                ParseQuery query = new ParseQuery("Student");
                 /*
                 if(!tag_list.isEmpty())
                 {
@@ -141,21 +142,25 @@ public class StudentCompanySearchAdapter extends RecyclerView.Adapter<StudentCom
     public void setAdapter(){
 
         mDataset.clear();
-        parseAdapter = new ParseQueryAdapter<Company>(context,factory) {
+        parseAdapter = new ParseQueryAdapter<Student>(context,factory) {
 
 
             @Override
-            public View getItemView(final Company object, View v, final ViewGroup parent) {
+            public View getItemView(final Student object, View v, final ViewGroup parent) {
                 if (v == null) {
-                    v = LayoutInflater.from(parent.getContext()).inflate(R.layout.company_row, parent, false);
+                    v = LayoutInflater.from(parent.getContext()).inflate(R.layout.student_row, parent, false);
                 }
                 super.getItemView(object, v, parent);
 
 
                 mDataset.add(object);
-                ImageView logo = (ImageView) v.findViewById(R.id.logo_img);
-                TextView companyName = (TextView) v.findViewById(R.id.company_name_tv);
-                TextView companyMail = (TextView) v.findViewById(R.id.Company_mail_tv );
+                ImageView profile = (ImageView) v.findViewById(R.id.profile_img);
+                TextView studentName = (TextView) v.findViewById(R.id.student_name_tv);
+                TextView studentMail = (TextView) v.findViewById(R.id.student_mail_tv );
+                TextView studentField = (TextView) v.findViewById(R.id.student_birthday_tv );
+                TextView studentDegree = (TextView) v.findViewById(R.id.student_degree_tv );
+                TextView studentGrade = (TextView) v.findViewById(R.id.student_grade_tv );
+
                 CheckBox pref = (CheckBox) v.findViewById(R.id.star);
 
                 Bitmap img=null;
@@ -167,16 +172,20 @@ public class StudentCompanySearchAdapter extends RecyclerView.Adapter<StudentCom
                 }
 
                 if(img!=null) {
-                    logo.setImageBitmap(img);
+                    profile.setImageBitmap(img);
                 }else
-                logo.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_profile));
-                companyName.setText(object.getName());
-                companyMail.setText(object.getMail());
+                    profile.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_profile));
+                studentName.setText(object.getName());
+                studentMail.setText(object.getMail());
+                SimpleDateFormat dateFormat=new SimpleDateFormat("dd/MM/yyyy");
+                String date= dateFormat.format(object.getBirth());
+                studentField.setText(date);
+
 
 
 
                 supportSet.clear();
-                supportSet.addAll(student.getCompanies());
+                supportSet.addAll(company.getStudents());
 
                 if (supportSet.add(object) == false) {
                     pref.setChecked(true);
@@ -189,12 +198,12 @@ public class StudentCompanySearchAdapter extends RecyclerView.Adapter<StudentCom
 
                         if (isChecked) {
                             //add this offer to pref
-                           student.addCompany(object);
-                            student.saveInBackground();
+                            company.addStudent(object);
+                            company.saveInBackground();
                         } else {
                             //delete this offer from pref
-                           student.removeCompany(object);
-                            student.saveInBackground();
+                           company.removeStudent(object);
+                           company.saveInBackground();
 
                         }
 
@@ -215,15 +224,13 @@ public class StudentCompanySearchAdapter extends RecyclerView.Adapter<StudentCom
 
     }
 
-
-
-/***************************************************************************************************/
+    /***************************************************************************************************/
     @Override
-    public StudentCompanySearchAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public CompanyStudentSearchAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.company_row, parent, false);
+                .inflate(R.layout.student_row, parent, false);
         v.setClickable(true);
-        v.setOnClickListener(StudentCompanySearchAdapter.this);
+        v.setOnClickListener(CompanyStudentSearchAdapter.this);
 
         ViewHolder vh = new ViewHolder(v);
         return vh;
@@ -267,16 +274,22 @@ public class StudentCompanySearchAdapter extends RecyclerView.Adapter<StudentCom
 
     }
 
-    public class OnQueryLoadListener implements ParseQueryAdapter.OnQueryLoadListener<Company> {
+    public class OnQueryLoadListener implements ParseQueryAdapter.OnQueryLoadListener<Student> {
 
         public void onLoading() {
 
         }
 
-        public void onLoaded(List<Company> objects, Exception e) {
-            studentCompanySearchAdapter.notifyDataSetChanged();
+        public void onLoaded(List<Student> objects, Exception e) {
+           companyStudentSearchAdapter.notifyDataSetChanged();
         }
     }
+
+
+
+
+
+
 
     // Provide a reference to the views for each data item
     // Complex data items may need more than one view per item, and
@@ -294,5 +307,4 @@ public class StudentCompanySearchAdapter extends RecyclerView.Adapter<StudentCom
 
 
     }
-
 }

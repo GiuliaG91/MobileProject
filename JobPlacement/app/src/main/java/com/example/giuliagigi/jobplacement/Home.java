@@ -35,7 +35,8 @@ import java.util.ArrayList;
 
 public class Home extends ActionBarActivity  implements TabHomeStudentFragment.OnFragmentInteractionListener ,TabHomeCompanyFragment.OnFragmentInteractionListener, NewOffer.OnFragmentInteractionListener,
                                                 ProfileManagementFragment.OnInteractionListener, ProfileManagement.OnInteractionListener , menuAdapter.SetSelectedItem ,
-                                                  OfferSearchFragment.OnFragmentInteractionListener , StudentCompanySearchFragment.OnFragmentInteractionListener
+                                                  OfferSearchFragment.OnFragmentInteractionListener , StudentCompanySearchFragment.OnFragmentInteractionListener,
+                                                    CompanyStudentSearchFragment.OnFragmentInteractionListener
 {
     private Toolbar toolbar;   // Declaring the Toolbar Object
 
@@ -88,7 +89,7 @@ public class Home extends ActionBarActivity  implements TabHomeStudentFragment.O
         toolbar = (Toolbar) findViewById(R.id.toolbar); // Attaching the layout to the toolbar object
         setSupportActionBar(toolbar);                   // Setting toolbar as the ActionBar with setSupportActionBar() call
         toolbar.setNavigationIcon(R.drawable.ic_menu_white);
-          application.setToolbar(toolbar);
+        application.setToolbar(toolbar);
         //Setup Drawer
 
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
