@@ -25,7 +25,7 @@ public class CompanyProfileManagementBasicsFragment extends ProfileManagementBas
 
     private static final String TITLE = "Overview";
     private static final String BUNDLE_KEY_COMPANY = "bundle_key_company";
-    private static final String BUNDLE_IDENTIFIER = "COMPANYPROFILEBASICS";
+    public static final String BUNDLE_IDENTIFIER = "COMPANYPROFILEBASICS";
 
     private EditText nameText,VATNumber, descriptionText;
     private TextView foundationDatePicker;

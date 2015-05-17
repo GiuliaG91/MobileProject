@@ -22,7 +22,7 @@ public class ProfileManagementBasicsFragment extends ProfileManagementFragment {
 
     private static final String TITLE = "Overview";
     protected ImageView profilePhoto;
-    private static final String BUNDLE_IDENTIFIER = "PROFILEMANAGEMENTBASICS";
+    public static final String BUNDLE_IDENTIFIER = "PROFILEMANAGEMENTBASICS";
     private static final String BUNDLE_KEY_USER = "bundle_key_user";
 
 

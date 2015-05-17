@@ -29,14 +29,6 @@ import java.util.GregorianCalendar;
 import java.util.Locale;
 
 
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link com.example.giuliagigi.jobplacement.StudentRegistrationFragment.onInteractionListener} interface
- * to handle interaction events.
- * Use the {@link StudentRegistrationFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class StudentRegistrationFragment extends Fragment {
 
     private static final String BUNDLE_KEY_MAIL = "BUNDLE_KEY_MAIL";
@@ -51,9 +43,7 @@ public class StudentRegistrationFragment extends Fragment {
     private static final String BUNDLE_KEY_FEMALE = "BUNDLE_KEY_FEMALE";
     private static final String BUNDLE_KEY_DEGREE_TYPE = "BUNDLE_KEY_DEGREE_TYPE";
     private static final String BUNDLE_KEY_DEGREE_STUDY = "BUNDLE_KEY_DEGREE_STUDY";
-    private static final String BUNDLE_KEY_HAS_SAVED_STATE = "BUNDLE_KEY_SAVED_STATE";
-    private static final String BUNDLE_IDENTIFIER = "STUDENTREGISTRATION";
-    private static final String BUNDLE_KEY_BUNDLE = "BUNDLE_KEY_BUNDLE";
+    public static final String BUNDLE_IDENTIFIER = "STUDENTREGISTRATION";
 
     EditText mail,password,confirmPassword,name,surname;
     CheckBox male,female;

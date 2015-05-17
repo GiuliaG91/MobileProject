@@ -15,7 +15,7 @@ import java.util.ArrayList;
 public class CompanyProfileManagementRegistryFragment extends ProfileManagementFragment {
 
     private static final String TITLE = "Registry";
-    private static final String BUNDLE_IDENTIFIER = "COMPANYPROFILEREGISTRY";
+    public static final String BUNDLE_IDENTIFIER = "COMPANYPROFILEREGISTRY";
     private static final String BUNDLE_KEY_COMPANY = "BUNDLE_KEY_COMPANY";
 
     private Company company;

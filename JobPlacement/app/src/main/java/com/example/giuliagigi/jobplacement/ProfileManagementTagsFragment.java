@@ -22,7 +22,7 @@ import java.util.HashMap;
 public class ProfileManagementTagsFragment extends ProfileManagementFragment {
 
     private static final String TITLE = "Tags";
-    private static final String BUNDLE_IDENTIFIER = "PROFILEMANAGEMENTTAGS";
+    public static final String BUNDLE_IDENTIFIER = "PROFILEMANAGEMENTTAGS";
 
     private ImageButton addTag;
     private GridLayout tagContainer;

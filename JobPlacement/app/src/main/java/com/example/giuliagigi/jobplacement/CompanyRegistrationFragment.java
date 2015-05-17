@@ -22,7 +22,7 @@ public class CompanyRegistrationFragment extends Fragment {
     private static final String BUNDLE_KEY_CONFIRM_PASSWORD = "BUNDLE_KEY_CONFIRM_PASSWORD";
     private static final String BUNDLE_KEY_FISCAL_CODE = "BUNDLE_KEY_FISCAL_CODE";
     private static final String BUNDLE_KEY_FIELD = "BUNDLE_KEY_FIELD";
-    private static final String BUNDLE_IDENTIFIER = "COMPANYREGISTRATION";
+    public static final String BUNDLE_IDENTIFIER = "COMPANYREGISTRATION";
 
     private OnInteractionListener hostActivity;
     private View root;

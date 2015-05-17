@@ -41,6 +41,7 @@ public class GlobalData extends Application {
 
     /* managing profile management display rotation*/
     private HashMap<String,MyBundle> bundles;
+    private ProfileManagementViewAdapter profileManagementViewAdapter;
 
     /**************NEW OFFER BUNDLE**********/
     private Bundle offerBundle;
@@ -252,6 +253,10 @@ public class GlobalData extends Application {
 
     /* ----------------- PROFILE BUNDLE --------------------------------------------------------- */
 
+    public void setProfileManagementViewAdapter(ProfileManagementViewAdapter profileManagementViewAdapter){
+        this.profileManagementViewAdapter = profileManagementViewAdapter;
+    }
+
     public MyBundle addBundle(String key){
 
         if(bundles.containsKey(key))
@@ -276,7 +281,17 @@ public class GlobalData extends Application {
         bundles.remove(toBeRemoved);
     }
 
+    public void clearProfileBundles(){
 
+        if(profileManagementViewAdapter!= null){
+
+            Log.println(Log.ASSERT,"GLOBAL DATA", "Proceed deleting bundles");
+
+            for(ProfileManagementFragment f:profileManagementViewAdapter.getFragments())
+                removeBundle(f.getBundleID());
+        }
+
+    }
 
     public static Context getContext() {
         return applicationContext;

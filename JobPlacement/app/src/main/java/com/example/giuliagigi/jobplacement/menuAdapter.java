@@ -110,6 +110,7 @@ public class menuAdapter extends RecyclerView.Adapter<menuAdapter.ViewHolder> {
                             @Override
                             public void onClick(View v) {
 
+                                gd.clearProfileBundles();
 
                                 FragmentManager fragmentManager = activity.getSupportFragmentManager();
                                 Fragment current = fragmentManager.findFragmentById(R.id.tab_Home_container);
@@ -172,9 +173,14 @@ public class menuAdapter extends RecyclerView.Adapter<menuAdapter.ViewHolder> {
 
 
                     case TYPE_MYJOBOFFERS :
+
+
                         v.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
+
+                                gd.clearProfileBundles();
+
                                 FragmentManager fragmentManager = activity.getSupportFragmentManager();
                                 Fragment current = fragmentManager.findFragmentById(R.id.tab_Home_container);
 
@@ -206,6 +212,7 @@ public class menuAdapter extends RecyclerView.Adapter<menuAdapter.ViewHolder> {
                             @Override
                             public void onClick(View v) {
 
+                                gd.clearProfileBundles();
 
                                 FragmentManager fragmentManager = activity.getSupportFragmentManager();
                                 Fragment current = fragmentManager.findFragmentById(R.id.tab_Home_container);
@@ -242,6 +249,8 @@ public class menuAdapter extends RecyclerView.Adapter<menuAdapter.ViewHolder> {
                         v.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
+
+                                gd.clearProfileBundles();
 
                                 FragmentManager fragmentManager = activity.getSupportFragmentManager();
                                 Fragment current = fragmentManager.findFragmentById(R.id.tab_Home_container);
@@ -299,6 +308,7 @@ public class menuAdapter extends RecyclerView.Adapter<menuAdapter.ViewHolder> {
                               @Override
                               public void onClick(View v) {
 
+                                  gd.clearProfileBundles();
 
                                   FragmentManager fragmentManager = activity.getSupportFragmentManager();
                                   Fragment current = fragmentManager.findFragmentById(R.id.tab_Home_container);
@@ -366,6 +376,7 @@ public class menuAdapter extends RecyclerView.Adapter<menuAdapter.ViewHolder> {
                               @Override
                               public void onClick(View v) {
 
+                                  gd.clearProfileBundles();
 
                                   FragmentManager fragmentManager = activity.getSupportFragmentManager();
                                   Fragment current = fragmentManager.findFragmentById(R.id.tab_Home_container);
@@ -405,6 +416,7 @@ public class menuAdapter extends RecyclerView.Adapter<menuAdapter.ViewHolder> {
                               @Override
                               public void onClick(View v) {
 
+                                  gd.clearProfileBundles();
 
                                   FragmentManager fragmentManager = activity.getSupportFragmentManager();
                                   Fragment current = fragmentManager.findFragmentById(R.id.tab_Home_container);
@@ -466,6 +478,8 @@ public class menuAdapter extends RecyclerView.Adapter<menuAdapter.ViewHolder> {
                           v.setOnClickListener(new View.OnClickListener() {
                               @Override
                               public void onClick(View v) {
+
+                                  gd.clearProfileBundles();
 
                                   FragmentManager fragmentManager = activity.getSupportFragmentManager();
                                   Fragment current = fragmentManager.findFragmentById(R.id.tab_Home_container);
