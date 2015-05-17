@@ -158,6 +158,12 @@ public class CompanyProfileManagementRegistryFragment extends ProfileManagementF
     @Override
     protected void setEnable(boolean enable) {
         super.setEnable(enable);
+        int visibility;
+        if(enable)
+            visibility = View.VISIBLE;
+        else
+            visibility = View.INVISIBLE;
+        addOffice.setVisibility(visibility);
     }
 
     @Override

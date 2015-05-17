@@ -3,6 +3,8 @@ package com.example.giuliagigi.jobplacement;
 import com.parse.ParseClassName;
 import com.parse.ParseObject;
 
+import java.util.HashMap;
+
 /**
  * Created by GiuliaGiGi on 30/04/15.
  */
@@ -13,7 +15,12 @@ public class Language extends ParseObject {
     public static final String LEVEL_MEDIUM = "Medium";
     public static final String LEVEL_LOW = "Low";
     public static final String LEVEL_NONE = "None";
-    public static final String[] LEVELS = new String[]{LEVEL_NONE , LEVEL_LOW, LEVEL_MEDIUM, LEVEL_HIGH};
+    public static final String LEVEL_HIGH_TRANSLATED = GlobalData.getContext().getString(R.string.string_language_level_high);
+    public static final String LEVEL_MEDIUM_TRANSLATED = GlobalData.getContext().getString(R.string.string_language_level_medium);
+    public static final String LEVEL_LOW_TRANSLATED = GlobalData.getContext().getString(R.string.string_language_level_low);
+    public static final String LEVEL_NONE_TRANSLATED = GlobalData.getContext().getString(R.string.string_language_level_none);
+    public static final HashMap<String,String> LANGUAGE_LEVELS = new HashMap<>();
+    public static final String[] LEVELS = new String[]{LEVEL_NONE_TRANSLATED , LEVEL_LOW_TRANSLATED, LEVEL_MEDIUM_TRANSLATED, LEVEL_HIGH_TRANSLATED};
 
     public static final String LEVEL_FIELD = "level";
     public static final String LANGUAGE_DESCRIPTION = "description";
@@ -31,10 +38,11 @@ public class Language extends ParseObject {
     }
 
     public String getLevel(){
-        return this.getString(LEVEL_FIELD);
+        return LANGUAGE_LEVELS.get(this.getString(LEVEL_FIELD));
     }
     public void setLevel(String level){
-        this.put(LEVEL_FIELD,level);
+        String levelTranslated = (String)getKeyByValue(LANGUAGE_LEVELS, level);
+        this.put(LEVEL_FIELD,levelTranslated);
     }
 
     public void setStudent(Student owner){
@@ -53,6 +61,23 @@ public class Language extends ParseObject {
                 return i;
         }
         return -1;
+    }
+
+    public static void initializeLangauges(){
+
+        LANGUAGE_LEVELS.put(LEVEL_NONE, LEVEL_NONE_TRANSLATED);
+        LANGUAGE_LEVELS.put(LEVEL_LOW, LEVEL_LOW_TRANSLATED);
+        LANGUAGE_LEVELS.put(LEVEL_MEDIUM, LEVEL_MEDIUM_TRANSLATED);
+        LANGUAGE_LEVELS.put(LEVEL_HIGH, LEVEL_HIGH_TRANSLATED);
+    }
+
+    public static Object getKeyByValue(HashMap hm, Object value) {
+        for (Object o : hm.keySet()) {
+            if (hm.get(o).equals(value)) {
+                return o;
+            }
+        }
+        return null;
     }
 
 }

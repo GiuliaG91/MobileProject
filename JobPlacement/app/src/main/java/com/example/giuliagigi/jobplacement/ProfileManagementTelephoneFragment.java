@@ -150,6 +150,7 @@ public class ProfileManagementTelephoneFragment extends ProfileManagementFragmen
 
     @Override
     public void saveChanges() {
+        super.saveChanges();
 
         if(!isRemoved && !numberText.getText().toString().equals(INSERT_FIELD)){
 

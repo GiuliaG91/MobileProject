@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.example.giuliagigi.jobplacement.StudentProfileManagementCertificateFragment"
     android:layout_width="match_parent"
+    android:background="@drawable/degree_border"
     android:layout_height="match_parent"
     android:orientation="vertical">
 
@@ -48,6 +49,7 @@
                 android:id="@+id/certificate_title_text"
                 android:layout_weight=".7"
                 android:textColor="#ff000000"
+                android:background="#00000000"
                 android:textSize="20dp"
                 android:paddingLeft="10dp"
                 android:paddingTop="5dp"/>
@@ -103,6 +105,7 @@
                 android:id="@+id/certificate_mark_text"
                 android:layout_weight=".7"
                 android:textColor="#ff000000"
+                android:background="#00000000"
                 android:textSize="20dp"
                 android:paddingLeft="10dp"
                 android:paddingTop="5dp"/>

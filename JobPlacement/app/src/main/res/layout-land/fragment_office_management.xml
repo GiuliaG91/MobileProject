@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+    android:orientation="horizontal" android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/degree_border"
     android:alpha="1"
@@ -9,7 +9,6 @@
     <android.support.v7.widget.CardView
         xmlns:card_view="http://schemas.android.com/apk/res-auto"
         android:id="@+id/address_card_view"
-        android:layout_gravity="center"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         card_view:cardCornerRadius="10dp"
@@ -17,9 +16,16 @@
         android:layout_margin="3dp"
         card_view:cardBackgroundColor="#ffffff">
 
+
         <LinearLayout
             android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_weight=".5"
             android:orientation="vertical">
     <!-- Address and cap -->
 
@@ -260,11 +266,13 @@
             </LinearLayout>
 
             <!--END Office type and delete button-->
-
+        </LinearLayout>
             <LinearLayout
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="200dp"
+                android:layout_weight=".5"
                 android:orientation="vertical"
+                android:layout_margin="5dp"
                 android:id="@+id/office_map_container">
 
                 <fragment
@@ -275,6 +283,7 @@
                     android:id="@+id/office_map_fragment"/>
 
                 </LinearLayout>
+
 
         </LinearLayout>
 

@@ -1,6 +1,7 @@
 package com.example.giuliagigi.jobplacement;
 
 import android.app.Application;
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -36,6 +37,7 @@ public class GlobalData extends Application {
     private HashMap<String,Boolean> isCached;
     private SharedPreferences loginPreferences;
     private InboxMessage currentViewMessage;
+    private static Context applicationContext;
 
     /* managing profile management display rotation*/
     private HashMap<String,MyBundle> bundles;
@@ -52,6 +54,8 @@ public class GlobalData extends Application {
     public void onCreate() {
         super.onCreate();
 
+
+        applicationContext = getApplicationContext();
 //        currentUser = null;
         currentUserObject = null;
         currentViewMessage = null;
@@ -71,6 +75,11 @@ public class GlobalData extends Application {
         ParseObject.registerSubclass(Withdrawal.class);
         ParseObject.registerSubclass(Certificate.class);
         ParseObject.registerSubclass(InboxMessage.class);
+
+        Degree.initializeLangauges();
+        Office.initializeLanguage();
+        Language.initializeLangauges();
+        Telephone.initializeLangauges();
 
         Parse.initialize(this, "EICiUy2eT7CZPXw8N6I1p6lE4844svLI73JTc2QY", "8I9HZ7AgMHgeIxQKk8k653jNBvBCz57nRuSH73pA");
 
@@ -241,7 +250,6 @@ public class GlobalData extends Application {
     }
 
 
-
     /* ----------------- PROFILE BUNDLE --------------------------------------------------------- */
 
     public MyBundle addBundle(String key){
@@ -267,5 +275,12 @@ public class GlobalData extends Application {
         MyBundle toBeRemoved = bundles.get(key);
         bundles.remove(toBeRemoved);
     }
+
+
+
+    public static Context getContext() {
+        return applicationContext;
+    }
+
 }
 
