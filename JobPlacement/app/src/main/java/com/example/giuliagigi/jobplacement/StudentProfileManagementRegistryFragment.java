@@ -3,6 +3,7 @@ package com.example.giuliagigi.jobplacement;
 import android.app.Activity;
 import android.location.Address;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentTransaction;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -142,6 +143,13 @@ public class StudentProfileManagementRegistryFragment extends ProfileManagementF
         });
 
         return root;
+    }
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+
     }
 
     @Override

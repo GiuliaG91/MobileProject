@@ -94,8 +94,7 @@ public class StudentProfileManagementLanguageFragment extends ProfileManagementF
                 description = null;
         }
 
-        if(root==null)
-            root = inflater.inflate(R.layout.fragment_student_profile_management_language, container, false);
+        root = inflater.inflate(R.layout.fragment_student_profile_management_language, container, false);
 
         languageLevel = (Spinner) root.findViewById(R.id.language_management_spinnerLevel);
         languageLevel.setAdapter(new StringAdapter(Language.LEVELS));

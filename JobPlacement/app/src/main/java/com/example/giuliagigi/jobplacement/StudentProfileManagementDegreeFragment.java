@@ -149,8 +149,7 @@ public class StudentProfileManagementDegreeFragment extends ProfileManagementFra
 
         }
 
-        if(root == null)
-            root = inflater.inflate(R.layout.fragment_degree_management, container, false);
+        root = inflater.inflate(R.layout.fragment_degree_management, container, false);
 
         degreeType = (Spinner)root.findViewById(R.id.degree_management_spinnerType);
         degreeStudies = (Spinner)root.findViewById(R.id.degree_management_spinnerField);

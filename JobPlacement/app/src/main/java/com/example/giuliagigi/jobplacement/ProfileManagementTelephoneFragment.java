@@ -77,8 +77,7 @@ public class ProfileManagementTelephoneFragment extends ProfileManagementFragmen
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        if(root == null)
-            root = inflater.inflate(R.layout.fragment_profile_management_telephone, container, false);
+        root = inflater.inflate(R.layout.fragment_profile_management_telephone, container, false);
 
         int type = 0;
         String number = null;

@@ -91,6 +91,8 @@ public class LogoutDialogFragment extends DialogFragment {
             /* next time login won't be automatic */
             SharedPreferences.Editor editor = sp.edit();
             editor.putBoolean(Login.SHAREDPREF_LATEST_LOGIN_PREFERENCE,false);
+            editor.putString(Login.SHAREDPREF_LATEST_MAIL,"");
+            editor.putString(Login.SHAREDPREF_LATEST_PASSWORD,"");
             editor.commit();
         }
 
