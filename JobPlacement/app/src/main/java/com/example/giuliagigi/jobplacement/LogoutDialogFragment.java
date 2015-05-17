@@ -96,7 +96,7 @@ public class LogoutDialogFragment extends DialogFragment {
         }
 
 
-        application.getCurrentUser();
+//        application.getCurrentUser();
         Intent i = new Intent(getActivity(),Login.class);
         startActivity(i);
     }

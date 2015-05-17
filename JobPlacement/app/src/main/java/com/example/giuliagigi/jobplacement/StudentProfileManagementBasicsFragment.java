@@ -30,6 +30,8 @@ public class StudentProfileManagementBasicsFragment extends ProfileManagementBas
     public static final String TITLE = "Overview";
     private static final String BUNDLE_IDENTIFIER = "STUDENTPROFILEMANAGEMENTBASICS";
     private static final String BUNDLE_KEY_STUDENT = "bundle_key_student";
+    private static final String BUNDLE_KEY_NAME = "bundle_key_student_name";
+    private static final String BUNDLE_KEY_SURNAME = "bundle_key_student_surname";
 
     private Student student;
     private Date date;
@@ -75,8 +77,6 @@ public class StudentProfileManagementBasicsFragment extends ProfileManagementBas
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-        }
     }
 
     @Override
@@ -224,16 +224,21 @@ public class StudentProfileManagementBasicsFragment extends ProfileManagementBas
     protected void restoreStateFromBundle() {
         super.restoreStateFromBundle();
 
-        if(bundle!=null)
+        if(bundle!=null){
+
             student = (Student)bundle.get(BUNDLE_KEY_STUDENT);
+
+        }
     }
 
     @Override
     protected void saveStateInBundle() {
         super.saveStateInBundle();
 
-        if(bundle!=null)
+        if(bundle!=null){
+
             bundle.put(BUNDLE_KEY_STUDENT,student);
+        }
     }
 
     @Override
