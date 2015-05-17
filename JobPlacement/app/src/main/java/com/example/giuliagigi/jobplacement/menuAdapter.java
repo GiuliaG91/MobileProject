@@ -45,8 +45,6 @@ public class menuAdapter extends RecyclerView.Adapter<menuAdapter.ViewHolder> {
     private Toolbar toolbar;
 
 
-    private SetSelectedItem mCallbacks;
-
     public static class ViewHolder extends RecyclerView.ViewHolder {
         // each data item is just a string in this case
         int Holderid;
@@ -92,7 +90,6 @@ public class menuAdapter extends RecyclerView.Adapter<menuAdapter.ViewHolder> {
         mDrawerList=l;
         toolbar=t;
         gd=globalData;
-        mCallbacks=(SetSelectedItem)activity;
     }
 
 
@@ -133,7 +130,6 @@ public class menuAdapter extends RecyclerView.Adapter<menuAdapter.ViewHolder> {
 
                                     toolbar.setTitle(tv.getText());
                                     mDrawerLayout.closeDrawers();
-                                    mCallbacks.setSelectedItem(TYPE_HOME);
 
                                 }
                                 mDrawerLayout.closeDrawers();
@@ -166,7 +162,6 @@ public class menuAdapter extends RecyclerView.Adapter<menuAdapter.ViewHolder> {
 
                                     toolbar.setTitle(tv.getText());
                                     mDrawerLayout.closeDrawers();
-                                    mCallbacks.setSelectedItem(TYPE_PROFILE);
 
                                 }
                                 mDrawerLayout.closeDrawers();
@@ -197,7 +192,6 @@ public class menuAdapter extends RecyclerView.Adapter<menuAdapter.ViewHolder> {
 
                                     toolbar.setTitle(tv.getText());
                                     mDrawerLayout.closeDrawers();
-                                    mCallbacks.setSelectedItem(TYPE_MYJOBOFFERS);
 
                                 }
                                 mDrawerLayout.closeDrawers();
@@ -233,7 +227,6 @@ public class menuAdapter extends RecyclerView.Adapter<menuAdapter.ViewHolder> {
 
                                     toolbar.setTitle(tv.getText());
                                     mDrawerLayout.closeDrawers();
-                                    mCallbacks.setSelectedItem(TYPE_MY_COMPANIES);
 
                                 }
                                 mDrawerLayout.closeDrawers();
@@ -267,7 +260,6 @@ public class menuAdapter extends RecyclerView.Adapter<menuAdapter.ViewHolder> {
 
                                     toolbar.setTitle(tv.getText());
                                     mDrawerLayout.closeDrawers();
-                                    mCallbacks.setSelectedItem(TYPE_MAILBOX);
 
                                     //********
                                     //activity.invalidateOptionsMenu();
@@ -327,7 +319,6 @@ public class menuAdapter extends RecyclerView.Adapter<menuAdapter.ViewHolder> {
 
                                       toolbar.setTitle(tv.getText());
                                       mDrawerLayout.closeDrawers();
-                                      mCallbacks.setSelectedItem(TYPE_HOME);
 
                                   }
                                   mDrawerLayout.closeDrawers();
@@ -361,7 +352,6 @@ public class menuAdapter extends RecyclerView.Adapter<menuAdapter.ViewHolder> {
 
                                       toolbar.setTitle(tv.getText());
                                       mDrawerLayout.closeDrawers();
-                                      mCallbacks.setSelectedItem(TYPE_PROFILE);
 
                                   }
                                   mDrawerLayout.closeDrawers();
@@ -397,7 +387,6 @@ public class menuAdapter extends RecyclerView.Adapter<menuAdapter.ViewHolder> {
 
                                       toolbar.setTitle(tv.getText());
                                       mDrawerLayout.closeDrawers();
-                                      mCallbacks.setSelectedItem(TYPE_MYJOBOFFERS);
 
                                   }
                                   mDrawerLayout.closeDrawers();
@@ -444,7 +433,6 @@ public class menuAdapter extends RecyclerView.Adapter<menuAdapter.ViewHolder> {
 
                                           toolbar.setTitle(tv.getText());
                                           mDrawerLayout.closeDrawers();
-                                          mCallbacks.setSelectedItem(TYPE_MY_COMPANIES);
                                       }
 
                               }  else
@@ -462,9 +450,7 @@ public class menuAdapter extends RecyclerView.Adapter<menuAdapter.ViewHolder> {
                                       // Highlight the selected item, update the title, and close the drawer
                                       // Highlight the selected item, update the title, and close the drawer
                                       TextView tv = (TextView) v.findViewById(R.id.rowText);
-
                                       toolbar.setTitle(tv.getText());
-                                      mCallbacks.setSelectedItem(TYPE_MY_COMPANIES);
                                   }
                                   mDrawerLayout.closeDrawers();
 
@@ -498,7 +484,6 @@ public class menuAdapter extends RecyclerView.Adapter<menuAdapter.ViewHolder> {
 
                                       toolbar.setTitle(tv.getText());
                                       mDrawerLayout.closeDrawers();
-                                      mCallbacks.setSelectedItem(TYPE_MAILBOX);
 
                                       //********
                                       //activity.invalidateOptionsMenu();
@@ -613,12 +598,5 @@ public class menuAdapter extends RecyclerView.Adapter<menuAdapter.ViewHolder> {
     private boolean isPositionHeader(int position) {
         return position == 0;
     }
-
-
-   public interface SetSelectedItem{
-
- void setSelectedItem(int item);
-
-   }
 
 }

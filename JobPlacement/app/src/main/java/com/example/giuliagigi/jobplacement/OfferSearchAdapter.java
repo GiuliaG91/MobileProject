@@ -223,7 +223,7 @@ public class OfferSearchAdapter extends RecyclerView.Adapter<OfferSearchAdapter.
 
 
         parseAdapter.addOnQueryLoadListener(new OnQueryLoadListener());
-        parseAdapter.setObjectsPerPage(4);
+        parseAdapter.setObjectsPerPage(15);
         parseAdapter.loadObjects();
 
 

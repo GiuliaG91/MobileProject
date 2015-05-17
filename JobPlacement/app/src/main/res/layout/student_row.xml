@@ -77,44 +77,11 @@
                         android:layout_width="fill_parent"
                         android:layout_height="0dp"
                         android:text="New Text"
-                        android:id="@+id/student_mail_tv"
-                        android:layout_weight="1"
-                        android:gravity="bottom"
-                        android:textColor="#ff000000"
-                        android:textSize="20dp"
-                        android:paddingBottom="5dp" />
-
-                    <TextView
-                        android:layout_width="fill_parent"
-                        android:layout_height="0dp"
-                        android:text="Small Text"
-                        android:id="@+id/student_birthday_tv"
-                        android:layout_weight="1"
-                        android:paddingTop="5dp" />
-                </LinearLayout>
-
-
-                <RelativeLayout
-                    android:layout_width="1dp"
-                    android:layout_height="fill_parent"
-                    android:background="@android:color/darker_gray"></RelativeLayout>
-
-                <LinearLayout
-                    android:orientation="vertical"
-                    android:layout_width="0dp"
-                    android:layout_height="fill_parent"
-                    android:layout_weight="0.5"
-                    android:paddingLeft="5dp">
-
-                    <TextView
-                        android:layout_width="fill_parent"
-                        android:layout_height="0dp"
-                        android:text="New Text"
                         android:id="@+id/student_degree_tv"
                         android:layout_weight="1"
                         android:gravity="bottom"
                         android:textColor="#ff000000"
-                        android:textSize="20dp"
+                        android:textSize="15dp"
                         android:paddingBottom="5dp" />
 
                     <TextView
@@ -125,7 +92,6 @@
                         android:layout_weight="1"
                         android:paddingTop="5dp" />
                 </LinearLayout>
-
 
 
             </LinearLayout>

@@ -18,6 +18,8 @@ import com.parse.ParseQueryAdapter;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -156,8 +158,6 @@ public class CompanyStudentSearchAdapter extends RecyclerView.Adapter<CompanyStu
                 mDataset.add(object);
                 ImageView profile = (ImageView) v.findViewById(R.id.profile_img);
                 TextView studentName = (TextView) v.findViewById(R.id.student_name_tv);
-                TextView studentMail = (TextView) v.findViewById(R.id.student_mail_tv );
-                TextView studentField = (TextView) v.findViewById(R.id.student_birthday_tv );
                 TextView studentDegree = (TextView) v.findViewById(R.id.student_degree_tv );
                 TextView studentGrade = (TextView) v.findViewById(R.id.student_grade_tv );
 
@@ -176,14 +176,19 @@ public class CompanyStudentSearchAdapter extends RecyclerView.Adapter<CompanyStu
                 }else
                     profile.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_profile));
                 studentName.setText(object.getName());
-                studentMail.setText(object.getMail());
-                SimpleDateFormat dateFormat=new SimpleDateFormat("dd/MM/yyyy");
-                String date= dateFormat.format(object.getBirth());
-                studentField.setText(date);
 
+        /*        List<Degree> degrees=object.getDegrees();
+             if(!degrees.isEmpty()) {
+                 Collections.sort(degrees);
 
-
-
+                 studentDegree.setText(degrees.get(0).getType() + " " + degrees.get(0).getStudies());
+                 studentGrade.setText("Mark:" + String.valueOf(degrees.get(0).getMark()));
+             }
+                else
+             {
+                 studentDegree.setText("no degree");
+                 studentGrade.setText("");
+             }*/
                 supportSet.clear();
                 supportSet.addAll(company.getStudents());
 
@@ -233,6 +238,7 @@ public class CompanyStudentSearchAdapter extends RecyclerView.Adapter<CompanyStu
         v.setOnClickListener(CompanyStudentSearchAdapter.this);
 
         ViewHolder vh = new ViewHolder(v);
+        v.setTag(vh);
         return vh;
     }
 
@@ -254,10 +260,10 @@ public class CompanyStudentSearchAdapter extends RecyclerView.Adapter<CompanyStu
 
         //globalData.setCurrentOffer(mDataset.get(vh.getPosition()));
         //Pass Object to fragment
-        FragmentManager fragmentManager = currentFragment.getChildFragmentManager();
+        FragmentManager fragmentManager =context.getSupportFragmentManager();
 
         //New Fragment
-        OfferDetail fragment=OfferDetail.newInstance();
+       ProfileManagement fragment= ProfileManagement.newInstance(false, mDataset.get(vh.getPosition()));
         // Insert the fragment by replacing any existing fragment
         // Insert the fragment by replacing any existing fragment
 
@@ -284,11 +290,6 @@ public class CompanyStudentSearchAdapter extends RecyclerView.Adapter<CompanyStu
            companyStudentSearchAdapter.notifyDataSetChanged();
         }
     }
-
-
-
-
-
 
 
     // Provide a reference to the views for each data item
