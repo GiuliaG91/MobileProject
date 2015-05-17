@@ -51,6 +51,7 @@
                         android:id="@+id/student_name_area"
                         android:gravity="bottom"
                         android:paddingLeft="10dp"
+                        android:background="#00000000"
                         android:paddingBottom="5dp"
                         android:textColor="#ffffff" />
 
@@ -61,6 +62,7 @@
                         android:textAppearance="?android:attr/textAppearanceMedium"
                         android:text="@string/string_student_fragment_surname_title"
                         android:gravity="bottom"
+                        android:background="#00000000"
                         android:id="@+id/student_surname_area"
                         android:paddingLeft="10dp"
                         android:textColor="#ffffff"
@@ -117,6 +119,7 @@
                             android:id="@+id/basics_email_area"
                             android:layout_weight="1"
                             android:textColor="#ff000000"
+                            android:background="#00000000"
                             android:textSize="20dp"
                             android:paddingLeft="10dp"
                             android:paddingTop="5dp"
@@ -239,6 +242,7 @@
                             android:id="@+id/student_birth_et"
                             android:layout_weight="1"
                             android:textColor="#ff000000"
+                            android:background="#00000000"
                             android:textSize="20dp"
                             android:paddingLeft="10dp"
                             android:paddingTop="5dp" />
@@ -292,6 +296,7 @@
                             android:id="@+id/student_birthCity_et"
                             android:layout_weight="1"
                             android:textColor="#ff000000"
+                            android:background="#00000000"
                             android:textSize="20dp"
                             android:paddingLeft="10dp"
                             android:paddingTop="5dp" />
@@ -358,6 +363,8 @@
                                 android:scrollbars="vertical"
                                 android:textColor="#000000"
                                 android:textSize="15dp"
+                                android:background="#00000000"
+                                android:gravity="top"
                                 android:paddingLeft="10dp"
                                 android:paddingTop="5dp" />
 

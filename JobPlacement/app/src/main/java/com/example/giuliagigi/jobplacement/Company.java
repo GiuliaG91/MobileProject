@@ -30,6 +30,7 @@ public class Company extends User {
     protected static final String FOUNDATION_DATE_FIELD = "Foundation_Date";
     protected static final String OFFICES_FIELD = "offices";
     protected static final String STUDENTS_FIELD = "students";
+    protected static final String OFFERS_FIELD="offers";
 
 
     protected String name;
@@ -39,6 +40,7 @@ public class Company extends User {
     protected String description;
     protected ArrayList<Office> offices;
     protected ArrayList<Student> students;
+    protected ArrayList<CompanyOffer> offers;
 
     public Company(){
 
@@ -51,6 +53,7 @@ public class Company extends User {
         description = null;
         offices = new ArrayList<Office>();
         students=new ArrayList<>();
+        offers=new ArrayList<>();
 
         isCached.put(NAME_FIELD,false);
         isCached.put(FISCAL_CODE_FIELD,false);
@@ -59,6 +62,7 @@ public class Company extends User {
         isCached.put(OFFICES_FIELD,false);
         isCached.put(DESCRIPTION_FIELD, false);
         isCached.put(STUDENTS_FIELD, false);
+        isCached.put(OFFERS_FIELD,false);
     }
 
     public void setName(String name){
@@ -221,6 +225,34 @@ public class Company extends User {
         getRelation(STUDENTS_FIELD).remove(student);
     }
 
+    public List<CompanyOffer> getOffers()
+    {
+        if(isCached.get(OFFERS_FIELD))
+            return offers;
+
+        ParseRelation<CompanyOffer> tmp= getRelation(OFFERS_FIELD);
+        List<CompanyOffer> result= null;
+        try {
+            result = tmp.getQuery().find();
+        } catch (com.parse.ParseException e) {
+            e.printStackTrace();
+        }
+        isCached.put(STUDENTS_FIELD, true);
+        return result;
+    }
+
+    public void addOffer(CompanyOffer companyOffer)
+    {
+        offers.add(companyOffer);
+        getRelation(OFFERS_FIELD).add(companyOffer);
+    }
+
+    public void removeOffer(CompanyOffer companyOffer)
+    {
+        offers.remove(companyOffer);
+        getRelation(OFFERS_FIELD).remove(companyOffer);
+    }
+
 
 
     @Override
@@ -234,6 +266,7 @@ public class Company extends User {
         getDescription();
         getFoundation();
         getStudents();
+        getOffers();
     }
 
 

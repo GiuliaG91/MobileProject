@@ -3,6 +3,7 @@ package com.example.giuliagigi.jobplacement;
 import android.app.Activity;
 import android.location.Address;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentTransaction;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -26,6 +27,8 @@ public class StudentProfileManagementRegistryFragment extends ProfileManagementF
 
 
     private static final String TITLE = "Registry";
+    private static final String BUNDLE_IDENTIFIER = "STUDENTPROFILEREGISTRY";
+    private static final String BUNDLE_KEY_STUDENT = "BUNDLE_KEY_STUDENT";
 
     private Student student;
     private boolean addressChanged;
@@ -44,6 +47,7 @@ public class StudentProfileManagementRegistryFragment extends ProfileManagementF
         Bundle args = new Bundle();
         fragment.setArguments(args);
         fragment.setStudent(student);
+        fragment.setUser(student);
         return fragment;
     }
 
@@ -55,6 +59,11 @@ public class StudentProfileManagementRegistryFragment extends ProfileManagementF
     public void setStudent(Student student){
 
         this.student = student;
+    }
+
+    @Override
+    public String getBundleID() {
+        return BUNDLE_IDENTIFIER;
     }
 
 
@@ -80,7 +89,8 @@ public class StudentProfileManagementRegistryFragment extends ProfileManagementF
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        root = inflater.inflate(R.layout.fragment_student_profile_management_registry, container, false);
+        if(root == null)
+            root = inflater.inflate(R.layout.fragment_student_profile_management_registry, container, false);
 
         geoloc = (GeoLocalization)getChildFragmentManager().findFragmentById(R.id.office_map_fragment);
         geoloc.setOnMapReadyCallback(this);
@@ -144,6 +154,13 @@ public class StudentProfileManagementRegistryFragment extends ProfileManagementF
     }
 
     @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+
+    }
+
+    @Override
     public void onResume() {
         super.onResume();
 
@@ -183,6 +200,28 @@ public class StudentProfileManagementRegistryFragment extends ProfileManagementF
         for(ProfileManagementTelephoneFragment tf:telephoneFragments)
             host.removeOnActivityChangedListener(tf);
     }
+
+
+
+    /* ----------------------- AUXILIARY METHODS ------------------------------------------------ */
+
+    @Override
+    protected void restoreStateFromBundle() {
+        super.restoreStateFromBundle();
+
+        if(bundle!=null)
+            student = (Student)bundle.get(BUNDLE_KEY_STUDENT);
+    }
+
+    @Override
+    protected void saveStateInBundle() {
+        super.saveStateInBundle();
+
+        if(bundle!=null)
+            bundle.put(BUNDLE_KEY_STUDENT,student);
+    }
+
+
 
     public void setEnable(boolean enable){
         int visibility;

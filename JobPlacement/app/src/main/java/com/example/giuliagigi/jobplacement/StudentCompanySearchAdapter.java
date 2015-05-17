@@ -155,7 +155,6 @@ public class StudentCompanySearchAdapter extends RecyclerView.Adapter<StudentCom
                 mDataset.add(object);
                 ImageView logo = (ImageView) v.findViewById(R.id.logo_img);
                 TextView companyName = (TextView) v.findViewById(R.id.company_name_tv);
-                TextView companyMail = (TextView) v.findViewById(R.id.Company_mail_tv );
                 CheckBox pref = (CheckBox) v.findViewById(R.id.star);
 
                 Bitmap img=null;
@@ -171,9 +170,6 @@ public class StudentCompanySearchAdapter extends RecyclerView.Adapter<StudentCom
                 }else
                 logo.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_profile));
                 companyName.setText(object.getName());
-                companyMail.setText(object.getMail());
-
-
 
                 supportSet.clear();
                 supportSet.addAll(student.getCompanies());
@@ -226,6 +222,7 @@ public class StudentCompanySearchAdapter extends RecyclerView.Adapter<StudentCom
         v.setOnClickListener(StudentCompanySearchAdapter.this);
 
         ViewHolder vh = new ViewHolder(v);
+        v.setTag(vh);
         return vh;
     }
 
@@ -247,10 +244,10 @@ public class StudentCompanySearchAdapter extends RecyclerView.Adapter<StudentCom
 
         //globalData.setCurrentOffer(mDataset.get(vh.getPosition()));
         //Pass Object to fragment
-        FragmentManager fragmentManager = currentFragment.getChildFragmentManager();
+        FragmentManager fragmentManager = context.getSupportFragmentManager();
 
         //New Fragment
-        OfferDetail fragment=OfferDetail.newInstance();
+        ProfileManagement fragment=ProfileManagement.newInstance(false,mDataset.get(vh.getPosition()));
         // Insert the fragment by replacing any existing fragment
         // Insert the fragment by replacing any existing fragment
 

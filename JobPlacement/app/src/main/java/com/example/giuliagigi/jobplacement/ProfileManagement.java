@@ -20,6 +20,11 @@ import java.util.ArrayList;
 
 public class ProfileManagement extends Fragment{
 
+    private static final String BUNDLE_KEY_IS_EDIT = "bundle_key_is_edit";
+    private static final String BUNDLE_KEY_EDITABLE = "bundle_key_editable";
+    private static final String BUNDLE_KEY_USER = "bundle_key_user";
+    private static final String BUNDLE_IDENTIFIER = "PROFILE_MANAGEMENT";
+
     private GlobalData application;
     private OnInteractionListener host;
     private ArrayList<ProfileManagementFragment> fragments;
@@ -66,8 +71,6 @@ public class ProfileManagement extends Fragment{
     public void onAttach(Activity activity) {
         super.onAttach(activity);
 
-        Log.println(Log.ASSERT,"PROFILE MANAG", "onAttach");
-
         isEditMode = false;
         try {
             host = (OnInteractionListener)activity;
@@ -76,9 +79,23 @@ public class ProfileManagement extends Fragment{
             throw new ClassCastException(activity.toString()
                     + " must implement OnInteractionListener");
         }
-        host.setEditMode(false);
         application = (GlobalData)getActivity().getApplication();
+
+        if(application.getBundle(BUNDLE_IDENTIFIER)!= null){
+
+            MyBundle b = application.getBundle(BUNDLE_IDENTIFIER);
+            isEditMode = b.getBoolean(BUNDLE_KEY_IS_EDIT);
+            editable = b.getBoolean(BUNDLE_KEY_EDITABLE);
+            user = (User)b.get(BUNDLE_KEY_USER);
+        }
     }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        host.setEditMode(isEditMode);
+    }
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -145,7 +162,11 @@ public class ProfileManagement extends Fragment{
     @Override
     public void onDetach() {
         super.onDetach();
-        Log.println(Log.ASSERT,"PROFILE MANAG", "onDetach");
+
+        MyBundle b = application.addBundle(BUNDLE_IDENTIFIER);
+        b.putBoolean(BUNDLE_KEY_IS_EDIT,isEditMode);
+        b.putBoolean(BUNDLE_KEY_EDITABLE,editable);
+        b.put(BUNDLE_KEY_USER,user);
     }
 
     @Override
@@ -156,6 +177,9 @@ public class ProfileManagement extends Fragment{
             f.onActivityResult(requestCode,resultCode,data);
     }
 
+
+
+    /* ----------------------------------- AUXILIARY METHODS ------------------------------------ */
 
     private void switchMode(){
 

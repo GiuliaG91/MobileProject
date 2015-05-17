@@ -5,6 +5,7 @@ import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.os.PersistableBundle;
 import android.support.v7.app.*;
 import android.os.Bundle;
 import android.util.Log;
@@ -40,7 +41,9 @@ import java.util.Set;
 
 public class Registration extends ActionBarActivity implements StudentRegistrationFragment.onInteractionListener, CompanyRegistrationFragment.OnInteractionListener {
 
-    private static final String USER_TYPE_SELECT = "Select a type";
+    private static final String BUNDLE_IDENTIFIER = "REGISTRATION";
+    private static final String BUNDLE_KEY = "REGISTRATION";
+
 
     private Fragment currentFragment;
     private GlobalData application;
@@ -150,6 +153,18 @@ public class Registration extends ActionBarActivity implements StudentRegistrati
                 }
             }
         });
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+
+        if(currentFragment != null){
+
+            FragmentTransaction ft = getFragmentManager().beginTransaction();
+            ft.remove(currentFragment);
+            ft.commit();
+        }
     }
 
     /*these methords are useless*/

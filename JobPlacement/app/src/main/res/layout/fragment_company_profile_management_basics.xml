@@ -48,10 +48,11 @@
                         android:layout_height="0dp"
                         android:layout_weight="0.3"
                         android:textAppearance="?android:attr/textAppearanceMedium"
-                        android:text="Name"
+                        android:text="@string/string_company_fragment_name_title"
                         android:gravity="bottom"
                         android:id="@+id/company_name_area"
                         android:paddingLeft="10dp"
+                        android:background="#00000000"
                         android:textColor="#ffffff"
                         android:paddingTop="5dp" />
                 </LinearLayout>
@@ -90,7 +91,7 @@
                         android:layout_width="fill_parent"
                         android:layout_height="0dp"
                         android:textAppearance="?android:attr/textAppearanceSmall"
-                        android:text="VAT Number"
+                        android:text="@string/string_company_fragment_vat"
                         android:id="@+id/company_basics_VAT_area"
                         android:layout_weight="1"
                         android:paddingLeft="10dp"
@@ -105,6 +106,7 @@
                         android:layout_weight="1"
                         android:textColor="#ff000000"
                         android:textSize="20dp"
+                        android:background="#00000000"
                         android:paddingLeft="10dp"
                         android:paddingTop="5dp" />
 
@@ -142,7 +144,7 @@
                         android:layout_width="fill_parent"
                         android:layout_height="0dp"
                         android:textAppearance="?android:attr/textAppearanceSmall"
-                        android:text="Foundation date"
+                        android:text="@string/string_company_fragment_foundation_date"
                         android:id="@+id/birth_hint"
                         android:layout_weight="1"
                         android:paddingLeft="10dp"
@@ -157,6 +159,7 @@
                         android:layout_weight="1"
                         android:textColor="#ff000000"
                         android:textSize="20dp"
+                        android:background="#00000000"
                         android:paddingLeft="10dp"
                         android:paddingTop="5dp" />
 
@@ -194,7 +197,7 @@
                         android:layout_width="fill_parent"
                         android:layout_height="0dp"
                         android:textAppearance="?android:attr/textAppearanceSmall"
-                        android:text="Email address"
+                        android:text="@string/string_company_fragment_email"
                         android:textColor="@color/ColorPrimaryDark"
                         android:id="@+id/email_hint"
                         android:layout_weight="1"
@@ -208,6 +211,7 @@
                         android:id="@+id/basics_email_area"
                         android:layout_weight="1"
                         android:textColor="#ff000000"
+                        android:background="#00000000"
                         android:textSize="20dp"
                         android:paddingLeft="10dp"
                         android:paddingTop="5dp"
@@ -248,7 +252,7 @@
                         android:layout_height="0dp"
                         android:layout_weight=".1"
                         android:textAppearance="?android:attr/textAppearanceSmall"
-                        android:text="Short description"
+                        android:text="@string/string_company_fragment_description"
                         android:id="@+id/student_description_hint"
                         android:paddingLeft="10dp"
                         android:layout_marginTop="20dp"
@@ -275,6 +279,8 @@
                             android:scrollbars="vertical"
                             android:textColor="#000000"
                             android:textSize="15dp"
+                            android:gravity="top"
+                            android:background="#00000000"
                             android:paddingLeft="10dp"
                             android:paddingTop="5dp" />
 

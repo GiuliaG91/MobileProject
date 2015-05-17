@@ -1,0 +1,114 @@
+﻿Merge remote-tracking branch 'origin/newMaster2' into newMaster2
+
+Conflicts:
+	JobPlacement/app/src/main/java/com/example/giuliagigi/jobplacement/GlobalData.java
+	JobPlacement/app/src/main/java/com/example/giuliagigi/jobplacement/Login.java
+	JobPlacement/app/src/main/java/com/example/giuliagigi/jobplacement/LogoutDialogFragment.java
+	JobPlacement/app/src/main/java/com/example/giuliagigi/jobplacement/ViewPagerAdapter.java
+	JobPlacement/app/src/main/java/com/example/giuliagigi/jobplacement/menuAdapter.java
+	JobPlacement/app/src/main/res/values-it/strings.xml
+#
+# It looks like you may be committing a merge.
+# If this is not correct, please remove the file
+#	.git/MERGE_HEAD
+# and try again.
+
+
+# Please enter the commit message for your changes. Lines starting
+# with '#' will be ignored, and an empty message aborts the commit.
+# On branch newMaster2
+# Your branch and 'origin/newMaster2' have diverged,
+# and have 1 and 15 different commits each, respectively.
+#   (use "git pull" to merge the remote branch into yours)
+#
+# All conflicts fixed but you are still merging.
+#
+# Changes to be committed:
+#	modified:   ../../../../../.idea/misc.xml
+#	modified:   ../../../../app.iml
+#	modified:   ../../AndroidManifest.xml
+#	modified:   ../../java/com/example/giuliagigi/jobplacement/BaseBackPressedListener.java
+#	modified:   ../../java/com/example/giuliagigi/jobplacement/Company.java
+#	modified:   ../../java/com/example/giuliagigi/jobplacement/CompanyOffer.java
+#	modified:   ../../java/com/example/giuliagigi/jobplacement/CompanyProfileManagementBasicsFragment.java
+#	modified:   ../../java/com/example/giuliagigi/jobplacement/CompanyProfileManagementOfficeFragment.java
+#	modified:   ../../java/com/example/giuliagigi/jobplacement/CompanyProfileManagementRegistryFragment.java
+#	modified:   ../../java/com/example/giuliagigi/jobplacement/CompanyRegistrationFragment.java
+#	modified:   ../../java/com/example/giuliagigi/jobplacement/CompanyShowOfferFragment.java
+#	modified:   ../../java/com/example/giuliagigi/jobplacement/CompanyStudentSearchAdapter.java
+#	modified:   ../../java/com/example/giuliagigi/jobplacement/CompanyStudentSearchFragment.java
+#	modified:   ../../java/com/example/giuliagigi/jobplacement/CompanyViewPagerAdapter.java
+#	modified:   ../../java/com/example/giuliagigi/jobplacement/Degree.java
+#	new file:   ../../java/com/example/giuliagigi/jobplacement/FavCompaniesAdapter.java
+#	new file:   ../../java/com/example/giuliagigi/jobplacement/FavCompaniesFragment.java
+#	new file:   ../../java/com/example/giuliagigi/jobplacement/FavStudentsAdapter.java
+#	new file:   ../../java/com/example/giuliagigi/jobplacement/FavStudentsFragment.java
+#	modified:   ../../java/com/example/giuliagigi/jobplacement/Fav_tab.java
+#	modified:   ../../java/com/example/giuliagigi/jobplacement/FavouritesAdapter.java
+#	modified:   ../../java/com/example/giuliagigi/jobplacement/GlobalData.java
+#	modified:   ../../java/com/example/giuliagigi/jobplacement/Home.java
+#	modified:   ../../java/com/example/giuliagigi/jobplacement/InboxMessage.java
+#	modified:   ../../java/com/example/giuliagigi/jobplacement/Language.java
+#	modified:   ../../java/com/example/giuliagigi/jobplacement/Login.java
+#	modified:   ../../java/com/example/giuliagigi/jobplacement/LogoutDialogFragment.java
+#	new file:   ../../java/com/example/giuliagigi/jobplacement/MyBundle.java
+#	modified:   ../../java/com/example/giuliagigi/jobplacement/NewOffer.java
+#	modified:   ../../java/com/example/giuliagigi/jobplacement/OfferDetail.java
+#	modified:   ../../java/com/example/giuliagigi/jobplacement/OfferSearchAdapter.java
+#	modified:   ../../java/com/example/giuliagigi/jobplacement/OfferSearchFragment.java
+#	modified:   ../../java/com/example/giuliagigi/jobplacement/Office.java
+#	modified:   ../../java/com/example/giuliagigi/jobplacement/ParseUserWrapper.java
+#	modified:   ../../java/com/example/giuliagigi/jobplacement/ProfileManagement.java
+#	modified:   ../../java/com/example/giuliagigi/jobplacement/ProfileManagementAccountFragment.java
+#	modified:   ../../java/com/example/giuliagigi/jobplacement/ProfileManagementBasicsFragment.java
+#	modified:   ../../java/com/example/giuliagigi/jobplacement/ProfileManagementFragment.java
+#	modified:   ../../java/com/example/giuliagigi/jobplacement/ProfileManagementTagsFragment.java
+#	modified:   ../../java/com/example/giuliagigi/jobplacement/ProfileManagementTelephoneFragment.java
+#	modified:   ../../java/com/example/giuliagigi/jobplacement/ProfileManagementViewAdapter.java
+#	modified:   ../../java/com/example/giuliagigi/jobplacement/Registration.java
+#	modified:   ../../java/com/example/giuliagigi/jobplacement/ShowOffersAdapter.java
+#	modified:   ../../java/com/example/giuliagigi/jobplacement/StudentCompanySearchAdapter.java
+#	modified:   ../../java/com/example/giuliagigi/jobplacement/StudentProfileManagementBasicsFragment.java
+#	modified:   ../../java/com/example/giuliagigi/jobplacement/StudentProfileManagementCertificateFragment.java
+#	modified:   ../../java/com/example/giuliagigi/jobplacement/StudentProfileManagementDegreeFragment.java
+#	modified:   ../../java/com/example/giuliagigi/jobplacement/StudentProfileManagementLanguageFragment.java
+#	modified:   ../../java/com/example/giuliagigi/jobplacement/StudentProfileManagementRegistryFragment.java
+#	modified:   ../../java/com/example/giuliagigi/jobplacement/StudentProfileManagementSkillsFragment.java
+#	modified:   ../../java/com/example/giuliagigi/jobplacement/StudentRegistrationFragment.java
+#	modified:   ../../java/com/example/giuliagigi/jobplacement/TabHomeCompanyFragment.java
+#	modified:   ../../java/com/example/giuliagigi/jobplacement/TabHomeStudentFragment.java
+#	modified:   ../../java/com/example/giuliagigi/jobplacement/Telephone.java
+#	modified:   ../../java/com/example/giuliagigi/jobplacement/ViewPagerAdapter.java
+#	modified:   ../../java/com/example/giuliagigi/jobplacement/menuAdapter.java
+#	modified:   ../../java/com/example/giuliagigi/jobplacement/voidPrefAdapter.java
+#	new file:   ../drawable-hdpi/ic_logoutoff.png
+#	new file:   ../drawable-hdpi/ic_preferite.png
+#	new file:   ../drawable-mdpi/ic_logoutoff.png
+#	new file:   ../drawable-mdpi/ic_preferite.png
+#	new file:   ../drawable-xhdpi/ic_logoutoff.png
+#	new file:   ../drawable-xhdpi/ic_preferite.png
+#	new file:   ../drawable-xxhdpi/ic_logoutoff.png
+#	new file:   ../drawable-xxhdpi/ic_preferite.png
+#	new file:   ../drawable/degree_border.xml
+#	modified:   ../layout-land/fragment_company_profile_management_basics.xml
+#	new file:   ../layout-land/fragment_office_management.xml
+#	modified:   ../layout-land/fragment_student_profile_management_basics.xml
+#	modified:   ../layout-land/fragment_student_profile_management_registry.xml
+#	modified:   ../layout/activity_home.xml
+#	modified:   ../layout/company_row.xml
+#	modified:   ../layout/fragment_company_profile_management_basics.xml
+#	modified:   ../layout/fragment_degree_management.xml
+#	modified:   ../layout/fragment_new_offer.xml
+#	modified:   ../layout/fragment_office_management.xml
+#	modified:   ../layout/fragment_profile_management_tags.xml
+#	modified:   ../layout/fragment_profile_management_telephone.xml
+#	modified:   ../layout/fragment_student_profile_management_basics.xml
+#	modified:   ../layout/fragment_student_profile_management_certificate.xml
+#	modified:   ../layout/fragment_student_profile_management_language.xml
+#	modified:   ../layout/fragment_student_profile_management_registry.xml
+#	modified:   ../layout/student_row.xml
+#	modified:   strings.xml
+#	modified:   ../values/arrays.xml
+#	modified:   ../values/strings.xml
+#
+

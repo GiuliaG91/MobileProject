@@ -24,7 +24,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:text="What is a tag?"
+            android:text="@string/string_tags_what_is"
             android:textAppearance="?android:textAppearanceMedium"
             android:textColor="@color/ColorPrimaryDark"
             android:gravity="center"
@@ -35,7 +35,7 @@
         <Button
             android:layout_width="wrap_content"
             android:layout_height="40dp"
-            android:text="Click for info!"
+            android:text="@string/string_tags_info"
             android:layout_gravity="center"
             android:background="@drawable/button_background"
             android:textAppearance="?android:textAppearanceSmall"
@@ -64,7 +64,7 @@
             <MultiAutoCompleteTextView
                 android:layout_width="0dp"
                 android:layout_height="fill_parent"
-                android:hint="Insert a tag"
+                android:hint="@string/string_tags_insert"
                 android:id="@+id/tagsFragment_tagAutoComplete_text"
                 android:layout_weight="1"
                 android:background="@null"

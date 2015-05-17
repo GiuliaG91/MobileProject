@@ -15,6 +15,8 @@ import java.util.ArrayList;
 public class CompanyProfileManagementRegistryFragment extends ProfileManagementFragment {
 
     private static final String TITLE = "Registry";
+    public static final String BUNDLE_IDENTIFIER = "COMPANYPROFILEREGISTRY";
+    private static final String BUNDLE_KEY_COMPANY = "BUNDLE_KEY_COMPANY";
 
     private Company company;
     Button addOffice;
@@ -44,6 +46,11 @@ public class CompanyProfileManagementRegistryFragment extends ProfileManagementF
         this.company = company;
     }
 
+    @Override
+    public String getBundleID() {
+        return BUNDLE_IDENTIFIER;
+    }
+
     /*------------- STANDARD CALLBACKS ------------------------------------------------------------*/
 
     @Override
@@ -64,7 +71,9 @@ public class CompanyProfileManagementRegistryFragment extends ProfileManagementF
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        root = inflater.inflate(R.layout.fragment_company_profile_management_registry, container, false);
+
+        if(root == null)
+            root = inflater.inflate(R.layout.fragment_company_profile_management_registry, container, false);
 
         addOffice = (Button)root.findViewById(R.id.company_add_office);
         addOffice.setOnClickListener(new View.OnClickListener() {
@@ -126,9 +135,35 @@ public class CompanyProfileManagementRegistryFragment extends ProfileManagementF
             host.removeOnActivityChangedListener(f);
     }
 
+
+    /* ---------------- AUXILIARY METHODS ------------------------------------------------------- */
+
+    @Override
+    protected void restoreStateFromBundle() {
+        super.restoreStateFromBundle();
+
+        if(bundle!=null)
+            company = (Company)bundle.get(BUNDLE_KEY_COMPANY);
+    }
+
+
+    @Override
+    protected void saveStateInBundle() {
+        super.saveStateInBundle();
+
+        if(bundle!= null)
+            bundle.put(BUNDLE_KEY_COMPANY,company);
+    }
+
     @Override
     protected void setEnable(boolean enable) {
         super.setEnable(enable);
+        int visibility;
+        if(enable)
+            visibility = View.VISIBLE;
+        else
+            visibility = View.INVISIBLE;
+        addOffice.setVisibility(visibility);
     }
 
     @Override

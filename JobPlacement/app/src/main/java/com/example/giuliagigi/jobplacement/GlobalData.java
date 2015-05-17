@@ -1,6 +1,7 @@
 package com.example.giuliagigi.jobplacement;
 
 import android.app.Application;
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -16,8 +17,6 @@ import com.parse.ParseUser;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-
-import bolts.Task;
 
 /**
  * Created by pietro on 20/04/2015.
@@ -38,7 +37,12 @@ public class GlobalData extends Application {
     private HashMap<String,Boolean> isCached;
     private SharedPreferences loginPreferences;
     private InboxMessageReceived currentViewMessage;
+    private static Context applicationContext;
 
+
+    /* managing profile management display rotation*/
+    private HashMap<String,MyBundle> bundles;
+    private ProfileManagementViewAdapter profileManagementViewAdapter;
 
     /**************NEW OFFER BUNDLE**********/
     private Bundle offerBundle;
@@ -52,6 +56,8 @@ public class GlobalData extends Application {
     public void onCreate() {
         super.onCreate();
 
+
+        applicationContext = getApplicationContext();
 //        currentUser = null;
         currentUserObject = null;
         currentViewMessage = null;
@@ -73,15 +79,21 @@ public class GlobalData extends Application {
         ParseObject.registerSubclass(InboxMessage.class);
         ParseObject.registerSubclass(InboxMessageReceived.class);
 
+        Degree.initializeLangauges();
+        Office.initializeLanguage();
+        Language.initializeLangauges();
+        Telephone.initializeLangauges();
+
+
         Parse.initialize(this, "EICiUy2eT7CZPXw8N6I1p6lE4844svLI73JTc2QY", "8I9HZ7AgMHgeIxQKk8k653jNBvBCz57nRuSH73pA");
 
-        //currentUser = (ParseUserWrapper)ParseUser.getCurrentUser();
-        //getCurrentUser();
 
         isCached = new HashMap<String,Boolean>();
         tags = new HashMap<String,Tag>();
         isCached.put("tag",false);
         getTags();
+
+        bundles = new HashMap<String,MyBundle>();
     }
 
 
@@ -242,13 +254,51 @@ public class GlobalData extends Application {
         this.currentViewMessage = m;
     }
 
-    public void setCurrentUser(ParseUserWrapper currentUser){
-        this.currentUser = currentUser;
+
+    /* ----------------- PROFILE BUNDLE --------------------------------------------------------- */
+
+    public void setProfileManagementViewAdapter(ProfileManagementViewAdapter profileManagementViewAdapter){
+        this.profileManagementViewAdapter = profileManagementViewAdapter;
     }
 
-    public void setCurrentUserObject(User currentUserObject){
+    public MyBundle addBundle(String key){
 
+        if(bundles.containsKey(key))
+            return bundles.get(key);
 
+        MyBundle b = new MyBundle();
+        bundles.put(key, b);
+        return b;
+    }
+
+    public MyBundle getBundle(String key){
+
+        return bundles.get(key);
+    }
+
+    public void removeBundle(String key){
+
+        if(!bundles.containsKey(key))
+            return;
+
+        MyBundle toBeRemoved = bundles.get(key);
+        bundles.remove(toBeRemoved);
+    }
+
+    public void clearProfileBundles(){
+
+        if(profileManagementViewAdapter!= null){
+
+            Log.println(Log.ASSERT,"GLOBAL DATA", "Proceed deleting bundles");
+
+            for(ProfileManagementFragment f:profileManagementViewAdapter.getFragments())
+                removeBundle(f.getBundleID());
+        }
+
+    }
+
+    public static Context getContext() {
+        return applicationContext;
 
     }
 

@@ -29,22 +29,33 @@ import java.util.GregorianCalendar;
 import java.util.Locale;
 
 
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link com.example.giuliagigi.jobplacement.StudentRegistrationFragment.onInteractionListener} interface
- * to handle interaction events.
- * Use the {@link StudentRegistrationFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class StudentRegistrationFragment extends Fragment {
 
-    private onInteractionListener hostActivity;
-    private View root;
-    int day, month, year;
+    private static final String BUNDLE_KEY_MAIL = "BUNDLE_KEY_MAIL";
+    private static final String BUNDLE_KEY_PASSWORD = "BUNDLE_KEY_PASSWORD";
+    private static final String BUNDLE_KEY_CONFIRM_PASSWORD = "BUNDLE_KEY_CONFIRM_PASSWORD";
+    private static final String BUNDLE_KEY_NAME = "BUNDLE_KEY_NAME";
+    private static final String BUNDLE_KEY_SURNAME = "BUNDLE_KEY_SURNAME";
+    private static final String BUNDLE_KEY_MALE = "BUNDLE_KEY_MALE";
+    private static final String BUNDLE_KEY_DAY = "BUNDLE_KEY_DAY";
+    private static final String BUNDLE_KEY_MONTH = "BUNDLE_KEY_MONTH";
+    private static final String BUNDLE_KEY_YEAR = "BUNDLE_KEY_YEAR";
+    private static final String BUNDLE_KEY_FEMALE = "BUNDLE_KEY_FEMALE";
+    private static final String BUNDLE_KEY_DEGREE_TYPE = "BUNDLE_KEY_DEGREE_TYPE";
+    private static final String BUNDLE_KEY_DEGREE_STUDY = "BUNDLE_KEY_DEGREE_STUDY";
+    public static final String BUNDLE_IDENTIFIER = "STUDENTREGISTRATION";
+
+    EditText mail,password,confirmPassword,name,surname;
+    CheckBox male,female;
+    Spinner degreeTypeList,degreeStudiesList;
     TextView birthPicker;
+    private View root;
+    GlobalData application;
+
+    int day, month, year;
     Date date;
 
+    private onInteractionListener hostActivity;
 
     /*------------- Constructors ----------------------------------------------*/
     public StudentRegistrationFragment() {
@@ -69,25 +80,32 @@ public class StudentRegistrationFragment extends Fragment {
             throw new ClassCastException(activity.toString()
                     + " must implement OnFragmentInteractionListener");
         }
+
+        application = (GlobalData)activity.getApplicationContext();
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        if (getArguments() != null) {
-        }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
 
         root = inflater.inflate(R.layout.fragment_student_registration, container, false);
-        final CheckBox male = (CheckBox)root.findViewById(R.id.male_checkBox);
-        final CheckBox female = (CheckBox)root.findViewById(R.id.female_checkBox);
 
-        Spinner degreeList = (Spinner)root.findViewById(R.id.degree_list);
-        Spinner studiesList = (Spinner)root.findViewById(R.id.studies_list);
+        mail = (EditText)root.findViewById(R.id.student_mail);
+        password = (EditText)root.findViewById(R.id.student_password);
+        confirmPassword = (EditText)root.findViewById(R.id.student_confirmPassword);
+        name = (EditText)root.findViewById(R.id.student_name);
+        surname = (EditText)root.findViewById(R.id.student_surname);
+
+        male = (CheckBox)root.findViewById(R.id.male_checkBox);
+        female = (CheckBox)root.findViewById(R.id.female_checkBox);
+
+        degreeTypeList = (Spinner)root.findViewById(R.id.degree_list);
+        degreeStudiesList = (Spinner)root.findViewById(R.id.studies_list);
 
         male.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -125,9 +143,9 @@ public class StudentRegistrationFragment extends Fragment {
                 builder.setPositiveButton("Save", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        int day = picker.getDayOfMonth();
-                        int month = picker.getMonth();
-                        int year = picker.getYear();
+                        day = picker.getDayOfMonth();
+                        month = picker.getMonth();
+                        year = picker.getYear();
                         Calendar c=Calendar.getInstance();
                         c.set(Calendar.DATE,day);
                         c.set(Calendar.MONTH, month);
@@ -147,8 +165,11 @@ public class StudentRegistrationFragment extends Fragment {
             }
         });
 
-        degreeList.setAdapter(new StringAdapterDegree(Degree.TYPES));
-        studiesList.setAdapter(new StringAdapterDegree(Degree.STUDIES));
+        degreeTypeList.setAdapter(new StringAdapterDegree(Degree.TYPES));
+        degreeStudiesList.setAdapter(new StringAdapterDegree(Degree.STUDIES));
+
+        if(application.getBundle(BUNDLE_IDENTIFIER)!= null)
+            restorePreviousState();
 
         return root;
     }
@@ -158,25 +179,66 @@ public class StudentRegistrationFragment extends Fragment {
 
         super.onDetach();
         hostActivity = null;
+        saveState();
     }
 
 
 
 
 
-    /* ----------------------------------- */
+    /* -------------------- AUXILIARY METHODS --------------------------------------------------- */
+
+    private void saveState(){
+
+        MyBundle b = application.addBundle(BUNDLE_IDENTIFIER);
+
+        b.putString(BUNDLE_KEY_MAIL, mail.getText().toString());
+        b.putString(BUNDLE_KEY_PASSWORD, password.getText().toString());
+        b.putString(BUNDLE_KEY_CONFIRM_PASSWORD, confirmPassword.getText().toString());
+        b.putString(BUNDLE_KEY_NAME, name.getText().toString());
+        b.putString(BUNDLE_KEY_SURNAME, surname.getText().toString());
+        b.putBoolean(BUNDLE_KEY_MALE,male.isChecked());
+        b.putBoolean(BUNDLE_KEY_FEMALE,female.isChecked());
+        b.putInt(BUNDLE_KEY_DEGREE_TYPE,Degree.getTypeID((String)degreeTypeList.getSelectedItem()));
+        b.putInt(BUNDLE_KEY_DEGREE_STUDY,Degree.getStudyID((String)degreeStudiesList.getSelectedItem()));
+        b.putInt(BUNDLE_KEY_DAY,day);
+        b.putInt(BUNDLE_KEY_MONTH,month);
+        b.putInt(BUNDLE_KEY_YEAR,year);
+
+    }
+
+
+    private void restorePreviousState(){
+
+        MyBundle b = application.getBundle(BUNDLE_IDENTIFIER);
+
+        mail.setText(b.getString(BUNDLE_KEY_MAIL));
+        password.setText(b.getString(BUNDLE_KEY_PASSWORD));
+        confirmPassword.setText(b.getString(BUNDLE_KEY_CONFIRM_PASSWORD));
+        name.setText(b.getString(BUNDLE_KEY_NAME));
+        surname.setText(b.getString(BUNDLE_KEY_SURNAME));
+
+        male.setChecked(b.getBoolean(BUNDLE_KEY_MALE));
+        female.setChecked(b.getBoolean(BUNDLE_KEY_FEMALE));
+
+        day = b.getInt(BUNDLE_KEY_DAY);
+        month = b.getInt(BUNDLE_KEY_MONTH);
+        year = b.getInt(BUNDLE_KEY_YEAR);
+
+        Calendar c=Calendar.getInstance();
+        c.set(Calendar.DATE,day);
+        c.set(Calendar.MONTH, month);
+        c.set(Calendar.YEAR, year);
+        DateFormat df= SimpleDateFormat.getDateInstance(SimpleDateFormat.MEDIUM, Locale.getDefault());
+        birthPicker.setText(df.format(c.getTime()));
+        date=c.getTime();
+
+        degreeTypeList.setSelection(b.getInt(BUNDLE_KEY_DEGREE_TYPE));
+        degreeStudiesList.setSelection(b.getInt(BUNDLE_KEY_DEGREE_STUDY));
+    }
+
+
     public Student retrieveRegistrationInfo() throws RegistrationException{
-
-        EditText mail = (EditText)root.findViewById(R.id.student_mail);
-        EditText password = (EditText)root.findViewById(R.id.student_password);
-        EditText confirmPassword = (EditText)root.findViewById(R.id.student_confirmPassword);
-        EditText name = (EditText)root.findViewById(R.id.student_name);
-        EditText surname = (EditText)root.findViewById(R.id.student_surname);
-        CheckBox male = (CheckBox)root.findViewById(R.id.male_checkBox);
-        CheckBox female = (CheckBox)root.findViewById(R.id.female_checkBox);
-        Spinner degreeTypeList = (Spinner)root.findViewById(R.id.degree_list);
-        Spinner degreeStudiesList = (Spinner)root.findViewById(R.id.studies_list);
-
 
         String degreeType = (String)degreeTypeList.getSelectedItem();
         String degreeStudies = (String)degreeStudiesList.getSelectedItem();

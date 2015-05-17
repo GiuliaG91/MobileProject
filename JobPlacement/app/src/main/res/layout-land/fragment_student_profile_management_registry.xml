@@ -8,23 +8,28 @@
     tools:context="com.example.giuliagigi.jobplacement.StudentProfileManagementBasicsFragment">
 
     <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
         android:layout_weight="1">
 
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
             android:orientation="horizontal">
 
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="fill_parent"
+                android:layout_weight=".5"
+                android:weightSum="1"
+                android:orientation="vertical">
 
             <android.support.v7.widget.CardView
                 xmlns:card_view="http://schemas.android.com/apk/res-auto"
                 android:id="@+id/address_card_view"
                 android:layout_gravity="center"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight=".5"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 card_view:cardCornerRadius="10dp"
                 card_view:cardMaxElevation="5dp"
                 android:layout_margin="3dp"
@@ -32,15 +37,15 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:orientation="vertical">
 
-                    <!-- address and cap area -->
+                    <!-- Address and cap -->
 
                     <LinearLayout
                         android:orientation="horizontal"
                         android:layout_width="match_parent"
-                        android:layout_height="170dp">
+                        android:layout_height="80dp">
 
                         <ImageView
                             android:layout_width="wrap_content"
@@ -55,88 +60,82 @@
                             android:orientation="vertical"
                             android:layout_width="0dp"
                             android:layout_height="fill_parent"
-                            android:layout_weight="1"
-                            android:paddingLeft="30dp">
+                            android:layout_weight=".6"
+                            android:paddingLeft="10dp">
 
-                            <LinearLayout
-                                android:layout_width="match_parent"
+                            <TextView
+                                android:layout_width="fill_parent"
                                 android:layout_height="0dp"
-                                android:orientation="vertical"
-                                android:layout_weight=".5">
+                                android:textAppearance="?android:attr/textAppearanceSmall"
+                                android:text="@string/string_student_fragment_address"
+                                android:textColor="@color/ColorPrimaryDark"
+                                android:id="@+id/student_address_title"
+                                android:layout_weight=".3"
+                                android:paddingLeft="10dp"
+                                android:gravity="bottom"
+                                android:textSize="10sp" />
 
-                                <TextView
-                                    android:layout_width="fill_parent"
-                                    android:layout_height="0dp"
-                                    android:textAppearance="?android:attr/textAppearanceSmall"
-                                    android:text="@string/string_student_fragment_address"
-                                    android:textColor="@color/ColorPrimaryDark"
-                                    android:id="@+id/student_address_title"
-                                    android:layout_weight=".3"
-                                    android:paddingLeft="10dp"
-                                    android:gravity="bottom"
-                                    android:textSize="10sp" />
-
-                                <EditText
-                                    android:layout_width="fill_parent"
-                                    android:layout_height="0dp"
-                                    android:text="New Text"
-                                    android:id="@+id/student_address_area"
-                                    android:scrollHorizontally="true"
-                                    android:layout_weight=".7"
-                                    android:textColor="#ff000000"
-                                    android:textSize="15dp"
-                                    android:paddingLeft="10dp"
-                                    android:paddingTop="5dp" />
-
+                            <EditText
+                                android:layout_width="fill_parent"
+                                android:layout_height="0dp"
+                                android:text="New Text"
+                                android:id="@+id/student_address_area"
+                                android:scrollHorizontally="true"
+                                android:layout_weight=".7"
+                                android:textColor="#ff000000"
+                                android:background="#00000000"
+                                android:textSize="15dp"
+                                android:paddingLeft="10dp"
+                                android:paddingTop="5dp" />
 
                         </LinearLayout>
 
-                            <LinearLayout
-                                android:layout_width="match_parent"
+                        <LinearLayout
+                            android:orientation="vertical"
+                            android:layout_width="0dp"
+                            android:layout_height="fill_parent"
+                            android:layout_weight=".4"
+                            android:paddingLeft="10dp">
+
+                            <TextView
+                                android:layout_width="fill_parent"
                                 android:layout_height="0dp"
-                                android:orientation="vertical"
-                                android:layout_weight=".5">
+                                android:textAppearance="?android:attr/textAppearanceSmall"
+                                android:text="@string/string_student_fragment_cap"
+                                android:textColor="@color/ColorPrimaryDark"
+                                android:id="@+id/student_cap_title"
+                                android:layout_weight=".3"
+                                android:paddingLeft="10dp"
+                                android:gravity="bottom"
+                                android:textSize="10sp" />
 
-                                <TextView
-                                    android:layout_width="fill_parent"
-                                    android:layout_height="0dp"
-                                    android:textAppearance="?android:attr/textAppearanceSmall"
-                                    android:text="@string/string_student_fragment_cap"
-                                    android:textColor="@color/ColorPrimaryDark"
-                                    android:id="@+id/student_cap_title"
-                                    android:layout_weight=".3"
-                                    android:paddingLeft="10dp"
-                                    android:gravity="bottom"
-                                    android:textSize="10sp" />
-
-                                <EditText
-                                    android:layout_width="fill_parent"
-                                    android:layout_height="0dp"
-                                    android:text="New Text"
-                                    android:id="@+id/student_CAP_area"
-                                    android:scrollHorizontally="true"
-                                    android:layout_weight=".7"
-                                    android:textColor="#ff000000"
-                                    android:textSize="15dp"
-                                    android:paddingLeft="10dp"
-                                    android:paddingTop="5dp" />
-
-
-
-                            </LinearLayout>
+                            <EditText
+                                android:layout_width="fill_parent"
+                                android:layout_height="0dp"
+                                android:text="New Text"
+                                android:id="@+id/student_CAP_area"
+                                android:scrollHorizontally="true"
+                                android:layout_weight=".7"
+                                android:textColor="#ff000000"
+                                android:background="#00000000"
+                                android:textSize="15dp"
+                                android:paddingLeft="10dp"
+                                android:paddingTop="5dp" />
 
                         </LinearLayout>
+
 
                     </LinearLayout>
 
-                    <!-- address and cap area -->
+                    <!-- END Address and cap -->
 
-                    <!-- nation area -->
+
+                    <!-- City and Nation -->
 
                     <LinearLayout
                         android:orientation="horizontal"
                         android:layout_width="match_parent"
-                        android:layout_height="170dp">
+                        android:layout_height="80dp">
 
                         <ImageView
                             android:layout_width="wrap_content"
@@ -147,192 +146,177 @@
                             android:layout_marginLeft="10dp"
                             android:layout_gravity="center_vertical"/>
 
+                        <LinearLayout
+                            android:orientation="vertical"
+                            android:layout_width="0dp"
+                            android:layout_height="fill_parent"
+                            android:layout_weight=".6"
+                            android:paddingLeft="10dp">
+
+                            <TextView
+                                android:layout_width="fill_parent"
+                                android:layout_height="0dp"
+                                android:textAppearance="?android:attr/textAppearanceSmall"
+                                android:text="@string/string_student_fragment_city"
+                                android:textColor="@color/ColorPrimaryDark"
+                                android:id="@+id/student_city_title"
+                                android:layout_weight=".3"
+                                android:paddingLeft="10dp"
+                                android:gravity="bottom"
+                                android:textSize="10sp" />
+
+                            <EditText
+                                android:layout_width="fill_parent"
+                                android:layout_height="0dp"
+                                android:text="New Text"
+                                android:id="@+id/student_city_area"
+                                android:scrollHorizontally="true"
+                                android:layout_weight=".7"
+                                android:textColor="#ff000000"
+                                android:background="#00000000"
+                                android:textSize="15dp"
+                                android:paddingLeft="10dp"
+                                android:paddingTop="5dp" />
+
+                        </LinearLayout>
 
                         <LinearLayout
                             android:orientation="vertical"
                             android:layout_width="0dp"
                             android:layout_height="fill_parent"
-                            android:layout_weight="1"
-                            android:paddingLeft="30dp">
+                            android:layout_weight=".4"
+                            android:paddingLeft="10dp">
 
-                            <LinearLayout
-                                android:layout_width="match_parent"
+                            <TextView
+                                android:layout_width="fill_parent"
                                 android:layout_height="0dp"
-                                android:orientation="vertical"
-                                android:layout_weight=".5">
+                                android:textAppearance="?android:attr/textAppearanceSmall"
+                                android:text="@string/string_student_fragment_nation"
+                                android:textColor="@color/ColorPrimaryDark"
+                                android:id="@+id/student_nation_title"
+                                android:layout_weight=".3"
+                                android:paddingLeft="10dp"
+                                android:gravity="bottom"
+                                android:textSize="10sp" />
 
-                                <TextView
-                                    android:layout_width="fill_parent"
-                                    android:layout_height="0dp"
-                                    android:textAppearance="?android:attr/textAppearanceSmall"
-                                    android:text="@string/string_student_fragment_city"
-                                    android:textColor="@color/ColorPrimaryDark"
-                                    android:id="@+id/student_city_title"
-                                    android:layout_weight=".3"
-                                    android:paddingLeft="10dp"
-                                    android:gravity="bottom"
-                                    android:textSize="10sp" />
-
-                                <EditText
-                                    android:layout_width="fill_parent"
-                                    android:layout_height="0dp"
-                                    android:text="New Text"
-                                    android:id="@+id/student_city_area"
-                                    android:scrollHorizontally="true"
-                                    android:layout_weight=".7"
-                                    android:textColor="#ff000000"
-                                    android:textSize="15dp"
-                                    android:paddingLeft="10dp"
-                                    android:paddingTop="5dp" />
-
-
-                            </LinearLayout>
-
-                            <LinearLayout
-                                android:layout_width="match_parent"
+                            <EditText
+                                android:layout_width="fill_parent"
                                 android:layout_height="0dp"
-                                android:orientation="vertical"
-                                android:layout_weight=".5">
+                                android:text="New Text"
+                                android:id="@+id/student_nation_area"
+                                android:scrollHorizontally="true"
+                                android:layout_weight=".7"
+                                android:textColor="#ff000000"
+                                android:background="#00000000"
+                                android:textSize="15dp"
+                                android:paddingLeft="10dp"
+                                android:paddingTop="5dp" />
 
-                                <TextView
-                                    android:layout_width="fill_parent"
-                                    android:layout_height="0dp"
-                                    android:textAppearance="?android:attr/textAppearanceSmall"
-                                    android:text="@string/string_student_fragment_nation"
-                                    android:textColor="@color/ColorPrimaryDark"
-                                    android:id="@+id/student_nation_title"
-                                    android:layout_weight=".3"
-                                    android:paddingLeft="10dp"
-                                    android:gravity="bottom"
-                                    android:textSize="10sp" />
-
-                                <EditText
-                                    android:layout_width="fill_parent"
-                                    android:layout_height="0dp"
-                                    android:text="New Text"
-                                    android:id="@+id/student_nation_area"
-                                    android:scrollHorizontally="true"
-                                    android:layout_weight=".7"
-                                    android:textColor="#ff000000"
-                                    android:textSize="15dp"
-                                    android:paddingLeft="10dp"
-                                    android:paddingTop="5dp" />
+                        </LinearLayout>
 
 
 
-                            </LinearLayout>
+
+                    </LinearLayout>
+
+                    <!-- END City and Nation -->
+
+                </LinearLayout>
+
+            </android.support.v7.widget.CardView>
+            <android.support.v7.widget.CardView
+                xmlns:card_view="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/phones_card_view"
+                android:layout_gravity="center"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                card_view:cardCornerRadius="10dp"
+                card_view:cardMaxElevation="5dp"
+                android:layout_margin="3dp"
+                card_view:cardBackgroundColor="#ffffff">
+                <!-- Phones -->
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <LinearLayout
+                        android:orientation="vertical"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:paddingLeft="5dp">
+
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:id="@+id/student_phone_title"
+                                android:textAppearance="?android:textAppearanceMedium"
+                                android:layout_weight=".9"
+                                android:padding="10dp"
+                                android:text="@string/string_student_fragment_phones"
+                                android:textColor="@color/ColorPrimaryDark"
+                                />
+
+                            <Button
+                                android:id="@+id/student_phones_plusButton"
+                                android:gravity="center"
+                                android:layout_width="30dp"
+                                android:layout_height="30dp"
+                                android:layout_margin="5dp"
+                                android:padding="10dp"
+                                android:background="@drawable/ic_plus"/>
+
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:orientation="vertical"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/student_phones_container">
+
 
                         </LinearLayout>
 
                     </LinearLayout>
-
-                    <!-- end nation area -->
-
 
 
                 </LinearLayout>
 
-
+                <!-- END Phones -->
 
             </android.support.v7.widget.CardView>
+            </LinearLayout>
 
 
             <LinearLayout
                 android:layout_width="0dp"
-                android:layout_height="match_parent"
+                android:layout_height="fill_parent"
                 android:orientation="vertical"
-                android:layout_weight=".5" >
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="200dp"
-                android:orientation="vertical"
-                android:id="@+id/office_map_container">
+                android:layout_weight=".5"
+                android:layout_margin="5dp">
+
+
+
 
                 <fragment
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="fill_parent"
                     class="com.example.giuliagigi.jobplacement.GeoLocalization"
                     android:id="@+id/office_map_fragment"/>
 
+
+
+
             </LinearLayout>
-
-                <android.support.v7.widget.CardView
-                    xmlns:card_view="http://schemas.android.com/apk/res-auto"
-                    android:id="@+id/phones_card_view"
-                    android:layout_gravity="center"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight=".5"
-                    card_view:cardCornerRadius="10dp"
-                    card_view:cardMaxElevation="5dp"
-                    android:layout_margin="3dp"
-                    card_view:cardBackgroundColor="#ffffff">
-                    <!-- Phones -->
-
-                    <LinearLayout
-                        android:orientation="horizontal"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-
-                        <LinearLayout
-                            android:orientation="vertical"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:paddingLeft="5dp">
-
-
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:orientation="horizontal">
-
-                                <TextView
-                                    android:layout_width="0dp"
-                                    android:layout_height="wrap_content"
-                                    android:id="@+id/student_phone_title"
-                                    android:textAppearance="?android:textAppearanceMedium"
-                                    android:layout_weight=".9"
-                                    android:padding="10dp"
-                                    android:text="@string/string_student_fragment_phones"
-                                    android:textColor="@color/ColorPrimaryDark"
-                                    />
-
-                                <Button
-                                    android:id="@+id/student_phones_plusButton"
-                                    android:gravity="center"
-                                    android:layout_width="30dp"
-                                    android:layout_height="30dp"
-                                    android:layout_margin="5dp"
-                                    android:padding="10dp"
-                                    android:background="@drawable/ic_plus"/>
-
-
-                            </LinearLayout>
-
-                            <LinearLayout
-                                android:orientation="vertical"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:id="@+id/student_phones_container">
-
-
-                            </LinearLayout>
-
-                        </LinearLayout>
-
-
-                    </LinearLayout>
-
-                    <!-- END Phones -->
-
-                </android.support.v7.widget.CardView>
-
-               </LinearLayout>
-
-
-
-
 
         </LinearLayout>
 

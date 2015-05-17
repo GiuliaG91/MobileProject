@@ -35,6 +35,7 @@ import com.parse.ParseInstallation;
 import com.parse.ParseObject;
 import com.parse.ParsePush;
 import com.parse.ParseQuery;
+
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
@@ -69,7 +70,6 @@ public class NewOffer extends Fragment implements DatePickerFragment.OnDataSetLi
     private boolean editMode=true;
     private boolean isNew=true;
     private boolean published=false; //default
-    private int flag_create_publish=-1; // 0 create 1 publish
 
    private EditText editDescriptionText=null;
    private TextView textView=null;
@@ -101,8 +101,7 @@ public class NewOffer extends Fragment implements DatePickerFragment.OnDataSetLi
     private MultiAutoCompleteTextView tagsView=null;
 
      private Map<String,Tag> retriveTag=null;
-
-
+     final Set<String> existent=new HashSet<>();
 
 
     public static NewOffer newInstance(boolean editMode,boolean isNew) {
@@ -127,9 +126,18 @@ public class NewOffer extends Fragment implements DatePickerFragment.OnDataSetLi
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-         setHasOptionsMenu(true);
-         setRetainInstance(true);
-         getInitArguments();
+        getInitArguments();
+        if(savedInstanceState!=null)
+        {
+            Boolean tmp=savedInstanceState.getBoolean("editMode");
+            if(tmp==true)
+            {
+                editMode=true;
+            }
+        }
+        setHasOptionsMenu(true);
+
+
     }
 
     @Override
@@ -149,15 +157,11 @@ public class NewOffer extends Fragment implements DatePickerFragment.OnDataSetLi
     public boolean onOptionsItemSelected(MenuItem item) {
 
         if (item.getItemId() == R.id.action_save) {
-            if (isNew = true) {
-                flag_create_publish = 0;
-                createPublishOffer(getView());
+            if (isNew == true) {
+                createOffer(getView());
             } else {
                 saveChanges();
             }
-            buttonConfiguration();
-
-
         }
         return true;
     }
@@ -207,7 +211,7 @@ public class NewOffer extends Fragment implements DatePickerFragment.OnDataSetLi
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 if (position == 0) {
-                    editSalary.clearComposingText();;
+                    editSalary.setText("");
                     editSalary.setEnabled(false);
 
                 } else {
@@ -283,7 +287,6 @@ public class NewOffer extends Fragment implements DatePickerFragment.OnDataSetLi
             }
         };
 
-
         editDescriptionText.addTextChangedListener(mTextEditorWatcher);
         editObject.addTextChangedListener(mobjectTextWhatcer);
 
@@ -304,12 +307,12 @@ public class NewOffer extends Fragment implements DatePickerFragment.OnDataSetLi
 
         final Set<String> support=new HashSet<String>();
         retriveTag=new HashMap<>();
-        final Set<String> existent=new HashSet<>();
+
 
         for(int i=0;i<tags.size();i++)
         {
             t[i]=tags.get(i).getTag();
-            retriveTag.put(tags.get(i).getTag().toLowerCase().trim(),tags.get(i));
+            retriveTag.put(tags.get(i).getTag().toLowerCase().trim(), tags.get(i));
             support.add(tags.get(i).getTag().toLowerCase().trim());
         }
 
@@ -338,8 +341,12 @@ public class NewOffer extends Fragment implements DatePickerFragment.OnDataSetLi
                         mytagView.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
+                                 TextView tv=(TextView)v.findViewById(R.id.tag_tv);
+                                existent.remove((tv.getText().toString().toLowerCase().trim()));
                                 tagContainer.removeView(v);
                                 Toast.makeText(getActivity(),"Removed",Toast.LENGTH_SHORT ).show();
+
+
                             }
                         });
 
@@ -361,14 +368,17 @@ public class NewOffer extends Fragment implements DatePickerFragment.OnDataSetLi
 
 
 
-        if(isNew==false)
+        if(isNew==false && editMode==false)
         {
             CompanyOffer offer=globalData.getCurrentViewOffer();
 
             editDescriptionText.setText(offer.getDescription());
             textView.setEnabled(false);
             editObject.setText(offer.getOfferObject());
-            editSalary.setText(offer.getSAlARY());
+            Integer salary=offer.getSAlARY();
+            if(salary!=-1) {
+                editSalary.setText(String.valueOf(salary));
+            }
 
             SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
             String date=dateFormat.format(offer.getValidity());
@@ -437,13 +447,22 @@ public class NewOffer extends Fragment implements DatePickerFragment.OnDataSetLi
                 LayoutInflater tag_inflater = (LayoutInflater) getActivity().getBaseContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
                 for (Tag tag : offer.getTags()) {
-
+                                final Tag tmp=tag;
                     View mytagView = tag_inflater.inflate(R.layout.taglayout, null);
+                   mytagView.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            tagContainer.removeView(v);
+                            Toast.makeText(getActivity(),"Removed",Toast.LENGTH_SHORT ).show();
+                            existent.remove(tmp.getTag().toLowerCase().trim());
+                        }
+                    });
                     mytagView.setEnabled(false);
 
                     TextView tag_tv = (TextView) mytagView.findViewById(R.id.tag_tv);
                     tag_tv.setText(tag.getTag());
                     tagContainer.addView(mytagView);
+                    existent.add(tag.getTag().toLowerCase().trim());
                 }
             }
         }
@@ -453,12 +472,75 @@ public class NewOffer extends Fragment implements DatePickerFragment.OnDataSetLi
 
     }
 
+
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        if(savedInstanceState!=null)
+        {
+           Boolean tmp_state= savedInstanceState.getBoolean("editMode");
+            if(tmp_state==true) {
+
+                editMode=true;
+                editObject.setText(savedInstanceState.getString("objectOffer"));
+                fieldSpinner.setSelection(savedInstanceState.getInt("workField"));
+                places.setText(savedInstanceState.getString("places"));
+                contractSpinner.setSelection(savedInstanceState.getInt("contract"));
+                validity.setText(savedInstanceState.getString("validity"));
+                termSpinner.setSelection(savedInstanceState.getInt("term"));
+                location.setText(savedInstanceState.getString("location"));
+                Integer pos=savedInstanceState.getInt("posSalary");
+                salarySpinner.setSelection(pos);
+                if(pos!=0) {
+
+                    editSalary.setText(savedInstanceState.getString("salary"));
+                }
+                else   editSalary.setText("");
+                editDescriptionText.setText(savedInstanceState.getString("description"));
+
+
+
+               ArrayList<String> tmp =savedInstanceState.getStringArrayList("taglist");
+
+                final GridLayout tagContainer = (GridLayout) root.findViewById(R.id.tagContainder);
+                LayoutInflater tag_inflater = (LayoutInflater) getActivity().getBaseContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+
+                for (String  tag : tmp) {
+                            final String text_tag=tag;
+                    View mytagView = tag_inflater.inflate(R.layout.taglayout, null);
+                    mytagView.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            tagContainer.removeView(v);
+                            Toast.makeText(getActivity(),"Removed",Toast.LENGTH_SHORT ).show();
+                            existent.remove(text_tag.toLowerCase().trim());
+                        }
+                    });
+                 
+
+                    TextView tag_tv = (TextView) mytagView.findViewById(R.id.tag_tv);
+                    tag_tv.setText(tag);
+                    tagContainer.addView(mytagView);
+                    existent.add(tag.toLowerCase().trim());
+                }
+
+
+            }
+        }
+
+
+
+    }
+
     private void buttonConfiguration() {
 
         if (editMode == false) {
 
+            button_a.setIcon(R.drawable.ic_create);
+            button_b.setIcon(R.drawable.ic_modify_white);
+            button_c.setIcon(R.drawable.ic_delete);
             actionMenu.setEnabled(true);
             actionMenu.setVisibility(View.VISIBLE);
+
 
        if(buttonSave!=null)
        {buttonSave.setVisible(false);
@@ -469,18 +551,12 @@ public class NewOffer extends Fragment implements DatePickerFragment.OnDataSetLi
                 //we need to check if is published or not
                 if (!globalData.getCurrentViewOffer().getPublished()) {
                     //created but not published -->   publish / modify / delete
-                    button_a.setTitle(getString(R.string.new_offer_publish_button));
-                    button_a.setIcon(R.drawable.ic_create);
-                    button_b.setTitle(getString(R.string.new_offer_modify_button));
-                    button_b.setIcon(R.drawable.ic_modify_white);
-                    button_c.setTitle(getString(R.string.new_offer_delete_button));
-                    button_c.setIcon(R.drawable.ic_delete);
 
                     button_a.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            flag_create_publish = 1;
-                            createPublishOffer(v);
+
+                            publish(v);
                         }
                     });
 
@@ -499,35 +575,41 @@ public class NewOffer extends Fragment implements DatePickerFragment.OnDataSetLi
                     button_c.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            //deleteOffer(v);
+                            deleteOffer(v);
                         }
                     });
 
                 } else {
                     //created and published -->   modify / delete
-                    button_a.setTitle(getString(R.string.new_offer_modify_button));
-                    button_a.setIcon(R.drawable.ic_modify_white);
-                    button_b.setTitle(getString(R.string.new_offer_delete_button));
-                    button_b.setIcon(R.drawable.ic_delete);
 
-                    button_a.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            editMode = true;
-                            setResetEditMode();
-                        }
-                    });
-
+                        button_a.setEnabled(false);
+                        button_a.setVisibility(View.INVISIBLE);
 
                     button_b.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            //deleteOffer(v);
+
+                            if(!globalData.getCurrentViewOffer().getStudents().isEmpty())
+                            {
+                                Toast.makeText(getActivity(),"Offerta non modificabile", Toast.LENGTH_SHORT).show();
+                            }
+                            else {
+
+
+                                editMode = true;
+                                setResetEditMode();
+                            }
                         }
                     });
 
-                    button_c.setEnabled(false);
-                    button_c.setVisibility(View.INVISIBLE);
+
+                         button_c.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            deleteOffer(v);
+                        }
+                    });
+
 
                 }
             }
@@ -570,6 +652,12 @@ public class NewOffer extends Fragment implements DatePickerFragment.OnDataSetLi
                 tagsView.setEnabled(false);
                 final GridLayout tagContainer = (GridLayout) root.findViewById(R.id.tagContainder);
                     tagContainer.setEnabled(false);
+
+                for(int i=0;i<tagContainer.getChildCount();i++)
+                {
+                    tagContainer.getChildAt(i).setEnabled(false);
+                }
+
                 //Gestione bottoni
                     buttonConfiguration();
 
@@ -579,7 +667,9 @@ public class NewOffer extends Fragment implements DatePickerFragment.OnDataSetLi
                 editDescriptionText.setEnabled(true);
                 textView.setEnabled(true);
                 editObject.setEnabled(true);
-                editSalary.setEnabled(true);
+                if(salarySpinner.getSelectedItemPosition()!=0) {
+                    editSalary.setEnabled(true);
+                }
                 dateButton.setEnabled(true);
                 validity.setEnabled(true);
                 places.setEnabled(true);
@@ -602,10 +692,30 @@ public class NewOffer extends Fragment implements DatePickerFragment.OnDataSetLi
                 {
                     tagContainer.setVisibility(View.VISIBLE);
                 }
-                tagContainer.setEnabled(false);
+                tagContainer.setEnabled(true);
+                for(int i=0;i<tagContainer.getChildCount();i++)
+                {
+                    tagContainer.getChildAt(i).setEnabled(true);
+                }
+
                 buttonConfiguration();
             }
         }
+    /**
+     * This interface must be implemented by activities that contain this
+     * fragment to allow an interaction in this fragment to be communicated
+     * to the activity and potentially other fragments contained in that
+     * activity.
+     * <p/>
+     * See the Android Training lesson <a href=
+     * "http://developer.android.com/training/basics/fragments/communicating.html"
+     * >Communicating with Other Fragments</a> for more information.
+     */
+    public interface OnFragmentInteractionListener {
+        // TODO: Update argument type and name
+        public void onFragmentInteraction(Uri uri);
+    }
+
 
 
 
@@ -634,6 +744,46 @@ public class NewOffer extends Fragment implements DatePickerFragment.OnDataSetLi
     }
 
     @Override
+    public void onSaveInstanceState(Bundle outState) {
+        outState.putBoolean("editMode", editMode);
+
+        outState.putString("objectOffer", editObject.getText().toString());
+        outState.putInt("workField", fieldSpinner.getSelectedItemPosition());
+        outState.putString("places", places.getText().toString());
+        outState.putInt("contract", contractSpinner.getSelectedItemPosition());
+        outState.putString("validity", validity.getText().toString());
+        outState.putInt("term", termSpinner.getSelectedItemPosition());
+        outState.putString("location", location.getText().toString());
+        outState.putInt("posSalary",salarySpinner.getSelectedItemPosition());
+        outState.putString("salary",editSalary.getText().toString());
+        outState.putString("description", editDescriptionText.getText().toString());
+
+        //elimino i tag salvati
+
+        ArrayList<String> tmp=new ArrayList<>();
+
+        final GridLayout tagContainer = (GridLayout) root.findViewById(R.id.tagContainder);
+
+        int n_tags = tagContainer.getChildCount();
+        for (int i = 0; i < n_tags; i++) {
+            View tv = tagContainer.getChildAt(i);
+            TextView t = (TextView) tv.findViewById(R.id.tag_tv);
+
+            Tag tag = retriveTag.get(t.getText().toString().toLowerCase().trim());
+            tmp.add(tag.getTag());
+            globalData.getCurrentViewOffer().getTags().remove(tag);
+            existent.remove(tag.getTag().toLowerCase().trim());
+
+        }
+
+
+            tagContainer.removeAllViews();
+
+        outState.putStringArrayList("taglist", tmp);
+
+    }
+
+    @Override
     public void onDataSet(GregorianCalendar gc) {
 
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
@@ -643,23 +793,6 @@ public class NewOffer extends Fragment implements DatePickerFragment.OnDataSetLi
        validity.setText(dateFormat.format(gc.getTime()).toString());
 
     }
-
-
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p/>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
-    public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        public void onFragmentInteraction(Uri uri);
-    }
-
 
 
     public class StringAdapter extends BaseAdapter {
@@ -701,7 +834,7 @@ public class NewOffer extends Fragment implements DatePickerFragment.OnDataSetLi
 
 
   /****************ON CLICK LISTENER*********/
-    public void createPublishOffer(View v) {
+    public void createOffer(View v) {
 
         CompanyOffer offer;
             //Make all check
@@ -765,14 +898,8 @@ public class NewOffer extends Fragment implements DatePickerFragment.OnDataSetLi
                     offer.setValidity(d);
                     offer.setTerm(termSpinner.getSelectedItem().toString());
 
-                    if(flag_create_publish==0)
-                    {
-                        offer.setPublishField(false);
-                    }
-                    else
-                    {
-                        offer.setPublishField(true);
-                    }
+                    offer.setPublishField(false);
+
 
                     final GlobalData gd=(GlobalData)getActivity().getApplication();
 
@@ -819,9 +946,16 @@ public class NewOffer extends Fragment implements DatePickerFragment.OnDataSetLi
                         offer.addTag(tag);
 
                     }
+
+                    globalData.setCurrentOffer(offer);
+                    final CompanyOffer obj=offer;
+
                     offer.saveInBackground(new SaveCallback() {
                         @Override
                         public void done(ParseException e) {
+                            obj.getCompany().addOffer(obj);
+                        }
+                    });
 
                             /* Invio notifica push a studenti */
                             ParseQuery<ParseUser> userQuery = ParseUser.getQuery();
@@ -835,19 +969,30 @@ public class NewOffer extends Fragment implements DatePickerFragment.OnDataSetLi
                             push.setMessage("The company " + ((Company)gd.getUserObject()).getName() + "has published a new offer");
                             push.sendInBackground();
                         }
-                    });
 
 
                     Toast.makeText(getActivity(),"Done",Toast.LENGTH_SHORT ).show();
 
                         editMode=false;
+                        isNew=false;
                        setResetEditMode();
                 }
 
             }
 
-        }
+      public Boolean isInEditMode()
+      {
+          return editMode;
+      }
 
+    public void publish(View v)
+    {
+        CompanyOffer offer=globalData.getCurrentViewOffer();
+        offer.setPublishField(true);
+        offer.saveInBackground();
+        buttonConfiguration();
+
+    }
 
     public void saveChanges() {
         CompanyOffer offer;
@@ -890,7 +1035,15 @@ public class NewOffer extends Fragment implements DatePickerFragment.OnDataSetLi
                 flag = 1;
                 Toast.makeText(getActivity(), "Wrong data", Toast.LENGTH_SHORT).show();
             }
-            offer = globalData.getCurrentViewOffer();
+
+            ParseQuery<CompanyOffer> query=new ParseQuery<CompanyOffer>("CompanyOffer");
+            query.whereEqualTo("objectId", globalData.getCurrentViewOffer().getObjectId());
+            offer=null;
+            try {
+                offer =query.find().get(0);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
 
 
             offer.setObject(editObject.getText().toString());
@@ -900,11 +1053,6 @@ public class NewOffer extends Fragment implements DatePickerFragment.OnDataSetLi
             offer.setValidity(d);
             offer.setTerm(termSpinner.getSelectedItem().toString());
 
-            if (flag_create_publish == 0) {
-                offer.setPublishField(false);
-            } else {
-                offer.setPublishField(true);
-            }
 
             GlobalData gd = (GlobalData) getActivity().getApplication();
 
@@ -935,6 +1083,11 @@ public class NewOffer extends Fragment implements DatePickerFragment.OnDataSetLi
             final GridLayout tagContainer = (GridLayout) root.findViewById(R.id.tagContainder);
 
             int n_tags = tagContainer.getChildCount();
+
+                List<Tag> list=offer.getTags();
+               offer.removeAllTag(list);
+
+
             for (int i = 0; i < n_tags; i++) {
                 View tv = tagContainer.getChildAt(i);
                 TextView t = (TextView) tv.findViewById(R.id.tag_tv);
@@ -952,38 +1105,28 @@ public class NewOffer extends Fragment implements DatePickerFragment.OnDataSetLi
 
     }
 
+    public void deleteOffer(View v)
+    {
 
-   private void saveState()
-   {
-       //Save all field in a boundle
+        CompanyOffer offer=null;
 
-       Bundle boundle = new Bundle();
-       boundle.putString("objectOffer",editObject.getText().toString());
-       boundle.putString("workField",fieldSpinner.getSelectedItem().toString());
-       boundle.putString("places", places.getText().toString());
-       boundle.putString("contract",contractSpinner.getSelectedItem().toString());
-       boundle.putString("validity",validity.getText().toString());
-       boundle.putString("term",termSpinner.getSelectedItem().toString());
-       boundle.putString("location",location.getText().toString());
-       boundle.putString("salary",editSalary.getText().toString());
-       boundle.putString("description", editDescriptionText.getText().toString());
-       boundle.putString("objectOffer", editObject.getText().toString());
+        ParseQuery<CompanyOffer> query=new ParseQuery<CompanyOffer>("CompanyOffer");
+        query.whereEqualTo("objectId", globalData.getCurrentViewOffer().getObjectId());
+        offer=null;
+        try {
+            offer =query.find().get(0);
 
-       globalData.setOfferBundle(boundle);
-       ArrayList<Tag> tmp=new ArrayList<>();
+            offer.deleteInBackground();
+            globalData.setCurrentOffer(null);
+            getChildFragmentManager().popBackStackImmediate();
+        } catch (ParseException e) {
+            e.printStackTrace();
+            Toast.makeText(getActivity(),"Can't delete this object", Toast.LENGTH_SHORT).show();
+        }
 
-       final GridLayout tagContainer = (GridLayout) root.findViewById(R.id.tagContainder);
 
-       int n_tags = tagContainer.getChildCount();
-       for (int i = 0; i < n_tags; i++) {
-           View tv = tagContainer.getChildAt(i);
-           TextView t = (TextView) tv.findViewById(R.id.tag_tv);
 
-           Tag tag = retriveTag.get(t.getText().toString().toLowerCase().trim());
-           tmp.add(tag);
+    }
 
-       }
-       globalData.setTagBoundle(tmp);
-   }
 
 }

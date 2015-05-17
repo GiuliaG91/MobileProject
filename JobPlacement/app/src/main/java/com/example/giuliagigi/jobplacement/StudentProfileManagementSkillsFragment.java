@@ -14,6 +14,8 @@ import java.util.ArrayList;
 public class StudentProfileManagementSkillsFragment extends ProfileManagementFragment {
 
     private static final String TITLE = "Skills";
+    private static final String BUNDLE_IDENTIFIER = "STUDENTPROFILESKILLS";
+    private static final String BUNDLE_KEY_STUDENT = "BUNDLE_KEY_STUDENT";
 
     private Student student;
     Button addDegree, addLanguage,addCertificate;
@@ -29,6 +31,7 @@ public class StudentProfileManagementSkillsFragment extends ProfileManagementFra
         Bundle args = new Bundle();
         fragment.setArguments(args);
         fragment.setStudent(student);
+        fragment.setUser(student);
         return fragment;
     }
 
@@ -42,13 +45,17 @@ public class StudentProfileManagementSkillsFragment extends ProfileManagementFra
         this.student = student;
     }
 
+    @Override
+    public String getBundleID() {
+        return BUNDLE_IDENTIFIER;
+    }
+
     /*----------------------- STANDARD CALLBACKS -------------------------------------------------*/
 
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
 
-        student = (Student)application.getUserObject();
         degreeFragments = new ArrayList<StudentProfileManagementDegreeFragment>();
         languageFragments = new ArrayList<StudentProfileManagementLanguageFragment>();
         certificateFragments = new ArrayList<StudentProfileManagementCertificateFragment>();
@@ -66,7 +73,8 @@ public class StudentProfileManagementSkillsFragment extends ProfileManagementFra
                              Bundle savedInstanceState) {
 
 
-        root = inflater.inflate(R.layout.fragment_student_profile_management_skills, container, false);
+        if(root == null)
+            root = inflater.inflate(R.layout.fragment_student_profile_management_skills, container, false);
 
         addDegree = (Button)root.findViewById(R.id.skills_add_degree);
         addDegree.setOnClickListener(new View.OnClickListener() {
@@ -204,13 +212,34 @@ public class StudentProfileManagementSkillsFragment extends ProfileManagementFra
     /*----------------------- AUXILIARY METHODS ------------------------------------------------------*/
 
     @Override
+    protected void restoreStateFromBundle() {
+        super.restoreStateFromBundle();
+
+        if(bundle!=null)
+            student = (Student)bundle.get(BUNDLE_KEY_STUDENT);
+    }
+
+    @Override
+    protected void saveStateInBundle() {
+        super.saveStateInBundle();
+
+        if(bundle!=null)
+            bundle.put(BUNDLE_KEY_STUDENT,student);
+    }
+
+    @Override
     protected void setEnable(boolean enable) {
 
         super.setEnable(enable);
+        int visibility;
+        if(enable)
+            visibility = View.VISIBLE;
+        else
+            visibility = View.INVISIBLE;
 
-        addCertificate.setEnabled(enable);
-        addDegree.setEnabled(enable);
-        addLanguage.setEnabled(enable);
+        addCertificate.setVisibility(visibility);
+        addDegree.setVisibility(visibility);
+        addLanguage.setVisibility(visibility);
     }
 
     @Override

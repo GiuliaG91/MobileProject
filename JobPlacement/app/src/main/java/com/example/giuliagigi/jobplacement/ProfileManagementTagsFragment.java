@@ -22,6 +22,7 @@ import java.util.HashMap;
 public class ProfileManagementTagsFragment extends ProfileManagementFragment {
 
     private static final String TITLE = "Tags";
+    public static final String BUNDLE_IDENTIFIER = "PROFILEMANAGEMENTTAGS";
 
     private ImageButton addTag;
     private GridLayout tagContainer;
@@ -47,8 +48,12 @@ public class ProfileManagementTagsFragment extends ProfileManagementFragment {
 
     public void setUser(User user){
 
-        Log.println(Log.ASSERT,"PM FRAG","setting user" + user);
         this.user = user;
+    }
+
+    @Override
+    public String getBundleID() {
+        return BUNDLE_IDENTIFIER;
     }
 
     /* ---------------------------- STANDARD CALLBACKS -------------------------------------------*/
@@ -56,23 +61,22 @@ public class ProfileManagementTagsFragment extends ProfileManagementFragment {
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
 
         userTags = user.getTags();
         tagViews = new ArrayList<View>();
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-        }
-    }
-
-    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        root = inflater.inflate(R.layout.fragment_profile_management_tags, container, false);
+        if(root == null)
+            root = inflater.inflate(R.layout.fragment_profile_management_tags, container, false);
 
         tagsText = (MultiAutoCompleteTextView) root.findViewById(R.id.tagsFragment_tagAutoComplete_text);
         addTag = (ImageButton) root.findViewById(R.id.tagsFragment_addTagButton);
@@ -189,6 +193,16 @@ public class ProfileManagementTagsFragment extends ProfileManagementFragment {
     /* ----------------------- AUXILIARY METHODS -------------------------------------------------*/
 
     @Override
+    protected void restoreStateFromBundle() {
+        super.restoreStateFromBundle();
+    }
+
+    @Override
+    protected void saveStateInBundle() {
+        super.saveStateInBundle();
+    }
+
+    @Override
     protected void setEnable(boolean enable) {
         super.setEnable(enable);
 
@@ -203,13 +217,8 @@ public class ProfileManagementTagsFragment extends ProfileManagementFragment {
     public void saveChanges() {
         super.saveChanges();
 
-        Log.println(Log.ASSERT, "TAGS FRAG", "lista tag: ");
-
-        for(Tag t: userTags.values()){
-
-            Log.println(Log.ASSERT, "TAGS FRAG", "tag: " + t.getTag());
+        for(Tag t: userTags.values())
             user.addTag(t);
-        }
 
         user.saveEventually();
     }

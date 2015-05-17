@@ -40,6 +40,7 @@ public class OfferSearchFragment extends Fragment{
     private RecyclerView mRecyclerView;
     private OfferSearchAdapter adapter;
     private LinearLayoutManager mLayoutManager;
+    private Integer position=0;
 
     private OnFragmentInteractionListener mListener;
 
@@ -56,10 +57,12 @@ public class OfferSearchFragment extends Fragment{
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        setHasOptionsMenu(true);
         super.onCreate(savedInstanceState);
 
-
+        if(savedInstanceState!=null)
+        {
+            position=savedInstanceState.getInt("position");
+        }
     }
 
     @Override
@@ -79,21 +82,23 @@ public class OfferSearchFragment extends Fragment{
         // use this setting to improve performance if you know that changes
         // in content do not change the layout size of the RecyclerView
         mRecyclerView.setHasFixedSize(true);
-
-        // use a linear layout manager
         mLayoutManager = new LinearLayoutManager(this.getActivity());
+        // use a linear layout manager
+
         mRecyclerView.addItemDecoration(new DividerItemDecoration(this.getActivity(), DividerItemDecoration.VERTICAL_LIST));
         mRecyclerView.setLayoutManager(mLayoutManager);
 
-        adapter = new OfferSearchAdapter(this.getActivity(), mRecyclerView);
+        adapter = new OfferSearchAdapter(this.getActivity(), mRecyclerView,this,position,mLayoutManager);
 
         /*********************/
 
         // specify an adapter
         mRecyclerView.setAdapter(adapter);
 
+
         return root;
     }
+
 
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
@@ -139,6 +144,7 @@ public class OfferSearchFragment extends Fragment{
     }
 
 
+
     /**
      * This interface must be implemented by activities that contain this
      * fragment to allow an interaction in this fragment to be communicated
@@ -159,5 +165,15 @@ public class OfferSearchFragment extends Fragment{
         adapter.setAdapter();
         adapter.notifyDataSetChanged();
 
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        try {
+            outState.putInt("position", mLayoutManager.findFirstVisibleItemPosition());
+        }catch (Exception e){
+            outState.putInt("position",0);
+        }
     }
 }

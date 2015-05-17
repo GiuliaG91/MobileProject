@@ -26,7 +26,6 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.Locale;
 
 
@@ -86,7 +85,7 @@ public class StudentProfileManagementDegreeFragment extends ProfileManagementFra
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-        isListenerAfterDetach = true;
+        isNestedFragment = true;
         isRemoved = false;
         degreeDateChanged = false;
     }
@@ -150,6 +149,7 @@ public class StudentProfileManagementDegreeFragment extends ProfileManagementFra
         }
 
         root = inflater.inflate(R.layout.fragment_degree_management, container, false);
+
         degreeType = (Spinner)root.findViewById(R.id.degree_management_spinnerType);
         degreeStudies = (Spinner)root.findViewById(R.id.degree_management_spinnerField);
 

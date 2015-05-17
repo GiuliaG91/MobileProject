@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/degree_border"
     android:orientation="vertical"
     android:alpha="1"
     tools:context="com.example.giuliagigi.jobplacement.StudentProfileManagementDegreeFragment">
@@ -115,6 +116,7 @@
                         android:id="@+id/degree_management_mark_area"
                         android:layout_weight=".7"
                         android:textColor="#ff000000"
+                        android:background="#00000000"
                         android:textSize="15dp"
                         android:paddingLeft="10dp" />
 

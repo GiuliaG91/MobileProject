@@ -2,6 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
+    android:background="@drawable/degree_border"
     android:orientation="vertical"
     tools:context="com.example.giuliagigi.jobplacement.StudentProfileManagementLanguageFragment">
 
@@ -34,6 +35,7 @@
                     android:id="@+id/language_description"
                     android:layout_weight="1"
                     android:paddingLeft="10dp"
+                    android:background="#00000000"
                     android:gravity="bottom"
                     android:textSize="10sp" />
 

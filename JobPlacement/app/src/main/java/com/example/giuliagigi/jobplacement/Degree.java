@@ -1,11 +1,18 @@
 package com.example.giuliagigi.jobplacement;
 
+import android.app.Application;
+import android.content.Context;
+import android.support.annotation.StringRes;
 import android.util.Log;
 
 import com.parse.ParseClassName;
 import com.parse.ParseObject;
 
+import java.util.Arrays;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Objects;
 
 /**
  * Created by MarcoEsposito90 on 22/04/2015.
@@ -19,19 +26,31 @@ public class Degree extends ParseObject implements Comparable<Degree>{
     public static final String TYPE_DOCTORATE = "Doctorate";
     public static final String TYPE_GRADUATING = "Graduating";
     public static final String TYPE_NONE = "None";
-    public static final String[] TYPES = new String[]{TYPE_NONE , TYPE_GRADUATING, TYPE_BACHELOR, TYPE_MASTER, TYPE_DOCTORATE};
+    public static final String TYPE_BACHELOR_TRANSLATED = GlobalData.getContext().getString(R.string.string_degree_type_bachelor);
+    public static final String TYPE_MASTER_TRANSLATED = GlobalData.getContext().getString(R.string.string_degree_type_master);
+    public static final String TYPE_DOCTORATE_TRANSLATED = GlobalData.getContext().getString(R.string.string_degree_type_doctorate);
+    public static final String TYPE_GRADUATING_TRANSLATED = GlobalData.getContext().getString(R.string.string_degree_type_graduating);
+    public static final String TYPE_NONE_TRANSLATED = GlobalData.getContext().getString(R.string.string_degree_type_none);
+    public static final HashMap<String,String> DEGREE_TYPES = new HashMap<>();
+    public static final String[] TYPES = new String[]{TYPE_NONE_TRANSLATED , TYPE_GRADUATING_TRANSLATED, TYPE_BACHELOR_TRANSLATED, TYPE_MASTER_TRANSLATED, TYPE_DOCTORATE_TRANSLATED};
 
     public static final String STUDIES_MECHANICS    =   "Mechanics";
     public static final String STUDIES_INFORMATICS  =   "Informatics";
     public static final String STUDIES_CHEMISTRY    =   "Chemistry";
     public static final String STUDIES_ENERGY       =   "Energy";
     public static final String STUDIES_MATERIALS    =   "Materials";
+    public static final String STUDIES_MECHANICS_TRANSLATED = GlobalData.getContext().getString(R.string.string_field_mechanics);
+    public static final String STUDIES_INFORMATICS_TRANSLATED = GlobalData.getContext().getString(R.string.string_field_informatics);
+    public static final String STUDIES_CHEMISTRY_TRANSLATED = GlobalData.getContext().getString(R.string.string_field_chemistry);
+    public static final String STUDIES_ENERGY_TRANSLATED = GlobalData.getContext().getString(R.string.string_field_energy);
+    public static final String STUDIES_MATERIALS_TRANSLATED = GlobalData.getContext().getString(R.string.string_field_materials);
+    public static final HashMap<String, String> DEGREE_STUDIES = new HashMap<>();
     public static final String[] STUDIES = new String[]{
-            STUDIES_MECHANICS,
-            STUDIES_CHEMISTRY,
-            STUDIES_INFORMATICS,
-            STUDIES_ENERGY,
-            STUDIES_MATERIALS};
+            STUDIES_MECHANICS_TRANSLATED,
+            STUDIES_CHEMISTRY_TRANSLATED,
+            STUDIES_INFORMATICS_TRANSLATED,
+            STUDIES_ENERGY_TRANSLATED,
+            STUDIES_MATERIALS_TRANSLATED};
 
     public static final String STUDIES_FIELD = "studies";
     public static final String TYPE_FIELD = "type";
@@ -43,20 +62,22 @@ public class Degree extends ParseObject implements Comparable<Degree>{
 
     public Degree(){
         super();
-    }
+        }
 
     public void setType(String type){
-        this.put(TYPE_FIELD,type);
+        String typeTranslated = (String)getKeyByValue(DEGREE_TYPES, type);
+        this.put(TYPE_FIELD,typeTranslated);
     }
     public String getType(){
-        return this.getString(TYPE_FIELD);
+        return DEGREE_TYPES.get(this.getString(TYPE_FIELD));
     }
 
     public String getStudies(){
-        return this.getString(STUDIES_FIELD);
+        return DEGREE_STUDIES.get(this.getString(STUDENT_FIELD));
     }
     public void setStudies(String studies){
-        this.put(STUDIES_FIELD,studies);
+        String studiesTranslated = (String)getKeyByValue(DEGREE_STUDIES, studies);
+        this.put(STUDIES_FIELD,studiesTranslated);
     }
 
     public Integer getMark(){
@@ -96,10 +117,6 @@ public class Degree extends ParseObject implements Comparable<Degree>{
         return (Student)this.get(STUDENT_FIELD);
     }
 
-
-
-
-
     public static int getTypeID(String type){
 
         for(int i=0; i<TYPES.length;i++){
@@ -109,6 +126,7 @@ public class Degree extends ParseObject implements Comparable<Degree>{
         }
         return -1;
     }
+
     public static int getStudyID(String study){
 
         for(int i=0; i<STUDIES.length;i++){
@@ -134,6 +152,30 @@ public class Degree extends ParseObject implements Comparable<Degree>{
             return 0;
 
         return 1;
+    }
+
+    public static void initializeLangauges(){
+
+        DEGREE_TYPES.put(TYPE_BACHELOR, TYPE_BACHELOR_TRANSLATED);
+        DEGREE_TYPES.put(TYPE_MASTER, TYPE_MASTER_TRANSLATED);
+        DEGREE_TYPES.put(TYPE_DOCTORATE, TYPE_DOCTORATE_TRANSLATED);
+        DEGREE_TYPES.put(TYPE_GRADUATING, TYPE_GRADUATING_TRANSLATED);
+        DEGREE_TYPES.put(TYPE_NONE, TYPE_NONE_TRANSLATED);
+
+        DEGREE_STUDIES.put(STUDIES_MECHANICS, STUDIES_MECHANICS_TRANSLATED);
+        DEGREE_STUDIES.put(STUDIES_INFORMATICS,  STUDIES_INFORMATICS_TRANSLATED);
+        DEGREE_STUDIES.put(STUDIES_CHEMISTRY, STUDIES_CHEMISTRY_TRANSLATED);
+        DEGREE_STUDIES.put(STUDIES_ENERGY, STUDIES_ENERGY_TRANSLATED);
+        DEGREE_STUDIES.put(STUDIES_MATERIALS, STUDIES_MATERIALS_TRANSLATED);
+    }
+
+    public static Object getKeyByValue(HashMap hm, Object value) {
+        for (Object o : hm.keySet()) {
+            if (hm.get(o).equals(value)) {
+                return o;
+            }
+        }
+        return null;
     }
 
 }

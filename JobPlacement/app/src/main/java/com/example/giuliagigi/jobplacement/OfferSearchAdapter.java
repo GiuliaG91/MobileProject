@@ -3,6 +3,7 @@ package com.example.giuliagigi.jobplacement;
 
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
@@ -35,6 +36,11 @@ public class OfferSearchAdapter extends RecyclerView.Adapter<OfferSearchAdapter.
     private GlobalData globalData;
     private Student student;
     private Set<CompanyOffer> supportSet;
+    private OfferSearchFragment parent;
+    private Integer currentPosition=0;
+    private LinearLayoutManager mLayoutManager;
+    private final int pageSize=15;
+    private int count=0;
 
 
     private ParseQueryAdapter<CompanyOffer> parseAdapter;
@@ -44,13 +50,18 @@ public class OfferSearchAdapter extends RecyclerView.Adapter<OfferSearchAdapter.
     OfferSearchAdapter offerSearchAdapter = this;
 
 
-    public OfferSearchAdapter(FragmentActivity c, ViewGroup parentIn) {
+    public OfferSearchAdapter(FragmentActivity c, ViewGroup parentIn, OfferSearchFragment fragment,Integer pos, LinearLayoutManager layoutManager) {
         parseParent = parentIn;
         context = c;
         mDataset = new ArrayList<>();
         globalData = (GlobalData) context.getApplication();
         student = globalData.getStudentFromUser();
         supportSet = new HashSet<>();
+        parent=fragment;
+        currentPosition=pos;
+        mLayoutManager=layoutManager;
+        count=0;
+
 
         if(globalData.getOfferFilterStatus().isValid())
         {
@@ -74,7 +85,6 @@ public class OfferSearchAdapter extends RecyclerView.Adapter<OfferSearchAdapter.
 
 
     }
-
 
     public void setFactory(final List<Tag> tag_list,
                            final List<String> contract_list,
@@ -130,8 +140,6 @@ public class OfferSearchAdapter extends RecyclerView.Adapter<OfferSearchAdapter.
 
                     }
                 }
-
-
 
                 return query;
             }
@@ -208,7 +216,6 @@ public class OfferSearchAdapter extends RecyclerView.Adapter<OfferSearchAdapter.
                             //delete this offer from pref
                             student.removeFavourites(object);
                             student.saveInBackground();
-
                         }
 
                     }
@@ -218,12 +225,28 @@ public class OfferSearchAdapter extends RecyclerView.Adapter<OfferSearchAdapter.
                 return v;
             }
 
+            @Override
+            public View getNextPageView(View v, ViewGroup parent) {
+                if (v == null) {
+                    // R.layout.adapter_next_page contains an ImageView with a custom graphic
+                    // and a TextView.
+                    v = View.inflate(getContext(), R.layout.favourites_row, null);
+                }
+                loadNextPage();
+                return v;
+            }
+
         };
 
 
         parseAdapter.addOnQueryLoadListener(new OnQueryLoadListener());
-        parseAdapter.setObjectsPerPage(15);
-        parseAdapter.loadObjects();
+
+            parseAdapter.setObjectsPerPage(pageSize);
+            parseAdapter.loadObjects();
+
+
+
+
 
 
     }
@@ -286,6 +309,14 @@ public class OfferSearchAdapter extends RecyclerView.Adapter<OfferSearchAdapter.
 
         public void onLoaded(List<CompanyOffer> objects, Exception e) {
             offerSearchAdapter.notifyDataSetChanged();
+           if(currentPosition!=0) {
+               count += pageSize;
+               if (count < currentPosition) {
+                   parseAdapter.loadNextPage();
+               } else {
+                   mLayoutManager.scrollToPosition(currentPosition);
+               }
+           }
         }
     }
 
@@ -303,6 +334,10 @@ public class OfferSearchAdapter extends RecyclerView.Adapter<OfferSearchAdapter.
 
         }
 
-
     }
+
+
+
+
+
 }

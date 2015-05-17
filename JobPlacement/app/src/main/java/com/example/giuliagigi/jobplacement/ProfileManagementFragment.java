@@ -21,6 +21,9 @@ import java.util.ArrayList;
 public class ProfileManagementFragment extends Fragment implements OnActivityChangedListener{
 
     protected static final String INSERT_FIELD = "Insert";
+    protected static final String BUNDLE_IDENTIFIER = "PROFILEMANAGEMENTFRAG";
+    protected static final String BUNDLE_KEY_USER = "BUNDLE_KEY_USER";
+    protected static final String BUNDLE_KEY_HASCHANGED = "BUNDLE_KEY_HASCHANGED";
     protected static final String TITLE = "None";
     protected static final int REQUEST_IMAGE_GET = 1;
 
@@ -30,8 +33,9 @@ public class ProfileManagementFragment extends Fragment implements OnActivityCha
     protected GlobalData application;
     protected boolean hasChanged = false;
     protected View root;
-    protected boolean isListenerAfterDetach;
+    protected boolean isNestedFragment;
     protected String title;
+    protected MyBundle bundle;
     protected User user;
 
 
@@ -52,9 +56,14 @@ public class ProfileManagementFragment extends Fragment implements OnActivityCha
 
     public void setUser(User user){
 
-        Log.println(Log.ASSERT,"PM FRAG","setting user" + user);
         this.user = user;
     }
+
+    public String getBundleID(){
+
+        return BUNDLE_IDENTIFIER;
+    }
+
     /* --------------------- STANDARD CALLBACKS ------------------------------------------------- */
 
     @Override
@@ -72,15 +81,21 @@ public class ProfileManagementFragment extends Fragment implements OnActivityCha
                     + " must implement OnInteractionListener");
         }
 
-        host.addOnActivityChangedListener(this);
-        isListenerAfterDetach = false;
+        isNestedFragment = false;
         hasChanged = false;
+    }
+
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        host.addOnActivityChangedListener(this);
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        restoreStateFromBundle();
     }
 
     @Override
@@ -105,9 +120,13 @@ public class ProfileManagementFragment extends Fragment implements OnActivityCha
     public void onDetach() {
         super.onDetach();
 
-        if(!isListenerAfterDetach)
+        if(!isNestedFragment)
             host.removeOnActivityChangedListener(this);
+
+        saveStateInBundle();
     }
+
+
 
 
     protected interface OnInteractionListener{
@@ -135,6 +154,24 @@ public class ProfileManagementFragment extends Fragment implements OnActivityCha
     }
 
     /* --------------------- AUXILIARY METHODS ------------------------------------------------- */
+
+    protected void restoreStateFromBundle(){
+
+        if(application.getBundle(getBundleID())!= null){
+
+            bundle = application.getBundle((getBundleID()));
+            user = (User)bundle.get(BUNDLE_KEY_USER);
+            hasChanged = bundle.getBoolean(BUNDLE_KEY_HASCHANGED);
+        }
+    }
+
+    protected void saveStateInBundle(){
+
+        bundle = application.addBundle(getBundleID());
+        bundle.put(BUNDLE_KEY_USER,user);
+        bundle.putBoolean(BUNDLE_KEY_HASCHANGED,hasChanged);
+    }
+
 
     protected void setEnable(boolean enable){
 

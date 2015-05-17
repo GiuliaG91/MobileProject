@@ -156,6 +156,14 @@ public class CompanyOffer extends ParseObject {
         getRelation(TAGS_FIELD).add(t);
      }
 
+    public void removeAllTag(List<Tag> list)
+    {
+        for (Tag t : list)
+        {
+            this.getRelation(TAGS_FIELD).remove(t);
+        }
+    }
+
     public void addStudent(Student student)
     {
       getRelation(APPLIES_FIELD).add(student);

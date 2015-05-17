@@ -24,6 +24,8 @@ import java.util.Locale;
 public class CompanyProfileManagementBasicsFragment extends ProfileManagementBasicsFragment {
 
     private static final String TITLE = "Overview";
+    private static final String BUNDLE_KEY_COMPANY = "bundle_key_company";
+    public static final String BUNDLE_IDENTIFIER = "COMPANYPROFILEBASICS";
 
     private EditText nameText,VATNumber, descriptionText;
     private TextView foundationDatePicker;
@@ -52,6 +54,16 @@ public class CompanyProfileManagementBasicsFragment extends ProfileManagementBas
         this.company = company;
     }
 
+    @Override
+    public String getTitle() {
+        return TITLE;
+    }
+
+    @Override
+    public String getBundleID() {
+        return BUNDLE_IDENTIFIER;
+    }
+
     /* ---------------------------- STANDARD CALLBACKS -------------------------------------------*/
 
     @Override
@@ -73,7 +85,8 @@ public class CompanyProfileManagementBasicsFragment extends ProfileManagementBas
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        root = inflater.inflate(R.layout.fragment_company_profile_management_basics, container, false);
+        if(root == null)
+            root = inflater.inflate(R.layout.fragment_company_profile_management_basics, container, false);
 
         nameText = (EditText)root.findViewById(R.id.company_name_area);
         if(company.getName() == null)
@@ -172,6 +185,22 @@ public class CompanyProfileManagementBasicsFragment extends ProfileManagementBas
 
 
     /* ---------------------------- AUXILIARY METHODS --------------------------------------------*/
+
+    @Override
+    protected void restoreStateFromBundle() {
+        super.restoreStateFromBundle();
+
+        if(bundle!=null)
+            company = (Company)bundle.get(BUNDLE_KEY_COMPANY);
+    }
+
+    @Override
+    protected void saveStateInBundle() {
+        super.saveStateInBundle();
+
+        if(bundle!=null)
+            bundle.put(BUNDLE_KEY_COMPANY,company);
+    }
 
     @Override
     public void setEnable(boolean enable){

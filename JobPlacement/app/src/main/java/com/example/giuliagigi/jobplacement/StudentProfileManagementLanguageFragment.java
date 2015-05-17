@@ -60,7 +60,7 @@ public class StudentProfileManagementLanguageFragment extends ProfileManagementF
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-        isListenerAfterDetach = true;
+        isNestedFragment = true;
         isRemoved = false;
     }
 

@@ -3,6 +3,7 @@ package com.example.giuliagigi.jobplacement;
 import android.graphics.Bitmap;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
@@ -18,6 +19,8 @@ import com.parse.ParseQueryAdapter;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -36,6 +39,10 @@ public class CompanyStudentSearchAdapter extends RecyclerView.Adapter<CompanyStu
     private Company company;
     private Set<Student> supportSet;
     private CompanyStudentSearchFragment currentFragment;
+    private Integer currentPosition=0;
+    private LinearLayoutManager mLayoutManager;
+    private final int pageSize=15;
+    private int count=0;
 
     private ParseQueryAdapter<Student> parseAdapter;
     private ParseQueryAdapter.QueryFactory<Student> factory;
@@ -44,7 +51,7 @@ public class CompanyStudentSearchAdapter extends RecyclerView.Adapter<CompanyStu
     CompanyStudentSearchAdapter companyStudentSearchAdapter=this;
 
 
-    public CompanyStudentSearchAdapter(FragmentActivity c, ViewGroup parentIn ,CompanyStudentSearchFragment fragment) {
+    public CompanyStudentSearchAdapter(FragmentActivity c, ViewGroup parentIn ,CompanyStudentSearchFragment fragment,LinearLayoutManager layoutManager) {
         parseParent = parentIn;
         context = c;
         currentFragment=fragment;
@@ -52,6 +59,8 @@ public class CompanyStudentSearchAdapter extends RecyclerView.Adapter<CompanyStu
         globalData = (GlobalData) context.getApplication();
         company=globalData.getCompanyFromUser();
         supportSet = new HashSet<>();
+        count=0;
+        mLayoutManager=layoutManager;
 
      /*   if(globalData.getOfferFilterStatus().isValid())
         {
@@ -156,8 +165,6 @@ public class CompanyStudentSearchAdapter extends RecyclerView.Adapter<CompanyStu
                 mDataset.add(object);
                 ImageView profile = (ImageView) v.findViewById(R.id.profile_img);
                 TextView studentName = (TextView) v.findViewById(R.id.student_name_tv);
-                TextView studentMail = (TextView) v.findViewById(R.id.student_mail_tv );
-                TextView studentField = (TextView) v.findViewById(R.id.student_birthday_tv );
                 TextView studentDegree = (TextView) v.findViewById(R.id.student_degree_tv );
                 TextView studentGrade = (TextView) v.findViewById(R.id.student_grade_tv );
 
@@ -176,14 +183,28 @@ public class CompanyStudentSearchAdapter extends RecyclerView.Adapter<CompanyStu
                 }else
                     profile.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_profile));
                 studentName.setText(object.getName());
-                studentMail.setText(object.getMail());
-                SimpleDateFormat dateFormat=new SimpleDateFormat("dd/MM/yyyy");
-                String date= dateFormat.format(object.getBirth());
-                studentField.setText(date);
 
+                List<Degree> degrees=object.getDegrees();
+             if(!degrees.isEmpty()) {
+                 Collections.sort(degrees);
 
-
-
+                 studentDegree.setText(degrees.get(0).getType() + " " + degrees.get(0).getStudies());
+                 Integer mark=null;
+                 try{
+                     mark=degrees.get(0).getMark();
+                 }catch (Exception e){mark=null;}
+                 if(mark!=null) {
+                     studentGrade.setText(context.getResources().getString(R.string.Mark) + String.valueOf(mark));
+                 }
+                 else{
+                     studentGrade.setText(context.getResources().getString(R.string.noMark));
+                 }
+             }
+                else
+             {
+                 studentDegree.setText(context.getResources().getString(R.string.noDegree));
+                 studentGrade.setText("");
+             }
                 supportSet.clear();
                 supportSet.addAll(company.getStudents());
 
@@ -214,11 +235,22 @@ public class CompanyStudentSearchAdapter extends RecyclerView.Adapter<CompanyStu
                 return v;
             }
 
+            @Override
+            public View getNextPageView(View v, ViewGroup parent) {
+                if (v == null) {
+                    // R.layout.adapter_next_page contains an ImageView with a custom graphic
+                    // and a TextView.
+                    v = View.inflate(getContext(), R.layout.student_row, null);
+                }
+                        loadNextPage();
+                return v;
+            }
+
         };
 
 
         parseAdapter.addOnQueryLoadListener(new OnQueryLoadListener());
-        parseAdapter.setObjectsPerPage(15);
+        parseAdapter.setObjectsPerPage(pageSize);
         parseAdapter.loadObjects();
 
 
@@ -233,6 +265,7 @@ public class CompanyStudentSearchAdapter extends RecyclerView.Adapter<CompanyStu
         v.setOnClickListener(CompanyStudentSearchAdapter.this);
 
         ViewHolder vh = new ViewHolder(v);
+        v.setTag(vh);
         return vh;
     }
 
@@ -254,10 +287,10 @@ public class CompanyStudentSearchAdapter extends RecyclerView.Adapter<CompanyStu
 
         //globalData.setCurrentOffer(mDataset.get(vh.getPosition()));
         //Pass Object to fragment
-        FragmentManager fragmentManager = currentFragment.getChildFragmentManager();
+        FragmentManager fragmentManager =context.getSupportFragmentManager();
 
         //New Fragment
-        OfferDetail fragment=OfferDetail.newInstance();
+       ProfileManagement fragment= ProfileManagement.newInstance(false, mDataset.get(vh.getPosition()));
         // Insert the fragment by replacing any existing fragment
         // Insert the fragment by replacing any existing fragment
 
@@ -269,7 +302,7 @@ public class CompanyStudentSearchAdapter extends RecyclerView.Adapter<CompanyStu
         // Highlight the selected item, update the title, and close the drawer
         // Highlight the selected item, update the title, and close the drawer
         Toolbar toolbar= globalData.getToolbar();
-        toolbar.setTitle("Offer");
+        toolbar.setTitle(context.getResources().getString(R.string.ToolbarTitleMyStudents));
 
 
     }
@@ -282,13 +315,16 @@ public class CompanyStudentSearchAdapter extends RecyclerView.Adapter<CompanyStu
 
         public void onLoaded(List<Student> objects, Exception e) {
            companyStudentSearchAdapter.notifyDataSetChanged();
+            if(currentPosition!=0) {
+                count += pageSize;
+                if (count < currentPosition) {
+                    parseAdapter.loadNextPage();
+                } else {
+                    mLayoutManager.scrollToPosition(currentPosition);
+                }
+            }
         }
     }
-
-
-
-
-
 
 
     // Provide a reference to the views for each data item

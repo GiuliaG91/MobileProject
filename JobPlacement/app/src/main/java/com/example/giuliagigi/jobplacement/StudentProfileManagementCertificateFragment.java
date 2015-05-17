@@ -68,7 +68,7 @@ public class StudentProfileManagementCertificateFragment extends ProfileManageme
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-        isListenerAfterDetach = true;
+        isNestedFragment = true;
         isRemoved = false;
     }
 
@@ -84,6 +84,7 @@ public class StudentProfileManagementCertificateFragment extends ProfileManageme
                              Bundle savedInstanceState) {
 
         root = inflater.inflate(R.layout.fragment_student_profile_management_certificate, container, false);
+
         String title = null, description = null, date = null, mark = null;
 
         if(getArguments().getBoolean(BUNDLE_HASCHANGED)){

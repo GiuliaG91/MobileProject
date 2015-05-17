@@ -29,9 +29,10 @@ public class TabHomeStudentFragment extends Fragment {
     ViewPager pager;
     ViewPagerAdapter adapter;
     SlidingTabLayout tabs;
-    CharSequence Titles[] = {"News", "Preferred","Applies"};
-    int Numboftabs = 3;
+    CharSequence Titles[] =null;
+    int Numboftabs = 4;
     GlobalData globalData;
+    private Integer currentPosition=0;
     /***************************************************************/
 
 
@@ -62,7 +63,12 @@ public class TabHomeStudentFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        if(savedInstanceState!=null)
+        {
+            currentPosition=savedInstanceState.getInt("position");
+        }
        globalData =(GlobalData)getActivity().getApplication();
+        Titles=getActivity().getResources().getStringArray(R.array.Home_Students_Tab);
     }
 
     @Override
@@ -75,11 +81,12 @@ public class TabHomeStudentFragment extends Fragment {
         /*************ViewPager***************************/
 
         // Creating The ViewPagerAdapter and Passing Fragment Manager, Titles fot the Tabs and Number Of Tabs.
-        adapter = new ViewPagerAdapter(getChildFragmentManager(), Titles, Numboftabs );
+        adapter = new ViewPagerAdapter(getChildFragmentManager(), Titles, Numboftabs,this);
 
         // Assigning ViewPager View and setting the adapter
         pager = (ViewPager) root.findViewById(R.id.pager);
         pager.setAdapter(adapter);
+        pager.setCurrentItem(currentPosition);
 
         // Assiging the Sliding Tab Layout View
         tabs = (SlidingTabLayout) root.findViewById(R.id.tabs);
@@ -97,6 +104,8 @@ public class TabHomeStudentFragment extends Fragment {
         // Setting the ViewPager For the SlidingTabsLayout
         tabs.setViewPager(pager);
 
+
+
       tabs.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
           @Override
           public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
@@ -105,7 +114,7 @@ public class TabHomeStudentFragment extends Fragment {
 
           @Override
           public void onPageSelected(int position) {
-
+                currentPosition=position;
           }
 
           @Override
@@ -128,6 +137,8 @@ public class TabHomeStudentFragment extends Fragment {
     public interface OnFragmentInteractionListener {
     }
 
-
-
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        outState.putInt("position",currentPosition);
+    }
 }

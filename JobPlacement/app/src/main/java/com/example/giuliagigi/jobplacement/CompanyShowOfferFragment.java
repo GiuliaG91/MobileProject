@@ -27,21 +27,11 @@ public class CompanyShowOfferFragment extends Fragment {
     private RecyclerView mRecyclerView;
     private  ShowOffersAdapter adapter;
     private LinearLayoutManager mLayoutManager;
-    private ParseQueryAdapter<CompanyOffer> queryAdapter;
-    ParseQueryAdapter.OnQueryLoadListener<CompanyOffer> listener;
 
-    private boolean loading = true;
-
-    public CompanyShowOfferFragment() {
-    }
 
     public static CompanyShowOfferFragment newInstance() {
         CompanyShowOfferFragment fragment = new CompanyShowOfferFragment();
-          /*
-            Bundle args = new Bundle();
-           fragment.setArguments(args);
 
-           */
         return fragment;
     }
 
@@ -68,25 +58,6 @@ public class CompanyShowOfferFragment extends Fragment {
         mRecyclerView.addItemDecoration(new DividerItemDecoration(this.getActivity(), DividerItemDecoration.VERTICAL_LIST));
         mRecyclerView.setLayoutManager(mLayoutManager);
 
-        /*ParseQueryAdapeter */
-
-        // Instantiate a QueryFactory to define the ParseQuery to be used for fetching items in this
-        // Adapter.
-        ParseQueryAdapter.QueryFactory<CompanyOffer> factory =
-                new ParseQueryAdapter.QueryFactory<CompanyOffer>() {
-                    public ParseQuery create() {
-                        Company c = ((GlobalData) getActivity().getApplication()).getCompanyFromUser();
-                        ParseQuery query = new ParseQuery("CompanyOffer").whereEqualTo("company",c);
-                        return query;
-                    }
-                };
-
-        // Pass the factory into the ParseQueryAdapter's constructor.
-
-        queryAdapter=new ParseQueryAdapter<>(getActivity(),factory);
-        queryAdapter.setObjectsPerPage(15);
-        queryAdapter.addOnQueryLoadListener(new OnQueryLoadListener());
-
 
           adapter = new ShowOffersAdapter(this.getActivity());
 
@@ -95,51 +66,8 @@ public class CompanyShowOfferFragment extends Fragment {
         // specify an adapter
         mRecyclerView.setAdapter(adapter);
 
-        mRecyclerView.setOnScrollListener(new RecyclerView.OnScrollListener() {
-            @Override
-            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-
-                 int total=   mLayoutManager.getItemCount();
-                if(mLayoutManager.findLastVisibleItemPosition()==total-1)
-                {
-                    Log.println(Log.ASSERT, "Ultimo", String.valueOf(total));
-                    Toast.makeText(getActivity(),"Ultimo-->"+String.valueOf(total),Toast.LENGTH_SHORT).show();
-                    queryAdapter.loadNextPage();
-                }
-
-            }
-            @Override
-            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-                super.onScrolled(recyclerView, dx, dy);
-            }
-        });
-
-
-        queryAdapter.loadObjects();
-
         return root;
     }
-
-
-
-    public class OnQueryLoadListener implements ParseQueryAdapter.OnQueryLoadListener<CompanyOffer> {
-
-        public void onLoading() {
-//rotellina
-        }
-
-        @Override
-        public void onLoaded(List<CompanyOffer> companyOffers, Exception e) {
-            if(companyOffers!=null) {
-                adapter.updateMyDataset(companyOffers);
-                adapter.notifyDataSetChanged();
-            }//else nothing to do.... nothing has been found
-        }
-
-
-    }
-
-
 }
 
 

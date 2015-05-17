@@ -59,6 +59,7 @@ public class OfferDetail extends  Fragment {
         super.onCreate(savedInstanceState);
         globalData=(GlobalData)getActivity().getApplication();
         offer=globalData.currentViewOffer;
+        globalData.getToolbar().setTitle(getResources().getString(R.string.ToolbarTilteOffer));
         if(offer==null)
         {
             getFragmentManager().popBackStackImmediate();

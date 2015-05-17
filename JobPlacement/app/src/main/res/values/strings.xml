@@ -17,13 +17,6 @@
     <string name="title_activity_home">Home</string>
 
 
-    <string name="title_section1">Menu</string>
-    <string name="title_section2">News</string>
-    <string name="title_section3">Preferred</string>
-    <string name="title_section4">Noti</string>
-
-
-  
 
     <string name="user_icon_description">UserIcon</string>
     <string name="nofavourites">No Favourites</string>
@@ -37,12 +30,42 @@
     <string name="drawer_open">Open</string>
     <string name="drawer_close">Close</string>
 
+    <!-- Titoli toolbar -->
+    <string name="ToolbarTilteHome">Home</string>
+    <string name="ToolbarTilteProfile">Profile</string>
+    <string name="ToolbarTilteOffer">Job Offer</string>
+    <string name="ToolbarTilteNewOffer">New Offer</string>
+    <string name="ToolbarTilteMyJobOffers">My Job Offers</string>
+    <string name="ToolbarTitleMyCompanies">My Companies</string>
+    <string name="ToolbarTitleMyStudents">Students</string>
+    <string name="ToolbarTilteStudentSearch">Student Search</string>
+    <string name="ToolbarTilteMailBox">MailBox</string>
+
+    <string-array name="Home_Students_Tab">
+
+        <item>News</item>
+        <item>Job Offers</item>
+        <item>Companies</item>
+        <item>Applies</item>
+
+    </string-array>
+
+    <string-array name="Home_Company_Tab">
+
+        <item>News</item>
+        <item>Job Offers</item>
+        <item>Students</item>
+
+
+    </string-array>
+
+
 
     <string-array name="Menu_items_student">
         <item>Home</item>
         <item>Profile</item>
-        <item>Search</item>
-        <item>AutoCandidate</item>
+        <item>My Job Offers </item>
+        <item>My Companies</item>
         <item>MessageBox</item>
         <item>Logout</item>
     </string-array>
@@ -105,6 +128,49 @@
     <string name="string_account_delete">Delete this account</string>
 
 
+    <!--Company -->
+    <string name="string_company_fragment_name_title">Company name:</string>
+    <string name="string_company_fragment_vat">VAT Number:</string>
+    <string name="string_company_fragment_foundation_date">Foundation date:</string>
+    <string name="string_company_fragment_email">Email address:</string>
+    <string name="string_company_fragment_description">Short description:</string>
+    <string name="string_company_fragment_office_title">Offices:</string>
+    <string name="string_company_fragment_address">Address:</string>
+    <string name="string_company_fragment_cap">Postal code:</string>
+    <string name="string_company_fragment_nation">Nation:</string>
+    <string name="string_company_fragment_city">City:</string>
+    <string name="string_company_fragment_office_type">Office type:</string>
+
+    <!--Degree types-->
+    <string name="string_degree_type_bachelor">Bachelor</string>
+    <string name="string_degree_type_master">Master</string>
+    <string name="string_degree_type_doctorate">Doctorate</string>
+    <string name="string_degree_type_graduating">Graduating</string>
+    <string name="string_degree_type_none">None</string>
+
+    <!-- Fields-->
+    <string name="string_field_informatics">Informatics</string>
+    <string name="string_field_mechanics">Mechanics</string>
+    <string name="string_field_chemistry">Chemistry</string>
+    <string name="string_field_energy">Energy</string>
+    <string name="string_field_materials">Materials</string>
+
+    <!--Office types -->
+    <string name="string_office_headquarter">Headquarter</string>
+    <string name="string_office_branch">Branch</string>
+
+    <!-- Language levels -->
+    <string name="string_language_level_low">Low</string>
+    <string name="string_language_level_none">None</string>
+    <string name="string_language_level_medium">Medium</string>
+    <string name="string_language_level_high">High</string>
+
+    <!-- Telephone types -->
+    <string name="string_telephone_type_cellular">Cellular</string>
+    <string name="string_telephone_type_home">Home</string>
+    <string name="string_telephone_type_fax">Fax</string>
+    <string name="string_telephone_type_office">Office</string>
+    <string name="string_telephone_type_other">Other</string>
     
     <!-- New Offer Fragment -->
 
@@ -260,5 +326,12 @@
     <string name="hour_ago">hour ago</string>
     <string name="days_ago">days ago</string>
     <string name="day_ago">day ago</string>
+
+    <string name="Mark">Mark:</string>
+    <string name="noDegree">No graduation recorded.</string>
+    <string name="noMark">No mark recorded.</string>
+
+
+    <string name="NoFavourites">No favourites found</string>
 
 </resources>

@@ -55,7 +55,7 @@ public class CompanyStudentSearchFragment extends Fragment {
         mLayoutManager = new LinearLayoutManager(this.getActivity());
         mRecyclerView.setLayoutManager(mLayoutManager);
 
-        adapter = new CompanyStudentSearchAdapter(this.getActivity(), mRecyclerView,this);
+        adapter = new CompanyStudentSearchAdapter(this.getActivity(), mRecyclerView,this,mLayoutManager);
 
         /*********************/
 

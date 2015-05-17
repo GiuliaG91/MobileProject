@@ -3,6 +3,7 @@ package com.example.giuliagigi.jobplacement;
 import android.app.Activity;
 import android.location.Address;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -75,7 +76,7 @@ public class CompanyProfileManagementOfficeFragment extends ProfileManagementFra
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-        isListenerAfterDetach = true;
+        isNestedFragment = true;
         isRemoved = false;
         addressChanged = false;
     }
@@ -133,9 +134,6 @@ public class CompanyProfileManagementOfficeFragment extends ProfileManagementFra
         }
 
         root = inflater.inflate(R.layout.fragment_office_management, container, false);
-
-        geoloc = (GeoLocalization)getChildFragmentManager().findFragmentById(R.id.office_map_fragment);
-        geoloc.setOnMapReadyCallback(this);
 
         officeType = (Spinner)root.findViewById(R.id.office_management_spinnerType);
         officeType.setAdapter(new StringAdapter(Office.TYPES));
@@ -204,6 +202,15 @@ public class CompanyProfileManagementOfficeFragment extends ProfileManagementFra
         return root;
     }
 
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        Log.println(Log.ASSERT,"OFFICE FRAG", "onViewCreated");
+
+        geoloc = (GeoLocalization)getChildFragmentManager().findFragmentById(R.id.office_map_fragment);
+        geoloc.setOnMapReadyCallback(this);
+    }
 
     @Override
     public void onDetach() {
@@ -320,7 +327,7 @@ public class CompanyProfileManagementOfficeFragment extends ProfileManagementFra
     @Override
     public void onMapReady(GoogleMap googleMap) {
 
-        Log.println(Log.ASSERT,"OFFICE FRAG", "Map was created. Setting marker position");
+        Log.println(Log.ASSERT,"OFFICE FRAG", "Map was created. Setting marker position: " + office.getOfficeAddress() + ", " + office.getOfficeCity());
 
         if(office.getLocation()!=null)
             geoloc.setMarkerPosition(new LatLng(office.getLocation().getLatitude(),office.getLocation().getLongitude()));

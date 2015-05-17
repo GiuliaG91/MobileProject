@@ -24,9 +24,7 @@ public class InboxMessage extends ParseObject {
 
 
     public InboxMessage(){
-
         super();
-
     }
 
 

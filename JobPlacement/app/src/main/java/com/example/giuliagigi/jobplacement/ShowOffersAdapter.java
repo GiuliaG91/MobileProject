@@ -13,7 +13,10 @@ import android.widget.AbsListView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.parse.FindCallback;
+import com.parse.ParseException;
 import com.parse.ParseObject;
+import com.parse.ParseQuery;
 import com.parse.ParseQueryAdapter;
 
 import java.util.ArrayList;
@@ -29,6 +32,7 @@ public class ShowOffersAdapter extends RecyclerView.Adapter<ShowOffersAdapter.Vi
     private FragmentActivity context;
     private ArrayList<CompanyOffer> mDataset;
     private GlobalData globalData;
+    private ShowOffersAdapter showOffersAdapter=this;
 
     //Ha messo il parse query qui
     //private Parsequery bla bla
@@ -65,6 +69,15 @@ public class ShowOffersAdapter extends RecyclerView.Adapter<ShowOffersAdapter.Vi
        mDataset=new ArrayList<>();
 
         globalData=(GlobalData)c.getApplication();
+       Company company = globalData.getCompanyFromUser();
+       ParseQuery query = new ParseQuery("CompanyOffer").whereEqualTo("company",company);
+
+  try {
+           mDataset.addAll(query.find());
+       } catch (ParseException e) {
+           e.printStackTrace();
+       }
+
    }
 
     // Create new views (invoked by the layout manager)

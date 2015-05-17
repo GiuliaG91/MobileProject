@@ -12,7 +12,6 @@ import android.widget.TextView;
  */
 public class voidPrefAdapter extends RecyclerView.Adapter<voidPrefAdapter.ViewHolder>{
 
-
     FragmentActivity myContext;
 
     // Provide a reference to the views for each data item
@@ -52,9 +51,9 @@ public class voidPrefAdapter extends RecyclerView.Adapter<voidPrefAdapter.ViewHo
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
 
-        Integer id=myContext.getResources().getIdentifier("nolecture" ,"string", myContext.getPackageName());
 
-        holder.vText.setText(myContext.getString(id));
+
+        holder.vText.setText(myContext.getResources().getString(R.string.nofavourites));
 
     }
 
