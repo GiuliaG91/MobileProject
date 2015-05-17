@@ -40,20 +40,20 @@
 
     <string-array name="Menu_items_student">
         <item>Home</item>
-        <item>Profile</item>
-        <item>Search</item>
-        <item>AutoCandidate</item>
-        <item>MessageBox</item>
-        <item>Logout</item>
+        <item>Profilo</item>
+        <item>Offerte Preferite</item>
+        <item>Aziende Preferite</item>
+        <item>Messaggi</item>
+        <item>Esci</item>
     </string-array>
 
     <string-array name="Menu_items_Company">
         <item>Home</item>
-        <item>Profile</item>
-        <item>Search</item>
-        <item>NewOffer</item>
-        <item>MessageBox</item>
-        <item>Logout</item>
+        <item>Profilo</item>
+        <item>Ricerca Studenti</item>
+        <item>Nuova Offerta</item>
+        <item>Messaggi</item>
+        <item>Esci</item>
     </string-array>
 
     <!-- Student fragment strings: -->

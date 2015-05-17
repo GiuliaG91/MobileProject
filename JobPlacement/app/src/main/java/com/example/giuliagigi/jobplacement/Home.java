@@ -1,11 +1,10 @@
 package com.example.giuliagigi.jobplacement;
 
 
-import android.app.Activity;
 import android.content.Intent;
 import android.content.res.TypedArray;
 import android.net.Uri;
-import android.support.v4.app.Fragment;
+import android.os.PersistableBundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
@@ -16,18 +15,10 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
-
-
-
-import android.view.ViewGroup;
-import android.widget.TextView;
-import android.view.LayoutInflater;
-
 
 
 import java.util.ArrayList;
@@ -51,6 +42,7 @@ public class Home extends ActionBarActivity  implements TabHomeStudentFragment.O
     private TypedArray ICONS;
     private String[] TITLES;
     private static int mDrawerSelectedItem=1;
+    private Boolean init=false;
 
 /********************************************************/
 /**
@@ -75,6 +67,12 @@ public class Home extends ActionBarActivity  implements TabHomeStudentFragment.O
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+
+
+        if(savedInstanceState!=null)
+        {
+            init=true;
+        }
 
         application = (GlobalData)getApplication();
 
@@ -114,14 +112,46 @@ public class Home extends ActionBarActivity  implements TabHomeStudentFragment.O
             TITLES=getResources().getStringArray(R.array.Menu_items_student);
             ICONS=getResources().obtainTypedArray(R.array.StudentMenuicons);
 
-                   setUpMainFragment(1);
+                   if(init==false)//setUpMainFragment(1);
+                   {
+                       FragmentManager fragmentManager = getSupportFragmentManager();
+                       //New Fragment
+
+
+                           TabHomeStudentFragment homeFragment = TabHomeStudentFragment.newInstance();
+                           // Insert the fragment by replacing any existing fragment
+                           // Insert the fragment by replacing any existing fragment
+
+                           fragmentManager.beginTransaction()
+                                   .replace(R.id.tab_Home_container, homeFragment)
+                                   .addToBackStack("Home")
+                                   .commit();
+
+                   }
+
+
         }
       else
         {
             TITLES=getResources().getStringArray(R.array.Menu_items_Company);
             ICONS=getResources().obtainTypedArray(R.array.CompanytMenuicons);
 
-               setUpMainFragment(2);
+              // setUpMainFragment(2);
+            if(init==false)
+            {
+                FragmentManager fragmentManager =getSupportFragmentManager();
+
+                //New Fragment
+                TabHomeCompanyFragment homeFragment = TabHomeCompanyFragment.newInstance();
+                // Insert the fragment by replacing any existing fragment
+                // Insert the fragment by replacing any existing fragment
+
+                fragmentManager.beginTransaction()
+                        .replace(R.id.tab_Home_container, homeFragment)
+                        .commit();
+                mDrawerLayout.closeDrawers();
+
+            }
 
         }
 
@@ -187,7 +217,11 @@ public class Home extends ActionBarActivity  implements TabHomeStudentFragment.O
     }
 
 
-
+    @Override
+    public void onSaveInstanceState(Bundle outState, PersistableBundle outPersistentState) {
+        super.onSaveInstanceState(outState, outPersistentState);
+        outState.putBoolean("init",true);
+    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -248,142 +282,6 @@ public class Home extends ActionBarActivity  implements TabHomeStudentFragment.O
         mDrawerSelectedItem=position;
     }
 
-
-    public void setUpMainFragment(int type) {
-
-
-        switch (type) {
-
-            case 1 :
-
-            //Student menu --> student fragments
-            switch (mDrawerSelectedItem) {
-                case 1: // Home
-                    FragmentManager fragmentManager = getSupportFragmentManager();
-                        //New Fragment
-                        TabHomeStudentFragment homeFragment = TabHomeStudentFragment.newInstance();
-                        // Insert the fragment by replacing any existing fragment
-                        // Insert the fragment by replacing any existing fragment
-
-                        fragmentManager.beginTransaction()
-                                .replace(R.id.tab_Home_container, homeFragment)
-                                .commit();
-
-                        // Highlight the selected item, update the title, and close the drawer
-                        // Highlight the selected item, update the title, and close the drawer
-                    toolbar.setTitle(TITLES[mDrawerSelectedItem]);
-                    mDrawerLayout.closeDrawers();
-
-
-
-                    break;
-
-                case 2:
-
-
-                                fragmentManager = getSupportFragmentManager();
-                                Fragment fragment = ProfileManagement.newInstance();
-
-                                fragmentManager.beginTransaction()
-                                        .replace(R.id.tab_Home_container, fragment)
-                                        .commit();
-
-
-                    toolbar.setTitle(TITLES[mDrawerSelectedItem]);
-                    mDrawerLayout.closeDrawers();
-
-
-
-                    break;
-
-
-                default:
-                    break;
-
-
-            }
-
-       break;
-  /**************************************************END STUDENT SWITCH***********************************/
-            case 2:
-                switch (mDrawerSelectedItem) {
-
-                    case 1 :
-
-
-                                FragmentManager fragmentManager =getSupportFragmentManager();
-                                Fragment current = fragmentManager.findFragmentById(R.id.tab_Home_container);
-
-
-                                    //New Fragment
-                                    TabHomeCompanyFragment homeFragment = TabHomeCompanyFragment.newInstance();
-                                    // Insert the fragment by replacing any existing fragment
-                                    // Insert the fragment by replacing any existing fragment
-
-                                    fragmentManager.beginTransaction()
-                                            .replace(R.id.tab_Home_container, homeFragment)
-                                            .commit();
-
-
-
-                        toolbar.setTitle(TITLES[mDrawerSelectedItem]);
-                        mDrawerLayout.closeDrawers();
-
-
-                        break;
-
-                    case 2:
-
-                        Log.println(Log.ASSERT,"HOME", "open company profile");
-                        fragmentManager = getSupportFragmentManager();
-                        Fragment profileFragment = ProfileManagement.newInstance();
-
-                        fragmentManager.beginTransaction()
-                                .replace(R.id.tab_Home_container, profileFragment)
-                                .commit();
-
-
-                        toolbar.setTitle(TITLES[mDrawerSelectedItem]);
-                        mDrawerLayout.closeDrawers();
-
-                        break;
-
-                    case 4 :
-
-                                 fragmentManager = getSupportFragmentManager();
-                                 current = fragmentManager.findFragmentById(R.id.fragment_new_offer);
-
-
-                                    //New Fragment
-                                    NewOffer fragment = NewOffer.newInstance(true,true);
-                                    // Insert the fragment by replacing any existing fragment
-                                    // Insert the fragment by replacing any existing fragment
-
-                                    fragmentManager.beginTransaction()
-                                            .replace(R.id.tab_Home_container, fragment)
-                                            .addToBackStack("Home")
-                                            .commit();
-
-                        toolbar.setTitle(TITLES[mDrawerSelectedItem]);
-                        mDrawerLayout.closeDrawers();
-
-                        break;
-
-
-
-
-
-
-                }
-                break;
-/**************************************************END COMPANY SWITCH***********************************/
-
-            default:
-      break;
-        }
-   /*****************************************END TYPE SWITCH******************************/
-    }
-
     public void setOnBackPressedListener(OnBackPressedListener onBackPressedListener) {
         this.onBackPressedListener = onBackPressedListener;
     }
@@ -394,7 +292,6 @@ public class Home extends ActionBarActivity  implements TabHomeStudentFragment.O
             onBackPressedListener.doBack();
 
         if(getSupportFragmentManager().getBackStackEntryCount()>0) {
-            toolbar.setTitle("Home");
 
             getSupportFragmentManager().popBackStackImmediate();
         }
@@ -404,7 +301,6 @@ public class Home extends ActionBarActivity  implements TabHomeStudentFragment.O
             // Create and show the dialog.
             LogoutDialogFragment newFragment = LogoutDialogFragment.newInstance();
             newFragment.show(getFragmentManager(),"Logout");
-
 
 
         }

@@ -17,13 +17,6 @@
     <string name="title_activity_home">Home</string>
 
 
-    <string name="title_section1">Menu</string>
-    <string name="title_section2">News</string>
-    <string name="title_section3">Preferred</string>
-    <string name="title_section4">Noti</string>
-
-
-  
 
     <string name="user_icon_description">UserIcon</string>
     <string name="nofavourites">No Favourites</string>
@@ -37,12 +30,40 @@
     <string name="drawer_open">Open</string>
     <string name="drawer_close">Close</string>
 
+    <!-- Titoli toolbar -->
+    <string name="ToolbarTilteHome">Home</string>
+    <string name="ToolbarTilteProfile">Profile</string>
+    <string name="ToolbarTilteOffer">Job Offer</string>
+    <string name="ToolbarTilteNewOffer">New Offer</string>
+    <string name="ToolbarTilteMyJobOffers">My Job Offers</string>
+    <string name="ToolbarTitleMyCompanyes">My Companies</string>
+    <string name="ToolbarTilteStudentSearch">Student Search</string>
+    <string name="ToolbarTilteMailBox">MailBox</string>
+
+    <string-array name="Home_Students_Tab">
+
+        <item>News</item>
+        <item>Job Offers</item>
+        <item>Companies</item>
+        <item>Applies</item>
+
+    </string-array>
+
+    <string-array name="Home_Company_Tab">
+
+        <item>News</item>
+        <item>Job Offers</item>
+
+
+    </string-array>
+
+
 
     <string-array name="Menu_items_student">
         <item>Home</item>
         <item>Profile</item>
-        <item>Search</item>
-        <item>AutoCandidate</item>
+        <item>My Job Offers </item>
+        <item>My Companies</item>
         <item>MessageBox</item>
         <item>Logout</item>
     </string-array>

@@ -40,6 +40,7 @@ public class OfferSearchFragment extends Fragment{
     private RecyclerView mRecyclerView;
     private OfferSearchAdapter adapter;
     private LinearLayoutManager mLayoutManager;
+    private Integer position=0;
 
     private OnFragmentInteractionListener mListener;
 
@@ -54,13 +55,6 @@ public class OfferSearchFragment extends Fragment{
         // Required empty public constructor
     }
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        setHasOptionsMenu(true);
-        super.onCreate(savedInstanceState);
-
-
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -85,7 +79,7 @@ public class OfferSearchFragment extends Fragment{
         mRecyclerView.addItemDecoration(new DividerItemDecoration(this.getActivity(), DividerItemDecoration.VERTICAL_LIST));
         mRecyclerView.setLayoutManager(mLayoutManager);
 
-        adapter = new OfferSearchAdapter(this.getActivity(), mRecyclerView);
+        adapter = new OfferSearchAdapter(this.getActivity(), mRecyclerView,this);
 
         /*********************/
 
@@ -94,6 +88,7 @@ public class OfferSearchFragment extends Fragment{
 
         return root;
     }
+
 
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
@@ -137,6 +132,7 @@ public class OfferSearchFragment extends Fragment{
         super.onDetach();
         mListener = null;
     }
+
 
 
     /**

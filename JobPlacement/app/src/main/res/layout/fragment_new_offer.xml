@@ -537,10 +537,12 @@
                 xmlns:card_view="http://schemas.android.com/apk/res-auto"
                 android:id="@+id/card_AddTag"
                 android:layout_gravity="center"
-                android:layout_width="350dp"
+                android:layout_width="fill_parent"
                 android:layout_height="70dp"
-                android:elevation="2dp"
-                android:layout_marginTop="5dp">
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginLeft="10dp"
+                card_view:cardCornerRadius="4dp">
 
 
                 <LinearLayout
@@ -578,7 +580,7 @@
             <GridLayout
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
-                android:columnCount="2"
+                android:columnCount="3"
                 android:id="@+id/tagContainder"
                 android:layout_marginLeft="5dp"
                 android:layout_marginRight="5dp"></GridLayout>>
@@ -603,27 +605,27 @@
         android:layout_marginEnd="16dp">
 
         <com.getbase.floatingactionbutton.FloatingActionButton
-            android:id="@+id/action_c"
+            android:id="@+id/action_a"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            fab:fab_title="@string/new_offer_publish_button"
             fab:fab_colorNormal="@color/ColorPrimary"
-            fab:fab_title="@string/offer_detail_contact_button"
             fab:fab_colorPressed="@color/ColorPrimaryDark"/>
 
         <com.getbase.floatingactionbutton.FloatingActionButton
             android:id="@+id/action_b"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            fab:fab_title="@string/new_offer_modify_button"
             fab:fab_colorNormal="@color/ColorPrimary"
-            fab:fab_title="@string/offer_detail_apply_button"
             fab:fab_colorPressed="@color/ColorPrimaryDark"/>
 
         <com.getbase.floatingactionbutton.FloatingActionButton
-            android:id="@+id/action_a"
+            android:id="@+id/action_c"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            fab:fab_title="@string/new_offer_delete_button"
             fab:fab_colorNormal="@color/ColorPrimary"
-            fab:fab_title="@string/offer_detail_apply_button"
             fab:fab_colorPressed="@color/ColorPrimaryDark"/>
 
 

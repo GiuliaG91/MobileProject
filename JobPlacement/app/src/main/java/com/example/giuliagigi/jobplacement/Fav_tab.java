@@ -14,7 +14,7 @@ import android.view.ViewGroup;
 /**
  * Created by pietro on 25/04/2015.
  */
-public class Fav_tab extends Fragment {
+public class Fav_tab extends Fragment{
 
     private   View root;
     private GlobalData globalData;
@@ -32,11 +32,11 @@ public class Fav_tab extends Fragment {
    }
 
 
-
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         root  = inflater.inflate(R.layout.fragment_offer_search,container,false);
 
         globalData=(GlobalData)getActivity().getApplication();
+        globalData.getToolbar().setTitle(getResources().getString(R.string.ToolbarTilteMyJobOffers));
         student=globalData.getStudentFromUser();
         mRecyclerView = (RecyclerView) root.findViewById(R.id.recycler_view_offer_search);
 
@@ -50,7 +50,7 @@ public class Fav_tab extends Fragment {
         mRecyclerView.setLayoutManager(mLayoutManager);
 
 
-        adapter = new FavouritesAdapter(this.getActivity(),student.getFavourites(),mRecyclerView);
+        adapter = new FavouritesAdapter(this.getActivity(),student.getFavourites(),mRecyclerView,this);
         // specify an adapter
         mRecyclerView.setAdapter(adapter);
 
@@ -60,10 +60,5 @@ public class Fav_tab extends Fragment {
         return root;
     }
 
-    @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
 
-
-    }
 }

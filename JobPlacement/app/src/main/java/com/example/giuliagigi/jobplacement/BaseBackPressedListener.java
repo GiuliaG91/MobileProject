@@ -23,11 +23,7 @@ public class BaseBackPressedListener implements OnBackPressedListener {
         FragmentManager fragmentManager = activity.getSupportFragmentManager();
         Fragment current = fragmentManager.findFragmentById(R.id.tab_Home_container);
 
-        if (current instanceof OfferDetail) {
 
-          //  Toast.makeText(activity," Ero in offerDetail",Toast.LENGTH_SHORT).show();
-
-        }
         if(current instanceof OfferSearchFragment)
         {
            // Toast.makeText(activity,"Ero in ricerca",Toast.LENGTH_SHORT).show();

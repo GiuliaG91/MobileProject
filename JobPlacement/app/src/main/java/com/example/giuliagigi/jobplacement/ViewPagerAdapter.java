@@ -14,13 +14,14 @@ public class ViewPagerAdapter extends FragmentPagerAdapter {
 
     CharSequence Titles[]; // This will Store the Titles of the Tabs which are Going to be passed when ViewPagerAdapter is created
     int NumbOfTabs; // Store the number of tabs, this will also be passed when the ViewPagerAdapter is created
+    TabHomeStudentFragment parent;
     // Build a Constructor and assign the passed Values to appropriate values in the class
-    public ViewPagerAdapter(FragmentManager fm,CharSequence mTitles[], int mNumbOfTabsumb) {
+    public ViewPagerAdapter(FragmentManager fm,CharSequence mTitles[], int mNumbOfTabsumb,TabHomeStudentFragment fragment) {
         super(fm);
 
         this.Titles = mTitles;
         this.NumbOfTabs = mNumbOfTabsumb;
-
+        parent=fragment;
     }
 
     //This method return the fragment for the every position in the View Pager
@@ -34,12 +35,19 @@ public class ViewPagerAdapter extends FragmentPagerAdapter {
         }
         else if(position == 1)            // As we are having 2 tabs if the position is now 0 it must be 1 so we are returning second tab
         {
-            Fav_tab tab2 = Fav_tab.newInstance();
+            //Fav_tab tab2 = Fav_tab.newInstance();
+            OfferSearchFragment tab2= OfferSearchFragment.newInstance();
             return tab2;
         }
         else if(position == 2)
         {
-          Applies_Tab tab3=Applies_Tab.newInstance();
+           // Fav_tab tab3 = Fav_tab.newInstance();
+            StudentCompanySearchFragment tab3=StudentCompanySearchFragment.newInstance();
+            return tab3;
+        }
+        else if(position == 3)
+        {
+            Applies_Tab tab3=Applies_Tab.newInstance();
             return tab3;
         }
 
@@ -59,6 +67,8 @@ public class ViewPagerAdapter extends FragmentPagerAdapter {
     public int getCount() {
         return NumbOfTabs;
     }
+
+
 
 
 }

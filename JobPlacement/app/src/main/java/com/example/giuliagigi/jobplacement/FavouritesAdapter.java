@@ -34,6 +34,7 @@ public class FavouritesAdapter extends RecyclerView.Adapter<FavouritesAdapter.Vi
     private Student student;
     private FavouritesAdapter favouritesAdapter=this;
     private RecyclerView mRecyclerView;
+    private Fav_tab parent;
 
     // Provide a reference to the views for each data item
     // Complex data items may need more than one view per item, and
@@ -61,13 +62,15 @@ public class FavouritesAdapter extends RecyclerView.Adapter<FavouritesAdapter.Vi
         }
     }
 
-    public  FavouritesAdapter(FragmentActivity c, ArrayList<CompanyOffer> companyOffers, RecyclerView r)
+    public  FavouritesAdapter(FragmentActivity c, ArrayList<CompanyOffer> companyOffers, RecyclerView r,Fav_tab fragment)
     {
         context=c;
         mDataset=new ArrayList<>(companyOffers);
         globalData=(GlobalData)context.getApplication();
         student=globalData.getStudentFromUser();
         mRecyclerView=r;
+        parent=fragment;
+
     }
 
 
@@ -141,11 +144,7 @@ public class FavouritesAdapter extends RecyclerView.Adapter<FavouritesAdapter.Vi
 
             }
         });
-
-
-
     }
-
     // Return the size of your dataset (invoked by the layout manager)
     @Override
     public int getItemCount() {
@@ -183,32 +182,7 @@ public class FavouritesAdapter extends RecyclerView.Adapter<FavouritesAdapter.Vi
 
     }
 
-    public void startItem(int position)
-    {
 
-
-        globalData.setCurrentOffer(mDataset.get(position));
-        //Pass Object to fragment
-        FragmentManager fragmentManager = context.getSupportFragmentManager();
-
-        //New Fragment
-        OfferDetail fragment=OfferDetail.newInstance();
-        // Insert the fragment by replacing any existing fragment
-        // Insert the fragment by replacing any existing fragment
-
-        fragmentManager.beginTransaction()
-                .replace(R.id.tab_Home_container, fragment)
-                .addToBackStack("PrefView")
-                .commit();
-
-        // Highlight the selected item, update the title, and close the drawer
-        // Highlight the selected item, update the title, and close the drawer
-        Toolbar toolbar= globalData.getToolbar();
-        toolbar.setTitle("Offer");
-
-
-
-    }
 
 
 }

@@ -35,6 +35,7 @@ public class OfferSearchAdapter extends RecyclerView.Adapter<OfferSearchAdapter.
     private GlobalData globalData;
     private Student student;
     private Set<CompanyOffer> supportSet;
+    private OfferSearchFragment parent;
 
 
     private ParseQueryAdapter<CompanyOffer> parseAdapter;
@@ -44,13 +45,16 @@ public class OfferSearchAdapter extends RecyclerView.Adapter<OfferSearchAdapter.
     OfferSearchAdapter offerSearchAdapter = this;
 
 
-    public OfferSearchAdapter(FragmentActivity c, ViewGroup parentIn) {
+    public OfferSearchAdapter(FragmentActivity c, ViewGroup parentIn, OfferSearchFragment fragment) {
         parseParent = parentIn;
         context = c;
         mDataset = new ArrayList<>();
         globalData = (GlobalData) context.getApplication();
         student = globalData.getStudentFromUser();
         supportSet = new HashSet<>();
+        parent=fragment;
+
+
 
         if(globalData.getOfferFilterStatus().isValid())
         {
@@ -74,7 +78,6 @@ public class OfferSearchAdapter extends RecyclerView.Adapter<OfferSearchAdapter.
 
 
     }
-
 
     public void setFactory(final List<Tag> tag_list,
                            final List<String> contract_list,
@@ -130,8 +133,6 @@ public class OfferSearchAdapter extends RecyclerView.Adapter<OfferSearchAdapter.
 
                     }
                 }
-
-
 
                 return query;
             }
@@ -222,7 +223,7 @@ public class OfferSearchAdapter extends RecyclerView.Adapter<OfferSearchAdapter.
 
 
         parseAdapter.addOnQueryLoadListener(new OnQueryLoadListener());
-        parseAdapter.setObjectsPerPage(15);
+        parseAdapter.setObjectsPerPage(4);
         parseAdapter.loadObjects();
 
 
@@ -303,6 +304,9 @@ public class OfferSearchAdapter extends RecyclerView.Adapter<OfferSearchAdapter.
 
         }
 
-
     }
+
+
+
+
 }

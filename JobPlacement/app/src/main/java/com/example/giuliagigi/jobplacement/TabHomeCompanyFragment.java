@@ -29,8 +29,9 @@ public class TabHomeCompanyFragment extends Fragment {
     ViewPager pager;
    CompanyViewPagerAdapter adapter;
     SlidingTabLayout tabs;
-    CharSequence Titles[] = {"Home","Offers"};
+    CharSequence Titles[] =null;
     int Numboftabs = 2;
+    private Integer currentPosition=0;
 
     /***************************************************************/
 
@@ -57,7 +58,14 @@ public class TabHomeCompanyFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        if(savedInstanceState!=null)
+        {
+            currentPosition=savedInstanceState.getInt("position");
+        }
+
         globalData=(GlobalData)getActivity().getApplication();
+        Titles=getResources().getStringArray(R.array.Home_Company_Tab);
     }
 
     @Override
@@ -74,6 +82,7 @@ public class TabHomeCompanyFragment extends Fragment {
         // Assigning ViewPager View and setting the adapter
         pager = (ViewPager) root.findViewById(R.id.pager);
         pager.setAdapter(adapter);
+        pager.setCurrentItem(currentPosition);
         // Assiging the Sliding Tab Layout View
         tabs = (SlidingTabLayout) root.findViewById(R.id.tabs);
         tabs.setDistributeEvenly(true); // To make the Tabs Fixed set this true, This makes the tabs Space Evenly in Available width
@@ -98,7 +107,7 @@ public class TabHomeCompanyFragment extends Fragment {
 
               @Override
               public void onPageSelected(int position) {
-
+                    currentPosition=position;
               }
 
               @Override
@@ -150,6 +159,11 @@ public class TabHomeCompanyFragment extends Fragment {
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         public void onFragmentInteraction(Uri uri);
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        outState.putInt("position",currentPosition);
     }
 
 }

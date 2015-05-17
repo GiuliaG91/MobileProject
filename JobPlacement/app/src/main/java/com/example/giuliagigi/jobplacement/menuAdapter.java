@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.security.acl.LastOwnerException;
 
@@ -27,8 +28,8 @@ public class menuAdapter extends RecyclerView.Adapter<menuAdapter.ViewHolder> {
     private static final int TYPE_HOME =1 ;
 
     private static final int TYPE_PROFILE=2;
-    private static final int TYPE_SEARCH=3;
-    private static final int TYPE_COMPANIES=4;
+    private static final int TYPE_MYJOBOFFERS=3;
+    private static final int TYPE_MY_COMPANIES=4;
     private static final int TYPE_MAILBOX=5;
     private static final int TYPE_LOGOUT=6;
 
@@ -175,16 +176,16 @@ public class menuAdapter extends RecyclerView.Adapter<menuAdapter.ViewHolder> {
                         break;
 
 
-                    case TYPE_SEARCH :
+                    case TYPE_MYJOBOFFERS :
                         v.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
                                 FragmentManager fragmentManager = activity.getSupportFragmentManager();
                                 Fragment current = fragmentManager.findFragmentById(R.id.tab_Home_container);
 
-                                if(!(current instanceof OfferSearchFragment)) {
+                                if(!(current instanceof Fav_tab)) {
 
-                                    Fragment fragment = OfferSearchFragment.newInstance();
+                                   Fav_tab fragment = Fav_tab.newInstance();
 
                                     fragmentManager.beginTransaction()
                                             .replace(R.id.tab_Home_container, fragment)
@@ -196,7 +197,7 @@ public class menuAdapter extends RecyclerView.Adapter<menuAdapter.ViewHolder> {
 
                                     toolbar.setTitle(tv.getText());
                                     mDrawerLayout.closeDrawers();
-                                    mCallbacks.setSelectedItem(TYPE_SEARCH);
+                                    mCallbacks.setSelectedItem(TYPE_MYJOBOFFERS);
 
                                 }
                                 mDrawerLayout.closeDrawers();
@@ -205,7 +206,7 @@ public class menuAdapter extends RecyclerView.Adapter<menuAdapter.ViewHolder> {
 
                          break;
 
-                    case TYPE_COMPANIES :
+                    case TYPE_MY_COMPANIES :
 
                         v.setOnClickListener(new View.OnClickListener() {
                             @Override
@@ -215,9 +216,9 @@ public class menuAdapter extends RecyclerView.Adapter<menuAdapter.ViewHolder> {
                                 FragmentManager fragmentManager = activity.getSupportFragmentManager();
                                 Fragment current = fragmentManager.findFragmentById(R.id.tab_Home_container);
 
-                                if (!(current instanceof StudentCompanySearchFragment)) {
+                                if (!(current instanceof FavCompaniesFragment)) {
                                     //New Fragment
-                                    StudentCompanySearchFragment fragment = StudentCompanySearchFragment.newInstance();
+                                    FavCompaniesFragment fragment = FavCompaniesFragment.newInstance();
                                     // Insert the fragment by replacing any existing fragment
                                     // Insert the fragment by replacing any existing fragment
 
@@ -232,7 +233,7 @@ public class menuAdapter extends RecyclerView.Adapter<menuAdapter.ViewHolder> {
 
                                     toolbar.setTitle(tv.getText());
                                     mDrawerLayout.closeDrawers();
-                                    mCallbacks.setSelectedItem(TYPE_COMPANIES);
+                                    mCallbacks.setSelectedItem(TYPE_MY_COMPANIES);
 
                                 }
                                 mDrawerLayout.closeDrawers();
@@ -373,7 +374,7 @@ public class menuAdapter extends RecyclerView.Adapter<menuAdapter.ViewHolder> {
 
                           break;
 
-                      case TYPE_SEARCH :
+                      case TYPE_MYJOBOFFERS: //Il nome nn centra richiama la search per studente
 
                           v.setOnClickListener(new View.OnClickListener() {
                               @Override
@@ -400,7 +401,7 @@ public class menuAdapter extends RecyclerView.Adapter<menuAdapter.ViewHolder> {
 
                                       toolbar.setTitle(tv.getText());
                                       mDrawerLayout.closeDrawers();
-                                      mCallbacks.setSelectedItem(TYPE_COMPANIES);
+                                      mCallbacks.setSelectedItem(TYPE_MYJOBOFFERS);
 
                                   }
                                   mDrawerLayout.closeDrawers();
@@ -412,7 +413,7 @@ public class menuAdapter extends RecyclerView.Adapter<menuAdapter.ViewHolder> {
 
                           break;
 
-                      case TYPE_COMPANIES :
+                      case TYPE_MY_COMPANIES : //NUOVA OFFERTA
 
 
                           v.setOnClickListener(new View.OnClickListener() {
@@ -423,9 +424,37 @@ public class menuAdapter extends RecyclerView.Adapter<menuAdapter.ViewHolder> {
                                   FragmentManager fragmentManager = activity.getSupportFragmentManager();
                                   Fragment current = fragmentManager.findFragmentById(R.id.tab_Home_container);
 
-                                  if (!(current instanceof NewOffer)) {
+                                  if ((current instanceof NewOffer)){
+                                      NewOffer o=(NewOffer)current;
+                                      if (o.isInEditMode())
+                                      {
+                                          Toast.makeText(activity,"Please save changes",Toast.LENGTH_SHORT).show();
+                                      }
+                                      else {
+
+                                          //New Fragment
+                                          NewOffer fragment = NewOffer.newInstance(true, true);
+                                          // Insert the fragment by replacing any existing fragment
+                                          // Insert the fragment by replacing any existing fragment
+
+                                          fragmentManager.beginTransaction()
+                                                  .replace(R.id.tab_Home_container, fragment)
+                                                  .addToBackStack("Home")
+                                                  .commit();
+
+                                          // Highlight the selected item, update the title, and close the drawer
+                                          // Highlight the selected item, update the title, and close the drawer
+                                          TextView tv = (TextView) v.findViewById(R.id.rowText);
+
+                                          toolbar.setTitle(tv.getText());
+                                          mDrawerLayout.closeDrawers();
+                                          mCallbacks.setSelectedItem(TYPE_MY_COMPANIES);
+                                      }
+
+                              }  else
+                                  {
                                       //New Fragment
-                                      NewOffer fragment = NewOffer.newInstance(true,true);
+                                      NewOffer fragment = NewOffer.newInstance(true, true);
                                       // Insert the fragment by replacing any existing fragment
                                       // Insert the fragment by replacing any existing fragment
 
@@ -439,11 +468,10 @@ public class menuAdapter extends RecyclerView.Adapter<menuAdapter.ViewHolder> {
                                       TextView tv = (TextView) v.findViewById(R.id.rowText);
 
                                       toolbar.setTitle(tv.getText());
-                                      mDrawerLayout.closeDrawers();
-                                      mCallbacks.setSelectedItem(TYPE_COMPANIES);
-
+                                      mCallbacks.setSelectedItem(TYPE_MY_COMPANIES);
                                   }
                                   mDrawerLayout.closeDrawers();
+
                               }
 
 
@@ -576,8 +604,8 @@ public class menuAdapter extends RecyclerView.Adapter<menuAdapter.ViewHolder> {
 
         else if(position==1) return TYPE_HOME;
         else if(position==2) return TYPE_PROFILE;
-        else if(position==3) return TYPE_SEARCH;
-        else if(position==4) return TYPE_COMPANIES;  // for student is autocandidature for companies is new offer
+        else if(position==3) return TYPE_MYJOBOFFERS;
+        else if(position==4) return TYPE_MY_COMPANIES;  // for student is autocandidature for companies is new offer
         else if(position==5) return TYPE_MAILBOX;   // after it became mail box
         else if(position==6) return TYPE_LOGOUT;
         return TYPE_HOME;
@@ -590,8 +618,7 @@ public class menuAdapter extends RecyclerView.Adapter<menuAdapter.ViewHolder> {
 
    public interface SetSelectedItem{
 
-
-       public void setSelectedItem(int item);
+ void setSelectedItem(int item);
 
    }
 

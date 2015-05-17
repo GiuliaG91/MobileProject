@@ -25,9 +25,7 @@ public class CompanyViewPagerAdapter extends FragmentPagerAdapter {
            news= new Home_tab();
           offers=CompanyShowOfferFragment.newInstance();
 
-
       }
-
 
     @Override
     public Fragment getItem(int position) {
