@@ -1,10 +1,8 @@
 package com.example.giuliagigi.jobplacement;
 
-import android.content.Context;
-import android.support.v4.app.Fragment;
+import android.graphics.Bitmap;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
@@ -15,26 +13,25 @@ import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.HashSet;
+import java.util.Collections;
 import java.util.List;
-import java.util.Set;
 
 /**
- * Created by pietro on 07/05/2015.
+ * Created by pietro on 17/05/2015.
  */
-public class FavouritesAdapter extends RecyclerView.Adapter<FavouritesAdapter.ViewHolder> implements View.OnClickListener{
+public class FavCompaniesAdapter extends RecyclerView.Adapter<FavCompaniesAdapter.ViewHolder> implements View.OnClickListener {
+
+
 
 
     private FragmentActivity context;
-    private ArrayList<CompanyOffer> mDataset;
+    private ArrayList<Company> mDataset;
     private GlobalData globalData;
     private Student student;
-    private FavouritesAdapter favouritesAdapter=this;
+    private FavCompaniesAdapter favCompaniesAdapter=this;
     private RecyclerView mRecyclerView;
-    private Fav_tab parent;
+    private FavCompaniesFragment parent;
 
     // Provide a reference to the views for each data item
     // Complex data items may need more than one view per item, and
@@ -42,10 +39,8 @@ public class FavouritesAdapter extends RecyclerView.Adapter<FavouritesAdapter.Vi
     public static class ViewHolder extends RecyclerView.ViewHolder {
         // each data item is just a string in this case
 
-        private ImageView logo;
-        private TextView object;
-        private TextView descriprion;
-        private TextView validity;
+        private ImageView profile;
+        private TextView companyName;
         private CheckBox pref;
 
 
@@ -54,18 +49,17 @@ public class FavouritesAdapter extends RecyclerView.Adapter<FavouritesAdapter.Vi
         public ViewHolder(View v) {
             super(v);
             v.setTag(this);
-            logo=(ImageView)v.findViewById(R.id.logo_img);
-            object=(TextView)v.findViewById(R.id.objectOffer_tv);
-            descriprion=(TextView)v.findViewById(R.id.description_tv);
-            validity=(TextView)v.findViewById(R.id.date_row_tv);
+
+            profile = (ImageView) v.findViewById(R.id.logo_img);
+           companyName = (TextView) v.findViewById(R.id.company_name_tv);
             pref=(CheckBox)v.findViewById(R.id.star);
         }
     }
 
-    public  FavouritesAdapter(FragmentActivity c, ArrayList<CompanyOffer> companyOffers, RecyclerView r,Fav_tab fragment)
+    public  FavCompaniesAdapter(FragmentActivity c, ArrayList<Company> companies, RecyclerView r,FavCompaniesFragment fragment)
     {
         context=c;
-        mDataset=new ArrayList<>(companyOffers);
+        mDataset=new ArrayList<>(companies);
         globalData=(GlobalData)context.getApplication();
         student=globalData.getStudentFromUser();
         mRecyclerView=r;
@@ -76,16 +70,16 @@ public class FavouritesAdapter extends RecyclerView.Adapter<FavouritesAdapter.Vi
 
     // Create new views (invoked by the layout manager)
     @Override
-    public  FavouritesAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public  FavCompaniesAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         // create a new view
         View v = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.favourites_row, parent, false);
+                .inflate(R.layout.company_row, parent, false);
         // set the view's size, margins, paddings and layout parameters
         v.setClickable(true);
-        v.setOnClickListener(FavouritesAdapter.this);
+        v.setOnClickListener(FavCompaniesAdapter.this);
 
         ViewHolder vh = new ViewHolder(v);
-        v.setTag(vh);
+
         return vh;
     }
 
@@ -95,56 +89,40 @@ public class FavouritesAdapter extends RecyclerView.Adapter<FavouritesAdapter.Vi
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
 
-        holder.logo.setImageResource(R.drawable.ic_profile);
+        Bitmap img=null;
+        try{
+            img=mDataset.get(position).getProfilePhoto();
 
-        holder.object.setText(mDataset.get(position).getOfferObject());
-        String description=mDataset.get(position).getDescription();
-        if(description==null || description.isEmpty() || description.equals(""))
-        {
-            holder.descriprion.setText("...");
+        }catch (Exception e){
+            img=null;
         }
-        else{
 
-            if(description.length()<30)
-            {
-                holder.descriprion.setText(description+"...");
-            }
-            else
-            {
-                holder.descriprion.setText(mDataset.get(position).getDescription().substring(0,29)+"...");
-            }
-        }
-        SimpleDateFormat dateFormat=new SimpleDateFormat("dd/MM/yyyy");
-        String date=dateFormat.format(mDataset.get(position).getValidity());
-        holder.validity.setText(date);
-
-            holder.pref.setChecked(true);
+        if(img!=null) {
+            holder.profile.setImageBitmap(img);
+        }else
+            holder.profile.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_profile));
+        holder.companyName.setText(mDataset.get(position).getName());
 
 
+        holder.pref.setChecked(true);
         holder.pref.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 
-                if(isChecked==true)
-                {
+                if (isChecked) {
                     //add this offer to pref
-                    student.addFavourites(mDataset.get(position));
+                    student.addCompany(mDataset.get(position));
                     student.saveInBackground();
-                }
-                else
-                {
+                } else {
                     //delete this offer from pref
-                    student.removeFavourites(mDataset.get(position));
+                    student.removeCompany(mDataset.get(position));
                     student.saveInBackground();
-
-                        mDataset.remove(position);
-                       mRecyclerView.removeViewAt(position);
-
 
                 }
 
             }
         });
+
     }
     // Return the size of your dataset (invoked by the layout manager)
     @Override
@@ -162,11 +140,10 @@ public class FavouritesAdapter extends RecyclerView.Adapter<FavouritesAdapter.Vi
 
         ViewHolder vh=(ViewHolder)v.getTag();
 
-        globalData.setCurrentOffer(mDataset.get(vh.getPosition()));
         //Pass Object to fragment
         FragmentManager fragmentManager = context.getSupportFragmentManager();
         //New Fragment
-        OfferDetail fragment=OfferDetail.newInstance();
+        ProfileManagement fragment=ProfileManagement.newInstance(false,mDataset.get(vh.getPosition()));
         // Insert the fragment by replacing any existing fragment
         // Insert the fragment by replacing any existing fragment
 
@@ -178,11 +155,10 @@ public class FavouritesAdapter extends RecyclerView.Adapter<FavouritesAdapter.Vi
         // Highlight the selected item, update the title, and close the drawer
         // Highlight the selected item, update the title, and close the drawer
         Toolbar toolbar= globalData.getToolbar();
-        toolbar.setTitle("Offer");
+        toolbar.setTitle("Student");
 
 
     }
-
 
 
 

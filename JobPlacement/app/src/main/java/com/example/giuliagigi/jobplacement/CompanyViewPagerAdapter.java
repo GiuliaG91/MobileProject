@@ -12,25 +12,26 @@ public class CompanyViewPagerAdapter extends FragmentPagerAdapter {
     CharSequence Titles[]; // This will Store the Titles of the Tabs which are Going to be passed when ViewPagerAdapter is created
     int NumbOfTabs; // Store the number of tabs, this will also be passed when the ViewPagerAdapter is created
 
-    private Fragment news;
-    private Fragment offers;
-
-
-
       CompanyViewPagerAdapter(FragmentManager fm, CharSequence mTitles[], int mNumbOfTabsumb){
         super(fm);
 
         this.Titles = mTitles;
         this.NumbOfTabs = mNumbOfTabsumb;
-           news= new Home_tab();
-          offers=CompanyShowOfferFragment.newInstance();
+
 
       }
 
     @Override
     public Fragment getItem(int position) {
-        if(position==0) return news;
-        else return offers;
+        if(position==0)
+        {
+            return new Home_tab();
+        }
+        else if(position==1)
+        {
+            return CompanyShowOfferFragment.newInstance();
+        }
+        else return FavStudentsFragment.newInstance();
 
     }
 

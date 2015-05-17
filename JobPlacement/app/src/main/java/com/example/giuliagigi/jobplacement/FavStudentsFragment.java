@@ -13,21 +13,21 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by pietro on 16/05/2015.
+ * Created by pietro on 17/05/2015.
  */
-public class FavCompaniesFragment extends Fragment {
+public class FavStudentsFragment extends Fragment {
 
     private View root;
     private GlobalData globalData;
-    private Student student;
+    private Company company;
     private RecyclerView mRecyclerView;
     private LinearLayoutManager mLayoutManager;
-    private FavCompaniesAdapter adapter;
+    private FavStudentsAdapter adapter;
 
 
-    public static FavCompaniesFragment newInstance()
+    public static FavStudentsFragment newInstance()
     {
-        FavCompaniesFragment fragment=new FavCompaniesFragment();
+        FavStudentsFragment fragment=new FavStudentsFragment();
         return fragment;
     }
 
@@ -35,8 +35,8 @@ public class FavCompaniesFragment extends Fragment {
         root  = inflater.inflate(R.layout.recycler_view_template,container,false);
 
         globalData=(GlobalData)getActivity().getApplication();
-        globalData.getToolbar().setTitle(getResources().getString(R.string.ToolbarTitleMyCompanies));
-        student=globalData.getStudentFromUser();
+        globalData.getToolbar().setTitle(getResources().getString(R.string.ToolbarTitleMyStudents));
+        company=globalData.getCompanyFromUser();
         mRecyclerView = (RecyclerView) root.findViewById(R.id.recycler_view_template);
 
         // use this setting to improve performance if you know that changes
@@ -48,15 +48,15 @@ public class FavCompaniesFragment extends Fragment {
         mRecyclerView.addItemDecoration(new DividerItemDecoration(this.getActivity(), DividerItemDecoration.VERTICAL_LIST));
         mRecyclerView.setLayoutManager(mLayoutManager);
 
-        List<Company> companies=student.getCompanies();
-        if(companies.isEmpty())
+        List<Student> students=company.getStudents();
+        if(students.isEmpty())
         {
             voidPrefAdapter ad=new voidPrefAdapter(this.getActivity());
             // specify an adapter
             mRecyclerView.setAdapter(ad);
         }
         else {
-            adapter = new FavCompaniesAdapter(this.getActivity(), (ArrayList<Company>) companies, mRecyclerView, this);
+            adapter = new FavStudentsAdapter(this.getActivity(), (ArrayList<Student>) students, mRecyclerView, this);
             // specify an adapter
             mRecyclerView.setAdapter(adapter);
         }

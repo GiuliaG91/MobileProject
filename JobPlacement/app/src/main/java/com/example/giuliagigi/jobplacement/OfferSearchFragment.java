@@ -55,6 +55,15 @@ public class OfferSearchFragment extends Fragment{
         // Required empty public constructor
     }
 
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        if(savedInstanceState!=null)
+        {
+            position=savedInstanceState.getInt("position");
+        }
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -73,18 +82,19 @@ public class OfferSearchFragment extends Fragment{
         // use this setting to improve performance if you know that changes
         // in content do not change the layout size of the RecyclerView
         mRecyclerView.setHasFixedSize(true);
-
-        // use a linear layout manager
         mLayoutManager = new LinearLayoutManager(this.getActivity());
+        // use a linear layout manager
+
         mRecyclerView.addItemDecoration(new DividerItemDecoration(this.getActivity(), DividerItemDecoration.VERTICAL_LIST));
         mRecyclerView.setLayoutManager(mLayoutManager);
 
-        adapter = new OfferSearchAdapter(this.getActivity(), mRecyclerView,this);
+        adapter = new OfferSearchAdapter(this.getActivity(), mRecyclerView,this,position,mLayoutManager);
 
         /*********************/
 
         // specify an adapter
         mRecyclerView.setAdapter(adapter);
+
 
         return root;
     }
@@ -155,5 +165,15 @@ public class OfferSearchFragment extends Fragment{
         adapter.setAdapter();
         adapter.notifyDataSetChanged();
 
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        try {
+            outState.putInt("position", mLayoutManager.findFirstVisibleItemPosition());
+        }catch (Exception e){
+            outState.putInt("position",0);
+        }
     }
 }

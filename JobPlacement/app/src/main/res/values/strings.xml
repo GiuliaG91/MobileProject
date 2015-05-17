@@ -36,7 +36,8 @@
     <string name="ToolbarTilteOffer">Job Offer</string>
     <string name="ToolbarTilteNewOffer">New Offer</string>
     <string name="ToolbarTilteMyJobOffers">My Job Offers</string>
-    <string name="ToolbarTitleMyCompanyes">My Companies</string>
+    <string name="ToolbarTitleMyCompanies">My Companies</string>
+    <string name="ToolbarTitleMyStudents">Students</string>
     <string name="ToolbarTilteStudentSearch">Student Search</string>
     <string name="ToolbarTilteMailBox">MailBox</string>
 
@@ -53,6 +54,7 @@
 
         <item>News</item>
         <item>Job Offers</item>
+        <item>Students</item>
 
 
     </string-array>
@@ -320,5 +322,8 @@
     <string name="Mark">Mark:</string>
     <string name="noDegree">No graduation recorded.</string>
     <string name="noMark">No mark recorded.</string>
+
+
+    <string name="NoFavourites">No favourites found</string>
 
 </resources>

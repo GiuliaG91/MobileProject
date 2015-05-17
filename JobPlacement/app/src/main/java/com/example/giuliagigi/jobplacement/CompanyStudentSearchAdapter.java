@@ -3,6 +3,7 @@ package com.example.giuliagigi.jobplacement;
 import android.graphics.Bitmap;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
@@ -38,6 +39,10 @@ public class CompanyStudentSearchAdapter extends RecyclerView.Adapter<CompanyStu
     private Company company;
     private Set<Student> supportSet;
     private CompanyStudentSearchFragment currentFragment;
+    private Integer currentPosition=0;
+    private LinearLayoutManager mLayoutManager;
+    private final int pageSize=15;
+    private int count=0;
 
     private ParseQueryAdapter<Student> parseAdapter;
     private ParseQueryAdapter.QueryFactory<Student> factory;
@@ -46,7 +51,7 @@ public class CompanyStudentSearchAdapter extends RecyclerView.Adapter<CompanyStu
     CompanyStudentSearchAdapter companyStudentSearchAdapter=this;
 
 
-    public CompanyStudentSearchAdapter(FragmentActivity c, ViewGroup parentIn ,CompanyStudentSearchFragment fragment) {
+    public CompanyStudentSearchAdapter(FragmentActivity c, ViewGroup parentIn ,CompanyStudentSearchFragment fragment,LinearLayoutManager layoutManager) {
         parseParent = parentIn;
         context = c;
         currentFragment=fragment;
@@ -54,6 +59,8 @@ public class CompanyStudentSearchAdapter extends RecyclerView.Adapter<CompanyStu
         globalData = (GlobalData) context.getApplication();
         company=globalData.getCompanyFromUser();
         supportSet = new HashSet<>();
+        count=0;
+        mLayoutManager=layoutManager;
 
      /*   if(globalData.getOfferFilterStatus().isValid())
         {
@@ -228,11 +235,22 @@ public class CompanyStudentSearchAdapter extends RecyclerView.Adapter<CompanyStu
                 return v;
             }
 
+            @Override
+            public View getNextPageView(View v, ViewGroup parent) {
+                if (v == null) {
+                    // R.layout.adapter_next_page contains an ImageView with a custom graphic
+                    // and a TextView.
+                    v = View.inflate(getContext(), R.layout.student_row, null);
+                }
+                        loadNextPage();
+                return v;
+            }
+
         };
 
 
         parseAdapter.addOnQueryLoadListener(new OnQueryLoadListener());
-        parseAdapter.setObjectsPerPage(15);
+        parseAdapter.setObjectsPerPage(pageSize);
         parseAdapter.loadObjects();
 
 
@@ -284,7 +302,7 @@ public class CompanyStudentSearchAdapter extends RecyclerView.Adapter<CompanyStu
         // Highlight the selected item, update the title, and close the drawer
         // Highlight the selected item, update the title, and close the drawer
         Toolbar toolbar= globalData.getToolbar();
-        toolbar.setTitle("Offer");
+        toolbar.setTitle(context.getResources().getString(R.string.ToolbarTitleMyStudents));
 
 
     }
@@ -297,6 +315,14 @@ public class CompanyStudentSearchAdapter extends RecyclerView.Adapter<CompanyStu
 
         public void onLoaded(List<Student> objects, Exception e) {
            companyStudentSearchAdapter.notifyDataSetChanged();
+            if(currentPosition!=0) {
+                count += pageSize;
+                if (count < currentPosition) {
+                    parseAdapter.loadNextPage();
+                } else {
+                    mLayoutManager.scrollToPosition(currentPosition);
+                }
+            }
         }
     }
 

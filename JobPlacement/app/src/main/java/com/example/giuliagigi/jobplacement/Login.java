@@ -66,7 +66,7 @@ public class Login extends ActionBarActivity {
 
         final SharedPreferences sp = getPreferences(Context.MODE_PRIVATE);
         application.setLoginPreferences(sp);
-//        sp.edit().clear().apply(); // pulisce le Shared Preferences
+       // sp.edit().clear().apply(); // pulisce le Shared Preferences
 
         mailText = (MultiAutoCompleteTextView)findViewById(R.id.email_editText);
         passwordText = (EditText)findViewById(R.id.password_editText);

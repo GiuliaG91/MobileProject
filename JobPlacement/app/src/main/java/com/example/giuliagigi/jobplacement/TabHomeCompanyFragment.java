@@ -30,7 +30,7 @@ public class TabHomeCompanyFragment extends Fragment {
    CompanyViewPagerAdapter adapter;
     SlidingTabLayout tabs;
     CharSequence Titles[] =null;
-    int Numboftabs = 2;
+    int Numboftabs = 3;
     private Integer currentPosition=0;
 
     /***************************************************************/

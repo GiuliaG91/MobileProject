@@ -473,6 +473,8 @@ public class menuAdapter extends RecyclerView.Adapter<menuAdapter.ViewHolder> {
 
 
                           break;
+
+
                       case  TYPE_MAILBOX :
 
                           v.setOnClickListener(new View.OnClickListener() {

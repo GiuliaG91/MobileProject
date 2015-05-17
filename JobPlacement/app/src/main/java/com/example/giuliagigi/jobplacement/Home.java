@@ -291,7 +291,7 @@ public class Home extends ActionBarActivity  implements TabHomeStudentFragment.O
             onBackPressedListener.doBack();
 
         if(getSupportFragmentManager().getBackStackEntryCount()>0) {
-            super.onBackPressed();
+           
         }
 
         else  {

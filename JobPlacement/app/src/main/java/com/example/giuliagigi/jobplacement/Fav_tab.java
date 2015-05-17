@@ -50,10 +50,17 @@ public class Fav_tab extends Fragment{
         mRecyclerView.setLayoutManager(mLayoutManager);
 
 
-        adapter = new FavouritesAdapter(this.getActivity(),student.getFavourites(),mRecyclerView,this);
-        // specify an adapter
-        mRecyclerView.setAdapter(adapter);
-
+        if(student.getFavourites().isEmpty())
+        {
+            voidPrefAdapter ad=new voidPrefAdapter(this.getActivity());
+            // specify an adapter
+            mRecyclerView.setAdapter(ad);
+        }
+        else {
+            adapter = new FavouritesAdapter(this.getActivity(), student.getFavourites(), mRecyclerView, this);
+            // specify an adapter
+            mRecyclerView.setAdapter(adapter);
+        }
 
 
 

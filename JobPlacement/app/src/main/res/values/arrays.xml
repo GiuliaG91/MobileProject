@@ -17,7 +17,7 @@
         <item>@drawable/ic_search</item>
         <item>@drawable/ic_offer</item>
         <item>@drawable/ic_action</item>
-        <item>@drawable/ic_logout</item>
+        <item>@drawable/ic_logoutoff</item>
 
     </string-array>
 
