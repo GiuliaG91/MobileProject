@@ -222,6 +222,7 @@ public class Registration extends ActionBarActivity implements StudentRegistrati
         newParseUser.setUsername(newUser.getMail());
         newParseUser.setPassword(newUser.getPassword());
         newParseUser.setType(newUser.getType());
+
         newParseUser.signUpInBackground(new SignUpCallback() {
             @Override
             public void done(ParseException e) {
@@ -253,6 +254,14 @@ public class Registration extends ActionBarActivity implements StudentRegistrati
                                                 newStudentDegree.saveEventually();
                                                 newParseUser.setUser(newUser);
                                                 newParseUser.saveEventually();
+
+                                                User u = new User();
+                                                u.setMail(newUser.getMail());
+                                                u.setType(User.TYPE_STUDENT);
+                                                u.setPassword(newUser.getPassword());
+                                                u.setName(newUser.getName() + " " + ((Student)newUser).getSurname());
+                                                u.saveInBackground();
+
                                                 saveLoginPreferences(newUser);
 
                                                 startActivity(new Intent(getApplicationContext(),Login.class));
@@ -265,6 +274,9 @@ public class Registration extends ActionBarActivity implements StudentRegistrati
                                     Log.println(Log.ASSERT, "SIGNUP", "error saving degree");
                             }
                         });
+
+
+
                     }
                     else if(newUser.getType().equals(User.TYPE_COMPANY)){
 
@@ -278,20 +290,25 @@ public class Registration extends ActionBarActivity implements StudentRegistrati
 
                                     newParseUser.setUser(newUser);
                                     newParseUser.saveEventually();
+
+                                    User u = new User();
+                                    u.setMail(newUser.getMail());
+                                    u.setType(User.TYPE_STUDENT);
+                                    u.setPassword(newUser.getPassword());
+                                    u.setName(newUser.getName());
+                                    u.saveInBackground();
+
                                     saveLoginPreferences(newUser);
 
                                     // invia notifica push agli studenti se il nuovo user registrato è una company
                                     if(newUser.getType().equals(User.TYPE_COMPANY)) {
-                                        ParseQuery userQuery = ParseQuery.getQuery("User");
-                                        userQuery.whereEqualTo(User.TYPE_FIELD, User.TYPE_STUDENT);
 
                                         ParseQuery pushQuery = ParseInstallation.getQuery();
-                                        pushQuery.whereMatchesQuery("user", userQuery);
-
+                                        pushQuery.whereEqualTo(User.TYPE_FIELD, User.TYPE_STUDENT);
 
                                         try {
 
-                                            JSONObject data = new JSONObject("{\"alert\": \"The company " + ((Company) newUser).getName() + " is signed up to the application\", \"uri\": " + newUser.getMail() + "\"}");
+                                            JSONObject data = new JSONObject("{\"alert\": \"The company " + ((Company) newUser).getName() + " is signed up to the application\", \"uri\": " + "www.google.com" + "\"}");
                                             ParsePush push = new ParsePush();
                                             push.setQuery(pushQuery);
                                             push.setData(data);
@@ -309,6 +326,8 @@ public class Registration extends ActionBarActivity implements StudentRegistrati
 
                             }
                         });
+
+
                     }
 
                 }

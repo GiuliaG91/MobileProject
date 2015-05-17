@@ -19,10 +19,15 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.support.v7.widget.Toolbar;
 
+import com.parse.FindCallback;
+import com.parse.ParseException;
+import com.parse.ParseQuery;
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.List;
 
 import static java.util.Calendar.YEAR;
 
@@ -34,7 +39,6 @@ public class MailBoxDetailFragment extends Fragment {
     View root;
     InboxMessage message;
     GlobalData globalData;
-    ArrayList<User> recipients;
     User sender;
 
     FragmentActivity activity;
@@ -63,12 +67,20 @@ public class MailBoxDetailFragment extends Fragment {
             getFragmentManager().popBackStackImmediate();
         }
 
-        sender = message.getSender();
-        sender.fetchIfNeededInBackground();
+        if(message.getSender().equals(globalData.getUserObject().getMail()))
+            sender = globalData.getUserObject();
+        else{
 
-        recipients = message.getRecipients();
-        for(User r: recipients){
-            r.fetchIfNeededInBackground();
+            ParseQuery<User> query = ParseQuery.getQuery("User");
+            query.whereEqualTo(User.MAIL_FIELD, message.getSender());
+            try {
+                List<User> users = query.find();
+                if(users != null && users.size() > 0)
+                    sender = users.get(0);
+
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
         }
 
     }
@@ -81,37 +93,57 @@ public class MailBoxDetailFragment extends Fragment {
 
 
         //set profile photo
-        ImageView img = (ImageView) root.findViewById(R.id.sender_img);
-        img.setImageBitmap(sender.getProfilePhoto());
+        if(sender.getProfilePhoto() != null) {
+            ImageView img = (ImageView) root.findViewById(R.id.sender_img);
+            img.setImageBitmap(sender.getProfilePhoto());
+        }
 
         //set sender name
         TextView tv = (TextView)root.findViewById(R.id.sender_tv);
-        if(sender instanceof Student)
-            tv.setText(((Student)sender).getName());
-        else
-            tv.setText(((Company)sender).getName());
+        tv.setText(sender.getName());
 
 
         //set list of recipients in the spinner
         Spinner sp = (Spinner)root.findViewById(R.id.recipients_list);
         ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<String>(this.globalData, R.layout.row_spinner);
-        ArrayList<String> name_recipients = new ArrayList<String>();
-        for(User u: this.recipients)
-            if(u instanceof Student)
-                name_recipients.add(((Student)u).getName());
-            else
-                name_recipients.add(((Company)u).getName());
 
-        spinnerAdapter.addAll(name_recipients);
+        spinnerAdapter.addAll(message.getRecipients());
         sp.setAdapter(spinnerAdapter);
 
 
         //set date
         tv = (TextView) root.findViewById(R.id.date_tv);
         Date date = this.message.getDate();
-        String format = date.getDay() + " " + globalData.getResources().getStringArray(R.array.months)[date.getMonth()];
+        Date now = new Date();
+        String format = "";
+        if(date.getDay() == now.getDay() && date.getMonth() == now.getMonth() && date.getYear() == now.getYear()){
 
-        format = format + " " + date.getYear() + " " + date.getHours() + ":" + date.getMinutes();
+            if(date.getHours() == now.getHours())
+                if(now.getMinutes() - date.getMinutes() == 1)
+                    format = date.getHours() + ":" + date.getMinutes() + " (" + (now.getMinutes() - date.getMinutes()) +" " + globalData.getResources().getString(R.string.minute_ago) + ")";
+                else
+                    format = date.getHours() + ":" + date.getMinutes() + " (" + (now.getMinutes() - date.getMinutes()) +" " + globalData.getResources().getString(R.string.minutes_ago) + ")";
+            else
+                if(now.getHours() - date.getHours() == 1)
+                    format = date.getHours() + ":" + date.getMinutes() + " (" + (now.getHours() - date.getHours()) + " " + globalData.getResources().getString(R.string.hour_ago) + ")";
+                else
+                    format = date.getHours() + ":" + date.getMinutes() + " (" + (now.getHours() - date.getHours()) + " " + globalData.getResources().getString(R.string.hours_ago) + ")";
+        }else if(date.getMonth() == now.getMonth() && date.getYear() == now.getYear()){
+
+            if(now.getDay() - date.getDay() <= 13)
+                if(now.getDay() - date.getDay() == 1)
+                    format = date.getDay() + " " + globalData.getResources().getStringArray(R.array.months)[date.getMonth()] + " (" + (now.getDay() - date.getDay()) + " " + globalData.getResources().getString(R.string.day_ago) + ")";
+                else
+                    format = date.getDay() + " " + globalData.getResources().getStringArray(R.array.months)[date.getMonth()] + " (" + (now.getDay() - date.getDay()) + " " + globalData.getResources().getString(R.string.days_ago) + ")";
+
+        }else if(date.getYear() == now.getYear()){
+
+            format = date.getDay() + " " + globalData.getResources().getStringArray(R.array.months)[date.getMonth()];
+
+        }else {
+            format = date.getDay() + "/" + date.getMonth() + "/" + date.getYear();
+        }
+
         tv.setText(format);
 
         //set object
@@ -132,6 +164,7 @@ public class MailBoxDetailFragment extends Fragment {
 
                 fragmentManager.beginTransaction()
                         .replace(R.id.tab_Home_container, fragment)
+                        .addToBackStack(message.getObject())
                         .commit();
 
                 Toolbar toolbar = (Toolbar) globalData.getToolbar();

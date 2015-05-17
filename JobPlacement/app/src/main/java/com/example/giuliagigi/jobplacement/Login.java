@@ -58,12 +58,14 @@ public class Login extends ActionBarActivity {
         application = (GlobalData)getApplicationContext();
 
         /* ero gia loggato? */
-        if(application.getCurrentUser()!=null)
+
+        if(application.getCurrentUser() != null)
             startActivity(new Intent(getApplicationContext(),Home.class));
+
 
         final SharedPreferences sp = getPreferences(Context.MODE_PRIVATE);
         application.setLoginPreferences(sp);
-//        sp.edit().clear().apply(); // pulisce le Shared Preferences
+        sp.edit().clear().apply(); // pulisce le Shared Preferences
 
         mailText = (MultiAutoCompleteTextView)findViewById(R.id.email_editText);
         passwordText = (EditText)findViewById(R.id.password_editText);
@@ -265,11 +267,13 @@ public class Login extends ActionBarActivity {
                     /* caching profile infos */
                     GlobalData gd = (GlobalData)getApplicationContext();
                     gd.getCurrentUser();
-                    gd.getUserObject();
+                    //gd.getUserObject();
+
 
                     /* register an object Installation for receiving Push Notifications */
                     ParseInstallation installation = ParseInstallation.getCurrentInstallation();
-                    installation.put("user", gd.getCurrentUser());
+                    installation.put(User.MAIL_FIELD, gd.getUserObject().getMail());
+                    installation.put(User.TYPE_FIELD, gd.getUserObject().getType());
                     installation.saveInBackground();
 
                     /* launch home activity */

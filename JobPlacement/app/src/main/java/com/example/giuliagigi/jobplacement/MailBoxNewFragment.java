@@ -24,6 +24,7 @@ import com.parse.ParseObject;
 import com.parse.ParsePush;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
+import com.parse.SaveCallback;
 
 import org.json.JSONObject;
 
@@ -38,8 +39,6 @@ public class MailBoxNewFragment extends Fragment {
     View root;
     InboxMessage message;
     GlobalData globalData;
-    ArrayList<String> recipients;
-    ArrayList<String> wrongRecipients;
     FragmentActivity activity;
 
 
@@ -61,11 +60,9 @@ public class MailBoxNewFragment extends Fragment {
         activity = this.getActivity();
 
         message = new InboxMessage();
-        message.setRecipients(new ArrayList<User>());
-        message.setSender(globalData.getUserObject());
+        message.setRecipients(new ArrayList<String>());
+        message.setSender(globalData.getUserObject().getMail());
 
-        recipients = new ArrayList<String>();
-        wrongRecipients = new ArrayList<String>();
 
     }
 
@@ -79,29 +76,6 @@ public class MailBoxNewFragment extends Fragment {
         button.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v){
 
-                String recipientsList = ((EditText)root.findViewById(R.id.recipients_list_new_message)).getText().toString();
-                StringTokenizer st = new StringTokenizer(recipientsList, ", ;");
-
-                while(st.hasMoreTokens())
-                    recipients.add(st.nextToken());
-
-                ArrayList<User> user_rec = new ArrayList<User>();
-                ParseQuery<ParseObject> query = ParseQuery.getQuery("User");
-
-                for(final String s: recipients){
-                    query.whereEqualTo(User.MAIL_FIELD, s);
-                    query.findInBackground(new FindCallback<ParseObject>() {
-                        @Override
-                        public void done(List<ParseObject> parseObjects, ParseException e) {
-                            if(e == null){
-                                message.getRecipients().add((User)parseObjects.get(0));
-                            } else {
-                                wrongRecipients.add(s);
-                            }
-                        }
-                    });
-                }
-
                 String object = ((EditText)root.findViewById(R.id.object_new_message)).getText().toString();
                 message.setObject(object);
 
@@ -111,39 +85,61 @@ public class MailBoxNewFragment extends Fragment {
                 message.setDate(new Date());
                 message.setIsPreferred(false);
                 message.setIsRead(false);
+                message.setIsDeleting(false);
 
-                message.saveEventually();
+                String recipientsList = ((EditText)root.findViewById(R.id.recipients_list_new_message)).getText().toString();
+                StringTokenizer st = new StringTokenizer(recipientsList, ", ;");
 
-                // Invio notifica Push solo se è la Company ad inviare il messaggio
-                if(globalData.getUserObject() instanceof Company){
-                    for(String s: recipients) {
-                        ParseQuery userQuery = ParseQuery.getQuery("User");
-                        userQuery.whereEqualTo(User.MAIL_FIELD, s);
+                while(st.hasMoreTokens())
+                    message.getRecipients().add(st.nextToken());
 
-                        ParseQuery pushQuery = ParseInstallation.getQuery();
-                        pushQuery.whereMatchesQuery("user", userQuery);
-
-
-                        JSONObject company = globalData.getUserObject().getJSONObject("company");
-
-                        ParsePush push = new ParsePush();
-                        push.setQuery(pushQuery);
-                        push.setData(company);
-                        String m = ((Company) globalData.getUserObject()).getName() + ": " + message.getObject();
-                        push.setMessage(m);
-                        push.sendInBackground();
+                message.saveInBackground(new SaveCallback() {
+                    @Override
+                    public void done(ParseException e) {
+                        if(e == null)
+                            Toast.makeText(globalData, globalData.getResources().getString(R.string.message_sent), Toast.LENGTH_SHORT).show();
                     }
+                });
+
+                for(String recipient: message.getRecipients()){
+
+                    InboxMessageReceived mr = new InboxMessageReceived();
+
+                    mr.setObject(message.getObject());
+                    mr.setSender(message.getSender());
+                    mr.setRecipients(message.getRecipients());
+                    mr.setBodyMessage(message.getBodyMessage());
+                    mr.setIsPreferred(false);
+                    mr.setIsRead(false);
+                    mr.setDate(message.getDate());
+                    mr.setIsDeleting(false);
+                    mr.setRecipient(recipient);
+
+                    mr.saveInBackground();
+
+                    ParseQuery<User> query = ParseQuery.getQuery("User");
+                    query.whereEqualTo(User.MAIL_FIELD, recipient.trim());
+                    query.findInBackground(new FindCallback<User>() {
+                        @Override
+                        public void done(List<User> list, ParseException e) {
+                            if(list != null){
+                                if(list.get(0).getType().equals(User.TYPE_STUDENT)){
+
+                                    ParseQuery pushQuery = ParseInstallation.getQuery();
+                                    pushQuery.whereEqualTo(User.MAIL_FIELD, list.get(0).getMail());
+
+                                    ParsePush push = new ParsePush();
+                                    push.setQuery(pushQuery);
+                                    push.setMessage("Nuovo messaggio da: " + globalData.getUserObject().getMail());
+                                    push.sendInBackground();
+
+                                }
+                            }
+                        }
+
+                    });
+
                 }
-
-                Toast.makeText(globalData, globalData.getResources().getString(R.string.message_sent), Toast.LENGTH_SHORT).show();
-
-                String messageEmailsWrong = globalData.getResources().getString(R.string.message_emails_wrong) + "\n";
-                for(String s: wrongRecipients)
-                    messageEmailsWrong = messageEmailsWrong + s + "\n";
-
-                Toast.makeText(globalData, messageEmailsWrong, Toast.LENGTH_SHORT).show();
-
-                // PUSH notifications and update the page in real time for the recipients
 
                 FragmentManager fragmentManager = activity.getSupportFragmentManager();
 
@@ -151,9 +147,89 @@ public class MailBoxNewFragment extends Fragment {
 
                 fragmentManager.beginTransaction()
                         .replace(R.id.tab_Home_container, fragment)
+                        .addToBackStack(globalData.getResources().getStringArray(R.array.Menu_items_student)[4])
                         .commit();
 
                 globalData.getToolbar().setTitle(globalData.getResources().getStringArray(R.array.Menu_items_student)[4]);
+
+                /*
+                ParseQuery<ParseObject> query = ParseQuery.getQuery("User");
+                query.whereContainedIn(User.MAIL_FIELD, recipients);
+                query.findInBackground(new FindCallback<ParseObject>() {
+                    @Override
+                    public void done(List<ParseObject> parseObjects, ParseException e) {
+                        if(e == null){
+
+                            for(ParseObject u: parseObjects){
+                                message.getRecipients().add((User)u);
+                            }
+
+                            message.saveInBackground();
+
+
+                            for(ParseObject u: parseObjects){
+                                InboxMessageReceived mr = new InboxMessageReceived();
+                                mr.setObject(message.getObject());
+                                mr.setSender(message.getSender());
+                                mr.setRecipients(message.getRecipients());
+                                mr.setBodyMessage(message.getBodyMessage());
+                                mr.setIsPreferred(false);
+                                mr.setIsRead(false);
+                                mr.setDate(message.getDate());
+                                mr.setIsDeleting(false);
+                                mr.setRecipient((User)u);
+
+                                mr.saveInBackground();
+
+
+                                if(u instanceof Student) {
+                                    ParseQuery pushQuery = ParseInstallation.getQuery();
+                                    pushQuery.whereEqualTo(User.MAIL_FIELD, ((User) u).getMail());
+
+                                    ParsePush push = new ParsePush();
+                                    push.setQuery(pushQuery);
+                                    push.setMessage("Nuovo messaggio da: " + globalData.getUserObject().getMail());
+                                    push.sendInBackground();
+                                }
+                            }
+
+                            Toast.makeText(globalData, globalData.getResources().getString(R.string.message_sent), Toast.LENGTH_SHORT).show();
+
+                            if(parseObjects.size() != recipients.size()){
+                                for(String m: recipients) {
+                                    if (!MailBoxNewFragment.isMailPresent(m, parseObjects))
+                                        wrongRecipients.add(m);
+                                }
+
+                                String messageEmailsWrong = globalData.getResources().getString(R.string.message_emails_wrong) + "\n";
+                                for(String s: wrongRecipients)
+                                    messageEmailsWrong = messageEmailsWrong + s + "\n";
+
+                                Toast.makeText(globalData, messageEmailsWrong, Toast.LENGTH_SHORT).show();
+
+                            }
+
+                            // PUSH notifications and update the page in real time for the recipients
+
+                            FragmentManager fragmentManager = activity.getSupportFragmentManager();
+
+                            Fragment fragment = MailBoxFragment.newInstance();
+
+                            fragmentManager.beginTransaction()
+                                    .replace(R.id.tab_Home_container, fragment)
+                                    .addToBackStack(globalData.getResources().getStringArray(R.array.Menu_items_student)[4])
+                                    .commit();
+
+                            globalData.getToolbar().setTitle(globalData.getResources().getStringArray(R.array.Menu_items_student)[4]);
+
+                        } else {
+
+                            Toast.makeText(globalData, globalData.getResources().getString(R.string.message_all_recipients_wrong), Toast.LENGTH_SHORT).show();
+
+                        }
+                    }
+                });
+                */
 
             }
         });
@@ -183,6 +259,15 @@ public class MailBoxNewFragment extends Fragment {
         savedInstanceState.putString("object", ((EditText)root.findViewById(R.id.object_new_message)).getText().toString());
         savedInstanceState.putString("bodyMessage", ((EditText)root.findViewById(R.id.body_new_message)).getText().toString());
 
+    }
+
+    private static boolean isMailPresent(String mail, List<ParseObject> userList){
+
+        for(ParseObject u: userList){
+            if(((User)u).getMail().equals(mail)) return true;
+        }
+
+        return false;
     }
 
 }

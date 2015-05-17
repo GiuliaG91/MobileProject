@@ -39,6 +39,7 @@ public class User extends ParseObject{
     protected static final String PHONE_FIELD = "phones";
     protected static final String TAG_FIELD = "tags";
     protected static final String PROFILE_PHOTO_FIELD = "profilePhoto";
+    protected static final String NAME_FIELD = "name";
 
     public static final String TYPE_STUDENT = "Student";
     public static final String TYPE_COMPANY = "Company";
@@ -193,6 +194,7 @@ public class User extends ParseObject{
         profilePhoto = photoBitmap;
         isCached.put(PROFILE_PHOTO_FIELD,true);
         ByteArrayOutputStream os = new ByteArrayOutputStream();
+
         photoBitmap.compress(Bitmap.CompressFormat.JPEG,100,os);
         byte[] photoByteArray = os.toByteArray();
         final ParseFile photoFile = new ParseFile("profilePicture.jpg", photoByteArray);
@@ -267,6 +269,14 @@ public class User extends ParseObject{
         for(Telephone t:phones)
             Log.println(Log.ASSERT,"USER", "telephone: " + t.getNumber());
 
+    }
+
+    public String getName(){
+        return this.getString(User.NAME_FIELD);
+    }
+
+    public void setName(String name){
+        this.put(User.NAME_FIELD, name);
     }
 
 }

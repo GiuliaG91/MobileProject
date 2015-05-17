@@ -254,14 +254,14 @@ public class OfferSearchAdapter extends RecyclerView.Adapter<OfferSearchAdapter.
     public void onClick(View v) {
 
 
-        ViewHolder vh=(ViewHolder)v.getTag();
+        ViewHolder vh = (ViewHolder)v.getTag();
 
         globalData.setCurrentOffer(mDataset.get(vh.getPosition()));
         //Pass Object to fragment
         FragmentManager fragmentManager = context.getSupportFragmentManager();
 
         //New Fragment
-        OfferDetail fragment=OfferDetail.newInstance();
+        OfferDetail fragment = OfferDetail.newInstance();
         // Insert the fragment by replacing any existing fragment
         // Insert the fragment by replacing any existing fragment
 

@@ -32,12 +32,12 @@ public class InboxMessage extends ParseObject {
 
     /*GETTER*/
 
-    public User getSender() {
-        return (User)this.get(SENDER);
+    public String getSender() {
+        return (String)this.get(SENDER);
     }
 
-    public ArrayList<User> getRecipients() {
-        return (ArrayList<User>)this.get(RECIPIENTS);
+    public ArrayList<String> getRecipients() {
+        return (ArrayList<String>)this.get(RECIPIENTS);
     }
 
     public String getObject() {
@@ -68,11 +68,11 @@ public class InboxMessage extends ParseObject {
 
         this.put(OBJECT,object);
     }
-    public void setSender(User sender){
+    public void setSender(String sender){
 
         this.put(SENDER, sender);
     }
-    public void setRecipients(ArrayList<User> recipients){
+    public void setRecipients(ArrayList<String> recipients){
 
         this.put(RECIPIENTS, recipients);
     }

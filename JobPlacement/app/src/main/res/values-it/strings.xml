@@ -2,7 +2,7 @@
     <string name="app_name">JobPlacement</string>
 
 
-    <string name="action_settings">Settings</string>
+    <string name="action_settings">Impostazioni</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
@@ -34,25 +34,25 @@
     <string name="action_filter">filter</string>
     <string name="action_menu">menu</string>
 
-    <string name="drawer_open">Open</string>
-    <string name="drawer_close">Close</string>
+    <string name="drawer_open">Apri</string>
+    <string name="drawer_close">Chiudi</string>
 
 
     <string-array name="Menu_items_student">
         <item>Home</item>
-        <item>Profile</item>
-        <item>Search</item>
-        <item>AutoCandidate</item>
-        <item>MessageBox</item>
+        <item>Profilo</item>
+        <item>Cerca</item>
+        <item>Candidati</item>
+        <item>Posta in arrivo</item>
         <item>Logout</item>
     </string-array>
 
     <string-array name="Menu_items_Company">
         <item>Home</item>
-        <item>Profile</item>
-        <item>Search</item>
-        <item>NewOffer</item>
-        <item>MessageBox</item>
+        <item>Profilo</item>
+        <item>Cerca</item>
+        <item>Nuova offerta</item>
+        <item>Posta in arrivo</item>
         <item>Logout</item>
     </string-array>
 
@@ -229,8 +229,8 @@
     <string name="send">Invia</string>
 
     <string name="body">Contenuto messaggio:</string>
-    <string name="message_sent">Il messaggio è stato inviato correttamente!</string>
-    <string name="message_emails_wrong">I seguenti destinatari non sono registrati nell\'applicazione:</string>
+    <string name="message_sent">Il messaggio è stato inviato!</string>
+    <string name="message_emails_wrong">La consegna ai seguenti destinatari non è riuscita:</string>
 
     <!-- Months -->
     <string-array name="months">
@@ -253,5 +253,13 @@
     <string name="on">Il</string>
     <string name="wrote">ha scritto</string>
 
+    <string name="message_all_recipients_wrong">Il campo "destinatari" non contiene email registrate nell\'applicazione.</string>
+
+    <string name="minutes_ago">minuti fa</string>
+    <string name="hours_ago">ore fa</string>
+    <string name="days_ago">giorni fa</string>
+    <string name="minute_ago">minuto fa</string>
+    <string name="hour_ago">ora fa</string>
+    <string name="day_ago">giorno fa</string>
 
 </resources>

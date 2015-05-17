@@ -37,7 +37,7 @@ public class GlobalData extends Application {
     private HashMap<String,Tag> tags;
     private HashMap<String,Boolean> isCached;
     private SharedPreferences loginPreferences;
-    private InboxMessage currentViewMessage;
+    private InboxMessageReceived currentViewMessage;
 
 
     /**************NEW OFFER BUNDLE**********/
@@ -71,10 +71,12 @@ public class GlobalData extends Application {
         ParseObject.registerSubclass(Withdrawal.class);
         ParseObject.registerSubclass(Certificate.class);
         ParseObject.registerSubclass(InboxMessage.class);
+        ParseObject.registerSubclass(InboxMessageReceived.class);
 
         Parse.initialize(this, "EICiUy2eT7CZPXw8N6I1p6lE4844svLI73JTc2QY", "8I9HZ7AgMHgeIxQKk8k653jNBvBCz57nRuSH73pA");
 
-        getCurrentUser();
+        //currentUser = (ParseUserWrapper)ParseUser.getCurrentUser();
+        //getCurrentUser();
 
         isCached = new HashMap<String,Boolean>();
         tags = new HashMap<String,Tag>();
@@ -90,7 +92,7 @@ public class GlobalData extends Application {
 
         currentUser = (ParseUserWrapper)ParseUser.getCurrentUser();
 
-        if(currentUser!=null)
+        if(currentUser != null)
             try {
                 currentUserObject = currentUser.getUser().fetchIfNeeded();
             } catch (ParseException e) {
@@ -236,8 +238,18 @@ public class GlobalData extends Application {
         return currentViewMessage;
     }
 
-    public void setCurrentViewMessage(InboxMessage m){
+    public void setCurrentViewMessage(InboxMessageReceived m){
         this.currentViewMessage = m;
+    }
+
+    public void setCurrentUser(ParseUserWrapper currentUser){
+        this.currentUser = currentUser;
+    }
+
+    public void setCurrentUserObject(User currentUserObject){
+
+
+
     }
 
 }

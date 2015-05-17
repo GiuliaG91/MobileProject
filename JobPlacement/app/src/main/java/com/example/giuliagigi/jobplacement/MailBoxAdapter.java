@@ -2,6 +2,7 @@ package com.example.giuliagigi.jobplacement;
 
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
@@ -12,7 +13,13 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.parse.FindCallback;
+import com.parse.ParseException;
+import com.parse.ParseObject;
+import com.parse.ParseQuery;
+
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -21,7 +28,7 @@ import java.util.List;
 public class MailBoxAdapter extends RecyclerView.Adapter<MailBoxAdapter.ViewHolder> implements View.OnClickListener{
 
     private FragmentActivity context;
-    private ArrayList<InboxMessage> mDataset;
+    private ArrayList<InboxMessageReceived> mDataset;
     private GlobalData globalData;
 
 
@@ -37,7 +44,9 @@ public class MailBoxAdapter extends RecyclerView.Adapter<MailBoxAdapter.ViewHold
         private CheckBox pref;
         private TextView message;
         private int position;
+        private CardView cardLayout;
         private LinearLayout rowLayout;
+        private TextView date;
 
 
         public ViewHolder(View v) {
@@ -50,15 +59,17 @@ public class MailBoxAdapter extends RecyclerView.Adapter<MailBoxAdapter.ViewHold
             pref = (CheckBox)v.findViewById(R.id.star_message);
             cancel = (CheckBox)v.findViewById(R.id.delete_message);
             message = (TextView)v.findViewById(R.id.body_message);
+            cardLayout = (CardView) v.findViewById(R.id.card_view_mail_box);
             rowLayout = (LinearLayout) v.findViewById(R.id.row_message);
             position = -1;
+            date = (TextView) v.findViewById(R.id.date_message);
         }
     }
 
     public MailBoxAdapter(FragmentActivity c)
     {
         context = c;
-        mDataset = new ArrayList<InboxMessage>();
+        mDataset = new ArrayList<InboxMessageReceived>();
         globalData = (GlobalData)context.getApplication();
     }
 
@@ -79,33 +90,67 @@ public class MailBoxAdapter extends RecyclerView.Adapter<MailBoxAdapter.ViewHold
 
     // Replace the contents of a view (invoked by the layout manager)
     @Override
-    public void onBindViewHolder(ViewHolder holder, final int position) {
+    public void onBindViewHolder(final ViewHolder holder, final int position) {
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
 
-        holder.image.setImageBitmap(mDataset.get(position).getSender().getProfilePhoto());
+        ParseQuery<User> query = ParseQuery.getQuery("User");
+        query.whereEqualTo(User.MAIL_FIELD, mDataset.get(position).getSender());
+        query.findInBackground(new FindCallback<User>() {
+            @Override
+            public void done(List<User> list, ParseException e) {
+
+                User u = list.get(0);
+
+                holder.name.setText(u.getName());
+
+                holder.image.setImageBitmap(u.getProfilePhoto());
+            }
+
+        });
+
 
         holder.object.setText(mDataset.get(position).getObject());
 
-        User user = mDataset.get(position).getSender();
-
-        if(user instanceof Student)
-            holder.name.setText(((Student)mDataset.get(position).getSender()).getName());
-        else
-            holder.name.setText(((Company)mDataset.get(position).getSender()).getName());
-
 
         holder.pref.setChecked(mDataset.get(position).getIsPreferred());
+        holder.pref.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View v){
+                if(((CheckBox)v).isChecked()) {
+                    mDataset.get(position).setIsPreferred(true);
+                    mDataset.get(position).saveInBackground();
+
+                }else {
+                    mDataset.get(position).setIsPreferred(false);
+                    mDataset.get(position).saveInBackground();
+
+                }
+            }
+        });
+
+
         holder.cancel.setChecked(mDataset.get(position).getIsDeleting());
 
         holder.cancel.setOnClickListener(new View.OnClickListener(){
 
             public void onClick(View v){
 
-                if(((CheckBox)v).isChecked())
+                if(((CheckBox)v).isChecked()) {
                     mDataset.get(position).setIsDeleting(true);
-                else
+                    mDataset.get(position).saveInBackground();
+                    holder.cardLayout.setCardBackgroundColor(0xFFE0B2);
+                    holder.rowLayout.setBackgroundColor(0xFFE0B2);
+                }else {
                     mDataset.get(position).setIsDeleting(false);
+                    mDataset.get(position).saveInBackground();
+                    if(mDataset.get(position).getIsRead()) {
+                        holder.cardLayout.setCardBackgroundColor(0xB2EBF2);
+                        holder.rowLayout.setBackgroundColor(0xB2EBF2);
+                    }else {
+                        holder.cardLayout.setCardBackgroundColor(0xFFFFFF);
+                        holder.rowLayout.setBackgroundColor(0xFFFFFF);
+                    }
+                }
 
             }
 
@@ -114,26 +159,38 @@ public class MailBoxAdapter extends RecyclerView.Adapter<MailBoxAdapter.ViewHold
         if(holder.message != null) {
 
             String message = mDataset.get(position).getBodyMessage();
-            if (message.isEmpty()) {
-                holder.message.setText("");
+            if (message.length() < 15) {
+                holder.message.setText(message);
             } else {
-
-                if (message.length() < 15) {
-                    holder.message.setText(message);
-                } else {
-                    holder.message.setText(message.substring(0, 15) + "...");
-                }
+                holder.message.setText(message.substring(0, 15) + "...");
             }
-
         }
+
 
         holder.position = position;
 
         if(mDataset.get(position).getIsRead()){
-            holder.name.setTextColor(0x424242);
-            holder.object.setTextColor(0x424242);
+            //holder.name.setTextColor(0x424242);
+            //holder.object.setTextColor(0x424242);
+            holder.cardLayout.setCardBackgroundColor(0xB2EBF2);
             holder.rowLayout.setBackgroundColor(0xB2EBF2);
         }
+
+        if(mDataset.get(position).getIsDeleting()){
+            holder.cardLayout.setCardBackgroundColor(0xFFE0B2);
+            holder.rowLayout.setBackgroundColor(0xFFE0B2);
+        }
+
+        Date now = new Date();
+
+        if(mDataset.get(position).getDate().getDay() == now.getDay() && mDataset.get(position).getDate().getMonth() == now.getMonth() && mDataset.get(position).getDate().getYear() == now.getYear())
+            holder.date.setText(mDataset.get(position).getDate().getHours() + ":" + mDataset.get(position).getDate().getMinutes());
+        else if(mDataset.get(position).getDate().getYear() == now.getYear())
+            holder.date.setText(mDataset.get(position).getDate().getDay() + " " + globalData.getResources().getStringArray(R.array.months)[mDataset.get(position).getDate().getMonth()]);
+        else
+            holder.date.setText(mDataset.get(position).getDate().getDay() + "/" + mDataset.get(position).getDate().getMonth() + "/" + mDataset.get(position).getDate().getYear() );
+
+
 
     }
 
@@ -144,7 +201,7 @@ public class MailBoxAdapter extends RecyclerView.Adapter<MailBoxAdapter.ViewHold
     }
 
 
-    public void updateMyDataset(List<InboxMessage> messages)
+    public void updateMyDataset(List<InboxMessageReceived> messages)
     {
         mDataset.addAll(messages);
 
@@ -166,6 +223,7 @@ public class MailBoxAdapter extends RecyclerView.Adapter<MailBoxAdapter.ViewHold
         mDataset.get(vh.position).setIsRead(true);
 
         globalData.setCurrentViewMessage(mDataset.get(vh.position));
+        globalData.getCurrentViewMessage().saveInBackground();
 
         FragmentManager fragmentManager = context.getSupportFragmentManager();
 
@@ -190,7 +248,7 @@ public class MailBoxAdapter extends RecyclerView.Adapter<MailBoxAdapter.ViewHold
 
     }
 
-    public ArrayList<InboxMessage> getMyDataset(){
+    public ArrayList<InboxMessageReceived> getMyDataset(){
 
         return this.mDataset;
 

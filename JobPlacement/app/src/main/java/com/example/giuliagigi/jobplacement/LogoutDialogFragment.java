@@ -13,6 +13,7 @@ import android.util.Log;
 import android.widget.Toast;
 import com.parse.LogOutCallback;
 import com.parse.ParseException;
+import com.parse.ParseInstallation;
 import com.parse.ParseUser;
 
 /**
@@ -82,6 +83,7 @@ public class LogoutDialogFragment extends DialogFragment {
     private void completeLogoutProcedure(){
 
         Toast.makeText(getActivity(), "Logout completed", Toast.LENGTH_SHORT).show();
+
         application.getCurrentUser(); //updates currentUser in GlobalData
 
         SharedPreferences sp = application.getLoginPreferences();
@@ -93,6 +95,8 @@ public class LogoutDialogFragment extends DialogFragment {
             editor.putBoolean(Login.SHAREDPREF_LATEST_LOGIN_PREFERENCE,false);
             editor.commit();
         }
+
+        Home.resetMyDrawerSelectedItem();
 
         Intent i = new Intent(getActivity(),Login.class);
         startActivity(i);

@@ -131,7 +131,6 @@ public class menuAdapter extends RecyclerView.Adapter<menuAdapter.ViewHolder> {
                                     TextView tv = (TextView) v.findViewById(R.id.rowText);
 
                                     toolbar.setTitle(tv.getText());
-                                    mDrawerLayout.closeDrawers();
                                     mCallbacks.setSelectedItem(TYPE_HOME);
 
                                 }
@@ -164,7 +163,6 @@ public class menuAdapter extends RecyclerView.Adapter<menuAdapter.ViewHolder> {
                                     TextView tv = (TextView) v.findViewById(R.id.rowText);
 
                                     toolbar.setTitle(tv.getText());
-                                    mDrawerLayout.closeDrawers();
                                     mCallbacks.setSelectedItem(TYPE_PROFILE);
 
                                 }
@@ -195,7 +193,6 @@ public class menuAdapter extends RecyclerView.Adapter<menuAdapter.ViewHolder> {
                                     TextView tv = (TextView) v.findViewById(R.id.rowText);
 
                                     toolbar.setTitle(tv.getText());
-                                    mDrawerLayout.closeDrawers();
                                     mCallbacks.setSelectedItem(TYPE_SEARCH);
 
                                 }
@@ -231,7 +228,6 @@ public class menuAdapter extends RecyclerView.Adapter<menuAdapter.ViewHolder> {
                                     TextView tv = (TextView) v.findViewById(R.id.rowText);
 
                                     toolbar.setTitle(tv.getText());
-                                    mDrawerLayout.closeDrawers();
                                     mCallbacks.setSelectedItem(TYPE_COMPANIES);
 
                                 }
@@ -265,12 +261,12 @@ public class menuAdapter extends RecyclerView.Adapter<menuAdapter.ViewHolder> {
                                     TextView tv = (TextView) v.findViewById(R.id.rowText);
 
                                     toolbar.setTitle(tv.getText());
-                                    mDrawerLayout.closeDrawers();
                                     mCallbacks.setSelectedItem(TYPE_MAILBOX);
 
                                     //********
                                     //activity.invalidateOptionsMenu();
                                 }
+                                mDrawerLayout.closeDrawers();
                             }
                         });
                         break;
@@ -283,6 +279,8 @@ public class menuAdapter extends RecyclerView.Adapter<menuAdapter.ViewHolder> {
 
                                 LogoutDialogFragment fragment = LogoutDialogFragment.newInstance();
                                 fragment.show(activity.getFragmentManager(), "Logout");
+
+                                Home.resetMyDrawerSelectedItem();
 
                                 mDrawerLayout.closeDrawers();
                             }
@@ -325,7 +323,6 @@ public class menuAdapter extends RecyclerView.Adapter<menuAdapter.ViewHolder> {
                                         TextView tv = (TextView) v.findViewById(R.id.rowText);
 
                                       toolbar.setTitle(tv.getText());
-                                      mDrawerLayout.closeDrawers();
                                       mCallbacks.setSelectedItem(TYPE_HOME);
 
                                   }
@@ -359,7 +356,6 @@ public class menuAdapter extends RecyclerView.Adapter<menuAdapter.ViewHolder> {
                                       TextView tv = (TextView) v.findViewById(R.id.rowText);
 
                                       toolbar.setTitle(tv.getText());
-                                      mDrawerLayout.closeDrawers();
                                       mCallbacks.setSelectedItem(TYPE_PROFILE);
 
                                   }
@@ -395,7 +391,6 @@ public class menuAdapter extends RecyclerView.Adapter<menuAdapter.ViewHolder> {
                                       TextView tv = (TextView) v.findViewById(R.id.rowText);
 
                                       toolbar.setTitle(tv.getText());
-                                      mDrawerLayout.closeDrawers();
                                       mCallbacks.setSelectedItem(TYPE_COMPANIES);
 
                                   }
@@ -435,7 +430,6 @@ public class menuAdapter extends RecyclerView.Adapter<menuAdapter.ViewHolder> {
                                       TextView tv = (TextView) v.findViewById(R.id.rowText);
 
                                       toolbar.setTitle(tv.getText());
-                                      mDrawerLayout.closeDrawers();
                                       mCallbacks.setSelectedItem(TYPE_COMPANIES);
 
                                   }
@@ -474,8 +468,8 @@ public class menuAdapter extends RecyclerView.Adapter<menuAdapter.ViewHolder> {
 
                                       //********
                                       //activity.invalidateOptionsMenu();
-
                                   }
+                                  mDrawerLayout.closeDrawers();
                                 }
                           });
 
@@ -489,6 +483,8 @@ public class menuAdapter extends RecyclerView.Adapter<menuAdapter.ViewHolder> {
 
                                   LogoutDialogFragment fragment = LogoutDialogFragment.newInstance();
                                   fragment.show(activity.getFragmentManager(), "Logout");
+
+                                  Home.resetMyDrawerSelectedItem();
 
                                   mDrawerLayout.closeDrawers();
                               }

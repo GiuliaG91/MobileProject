@@ -36,7 +36,7 @@ public class MailBoxFragment extends Fragment {
     private RecyclerView mRecyclerView;
     private MailBoxAdapter adapter;
     private LinearLayoutManager mLayoutManager;
-    private ParseQueryAdapter<InboxMessage> queryAdapter;
+    private ParseQueryAdapter<InboxMessageReceived> queryAdapter;
     private int currentMailBoxFragment;
 
     private boolean loading = true;
@@ -143,11 +143,12 @@ public class MailBoxFragment extends Fragment {
 
         // Instantiate a QueryFactory to define the ParseQuery to be used for fetching items in this
         // Adapter.
-        ParseQueryAdapter.QueryFactory<InboxMessage> factory =
-                new ParseQueryAdapter.QueryFactory<InboxMessage>() {
+        ParseQueryAdapter.QueryFactory<InboxMessageReceived> factory =
+                new ParseQueryAdapter.QueryFactory<InboxMessageReceived>() {
                     public ParseQuery create() {
 
-                        ParseQuery query = new ParseQuery("InboxMessage");
+                        ParseQuery query = new ParseQuery("InboxMessageReceived");
+                        query.whereEqualTo(InboxMessageReceived.RECIPIENT, ((GlobalData)((FragmentActivity)mListener).getApplication()).getUserObject().getMail());
                         return query;
                     }
                 };
@@ -171,7 +172,7 @@ public class MailBoxFragment extends Fragment {
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
 
                 int total=   mLayoutManager.getItemCount();
-                if(mLayoutManager.findLastVisibleItemPosition()==total-1)
+                if(mLayoutManager.findLastVisibleItemPosition()== total-1)
                 {
                     queryAdapter.loadNextPage();
                 }
@@ -204,6 +205,7 @@ public class MailBoxFragment extends Fragment {
 
                 fragmentManager.beginTransaction()
                         .replace(R.id.tab_Home_container, fragment)
+                        .addToBackStack(((FragmentActivity)mListener).getResources().getStringArray(R.array.Menu_items_student)[4])
                         .commit();
 
                 Log.println(Log.ASSERT, "onClick() Button NEW", "sostituissco fragment MailBoxFragment con MailBoxNewFragment");
@@ -214,6 +216,26 @@ public class MailBoxFragment extends Fragment {
 
             }
         });
+
+        /*
+        button = (Button) root.findViewById(R.id.mails_sent_btn);
+        button.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View v){
+
+                ParseQueryAdapter.QueryFactory<InboxMessage> factory =
+                        new ParseQueryAdapter.QueryFactory<InboxMessage>() {
+                            public ParseQuery create() {
+
+                                ParseQuery query = new ParseQuery("InboxMessage");
+                                query.whereEqualTo(InboxMessageReceived.SENDER, ((GlobalData)((FragmentActivity)mListener).getApplication()).getUserObject().getMail());
+                                return query;
+                            }
+                        };
+                queryAdapter = new ParseQueryAdapter<>(getActivity(), factory);
+                queryAdapter.loadObjects();
+            }
+        });
+        */
 
         return root;
     }
@@ -257,14 +279,14 @@ public class MailBoxFragment extends Fragment {
         public void onFragmentInteraction(Uri uri);
     }
 
-    public class OnQueryLoadListener implements ParseQueryAdapter.OnQueryLoadListener<InboxMessage> {
+    public class OnQueryLoadListener implements ParseQueryAdapter.OnQueryLoadListener<InboxMessageReceived> {
 
         public void onLoading() {
             //rotellina
         }
 
         @Override
-        public void onLoaded(List<InboxMessage> inboxMessages, Exception e) {
+        public void onLoaded(List<InboxMessageReceived> inboxMessages, Exception e) {
 
             adapter.updateMyDataset(inboxMessages);
             adapter.notifyDataSetChanged();
@@ -323,7 +345,7 @@ public class MailBoxFragment extends Fragment {
 
     public static void deleteMessages(View root, MailBoxAdapter adapter){
 
-        ArrayList<InboxMessage> listMessages = adapter.getMyDataset();
+        ArrayList<InboxMessageReceived> listMessages = adapter.getMyDataset();
 
         for(int i = 0; i < listMessages.size(); i++){
 
