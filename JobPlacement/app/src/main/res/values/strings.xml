@@ -78,6 +78,10 @@
     </string-array>
 
     <!-- Student fragment strings: -->
+    <string name="string_password">Password:</string>
+    <string name="string_confirm_password">Confirm password:</string>
+    <string name="string_date_hint">Click to insert date</string>
+    <string name="string_insert">Insert::</string>
     <string name="string_student_fragment_name_title">Name:</string>
     <string name="string_student_fragment_surname_title">Surname:</string>
     <string name="string_student_fragment_sex_title">Sex:</string>
@@ -90,6 +94,7 @@
     <string name="string_student_fragment_city">City:</string>
     <string name="string_student_fragment_nation">Nation:</string>
     <string name="string_student_fragment_phones">Phones:</string>
+    <string name="string_student_fragment_degrees">Degrees:</string>
     <string name="string_student_fragment_languages">Languages:</string>
     <string name="string_student_fragment_languages_title">Language:</string>
     <string name="string_student_fragment_language_level">Level:</string>
@@ -104,6 +109,7 @@
 
     <!-- Certificate fragment strings: -->
     <string name="string_certificate_fragment_area">Certificates:</string>
+    <string name="string_certificate_fragment_name">Title:</string>
     <string name="string_certificate_fragment_mark">Mark:</string>
     <string name="string_certificate_fragment_date">Date:</string>
     <string name="string_certificate_fragment_description">Certificate description:</string>
@@ -228,6 +234,44 @@
         <item>Equal to</item>
 
     </string-array>
+
+
+    <!-- aggiunti da Sivlia -->
+
+    <string name="new_message">Create new message</string>
+    <string name="new_message_toolbar_title">New Message</string>
+    <string name="sender">From:</string>
+    <string name="recipient">To:</string>
+    <string name="recipients">Recipients</string>
+    <string name="date">Date:</string>
+    <string name="object">Object:</string>
+    <string name="object1">Object</string>
+    <string name="body">Body:</string>
+    <string name="send">Send</string>
+
+    <string name="message_sent">The message was sent correctly!</string>
+    <string name="message_emails_wrong">The following recipients were not registered in the application:</string>
+
+    <!-- Months -->
+    <string-array name="months">
+        <item>January</item>
+        <item>February</item>
+        <item>March</item>
+        <item>April</item>
+        <item>May</item>
+        <item>June</item>
+        <item>July</item>
+        <item>August</item>
+        <item>September</item>
+        <item>October</item>
+        <item>November</item>
+        <item>December</item>
+    </string-array>
+
+    <string name="delete_messages">Delete Messages</string>
+    <string name="respond_message">Respond</string>
+    <string name="on">On</string>
+    <string name="wrote">wrote</string>
 
 
 </resources>

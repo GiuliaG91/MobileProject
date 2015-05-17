@@ -60,7 +60,7 @@
                                 android:layout_width="fill_parent"
                                 android:layout_height="0dp"
                                 android:textAppearance="?android:attr/textAppearanceSmall"
-                                android:text="Address"
+                                android:text="@string/string_student_fragment_address"
                                 android:textColor="@color/ColorPrimaryDark"
                                 android:id="@+id/student_address_title"
                                 android:layout_weight=".3"
@@ -93,7 +93,7 @@
                                 android:layout_width="fill_parent"
                                 android:layout_height="0dp"
                                 android:textAppearance="?android:attr/textAppearanceSmall"
-                                android:text="CAP"
+                                android:text="@string/string_student_fragment_cap"
                                 android:textColor="@color/ColorPrimaryDark"
                                 android:id="@+id/student_cap_title"
                                 android:layout_weight=".3"
@@ -148,7 +148,7 @@
                                 android:layout_width="fill_parent"
                                 android:layout_height="0dp"
                                 android:textAppearance="?android:attr/textAppearanceSmall"
-                                android:text="City"
+                                android:text="@string/string_student_fragment_city"
                                 android:textColor="@color/ColorPrimaryDark"
                                 android:id="@+id/student_city_title"
                                 android:layout_weight=".3"
@@ -181,7 +181,7 @@
                                 android:layout_width="fill_parent"
                                 android:layout_height="0dp"
                                 android:textAppearance="?android:attr/textAppearanceSmall"
-                                android:text="Nation"
+                                android:text="@string/string_student_fragment_nation"
                                 android:textColor="@color/ColorPrimaryDark"
                                 android:id="@+id/student_nation_title"
                                 android:layout_weight=".3"
@@ -209,6 +209,21 @@
                     </LinearLayout>
 
                     <!-- END City and Nation -->
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="200dp"
+                        android:orientation="vertical"
+                        android:layout_margin="5dp"
+                        android:id="@+id/office_map_container">
+
+                        <fragment
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            class="com.example.giuliagigi.jobplacement.GeoLocalization"
+                            android:id="@+id/office_map_fragment"/>
+
+                    </LinearLayout>
 
                     </LinearLayout>
 
@@ -252,7 +267,7 @@
                                 android:textAppearance="?android:textAppearanceMedium"
                                 android:layout_weight=".9"
                                 android:padding="10dp"
-                                android:text="Phones"
+                                android:text="@string/string_student_fragment_phones"
                                 android:textColor="@color/ColorPrimaryDark"
                                 />
 
@@ -286,19 +301,7 @@
 
             </android.support.v7.widget.CardView>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="200dp"
-                android:orientation="vertical"
-                android:id="@+id/office_map_container">
 
-                <fragment
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    class="com.example.giuliagigi.jobplacement.GeoLocalization"
-                    android:id="@+id/office_map_fragment"/>
-
-            </LinearLayout>
 
         </LinearLayout>
 

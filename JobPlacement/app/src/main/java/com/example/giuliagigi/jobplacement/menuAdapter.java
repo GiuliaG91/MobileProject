@@ -154,7 +154,7 @@ public class menuAdapter extends RecyclerView.Adapter<menuAdapter.ViewHolder> {
 
                                 if(!(current instanceof ProfileManagement)) {
 
-                                    Fragment fragment = ProfileManagement.newInstance();
+                                    Fragment fragment = ProfileManagement.newInstance(true,gd.getUserObject());
 
                                     fragmentManager.beginTransaction()
                                             .replace(R.id.tab_Home_container, fragment)
@@ -246,39 +246,35 @@ public class menuAdapter extends RecyclerView.Adapter<menuAdapter.ViewHolder> {
                     break;
                     case  TYPE_MAILBOX :
 
-                                    v.setOnClickListener(new View.OnClickListener() {
-                                        @Override
-                                        public void onClick(View v) {
+                        v.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
 
-                                    FragmentManager fragmentManager = activity.getSupportFragmentManager();
-                                    Fragment current = fragmentManager.findFragmentById(R.id.tab_Home_container);
+                                FragmentManager fragmentManager = activity.getSupportFragmentManager();
+                                Fragment current = fragmentManager.findFragmentById(R.id.tab_Home_container);
 
-                                    if(!(current instanceof StudentMailBoxFragment)) {
+                                if(!(current instanceof MailBoxFragment)) {
 
-                                        Fragment fragment = StudentMailBoxFragment.newInstance();
+                                    Fragment fragment = MailBoxFragment.newInstance();
 
-                                        fragmentManager.beginTransaction()
-                                                .replace(R.id.tab_Home_container, fragment)
-                                                .commit();
+                                    fragmentManager.beginTransaction()
+                                            .replace(R.id.tab_Home_container, fragment)
+                                            .commit();
 
-                                        // Highlight the selected item, update the title, and close the drawer
-                                        // Highlight the selected item, update the title, and close the drawer
-                                        TextView tv = (TextView) v.findViewById(R.id.rowText);
+                                    // Highlight the selected item, update the title, and close the drawer
+                                    // Highlight the selected item, update the title, and close the drawer
+                                    TextView tv = (TextView) v.findViewById(R.id.rowText);
 
-                                        toolbar.setTitle(tv.getText());
-                                        mDrawerLayout.closeDrawers();
-                                        mCallbacks.setSelectedItem(TYPE_MAILBOX);
+                                    toolbar.setTitle(tv.getText());
+                                    mDrawerLayout.closeDrawers();
+                                    mCallbacks.setSelectedItem(TYPE_MAILBOX);
 
-                                    }
-                                            mDrawerLayout.closeDrawers();
+                                    //********
+                                    //activity.invalidateOptionsMenu();
                                 }
-                            });
-
-
+                            }
+                        });
                         break;
-
-
-
 
                     case TYPE_LOGOUT :
 
@@ -353,7 +349,7 @@ public class menuAdapter extends RecyclerView.Adapter<menuAdapter.ViewHolder> {
 
                                   if(!(current instanceof ProfileManagement)) {
 
-                                      Fragment fragment = ProfileManagement.newInstance();
+                                      Fragment fragment = ProfileManagement.newInstance(true,gd.getUserObject());
 
                                       fragmentManager.beginTransaction()
                                               .replace(R.id.tab_Home_container, fragment)
@@ -488,9 +484,9 @@ public class menuAdapter extends RecyclerView.Adapter<menuAdapter.ViewHolder> {
                                   FragmentManager fragmentManager = activity.getSupportFragmentManager();
                                   Fragment current = fragmentManager.findFragmentById(R.id.tab_Home_container);
 
-                                  if(!(current instanceof CompanyMailBoxFragment)) {
+                                  if(!(current instanceof MailBoxFragment)) {
 
-                                      Fragment fragment = CompanyMailBoxFragment.newInstance();
+                                      Fragment fragment = MailBoxFragment.newInstance();
 
                                       fragmentManager.beginTransaction()
                                               .replace(R.id.tab_Home_container, fragment)
@@ -504,11 +500,12 @@ public class menuAdapter extends RecyclerView.Adapter<menuAdapter.ViewHolder> {
                                       mDrawerLayout.closeDrawers();
                                       mCallbacks.setSelectedItem(TYPE_MAILBOX);
 
-                                  }
-                                  mDrawerLayout.closeDrawers();
-                              }
-                          });
+                                      //********
+                                      //activity.invalidateOptionsMenu();
 
+                                  }
+                                }
+                          });
 
                             break;
 
@@ -527,6 +524,8 @@ public class menuAdapter extends RecyclerView.Adapter<menuAdapter.ViewHolder> {
 
 
                           break;
+
+
 
 
                       default: break;

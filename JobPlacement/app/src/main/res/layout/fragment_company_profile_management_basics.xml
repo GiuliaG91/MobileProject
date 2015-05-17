@@ -11,25 +11,32 @@
         android:layout_weight="1">
 
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
             android:orientation="vertical">
 
             <!-- Profile photo and name -->
 
-            <LinearLayout
-                android:orientation="horizontal"
+            <RelativeLayout
+                android:orientation="vertical"
                 android:layout_width="fill_parent"
                 android:layout_height="0dp"
                 android:layout_weight="0.3"
-                android:id="@+id/basics_profilePhoto"
-                android:background="@drawable/user_icon">
+                android:id="@+id/basics_profile_photo_container">
+
+                <ImageView
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:background="@drawable/user_icon"
+                    android:scaleType="centerInside"
+                    android:id="@+id/basics_profilePhoto"/>
 
 
                 <LinearLayout
                     android:orientation="vertical"
                     android:layout_width="fill_parent"
                     android:layout_height="fill_parent"
+                    android:layout_alignParentBottom="true"
                     android:gravity="bottom"
                     android:weightSum="1"
                     android:paddingBottom="20dp"
@@ -49,7 +56,9 @@
                         android:paddingTop="5dp" />
                 </LinearLayout>
 
-            </LinearLayout>
+
+
+    </RelativeLayout>
 
             <!-- END Profile photo and name -->
 

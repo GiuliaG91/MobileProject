@@ -10,7 +10,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.GridLayout;
 import android.widget.ImageButton;
 import android.widget.MultiAutoCompleteTextView;
@@ -24,8 +23,6 @@ public class ProfileManagementTagsFragment extends ProfileManagementFragment {
 
     private static final String TITLE = "Tags";
 
-    private User currentUser;
-
     private ImageButton addTag;
     private GridLayout tagContainer;
     private MultiAutoCompleteTextView tagsText;
@@ -35,10 +32,11 @@ public class ProfileManagementTagsFragment extends ProfileManagementFragment {
     /* ---------------------------- CONTRUCTIORS GETTERS SETTERS ---------------------------------*/
 
     public ProfileManagementTagsFragment() {}
-    public static ProfileManagementTagsFragment newInstance() {
+    public static ProfileManagementTagsFragment newInstance(User user) {
         ProfileManagementTagsFragment fragment = new ProfileManagementTagsFragment();
         Bundle args = new Bundle();
         fragment.setArguments(args);
+        fragment.setUser(user);
         return fragment;
     }
 
@@ -47,14 +45,19 @@ public class ProfileManagementTagsFragment extends ProfileManagementFragment {
     }
 
 
+    public void setUser(User user){
+
+        Log.println(Log.ASSERT,"PM FRAG","setting user" + user);
+        this.user = user;
+    }
+
     /* ---------------------------- STANDARD CALLBACKS -------------------------------------------*/
 
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
 
-        currentUser = application.getUserObject();
-        userTags = currentUser.getTags();
+        userTags = user.getTags();
         tagViews = new ArrayList<View>();
     }
 
@@ -86,7 +89,7 @@ public class ProfileManagementTagsFragment extends ProfileManagementFragment {
                 public void onClick(View v) {
 
                     tagContainer.removeView(v);
-                    currentUser.removeTag(userTags.get(tagTextView.getText().toString().trim()));
+                    user.removeTag(userTags.get(tagTextView.getText().toString().trim()));
                     userTags.remove(tagTextView.getText().toString().trim());
                     tagViews.remove(mytagView);
                     Toast.makeText(getActivity(), "Removed", Toast.LENGTH_SHORT).show();
@@ -141,7 +144,7 @@ public class ProfileManagementTagsFragment extends ProfileManagementFragment {
                             public void onClick(View v) {
 
                                 tagContainer.removeView(v);
-                                currentUser.removeTag(userTags.get(t.getText().toString().trim()));
+                                user.removeTag(userTags.get(t.getText().toString().trim()));
                                 userTags.remove(t.getText().toString().trim());
                                 tagViews.remove(mytagView);
                                 Toast.makeText(getActivity(), "Removed", Toast.LENGTH_SHORT).show();
@@ -205,9 +208,9 @@ public class ProfileManagementTagsFragment extends ProfileManagementFragment {
         for(Tag t: userTags.values()){
 
             Log.println(Log.ASSERT, "TAGS FRAG", "tag: " + t.getTag());
-            currentUser.addTag(t);
+            user.addTag(t);
         }
 
-        currentUser.saveEventually();
+        user.saveEventually();
     }
 }

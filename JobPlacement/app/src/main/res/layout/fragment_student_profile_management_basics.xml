@@ -17,13 +17,19 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <LinearLayout
-                android:orientation="horizontal"
+            <RelativeLayout
+                android:orientation="vertical"
                 android:layout_width="fill_parent"
                 android:layout_height="0dp"
                 android:layout_weight="0.3"
-                android:id="@+id/basics_profilePhoto"
-                android:background="@drawable/user_icon">
+                android:id="@+id/basics_profile_photo_container">
+
+                <ImageView
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:background="@drawable/user_icon"
+                    android:scaleType="centerCrop"
+                    android:id="@+id/basics_profilePhoto"/>
 
 
                 <LinearLayout
@@ -31,6 +37,7 @@
                     android:layout_width="fill_parent"
                     android:layout_height="fill_parent"
                     android:gravity="bottom"
+                    android:layout_alignParentBottom="true"
                     android:weightSum="1"
                     android:paddingBottom="20dp"
                     android:id="@+id/basics_name_surname_container">
@@ -60,7 +67,7 @@
                         android:paddingTop="5dp" />
                 </LinearLayout>
 
-            </LinearLayout>
+            </RelativeLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"

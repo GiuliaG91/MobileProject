@@ -4,9 +4,6 @@ package com.example.giuliagigi.jobplacement;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.net.Uri;
-import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
@@ -16,27 +13,18 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.Toast;
 
-import com.parse.ParseException;
-import com.parse.ParseFile;
-import com.parse.ProgressCallback;
-import com.parse.SaveCallback;
-
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
 import java.util.ArrayList;
 
 
 public class ProfileManagement extends Fragment{
 
-    private static final int REQUEST_IMAGE_GET = 1;
     private GlobalData application;
     private OnInteractionListener host;
     private ArrayList<ProfileManagementFragment> fragments;
-    private boolean editable;
-
+    private boolean isEditMode,editable;
+    private User user;
 
 
     /**
@@ -49,14 +37,28 @@ public class ProfileManagement extends Fragment{
     /***************************************************************/
 
 
+    /*------------- CONSTRUCTORS GETTERS SETTERS ------------------------------------------------*/
 
     public  ProfileManagement(){ }
-    public static ProfileManagement newInstance() {
+    public static ProfileManagement newInstance(boolean editable, User user) {
         ProfileManagement fragment = new ProfileManagement();
         Bundle args = new Bundle();
         fragment.setArguments(args);
+        fragment.setEditable(editable);
+        fragment.setUser(user);
         return fragment;
     }
+
+    public void setEditable(boolean editable){
+
+        this.editable = editable;
+    }
+
+    public void setUser(User user){
+
+        this.user = user;
+    }
+
 
     /*------------- STANDARD CALLBACKS ------------------------------------------------------------*/
 
@@ -66,7 +68,7 @@ public class ProfileManagement extends Fragment{
 
         Log.println(Log.ASSERT,"PROFILE MANAG", "onAttach");
 
-        editable = false;
+        isEditMode = false;
         try {
             host = (OnInteractionListener)activity;
         }
@@ -74,7 +76,7 @@ public class ProfileManagement extends Fragment{
             throw new ClassCastException(activity.toString()
                     + " must implement OnInteractionListener");
         }
-        host.setEditMode(editable);
+        host.setEditMode(false);
         application = (GlobalData)getActivity().getApplication();
     }
 
@@ -96,7 +98,7 @@ public class ProfileManagement extends Fragment{
         /*************ViewPager***************************/
 
         // Creating The ViewPagerAdapter and Passing Fragment Manager, Titles fot the Tabs and Number Of Tabs.
-        adapter = new ProfileManagementViewAdapter(getChildFragmentManager(), application.getCurrentUser().getType());
+        adapter = new ProfileManagementViewAdapter(getChildFragmentManager(),user,editable);
         // Assigning ViewPager View and setting the adapter
         pager = (ViewPager) view.findViewById(R.id.pager);
         pager.setAdapter(adapter);
@@ -118,19 +120,23 @@ public class ProfileManagement extends Fragment{
         // Setting the ViewPager For the SlidingTabsLayout
         tabs.setViewPager(pager);
 
-        final Button edit = new Button(getActivity().getApplicationContext());
-        edit.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-        edit.setText("edit profile");
-        edit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
 
-                editable = !editable;
-                host.setEditMode(editable);
-            }
-        });
-        ViewGroup root = (ViewGroup)view.findViewById(R.id.fragment_tab_home);
-        root.addView(edit);
+        if(editable){
+
+            final Button edit = new Button(getActivity().getApplicationContext());
+            edit.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+            edit.setText("edit profile");
+            edit.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    switchMode();
+                }
+            });
+            ViewGroup root = (ViewGroup)view.findViewById(R.id.fragment_tab_home);
+            root.addView(edit);
+        }
+
         /****************************************************/
 
 
@@ -150,6 +156,21 @@ public class ProfileManagement extends Fragment{
             f.onActivityResult(requestCode,resultCode,data);
     }
 
+
+    private void switchMode(){
+
+        if(editable){
+
+            isEditMode = !isEditMode;
+            host.setEditMode(isEditMode);
+        }
+        else
+            Toast.makeText(getActivity(), "ERROR: you are not supposed to modify this account",Toast.LENGTH_SHORT).show();
+
+    }
+
+
+    /* ----------- interface with upper activity --------------*/
     public interface OnInteractionListener {
 
         public void setEditMode(boolean editable);

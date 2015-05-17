@@ -37,6 +37,7 @@ public class GlobalData extends Application {
     private HashMap<String,Tag> tags;
     private HashMap<String,Boolean> isCached;
     private SharedPreferences loginPreferences;
+    private InboxMessage currentViewMessage;
 
 
     /**************NEW OFFER BUNDLE**********/
@@ -51,8 +52,9 @@ public class GlobalData extends Application {
     public void onCreate() {
         super.onCreate();
 
-        currentUser = null;
+//        currentUser = null;
         currentUserObject = null;
+        currentViewMessage = null;
 
         // Enable Local Datastore.
         Parse.enableLocalDatastore(this);
@@ -68,8 +70,11 @@ public class GlobalData extends Application {
         ParseObject.registerSubclass(Tag.class);
         ParseObject.registerSubclass(Withdrawal.class);
         ParseObject.registerSubclass(Certificate.class);
+        ParseObject.registerSubclass(InboxMessage.class);
 
         Parse.initialize(this, "EICiUy2eT7CZPXw8N6I1p6lE4844svLI73JTc2QY", "8I9HZ7AgMHgeIxQKk8k653jNBvBCz57nRuSH73pA");
+
+        getCurrentUser();
 
         isCached = new HashMap<String,Boolean>();
         tags = new HashMap<String,Tag>();
@@ -91,6 +96,8 @@ public class GlobalData extends Application {
             } catch (ParseException e) {
                 e.printStackTrace();
             }
+        else
+            Log.println(Log.ASSERT,"GLOBAL DATA", "currentUser is null");
 
         return  currentUser;
     }
@@ -113,22 +120,8 @@ public class GlobalData extends Application {
         }
 
         return (Student)currentUserObject;
-
-
-
-//        if(currentUser.getType().equals(User.TYPE_COMPANY))
-//            return null;
-//
-//        ParseQuery<Student> studentQuery = ParseQuery.getQuery(Student.class);
-//        studentQuery.whereEqualTo(User.MAIL_FIELD,currentUser.getEmail());
-//        Student result = null;
-//        try {
-//            result = (Student)studentQuery.find().get(0);
-//        } catch (ParseException e) {
-//            e.printStackTrace();
-//        }
-//        return result;
     }
+
     public Company getCompanyFromUser(){
 
         getCurrentUser();
@@ -146,63 +139,15 @@ public class GlobalData extends Application {
             }
         }
 
-
         return (Company)currentUserObject;
-//        if(currentUser.getType().equals(User.TYPE_STUDENT))
-//            return null;
-//
-//        ParseQuery<Company> companyQuery = ParseQuery.getQuery(Company.class);
-//        companyQuery.whereEqualTo(User.MAIL_FIELD, currentUser.getEmail());
-//        Company result = null;
-//        try {
-//            result = (Company)companyQuery.find().get(0);
-//        } catch (ParseException e) {
-//            e.printStackTrace();
-//        }
-//        return result;
     }
+
     public User getUserObject(){
 
         if(getCurrentUser().getType().equals(User.TYPE_STUDENT))
             return getStudentFromUser();
         else
             return getCompanyFromUser();
-
-//        if(currentUser == null)
-//            return null;
-
-//        if(currentUserObject == null){
-//
-//            if(currentUser.getType().equals((User.TYPE_STUDENT))){
-//
-//                ParseQuery<Student> studentQuery = ParseQuery.getQuery(Student.class);
-//                studentQuery.whereEqualTo(User.MAIL_FIELD,currentUser.getEmail());
-//                    studentQuery.findInBackground(new FindCallback<Student>() {
-//                        @Override
-//                        public void done(List<Student> students, ParseException e) {
-//
-//                            if(e == null)
-//                                if(students!= null)
-//                                    currentUserObject = students.get(0);
-//                        }
-//                    });
-//            }
-//            else {
-//
-//                ParseQuery<Company> companyQuery = ParseQuery.getQuery(Company.class);
-//                companyQuery.whereEqualTo(User.MAIL_FIELD,currentUser.getEmail());
-//                try {
-//                    currentUserObject = companyQuery.find().get(0);
-//                } catch (ParseException e) {
-//                    e.printStackTrace();
-//                }
-//            }
-//        }
-//
-//        if(currentUserObject.isCachingNeeded())
-//            currentUserObject.cacheData();
-//
-//        return currentUserObject;
     }
 
 
@@ -282,6 +227,17 @@ public class GlobalData extends Application {
 
     public OfferFilterStatus getOfferFilterStatus() {
         return offerFilterStatus;
+    }
+
+
+    /* ---------------- INBOX MESSAGES -----------------------------------------------------------*/
+
+    public InboxMessage getCurrentViewMessage(){
+        return currentViewMessage;
+    }
+
+    public void setCurrentViewMessage(InboxMessage m){
+        this.currentViewMessage = m;
     }
 
 }

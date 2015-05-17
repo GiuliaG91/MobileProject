@@ -12,7 +12,7 @@ import java.util.Date;
  */
 
 @ParseClassName("Degree")
-public class Degree extends ParseObject{
+public class Degree extends ParseObject implements Comparable<Degree>{
 
     public static final String TYPE_BACHELOR = "Bachelor";
     public static final String TYPE_MASTER = "Master";
@@ -119,5 +119,21 @@ public class Degree extends ParseObject{
         return -1;
     }
 
+    @Override
+    public int compareTo(Degree other) {
+
+        if(other == null)
+            return 1;
+
+        int thisId = getTypeID(this.getType());
+        int otherId = getTypeID(other.getType());
+
+        if(thisId<otherId)
+            return -1;
+        else if (thisId == otherId)
+            return 0;
+
+        return 1;
+    }
 
 }

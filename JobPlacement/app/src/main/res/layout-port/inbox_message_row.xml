@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/row_message"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="100dp"
+    android:background="@android:color/white">
+
+    <CheckBox
+        android:id="@+id/delete_message"
+        android:layout_width="0dp"
+        android:layout_height="fill_parent"
+        android:layout_weight="0.6"
+        android:layout_marginLeft="5dp"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        android:textColor="#ccc"
+        android:clickable="true"
+        android:focusable="true"
+        android:layout_gravity="center_vertical"/>
+
+    <CheckBox
+        android:id="@+id/star_message"
+        android:layout_width="0dp"
+        android:layout_height="fill_parent"
+        android:layout_weight="0.5"
+        android:layout_marginLeft="5dp"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        android:textColor="#ccc"
+        android:clickable="true"
+        android:focusable="true"
+        android:button="@drawable/star"
+        android:layout_gravity="center_vertical"/>
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:id="@+id/sender_img"
+        android:src="@drawable/ic_profile"
+        android:layout_gravity="center_vertical" />
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="0dp"
+        android:layout_height="fill_parent"
+        android:layout_weight="3"
+        android:paddingLeft="5dp">
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="0dp"
+            android:text="Sender"
+            android:id="@+id/sender"
+            android:layout_weight="1"
+            android:gravity="bottom"
+            android:textColor="#ff000000"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:paddingBottom="5dp" />
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="0dp"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="Object: ..."
+            android:id="@+id/object_message"
+            android:layout_weight="1"
+            android:paddingTop="5dp"
+            android:textStyle="bold"/>
+
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="fill_parent"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="00:00"
+        android:id="@+id/date_message"
+        android:layout_weight="0.3"
+        android:gravity="center_vertical"/>
+
+</LinearLayout>

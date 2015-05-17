@@ -31,7 +31,12 @@ import android.widget.Toast;
 import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.getbase.floatingactionbutton.FloatingActionsMenu;
 import com.parse.ParseException;
+import com.parse.ParseInstallation;
+import com.parse.ParseObject;
+import com.parse.ParsePush;
 import com.parse.ParseQuery;
+
+import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
 import java.text.SimpleDateFormat;
@@ -696,6 +701,21 @@ public class NewOffer extends Fragment implements DatePickerFragment.OnDataSetLi
                 buttonConfiguration();
             }
         }
+    /**
+     * This interface must be implemented by activities that contain this
+     * fragment to allow an interaction in this fragment to be communicated
+     * to the activity and potentially other fragments contained in that
+     * activity.
+     * <p/>
+     * See the Android Training lesson <a href=
+     * "http://developer.android.com/training/basics/fragments/communicating.html"
+     * >Communicating with Other Fragments</a> for more information.
+     */
+    public interface OnFragmentInteractionListener {
+        // TODO: Update argument type and name
+        public void onFragmentInteraction(Uri uri);
+    }
+
 
 
 
@@ -881,7 +901,7 @@ public class NewOffer extends Fragment implements DatePickerFragment.OnDataSetLi
                     offer.setPublishField(false);
 
 
-                    GlobalData gd=(GlobalData)getActivity().getApplication();
+                    final GlobalData gd=(GlobalData)getActivity().getApplication();
 
                     Company company=(Company)gd.getUserObject();
 
@@ -926,15 +946,31 @@ public class NewOffer extends Fragment implements DatePickerFragment.OnDataSetLi
                         offer.addTag(tag);
 
                     }
+
                     globalData.setCurrentOffer(offer);
-                   final CompanyOffer obj=offer;
+                    final CompanyOffer obj=offer;
+
                     offer.saveInBackground(new SaveCallback() {
                         @Override
                         public void done(ParseException e) {
-
-                                obj.getCompany().addOffer(obj);
+                            obj.getCompany().addOffer(obj);
                         }
                     });
+
+                            /* Invio notifica push a studenti */
+                            ParseQuery<ParseUser> userQuery = ParseUser.getQuery();
+                            userQuery.whereEqualTo(ParseUserWrapper.TYPE_FIELD,User.TYPE_STUDENT);
+
+                            ParseQuery pushQuery = ParseInstallation.getQuery();
+                            pushQuery.whereMatchesQuery("user", userQuery);
+
+                            ParsePush push = new ParsePush();
+                            push.setQuery(pushQuery);
+                            push.setMessage("The company " + ((Company)gd.getUserObject()).getName() + "has published a new offer");
+                            push.sendInBackground();
+                        }
+
+
                     Toast.makeText(getActivity(),"Done",Toast.LENGTH_SHORT ).show();
 
                         editMode=false;
@@ -943,8 +979,6 @@ public class NewOffer extends Fragment implements DatePickerFragment.OnDataSetLi
                 }
 
             }
-
-        }
 
       public Boolean isInEditMode()
       {
@@ -1092,22 +1126,6 @@ public class NewOffer extends Fragment implements DatePickerFragment.OnDataSetLi
 
 
 
-    }
-
-
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p/>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
-    public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        public void onFragmentInteraction(Uri uri);
     }
 
 

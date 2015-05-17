@@ -21,9 +21,12 @@ import com.parse.ParseException;
 
 import org.w3c.dom.Text;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+import java.util.Locale;
 
 
 /**
@@ -122,13 +125,16 @@ public class StudentRegistrationFragment extends Fragment {
                 builder.setPositiveButton("Save", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        day = picker.getDayOfMonth();
-                        month = picker.getMonth();
-                        year = picker.getYear();
-                        birthPicker.setText(day + "/" + month + "/" + year);
-                        Calendar c = GregorianCalendar.getInstance();
-                        c.set(day,month,year);
-                        date = c.getTime();
+                        int day = picker.getDayOfMonth();
+                        int month = picker.getMonth();
+                        int year = picker.getYear();
+                        Calendar c=Calendar.getInstance();
+                        c.set(Calendar.DATE,day);
+                        c.set(Calendar.MONTH, month);
+                        c.set(Calendar.YEAR, year);
+                        DateFormat df= SimpleDateFormat.getDateInstance(SimpleDateFormat.MEDIUM, Locale.getDefault());
+                        birthPicker.setText(df.format(c.getTime()));
+                        date=c.getTime();
                     }
                 });
                 builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {

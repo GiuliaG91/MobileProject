@@ -26,6 +26,7 @@ import android.widget.Toast;
 
 import com.parse.LogInCallback;
 import com.parse.ParseException;
+import com.parse.ParseInstallation;
 import com.parse.ParseUser;
 import com.parse.RequestPasswordResetCallback;
 
@@ -55,6 +56,10 @@ public class Login extends ActionBarActivity {
         setContentView(R.layout.login_layout);
 
         application = (GlobalData)getApplicationContext();
+
+        /* ero gia loggato? */
+        if(application.getCurrentUser()!=null)
+            startActivity(new Intent(getApplicationContext(),Home.class));
 
         final SharedPreferences sp = getPreferences(Context.MODE_PRIVATE);
         application.setLoginPreferences(sp);
@@ -257,10 +262,15 @@ public class Login extends ActionBarActivity {
                     editor.putBoolean(SHAREDPREF_LATEST_LOGIN_PREFERENCE,rememberAccount.isChecked());
                     editor.apply();
 
-//                    /* caching profile infos */
-//                    GlobalData gd = (GlobalData)getApplicationContext();
-//                    gd.getCurrentUser();
-//                    gd.getUserObject();
+                    /* caching profile infos */
+                    GlobalData gd = (GlobalData)getApplicationContext();
+                    gd.getCurrentUser();
+                    gd.getUserObject();
+
+                    /* register an object Installation for receiving Push Notifications */
+                    ParseInstallation installation = ParseInstallation.getCurrentInstallation();
+                    installation.put("user", gd.getCurrentUser());
+                    installation.saveInBackground();
 
                     /* launch home activity */
                     Intent i = new Intent(getApplicationContext(),Home.class);

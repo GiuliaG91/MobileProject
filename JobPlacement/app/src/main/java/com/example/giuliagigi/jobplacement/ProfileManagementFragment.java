@@ -32,15 +32,17 @@ public class ProfileManagementFragment extends Fragment implements OnActivityCha
     protected View root;
     protected boolean isListenerAfterDetach;
     protected String title;
+    protected User user;
 
 
     /* --------------------- CONSTRUCTORS -------------------------------------------------------- */
 
     public ProfileManagementFragment() {}
-    public static ProfileManagementFragment newInstance() {
+    public static ProfileManagementFragment newInstance(User user) {
         ProfileManagementFragment fragment = new ProfileManagementFragment();
         Bundle args = new Bundle();
         fragment.setArguments(args);
+        fragment.setUser(user);
         return fragment;
     }
 
@@ -48,6 +50,11 @@ public class ProfileManagementFragment extends Fragment implements OnActivityCha
         return TITLE;
     }
 
+    public void setUser(User user){
+
+        Log.println(Log.ASSERT,"PM FRAG","setting user" + user);
+        this.user = user;
+    }
     /* --------------------- STANDARD CALLBACKS ------------------------------------------------- */
 
     @Override

@@ -6,7 +6,6 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.text.format.Time;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,11 +22,12 @@ import com.parse.DeleteCallback;
 import com.parse.ParseException;
 import com.parse.SaveCallback;
 
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
-
+import java.util.Locale;
 
 
 public class StudentProfileManagementDegreeFragment extends ProfileManagementFragment {
@@ -42,7 +42,7 @@ public class StudentProfileManagementDegreeFragment extends ProfileManagementFra
     private static String BUNDLE_DATE_YEAR = "bundle_date_year";
     private static String BUNDLE_HASCHANGED = "bundle_recycled";
 
-    private Student currentUser;
+    private Student student;
     private Spinner degreeType, degreeStudies;
     private EditText degreeMark;
     private TextView degreeDate;
@@ -50,6 +50,7 @@ public class StudentProfileManagementDegreeFragment extends ProfileManagementFra
     Button delete;
     private Degree degree;
     private boolean isRemoved, degreeDateChanged;
+    private Date dateDegree;
     private int day,month,year;
 
     /* ---------- CONSTRUCTORS, GETTERS, SETTERS ----------------------------------------------*/
@@ -57,11 +58,12 @@ public class StudentProfileManagementDegreeFragment extends ProfileManagementFra
     public StudentProfileManagementDegreeFragment() {
         super();
     }
-    public static StudentProfileManagementDegreeFragment newInstance(Degree degree) {
+    public static StudentProfileManagementDegreeFragment newInstance(Degree degree,Student student) {
         StudentProfileManagementDegreeFragment fragment = new StudentProfileManagementDegreeFragment();
         Bundle args = new Bundle();
         fragment.setArguments(args);
         fragment.setDegree(degree);
+        fragment.setStudent(student);
         return fragment;
 
     }
@@ -74,12 +76,16 @@ public class StudentProfileManagementDegreeFragment extends ProfileManagementFra
         return TITLE;
     }
 
+    public void setStudent(Student student){
+
+        this.student = student;
+    }
+
     /* ---------- STANDARD CALLBACKS -------------------------------------------------------*/
 
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-        currentUser = (Student)application.getUserObject();
         isListenerAfterDetach = true;
         isRemoved = false;
         degreeDateChanged = false;
@@ -165,8 +171,8 @@ public class StudentProfileManagementDegreeFragment extends ProfileManagementFra
 
                         if(e==null){
 
-                            currentUser.removeDegree(degree);
-                            currentUser.saveEventually();
+                            student.removeDegree(degree);
+                            student.saveEventually();
                         }
                     }
                 });
@@ -210,8 +216,11 @@ public class StudentProfileManagementDegreeFragment extends ProfileManagementFra
         degreeDate = (TextView)root.findViewById(R.id.degree_management_datePicker);
         if(degree.getDegreeDate() == null)
             degreeDate.setText(INSERT_FIELD);
-        else
-            degreeDate.setText(date);
+        else {
+            DateFormat df = SimpleDateFormat.getDateInstance(SimpleDateFormat.MEDIUM, Locale.getDefault());
+            degreeDate.setText(df.format(degree.getDegreeDate()));
+        }
+
 
         degreeDate.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -225,9 +234,18 @@ public class StudentProfileManagementDegreeFragment extends ProfileManagementFra
                 builder.setPositiveButton("Save", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        degreeDate.setText(picker.getDayOfMonth() + "/" + picker.getMonth() + "/" + picker.getYear());
-                        degreeDateChanged = true;
                         hasChanged = true;
+                        int day = picker.getDayOfMonth();
+                        int month = picker.getMonth();
+                        int year = picker.getYear();
+                        Calendar c=Calendar.getInstance();
+                        c.set(Calendar.DATE,day);
+                        c.set(Calendar.MONTH, month);
+                        c.set(Calendar.YEAR, year);
+                        DateFormat df= SimpleDateFormat.getDateInstance(SimpleDateFormat.MEDIUM, Locale.getDefault());
+                        degreeDate.setText(df.format(c.getTime()));
+                        dateDegree = c.getTime();
+//                        birthPicker.setText(String.format("%2d/%2d/%4d", day, month, year));
                     }
                 });
                 builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -307,24 +325,20 @@ public class StudentProfileManagementDegreeFragment extends ProfileManagementFra
 
             if(degreeDateChanged) {
 
-                Date date = null;
-                Calendar c = GregorianCalendar.getInstance();
-                c.set(day,month,year);
-                date = c.getTime();
-                Log.println(Log.ASSERT, "BASICS", "DATE:" + date.toString());
-                degree.setDegreeDate(date);
+
+                degree.setDegreeDate(dateDegree);
             }
             degree.setLoud(hasLoud.isChecked());
-            degree.setStudent(currentUser);
+            degree.setStudent(student);
             degree.saveEventually(new SaveCallback() {
                 @Override
                 public void done(ParseException e) {
 
                     if(e == null){
 
-                        Log.println(Log.ASSERT,"DEGREE FRAG","degree saved successfully. Adding to user");
-                        currentUser.addDegree(degree);
-                        currentUser.saveEventually();
+                        Log.println(Log.ASSERT,"DEGREE FRAG","degree saved successfully. Adding...");
+                        student.addDegree(degree);
+                        student.saveEventually();
                     }
                 }
             });

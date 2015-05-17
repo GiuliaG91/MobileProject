@@ -23,8 +23,14 @@ import android.widget.Toast;
 
 import com.parse.DeleteCallback;
 import com.parse.ParseException;
+import com.parse.ParseInstallation;
+import com.parse.ParsePush;
+import com.parse.ParseQuery;
 import com.parse.SaveCallback;
 import com.parse.SignUpCallback;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.Arrays;
 import java.util.Currency;
@@ -273,6 +279,29 @@ public class Registration extends ActionBarActivity implements StudentRegistrati
                                     newParseUser.setUser(newUser);
                                     newParseUser.saveEventually();
                                     saveLoginPreferences(newUser);
+
+                                    // invia notifica push agli studenti se il nuovo user registrato è una company
+                                    if(newUser.getType().equals(User.TYPE_COMPANY)) {
+                                        ParseQuery userQuery = ParseQuery.getQuery("User");
+                                        userQuery.whereEqualTo(User.TYPE_FIELD, User.TYPE_STUDENT);
+
+                                        ParseQuery pushQuery = ParseInstallation.getQuery();
+                                        pushQuery.whereMatchesQuery("user", userQuery);
+
+
+                                        try {
+
+                                            JSONObject data = new JSONObject("{\"alert\": \"The company " + ((Company) newUser).getName() + " is signed up to the application\", \"uri\": " + newUser.getMail() + "\"}");
+                                            ParsePush push = new ParsePush();
+                                            push.setQuery(pushQuery);
+                                            push.setData(data);
+                                            push.sendInBackground();
+
+                                        }catch(JSONException jsonEx) {
+                                            Log.println(Log.ASSERT, "REGISTRATION", jsonEx.toString());
+                                        }
+                                    }
+
                                     startActivity(new Intent(getApplicationContext(),Login.class));
                                 }
                                 else

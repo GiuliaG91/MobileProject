@@ -4,11 +4,8 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
-import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
+import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,49 +13,55 @@ import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.parse.ParseException;
 import com.parse.SaveCallback;
 
-import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+import java.util.Locale;
 
 public class StudentProfileManagementBasicsFragment extends ProfileManagementBasicsFragment {
 
     public static final String TITLE = "Overview";
 
-    private Student currentUser;
-    private int day,month,year;
+    private Student student;
+    private Date date;
     private boolean birthDateChanged;
     EditText nameText,surnameText, birthCityText, emailText, descriptionText;
     TextView birthPicker;
 //    LinearLayout profilePhoto;
     CheckBox male,female;
 
+
+    /* ---------------------- CONSTRUCTORS GETTERS SETTERS ---------------------------------------*/
+
     public StudentProfileManagementBasicsFragment() {super();}
-    public static StudentProfileManagementBasicsFragment newInstance() {
+    public static StudentProfileManagementBasicsFragment newInstance(Student student) {
         StudentProfileManagementBasicsFragment fragment = new StudentProfileManagementBasicsFragment();
         Bundle args = new Bundle();
         fragment.setArguments(args);
+        fragment.setStudent(student);
+        fragment.setUser(student);
         return fragment;
     }
-    @Override
-    public String getTitle() {
-        return TITLE;
+
+    public void setStudent(Student student){
+
+        this.student = student;
     }
 
-
+    /* ---------------------------- STANDARD CALLBACKS -------------------------------------------*/
 
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
 
-        Log.println(Log.ASSERT, "BASICS FRAG", "onAttach");
-        currentUser = (Student)application.getUserObject();
+        Log.println(Log.ASSERT, "STUD BASICS", "onAttach");
         birthDateChanged = false;
     }
 
@@ -73,42 +76,41 @@ public class StudentProfileManagementBasicsFragment extends ProfileManagementBas
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
+        Log.println(Log.ASSERT,"STUD BASICS", "retrieving view from resources");
         root = inflater.inflate(R.layout.fragment_student_profile_management_basics, container, false);
 
+        if(root == null)
+            Log.println(Log.ASSERT,"STUD BASICS", "layout not found");
+
         nameText = (EditText)root.findViewById(R.id.student_name_area);
-        if(currentUser.getName() == null)
+        if(student.getName() == null)
             nameText.setText(INSERT_FIELD);
         else
-            nameText.setText(currentUser.getName());
+            nameText.setText(student.getName());
 
         surnameText = (EditText)root.findViewById(R.id.student_surname_area);
-        if(currentUser.getSurname() == null)
+        if(student.getSurname() == null)
             surnameText.setText(INSERT_FIELD);
         else
-            surnameText.setText(currentUser.getSurname());
-
-//        emailText = (EditText)root.findViewById(R.id.basics_email_area);
-//        emailText.setText(currentUser.getMail());
+            surnameText.setText(student.getSurname());
 
         birthCityText = (EditText)root.findViewById(R.id.student_birthCity_et);
-        if(currentUser.getBirthCity() == null)
+        if(student.getBirthCity() == null)
             birthCityText.setText(INSERT_FIELD);
         else
-            birthCityText.setText(currentUser.getBirthCity());
+            birthCityText.setText(student.getBirthCity());
 
 
         birthPicker = (TextView)root.findViewById(R.id.student_birth_et);
-        if(currentUser.getBirth() == null){
+        if(student.getBirth() == null){
 
             birthPicker.setText(INSERT_FIELD);
         }
 
         else{
 
-            day = currentUser.getBirth().getDay();
-            month = currentUser.getBirth().getMonth();
-            year = currentUser.getBirth().getYear() + 1900;
-            birthPicker.setText(day + "/" + month + "/" + year);
+            DateFormat df=SimpleDateFormat.getDateInstance(SimpleDateFormat.MEDIUM,Locale.getDefault());
+            birthPicker.setText(df.format(student.getBirth()));
         }
 
 
@@ -127,10 +129,17 @@ public class StudentProfileManagementBasicsFragment extends ProfileManagementBas
                     public void onClick(DialogInterface dialog, int which) {
                         hasChanged = true;
                         birthDateChanged = true;
-                        day = picker.getDayOfMonth();
-                        month = picker.getMonth();
-                        year = picker.getYear();
-                        birthPicker.setText(day + "/" + month + "/" + year);
+                        int day = picker.getDayOfMonth();
+                        int month = picker.getMonth();
+                        int year = picker.getYear();
+                        Calendar c=Calendar.getInstance();
+                        c.set(Calendar.DATE,day);
+                        c.set(Calendar.MONTH, month);
+                        c.set(Calendar.YEAR, year);
+                        DateFormat df=SimpleDateFormat.getDateInstance( SimpleDateFormat.MEDIUM, Locale.getDefault());
+                        birthPicker.setText(df.format(c.getTime()));
+                        date=c.getTime();
+//                        birthPicker.setText(String.format("%2d/%2d/%4d", day, month, year));
                     }
                 });
                 builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -145,10 +154,10 @@ public class StudentProfileManagementBasicsFragment extends ProfileManagementBas
 
 
         descriptionText = (EditText)root.findViewById(R.id.student_description_et);
-        if(currentUser.getDescription() == null)
+        if(student.getDescription() == null)
             descriptionText.setText(INSERT_FIELD);
         else
-            descriptionText.setText(currentUser.getDescription());
+            descriptionText.setText(student.getDescription());
 
         textFields.add(nameText);
         textFields.add(surnameText);
@@ -182,29 +191,13 @@ public class StudentProfileManagementBasicsFragment extends ProfileManagementBas
         });
 
 
-
-//        profilePhoto = (LinearLayout)root.findViewById(R.id.basics_profilePhoto);
-//
-//        if(currentUser.getProfilePhoto() != null) {
-//            Bitmap bmImg = currentUser.getProfilePhoto();
-//            BitmapDrawable background = new BitmapDrawable(bmImg);
-//            profilePhoto.setBackgroundDrawable(background);
-//        }
-//
-//        profilePhoto.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//
-//                Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-//                intent.setType("image/*");
-//                if(intent.resolveActivity(getActivity().getPackageManager()) != null){
-//                    startActivityForResult(intent,REQUEST_IMAGE_GET);
-//                }
-//            }
-//        });
-
-//        setEnable(host.isEditMode());
+        Log.println(Log.ASSERT,"STUD BASICS", "onCreateView finish");
         return root;
+    }
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
     }
 
     @Override
@@ -216,32 +209,6 @@ public class StudentProfileManagementBasicsFragment extends ProfileManagementBas
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-
-//        Log.println(Log.ASSERT,"BASICS FRAG", "onActivity result");
-//
-//        if(requestCode == REQUEST_IMAGE_GET && resultCode == Activity.RESULT_OK){
-//
-//            Uri photoUri = data.getData();
-//            Bitmap photoBitmap = null;
-//
-//            try {
-//                photoBitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(),photoUri);
-//
-//                if(photoBitmap == null)
-//                    Log.println(Log.ASSERT,"PM FRAG", "photoBitmap null");
-//                else{
-//
-//                    hasChanged = true;
-//                    application.getUserObject().setProfilePhoto(photoBitmap);
-//                    Bitmap bmImg = currentUser.getProfilePhoto();
-//                    BitmapDrawable background = new BitmapDrawable(bmImg);
-//                    profilePhoto.setBackgroundDrawable(background);
-//                }
-//
-//            } catch (IOException e) {
-//                e.printStackTrace();
-//            }
-//        }
     }
 
     /* ----------------------- AUXILIARY METHODS ----------------------------------------------- */
@@ -251,7 +218,7 @@ public class StudentProfileManagementBasicsFragment extends ProfileManagementBas
 
         super.setEnable(enable);
 
-        boolean isMale = currentUser.getSex().equals(Student.SEX_MALE);
+        boolean isMale = student.getSex().equals(Student.SEX_MALE);
         male.setChecked(isMale);
         female.setChecked(!isMale);
         male.setEnabled(enable);
@@ -271,31 +238,27 @@ public class StudentProfileManagementBasicsFragment extends ProfileManagementBas
         else
             sex = Student.SEX_FEMALE;
 
-        if(!nameText.getText().toString().equals(INSERT_FIELD)) currentUser.setName(nameText.getText().toString());
-        if(!surnameText.getText().toString().equals(INSERT_FIELD)) currentUser.setSurname(surnameText.getText().toString());
-        if(!birthCityText.getText().toString().equals(INSERT_FIELD)) currentUser.setBirthCity(birthCityText.getText().toString());
-        if(!descriptionText.getText().toString().equals(INSERT_FIELD)) currentUser.setDescription(descriptionText.getText().toString());
-        currentUser.setSex(sex);
+        if(!nameText.getText().toString().equals(INSERT_FIELD)) student.setName(nameText.getText().toString());
+        if(!surnameText.getText().toString().equals(INSERT_FIELD)) student.setSurname(surnameText.getText().toString());
+        if(!birthCityText.getText().toString().equals(INSERT_FIELD)) student.setBirthCity(birthCityText.getText().toString());
+        if(!descriptionText.getText().toString().equals(INSERT_FIELD)) student.setDescription(descriptionText.getText().toString());
+        student.setSex(sex);
 
         if(birthDateChanged){
 
-            Date date = null;
-            Calendar c = GregorianCalendar.getInstance();
-            c.set(day,month,year);
-            date = c.getTime();
 
             Log.println(Log.ASSERT,"Basics", "data: " + date.toString());
-            currentUser.setBirth(date);
+            student.setBirth(date);
             birthDateChanged = false;
         }
 
-        Log.println(Log.ASSERT,"BASICS", "now saving..." + currentUser.getObjectId());
-        currentUser.saveInBackground(new SaveCallback() {
+        Log.println(Log.ASSERT, "BASICS", "now saving..." + student.getObjectId());
+        student.saveInBackground(new SaveCallback() {
             @Override
             public void done(ParseException e) {
 
-                if(e == null)
-                    Log.println(Log.ASSERT,"BASICS", "saved!");
+                if (e == null)
+                    Log.println(Log.ASSERT, "BASICS", "saved!");
             }
         });
     }
