@@ -34,6 +34,7 @@
                     android:id="@+id/language_description"
                     android:layout_weight="1"
                     android:paddingLeft="10dp"
+                    android:background="#00000000"
                     android:gravity="bottom"
                     android:textSize="10sp" />
 

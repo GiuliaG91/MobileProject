@@ -48,6 +48,7 @@
                     android:gravity="bottom"
                     android:id="@+id/company_name_area"
                     android:paddingLeft="10dp"
+                    android:background="#00000000"
                     android:textColor="#ffffff"
                     android:paddingTop="5dp" />
             </LinearLayout>
@@ -110,6 +111,7 @@
                             android:layout_weight="1"
                             android:textColor="#ff000000"
                             android:textSize="20dp"
+                            android:background="#00000000"
                             android:paddingLeft="10dp"
                             android:paddingTop="5dp"/>
 
@@ -161,6 +163,7 @@
                             android:id="@+id/company_birth_et"
                             android:layout_weight="1"
                             android:textColor="#ff000000"
+                            android:background="#00000000"
                             android:textSize="20dp"
                             android:paddingLeft="10dp"
                             android:paddingTop="5dp" />
@@ -213,6 +216,7 @@
                             android:id="@+id/basics_email_area"
                             android:layout_weight="1"
                             android:textColor="#ff000000"
+                            android:background="#00000000"
                             android:textSize="20dp"
                             android:paddingLeft="10dp"
                             android:paddingTop="5dp"
@@ -277,7 +281,9 @@
                                 android:layout_height="fill_parent"
                                 android:id="@+id/company_description_et"
                                 android:scrollbars="vertical"
+                                android:gravity="top"
                                 android:textColor="#000000"
+                                android:background="#00000000"
                                 android:textSize="15dp"
                                 android:paddingLeft="10dp"
                                 android:paddingTop="5dp" />

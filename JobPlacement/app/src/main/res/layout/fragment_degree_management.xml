@@ -115,6 +115,7 @@
                         android:id="@+id/degree_management_mark_area"
                         android:layout_weight=".7"
                         android:textColor="#ff000000"
+                        android:background="#00000000"
                         android:textSize="15dp"
                         android:paddingLeft="10dp" />
 

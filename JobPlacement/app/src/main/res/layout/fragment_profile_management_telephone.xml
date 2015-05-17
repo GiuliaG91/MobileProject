@@ -26,6 +26,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:id="@+id/telephone_number_text"
+        android:background="#00000000"
         android:textAppearance="?android:textAppearanceSmall"
         android:layout_gravity="center_vertical"
         android:layout_weight=".5" />
