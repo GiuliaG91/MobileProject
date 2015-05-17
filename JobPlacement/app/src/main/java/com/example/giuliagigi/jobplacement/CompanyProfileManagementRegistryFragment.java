@@ -15,6 +15,8 @@ import java.util.ArrayList;
 public class CompanyProfileManagementRegistryFragment extends ProfileManagementFragment {
 
     private static final String TITLE = "Registry";
+    private static final String BUNDLE_IDENTIFIER = "COMPANYPROFILEREGISTRY";
+    private static final String BUNDLE_KEY_COMPANY = "BUNDLE_KEY_COMPANY";
 
     private Company company;
     Button addOffice;
@@ -42,6 +44,11 @@ public class CompanyProfileManagementRegistryFragment extends ProfileManagementF
     public void setCompany(Company company){
 
         this.company = company;
+    }
+
+    @Override
+    public String getBundleID() {
+        return BUNDLE_IDENTIFIER;
     }
 
     /*------------- STANDARD CALLBACKS ------------------------------------------------------------*/
@@ -126,6 +133,26 @@ public class CompanyProfileManagementRegistryFragment extends ProfileManagementF
 
         for(ProfileManagementFragment f: officeFragments)
             host.removeOnActivityChangedListener(f);
+    }
+
+
+    /* ---------------- AUXILIARY METHODS ------------------------------------------------------- */
+
+    @Override
+    protected void restoreStateFromBundle() {
+        super.restoreStateFromBundle();
+
+        if(bundle!=null)
+            company = (Company)bundle.get(BUNDLE_KEY_COMPANY);
+    }
+
+
+    @Override
+    protected void saveStateInBundle() {
+        super.saveStateInBundle();
+
+        if(bundle!= null)
+            bundle.put(BUNDLE_KEY_COMPANY,company);
     }
 
     @Override

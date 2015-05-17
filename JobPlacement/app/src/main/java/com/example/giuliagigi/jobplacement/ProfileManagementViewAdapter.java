@@ -18,6 +18,7 @@ public class ProfileManagementViewAdapter extends FragmentPagerAdapter{
         // Build a Constructor and assign the passed Values to appropriate values in the class
         public ProfileManagementViewAdapter(FragmentManager fm, User user, boolean editable) {
             super(fm);
+
             fragments = new ArrayList<ProfileManagementFragment>();
 
             if(user.getType().equals(User.TYPE_STUDENT)){

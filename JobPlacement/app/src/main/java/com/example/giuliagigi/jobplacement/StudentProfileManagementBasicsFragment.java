@@ -28,6 +28,8 @@ import java.util.Locale;
 public class StudentProfileManagementBasicsFragment extends ProfileManagementBasicsFragment {
 
     public static final String TITLE = "Overview";
+    private static final String BUNDLE_IDENTIFIER = "STUDENTPROFILEMANAGEMENTBASICS";
+    private static final String BUNDLE_KEY_STUDENT = "bundle_key_student";
 
     private Student student;
     private Date date;
@@ -55,6 +57,11 @@ public class StudentProfileManagementBasicsFragment extends ProfileManagementBas
         this.student = student;
     }
 
+    @Override
+    public String getBundleID() {
+        return BUNDLE_IDENTIFIER;
+    }
+
     /* ---------------------------- STANDARD CALLBACKS -------------------------------------------*/
 
     @Override
@@ -76,7 +83,6 @@ public class StudentProfileManagementBasicsFragment extends ProfileManagementBas
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        Log.println(Log.ASSERT,"STUD BASICS", "retrieving view from resources");
         root = inflater.inflate(R.layout.fragment_student_profile_management_basics, container, false);
 
         if(root == null)
@@ -190,8 +196,6 @@ public class StudentProfileManagementBasicsFragment extends ProfileManagementBas
             }
         });
 
-
-        Log.println(Log.ASSERT,"STUD BASICS", "onCreateView finish");
         return root;
     }
 
@@ -204,6 +208,9 @@ public class StudentProfileManagementBasicsFragment extends ProfileManagementBas
     public void onDetach() {
         super.onDetach();
         host = null;
+
+        MyBundle b = application.addBundle(BUNDLE_IDENTIFIER);
+        b.put(BUNDLE_KEY_STUDENT,student);
     }
 
     @Override
@@ -212,6 +219,22 @@ public class StudentProfileManagementBasicsFragment extends ProfileManagementBas
     }
 
     /* ----------------------- AUXILIARY METHODS ----------------------------------------------- */
+
+    @Override
+    protected void restoreStateFromBundle() {
+        super.restoreStateFromBundle();
+
+        if(bundle!=null)
+            student = (Student)bundle.get(BUNDLE_KEY_STUDENT);
+    }
+
+    @Override
+    protected void saveStateInBundle() {
+        super.saveStateInBundle();
+
+        if(bundle!=null)
+            bundle.put(BUNDLE_KEY_STUDENT,student);
+    }
 
     @Override
     public void setEnable(boolean enable){

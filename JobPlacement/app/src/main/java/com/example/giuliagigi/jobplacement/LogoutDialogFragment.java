@@ -81,8 +81,7 @@ public class LogoutDialogFragment extends DialogFragment {
 
     private void completeLogoutProcedure(){
 
-        Toast.makeText(getActivity(), "Logout completed", Toast.LENGTH_SHORT).show();
-        application.getCurrentUser(); //updates currentUser in GlobalData
+         //updates currentUser in GlobalData
 
         SharedPreferences sp = application.getLoginPreferences();
 
@@ -96,6 +95,8 @@ public class LogoutDialogFragment extends DialogFragment {
             editor.commit();
         }
 
+
+        application.getCurrentUser();
         Intent i = new Intent(getActivity(),Login.class);
         startActivity(i);
     }

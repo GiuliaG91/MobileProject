@@ -22,6 +22,8 @@ public class ProfileManagementBasicsFragment extends ProfileManagementFragment {
 
     private static final String TITLE = "Overview";
     protected ImageView profilePhoto;
+    private static final String BUNDLE_IDENTIFIER = "PROFILEMANAGEMENTBASICS";
+    private static final String BUNDLE_KEY_USER = "bundle_key_user";
 
 
     /* ---------------------- CONSTRUCTORS GETTERS SETTERS ---------------------------------------*/
@@ -42,8 +44,12 @@ public class ProfileManagementBasicsFragment extends ProfileManagementFragment {
 
     public void setUser(User user){
 
-        Log.println(Log.ASSERT,"PM FRAG","setting user" + user);
         this.user = user;
+    }
+
+    @Override
+    public String getBundleID() {
+        return BUNDLE_IDENTIFIER;
     }
 
     /* ---------------------------- STANDARD CALLBACKS -------------------------------------------*/
@@ -56,8 +62,7 @@ public class ProfileManagementBasicsFragment extends ProfileManagementFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-        }
+
     }
 
     @Override
@@ -71,7 +76,6 @@ public class ProfileManagementBasicsFragment extends ProfileManagementFragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
 
-        Log.println(Log.ASSERT,"BASICS", "onViewCreated start");
         setBasicsView();
         setEnable(host.isEditMode());
         super.onViewCreated(view, savedInstanceState);
@@ -85,8 +89,6 @@ public class ProfileManagementBasicsFragment extends ProfileManagementFragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-
-        Log.println(Log.ASSERT, "BASICS FRAG", "onActivity result");
 
         if(requestCode == REQUEST_IMAGE_GET && resultCode == Activity.RESULT_OK){
 

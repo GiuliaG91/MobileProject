@@ -76,7 +76,7 @@ public class CompanyProfileManagementOfficeFragment extends ProfileManagementFra
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-        isListenerAfterDetach = true;
+        isNestedFragment = true;
         isRemoved = false;
         addressChanged = false;
     }

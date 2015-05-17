@@ -27,6 +27,8 @@ public class StudentProfileManagementRegistryFragment extends ProfileManagementF
 
 
     private static final String TITLE = "Registry";
+    private static final String BUNDLE_IDENTIFIER = "STUDENTPROFILEREGISTRY";
+    private static final String BUNDLE_KEY_STUDENT = "BUNDLE_KEY_STUDENT";
 
     private Student student;
     private boolean addressChanged;
@@ -45,6 +47,7 @@ public class StudentProfileManagementRegistryFragment extends ProfileManagementF
         Bundle args = new Bundle();
         fragment.setArguments(args);
         fragment.setStudent(student);
+        fragment.setUser(student);
         return fragment;
     }
 
@@ -56,6 +59,11 @@ public class StudentProfileManagementRegistryFragment extends ProfileManagementF
     public void setStudent(Student student){
 
         this.student = student;
+    }
+
+    @Override
+    public String getBundleID() {
+        return BUNDLE_IDENTIFIER;
     }
 
 
@@ -192,6 +200,28 @@ public class StudentProfileManagementRegistryFragment extends ProfileManagementF
         for(ProfileManagementTelephoneFragment tf:telephoneFragments)
             host.removeOnActivityChangedListener(tf);
     }
+
+
+
+    /* ----------------------- AUXILIARY METHODS ------------------------------------------------ */
+
+    @Override
+    protected void restoreStateFromBundle() {
+        super.restoreStateFromBundle();
+
+        if(bundle!=null)
+            student = (Student)bundle.get(BUNDLE_KEY_STUDENT);
+    }
+
+    @Override
+    protected void saveStateInBundle() {
+        super.saveStateInBundle();
+
+        if(bundle!=null)
+            bundle.put(BUNDLE_KEY_STUDENT,student);
+    }
+
+
 
     public void setEnable(boolean enable){
         int visibility;

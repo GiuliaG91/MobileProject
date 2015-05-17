@@ -68,7 +68,7 @@ public class StudentProfileManagementCertificateFragment extends ProfileManageme
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-        isListenerAfterDetach = true;
+        isNestedFragment = true;
         isRemoved = false;
     }
 

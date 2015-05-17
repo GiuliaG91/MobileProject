@@ -17,8 +17,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import bolts.Task;
-
 /**
  * Created by pietro on 20/04/2015.
  */
@@ -39,6 +37,8 @@ public class GlobalData extends Application {
     private SharedPreferences loginPreferences;
     private InboxMessage currentViewMessage;
 
+    /* managing profile management display rotation*/
+    private HashMap<String,MyBundle> bundles;
 
     /**************NEW OFFER BUNDLE**********/
     private Bundle offerBundle;
@@ -78,6 +78,8 @@ public class GlobalData extends Application {
         tags = new HashMap<String,Tag>();
         isCached.put("tag",false);
         getTags();
+
+        bundles = new HashMap<String,MyBundle>();
     }
 
 
@@ -238,5 +240,32 @@ public class GlobalData extends Application {
         this.currentViewMessage = m;
     }
 
+
+
+    /* ----------------- PROFILE BUNDLE --------------------------------------------------------- */
+
+    public MyBundle addBundle(String key){
+
+        if(bundles.containsKey(key))
+            return bundles.get(key);
+
+        MyBundle b = new MyBundle();
+        bundles.put(key, b);
+        return b;
+    }
+
+    public MyBundle getBundle(String key){
+
+        return bundles.get(key);
+    }
+
+    public void removeBundle(String key){
+
+        if(!bundles.containsKey(key))
+            return;
+
+        MyBundle toBeRemoved = bundles.get(key);
+        bundles.remove(toBeRemoved);
+    }
 }
 

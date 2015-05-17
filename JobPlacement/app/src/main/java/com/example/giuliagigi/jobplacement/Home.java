@@ -68,6 +68,7 @@ public class Home extends ActionBarActivity  implements TabHomeStudentFragment.O
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
+        Log.println(Log.ASSERT,"HOME","onCreate");
 
         if(savedInstanceState!=null)
         {
@@ -179,15 +180,12 @@ public class Home extends ActionBarActivity  implements TabHomeStudentFragment.O
         mDrawerToggle.syncState();               // Finally we set the drawer toggle sync State
 
 
-        /* -------------------
-                    email verification alert
-             */
-
-        Log.println(Log.ASSERT,"HOME ACTIVITY", "account verified: " + application.getCurrentUser().isEmailVerified());
+        /* email verification alert */
         if (!application.getCurrentUser().isEmailVerified())
             Toast.makeText(getApplicationContext(),"Your email wasn't verified yet. Please click on the link we sent you",Toast.LENGTH_SHORT).show();
 
     }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -226,10 +224,15 @@ public class Home extends ActionBarActivity  implements TabHomeStudentFragment.O
     }
 
 
+
+
     @Override
     public void onFragmentInteraction(Uri uri) {
 
     }
+
+
+    /* ------------------ PROFILE MANAGEMENT FRAGMENT INTERFACE ----------------------------------*/
 
     @Override
     public boolean isEditMode() {
@@ -260,6 +263,8 @@ public class Home extends ActionBarActivity  implements TabHomeStudentFragment.O
 
     }
 
+
+    /* -------------------- PROFILE MANAGEMENT INTERFACE -----------------------------------------*/
     @Override
     public void setEditMode(boolean editable) {
 
@@ -272,6 +277,9 @@ public class Home extends ActionBarActivity  implements TabHomeStudentFragment.O
             for (OnActivityChangedListener l:listeners)
                 l.onActivityStateChanged(OnActivityChangedListener.State.DISPLAY_MODE_STATE, OnActivityChangedListener.State.EDIT_MODE_STATE);
     }
+
+    /* ---------------- END PROFILE MANAGEMENT INTERFACE -----------------------------------------*/
+
 
     public void setOnBackPressedListener(OnBackPressedListener onBackPressedListener) {
         this.onBackPressedListener = onBackPressedListener;
