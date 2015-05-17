@@ -104,6 +104,42 @@
     <string name="string_account_resend_mail">Re-invia la mail di verifica</string>
     <string name="string_account_delete">Elimina questo account</string>
 
+    <!--Company -->
+    <string name="string_company_fragment_name_title">Nome azienda:</string>
+    <string name="string_company_fragment_vat">Partita IVA:</string>
+    <string name="string_company_fragment_foundation_date">Data di fondazione:</string>
+    <string name="string_company_fragment_email">Indirizzo email:</string>
+    <string name="string_company_fragment_description">Breve descrizione:</string>
+    <string name="string_company_fragment_office_title">Sedi:</string>
+    <string name="string_company_fragment_address">Indirizzo:</string>
+    <string name="string_company_fragment_cap">CAP:</string>
+    <string name="string_company_fragment_nation">Nazione:</string>
+    <string name="string_company_fragment_city">Città:</string>
+    <string name="string_company_fragment_office_type">Tipo di sede:</string>
+
+    <!--Degree types-->
+    <string name="string_degree_type_bachelor">Triennale</string>
+    <string name="string_degree_type_master">Magistrale</string>
+    <string name="string_degree_type_doctorate">Dottorato</string>
+    <string name="string_degree_type_graduating">Laureando</string>
+    <string name="string_degree_type_none">N.D.</string>
+
+    <!-- Fields-->
+    <string name="string_field_informatics">Informatica</string>
+    <string name="string_field_mechanics">Meccanica</string>
+    <string name="string_field_chemistry">Chimica</string>
+    <string name="string_field_energy">Energia</string>
+    <string name="string_field_materials">Materiali</string>
+
+    <!--Office types -->
+    <string name="string_office_headquarter">Sede principale</string>
+    <string name="string_office_branch">Filiale</string>
+
+    <!-- Language levels -->
+    <string name="string_language_level_low">Basso</string>
+    <string name="string_language_level_none">N.D.</string>
+    <string name="string_language_level_medium">Medio</string>
+    <string name="string_language_level_high">Alto</string>
 
     
     <!-- New Offer Fragment -->

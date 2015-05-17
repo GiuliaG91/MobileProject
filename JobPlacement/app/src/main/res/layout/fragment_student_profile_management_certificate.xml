@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.example.giuliagigi.jobplacement.StudentProfileManagementCertificateFragment"
     android:layout_width="match_parent"
+    android:background="@drawable/degree_border"
     android:layout_height="match_parent"
     android:orientation="vertical">
 

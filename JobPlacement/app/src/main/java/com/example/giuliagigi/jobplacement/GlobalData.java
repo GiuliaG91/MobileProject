@@ -1,6 +1,7 @@
 package com.example.giuliagigi.jobplacement;
 
 import android.app.Application;
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -16,8 +17,6 @@ import com.parse.ParseUser;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-
-import bolts.Task;
 
 /**
  * Created by pietro on 20/04/2015.
@@ -38,6 +37,7 @@ public class GlobalData extends Application {
     private HashMap<String,Boolean> isCached;
     private SharedPreferences loginPreferences;
     private InboxMessage currentViewMessage;
+    private static Context applicationContext;
 
 
     /**************NEW OFFER BUNDLE**********/
@@ -52,6 +52,8 @@ public class GlobalData extends Application {
     public void onCreate() {
         super.onCreate();
 
+
+        applicationContext = getApplicationContext();
 //        currentUser = null;
         currentUserObject = null;
         currentViewMessage = null;
@@ -71,6 +73,10 @@ public class GlobalData extends Application {
         ParseObject.registerSubclass(Withdrawal.class);
         ParseObject.registerSubclass(Certificate.class);
         ParseObject.registerSubclass(InboxMessage.class);
+
+        Degree.initializeLangauges();
+        Office.initializeLanguage();
+        Language.initializeLangauges();
 
         Parse.initialize(this, "EICiUy2eT7CZPXw8N6I1p6lE4844svLI73JTc2QY", "8I9HZ7AgMHgeIxQKk8k653jNBvBCz57nRuSH73pA");
 
@@ -236,6 +242,11 @@ public class GlobalData extends Application {
 
     public void setCurrentViewMessage(InboxMessage m){
         this.currentViewMessage = m;
+    }
+
+
+    public static Context getContext() {
+        return applicationContext;
     }
 
 }
