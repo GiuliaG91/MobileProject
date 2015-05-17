@@ -48,7 +48,6 @@ public class StudentProfileManagementSkillsFragment extends ProfileManagementFra
     public void onAttach(Activity activity) {
         super.onAttach(activity);
 
-        student = (Student)application.getUserObject();
         degreeFragments = new ArrayList<StudentProfileManagementDegreeFragment>();
         languageFragments = new ArrayList<StudentProfileManagementLanguageFragment>();
         certificateFragments = new ArrayList<StudentProfileManagementCertificateFragment>();
