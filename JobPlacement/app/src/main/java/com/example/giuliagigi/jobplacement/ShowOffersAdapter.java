@@ -71,24 +71,12 @@ public class ShowOffersAdapter extends RecyclerView.Adapter<ShowOffersAdapter.Vi
         globalData=(GlobalData)c.getApplication();
        Company company = globalData.getCompanyFromUser();
        ParseQuery query = new ParseQuery("CompanyOffer").whereEqualTo("company",company);
-      query.findInBackground(new FindCallback() {
-           @Override
-           public void done(List list, ParseException e) {
-               mDataset.addAll(list);
-               showOffersAdapter.notifyDataSetChanged();
-           }
 
-           @Override
-           public void done(Object o, Throwable throwable) {
-
-           }
-       });
-
-    /*   try {
+  try {
            mDataset.addAll(query.find());
        } catch (ParseException e) {
            e.printStackTrace();
-       }*/
+       }
 
    }
 

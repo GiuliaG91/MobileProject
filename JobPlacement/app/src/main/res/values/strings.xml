@@ -274,4 +274,8 @@
     <string name="wrote">wrote</string>
 
 
+    <string name="Mark">Mark:</string>
+    <string name="noDegree">No graduation recorded.</string>
+    <string name="noMark">No mark recorded.</string>
+
 </resources>

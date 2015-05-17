@@ -177,18 +177,27 @@ public class CompanyStudentSearchAdapter extends RecyclerView.Adapter<CompanyStu
                     profile.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_profile));
                 studentName.setText(object.getName());
 
-        /*        List<Degree> degrees=object.getDegrees();
+                List<Degree> degrees=object.getDegrees();
              if(!degrees.isEmpty()) {
                  Collections.sort(degrees);
 
                  studentDegree.setText(degrees.get(0).getType() + " " + degrees.get(0).getStudies());
-                 studentGrade.setText("Mark:" + String.valueOf(degrees.get(0).getMark()));
+                 Integer mark=null;
+                 try{
+                     mark=degrees.get(0).getMark();
+                 }catch (Exception e){mark=null;}
+                 if(mark!=null) {
+                     studentGrade.setText(context.getResources().getString(R.string.Mark) + String.valueOf(mark));
+                 }
+                 else{
+                     studentGrade.setText(context.getResources().getString(R.string.noMark));
+                 }
              }
                 else
              {
-                 studentDegree.setText("no degree");
+                 studentDegree.setText(context.getResources().getString(R.string.noDegree));
                  studentGrade.setText("");
-             }*/
+             }
                 supportSet.clear();
                 supportSet.addAll(company.getStudents());
 
