@@ -163,6 +163,12 @@
     <string name="string_language_level_medium">Medium</string>
     <string name="string_language_level_high">High</string>
 
+    <!-- Telephone types -->
+    <string name="string_telephone_type_cellular">Cellular</string>
+    <string name="string_telephone_type_home">Home</string>
+    <string name="string_telephone_type_fax">Fax</string>
+    <string name="string_telephone_type_office">Office</string>
+    <string name="string_telephone_type_other">Other</string>
     
     <!-- New Offer Fragment -->
 

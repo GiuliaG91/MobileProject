@@ -141,6 +141,13 @@
     <string name="string_language_level_medium">Medio</string>
     <string name="string_language_level_high">Alto</string>
 
+    <!-- Telephone types -->
+    <string name="string_telephone_type_cellular">Cellulare</string>
+    <string name="string_telephone_type_home">Casa</string>
+    <string name="string_telephone_type_fax">Fax</string>
+    <string name="string_telephone_type_office">Ufficio</string>
+    <string name="string_telephone_type_other">Altro</string>
+
     
     <!-- New Offer Fragment -->
 

@@ -207,10 +207,15 @@ public class StudentProfileManagementSkillsFragment extends ProfileManagementFra
     protected void setEnable(boolean enable) {
 
         super.setEnable(enable);
+        int visibility;
+        if(enable)
+            visibility = View.VISIBLE;
+        else
+            visibility = View.INVISIBLE;
 
-        addCertificate.setEnabled(enable);
-        addDegree.setEnabled(enable);
-        addLanguage.setEnabled(enable);
+        addCertificate.setVisibility(visibility);
+        addDegree.setVisibility(visibility);
+        addLanguage.setVisibility(visibility);
     }
 
     @Override

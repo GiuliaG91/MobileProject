@@ -77,6 +77,7 @@ public class GlobalData extends Application {
         Degree.initializeLangauges();
         Office.initializeLanguage();
         Language.initializeLangauges();
+        Telephone.initializeLangauges();
 
         Parse.initialize(this, "EICiUy2eT7CZPXw8N6I1p6lE4844svLI73JTc2QY", "8I9HZ7AgMHgeIxQKk8k653jNBvBCz57nRuSH73pA");
 
