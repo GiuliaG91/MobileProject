@@ -72,7 +72,8 @@ public class ProfileManagementTagsFragment extends ProfileManagementFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        root = inflater.inflate(R.layout.fragment_profile_management_tags, container, false);
+        if(root == null)
+            root = inflater.inflate(R.layout.fragment_profile_management_tags, container, false);
 
         tagsText = (MultiAutoCompleteTextView) root.findViewById(R.id.tagsFragment_tagAutoComplete_text);
         addTag = (ImageButton) root.findViewById(R.id.tagsFragment_addTagButton);

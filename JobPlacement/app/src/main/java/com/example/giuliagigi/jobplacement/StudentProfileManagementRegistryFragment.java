@@ -80,7 +80,8 @@ public class StudentProfileManagementRegistryFragment extends ProfileManagementF
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        root = inflater.inflate(R.layout.fragment_student_profile_management_registry, container, false);
+        if(root == null)
+            root = inflater.inflate(R.layout.fragment_student_profile_management_registry, container, false);
 
         geoloc = (GeoLocalization)getChildFragmentManager().findFragmentById(R.id.office_map_fragment);
         geoloc.setOnMapReadyCallback(this);

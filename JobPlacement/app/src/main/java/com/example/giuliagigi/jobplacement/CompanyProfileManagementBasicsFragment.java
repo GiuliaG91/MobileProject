@@ -73,7 +73,8 @@ public class CompanyProfileManagementBasicsFragment extends ProfileManagementBas
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        root = inflater.inflate(R.layout.fragment_company_profile_management_basics, container, false);
+        if(root == null)
+            root = inflater.inflate(R.layout.fragment_company_profile_management_basics, container, false);
 
         nameText = (EditText)root.findViewById(R.id.company_name_area);
         if(company.getName() == null)

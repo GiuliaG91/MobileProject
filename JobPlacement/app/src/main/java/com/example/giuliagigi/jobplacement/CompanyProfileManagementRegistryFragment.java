@@ -64,7 +64,9 @@ public class CompanyProfileManagementRegistryFragment extends ProfileManagementF
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        root = inflater.inflate(R.layout.fragment_company_profile_management_registry, container, false);
+
+        if(root == null)
+            root = inflater.inflate(R.layout.fragment_company_profile_management_registry, container, false);
 
         addOffice = (Button)root.findViewById(R.id.company_add_office);
         addOffice.setOnClickListener(new View.OnClickListener() {

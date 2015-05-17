@@ -66,7 +66,8 @@ public class StudentProfileManagementSkillsFragment extends ProfileManagementFra
                              Bundle savedInstanceState) {
 
 
-        root = inflater.inflate(R.layout.fragment_student_profile_management_skills, container, false);
+        if(root == null)
+            root = inflater.inflate(R.layout.fragment_student_profile_management_skills, container, false);
 
         addDegree = (Button)root.findViewById(R.id.skills_add_degree);
         addDegree.setOnClickListener(new View.OnClickListener() {

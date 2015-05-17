@@ -132,7 +132,8 @@ public class CompanyProfileManagementOfficeFragment extends ProfileManagementFra
 
         }
 
-        root = inflater.inflate(R.layout.fragment_office_management, container, false);
+        if(root == null)
+            root = inflater.inflate(R.layout.fragment_office_management, container, false);
 
         geoloc = (GeoLocalization)getChildFragmentManager().findFragmentById(R.id.office_map_fragment);
         geoloc.setOnMapReadyCallback(this);
