@@ -110,7 +110,6 @@ public class menuAdapter extends RecyclerView.Adapter<menuAdapter.ViewHolder> {
                             @Override
                             public void onClick(View v) {
 
-                                gd.clearProfileBundles();
 
                                 FragmentManager fragmentManager = activity.getSupportFragmentManager();
                                 Fragment current = fragmentManager.findFragmentById(R.id.tab_Home_container);
@@ -133,6 +132,7 @@ public class menuAdapter extends RecyclerView.Adapter<menuAdapter.ViewHolder> {
 
                                 }
                                 mDrawerLayout.closeDrawers();
+
                             }
 
 
@@ -146,12 +146,11 @@ public class menuAdapter extends RecyclerView.Adapter<menuAdapter.ViewHolder> {
                             @Override
                             public void onClick(View v) {
 
-                                gd.clearProfileBundles();
-                                
+
                                 FragmentManager fragmentManager = activity.getSupportFragmentManager();
                                 Fragment current = fragmentManager.findFragmentById(R.id.tab_Home_container);
 
-                                if(!(current instanceof ProfileManagement)) {
+                                if(!(current instanceof ProfileManagement) || gd.getLatestDisplayedUser()!=gd.getUserObject()) {
 
                                     Fragment fragment = ProfileManagement.newInstance(true,gd.getUserObject());
 
@@ -167,6 +166,7 @@ public class menuAdapter extends RecyclerView.Adapter<menuAdapter.ViewHolder> {
 
                                 }
                                 mDrawerLayout.closeDrawers();
+
                             }
                         });
 
@@ -180,7 +180,6 @@ public class menuAdapter extends RecyclerView.Adapter<menuAdapter.ViewHolder> {
                             @Override
                             public void onClick(View v) {
 
-                                gd.clearProfileBundles();
 
                                 FragmentManager fragmentManager = activity.getSupportFragmentManager();
                                 Fragment current = fragmentManager.findFragmentById(R.id.tab_Home_container);
@@ -201,6 +200,7 @@ public class menuAdapter extends RecyclerView.Adapter<menuAdapter.ViewHolder> {
 
                                 }
                                 mDrawerLayout.closeDrawers();
+
                             }
                         });
 
@@ -212,7 +212,6 @@ public class menuAdapter extends RecyclerView.Adapter<menuAdapter.ViewHolder> {
                             @Override
                             public void onClick(View v) {
 
-                                gd.clearProfileBundles();
 
                                 FragmentManager fragmentManager = activity.getSupportFragmentManager();
                                 Fragment current = fragmentManager.findFragmentById(R.id.tab_Home_container);
@@ -236,6 +235,7 @@ public class menuAdapter extends RecyclerView.Adapter<menuAdapter.ViewHolder> {
 
                                 }
                                 mDrawerLayout.closeDrawers();
+
                             }
 
 
@@ -248,8 +248,6 @@ public class menuAdapter extends RecyclerView.Adapter<menuAdapter.ViewHolder> {
                         v.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-
-                                gd.clearProfileBundles();
 
                                 FragmentManager fragmentManager = activity.getSupportFragmentManager();
                                 Fragment current = fragmentManager.findFragmentById(R.id.tab_Home_container);
@@ -273,6 +271,7 @@ public class menuAdapter extends RecyclerView.Adapter<menuAdapter.ViewHolder> {
                                     //activity.invalidateOptionsMenu();
                                 }
                                 mDrawerLayout.closeDrawers();
+
                             }
                         });
                         break;
@@ -308,7 +307,6 @@ public class menuAdapter extends RecyclerView.Adapter<menuAdapter.ViewHolder> {
                               @Override
                               public void onClick(View v) {
 
-                                  gd.clearProfileBundles();
 
                                   FragmentManager fragmentManager = activity.getSupportFragmentManager();
                                   Fragment current = fragmentManager.findFragmentById(R.id.tab_Home_container);
@@ -331,6 +329,7 @@ public class menuAdapter extends RecyclerView.Adapter<menuAdapter.ViewHolder> {
 
                                   }
                                   mDrawerLayout.closeDrawers();
+
                               }
 
 
@@ -345,12 +344,11 @@ public class menuAdapter extends RecyclerView.Adapter<menuAdapter.ViewHolder> {
                               @Override
                               public void onClick(View v) {
 
-                                  gd.clearProfileBundles();
 
                                   FragmentManager fragmentManager = activity.getSupportFragmentManager();
                                   Fragment current = fragmentManager.findFragmentById(R.id.tab_Home_container);
 
-                                  if(!(current instanceof ProfileManagement)) {
+                                  if(!(current instanceof ProfileManagement) || gd.getLatestDisplayedUser()!=gd.getUserObject()) {
 
                                       Fragment fragment = ProfileManagement.newInstance(true,gd.getUserObject());
 
@@ -366,6 +364,7 @@ public class menuAdapter extends RecyclerView.Adapter<menuAdapter.ViewHolder> {
 
                                   }
                                   mDrawerLayout.closeDrawers();
+
                               }
                           });
 
@@ -377,7 +376,6 @@ public class menuAdapter extends RecyclerView.Adapter<menuAdapter.ViewHolder> {
                               @Override
                               public void onClick(View v) {
 
-                                  gd.clearProfileBundles();
 
                                   FragmentManager fragmentManager = activity.getSupportFragmentManager();
                                   Fragment current = fragmentManager.findFragmentById(R.id.tab_Home_container);
@@ -401,6 +399,7 @@ public class menuAdapter extends RecyclerView.Adapter<menuAdapter.ViewHolder> {
 
                                   }
                                   mDrawerLayout.closeDrawers();
+
                               }
 
 
@@ -416,7 +415,6 @@ public class menuAdapter extends RecyclerView.Adapter<menuAdapter.ViewHolder> {
                               @Override
                               public void onClick(View v) {
 
-                                  gd.clearProfileBundles();
 
                                   FragmentManager fragmentManager = activity.getSupportFragmentManager();
                                   Fragment current = fragmentManager.findFragmentById(R.id.tab_Home_container);
@@ -445,6 +443,7 @@ public class menuAdapter extends RecyclerView.Adapter<menuAdapter.ViewHolder> {
 
                                           toolbar.setTitle(tv.getText());
                                           mDrawerLayout.closeDrawers();
+
                                       }
 
                               }  else
@@ -466,7 +465,6 @@ public class menuAdapter extends RecyclerView.Adapter<menuAdapter.ViewHolder> {
 
                                   }
                                   mDrawerLayout.closeDrawers();
-
                               }
 
 
@@ -482,7 +480,6 @@ public class menuAdapter extends RecyclerView.Adapter<menuAdapter.ViewHolder> {
                               @Override
                               public void onClick(View v) {
 
-                                  gd.clearProfileBundles();
 
                                   FragmentManager fragmentManager = activity.getSupportFragmentManager();
                                   Fragment current = fragmentManager.findFragmentById(R.id.tab_Home_container);
@@ -505,7 +502,8 @@ public class menuAdapter extends RecyclerView.Adapter<menuAdapter.ViewHolder> {
                                       //activity.invalidateOptionsMenu();
                                   }
                                   mDrawerLayout.closeDrawers();
-                                }
+
+                              }
                           });
 
                             break;

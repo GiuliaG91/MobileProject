@@ -65,7 +65,6 @@ public class GeoLocalization extends SupportMapFragment{
     @Override
     public void onViewCreated(View root, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(root, savedInstanceState);
-        Log.println(Log.ASSERT,"GEOLOC","onViewCreated");
 
         getMapAsync(new OnMapReadyCallback() {
             @Override
@@ -107,8 +106,6 @@ public class GeoLocalization extends SupportMapFragment{
 
 
     public Address setMapLocation(String geoAddress) throws IOException{
-
-        Log.println(Log.ASSERT,"OFFICE FRAG", "setting map location");
 
         List<Address> addressList;
 

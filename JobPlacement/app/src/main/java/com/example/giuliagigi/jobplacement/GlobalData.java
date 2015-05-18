@@ -31,6 +31,7 @@ public class GlobalData extends Application {
 
     private ParseUserWrapper currentUser;
     private User currentUserObject;
+    private User latestDisplayedUser;
     Toolbar toolbar;
     CompanyOffer currentViewOffer;
     private HashMap<String,Tag> tags;
@@ -42,7 +43,6 @@ public class GlobalData extends Application {
 
     /* managing profile management display rotation*/
     private HashMap<String,MyBundle> bundles;
-    private ProfileManagementViewAdapter profileManagementViewAdapter;
 
     /**************NEW OFFER BUNDLE**********/
     private Bundle offerBundle;
@@ -61,6 +61,7 @@ public class GlobalData extends Application {
 //        currentUser = null;
         currentUserObject = null;
         currentViewMessage = null;
+        latestDisplayedUser = null;
 
         // Enable Local Datastore.
         Parse.enableLocalDatastore(this);
@@ -257,15 +258,15 @@ public class GlobalData extends Application {
 
     /* ----------------- PROFILE BUNDLE --------------------------------------------------------- */
 
-    public void setProfileManagementViewAdapter(ProfileManagementViewAdapter profileManagementViewAdapter){
-        this.profileManagementViewAdapter = profileManagementViewAdapter;
-    }
-
     public MyBundle addBundle(String key){
+
+        if(latestDisplayedUser!=null)
+            key = key + ";" + latestDisplayedUser.getObjectId();
 
         if(bundles.containsKey(key))
             return bundles.get(key);
 
+        Log.println(Log.ASSERT,"GLOBAL DATA", "adding a bundle");
         MyBundle b = new MyBundle();
         bundles.put(key, b);
         return b;
@@ -273,28 +274,31 @@ public class GlobalData extends Application {
 
     public MyBundle getBundle(String key){
 
+        if(latestDisplayedUser!=null)
+            key = key + ";" + latestDisplayedUser.getObjectId();
+
         return bundles.get(key);
     }
 
     public void removeBundle(String key){
 
+        if(latestDisplayedUser!=null)
+            key = key + ";" + latestDisplayedUser.getObjectId();
+
         if(!bundles.containsKey(key))
             return;
 
         MyBundle toBeRemoved = bundles.get(key);
+        Log.println(Log.ASSERT,"GLOBAL DATA", "removing bundle: " + key + ", " + toBeRemoved);
         bundles.remove(toBeRemoved);
     }
 
-    public void clearProfileBundles(){
+    public void setLatestDisplayedUser(User latestDisplayedUser) {
+        this.latestDisplayedUser = latestDisplayedUser;
+    }
 
-        if(profileManagementViewAdapter!= null){
-
-            Log.println(Log.ASSERT,"GLOBAL DATA", "Proceed deleting bundles");
-
-            for(ProfileManagementFragment f:profileManagementViewAdapter.getFragments())
-                removeBundle(f.getBundleID());
-        }
-
+    public User getLatestDisplayedUser() {
+        return latestDisplayedUser;
     }
 
     public static Context getContext() {

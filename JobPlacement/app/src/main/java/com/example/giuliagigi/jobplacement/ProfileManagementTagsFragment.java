@@ -53,7 +53,8 @@ public class ProfileManagementTagsFragment extends ProfileManagementFragment {
 
     @Override
     public String getBundleID() {
-        return BUNDLE_IDENTIFIER;
+
+        return BUNDLE_IDENTIFIER + ";" + getTag();
     }
 
     /* ---------------------------- STANDARD CALLBACKS -------------------------------------------*/

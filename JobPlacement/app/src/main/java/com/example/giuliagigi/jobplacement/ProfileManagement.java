@@ -4,12 +4,14 @@ package com.example.giuliagigi.jobplacement;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.OrientationEventListener;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -23,12 +25,12 @@ public class ProfileManagement extends Fragment{
     private static final String BUNDLE_KEY_IS_EDIT = "bundle_key_is_edit";
     private static final String BUNDLE_KEY_EDITABLE = "bundle_key_editable";
     private static final String BUNDLE_KEY_USER = "bundle_key_user";
-    private static final String BUNDLE_IDENTIFIER = "PROFILE_MANAGEMENT";
+    public final String BUNDLE_IDENTIFIER = "PROFILE_MANAGEMENT;"+getTag();
 
     private GlobalData application;
     private OnInteractionListener host;
     private ArrayList<ProfileManagementFragment> fragments;
-    private boolean isEditMode,editable;
+    private boolean isEditMode,editable,orientationFlag;
     private User user;
 
 
@@ -44,7 +46,7 @@ public class ProfileManagement extends Fragment{
 
     /*------------- CONSTRUCTORS GETTERS SETTERS ------------------------------------------------*/
 
-    public  ProfileManagement(){ }
+    public  ProfileManagement(){}
     public static ProfileManagement newInstance(boolean editable, User user) {
         ProfileManagement fragment = new ProfileManagement();
         Bundle args = new Bundle();
@@ -71,7 +73,12 @@ public class ProfileManagement extends Fragment{
     public void onAttach(Activity activity) {
         super.onAttach(activity);
 
+        Log.println(Log.ASSERT,"PROFILE MANAG","on Attach");
+
+
         isEditMode = false;
+        orientationFlag = false;
+
         try {
             host = (OnInteractionListener)activity;
         }
@@ -81,8 +88,12 @@ public class ProfileManagement extends Fragment{
         }
         application = (GlobalData)getActivity().getApplication();
 
+        if(user!=null)
+            application.setLatestDisplayedUser(user);
+
         if(application.getBundle(BUNDLE_IDENTIFIER)!= null){
 
+            Log.println(Log.ASSERT,"PROFILE MANAG","found a bundle!");
             MyBundle b = application.getBundle(BUNDLE_IDENTIFIER);
             isEditMode = b.getBoolean(BUNDLE_KEY_IS_EDIT);
             editable = b.getBoolean(BUNDLE_KEY_EDITABLE);
@@ -163,10 +174,13 @@ public class ProfileManagement extends Fragment{
     public void onDetach() {
         super.onDetach();
 
-        MyBundle b = application.addBundle(BUNDLE_IDENTIFIER);
-        b.putBoolean(BUNDLE_KEY_IS_EDIT,isEditMode);
-        b.putBoolean(BUNDLE_KEY_EDITABLE,editable);
-        b.put(BUNDLE_KEY_USER,user);
+            Log.println(Log.ASSERT,"PROFILE MANAG", "saving in bundle");
+            MyBundle b = application.addBundle(BUNDLE_IDENTIFIER);
+            b.putBoolean(BUNDLE_KEY_IS_EDIT,isEditMode);
+            b.putBoolean(BUNDLE_KEY_EDITABLE,editable);
+            b.put(BUNDLE_KEY_USER,user);
+            orientationFlag = false;
+
     }
 
     @Override
@@ -176,7 +190,6 @@ public class ProfileManagement extends Fragment{
         for (ProfileManagementFragment f: fragments)
             f.onActivityResult(requestCode,resultCode,data);
     }
-
 
 
     /* ----------------------------------- AUXILIARY METHODS ------------------------------------ */
@@ -192,6 +205,8 @@ public class ProfileManagement extends Fragment{
             Toast.makeText(getActivity(), "ERROR: you are not supposed to modify this account",Toast.LENGTH_SHORT).show();
 
     }
+
+
 
 
     /* ----------- interface with upper activity --------------*/

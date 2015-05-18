@@ -48,7 +48,8 @@ public class CompanyProfileManagementRegistryFragment extends ProfileManagementF
 
     @Override
     public String getBundleID() {
-        return BUNDLE_IDENTIFIER;
+
+        return BUNDLE_IDENTIFIER + ";" + getTag();
     }
 
     /*------------- STANDARD CALLBACKS ------------------------------------------------------------*/

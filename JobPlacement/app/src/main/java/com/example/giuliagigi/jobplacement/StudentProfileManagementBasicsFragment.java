@@ -28,7 +28,7 @@ import java.util.Locale;
 public class StudentProfileManagementBasicsFragment extends ProfileManagementBasicsFragment {
 
     public static final String TITLE = "Overview";
-    private static final String BUNDLE_IDENTIFIER = "STUDENTPROFILEMANAGEMENTBASICS";
+    public static final String BUNDLE_IDENTIFIER = "STUDENTPROFILEMANAGEMENTBASICS";
     private static final String BUNDLE_KEY_STUDENT = "bundle_key_student";
     private static final String BUNDLE_KEY_NAME = "bundle_key_student_name";
     private static final String BUNDLE_KEY_SURNAME = "bundle_key_student_surname";
@@ -61,7 +61,8 @@ public class StudentProfileManagementBasicsFragment extends ProfileManagementBas
 
     @Override
     public String getBundleID() {
-        return BUNDLE_IDENTIFIER;
+
+        return BUNDLE_IDENTIFIER + ";" + getTag();
     }
 
     /* ---------------------------- STANDARD CALLBACKS -------------------------------------------*/
@@ -70,7 +71,6 @@ public class StudentProfileManagementBasicsFragment extends ProfileManagementBas
     public void onAttach(Activity activity) {
         super.onAttach(activity);
 
-        Log.println(Log.ASSERT, "STUD BASICS", "onAttach");
         birthDateChanged = false;
     }
 

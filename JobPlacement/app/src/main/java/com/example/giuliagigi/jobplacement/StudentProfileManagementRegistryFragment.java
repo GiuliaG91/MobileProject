@@ -27,7 +27,7 @@ public class StudentProfileManagementRegistryFragment extends ProfileManagementF
 
 
     private static final String TITLE = "Registry";
-    private static final String BUNDLE_IDENTIFIER = "STUDENTPROFILEREGISTRY";
+    public static final String BUNDLE_IDENTIFIER = "STUDENTPROFILEREGISTRY";
     private static final String BUNDLE_KEY_STUDENT = "BUNDLE_KEY_STUDENT";
 
     private Student student;
@@ -63,7 +63,8 @@ public class StudentProfileManagementRegistryFragment extends ProfileManagementF
 
     @Override
     public String getBundleID() {
-        return BUNDLE_IDENTIFIER;
+
+        return BUNDLE_IDENTIFIER + ";" + getTag();
     }
 
 
@@ -73,7 +74,6 @@ public class StudentProfileManagementRegistryFragment extends ProfileManagementF
     public void onAttach(Activity activity) {
         super.onAttach(activity);
 
-        Log.println(Log.ASSERT,"REGISTRY FRAG", "onAttach");
         telephoneFragments = new ArrayList<ProfileManagementTelephoneFragment>();
         addressChanged = false;
     }

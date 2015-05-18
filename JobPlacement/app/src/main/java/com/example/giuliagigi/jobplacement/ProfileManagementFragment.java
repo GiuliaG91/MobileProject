@@ -2,6 +2,7 @@ package com.example.giuliagigi.jobplacement;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -61,7 +62,7 @@ public class ProfileManagementFragment extends Fragment implements OnActivityCha
 
     public String getBundleID(){
 
-        return BUNDLE_IDENTIFIER;
+        return BUNDLE_IDENTIFIER + ";" + getTag();
     }
 
     /* --------------------- STANDARD CALLBACKS ------------------------------------------------- */
@@ -95,7 +96,9 @@ public class ProfileManagementFragment extends Fragment implements OnActivityCha
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        restoreStateFromBundle();
+
+        if(application.getBundle(getBundleID())!=null)
+            restoreStateFromBundle();
     }
 
     @Override
@@ -112,18 +115,13 @@ public class ProfileManagementFragment extends Fragment implements OnActivityCha
     }
 
     @Override
-    public void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-    }
-
-    @Override
     public void onDetach() {
         super.onDetach();
 
         if(!isNestedFragment)
             host.removeOnActivityChangedListener(this);
 
-        saveStateInBundle();
+            saveStateInBundle();
     }
 
 

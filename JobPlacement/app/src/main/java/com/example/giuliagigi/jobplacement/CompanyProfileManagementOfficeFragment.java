@@ -206,8 +206,6 @@ public class CompanyProfileManagementOfficeFragment extends ProfileManagementFra
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        Log.println(Log.ASSERT,"OFFICE FRAG", "onViewCreated");
-
         geoloc = (GeoLocalization)getChildFragmentManager().findFragmentById(R.id.office_map_fragment);
         geoloc.setOnMapReadyCallback(this);
     }

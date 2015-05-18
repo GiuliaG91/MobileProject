@@ -2,6 +2,7 @@ package com.example.giuliagigi.jobplacement;
 
 
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.content.res.TypedArray;
 import android.net.Uri;
 import android.os.PersistableBundle;
@@ -222,9 +223,6 @@ public class Home extends ActionBarActivity  implements TabHomeStudentFragment.O
         super.onActivityResult(requestCode, resultCode, data);
         Log.println(Log.ASSERT,"HOME ACTIVITY", "onActivityResult");
     }
-
-
-
 
     @Override
     public void onFragmentInteraction(Uri uri) {

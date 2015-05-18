@@ -21,7 +21,6 @@ public class ProfileManagementViewAdapter extends FragmentPagerAdapter{
 
             fragments = new ArrayList<ProfileManagementFragment>();
             GlobalData application = (GlobalData)GlobalData.getContext();
-            application.setProfileManagementViewAdapter(this);
 
             if(user.getType().equals(User.TYPE_STUDENT)){
 

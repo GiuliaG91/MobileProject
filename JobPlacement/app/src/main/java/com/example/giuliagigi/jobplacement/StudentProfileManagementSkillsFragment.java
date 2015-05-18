@@ -14,7 +14,7 @@ import java.util.ArrayList;
 public class StudentProfileManagementSkillsFragment extends ProfileManagementFragment {
 
     private static final String TITLE = "Skills";
-    private static final String BUNDLE_IDENTIFIER = "STUDENTPROFILESKILLS";
+    public static final String BUNDLE_IDENTIFIER = "STUDENTPROFILESKILLS";
     private static final String BUNDLE_KEY_STUDENT = "BUNDLE_KEY_STUDENT";
 
     private Student student;
@@ -47,7 +47,8 @@ public class StudentProfileManagementSkillsFragment extends ProfileManagementFra
 
     @Override
     public String getBundleID() {
-        return BUNDLE_IDENTIFIER;
+
+        return BUNDLE_IDENTIFIER + ";" + getTag();
     }
 
     /*----------------------- STANDARD CALLBACKS -------------------------------------------------*/
