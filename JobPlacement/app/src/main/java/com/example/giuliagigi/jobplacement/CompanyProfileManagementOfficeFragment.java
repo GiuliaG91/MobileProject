@@ -327,8 +327,6 @@ public class CompanyProfileManagementOfficeFragment extends ProfileManagementFra
     @Override
     public void onMapReady(GoogleMap googleMap) {
 
-        Log.println(Log.ASSERT,"OFFICE FRAG", "Map was created. Setting marker position: " + office.getOfficeAddress() + ", " + office.getOfficeCity());
-
         if(office.getLocation()!=null)
             geoloc.setMarkerPosition(new LatLng(office.getLocation().getLatitude(),office.getLocation().getLongitude()));
     }
