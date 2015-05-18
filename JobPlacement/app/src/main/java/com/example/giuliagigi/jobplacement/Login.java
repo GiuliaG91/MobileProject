@@ -59,13 +59,17 @@ public class Login extends ActionBarActivity {
 
         /* ero gia loggato? */
 
-        if(application.getCurrentUser() != null)
+        if(application.getCurrentUser()!=null){
+
+            Log.println(Log.ASSERT,"LOGIN", "User session already open. Entering home activity");
             startActivity(new Intent(getApplicationContext(),Home.class));
+        }
 
 
         final SharedPreferences sp = getPreferences(Context.MODE_PRIVATE);
         application.setLoginPreferences(sp);
-        sp.edit().clear().apply(); // pulisce le Shared Preferences
+
+       // sp.edit().clear().apply(); // pulisce le Shared Preferences
 
         mailText = (MultiAutoCompleteTextView)findViewById(R.id.email_editText);
         passwordText = (EditText)findViewById(R.id.password_editText);

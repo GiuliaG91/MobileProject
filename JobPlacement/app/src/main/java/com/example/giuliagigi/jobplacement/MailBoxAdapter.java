@@ -91,9 +91,13 @@ public class MailBoxAdapter extends RecyclerView.Adapter<MailBoxAdapter.ViewHold
     // Replace the contents of a view (invoked by the layout manager)
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
-        // - get element from your dataset at this position
-        // - replace the contents of the view with that element
 
+        holder.name.setText(mDataset.get(position).getNameSender());
+
+        if(mDataset.get(position).getPhotoSender() != null)
+            holder.image.setImageBitmap(mDataset.get(position).getPhotoSender());
+
+        /*
         ParseQuery<User> query = ParseQuery.getQuery("User");
         query.whereEqualTo(User.MAIL_FIELD, mDataset.get(position).getSender());
         query.findInBackground(new FindCallback<User>() {
@@ -108,7 +112,7 @@ public class MailBoxAdapter extends RecyclerView.Adapter<MailBoxAdapter.ViewHold
             }
 
         });
-
+        */
 
         holder.object.setText(mDataset.get(position).getObject());
 
@@ -166,7 +170,6 @@ public class MailBoxAdapter extends RecyclerView.Adapter<MailBoxAdapter.ViewHold
             }
         }
 
-
         holder.position = position;
 
         if(mDataset.get(position).getIsRead()){
@@ -204,6 +207,10 @@ public class MailBoxAdapter extends RecyclerView.Adapter<MailBoxAdapter.ViewHold
     public void updateMyDataset(List<InboxMessageReceived> messages)
     {
         mDataset.addAll(messages);
+
+        //carico dal server le immagini dei mittenti
+        for(InboxMessageReceived m: mDataset)
+            m.getPhotoSender();
 
     }
 

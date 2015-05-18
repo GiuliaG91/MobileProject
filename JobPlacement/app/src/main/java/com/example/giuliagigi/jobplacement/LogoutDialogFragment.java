@@ -82,9 +82,10 @@ public class LogoutDialogFragment extends DialogFragment {
 
     private void completeLogoutProcedure(){
 
+
         Toast.makeText(getActivity(), "Logout completed", Toast.LENGTH_SHORT).show();
 
-        application.getCurrentUser(); //updates currentUser in GlobalData
+         //updates currentUser in GlobalData
 
         SharedPreferences sp = application.getLoginPreferences();
 
@@ -93,10 +94,11 @@ public class LogoutDialogFragment extends DialogFragment {
             /* next time login won't be automatic */
             SharedPreferences.Editor editor = sp.edit();
             editor.putBoolean(Login.SHAREDPREF_LATEST_LOGIN_PREFERENCE,false);
+            editor.putString(Login.SHAREDPREF_LATEST_MAIL,"");
+            editor.putString(Login.SHAREDPREF_LATEST_PASSWORD,"");
             editor.commit();
         }
 
-        Home.resetMyDrawerSelectedItem();
 
         Intent i = new Intent(getActivity(),Login.class);
         startActivity(i);

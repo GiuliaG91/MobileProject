@@ -114,6 +114,9 @@ public class MailBoxNewFragment extends Fragment {
                     mr.setDate(message.getDate());
                     mr.setIsDeleting(false);
                     mr.setRecipient(recipient);
+                    mr.setNameSender(globalData.getUserObject().getName());
+                    if(globalData.getUserObject().getProfilePhoto() != null)
+                        mr.setPhotoSender(globalData.getUserObject().getProfilePhoto());
 
                     mr.saveInBackground();
 
