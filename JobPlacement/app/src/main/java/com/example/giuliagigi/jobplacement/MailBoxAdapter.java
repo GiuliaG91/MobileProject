@@ -228,9 +228,9 @@ public class MailBoxAdapter extends RecyclerView.Adapter<MailBoxAdapter.ViewHold
         ViewHolder vh = (ViewHolder)v.getTag();
 
         mDataset.get(vh.position).setIsRead(true);
+        mDataset.get(vh.position).saveInBackground();
 
         globalData.setCurrentViewMessage(mDataset.get(vh.position));
-        globalData.getCurrentViewMessage().saveInBackground();
 
         FragmentManager fragmentManager = context.getSupportFragmentManager();
 
@@ -239,15 +239,9 @@ public class MailBoxAdapter extends RecyclerView.Adapter<MailBoxAdapter.ViewHold
 
         fragmentManager.beginTransaction()
                 .replace(R.id.tab_Home_container, fragment)
-                .addToBackStack("MailBox")
+                .addToBackStack((String)vh.object.getText())
                 .commit();
 
-
-        // 1) --> aggiungere al backstack il fragment MailBoxFragment oppure implementare un tasto up
-        // nella action bar per ritornare alla vista precedente anche tramite la action bar
-
-        // 2) --> annullare l'attuale toolbar in modo tale da caricare gli action button
-        // per il fragment MailBoxDetailFragment
 
         Toolbar toolbar = globalData.getToolbar();
         toolbar.setTitle(vh.object.getText());

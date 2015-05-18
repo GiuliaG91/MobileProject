@@ -271,6 +271,7 @@
     <string name="object1">Oggetto</string>
     <string name="send">Invia</string>
 
+    <string name="body_new">Risposta:</string>
     <string name="body">Contenuto messaggio:</string>
     <string name="message_sent">Il messaggio è stato inviato!</string>
     <string name="message_emails_wrong">La consegna ai seguenti destinatari non è riuscita:</string>

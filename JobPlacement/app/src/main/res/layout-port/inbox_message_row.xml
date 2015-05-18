@@ -12,7 +12,7 @@
         android:id="@+id/card_view_mail_box"
         android:layout_gravity="center"
         android:layout_width="fill_parent"
-        android:layout_height="120dp"
+        android:layout_height="90dp"
         card_view:cardCornerRadius="5dp"
         android:layout_margin="5dp">
 
@@ -25,7 +25,7 @@
                 android:id="@+id/delete_message"
                 android:layout_width="0dp"
                 android:layout_height="fill_parent"
-                android:layout_weight="0.5"
+                android:layout_weight="0.6"
                 android:layout_marginLeft="5dp"
                 android:textSize="14sp"
                 android:textStyle="bold"

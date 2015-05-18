@@ -291,6 +291,7 @@
     <string name="date">Date:</string>
     <string name="object">Object:</string>
     <string name="object1">Object</string>
+    <string name="body_new">Reply:</string>
     <string name="body">Body:</string>
     <string name="send">Send</string>
 

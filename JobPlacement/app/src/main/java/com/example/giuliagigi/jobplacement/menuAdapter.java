@@ -258,6 +258,7 @@ public class menuAdapter extends RecyclerView.Adapter<menuAdapter.ViewHolder> {
 
                                     fragmentManager.beginTransaction()
                                             .replace(R.id.tab_Home_container, fragment)
+                                            .addToBackStack(gd.getResources().getStringArray(R.array.Menu_items_student)[1])
                                             .commit();
 
                                     // Highlight the selected item, update the title, and close the drawer
@@ -490,6 +491,7 @@ public class menuAdapter extends RecyclerView.Adapter<menuAdapter.ViewHolder> {
 
                                       fragmentManager.beginTransaction()
                                               .replace(R.id.tab_Home_container, fragment)
+                                              .addToBackStack(gd.getResources().getStringArray(R.array.Menu_items_Company)[4])
                                               .commit();
 
                                       // Highlight the selected item, update the title, and close the drawer

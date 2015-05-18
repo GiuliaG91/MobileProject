@@ -193,26 +193,17 @@ public class MailBoxFragment extends Fragment {
             @Override
             public void onClick(View view){
 
-                Log.println(Log.ASSERT, "onClick() Button NEW", "entro nel metodo onClick()");
-
                 FragmentManager fragmentManager = ((FragmentActivity)mListener).getSupportFragmentManager();
-
-                Log.println(Log.ASSERT, "onClick() Button NEW", "acquisisco FragmentManager");
 
                 Fragment fragment = MailBoxNewFragment.newInstance();
 
-                Log.println(Log.ASSERT, "onClick() Button NEW", "creo nuova istanza MailBoxNewFragment");
-
                 fragmentManager.beginTransaction()
                         .replace(R.id.tab_Home_container, fragment)
-                        .addToBackStack(((FragmentActivity)mListener).getResources().getStringArray(R.array.Menu_items_student)[4])
+                        .addToBackStack(((FragmentActivity)mListener).getResources().getString(R.string.new_message_toolbar_title))
                         .commit();
 
-                Log.println(Log.ASSERT, "onClick() Button NEW", "sostituissco fragment MailBoxFragment con MailBoxNewFragment");
-
                 Toolbar toolbar = (Toolbar) ((Activity)mListener).findViewById(R.id.toolbar);
-
-                //toolbar.setTitle(((Activity)mListener).getResources().getString(R.string.new_message_toolbar_title));
+                toolbar.setTitle(((Activity)mListener).getResources().getString(R.string.new_message_toolbar_title));
 
             }
         });

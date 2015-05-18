@@ -77,9 +77,9 @@ public class MailBoxRespondFragment extends Fragment {
         tv = (TextView) root.findViewById(R.id.old_message);
         Date date = globalData.getCurrentViewMessage().getDate();
         Resources res = globalData.getResources();
-        String oldMessage = res.getString(R.string.on) + " " + date.getDay() + " " + res.getStringArray(R.array.months)[date.getMonth()];
-        oldMessage = oldMessage + " " + date.getYear() + " " + globalData.getCurrentViewMessage().getSender() + " " + res.getString(R.string.wrote) + ":\n\"";
-        oldMessage = oldMessage + globalData.getCurrentViewMessage().getBodyMessage() + "\"\n\n";
+        String oldMessage = "   " + res.getString(R.string.on) + " " + date.getDay() + " " + res.getStringArray(R.array.months)[date.getMonth()] + " " + date.getYear() + ", ";
+        oldMessage = oldMessage + ((InboxMessageReceived)globalData.getCurrentViewMessage()).getNameSender() + " <" + globalData.getCurrentViewMessage().getSender() + "> " + res.getString(R.string.wrote) + ":\n\"";
+        oldMessage = oldMessage + globalData.getCurrentViewMessage().getBodyMessage() + "\"";
         tv.setText(oldMessage);
         //tv.setTextColor(0x0D47A1);
 
