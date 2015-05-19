@@ -3,24 +3,16 @@ package com.example.giuliagigi.jobplacement;
 import android.app.Activity;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
-
-import com.parse.ParseQuery;
-import com.parse.ParseQueryAdapter;
-
-import java.util.ArrayList;
 import java.util.List;
 
 
@@ -33,7 +25,6 @@ import java.util.List;
  * create an instance of this fragment.
  */
 public class OfferSearchFragment extends Fragment{
-
 
     View root;
     FragmentActivity activity;
@@ -56,9 +47,27 @@ public class OfferSearchFragment extends Fragment{
     }
 
     @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        menu.clear();
+        inflater.inflate(R.menu.menu_search, menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        if (item.getItemId() == R.id.action_filter) {
+            FilterFragment newFragment = FilterFragment.newInstance();
+            newFragment.show(getChildFragmentManager(), "dialog");
+
+
+        }
+        return true;
+    }
+
+    @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        setHasOptionsMenu(true);
         if(savedInstanceState!=null)
         {
             position=savedInstanceState.getInt("position");
@@ -69,8 +78,6 @@ public class OfferSearchFragment extends Fragment{
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-
-
         activity = getActivity();
 
         root = inflater.inflate(R.layout.fragment_offer_search, container, false);
@@ -105,24 +112,7 @@ public class OfferSearchFragment extends Fragment{
         }
     }
 
-    @Override
-    public void onCreateOptionsMenu(
-            Menu menu, MenuInflater inflater) {
-        menu.clear();
-        inflater.inflate(R.menu.menu_search, menu);
-    }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-
-        if (item.getItemId() == R.id.action_filter) {
-            FilterFragment newFragment = FilterFragment.newInstance();
-            newFragment.show(getChildFragmentManager(), "dialog");
-
-
-        }
-        return true;
-    }
 
     @Override
     public void onAttach(Activity activity) {

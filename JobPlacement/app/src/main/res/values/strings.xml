@@ -187,7 +187,8 @@
     <string name="new_offer_fragment_hint_object">Object of offer</string>
     <string name="new_offer_fragment_hint_duration">Term of contract</string>
     <string name="new_offer_fragment_hint_salary">Salary</string>
-    <string name="new_offer_fragment_hint_location">Location</string>
+    <string name="new_offer_fragment_hint_nation">Nation</string>
+    <string name="new_offer_fragment_hint_city">City</string>
     <string name="new_offer_fragment_hint_description">Description up to 500 chracters</string>
 
     <string name="new_offer_fragment_hint_spinnerField">Please choose a field</string>

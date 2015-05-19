@@ -2,6 +2,8 @@ package com.example.giuliagigi.jobplacement;
 
 import android.app.Activity;
 import android.content.Context;
+import android.location.Address;
+import android.location.Geocoder;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -32,6 +34,7 @@ import android.widget.Toast;
 import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.getbase.floatingactionbutton.FloatingActionsMenu;
 import com.parse.ParseException;
+import com.parse.ParseGeoPoint;
 import com.parse.ParseInstallation;
 import com.parse.ParseObject;
 import com.parse.ParsePush;
@@ -40,6 +43,7 @@ import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -87,7 +91,8 @@ public class NewOffer extends Fragment implements DatePickerFragment.OnDataSetLi
     private FloatingActionsMenu actionMenu=null;
 
    private EditText places=null;
-    private EditText location=null;
+    private EditText nation=null;
+    private EditText city=null;
 
     private Spinner fieldSpinner = null;
     private Spinner contractSpinner = null;
@@ -189,7 +194,8 @@ public class NewOffer extends Fragment implements DatePickerFragment.OnDataSetLi
         button_d=(FloatingActionButton)root.findViewById(R.id.action_d);
         actionMenu=(FloatingActionsMenu)root.findViewById(R.id.multiple_actions);
         places=(EditText)root.findViewById(R.id.offerAvailability);
-        location=(EditText)root.findViewById(R.id.offerLocation);
+      nation=(EditText)root.findViewById(R.id.new_offer_edit_nation);
+        city=(EditText)root.findViewById(R.id.new_offer_edit_city);
         addtag=(ImageButton)root.findViewById(R.id.addTagButton);
 
         fieldSpinner = (Spinner) root.findViewById(R.id.fieldOffer);
@@ -388,7 +394,8 @@ public class NewOffer extends Fragment implements DatePickerFragment.OnDataSetLi
 
             validity.setText(date);
             places.setText(offer.getnPositions().toString());
-            location.setText(offer.getLocation());
+            nation.setText(offer.getNation());
+            city.setText(offer.getCity());
             int i;
             for(i=0;i<typeOfFields.length;i++)
             {
@@ -490,7 +497,8 @@ public class NewOffer extends Fragment implements DatePickerFragment.OnDataSetLi
                 contractSpinner.setSelection(savedInstanceState.getInt("contract"));
                 validity.setText(savedInstanceState.getString("validity"));
                 termSpinner.setSelection(savedInstanceState.getInt("term"));
-                location.setText(savedInstanceState.getString("location"));
+                nation.setText(savedInstanceState.getString("nation"));
+                city.setText(savedInstanceState.getString("city"));
                 Integer pos=savedInstanceState.getInt("posSalary");
                 salarySpinner.setSelection(pos);
                 if(pos!=0) {
@@ -652,7 +660,8 @@ public class NewOffer extends Fragment implements DatePickerFragment.OnDataSetLi
                 dateButton.setEnabled(false);
                 validity.setEnabled(false);
                 places.setEnabled(false);
-                location.setEnabled(false);
+                nation.setEnabled(false);
+                city.setEnabled(false);
 
                 fieldSpinner.setEnabled(false);
                 contractSpinner.setEnabled(false);
@@ -687,7 +696,8 @@ public class NewOffer extends Fragment implements DatePickerFragment.OnDataSetLi
                 dateButton.setEnabled(true);
                 validity.setEnabled(true);
                 places.setEnabled(true);
-                location.setEnabled(true);
+                nation.setEnabled(true);
+                city.setEnabled(true);
 
 
 
@@ -767,7 +777,8 @@ public class NewOffer extends Fragment implements DatePickerFragment.OnDataSetLi
         outState.putInt("contract", contractSpinner.getSelectedItemPosition());
         outState.putString("validity", validity.getText().toString());
         outState.putInt("term", termSpinner.getSelectedItemPosition());
-        outState.putString("location", location.getText().toString());
+        outState.putString("nation", nation.getText().toString());
+        outState.putString("city", city.getText().toString());
         outState.putInt("posSalary",salarySpinner.getSelectedItemPosition());
         outState.putString("salary",editSalary.getText().toString());
         outState.putString("description", editDescriptionText.getText().toString());
@@ -857,7 +868,9 @@ public class NewOffer extends Fragment implements DatePickerFragment.OnDataSetLi
                     places.getText().length()==0 ||
                     validity.getText().length()==0 ||
                     contractSpinner.getSelectedItemPosition()==0 ||
-                    termSpinner.getSelectedItemPosition() ==0
+                    termSpinner.getSelectedItemPosition() ==0 ||
+                   nation.getText().length()!=0 && city.getText().length()==0 ||
+                  nation.getText().length()==0 && city.getText().length()!=0
                     )
             {
             Toast.makeText(getActivity(),"Missing field",Toast.LENGTH_SHORT ).show();
@@ -932,14 +945,34 @@ public class NewOffer extends Fragment implements DatePickerFragment.OnDataSetLi
                         offer.setSalary(-1);
                     }
 
-                    if(location.getText().length()==0)
+                    if(nation.getText().length()==0 && city.getText().length()==0)
                     {
-                        offer.setLocation("");
                     }
                     else {
-                        offer.setLocation(location.getText().toString());
-                    }
 
+                        //Creo il geopoint
+                        //make a geoPoint
+
+                        String geoAddress = nation.getText().toString() + ", " + city.getText().toString();
+                        Geocoder geocoder = new Geocoder(getActivity());
+                        List<Address> addressList = null;
+                        try {
+                            addressList = geocoder.getFromLocationName(geoAddress, 5);
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+
+                        if (addressList.isEmpty()) {
+                            //do nothing
+                        } else {
+                            Address a = addressList.get(0);
+                            ParseGeoPoint geoPoint = new ParseGeoPoint(a.getLatitude(), a.getLongitude());
+
+                            offer.setLocation(geoPoint);
+                            offer.setNation(nation.getText().toString());
+                            offer.setCity(city.getText().toString());
+                        }
+                    }
                     if(editDescriptionText.getText().length()==0)
                     {
                         offer.setDescription("");
@@ -1016,7 +1049,9 @@ public class NewOffer extends Fragment implements DatePickerFragment.OnDataSetLi
                 places.getText().length() == 0 ||
                 validity.getText().length() == 0 ||
                 contractSpinner.getSelectedItemPosition() == 0 ||
-                termSpinner.getSelectedItemPosition() == 0
+                termSpinner.getSelectedItemPosition() == 0 ||
+                nation.getText().length()!=0 && city.getText().length()==0 ||
+                nation.getText().length()==0 && city.getText().length()!=0
                 ) {
             Toast.makeText(getActivity(), "Missing field", Toast.LENGTH_SHORT).show();
         }
@@ -1082,10 +1117,33 @@ public class NewOffer extends Fragment implements DatePickerFragment.OnDataSetLi
                 offer.setSalary(-1);
             }
 
-            if (location.getText().length() == 0) {
-                offer.setLocation("");
-            } else {
-                offer.setLocation(location.getText().toString());
+            if(nation.getText().length()==0 && city.getText().length()==0)
+            {
+            }
+            else {
+
+                //Creo il geopoint
+                //make a geoPoint
+
+                String geoAddress = nation.getText().toString() + ", " + city.getText().toString();
+                Geocoder geocoder = new Geocoder(getActivity());
+                List<Address> addressList = null;
+                try {
+                    addressList = geocoder.getFromLocationName(geoAddress, 5);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+                if (addressList.isEmpty()) {
+                    //do nothing
+                } else {
+                    Address a = addressList.get(0);
+                    ParseGeoPoint geoPoint = new ParseGeoPoint(a.getLatitude(), a.getLongitude());
+
+                    offer.setLocation(geoPoint);
+                    offer.setNation(nation.getText().toString());
+                    offer.setCity(city.getText().toString());
+                }
             }
 
             if (editDescriptionText.getText().length() == 0) {

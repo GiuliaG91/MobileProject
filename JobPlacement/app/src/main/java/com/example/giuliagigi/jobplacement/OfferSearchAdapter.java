@@ -19,6 +19,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 
+import com.parse.ParseException;
 import com.parse.ParseGeoPoint;
 import com.parse.ParseQuery;
 import com.parse.ParseQueryAdapter;
@@ -161,6 +162,9 @@ public class OfferSearchAdapter extends RecyclerView.Adapter<OfferSearchAdapter.
 
                         if (type == 1) //city in general
                         {
+
+                            query.whereNear("location",geoPoint);
+
 
                         } else if (type == 2) //less then
                         {

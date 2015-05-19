@@ -147,6 +147,7 @@ public class FilterFragment extends DialogFragment {
 
         //set all possible filters
         editSalary = (EditText) root.findViewById(R.id.filter_edit_salary);
+        editDistance=(EditText) root.findViewById(R.id.filter_edit_distance);
         nation = (EditText) root.findViewById(R.id.filter_edit_nation);
         city = (EditText) root.findViewById(R.id.filter_edit_city);
         fieldSpinner = (Spinner) root.findViewById(R.id.filter_field_spinner);
@@ -621,27 +622,30 @@ public class FilterFragment extends DialogFragment {
                 }
             }
 
-            container = (GridLayout) root.findViewById(R.id.filter_location_container);
-            if (container.getChildCount() > 0) {
-                for (int i = 0; i < container.getChildCount(); i++) {
-                    View tv = container.getChildAt(i);
-                    TextView t = (TextView) tv.findViewById(R.id.tag_tv);
-                    location_list.add(t.getText().toString().toLowerCase().trim());
-                }
-            }
 
            pos = salarySpinner.getSelectedItemPosition();
             if (pos != 0) {
 
                 salary_list.add(String.valueOf(pos));
-                salary_list.add(editSalary.getText().toString());
+                if(editSalary.getText().toString().equals(""))
+                {
+                    salary_list.add("0");
+                }
+                else {
+                    salary_list.add(editSalary.getText().toString());
+                }
             }
 
             pos = distanceSpinner.getSelectedItemPosition();
             if (pos != 0) {
 
                 location_list.add(String.valueOf(pos));
-                location_list.add(editDistance.getText().toString());
+                if(editDistance.getText().toString().equals(""))
+                {
+                    location_list.add("0");
+                }
+                else {
+                location_list.add(editDistance.getText().toString());}
                 location_list.add(nation.getText().toString());
                 location_list.add(city.getText().toString());
             }
