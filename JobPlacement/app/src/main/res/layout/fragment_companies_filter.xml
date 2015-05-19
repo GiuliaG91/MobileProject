@@ -1,0 +1,251 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:id="@+id/scrollView" >
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:orientation="vertical">
+
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"
+                    android:layout_marginBottom="5dp"
+                    android:text="@string/filter_Remove"
+                    android:layout_marginLeft="3dp"
+                    android:layout_marginTop="20dp"
+                    android:textSize="20sp"
+                    />
+                <ImageButton
+                    android:id="@+id/filter_remove"
+                    android:layout_width="0dp"
+                    android:layout_height="fill_parent"
+                    android:layout_weight="0.2"
+                    android:src="@drawable/ic_cross"
+                    android:background="#00000000"
+                    android:layout_marginRight="5dp"
+                    android:layout_marginTop="5dp"/>
+
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/tag_filter_layout"
+                android:layout_marginBottom="5dp"
+                android:layout_marginTop="5dp">
+
+                <TextView
+                    android:layout_width="fill_parent"
+                    android:layout_height="0dp"
+                    android:text="@string/filter_Skills"
+                    android:id="@+id/tag_filter_tv"
+                    android:layout_weight="0.3"
+                    android:layout_marginLeft="3dp"
+                    android:layout_marginTop="20dp" />
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1">
+
+                    <MultiAutoCompleteTextView
+                        android:layout_width="0dp"
+                        android:layout_height="fill_parent"
+                        android:hint="@string/new_offer_fragment_hint_tags"
+                        android:id="@+id/filter_tag_complete_tv"
+                        android:layout_weight="1"
+                        android:completionThreshold="1"
+                        android:backgroundTint="#00000000" />
+
+                    <ImageButton
+                        android:layout_width="0dp"
+                        android:layout_height="fill_parent"
+                        android:background="#00000000"
+                        android:layout_weight="0.2"
+                        android:id="@+id/filter_tag_add"
+                        android:src="@drawable/ic_plus"/>
+
+                </LinearLayout>
+                <android.support.v7.widget.CardView
+                    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+                    android:id="@+id/filter_tag_cardview"
+                    android:layout_gravity="center"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="5dp"
+                    android:layout_marginLeft="5dp"
+                    card_view:cardCornerRadius="4dp">
+
+                    <GridLayout
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:columnCount="3"
+                        android:id="@+id/filter_tag_container"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginRight="5dp"></GridLayout>>
+
+                </android.support.v7.widget.CardView>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="5dp"
+                android:layout_marginTop="5dp"
+                android:id="@+id/field_filter_layout">
+
+                <TextView
+                    android:layout_width="fill_parent"
+                    android:layout_height="0dp"
+                    android:text="@string/filter_Field"
+                    android:id="@+id/field_filter_tv"
+                    android:layout_weight="0.3"
+                    android:layout_marginLeft="3dp"
+                    android:layout_marginTop="20dp" />
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1">
+                    <Spinner
+                        android:layout_width="0dp"
+                        android:layout_height="fill_parent"
+                        android:layout_weight="1"
+                        android:id="@+id/filter_field_spinner"></Spinner>
+
+                    <ImageButton
+                        android:layout_width="0dp"
+                        android:layout_height="fill_parent"
+                        android:background="#00000000"
+                        android:layout_weight="0.2"
+                        android:id="@+id/filter_field_add"
+                        android:src="@drawable/ic_plus"/>
+                </LinearLayout>
+                <android.support.v7.widget.CardView
+                    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+                    android:id="@+id/filter_field_cardview"
+                    android:layout_gravity="center"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="5dp"
+                    android:layout_marginLeft="5dp"
+                    card_view:cardCornerRadius="4dp">
+
+
+                    <GridLayout
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:columnCount="3"
+                        android:id="@+id/filter_field_container"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginRight="5dp"></GridLayout>>
+
+                </android.support.v7.widget.CardView>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="5dp"
+                android:layout_marginTop="5dp"
+                android:id="@+id/location_filter_layout">
+
+                <TextView
+                    android:layout_width="fill_parent"
+                    android:layout_height="0dp"
+                    android:text="@string/filter_Location"
+                    android:id="@+id/location_filter_tv"
+                    android:layout_weight="0.3"
+                    android:layout_marginLeft="3dp"
+                    android:layout_marginTop="20dp" />
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1">
+                    <MultiAutoCompleteTextView
+                        android:layout_width="0dp"
+                        android:layout_height="fill_parent"
+                        android:hint="@string/new_offer_fragment_hint_location"
+                        android:id="@+id/filter_location_complete_tv"
+                        android:layout_weight="1"
+                        android:completionThreshold="1"
+                        android:backgroundTint="#00000000" />
+
+                    <ImageButton
+                        android:layout_width="0dp"
+                        android:layout_height="fill_parent"
+                        android:background="#00000000"
+                        android:layout_weight="0.2"
+                        android:id="@+id/filter_location_add"
+                        android:src="@drawable/ic_plus"/>
+
+                </LinearLayout>
+                <android.support.v7.widget.CardView
+                    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+                    android:id="@+id/filter_location_cardview"
+                    android:layout_gravity="center"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="5dp"
+                    android:layout_marginLeft="5dp"
+                    card_view:cardCornerRadius="4dp">
+
+
+                    <GridLayout
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:columnCount="2"
+                        android:id="@+id/filter_location_container"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginRight="5dp"></GridLayout>>
+
+                </android.support.v7.widget.CardView>
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+    </ScrollView>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.1"
+        android:orientation="horizontal">
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
+            android:text="cancel"
+            android:id="@+id/cancel_button"/>
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
+            android:text="ok"
+            android:id="@+id/ok_button"/>
+
+    </LinearLayout>
+
+
+</LinearLayout>

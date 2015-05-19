@@ -52,14 +52,13 @@ public class StudentCompanySearchAdapter extends RecyclerView.Adapter<StudentCom
         student=globalData.getStudentFromUser();
         supportSet = new HashSet<>();
 
-     /*   if(globalData.getOfferFilterStatus().isValid())
+        if(globalData.getCompanyFilterStatus().isValid())
         {
-            OfferFilterStatus status=globalData.getOfferFilterStatus();
-            setFactory(status.getTag_list(),status.getContract_list(),status.getTerm_list(),status.getField_list(),status.getLocation_list(),
-                    status.getSalary_list());
+            CompanyFilterStatus status=globalData.getCompanyFilterStatus();
+            setFactory(status.getTag_list(), status.getField_list(),status.getLocation_list());
         }
         else {
-*/
+
             factory = new ParseQueryAdapter.QueryFactory<Company>() {
                 @Override
                 public ParseQuery<Company> create() {
@@ -68,8 +67,8 @@ public class StudentCompanySearchAdapter extends RecyclerView.Adapter<StudentCom
                 }
             };
 
-        setAdapter();
-
+            setAdapter();
+        }
 
     }
 
@@ -77,11 +76,8 @@ public class StudentCompanySearchAdapter extends RecyclerView.Adapter<StudentCom
 
 
     public void setFactory(final List<Tag> tag_list,
-                           final List<String> contract_list,
-                           final List<String> term_list,
                            final List<String> field_list,
-                           final List<String> location_list,
-                           final List<String> salary_list)
+                           final List<String> location_list)
     {
 
 
@@ -90,48 +86,15 @@ public class StudentCompanySearchAdapter extends RecyclerView.Adapter<StudentCom
             @Override
             public ParseQuery<Company> create() {
                 ParseQuery query = new ParseQuery("Company");
-                /*
+
                 if(!tag_list.isEmpty())
                 {
                     query.whereContainedIn("tags",tag_list);
-                }
-                if(!contract_list.isEmpty())
-                {
-                    query.whereContainedIn("contract",contract_list);
-                }
-                if(!term_list.isEmpty())
-                {
-                    query.whereContainedIn("term",term_list);
                 }
                 if(!field_list.isEmpty())
                 {
                     query.whereContainedIn("field",field_list);
                 }
-
-                if(!salary_list.isEmpty())
-                {
-                    Integer type=Integer.parseInt(salary_list.get(0));
-                    Integer sal=Integer.parseInt(salary_list.get(1));
-
-
-                    if(type==1) //less then
-                    {
-                        query.whereLessThan("salary", sal);
-
-                    }
-                    else if (type==2) //more then
-                    {
-                        query.whereGreaterThan("salary",sal);
-                    }
-                    else if(type == 3) //equal to
-                    {
-                        query.whereEqualTo("salary",sal);
-
-
-                    }
-                }
-
-*/
 
                 return query;
             }

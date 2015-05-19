@@ -50,6 +50,9 @@ public class GlobalData extends Application {
     /******************************************/
     /************FILTERS***************/
     private OfferFilterStatus offerFilterStatus=new OfferFilterStatus();
+    private StudentFilterStatus studentFilterStatus=new StudentFilterStatus();
+    private CompanyFilterStatus companyFilterStatus=new CompanyFilterStatus();
+
     /***********************************/
 
     @Override
@@ -224,26 +227,15 @@ public class GlobalData extends Application {
 
     /***********************************************************/
 
-    public Bundle getOfferBundle() {
-        return offerBundle;
-    }
-
-    public void setOfferBundle(Bundle offerBundle) {
-        this.offerBundle = offerBundle;
-    }
-
-    public ArrayList<Tag> getTagBoundle() {
-        return tagBoundle;
-    }
-
-    public void setTagBoundle(ArrayList<Tag> tagBoundle) {
-        this.tagBoundle = tagBoundle;
-    }
 
     public OfferFilterStatus getOfferFilterStatus() {
         return offerFilterStatus;
     }
+    public StudentFilterStatus getStudentFilterStatus(){return  studentFilterStatus;}
 
+    public CompanyFilterStatus getCompanyFilterStatus() {
+        return companyFilterStatus;
+    }
 
     /* ---------------- INBOX MESSAGES -----------------------------------------------------------*/
 

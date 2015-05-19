@@ -14,6 +14,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.util.List;
+
 /**
  * Created by pietro on 14/05/2015.
  */
@@ -92,10 +94,8 @@ public class StudentCompanySearchFragment extends Fragment {
     public boolean onOptionsItemSelected(MenuItem item) {
 
         if (item.getItemId() == R.id.action_filter) {
-            FilterFragment newFragment = FilterFragment.newInstance();
+            FilterCompaniesFragment newFragment = FilterCompaniesFragment.newInstance();
             newFragment.show(getChildFragmentManager(), "dialog");
-
-
         }
         return true;
     }
@@ -132,5 +132,12 @@ public class StudentCompanySearchFragment extends Fragment {
         public void onFragmentInteraction(Uri uri);
     }
 
+
+    public void addFiters(List<Tag> tag_list,  List<String> field_list, List<String> location_list) {
+        adapter.setFactory(tag_list,field_list, location_list);
+        adapter.setAdapter();
+        adapter.notifyDataSetChanged();
+
+    }
 
 }

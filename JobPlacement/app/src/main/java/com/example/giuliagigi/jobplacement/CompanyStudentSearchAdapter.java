@@ -54,41 +54,39 @@ public class CompanyStudentSearchAdapter extends RecyclerView.Adapter<CompanyStu
     public CompanyStudentSearchAdapter(FragmentActivity c, ViewGroup parentIn ,CompanyStudentSearchFragment fragment,LinearLayoutManager layoutManager) {
         parseParent = parentIn;
         context = c;
-        currentFragment=fragment;
+        currentFragment = fragment;
         mDataset = new ArrayList<>();
         globalData = (GlobalData) context.getApplication();
-        company=globalData.getCompanyFromUser();
+        company = globalData.getCompanyFromUser();
         supportSet = new HashSet<>();
-        count=0;
-        mLayoutManager=layoutManager;
+        count = 0;
+        mLayoutManager = layoutManager;
 
-     /*   if(globalData.getOfferFilterStatus().isValid())
-        {
-            OfferFilterStatus status=globalData.getOfferFilterStatus();
-            setFactory(status.getTag_list(),status.getContract_list(),status.getTerm_list(),status.getField_list(),status.getLocation_list(),
+        if (globalData.getOfferFilterStatus().isValid()) {
+            StudentFilterStatus status = globalData.getStudentFilterStatus();
+            setFactory(status.getTag_list(), status.getDegree_list(), status.getField_list(), status.getLocation_list(),
                     status.getSalary_list());
+        } else {
+
+            factory = new ParseQueryAdapter.QueryFactory<Student>() {
+                @Override
+                public ParseQuery<Student> create() {
+                    ParseQuery query = new ParseQuery("Student");
+                    return query;
+                }
+            };
+
+            setAdapter();
+
+
         }
-        else {
-*/
-        factory = new ParseQueryAdapter.QueryFactory<Student>() {
-            @Override
-            public ParseQuery<Student> create() {
-                ParseQuery query = new ParseQuery("Student");
-                return query;
-            }
-        };
-
-        setAdapter();
-
-
     }
 
     /************************************************   query adapter things **********************/
 
 
     public void setFactory(final List<Tag> tag_list,
-                           final List<String> contract_list,
-                           final List<String> term_list,
+                           final List<String> degree_list,
                            final List<String> field_list,
                            final List<String> location_list,
                            final List<String> salary_list)
@@ -100,18 +98,38 @@ public class CompanyStudentSearchAdapter extends RecyclerView.Adapter<CompanyStu
             @Override
             public ParseQuery<Student> create() {
                 ParseQuery query = new ParseQuery("Student");
-                /*
+
                 if(!tag_list.isEmpty())
                 {
                     query.whereContainedIn("tags",tag_list);
                 }
-                if(!contract_list.isEmpty())
+                if(!degree_list.isEmpty())
                 {
-                    query.whereContainedIn("contract",contract_list);
-                }
-                if(!term_list.isEmpty())
-                {
-                    query.whereContainedIn("term",term_list);
+                    Integer type=Integer.parseInt(degree_list.get(0));
+//                    Integer grade=Integer.parseInt(degree_list.get(1));
+
+                        query.include("Degree");
+                    ParseQuery inner=null;
+                    if(type==1) //less then
+                    {
+                       inner=new ParseQuery("Degree");
+                        query.whereEqualTo("type","Bachelor");
+
+                    }
+                    else if (type==2) //more then
+                    {
+                        inner=new ParseQuery("Degree");
+                        query.whereEqualTo("type", "Bachelor");
+                    }
+                    else if(type == 3) //equal to
+                    {
+                        inner=new ParseQuery("Degree");
+                        query.whereEqualTo("type","Bachelor");
+
+
+                    }
+                    query.whereMatchesQuery("degrees",inner);
+
                 }
                 if(!field_list.isEmpty())
                 {
@@ -140,8 +158,6 @@ public class CompanyStudentSearchAdapter extends RecyclerView.Adapter<CompanyStu
 
                     }
                 }
-
-*/
 
                 return query;
             }
