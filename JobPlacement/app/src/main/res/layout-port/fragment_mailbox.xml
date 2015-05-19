@@ -1,14 +1,9 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    xmlns:fab="http://schemas.android.com/apk/res-auto"
     android:layout_height="match_parent"
     android:id="@+id/student_mailbox_fragment"
     tools:context="com.example.giuliagigi.jobplacement.MailBoxFragment">
-
-    <Button
-        android:id="@+id/new_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Nuovo Messaggio"/>
 
     <!-- A RecyclerView with some commonly used attributes -->
     <android.support.v7.widget.RecyclerView
@@ -16,6 +11,47 @@
         android:scrollbars="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
+
+    <com.getbase.floatingactionbutton.FloatingActionsMenu
+        android:id="@+id/multiple_actions_mailbox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_gravity="right|bottom"
+        fab:fab_addButtonColorNormal="@color/ColorPrimary"
+        fab:fab_addButtonColorPressed="@color/ColorPrimaryDark"
+        fab:fab_labelStyle="@style/menu_labels_style"
+        android:layout_marginBottom="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginEnd="16dp">
+
+        <com.getbase.floatingactionbutton.FloatingActionButton
+            android:id="@+id/action_cancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            fab:fab_colorNormal="@color/ColorPrimary"
+            fab:fab_title="@string/cancel_mails"
+            fab:fab_colorPressed="@color/ColorPrimaryDark"/>
+
+        <com.getbase.floatingactionbutton.FloatingActionButton
+            android:id="@+id/action_new_message"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            fab:fab_colorNormal="@color/ColorPrimary"
+            fab:fab_title="@string/new_message_toolbar_title"
+            fab:fab_colorPressed="@color/ColorPrimaryDark"/>
+
+        <com.getbase.floatingactionbutton.FloatingActionButton
+            android:id="@+id/action_sent_mail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            fab:fab_colorNormal="@color/ColorPrimary"
+            fab:fab_title="@string/sent_mail"
+            fab:fab_colorPressed="@color/ColorPrimaryDark"/>
+
+    </com.getbase.floatingactionbutton.FloatingActionsMenu>
 
 
 </FrameLayout>

@@ -40,10 +40,12 @@ public class MailBoxNewFragment extends Fragment {
     InboxMessage message;
     GlobalData globalData;
     FragmentActivity activity;
+    ArrayList<String> recipients;
 
 
-    public static MailBoxNewFragment newInstance() {
+    public static MailBoxNewFragment newInstance(ArrayList<String> recipients) {
         MailBoxNewFragment fragment = new MailBoxNewFragment();
+        fragment.recipients = recipients;
         return fragment;
     }
 
@@ -71,6 +73,15 @@ public class MailBoxNewFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         root = inflater.inflate(R.layout.fragment_mail_box_new,container,false);
+
+        if(this.recipients != null){
+            EditText ed = (EditText)root.findViewById(R.id.recipients_list_new_message);
+            String list_rec = "";
+            for(String r: this.recipients){
+                list_rec = list_rec + r + " ";
+            }
+            ed.setText(list_rec);
+        }
 
         Button button = (Button) root.findViewById(R.id.send_new_message_btn);
         button.setOnClickListener(new View.OnClickListener(){

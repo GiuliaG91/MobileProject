@@ -285,6 +285,8 @@
 
     <string name="new_message">Create new message</string>
     <string name="new_message_toolbar_title">New Message</string>
+    <string name="sent_mail">Sent mails</string>
+    <string name="cancel_mails">Cancel mails</string>
     <string name="sender">From:</string>
     <string name="recipient">To:</string>
     <string name="recipients">Recipients</string>

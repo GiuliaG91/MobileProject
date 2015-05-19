@@ -92,7 +92,11 @@ public class MailBoxAdapter extends RecyclerView.Adapter<MailBoxAdapter.ViewHold
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
 
-        holder.name.setText(mDataset.get(position).getNameSender());
+        if(mDataset.get(position).getNameSender().length() < 22)
+            holder.name.setText(mDataset.get(position).getNameSender());
+        else{
+            holder.name.setText(mDataset.get(position).getNameSender().substring(0, 21) + "...");
+        }
 
         if(mDataset.get(position).getPhotoSender() != null)
             holder.image.setImageBitmap(mDataset.get(position).getPhotoSender());
@@ -114,7 +118,10 @@ public class MailBoxAdapter extends RecyclerView.Adapter<MailBoxAdapter.ViewHold
         });
         */
 
-        holder.object.setText(mDataset.get(position).getObject());
+        if(mDataset.get(position).getObject().length() < 20)
+            holder.object.setText(mDataset.get(position).getObject());
+        else
+            holder.object.setText(mDataset.get(position).getObject().substring(0, 19) + "...");
 
 
         holder.pref.setChecked(mDataset.get(position).getIsPreferred());
@@ -163,10 +170,10 @@ public class MailBoxAdapter extends RecyclerView.Adapter<MailBoxAdapter.ViewHold
         if(holder.message != null) {
 
             String message = mDataset.get(position).getBodyMessage();
-            if (message.length() < 15) {
+            if (message.length() < 25) {
                 holder.message.setText(message);
             } else {
-                holder.message.setText(message.substring(0, 15) + "...");
+                holder.message.setText(message.substring(0, 24) + "...");
             }
         }
 

@@ -12,6 +12,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.BaseAdapter;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -106,9 +107,10 @@ public class MailBoxDetailFragment extends Fragment {
         //set list of recipients in the spinner
         Spinner sp = (Spinner)root.findViewById(R.id.recipients_list);
         ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<String>(this.globalData, R.layout.row_spinner);
-
         spinnerAdapter.addAll(message.getRecipients());
         sp.setAdapter(spinnerAdapter);
+
+        //sp.setAdapter(new StringAdapter((String[])(message.getRecipients().toArray())));
 
 
         //set date
@@ -205,7 +207,44 @@ public class MailBoxDetailFragment extends Fragment {
 //
 //    }
 
-    // implementare un botttone Up che punti a mailBoxFragment con la vista di tutti i messaggi
-    // resettare di conseguenza il contenuto di globalData.currentViewMessage
+
+/*
+    private class StringAdapter extends BaseAdapter {
+
+        public String[] stringArray;
+
+        public StringAdapter(String[] stringArray) {
+            super();
+            this.stringArray = stringArray;
+        }
+
+        @Override
+        public int getCount() {
+            return stringArray.length;
+        }
+
+        @Override
+        public String getItem(int position) {
+            return stringArray[position];
+        }
+
+        @Override
+        public long getItemId(int position) {
+            return position;
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+
+            if(convertView == null)
+                convertView = getActivity().getLayoutInflater().inflate(R.layout.list_text_element,parent,false);
+
+            TextView text = (TextView)convertView.findViewById(R.id.text_view);
+            text.setTextSize(15);
+            text.setText(stringArray[position]);
+            return convertView;
+        }
+    }
+    */
 
 }

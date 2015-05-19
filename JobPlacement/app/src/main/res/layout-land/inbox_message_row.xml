@@ -75,7 +75,7 @@
                         android:id="@+id/sender"
                         android:gravity="bottom"
                         android:textColor="#ff000000"
-                        android:textSize="20sp"
+                        android:textSize="16sp"
                         android:paddingBottom="5dp" />
 
                     <TextView
@@ -88,7 +88,7 @@
                         android:layout_weight="1"
                         android:gravity="bottom"
                         android:textColor="#ff000000"
-                        android:textSize="20sp"
+                        android:textSize="16sp"
                         android:paddingBottom="5dp" />
 
                 </LinearLayout>
@@ -98,6 +98,7 @@
                     android:layout_height="0dp"
                     android:textAppearance="?android:attr/textAppearanceSmall"
                     android:text="Thjjdkrfri fdkjslfkj  ..."
+                    android:textSize="15sp"
                     android:id="@+id/body_message"
                     android:layout_weight="1"
                     android:paddingTop="5dp" />

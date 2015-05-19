@@ -20,13 +20,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.Toast;
 
+import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.parse.DeleteCallback;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
 import com.parse.ParseQueryAdapter;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 
@@ -71,7 +74,7 @@ public class MailBoxFragment extends Fragment {
                 case 2:  // MessageBox creazione nuovo messaggio
                     FragmentManager fragmentManager = ((FragmentActivity)mListener).getSupportFragmentManager();
 
-                    Fragment fragment = MailBoxNewFragment.newInstance();
+                    Fragment fragment = MailBoxNewFragment.newInstance(null);
 
                     fragmentManager.beginTransaction()
                             .replace(R.id.tab_Home_container, fragment)
@@ -187,15 +190,17 @@ public class MailBoxFragment extends Fragment {
 
         queryAdapter.loadObjects();
 
-        // aggiungo listener a bottone di prova per triggerare nuovi messaggi
-        Button button = (Button) root.findViewById(R.id.new_btn);
-        button.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View view){
 
+        /*Attach on click listener to button menu */
+
+        final FloatingActionButton newMessageButton = (FloatingActionButton)root.findViewById(R.id.action_new_message);
+        newMessageButton.setIcon(R.drawable.ic_mail);
+        newMessageButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
                 FragmentManager fragmentManager = ((FragmentActivity)mListener).getSupportFragmentManager();
 
-                Fragment fragment = MailBoxNewFragment.newInstance();
+                Fragment fragment = MailBoxNewFragment.newInstance(null);
 
                 fragmentManager.beginTransaction()
                         .replace(R.id.tab_Home_container, fragment)
@@ -204,29 +209,31 @@ public class MailBoxFragment extends Fragment {
 
                 Toolbar toolbar = (Toolbar) ((Activity)mListener).findViewById(R.id.toolbar);
                 toolbar.setTitle(((Activity)mListener).getResources().getString(R.string.new_message_toolbar_title));
+            }
+        });
+
+        final FloatingActionButton sentMailsButton = (FloatingActionButton)root.findViewById(R.id.action_sent_mail);
+        sentMailsButton.setIcon(R.drawable.ic_send_white_36dp);
+        sentMailsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                //triggerare MailBoxSentFragment
 
             }
         });
 
-        /*
-        button = (Button) root.findViewById(R.id.mails_sent_btn);
-        button.setOnClickListener(new View.OnClickListener(){
-            public void onClick(View v){
+        final FloatingActionButton cancelButton = (FloatingActionButton)root.findViewById(R.id.action_cancel);
+        cancelButton.setIcon(R.drawable.ic_delete);
+        cancelButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
-                ParseQueryAdapter.QueryFactory<InboxMessage> factory =
-                        new ParseQueryAdapter.QueryFactory<InboxMessage>() {
-                            public ParseQuery create() {
+                MailBoxFragment.deleteMessages(root, adapter);
 
-                                ParseQuery query = new ParseQuery("InboxMessage");
-                                query.whereEqualTo(InboxMessageReceived.SENDER, ((GlobalData)((FragmentActivity)mListener).getApplication()).getUserObject().getMail());
-                                return query;
-                            }
-                        };
-                queryAdapter = new ParseQueryAdapter<>(getActivity(), factory);
-                queryAdapter.loadObjects();
             }
         });
-        */
+
 
         return root;
     }
@@ -284,7 +291,6 @@ public class MailBoxFragment extends Fragment {
 
         }
     }
-
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater menuInflater){

@@ -1,14 +1,17 @@
 package com.example.giuliagigi.jobplacement;
 
 
+import android.app.Activity;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -27,6 +30,7 @@ import com.parse.ParseObject;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 
 
@@ -232,7 +236,20 @@ public class OfferDetail extends  Fragment {
             @Override
             public void onClick(View v) {
 
-                //write a new mail
+                FragmentManager fragmentManager =activity.getSupportFragmentManager();
+
+                ArrayList<String> recipients = new ArrayList<String>();
+                recipients.add(company.getMail());
+
+                Fragment fragment = MailBoxNewFragment.newInstance(recipients);
+
+                fragmentManager.beginTransaction()
+                        .replace(R.id.tab_Home_container, fragment)
+                        .addToBackStack(activity.getResources().getString(R.string.new_message_toolbar_title))
+                        .commit();
+
+                Toolbar toolbar = (Toolbar) activity.findViewById(R.id.toolbar);
+                toolbar.setTitle(activity.getResources().getString(R.string.new_message_toolbar_title));
 
             }
         });

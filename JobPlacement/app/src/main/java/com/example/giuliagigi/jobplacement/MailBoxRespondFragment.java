@@ -135,6 +135,8 @@ public class MailBoxRespondFragment extends Fragment {
                     }
                 });
 
+                globalData.setCurrentViewMessage(null);
+
                 // dopo l'invio del messaggio torno al fragment principale con la lista dei messaggi
 
                 FragmentManager fragmentManager = activity.getSupportFragmentManager();
