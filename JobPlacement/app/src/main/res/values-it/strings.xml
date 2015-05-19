@@ -308,4 +308,8 @@
     <string name="hour_ago">ora fa</string>
     <string name="day_ago">giorno fa</string>
 
+    <string name="respond_sender">Rispondi al mittente</string>
+    <string name="respond_all">Rispondi a tutti</string>
+    <string name="me">Me</string>
+
 </resources>

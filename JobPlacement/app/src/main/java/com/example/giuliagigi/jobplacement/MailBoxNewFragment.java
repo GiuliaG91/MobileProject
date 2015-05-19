@@ -40,12 +40,28 @@ public class MailBoxNewFragment extends Fragment {
     InboxMessage message;
     GlobalData globalData;
     FragmentActivity activity;
-    ArrayList<String> recipients;
 
 
-    public static MailBoxNewFragment newInstance(ArrayList<String> recipients) {
+    public static MailBoxNewFragment newInstance(Bundle data) {
         MailBoxNewFragment fragment = new MailBoxNewFragment();
-        fragment.recipients = recipients;
+
+        fragment.message = new InboxMessage();
+
+        if(data.getStringArrayList(MailBoxDetailFragment.RECIPIENTS_KEY) != null)
+            fragment.message.setRecipients(data.getStringArrayList(MailBoxDetailFragment.RECIPIENTS_KEY));
+        else
+            fragment.message.setRecipients(new ArrayList<String>());
+
+        if(data.getString(MailBoxDetailFragment.OBJECT_KEY) != null)
+            fragment.message.setObject(data.getString(MailBoxDetailFragment.OBJECT_KEY));
+        else
+            fragment.message.setObject("");
+
+        if(data.getString(MailBoxDetailFragment.OLD_MESSAGE_KEY) != null)
+            fragment.message.setBodyMessage(data.getString(MailBoxDetailFragment.OLD_MESSAGE_KEY));
+        else
+            fragment.message.setBodyMessage("");
+
         return fragment;
     }
 
@@ -61,10 +77,7 @@ public class MailBoxNewFragment extends Fragment {
         globalData = (GlobalData)getActivity().getApplication();
         activity = this.getActivity();
 
-        message = new InboxMessage();
-        message.setRecipients(new ArrayList<String>());
         message.setSender(globalData.getUserObject().getMail());
-
 
     }
 
@@ -74,21 +87,34 @@ public class MailBoxNewFragment extends Fragment {
 
         root = inflater.inflate(R.layout.fragment_mail_box_new,container,false);
 
-        if(this.recipients != null){
+        if(this.message.getRecipients().size() != 0){
             EditText ed = (EditText)root.findViewById(R.id.recipients_list_new_message);
             String list_rec = "";
-            for(String r: this.recipients){
+            for(String r: this.message.getRecipients()){
                 list_rec = list_rec + r + " ";
             }
             ed.setText(list_rec);
         }
 
+        if(this.message.getObject().length() > 0){
+            EditText ed = (EditText) root.findViewById(R.id.object_new_message);
+            ed.setText(this.message.getObject());
+        }
+
+        if(this.message.getBodyMessage().length() > 0){
+            EditText ed = (EditText) root.findViewById(R.id.body_new_message);
+            ed.setText(this.message.getBodyMessage());
+        }
+
+
         Button button = (Button) root.findViewById(R.id.send_new_message_btn);
         button.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v){
 
-                String object = ((EditText)root.findViewById(R.id.object_new_message)).getText().toString();
-                message.setObject(object);
+                if(message.getObject().length() == 0) {
+                    String object = ((EditText) root.findViewById(R.id.object_new_message)).getText().toString();
+                    message.setObject(object);
+                }
 
                 String bodyMessage = ((EditText)root.findViewById(R.id.body_new_message)).getText().toString();
                 message.setBodyMessage(bodyMessage);

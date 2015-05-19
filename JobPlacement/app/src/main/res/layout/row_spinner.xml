@@ -4,8 +4,9 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:padding="5dp"
-    android:textSize="18sp"
+    android:textSize="15sp"
     android:textColor="#00008B"
-    android:id="@+id/spinner_row">
+    android:id="@+id/spinner_row"
+    android:background="@color/header_detail_mail_box">
 
 </TextView>

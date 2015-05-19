@@ -237,10 +237,13 @@ public class OfferDetail extends  Fragment {
 
                 FragmentManager fragmentManager =activity.getSupportFragmentManager();
 
-                ArrayList<String> recipients = new ArrayList<String>();
+                Bundle data = new Bundle();
+                ArrayList<CharSequence> recipients = new ArrayList<CharSequence>();
                 recipients.add(company.getMail());
+                data.putCharSequenceArrayList(MailBoxDetailFragment.RECIPIENTS_KEY, recipients);
 
-                Fragment fragment = MailBoxNewFragment.newInstance(recipients);
+
+                Fragment fragment = MailBoxNewFragment.newInstance(data);
 
                 fragmentManager.beginTransaction()
                         .replace(R.id.tab_Home_container, fragment)

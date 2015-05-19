@@ -369,4 +369,8 @@
 
     <string name="NoFavourites">No favourites found</string>
 
+    <string name="respond_sender">Reply to the sender</string>
+    <string name="respond_all">Reply to all</string>
+    <string name="me">Myself</string>
+
 </resources>

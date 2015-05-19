@@ -200,7 +200,7 @@ public class MailBoxFragment extends Fragment {
             public void onClick(View v) {
                 FragmentManager fragmentManager = ((FragmentActivity)mListener).getSupportFragmentManager();
 
-                Fragment fragment = MailBoxNewFragment.newInstance(null);
+                Fragment fragment = MailBoxNewFragment.newInstance(new Bundle());
 
                 fragmentManager.beginTransaction()
                         .replace(R.id.tab_Home_container, fragment)

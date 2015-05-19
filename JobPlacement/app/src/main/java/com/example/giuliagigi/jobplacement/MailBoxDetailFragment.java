@@ -1,6 +1,7 @@
 package com.example.giuliagigi.jobplacement;
 
 import android.app.Activity;
+import android.content.res.Resources;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
@@ -20,6 +21,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.support.v7.widget.Toolbar;
 
+import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
@@ -36,6 +38,10 @@ import static java.util.Calendar.YEAR;
  * Created by Silvia on 11/05/2015.
  */
 public class MailBoxDetailFragment extends Fragment {
+
+    protected static final String RECIPIENTS_KEY = "recipients";
+    protected static final String OBJECT_KEY = "object";
+    protected static final String OLD_MESSAGE_KEY = "old_message";
 
     View root;
     InboxMessage message;
@@ -106,11 +112,18 @@ public class MailBoxDetailFragment extends Fragment {
 
         //set list of recipients in the spinner
         Spinner sp = (Spinner)root.findViewById(R.id.recipients_list);
-        ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<String>(this.globalData, R.layout.row_spinner);
-        spinnerAdapter.addAll(message.getRecipients());
-        sp.setAdapter(spinnerAdapter);
+        String[] recipients = new String[message.getRecipients().size()];
+        for(int i = 0; i < message.getRecipients().size(); i++)
+            if(message.getRecipients().get(i).equals(globalData.getUserObject().getMail()))
+                recipients[i] = globalData.getResources().getString(R.string.me);
+            else
+                recipients[i] = message.getRecipients().get(i);
+        sp.setAdapter(new StringAdapter(recipients));
 
-        //sp.setAdapter(new StringAdapter((String[])(message.getRecipients().toArray())));
+        //ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<String>(this.globalData, R.layout.row_spinner);
+        //spinnerAdapter.addAll(message.getRecipients());
+        //sp.setAdapter(spinnerAdapter);
+
 
 
         //set date
@@ -156,20 +169,81 @@ public class MailBoxDetailFragment extends Fragment {
         tv = (TextView) root.findViewById(R.id.body_tv);
         tv.setText(message.getBodyMessage());
 
-        // aggiungo listener a bottone di prova per triggerare fragment MailBoxRespondFragment
-        ImageButton button = (ImageButton) root.findViewById(R.id.respond_btn);
-        button.setOnClickListener(new View.OnClickListener(){
-            public void onClick(View view){
+
+        /*Attach on click listener to button menu */
+
+        final FloatingActionButton respondSenderButton = (FloatingActionButton)root.findViewById(R.id.action_respond_sender);
+        respondSenderButton.setIcon(R.drawable.ic_person_outline_white_36dp);
+        respondSenderButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Bundle data = new Bundle();
+
+                ArrayList<CharSequence> recipients = new ArrayList<CharSequence>();
+                recipients.add(message.getSender());
+                data.putCharSequenceArrayList(MailBoxDetailFragment.RECIPIENTS_KEY, recipients);
+
+                data.putString(MailBoxDetailFragment.OBJECT_KEY, message.getObject());
+
+                Date date = message.getDate();
+                Resources res = globalData.getResources();
+                String oldMessage = res.getString(R.string.on) + " " + date.getDay() + " " + res.getStringArray(R.array.months)[date.getMonth()] + " " + date.getYear() + ", ";
+                oldMessage = oldMessage + ((InboxMessageReceived)message).getNameSender() + " <" + message.getSender() + "> " + res.getString(R.string.wrote) + ":\n\"";
+                oldMessage = oldMessage + message.getBodyMessage() + "\"";
+                data.putString(MailBoxDetailFragment.OLD_MESSAGE_KEY, oldMessage);
+
+
                 FragmentManager fragmentManager = activity.getSupportFragmentManager();
 
-                Fragment fragment = MailBoxRespondFragment.newInstance();
+                Fragment fragment = MailBoxNewFragment.newInstance(data);
 
                 fragmentManager.beginTransaction()
                         .replace(R.id.tab_Home_container, fragment)
                         .addToBackStack(message.getObject())
                         .commit();
 
-                Toolbar toolbar = (Toolbar) globalData.getToolbar();
+                Toolbar toolbar = (Toolbar) activity.findViewById(R.id.toolbar);
+                toolbar.setTitle(message.getObject());
+            }
+        });
+
+        final FloatingActionButton respondAllButton = (FloatingActionButton)root.findViewById(R.id.action_respond_all);
+        respondAllButton.setIcon(R.drawable.ic_people_outline_white_36dp);
+        respondAllButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Bundle data = new Bundle();
+
+                ArrayList<CharSequence> recipients = new ArrayList<CharSequence>();
+                recipients.add(message.getSender());
+                for(String r: message.getRecipients())
+                    if(!r.equals(globalData.getUserObject().getMail()) && !message.getRecipients().contains(r))
+                        recipients.add(r);
+                data.putCharSequenceArrayList(MailBoxDetailFragment.RECIPIENTS_KEY, recipients);
+
+                data.putString(MailBoxDetailFragment.OBJECT_KEY, message.getObject());
+
+                Date date = message.getDate();
+                Resources res = globalData.getResources();
+                String oldMessage = res.getString(R.string.on) + " " + date.getDay() + " " + res.getStringArray(R.array.months)[date.getMonth()] + " " + date.getYear() + ", ";
+                oldMessage = oldMessage + ((InboxMessageReceived)message).getNameSender() + " <" + message.getSender() + "> " + res.getString(R.string.wrote) + ":\n\"";
+                oldMessage = oldMessage + message.getBodyMessage() + "\"";
+                data.putString(MailBoxDetailFragment.OLD_MESSAGE_KEY, oldMessage);
+
+                FragmentManager fragmentManager = activity.getSupportFragmentManager();
+
+                Fragment fragment = MailBoxNewFragment.newInstance(data);
+
+                fragmentManager.beginTransaction()
+                        .replace(R.id.tab_Home_container, fragment)
+                        .addToBackStack(message.getObject())
+                        .commit();
+
+                Toolbar toolbar = (Toolbar) activity.findViewById(R.id.toolbar);
+                toolbar.setTitle(message.getObject());
+
             }
         });
 
@@ -208,7 +282,7 @@ public class MailBoxDetailFragment extends Fragment {
 //    }
 
 
-/*
+
     private class StringAdapter extends BaseAdapter {
 
         public String[] stringArray;
@@ -237,14 +311,14 @@ public class MailBoxDetailFragment extends Fragment {
         public View getView(int position, View convertView, ViewGroup parent) {
 
             if(convertView == null)
-                convertView = getActivity().getLayoutInflater().inflate(R.layout.list_text_element,parent,false);
+                convertView = getActivity().getLayoutInflater().inflate(R.layout.row_spinner,parent,false);
 
-            TextView text = (TextView)convertView.findViewById(R.id.text_view);
+            TextView text = (TextView)convertView.findViewById(R.id.spinner_row);
             text.setTextSize(15);
             text.setText(stringArray[position]);
             return convertView;
         }
     }
-    */
+
 
 }

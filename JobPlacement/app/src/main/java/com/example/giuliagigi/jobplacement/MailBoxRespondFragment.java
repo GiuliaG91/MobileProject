@@ -81,7 +81,6 @@ public class MailBoxRespondFragment extends Fragment {
         oldMessage = oldMessage + ((InboxMessageReceived)globalData.getCurrentViewMessage()).getNameSender() + " <" + globalData.getCurrentViewMessage().getSender() + "> " + res.getString(R.string.wrote) + ":\n\"";
         oldMessage = oldMessage + globalData.getCurrentViewMessage().getBodyMessage() + "\"";
         tv.setText(oldMessage);
-        //tv.setTextColor(0x0D47A1);
 
         Button button = (Button) root.findViewById(R.id.send_response_message_btn);
         button.setOnClickListener(new View.OnClickListener(){
