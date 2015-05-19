@@ -113,9 +113,10 @@ public class MailBoxDetailFragment extends Fragment {
         //set list of recipients in the spinner
         Spinner sp = (Spinner)root.findViewById(R.id.recipients_list);
         String[] recipients = new String[message.getRecipients().size()];
-        for(int i = 0; i < message.getRecipients().size(); i++)
+        recipients[0] = globalData.getResources().getString(R.string.me);
+        for(int i = 1; i < message.getRecipients().size(); i++)
             if(message.getRecipients().get(i).equals(globalData.getUserObject().getMail()))
-                recipients[i] = globalData.getResources().getString(R.string.me);
+                continue;
             else
                 recipients[i] = message.getRecipients().get(i);
         sp.setAdapter(new StringAdapter(recipients));
@@ -162,8 +163,10 @@ public class MailBoxDetailFragment extends Fragment {
         tv.setText(format);
 
         //set object
+        /*
         tv = (TextView) root.findViewById(R.id.object_tv);
         tv.setText(message.getObject());
+        */
 
         //set body
         tv = (TextView) root.findViewById(R.id.body_tv);
@@ -190,7 +193,7 @@ public class MailBoxDetailFragment extends Fragment {
                 Resources res = globalData.getResources();
                 String oldMessage = res.getString(R.string.on) + " " + date.getDay() + " " + res.getStringArray(R.array.months)[date.getMonth()] + " " + date.getYear() + ", ";
                 oldMessage = oldMessage + ((InboxMessageReceived)message).getNameSender() + " <" + message.getSender() + "> " + res.getString(R.string.wrote) + ":\n\"";
-                oldMessage = oldMessage + message.getBodyMessage() + "\"";
+                oldMessage = oldMessage + message.getBodyMessage() + "\"\n\n";
                 data.putString(MailBoxDetailFragment.OLD_MESSAGE_KEY, oldMessage);
 
 

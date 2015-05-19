@@ -1,34 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:fab="http://schemas.android.com/apk/res-auto"
-    android:layout_width="0dp"
-    android:layout_height="match_parent"
-    android:layout_weight="1">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <LinearLayout
+        <!--
+        <TextView
+            android:id="@+id/object_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Object"
+            android:textSize="18sp"
+            android:textStyle="bold"/>
+            -->
+
+        <android.support.v7.widget.CardView
+            xmlns:card_view="http://schemas.android.com/apk/res-auto"
+            android:layout_gravity="center"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:background="@color/header_detail_mail_box"
-            android:padding="10dp">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Object"
-                android:textSize="18sp"
-                android:textStyle="bold"/>
+            card_view:cardCornerRadius="10dp"
+            card_view:cardMaxElevation="5dp"
+            android:layout_margin="3dp"
+            card_view:cardBackgroundColor="@color/header_detail_mail_box">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:layout_gravity="center_vertical">
+                android:layout_gravity="center_vertical"
+                android:padding="10dp">
+
+                <!--
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_attach_file_white_24dp"
+                    android:layout_gravity="top"/>
+                -->
 
                 <ImageView
                     android:id="@+id/sender_img"
@@ -38,16 +52,14 @@
                     android:layout_gravity="center_vertical"
                     />
 
-                <LinearLayout
+                <TableLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
                     android:layout_gravity="center_vertical">
 
-                    <LinearLayout
+                    <TableRow
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
+                        android:layout_height="wrap_content">
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -68,9 +80,9 @@
                             android:layout_gravity="center_vertical"
                             />
 
-                    </LinearLayout>
+                    </TableRow>
 
-                    <LinearLayout
+                    <TableRow
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content">
 
@@ -85,14 +97,15 @@
 
                         <Spinner
                             android:id="@+id/recipients_list"
-                            android:layout_width="wrap_content"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
+                            android:layout_weight="1"
                             android:layout_marginLeft="7dp"
                             android:background="#E8EAF6"/>
 
-                    </LinearLayout>
+                    </TableRow>
 
-                    <LinearLayout
+                    <TableRow
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content">
 
@@ -116,14 +129,14 @@
                             android:layout_gravity="center_vertical"
                             />
 
-                    </LinearLayout>
+                    </TableRow>
 
-                </LinearLayout>
+                </TableLayout>
 
 
             </LinearLayout>
 
-        </LinearLayout>
+        </android.support.v7.widget.CardView>
 
 
         <android.support.v7.widget.CardView
@@ -155,6 +168,143 @@
 
     </LinearLayout>
 
+    <!--
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="#E3F2FD">
+
+        <ImageView
+            android:id="@+id/sender_img"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:src="@drawable/ic_profile"
+            android:layout_marginLeft="7dp"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/sender"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:layout_marginLeft="7dp"
+            android:layout_gravity="center_vertical"
+            />
+
+        <TextView
+            android:id="@+id/sender_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="nome"
+            android:textSize="16sp"
+            android:layout_marginLeft="7dp"
+            android:layout_gravity="center_vertical"
+            />
+
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/recipient"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:layout_marginLeft="77dp"
+        android:layout_marginTop="6dp"
+        android:layout_gravity="center_vertical"
+        />
+
+    <Spinner
+        android:id="@+id/recipients_list"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="77dp"
+        android:layout_marginTop="6dp"
+        android:background="#E0E0E0"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="6dp">
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/date"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:layout_marginLeft="77dp"
+            android:layout_gravity="center_vertical"
+            />
+
+        <TextView
+            android:id="@+id/date_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="10 maggio ..."
+            android:textSize="16sp"
+            android:layout_marginLeft="7dp"
+            android:layout_gravity="center_vertical"
+            />
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="6dp"
+        >
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/object"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:layout_marginLeft="77dp"
+            android:layout_gravity="center_vertical"
+            />
+
+        <TextView
+            android:id="@+id/object_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="oggetto ..."
+            android:textSize="16sp"
+            android:layout_marginLeft="7dp"
+            android:layout_gravity="center_vertical"
+            />
+
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/body"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:layout_marginLeft="77dp"
+        android:layout_marginTop="6dp"/>
+
+    <TextView
+        android:id="@+id/body_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="15dp"
+        android:textSize="16dp"
+        android:text="gjjfdgkjshòafjksghkjòhggfdgs ....."/>
+
+        -->
 
     <com.getbase.floatingactionbutton.FloatingActionsMenu
         android:id="@+id/multiple_actions_mailbox"
@@ -163,7 +313,7 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
-        android:layout_gravity="right|top"
+        android:layout_gravity="right|bottom"
         fab:fab_addButtonColorNormal="@color/ColorPrimary"
         fab:fab_addButtonColorPressed="@color/ColorPrimaryDark"
         fab:fab_labelStyle="@style/menu_labels_style"

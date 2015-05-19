@@ -78,12 +78,11 @@ public class MailBoxFragment extends Fragment {
 
                     fragmentManager.beginTransaction()
                             .replace(R.id.tab_Home_container, fragment)
-                            .addToBackStack(((FragmentActivity)mListener).getResources().getStringArray(R.array.Menu_items_student)[4])
+                            .addToBackStack(((FragmentActivity)mListener).getResources().getString(R.string.new_message_toolbar_title))
                             .commit();
 
                     Toolbar toolbar = (Toolbar) ((Activity)mListener).findViewById(R.id.toolbar);
-
-                    //toolbar.setTitle(((Activity) mListener).getResources().getString(R.string.new_message_toolbar_title));
+                    toolbar.setTitle(((FragmentActivity)mListener).getResources().getString(R.string.new_message_toolbar_title));
 
                     break;
 
@@ -94,28 +93,11 @@ public class MailBoxFragment extends Fragment {
 
                     fragmentManager.beginTransaction()
                             .replace(R.id.tab_Home_container, fragment)
-                            .addToBackStack(((FragmentActivity)mListener).getResources().getStringArray(R.array.Menu_items_student)[4])
+                            .addToBackStack(((GlobalData)((Activity)mListener).getApplication()).getCurrentViewMessage().getObject())
                             .commit();
 
                     toolbar = (Toolbar) ((Activity)mListener).findViewById(R.id.toolbar);
-
-                    //toolbar.setTitle((CharSequence)((GlobalData)((Activity)mListener).getApplication()).getCurrentViewMessage().getObject());
-
-                    break;
-
-                case 4:  // MessageBox rispondi al mittente
-                    fragmentManager = ((FragmentActivity)mListener).getSupportFragmentManager();
-
-                    fragment = MailBoxRespondFragment.newInstance();
-
-                    fragmentManager.beginTransaction()
-                            .replace(R.id.tab_Home_container, fragment)
-                            .addToBackStack(((FragmentActivity)mListener).getResources().getStringArray(R.array.Menu_items_student)[4])
-                            .commit();
-
-                    toolbar = (Toolbar) ((Activity)mListener).findViewById(R.id.toolbar);
-
-                    //toolbar.setTitle((CharSequence)((GlobalData)((Activity)mListener).getApplication()).getCurrentViewMessage().getObject());
+                    toolbar.setTitle((CharSequence)((GlobalData)((Activity)mListener).getApplication()).getCurrentViewMessage().getObject());
 
                     break;
 
