@@ -17,15 +17,15 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-                <LinearLayout
+                <ImageView
                     android:orientation="horizontal"
                     android:layout_width="fill_parent"
                     android:layout_height="0dp"
                     android:layout_weight="0.3"
                     android:id="@+id/basics_profilePhoto"
-                    android:background="@drawable/user_icon">
+                    android:scaleType="centerCrop"
+                    android:background="@drawable/user_icon"/>
 
-                </LinearLayout>
 
 
 

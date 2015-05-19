@@ -13,7 +13,7 @@ import java.util.ArrayList;
 
 public class StudentProfileManagementSkillsFragment extends ProfileManagementFragment {
 
-    private static final String TITLE = "Skills";
+    private static final String TITLE = GlobalData.getContext().getString(R.string.string_skills_tab);
     public static final String BUNDLE_IDENTIFIER = "STUDENTPROFILESKILLS";
     private static final String BUNDLE_KEY_STUDENT = "BUNDLE_KEY_STUDENT";
 

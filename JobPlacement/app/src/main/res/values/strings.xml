@@ -26,6 +26,7 @@
     <string name="action_modify">modify</string>
     <string name="action_filter">filter</string>
     <string name="action_menu">menu</string>
+    <string name="action_edit">edit</string>
 
     <string name="drawer_open">Open</string>
     <string name="drawer_close">Close</string>
@@ -78,6 +79,19 @@
         <item>MessageBox</item>
         <item>Logout</item>
     </string-array>
+
+    <!--Registration -->
+    <string name="string_select_type">Select a type</string>
+    <string name="string_type_student">Student</string>
+    <string name="string_type_company">Company</string>
+
+    <!--Tabs -->
+    <string name="string_account_tab">Account</string>
+    <string name="string_basics_tab">Overview</string>
+    <string name="string_skills_tab">Skills</string>
+    <string name="string_registry_tab">Registry</string>
+    <string name="string_office_tab">Offices</string>
+
 
     <!-- Student fragment strings: -->
     <string name="string_password">Password:</string>

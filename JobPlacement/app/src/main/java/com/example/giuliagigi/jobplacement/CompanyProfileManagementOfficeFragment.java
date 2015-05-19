@@ -27,7 +27,7 @@ import java.io.IOException;
 
 public class CompanyProfileManagementOfficeFragment extends ProfileManagementFragment implements OnMapReadyCallback{
 
-    private static final String TITLE = "Office";
+    private static final String TITLE = GlobalData.getContext().getString(R.string.string_office_tab);
 
     private static String BUNDLE_TYPE = "bundle_type";
     private static String BUNDLE_CITY = "bundle_city";
