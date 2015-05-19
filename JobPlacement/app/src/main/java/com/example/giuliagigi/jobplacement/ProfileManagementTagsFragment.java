@@ -3,6 +3,7 @@ package com.example.giuliagigi.jobplacement;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -174,10 +175,14 @@ public class ProfileManagementTagsFragment extends ProfileManagementFragment {
             public void onClick(View v) {
 
                 AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                builder.setTitle("What is a tag?");
-                TextView explanationText = new TextView(getActivity());
-                explanationText.setText("A tag is blablabla");
-                builder.setView(explanationText);
+                View view = getActivity().getLayoutInflater().inflate(R.layout.tags_description, null);
+                builder.setView(view);
+                //builder.setTitle(GlobalData.getContext().getString(R.string.string_tags_what_is));
+                TextView explanationText = (TextView)view.findViewById(R.id.tags_description_text);
+                if(application.getUserObject().getType().equals(User.TYPE_STUDENT))
+                    explanationText.setText(GlobalData.getContext().getString(R.string.string_tags_description_student));
+                else
+                    explanationText.setText(GlobalData.getContext().getString(R.string.string_tags_description_company));
                 builder.create().show();
             }
         });

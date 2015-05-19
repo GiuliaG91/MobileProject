@@ -134,6 +134,8 @@
     <string name="string_tags_what_is">What is a tag?</string>
     <string name="string_tags_info">Click for info!</string>
     <string name="string_tags_insert">Insert tag</string>
+    <string name="string_tags_description_student">Tags are keywords describing your skills and are used as search keys to find the most suitable offers for you.</string>
+    <string name="string_tags_description_company">Tags are keywords describing your job offers and are used as search keys to find the most suitable student for your offers.</string>
 
     <!-- Account area -->
     <string name="string_account_change_username">Change username</string>

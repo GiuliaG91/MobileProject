@@ -110,6 +110,8 @@
     <string name="string_tags_what_is">Cos\'è un tag?</string>
     <string name="string_tags_info">Clicca per saperne di più!</string>
     <string name="string_tags_insert">Inserisci tag</string>
+    <string name="string_tags_description_student">I tag sono delle parole chiave che descrivono le tue competenze e vengono utilizzati come chiavi di ricerca per trovare le offerte più adatte a te.</string>
+    <string name="string_tags_description_company">I tag sono delle parole chiave che descrivono le vostre offerte di lavoro e vengono utilizzati come chiavi di ricerca per trovare gli studenti più adatti alle vostre offerte.</string>
 
     <!-- Account area -->
     <string name="string_account_change_username">Modifica lo username</string>

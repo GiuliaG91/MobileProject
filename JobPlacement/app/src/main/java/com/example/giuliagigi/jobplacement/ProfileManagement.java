@@ -214,6 +214,10 @@ public class ProfileManagement extends Fragment{
         if (item.getItemId() == R.id.action_edit && editable) {
             switchMode();
             }
+        if(isEditMode)
+            item.setIcon(R.drawable.ic_confirm_white);
+        else
+            item.setIcon(R.drawable.ic_edit_white);
         return true;
     }
 
