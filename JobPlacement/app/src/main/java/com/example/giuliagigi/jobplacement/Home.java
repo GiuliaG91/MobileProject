@@ -57,10 +57,6 @@ public class Home extends ActionBarActivity  implements TabHomeStudentFragment.O
     private ArrayList<OnActivityChangedListener> listeners;
 
 
-    /****************BACK BUTTON*************/
-
-    protected OnBackPressedListener onBackPressedListener;
-
     /**
      * ***********************************************************
      */
@@ -279,17 +275,13 @@ public class Home extends ActionBarActivity  implements TabHomeStudentFragment.O
     /* ---------------- END PROFILE MANAGEMENT INTERFACE -----------------------------------------*/
 
 
-    public void setOnBackPressedListener(OnBackPressedListener onBackPressedListener) {
-        this.onBackPressedListener = onBackPressedListener;
-    }
 
     @Override
     public void onBackPressed() {
-        if (onBackPressedListener != null)
-            onBackPressedListener.doBack();
+
 
         if(getSupportFragmentManager().getBackStackEntryCount()>0) {
-           
+           getSupportFragmentManager().popBackStackImmediate();
         }
 
         else  {

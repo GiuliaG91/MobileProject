@@ -316,6 +316,15 @@
 
     </string-array>
 
+    <string-array name="filter_location">
+        <item>Choose a distance in Km</item>
+        <item>The city</item>
+        <item>Less then</item>
+        <item>More then</item>
+        <item>Equal to</item>
+
+    </string-array>
+
 
     <!-- aggiunti da Sivlia -->
 

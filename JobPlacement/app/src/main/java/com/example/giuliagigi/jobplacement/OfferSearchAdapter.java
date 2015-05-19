@@ -2,11 +2,13 @@ package com.example.giuliagigi.jobplacement;
 
 
 import android.graphics.Bitmap;
+import android.location.Address;
+import android.location.Geocoder;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
+import android.support.v7.widget.Toolbar;;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,14 +18,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 
-<<<<<<< HEAD
-import com.parse.ParseException;
 import com.parse.ParseGeoPoint;
-=======
->>>>>>> origin/newMaster2
+
 import com.parse.ParseQuery;
 import com.parse.ParseQueryAdapter;
 
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -124,53 +124,65 @@ public class OfferSearchAdapter extends RecyclerView.Adapter<OfferSearchAdapter.
                     query.whereContainedIn("field",field_list);
                 }
 
-                if(!salary_list.isEmpty())
-                {
-                    Integer type=Integer.parseInt(salary_list.get(0));
-                    Integer sal=Integer.parseInt(salary_list.get(1));
+                if(!salary_list.isEmpty()) {
+                    Integer type = Integer.parseInt(salary_list.get(0));
+                    Integer sal = Integer.parseInt(salary_list.get(1));
 
 
-                    if(type==1) //less then
+                    if (type == 1) //less then
                     {
                         query.whereLessThan("salary", sal);
 
-                    }
-                    else if (type==2) //more then
+                    } else if (type == 2) //more then
                     {
-                      query.whereGreaterThan("salary",sal);
-                    }
-                    else if(type == 3) //equal to
+                        query.whereGreaterThan("salary", sal);
+                    } else if (type == 3) //equal to
                     {
-                        query.whereEqualTo("salary",sal);
+                        query.whereEqualTo("salary", sal);
 
-<<<<<<< HEAD
-                    if (addressList.isEmpty()) {
-                        return null;
-                    } else {
-                        Address a = addressList.get(0);
-                        ParseGeoPoint geoPoint = new ParseGeoPoint(a.getLatitude(), a.getLongitude());
+                    }
 
-                        if (type == 1) //city in general
-                        {
+                    if (!location_list.isEmpty()) {
+                        type = Integer.parseInt(location_list.get(0));
+                        Integer distance = Integer.parseInt(location_list.get(1));
+                        String nation = location_list.get(2);
+                        String city = location_list.get(3);
 
-                            query.whereNear("location",geoPoint);
+                        List<Address> addressList = null;
+
+                        Geocoder geocoder = new Geocoder(context);
+                        String geoAddress = nation + ", " + city;
+                        try {
+                            addressList = geocoder.getFromLocationName(geoAddress, 5);
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+
+                        if (addressList.isEmpty()) {
+                            return null;
+                        } else {
+                            Address a = addressList.get(0);
+                            ParseGeoPoint geoPoint = new ParseGeoPoint(a.getLatitude(), a.getLongitude());
+
+                            if (type == 1) //city in general
+                            {
+
+                                query.whereNear("location", geoPoint);
 
 
-                        } else if (type == 2) //less then
-                        {
-                        } else if (type == 3) //more then
-                        {
+                            } else if (type == 2) //less then
+                            {
+                            } else if (type == 3) //more then
+                            {
 
-                        } else if (type == 4) //equal to
-                        {
+                            } else if (type == 4) //equal to
+                            {
+
+                            }
 
                         }
-=======
->>>>>>> origin/newMaster2
-
                     }
                 }
-
                 return query;
             }
         };

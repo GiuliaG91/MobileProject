@@ -7,8 +7,10 @@ import android.location.Geocoder;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.CardView;
+import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
@@ -32,6 +34,7 @@ import android.widget.Toast;
 
 import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.getbase.floatingactionbutton.FloatingActionsMenu;
+import com.google.android.gms.appstate.AppStateManager;
 import com.parse.ParseException;
 import com.parse.ParseGeoPoint;
 import com.parse.ParseInstallation;
@@ -86,6 +89,7 @@ public class NewOffer extends Fragment implements DatePickerFragment.OnDataSetLi
     private FloatingActionButton button_a=null;
     private FloatingActionButton button_b=null;
     private FloatingActionButton button_c=null;
+    private FloatingActionButton button_d=null;
     private FloatingActionsMenu actionMenu=null;
 
    private EditText places=null;
@@ -189,9 +193,10 @@ public class NewOffer extends Fragment implements DatePickerFragment.OnDataSetLi
         button_a=(FloatingActionButton)root.findViewById(R.id.action_a);
         button_b=(FloatingActionButton)root.findViewById(R.id.action_b);
         button_c=(FloatingActionButton)root.findViewById(R.id.action_c);
+        button_d=(FloatingActionButton)root.findViewById(R.id.action_d);
         actionMenu=(FloatingActionsMenu)root.findViewById(R.id.multiple_actions);
         places=(EditText)root.findViewById(R.id.offerAvailability);
-      nation=(EditText)root.findViewById(R.id.new_offer_edit_nation);
+        nation=(EditText)root.findViewById(R.id.new_offer_edit_nation);
         city=(EditText)root.findViewById(R.id.new_offer_edit_city);
         addtag=(ImageButton)root.findViewById(R.id.addTagButton);
 
@@ -546,6 +551,7 @@ public class NewOffer extends Fragment implements DatePickerFragment.OnDataSetLi
             button_a.setIcon(R.drawable.ic_create);
             button_b.setIcon(R.drawable.ic_modify_white);
             button_c.setIcon(R.drawable.ic_delete);
+            button_d.setIcon(R.drawable.ic_apply);
             actionMenu.setEnabled(true);
             actionMenu.setVisibility(View.VISIBLE);
 
@@ -587,6 +593,9 @@ public class NewOffer extends Fragment implements DatePickerFragment.OnDataSetLi
                         }
                     });
 
+                    button_d.setEnabled(false);
+                    button_d.setVisibility(View.INVISIBLE);
+
                 } else {
                     //created and published -->   modify / delete
 
@@ -597,11 +606,9 @@ public class NewOffer extends Fragment implements DatePickerFragment.OnDataSetLi
                         @Override
                         public void onClick(View v) {
 
-                            if(!globalData.getCurrentViewOffer().getStudents().isEmpty())
-                            {
-                                Toast.makeText(getActivity(),"Offerta non modificabile", Toast.LENGTH_SHORT).show();
-                            }
-                            else {
+                            if (!globalData.getCurrentViewOffer().getStudents().isEmpty()) {
+                                Toast.makeText(getActivity(), "Offerta non modificabile", Toast.LENGTH_SHORT).show();
+                            } else {
 
 
                                 editMode = true;
@@ -612,12 +619,22 @@ public class NewOffer extends Fragment implements DatePickerFragment.OnDataSetLi
 
 
                          button_c.setOnClickListener(new View.OnClickListener() {
+                             @Override
+                             public void onClick(View v) {
+                                 deleteOffer(v);
+                             }
+                         });
+
+                    button_d.setEnabled(true);
+                    button_d.setVisibility(View.VISIBLE);
+                    button_d.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            deleteOffer(v);
+
+                            viewAppliedStudents(v);
+
                         }
                     });
-
 
                 }
             }
@@ -1182,6 +1199,35 @@ public class NewOffer extends Fragment implements DatePickerFragment.OnDataSetLi
             Toast.makeText(getActivity(),"Can't delete this object", Toast.LENGTH_SHORT).show();
         }
 
+
+
+    }
+    public void viewAppliedStudents(View v)
+    {
+
+        CompanyOffer offer=globalData.getCurrentViewOffer();
+        List<Student> students=offer.getStudents();
+
+        if(!students.isEmpty()) {
+            FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+
+            //New Fragment
+            StudentsAppliedListFragment fragment = StudentsAppliedListFragment.newInstance();
+            fragment.setStudents(students);
+            // Insert the fragment by replacing any existing fragment
+            // Insert the fragment by replacing any existing fragment
+
+            fragmentManager.beginTransaction()
+                    .replace(R.id.tab_Home_container, fragment)
+                    .addToBackStack("Students")
+                    .commit();
+
+            // Highlight the selected item, update the title, and close the drawer
+            // Highlight the selected item, update the title, and close the drawer
+            Toolbar toolbar = globalData.getToolbar();
+            toolbar.setTitle("Students");
+
+        }else Toast.makeText(getActivity(),"No students applied",Toast.LENGTH_SHORT).show();
 
 
     }
