@@ -51,7 +51,7 @@ public class ProfileManagement extends Fragment{
 
     /*------------- CONSTRUCTORS GETTERS SETTERS ------------------------------------------------*/
 
-    public  ProfileManagement(){}
+
     public static ProfileManagement newInstance(boolean editable, User user) {
         ProfileManagement fragment = new ProfileManagement();
         Bundle args = new Bundle();
@@ -60,6 +60,8 @@ public class ProfileManagement extends Fragment{
         fragment.setUser(user);
         return fragment;
     }
+
+    public  ProfileManagement(){}
 
     public void setEditable(boolean editable){
 
@@ -70,7 +72,6 @@ public class ProfileManagement extends Fragment{
 
         this.user = user;
     }
-
 
     /*------------- STANDARD CALLBACKS ------------------------------------------------------------*/
 
@@ -116,6 +117,7 @@ public class ProfileManagement extends Fragment{
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
     }
 
     @Override
@@ -176,22 +178,6 @@ public class ProfileManagement extends Fragment{
 
     }
 
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        menu.clear();
-        inflater.inflate(R.menu.menu_profile_management, menu);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-
-        if (item.getItemId() == R.id.action_edit) {
-            Log.println(Log.ASSERT,"PROFILE MANAG", "ho cliccato edit");
-
-
-        }
-        return true;
-    }
 
 
     @Override
@@ -213,6 +199,22 @@ public class ProfileManagement extends Fragment{
 
         for (ProfileManagementFragment f: fragments)
             f.onActivityResult(requestCode,resultCode,data);
+    }
+
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        menu.clear();
+        inflater.inflate(R.menu.menu_profile_management, menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        if (item.getItemId() == R.id.action_edit && editable) {
+            switchMode();
+            }
+        return true;
     }
 
 
