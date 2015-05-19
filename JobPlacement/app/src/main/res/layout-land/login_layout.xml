@@ -1,16 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:fillViewport="true"
-    android:background="@drawable/background_land">
+    android:background="@drawable/background_land_transparent">
 
     <!-- Intestazione con logo -->
     <LinearLayout
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight=".3"
         android:layout_centerHorizontal="true"
         android:id="@+id/logo"
         android:orientation="vertical">
@@ -18,7 +19,7 @@
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:src="@drawable/logo_prova"/>
+            android:src="@drawable/application_logo"/>
     </LinearLayout>
     <!-- Fine intestazione con logo -->
 
@@ -27,10 +28,11 @@
         android:id="@+id/user_password"
         android:layout_below="@+id/logo"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight=".5"
         android:layout_centerVertical="true"
         android:orientation="vertical"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="10dp"
         android:layout_marginBottom="10dp"
         android:layout_marginLeft="30dp"
         android:layout_marginRight="30dp"
@@ -42,7 +44,7 @@
         <MultiAutoCompleteTextView
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:padding="20dp"
+            android:padding="15dp"
             android:hint="Mail"
             android:id="@+id/email_editText"
             android:inputType="textEmailAddress"/>
@@ -58,7 +60,7 @@
         <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:padding="5dp"
+            android:padding="10dp"
             android:orientation="horizontal">
 
             <CheckBox
@@ -79,38 +81,63 @@
     </LinearLayout>
     <!-- Fine username e password -->
 
-    <Button
-        android:id="@+id/login_button"
-        android:layout_below="@+id/user_password"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:layout_marginBottom="10dp"
-        android:layout_marginLeft="30dp"
-        android:layout_marginRight="30dp"
-        android:background="#191970"
-        android:textColor="#ffffff"
-        android:text="LOGIN"
-        />
+    <!-- Register - login - forgot -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight=".2"
+        android:orientation="horizontal">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Forgot your password?"
-        android:id="@+id/login_passwordReset_text"
-        android:textColor="#000000"
-        android:layout_below="@+id/login_button"
-        android:layout_centerHorizontal="true" />
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_weight=".5">
 
-    <TextView
-        android:id="@+id/register_link"
-        android:layout_below="@+id/login_button"
-        android:layout_width="fill_parent"
-        android:layout_height="match_parent"
-        android:text="Register now!"
-        android:layout_margin="5dp"
-        android:textSize="20dp"
-        android:gravity="center"/>
+        <TextView
+            android:id="@+id/register_link"
+            android:layout_below="@+id/login_button"
+            android:layout_width="fill_parent"
+            android:layout_height="0dp"
+            android:layout_weight=".4"
+            android:text="Register now!"
+            android:textColor="#191970"
+            android:layout_margin="5dp"
+            android:textSize="15dp"
+            android:gravity="center"/>
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="0dp"
+            android:text="Forgot your password?"
+            android:layout_weight=".5"
+            android:textSize="15dp"
+            android:id="@+id/login_passwordReset_text"
+            android:textColor="#191970"
+            android:layout_marginBottom="5dp"
+            android:layout_below="@+id/login_button"
+            android:gravity="center" />
+
+        </LinearLayout>
 
 
-</RelativeLayout>
+        <Button
+            android:id="@+id/login_button"
+            android:layout_below="@+id/user_password"
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:layout_weight=".6"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:background="#191970"
+            android:textColor="#ffffff"
+            android:text="LOGIN"
+            />
+
+
+
+
+    </LinearLayout>
+</LinearLayout>

@@ -158,20 +158,7 @@ public class ProfileManagementTelephoneFragment extends ProfileManagementFragmen
 
             telephone.setNumber(numberText.getText().toString());
             telephone.setType((String) typeSelector.getSelectedItem());
-            /*
-            if(typeSelector.getSelectedItem() == 0){
-                new_image= getResources().getDrawable(R.drawable.ic_cellular);
-            } else if(typeSelector.getSelectedItem() == 1){
-                new_image= getResources().getDrawable(R.drawable.ic_phone);
-            } else if(typeSelector.getSelectedItem() == 2){
-                new_image= getResources().getDrawable(R.drawable.ic_phoneoffice);
-            } else if(typeSelector.getSelectedItem() == 3){
-                new_image= getResources().getDrawable(R.drawable.ic_fax);
-            } else if(typeSelector.getSelectedItem() == 4){
-                new_image= getResources().getDrawable(R.drawable.ic_phoneother);
-            }
-            phoneIcon.setBackgroundDrawable(new_image);
-            */
+
             telephone.setUser(user);
             telephone.saveEventually(new SaveCallback() {
                 @Override
