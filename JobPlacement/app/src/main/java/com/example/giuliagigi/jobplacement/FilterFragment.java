@@ -44,16 +44,11 @@ public class FilterFragment extends DialogFragment {
     GlobalData globalData = null;
 
     private EditText editSalary = null;
-    private EditText nation = null;
-    private EditText city = null;
-    private EditText editDistance = null;
 
     private Spinner fieldSpinner = null;
     private Spinner contractSpinner = null;
     private Spinner salarySpinner = null;
     private Spinner termSpinner = null;
-    private Spinner distanceSpinner = null;
-
 
     private ImageButton addtagsButton = null;
     private ImageButton addfieldButton = null;
@@ -70,9 +65,9 @@ public class FilterFragment extends DialogFragment {
     private String[] typeOfContracts;
     private String[] salaries;
     private String[] durations;
-    private String[] distances;
 
     private MultiAutoCompleteTextView tagsView = null;
+    private MultiAutoCompleteTextView location = null;
 
     private Map<String, Tag> retriveTag = null;
     private Set<String> correct;
@@ -81,6 +76,7 @@ public class FilterFragment extends DialogFragment {
     private Set<String> supportField;
     private Set<String> supportTerm;
     private Set<String> supportContract;
+    private Set<String> supportLocation;
 
     /**
      * ************************FILTERS******************
@@ -113,7 +109,9 @@ public class FilterFragment extends DialogFragment {
         supportTag = new HashSet<>();
         supportContract = new HashSet<>();
         supportField = new HashSet<>();
+        supportLocation = new HashSet<>();
         supportTerm = new HashSet<>();
+
 
         tag_list = new ArrayList<>();
         contract_list = new ArrayList<>();
@@ -147,17 +145,19 @@ public class FilterFragment extends DialogFragment {
 
         //set all possible filters
         editSalary = (EditText) root.findViewById(R.id.filter_edit_salary);
+<<<<<<< HEAD
         editDistance=(EditText) root.findViewById(R.id.filter_edit_distance);
         nation = (EditText) root.findViewById(R.id.filter_edit_nation);
         city = (EditText) root.findViewById(R.id.filter_edit_city);
+=======
+>>>>>>> origin/newMaster2
         fieldSpinner = (Spinner) root.findViewById(R.id.filter_field_spinner);
         contractSpinner = (Spinner) root.findViewById(R.id.filter_contract_spinner);
         salarySpinner = (Spinner) root.findViewById(R.id.filter_salary_spinner);
         termSpinner = (Spinner) root.findViewById(R.id.filter_term_spinner);
-        distanceSpinner=(Spinner) root.findViewById(R.id.filter_distance_spinner);
-
         //MultiAutoCompletetextview
         tagsView = (MultiAutoCompleteTextView) root.findViewById(R.id.filter_tag_complete_tv);
+        location = (MultiAutoCompleteTextView) root.findViewById(R.id.filter_location_complete_tv);
 
 
         typeOfFields = getResources().getStringArray(R.array.new_offer_fragment_fields);
@@ -184,27 +184,6 @@ public class FilterFragment extends DialogFragment {
 
             }
         });
-
-        distances = getResources().getStringArray(R.array.filter_distance);
-        distanceSpinner.setAdapter(new StringAdapter(distances));
-
-        distanceSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if (position == 0 || position == 1) {
-                    editDistance.setEnabled(false);
-                } else {
-                    editDistance.setEnabled(true);
-                }
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
-
-
 
 
         durations = getResources().getStringArray(R.array.new_offer_fragment_termContracts);
@@ -269,6 +248,12 @@ public class FilterFragment extends DialogFragment {
             }
         });
 
+        addlocationButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onClickLocation(v);
+            }
+        });
 
         remove.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -383,21 +368,29 @@ public class FilterFragment extends DialogFragment {
                 contractContainer.addView(mytagView);
             }
 
+            final GridLayout locationContainer = (GridLayout) root.findViewById(R.id.filter_location_container);
+            for (int i = 0; i < location_list.size(); i++) {
+                LayoutInflater inflater = (LayoutInflater) getActivity().getBaseContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                View mytagView = inflater.inflate(R.layout.taglayout, null);
+
+                mytagView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        locationContainer.removeView(v);
+                        Toast.makeText(getActivity(), "Removed", Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+                TextView t = (TextView) mytagView.findViewById(R.id.tag_tv);
+                t.setText(location_list.get(i));
+                locationContainer.addView(mytagView);
+            }
+
 
             if (!salary_list.isEmpty()) {
                 Integer pos = Integer.parseInt(salary_list.get(0));
                 salarySpinner.setSelection(pos);
                 editSalary.setText(salary_list.get(1));
-
-            }
-
-            if(!location_list.isEmpty())
-            {
-                Integer pos = Integer.parseInt(location_list.get(0));
-                distanceSpinner.setSelection(pos);
-                editDistance.setText(salary_list.get(1));
-                nation.setText(salary_list.get(2));
-                city.setText(salary_list.get(3));
 
             }
 
@@ -535,6 +528,23 @@ public class FilterFragment extends DialogFragment {
         fieldSpinner.setSelection(0);
     }
 
+    public void onClickLocation(View v) {
+
+      /*  LinearLayout container=(LinearLayout)root.findViewById(R.id.filter_tag_container);
+        String filter=tagsView.getText().toString().trim();
+        if(!supportTag.add(filter))
+        {
+            Toast.makeText(getActivity(),"Tag already present" , Toast.LENGTH_SHORT).show();
+        }
+        else
+        {
+            TextView tv=new TextView(getActivity());
+            tv.setText(filter);
+            container.addView(tv);
+        }
+
+        */
+    }
 
     /**
      * *******************APPLY FILTERS*******************************
@@ -542,86 +552,25 @@ public class FilterFragment extends DialogFragment {
 
     public void applyFilters(View v) {
 
-        int flag=0;
-        Integer pos = 0;
-        //check for wrong things
-        pos = salarySpinner.getSelectedItemPosition();
-        if(pos!=0 && editSalary.getText().toString().equals(""))
-        {
-            flag=1;
-            Toast.makeText(getActivity(),"Please insert a valid salary",Toast.LENGTH_SHORT).show();
-        }
-        pos = distanceSpinner.getSelectedItemPosition();
-        if(pos!=0 )
-        {
-            if(pos!=1) { //tutti i campi non nulli
-                if (editDistance.getText().toString().equals("")) {
-                    flag = 1;
-                    Toast.makeText(getActivity(), "Please insert a valid distance", Toast.LENGTH_SHORT).show();
-                }
-                if (nation.getText().toString().equals("")) {
-                    flag = 1;
-                    Toast.makeText(getActivity(), "Please insert a nation", Toast.LENGTH_SHORT).show();
-                }
-                if (city.getText().toString().equals("")) {
-                    flag = 1;
-                    Toast.makeText(getActivity(), "Please insert a city", Toast.LENGTH_SHORT).show();
-                }
-
+        GridLayout container = (GridLayout) root.findViewById(R.id.filter_tag_container);
+        if (container.getChildCount() > 0) {
+            for (int i = 0; i < container.getChildCount(); i++) {
+                View tv = container.getChildAt(i);
+                TextView t = (TextView) tv.findViewById(R.id.tag_tv);
+                tag_list.add(retriveTag.get(t.getText().toString().trim()));
             }
-            else{
-                if (nation.getText().toString().equals("")) {
-                    flag = 1;
-                    Toast.makeText(getActivity(), "Please insert a nation", Toast.LENGTH_SHORT).show();
-                }
-                if (city.getText().toString().equals("")) {
-                    flag = 1;
-                    Toast.makeText(getActivity(), "Please insert a city", Toast.LENGTH_SHORT).show();
-                }
-
-
-            }
-
         }
 
-
-        if(flag==0) {
-            GridLayout container = (GridLayout) root.findViewById(R.id.filter_tag_container);
-            if (container.getChildCount() > 0) {
-                for (int i = 0; i < container.getChildCount(); i++) {
-                    View tv = container.getChildAt(i);
-                    TextView t = (TextView) tv.findViewById(R.id.tag_tv);
-                    tag_list.add(retriveTag.get(t.getText().toString().trim()));
-                }
+        container = (GridLayout) root.findViewById(R.id.filter_field_container);
+        if (container.getChildCount() > 0) {
+            for (int i = 0; i < container.getChildCount(); i++) {
+                View tv = container.getChildAt(i);
+                TextView t = (TextView) tv.findViewById(R.id.tag_tv);
+                field_list.add(t.getText().toString());
             }
+        }
 
-            container = (GridLayout) root.findViewById(R.id.filter_field_container);
-            if (container.getChildCount() > 0) {
-                for (int i = 0; i < container.getChildCount(); i++) {
-                    View tv = container.getChildAt(i);
-                    TextView t = (TextView) tv.findViewById(R.id.tag_tv);
-                    field_list.add(t.getText().toString());
-                }
-            }
-
-            container = (GridLayout) root.findViewById(R.id.filter_term_container);
-            if (container.getChildCount() > 0) {
-                for (int i = 0; i < container.getChildCount(); i++) {
-                    View tv = container.getChildAt(i);
-                    TextView t = (TextView) tv.findViewById(R.id.tag_tv);
-                    term_list.add(t.getText().toString().trim());
-                }
-            }
-
-            container = (GridLayout) root.findViewById(R.id.filter_contract_container);
-            if (container.getChildCount() > 0) {
-                for (int i = 0; i < container.getChildCount(); i++) {
-                    View tv = container.getChildAt(i);
-                    TextView t = (TextView) tv.findViewById(R.id.tag_tv);
-                    contract_list.add(t.getText().toString().trim());
-                }
-            }
-
+<<<<<<< HEAD
 
            pos = salarySpinner.getSelectedItemPosition();
             if (pos != 0) {
@@ -634,8 +583,27 @@ public class FilterFragment extends DialogFragment {
                 else {
                     salary_list.add(editSalary.getText().toString());
                 }
+=======
+        container = (GridLayout) root.findViewById(R.id.filter_term_container);
+        if (container.getChildCount() > 0) {
+            for (int i = 0; i < container.getChildCount(); i++) {
+                View tv = container.getChildAt(i);
+                TextView t = (TextView) tv.findViewById(R.id.tag_tv);
+                term_list.add(t.getText().toString().trim());
             }
+        }
 
+        container = (GridLayout) root.findViewById(R.id.filter_contract_container);
+        if (container.getChildCount() > 0) {
+            for (int i = 0; i < container.getChildCount(); i++) {
+                View tv = container.getChildAt(i);
+                TextView t = (TextView) tv.findViewById(R.id.tag_tv);
+                contract_list.add(t.getText().toString().trim());
+>>>>>>> origin/newMaster2
+            }
+        }
+
+<<<<<<< HEAD
             pos = distanceSpinner.getSelectedItemPosition();
             if (pos != 0) {
 
@@ -648,16 +616,29 @@ public class FilterFragment extends DialogFragment {
                 location_list.add(editDistance.getText().toString());}
                 location_list.add(nation.getText().toString());
                 location_list.add(city.getText().toString());
+=======
+        container = (GridLayout) root.findViewById(R.id.filter_location_container);
+        if (container.getChildCount() > 0) {
+            for (int i = 0; i < container.getChildCount(); i++) {
+                View tv = container.getChildAt(i);
+                TextView t = (TextView) tv.findViewById(R.id.tag_tv);
+                location_list.add(t.getText().toString().toLowerCase().trim());
+>>>>>>> origin/newMaster2
             }
-
-            globalData.getOfferFilterStatus().setFilters(tag_list, contract_list, term_list, field_list, location_list, salary_list);
-            globalData.getOfferFilterStatus().setValid(true);
-
-            OfferSearchFragment fragment = (OfferSearchFragment) this.getParentFragment();
-            fragment.addFiters(tag_list, contract_list, term_list, field_list, location_list, salary_list);
-            getDialog().dismiss();
         }
 
+        Integer pos = salarySpinner.getSelectedItemPosition();
+        if (pos != 0) {
+
+            salary_list.add(String.valueOf(pos));
+            salary_list.add(editSalary.getText().toString());
+        }
+        globalData.getOfferFilterStatus().setFilters(tag_list, contract_list, term_list, field_list, location_list, salary_list);
+        globalData.getOfferFilterStatus().setValid(true);
+
+        OfferSearchFragment fragment = (OfferSearchFragment) this.getParentFragment();
+        fragment.addFiters(tag_list, contract_list, term_list, field_list, location_list, salary_list);
+        getDialog().dismiss();
     }
 
 
@@ -685,11 +666,6 @@ public class FilterFragment extends DialogFragment {
 
         salarySpinner.setSelection(0);
         editSalary.clearComposingText();
-
-        distanceSpinner.setSelection(0);
-        editDistance.setText("");
-        nation.setText("");
-        city.setText("");
 
 
         /*clear list*/

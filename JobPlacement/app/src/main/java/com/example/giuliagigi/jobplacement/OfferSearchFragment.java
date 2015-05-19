@@ -79,6 +79,8 @@ public class OfferSearchFragment extends Fragment{
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         activity = getActivity();
+        ((Home) activity).setOnBackPressedListener(new BaseBackPressedListener(activity));
+
 
         root = inflater.inflate(R.layout.fragment_offer_search, container, false);
 

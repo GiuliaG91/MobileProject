@@ -51,6 +51,8 @@ public class StudentCompanySearchFragment extends Fragment {
 
 
         activity = getActivity();
+        ((Home) activity).setOnBackPressedListener(new BaseBackPressedListener(activity));
+
 
         root = inflater.inflate(R.layout.fragment_offer_search, container, false);
 

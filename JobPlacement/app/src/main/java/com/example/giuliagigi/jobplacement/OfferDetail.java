@@ -84,6 +84,7 @@ public class OfferDetail extends  Fragment {
 
        root=inflater.inflate(R.layout.offer_layout,container,false);
             activity=getActivity();
+        ((Home)activity).setOnBackPressedListener(new BaseBackPressedListener(activity));
         //set object
         //todo mettere hint come stringhe
         LinearLayout linearLayout=(LinearLayout)root.findViewById(R.id.object_row);

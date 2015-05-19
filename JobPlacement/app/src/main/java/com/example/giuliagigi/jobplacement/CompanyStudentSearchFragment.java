@@ -29,6 +29,8 @@ public class CompanyStudentSearchFragment extends Fragment {
 
     private OnFragmentInteractionListener mListener;
 
+
+
     public static CompanyStudentSearchFragment newInstance()
     {
         CompanyStudentSearchFragment fragment=new CompanyStudentSearchFragment();
@@ -40,6 +42,8 @@ public class CompanyStudentSearchFragment extends Fragment {
 
 
         activity = getActivity();
+        ((Home) activity).setOnBackPressedListener(new BaseBackPressedListener(activity));
+
 
         root = inflater.inflate(R.layout.fragment_offer_search, container, false);
 

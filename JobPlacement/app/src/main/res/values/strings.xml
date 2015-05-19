@@ -26,6 +26,7 @@
     <string name="action_modify">modify</string>
     <string name="action_filter">filter</string>
     <string name="action_menu">menu</string>
+    <string name="action_edit">edit</string>
 
     <string name="drawer_open">Open</string>
     <string name="drawer_close">Close</string>
@@ -78,6 +79,19 @@
         <item>MessageBox</item>
         <item>Logout</item>
     </string-array>
+
+    <!--Registration -->
+    <string name="string_select_type">Select a type</string>
+    <string name="string_type_student">Student</string>
+    <string name="string_type_company">Company</string>
+
+    <!--Tabs -->
+    <string name="string_account_tab">Account</string>
+    <string name="string_basics_tab">Overview</string>
+    <string name="string_skills_tab">Skills</string>
+    <string name="string_registry_tab">Registry</string>
+    <string name="string_office_tab">Offices</string>
+
 
     <!-- Student fragment strings: -->
     <string name="string_password">Password:</string>
@@ -296,23 +310,11 @@
 
     <string-array name="filter_salary">
         <item>All types</item>
-        <item>Less than</item>
-        <item>More than</item>
+        <item>Less then</item>
+        <item>More then</item>
         <item>Equal to</item>
 
     </string-array>
-
-    <string-array name="filter_distance">
-        <item>Choose a distance in Km</item>
-        <item>In the city</item>
-        <item>Less than  </item>
-        <item>More than  </item>
-        <item>Equal to   </item>
-
-    </string-array>
-
-
-
 
 
     <!-- aggiunti da Sivlia -->
@@ -367,6 +369,7 @@
     <string name="Mark">Mark:</string>
     <string name="noDegree">No graduation recorded.</string>
     <string name="noMark">No mark recorded.</string>
+
 
     <string name="NoFavourites">No favourites found</string>
 

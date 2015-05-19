@@ -23,7 +23,7 @@ import java.util.Locale;
 
 public class CompanyProfileManagementBasicsFragment extends ProfileManagementBasicsFragment {
 
-    private static final String TITLE = "Overview";
+    private static final String TITLE = GlobalData.getContext().getString(R.string.string_basics_tab);
     private static final String BUNDLE_KEY_COMPANY = "bundle_key_company";
     public static final String BUNDLE_IDENTIFIER = "COMPANYPROFILEBASICS";
 

@@ -14,7 +14,7 @@ import android.widget.Toast;
 
 public class ProfileManagementAccountFragment extends ProfileManagementFragment {
 
-    private static String TITLE = "Account";
+    private static String TITLE = GlobalData.getContext().getString(R.string.string_account_tab);
 
     private Button deleteAccount, sendVerification, changeUsername, changePassword;
 
