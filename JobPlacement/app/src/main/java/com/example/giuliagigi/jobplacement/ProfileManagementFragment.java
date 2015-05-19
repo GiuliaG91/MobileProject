@@ -21,7 +21,7 @@ import java.util.ArrayList;
 
 public class ProfileManagementFragment extends Fragment implements OnActivityChangedListener{
 
-    protected static final String INSERT_FIELD = "Insert";
+    protected static final String INSERT_FIELD = GlobalData.getContext().getString(R.string.string_insert);
     protected static final String BUNDLE_IDENTIFIER = "PROFILEMANAGEMENTFRAG";
     protected static final String BUNDLE_KEY_USER = "BUNDLE_KEY_USER";
     protected static final String BUNDLE_KEY_HASCHANGED = "BUNDLE_KEY_HASCHANGED";

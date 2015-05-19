@@ -83,7 +83,7 @@
     <string name="string_password">Password:</string>
     <string name="string_confirm_password">Confirm password:</string>
     <string name="string_date_hint">Click to insert date</string>
-    <string name="string_insert">Insert::</string>
+    <string name="string_insert">Insert</string>
     <string name="string_student_fragment_name_title">Name:</string>
     <string name="string_student_fragment_surname_title">Surname:</string>
     <string name="string_student_fragment_sex_title">Sex:</string>
