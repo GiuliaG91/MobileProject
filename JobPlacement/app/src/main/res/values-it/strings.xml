@@ -60,7 +60,7 @@
     <string name="string_password">Password:</string>
     <string name="string_confirm_password">Conferma password:</string>
     <string name="string_date_hint">Clicca per selezionare la data</string>
-    <string name="string_insert">Inserisci:</string>
+    <string name="string_insert">Inserisci</string>
     <string name="string_student_fragment_name_title">Nome:</string>
     <string name="string_student_fragment_surname_title">Cognome:</string>
     <string name="string_student_fragment_sex_title">Sesso:</string>
