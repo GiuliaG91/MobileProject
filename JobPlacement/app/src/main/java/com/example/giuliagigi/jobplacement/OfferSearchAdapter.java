@@ -1,6 +1,7 @@
 package com.example.giuliagigi.jobplacement;
 
 
+import android.graphics.Bitmap;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -171,11 +172,12 @@ public class OfferSearchAdapter extends RecyclerView.Adapter<OfferSearchAdapter.
                 TextView date = (TextView) v.findViewById(R.id.date_row_tv);
                 CheckBox pref = (CheckBox) v.findViewById(R.id.star);
 
-             /*  Bitmap img=object.getCompany().getProfilePhoto();
+              Bitmap img=object.getCompany().getProfilePhoto();
                 if(img!=null) {
                     logo.setImageBitmap(img);
-                }else*/
-                logo.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_profile));
+                }else {
+                    logo.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_profile));
+                }
                 object_tv.setText(object.getOfferObject());
                 descriprion.setText(object.getDescription());
 
@@ -243,11 +245,6 @@ public class OfferSearchAdapter extends RecyclerView.Adapter<OfferSearchAdapter.
 
             parseAdapter.setObjectsPerPage(pageSize);
             parseAdapter.loadObjects();
-
-
-
-
-
 
     }
 

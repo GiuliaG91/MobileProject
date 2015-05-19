@@ -12,7 +12,6 @@ public class StudentFilterStatus {
     private  List<String> degree_list=null;
     private  List<String> field_list=null;
     private  List<String> location_list=null;
-    private  List<String> salary_list=null;
     private  boolean Valid=false;
 
 
@@ -20,15 +19,13 @@ public class StudentFilterStatus {
     public void setFilters(List<Tag> tag_list,
                            List<String> degree_list,
                            List<String> field_list,
-                           List<String> location_list,
-                           List<String> salary_list)
+                           List<String> location_list)
     {
 
         this.tag_list=tag_list;
         this.degree_list=degree_list;
         this.field_list=field_list;
         this.location_list=location_list;
-        this.salary_list=salary_list;
 
     }
 
@@ -56,10 +53,6 @@ public class StudentFilterStatus {
 
     public List<String> getLocation_list() {
         return location_list;
-    }
-
-    public List<String> getSalary_list() {
-        return salary_list;
     }
 
 }

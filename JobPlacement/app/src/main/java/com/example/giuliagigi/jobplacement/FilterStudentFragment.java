@@ -39,16 +39,12 @@ public class FilterStudentFragment  extends DialogFragment {
 
     GlobalData globalData = null;
 
-    private EditText editSalary = null;
-
     private Spinner fieldSpinner = null;
-    private Spinner salarySpinner = null;
     private Spinner degreeSpinner = null;
     private EditText editGrade=null;
 
     private ImageButton addtagsButton = null;
     private ImageButton addfieldButton = null;
-    private ImageButton addDegreeButton = null;
     private ImageButton addlocationButton = null;
     private ImageButton remove = null;
 
@@ -58,7 +54,6 @@ public class FilterStudentFragment  extends DialogFragment {
 
     private String[] typeOfFields;
     private String[] typeOfDegrees;
-    private String[] salaries;
 
     private MultiAutoCompleteTextView tagsView = null;
     private MultiAutoCompleteTextView location = null;
@@ -77,8 +72,6 @@ public class FilterStudentFragment  extends DialogFragment {
     List<String> degree_list = null;
     List<String> field_list = null;
     List<String> location_list = null;
-    List<String> salary_list = null;
-    int mark=0;
 
     /**
      * ***********************************************
@@ -105,8 +98,6 @@ public class FilterStudentFragment  extends DialogFragment {
         degree_list = new ArrayList<>();
         field_list = new ArrayList<>();
         location_list = new ArrayList<>();
-        salary_list = new ArrayList<>();
-
 
     }
 
@@ -129,10 +120,8 @@ public class FilterStudentFragment  extends DialogFragment {
         cancelButton = (Button) root.findViewById(R.id.cancel_button);
 
         //set all possible filters
-        editSalary = (EditText) root.findViewById(R.id.filter_edit_salary);
         fieldSpinner = (Spinner) root.findViewById(R.id.filter_field_spinner);
         degreeSpinner = (Spinner) root.findViewById(R.id.filter_degree_spinner);
-        salarySpinner = (Spinner) root.findViewById(R.id.filter_salary_spinner);
         //MultiAutoCompletetextview
         tagsView = (MultiAutoCompleteTextView) root.findViewById(R.id.filter_tag_complete_tv);
         location = (MultiAutoCompleteTextView) root.findViewById(R.id.filter_location_complete_tv);
@@ -144,26 +133,7 @@ public class FilterStudentFragment  extends DialogFragment {
         typeOfDegrees = getResources().getStringArray(R.array.typeOfDegrees);
         degreeSpinner.setAdapter(new StringAdapter(typeOfDegrees));
 
-        salaries = getResources().getStringArray(R.array.filter_salary);
-        salarySpinner.setAdapter(new StringAdapter(salaries));
-
         editGrade=(EditText)root.findViewById(R.id.filter_grade_editbox);
-
-        salarySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if (position == 0) {
-                    editSalary.setEnabled(false);
-                } else {
-                    editSalary.setEnabled(true);
-                }
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
 
         //multiautocompletetextview
         ParseQuery<Tag> query = ParseQuery.getQuery("Tag");
@@ -252,7 +222,6 @@ public class FilterStudentFragment  extends DialogFragment {
             degree_list = globalData.getStudentFilterStatus().getDegree_list();
             field_list = globalData.getStudentFilterStatus().getField_list();
             location_list = globalData.getStudentFilterStatus().getLocation_list();
-            salary_list = globalData.getStudentFilterStatus().getSalary_list();
 
             final GridLayout container = (GridLayout) root.findViewById(R.id.filter_tag_container);
 
@@ -312,17 +281,11 @@ public class FilterStudentFragment  extends DialogFragment {
             }
 
 
-            if (!salary_list.isEmpty()) {
-                Integer pos = Integer.parseInt(salary_list.get(0));
-                salarySpinner.setSelection(pos);
-                editSalary.setText(salary_list.get(1));
-
-            }
 
             if(!degree_list.isEmpty()) {
                 Integer pos = Integer.parseInt(degree_list.get(0));
                 degreeSpinner.setSelection(pos);
-                editGrade.setText(degree_list.get(1));
+                editGrade.setText(degree_list.get(2));
             }
 
 
@@ -351,7 +314,7 @@ public class FilterStudentFragment  extends DialogFragment {
                     public void onClick(View v) {
                         container.removeView(v);
                         Toast.makeText(getActivity(), "Removed", Toast.LENGTH_SHORT).show();
-                        globalData.getStudentFilterStatus().setFilters(tag_list, degree_list, field_list, location_list, salary_list);
+                        globalData.getStudentFilterStatus().setFilters(tag_list, degree_list, field_list, location_list);
                     }
                 });
 
@@ -372,7 +335,7 @@ public class FilterStudentFragment  extends DialogFragment {
     public void onClickfield(View v) {
         final GridLayout container = (GridLayout) root.findViewById(R.id.filter_field_container);
         if (fieldSpinner.getSelectedItemPosition() == 0) {
-            Toast.makeText(getActivity(), "Please choose a term if you want", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), "Please choose a field if you want", Toast.LENGTH_SHORT).show();
         } else {
 
             String filter = fieldSpinner.getSelectedItem().toString().trim();
@@ -387,7 +350,7 @@ public class FilterStudentFragment  extends DialogFragment {
                     public void onClick(View v) {
                         container.removeView(v);
                         Toast.makeText(getActivity(), "Removed", Toast.LENGTH_SHORT).show();
-                        globalData.getStudentFilterStatus().setFilters(tag_list, degree_list, field_list, location_list, salary_list);
+                        globalData.getStudentFilterStatus().setFilters(tag_list, degree_list, field_list, location_list);
                     }
                 });
 
@@ -450,29 +413,27 @@ public class FilterStudentFragment  extends DialogFragment {
             }
         }
 
-        Integer pos = salarySpinner.getSelectedItemPosition();
-        if (pos != 0) {
-
-            salary_list.add(String.valueOf(pos));
-            salary_list.add(editSalary.getText().toString());
-        }
-        pos = degreeSpinner.getSelectedItemPosition();
+        Integer pos = degreeSpinner.getSelectedItemPosition();
         if (pos != 0) {
 
             degree_list.add(String.valueOf(pos));
-            if(editGrade.getText().equals(""))
+            degree_list.add(degreeSpinner.getSelectedItem().toString());
+            if(editGrade.getText().toString().equals(""))
             {
                 degree_list.add("0");
             }
             degree_list.add(editGrade.getText().toString());
         }
+        else
+        {
+            degree_list.clear();
+        }
 
-
-        globalData.getStudentFilterStatus().setFilters(tag_list, degree_list, field_list, location_list, salary_list);
+        globalData.getStudentFilterStatus().setFilters(tag_list, degree_list, field_list, location_list);
         globalData.getStudentFilterStatus().setValid(true);
 
         CompanyStudentSearchFragment fragment = (CompanyStudentSearchFragment) this.getParentFragment();
-        fragment.addFiters(tag_list, degree_list, field_list, location_list, salary_list);
+        fragment.addFiters(tag_list, degree_list, field_list, location_list);
         getDialog().dismiss();
     }
 
@@ -493,20 +454,12 @@ public class FilterStudentFragment  extends DialogFragment {
         container = (GridLayout) root.findViewById(R.id.filter_location_container);
         container.removeAllViews();
 
-
-        salarySpinner.setSelection(0);
-        editSalary.clearComposingText();
-
-
-
-
         /*clear list*/
 
         tag_list.clear();
        degree_list.clear();
         field_list.clear();
         location_list.clear();
-        salary_list.clear();
 
         //no filters
         globalData.getStudentFilterStatus().setValid(false);

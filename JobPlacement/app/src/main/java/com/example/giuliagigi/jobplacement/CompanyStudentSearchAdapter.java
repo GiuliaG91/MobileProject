@@ -43,6 +43,8 @@ public class CompanyStudentSearchAdapter extends RecyclerView.Adapter<CompanyStu
     private LinearLayoutManager mLayoutManager;
     private final int pageSize=15;
     private int count=0;
+    private boolean flagDegree=false;
+    private List<String> mydegree_list;
 
     private ParseQueryAdapter<Student> parseAdapter;
     private ParseQueryAdapter.QueryFactory<Student> factory;
@@ -60,12 +62,13 @@ public class CompanyStudentSearchAdapter extends RecyclerView.Adapter<CompanyStu
         company = globalData.getCompanyFromUser();
         supportSet = new HashSet<>();
         count = 0;
+        flagDegree=false;
+        mydegree_list=new ArrayList<>();
         mLayoutManager = layoutManager;
 
         if (globalData.getOfferFilterStatus().isValid()) {
             StudentFilterStatus status = globalData.getStudentFilterStatus();
-            setFactory(status.getTag_list(), status.getDegree_list(), status.getField_list(), status.getLocation_list(),
-                    status.getSalary_list());
+            setFactory(status.getTag_list(), status.getDegree_list(), status.getField_list(), status.getLocation_list());
         } else {
 
             factory = new ParseQueryAdapter.QueryFactory<Student>() {
@@ -88,8 +91,7 @@ public class CompanyStudentSearchAdapter extends RecyclerView.Adapter<CompanyStu
     public void setFactory(final List<Tag> tag_list,
                            final List<String> degree_list,
                            final List<String> field_list,
-                           final List<String> location_list,
-                           final List<String> salary_list)
+                           final List<String> location_list)
     {
 
 
@@ -102,61 +104,18 @@ public class CompanyStudentSearchAdapter extends RecyclerView.Adapter<CompanyStu
                 if(!tag_list.isEmpty())
                 {
                     query.whereContainedIn("tags",tag_list);
+
                 }
                 if(!degree_list.isEmpty())
                 {
-                    Integer type=Integer.parseInt(degree_list.get(0));
-//                    Integer grade=Integer.parseInt(degree_list.get(1));
+                    flagDegree=true;
+                    mydegree_list=degree_list;
 
-                        query.include("Degree");
-                    ParseQuery inner=null;
-                    if(type==1) //less then
-                    {
-                       inner=new ParseQuery("Degree");
-                        query.whereEqualTo("type","Bachelor");
-
-                    }
-                    else if (type==2) //more then
-                    {
-                        inner=new ParseQuery("Degree");
-                        query.whereEqualTo("type", "Bachelor");
-                    }
-                    else if(type == 3) //equal to
-                    {
-                        inner=new ParseQuery("Degree");
-                        query.whereEqualTo("type","Bachelor");
-
-
-                    }
-                    query.whereMatchesQuery("degrees",inner);
 
                 }
                 if(!field_list.isEmpty())
                 {
                     query.whereContainedIn("field",field_list);
-                }
-
-                if(!salary_list.isEmpty())
-                {
-                    Integer type=Integer.parseInt(salary_list.get(0));
-                    Integer sal=Integer.parseInt(salary_list.get(1));
-
-
-                    if(type==1) //less then
-                    {
-                        query.whereLessThan("salary", sal);
-
-                    }
-                    else if (type==2) //more then
-                    {
-                        query.whereGreaterThan("salary",sal);
-                    }
-                    else if(type == 3) //equal to
-                    {
-                        query.whereEqualTo("salary",sal);
-
-
-                    }
                 }
 
                 return query;
@@ -175,80 +134,81 @@ public class CompanyStudentSearchAdapter extends RecyclerView.Adapter<CompanyStu
                 if (v == null) {
                     v = LayoutInflater.from(parent.getContext()).inflate(R.layout.student_row, parent, false);
                 }
-                super.getItemView(object, v, parent);
+
+                    super.getItemView(object, v, parent);
 
 
-                mDataset.add(object);
-                ImageView profile = (ImageView) v.findViewById(R.id.profile_img);
-                TextView studentName = (TextView) v.findViewById(R.id.student_name_tv);
-                TextView studentDegree = (TextView) v.findViewById(R.id.student_degree_tv );
-                TextView studentGrade = (TextView) v.findViewById(R.id.student_grade_tv );
+                    mDataset.add(object);
+                    ImageView profile = (ImageView) v.findViewById(R.id.profile_img);
+                    TextView studentName = (TextView) v.findViewById(R.id.student_name_tv);
+                    TextView studentDegree = (TextView) v.findViewById(R.id.student_degree_tv);
+                    TextView studentGrade = (TextView) v.findViewById(R.id.student_grade_tv);
 
-                CheckBox pref = (CheckBox) v.findViewById(R.id.star);
+                    CheckBox pref = (CheckBox) v.findViewById(R.id.star);
 
-                Bitmap img=null;
-                try{
-                    img=object.getProfilePhoto();
+                    Bitmap img = null;
+                    try {
+                        img = object.getProfilePhoto();
 
-                }catch (Exception e){
-                    img=null;
-                }
+                    } catch (Exception e) {
+                        img = null;
+                    }
 
-                if(img!=null) {
-                    profile.setImageBitmap(img);
-                }else
-                    profile.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_profile));
-                studentName.setText(object.getName());
+                    if (img != null) {
+                        profile.setImageBitmap(img);
+                    } else
+                        profile.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_profile));
+                    studentName.setText(object.getName());
 
-                List<Degree> degrees=object.getDegrees();
-             if(!degrees.isEmpty()) {
-                 Collections.sort(degrees);
+                    List<Degree> degrees = object.getDegrees();
+                    if (!degrees.isEmpty()) {
+                        Collections.sort(degrees);
 
-                 studentDegree.setText(degrees.get(0).getType() + " " + degrees.get(0).getStudies());
-                 Integer mark=null;
-                 try{
-                     mark=degrees.get(0).getMark();
-                 }catch (Exception e){mark=null;}
-                 if(mark!=null) {
-                     studentGrade.setText(context.getResources().getString(R.string.Mark) + String.valueOf(mark));
-                 }
-                 else{
-                     studentGrade.setText(context.getResources().getString(R.string.noMark));
-                 }
-             }
-                else
-             {
-                 studentDegree.setText(context.getResources().getString(R.string.noDegree));
-                 studentGrade.setText("");
-             }
-                supportSet.clear();
-                supportSet.addAll(company.getStudents());
-
-                if (supportSet.add(object) == false) {
-                    pref.setChecked(true);
-                } else {
-                    pref.setChecked(false);
-                }
-                pref.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                    @Override
-                    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-
-                        if (isChecked) {
-                            //add this offer to pref
-                            company.addStudent(object);
-                            company.saveInBackground();
+                        studentDegree.setText(degrees.get(0).getType() + " " + degrees.get(0).getStudies());
+                        Integer mark = null;
+                        try {
+                            mark = degrees.get(0).getMark();
+                        } catch (Exception e) {
+                            mark = null;
+                        }
+                        if (mark != null) {
+                            studentGrade.setText(context.getResources().getString(R.string.Mark) + String.valueOf(mark));
                         } else {
-                            //delete this offer from pref
-                           company.removeStudent(object);
-                           company.saveInBackground();
+                            studentGrade.setText(context.getResources().getString(R.string.noMark));
+                        }
+                    } else {
+                        studentDegree.setText(context.getResources().getString(R.string.noDegree));
+                        studentGrade.setText("");
+                    }
+                    supportSet.clear();
+                    supportSet.addAll(company.getStudents());
+
+                    if (supportSet.add(object) == false) {
+                        pref.setChecked(true);
+                    } else {
+                        pref.setChecked(false);
+                    }
+                    pref.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                        @Override
+                        public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+
+                            if (isChecked) {
+                                //add this offer to pref
+                                company.addStudent(object);
+                                company.saveInBackground();
+                            } else {
+                                //delete this offer from pref
+                                company.removeStudent(object);
+                                company.saveInBackground();
+
+                            }
 
                         }
-
-                    }
-                });
+                    });
 
 
                 return v;
+
             }
 
             @Override
@@ -263,7 +223,6 @@ public class CompanyStudentSearchAdapter extends RecyclerView.Adapter<CompanyStu
             }
 
         };
-
 
         parseAdapter.addOnQueryLoadListener(new OnQueryLoadListener());
         parseAdapter.setObjectsPerPage(pageSize);
@@ -330,7 +289,8 @@ public class CompanyStudentSearchAdapter extends RecyclerView.Adapter<CompanyStu
         }
 
         public void onLoaded(List<Student> objects, Exception e) {
-           companyStudentSearchAdapter.notifyDataSetChanged();
+
+            companyStudentSearchAdapter.notifyDataSetChanged();
             if(currentPosition!=0) {
                 count += pageSize;
                 if (count < currentPosition) {
@@ -354,9 +314,6 @@ public class CompanyStudentSearchAdapter extends RecyclerView.Adapter<CompanyStu
             super(v);
             v.setTag(this);
             myView = v;
-
         }
-
-
     }
 }

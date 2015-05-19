@@ -274,6 +274,7 @@
     <string name="new_offer_publish_button">Publish</string>
     <string name="new_offer_modify_button">Modify</string>
     <string name="new_offer_delete_button">Delete</string>
+    <string name="new_offer_view_button">Students Applied</string>
 
 
 <!--Filter -->
@@ -285,6 +286,8 @@
     <string name="filter_Location">Location</string>
     <string name="filter_Salary">Salary</string>
     <string name="filter_Remove">Remove All Filters</string>
+
+    <string name="hint_grade">Write here:</string>
 
 
     <string name="filter_Degree">Degree</string>
