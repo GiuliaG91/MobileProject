@@ -11,8 +11,8 @@ import com.parse.ParseObject;
 
 public class Relation_StudentDegree extends ParseObject{
 
-    private static final String STUDENT_FIELD = "student";
-    private static final String DEGREE_FIELD = "degree";
+    public static final String STUDENT_FIELD = "student";
+    public static final String DEGREE_FIELD = "degree";
 
     public Relation_StudentDegree(){
         super();

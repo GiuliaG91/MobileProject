@@ -10,8 +10,8 @@ import com.parse.ParseObject;
 @ParseClassName("Relation_CompanyOffice")
 public class Relation_CompanyOffice extends ParseObject{
 
-    private static final String COMPANY_FIELD = "company";
-    private static final String OFFICE_FIELD = "office";
+    public static final String COMPANY_FIELD = "company";
+    public static final String OFFICE_FIELD = "office";
 
     public Relation_CompanyOffice(){
         super();
