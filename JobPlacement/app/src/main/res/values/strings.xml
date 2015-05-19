@@ -295,11 +295,23 @@
 
     <string-array name="filter_salary">
         <item>All types</item>
-        <item>Less then</item>
-        <item>More then</item>
+        <item>Less than</item>
+        <item>More than</item>
         <item>Equal to</item>
 
     </string-array>
+
+    <string-array name="filter_distance">
+        <item>Choose a distance in Km</item>
+        <item>In the city</item>
+        <item>Less than  </item>
+        <item>More than  </item>
+        <item>Equal to   </item>
+
+    </string-array>
+
+
+
 
 
     <!-- aggiunti da Sivlia -->
@@ -354,7 +366,6 @@
     <string name="Mark">Mark:</string>
     <string name="noDegree">No graduation recorded.</string>
     <string name="noMark">No mark recorded.</string>
-
 
     <string name="NoFavourites">No favourites found</string>
 
