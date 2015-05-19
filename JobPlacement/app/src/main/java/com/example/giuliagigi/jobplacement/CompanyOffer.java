@@ -1,6 +1,7 @@
 package com.example.giuliagigi.jobplacement;
 
 import com.parse.ParseClassName;
+import com.parse.ParseGeoPoint;
 import com.parse.ParseObject;
 import com.parse.ParseRelation;
 
@@ -25,6 +26,8 @@ public class CompanyOffer extends ParseObject {
     private static final String  CONTRACT_FIELD = "contract";
     private static final String  TERM_FIELD = "term";
     private static final String  LOCATION_FIELD = "location";
+    private static final String  NATION_FIELD = "nation";
+    private static final String  CITY_FIELD = "city";
     private static final String  SAlARY_FIELD = "salary";
     private static final String  DESCRIPTION_FIELD= "description";
     private static final String COMPANY_FIELD=  "company";
@@ -64,9 +67,6 @@ public class CompanyOffer extends ParseObject {
         return this.getString(TERM_FIELD);
     }
 
-    public String getLocation() {
-        return this.getString(LOCATION_FIELD);
-    }
 
     public Integer getSAlARY() {
         return this.getInt(SAlARY_FIELD);
@@ -77,6 +77,10 @@ public class CompanyOffer extends ParseObject {
     }
 
     public Company getCompany() {return (Company)this.get(COMPANY_FIELD);}
+
+    public String getNation(){return this.getString(NATION_FIELD);}
+
+    public String getCity(){return this.getString(CITY_FIELD);}
 
 
     public List<Tag> getTags( ){
@@ -151,6 +155,15 @@ public class CompanyOffer extends ParseObject {
     {
         this.put(COMPANY_FIELD,company);
     }
+    public void setNation(String nation)
+    {
+        this.put(NATION_FIELD,nation);
+    }
+    public void setCity(String city)
+    {
+        this.put(CITY_FIELD,city);
+    }
+
 
     public void addTag(Tag t){ //this.addUnique(TAGS_FIELD, Arrays.asList(t));
         getRelation(TAGS_FIELD).add(t);
@@ -176,6 +189,14 @@ public class CompanyOffer extends ParseObject {
 
     /*END SETTER METHODS*/
 
+    public void setLocation(ParseGeoPoint location){
+
+            this.put(LOCATION_FIELD,location);
+    }
+    public ParseGeoPoint getLocation(){
+
+        return (ParseGeoPoint)get(LOCATION_FIELD);
+    }
 
 
 

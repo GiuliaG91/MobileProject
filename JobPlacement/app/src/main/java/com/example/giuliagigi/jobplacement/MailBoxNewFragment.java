@@ -79,6 +79,7 @@ public class MailBoxNewFragment extends Fragment {
 
         message.setSender(globalData.getUserObject().getMail());
 
+
     }
 
     @Override
@@ -87,34 +88,31 @@ public class MailBoxNewFragment extends Fragment {
 
         root = inflater.inflate(R.layout.fragment_mail_box_new,container,false);
 
-        if(this.message.getRecipients().size() != 0){
+        if(message.getRecipients().size() > 0){
             EditText ed = (EditText)root.findViewById(R.id.recipients_list_new_message);
             String list_rec = "";
-            for(String r: this.message.getRecipients()){
-                list_rec = list_rec + r + " ";
+            for(String r: message.getRecipients()){
+                list_rec = list_rec + r + "   ";
             }
             ed.setText(list_rec);
         }
 
-        if(this.message.getObject().length() > 0){
+        if(message.getObject().length() > 0){
             EditText ed = (EditText) root.findViewById(R.id.object_new_message);
-            ed.setText(this.message.getObject());
+            ed.setText(message.getObject());
         }
 
-        if(this.message.getBodyMessage().length() > 0){
+        if(message.getBodyMessage().length() > 0){
             EditText ed = (EditText) root.findViewById(R.id.body_new_message);
-            ed.setText(this.message.getBodyMessage());
+            ed.setText(message.getBodyMessage());
         }
-
 
         Button button = (Button) root.findViewById(R.id.send_new_message_btn);
         button.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v){
 
-                if(message.getObject().length() == 0) {
-                    String object = ((EditText) root.findViewById(R.id.object_new_message)).getText().toString();
-                    message.setObject(object);
-                }
+                String object = ((EditText)root.findViewById(R.id.object_new_message)).getText().toString();
+                message.setObject(object);
 
                 String bodyMessage = ((EditText)root.findViewById(R.id.body_new_message)).getText().toString();
                 message.setBodyMessage(bodyMessage);

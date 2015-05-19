@@ -27,7 +27,7 @@ import java.util.Locale;
 
 public class StudentProfileManagementBasicsFragment extends ProfileManagementBasicsFragment {
 
-    public static final String TITLE = "Overview";
+    public static final String TITLE = GlobalData.getContext().getString(R.string.string_basics_tab);
     public static final String BUNDLE_IDENTIFIER = "STUDENTPROFILEMANAGEMENTBASICS";
     private static final String BUNDLE_KEY_STUDENT = "bundle_key_student";
     private static final String BUNDLE_KEY_NAME = "bundle_key_student_name";

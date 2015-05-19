@@ -18,19 +18,16 @@ import android.widget.Toast;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
-import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseGeoPoint;
-import com.parse.ParseQuery;
 import com.parse.SaveCallback;
 
 import java.io.IOException;
-import java.util.List;
 
 
 public class CompanyProfileManagementOfficeFragment extends ProfileManagementFragment implements OnMapReadyCallback{
 
-    private static final String TITLE = "Office";
+    private static final String TITLE = GlobalData.getContext().getString(R.string.string_office_tab);
 
     private static String BUNDLE_TYPE = "bundle_type";
     private static String BUNDLE_CITY = "bundle_city";
@@ -152,19 +149,6 @@ public class CompanyProfileManagementOfficeFragment extends ProfileManagementFra
                     isRemoved = true;
                     company.removeOffice(office);
                     company.saveEventually();
-
-                    ParseQuery<Relation_CompanyOffice> q = ParseQuery.getQuery(Relation_CompanyOffice.class);
-                    q.whereEqualTo(Relation_CompanyOffice.OFFICE_FIELD,office);
-                    q.whereEqualTo(Relation_CompanyOffice.COMPANY_FIELD,company);
-                    q.findInBackground(new FindCallback<Relation_CompanyOffice>() {
-                        @Override
-                        public void done(List<Relation_CompanyOffice> relation_companyOffices, ParseException e) {
-
-                            if(e == null && relation_companyOffices.size() > 0)
-                                relation_companyOffices.get(0).deleteEventually();
-                        }
-                    });
-
                     root.setVisibility(View.INVISIBLE);
 
                 } catch (ParseException e) {
@@ -302,24 +286,6 @@ public class CompanyProfileManagementOfficeFragment extends ProfileManagementFra
                         Log.println(Log.ASSERT, "OFFICE FRAG", "office saved. Updating company");
                         company.addOffice(office);
                         company.saveEventually();
-
-                        ParseQuery<Relation_CompanyOffice> q = ParseQuery.getQuery(Relation_CompanyOffice.class);
-                        q.whereEqualTo(Relation_CompanyOffice.OFFICE_FIELD,office);
-                        q.whereEqualTo(Relation_CompanyOffice.COMPANY_FIELD,company);
-                        q.findInBackground(new FindCallback<Relation_CompanyOffice>() {
-                            @Override
-                            public void done(List<Relation_CompanyOffice> relation_companyOffices, ParseException e) {
-
-                                if(e == null && relation_companyOffices.size() == 0){
-
-                                    Relation_CompanyOffice r = new Relation_CompanyOffice();
-                                    r.setCompany(company);
-                                    r.setOffice(office);
-                                    r.saveEventually();
-                                }
-                            }
-                        });
-
                     } else
                         Log.println(Log.ASSERT, "OFFICE FRAG", "error saving office");
 

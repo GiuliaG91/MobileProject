@@ -5,12 +5,16 @@ package com.example.giuliagigi.jobplacement;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.graphics.drawable.Drawable;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.OrientationEventListener;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +22,7 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.zip.Inflater;
 
 
 public class ProfileManagement extends Fragment{
@@ -148,11 +153,12 @@ public class ProfileManagement extends Fragment{
         // Setting the ViewPager For the SlidingTabsLayout
         tabs.setViewPager(pager);
 
-
+/*
         if(editable){
 
             final Button edit = new Button(getActivity().getApplicationContext());
-            edit.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+            edit.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+            //edit.setBackgroundDrawable(getResources().getDrawable(R.drawable.ic_edit));
             edit.setText("edit profile");
             edit.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -163,12 +169,30 @@ public class ProfileManagement extends Fragment{
             });
             ViewGroup root = (ViewGroup)view.findViewById(R.id.fragment_tab_home);
             root.addView(edit);
-        }
+        }*/
 
         /****************************************************/
 
 
     }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        menu.clear();
+        inflater.inflate(R.menu.menu_profile_management, menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        if (item.getItemId() == R.id.action_edit) {
+            Log.println(Log.ASSERT,"PROFILE MANAG", "ho cliccato edit");
+
+
+        }
+        return true;
+    }
+
 
     @Override
     public void onDetach() {

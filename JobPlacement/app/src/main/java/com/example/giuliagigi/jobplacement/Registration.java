@@ -277,11 +277,6 @@ public class Registration extends ActionBarActivity implements StudentRegistrati
                                                 u.setName(newUser.getName() + " " + ((Student)newUser).getSurname());
                                                 u.saveInBackground();
 
-                                                Relation_StudentDegree r = new Relation_StudentDegree();
-                                                r.setStudent((Student)newUser);
-                                                r.setDegree(newStudentDegree);
-                                                r.saveInBackground();
-
                                                 saveLoginPreferences(newUser);
 
                                                 startActivity(new Intent(getApplicationContext(),Login.class));

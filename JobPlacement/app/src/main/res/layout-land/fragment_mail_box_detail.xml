@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -34,7 +35,10 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:layout_gravity="center_vertical"
-                android:padding="10dp">
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:paddingLeft="3dp"
+                android:paddingRight="3dp">
 
                 <!--
                 <ImageView
@@ -67,7 +71,7 @@
                             android:text="@string/sender"
                             android:textSize="18sp"
                             android:textStyle="bold"
-                            android:layout_gravity="center_vertical"
+                            android:layout_gravity="bottom"
                             />
 
                         <TextView
@@ -77,7 +81,7 @@
                             android:text="nome"
                             android:textSize="16sp"
                             android:layout_marginLeft="7dp"
-                            android:layout_gravity="center_vertical"
+                            android:layout_gravity="bottom"
                             />
 
                     </TableRow>
@@ -101,7 +105,8 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:layout_marginLeft="7dp"
-                            android:background="#E8EAF6"/>
+                            android:background="@color/header_detail_mail_box"
+                            android:layout_gravity="bottom"/>
 
                     </TableRow>
 
@@ -116,7 +121,7 @@
                             android:textSize="18sp"
                             android:textStyle="bold"
                             android:layout_marginTop="3dp"
-                            android:layout_gravity="center_vertical"
+                            android:layout_gravity="bottom"
                             />
 
                         <TextView
@@ -126,7 +131,7 @@
                             android:text="10 maggio ..."
                             android:textSize="16sp"
                             android:layout_marginLeft="7dp"
-                            android:layout_gravity="center_vertical"
+                            android:layout_gravity="bottom"
                             />
 
                     </TableRow>
@@ -168,144 +173,6 @@
 
     </LinearLayout>
 
-    <!--
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:background="#E3F2FD">
-
-        <ImageView
-            android:id="@+id/sender_img"
-            android:layout_width="70dp"
-            android:layout_height="70dp"
-            android:src="@drawable/ic_profile"
-            android:layout_marginLeft="7dp"
-            />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/sender"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            android:layout_marginLeft="7dp"
-            android:layout_gravity="center_vertical"
-            />
-
-        <TextView
-            android:id="@+id/sender_tv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="nome"
-            android:textSize="16sp"
-            android:layout_marginLeft="7dp"
-            android:layout_gravity="center_vertical"
-            />
-
-    </LinearLayout>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/recipient"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        android:layout_marginLeft="77dp"
-        android:layout_marginTop="6dp"
-        android:layout_gravity="center_vertical"
-        />
-
-    <Spinner
-        android:id="@+id/recipients_list"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="77dp"
-        android:layout_marginTop="6dp"
-        android:background="#E0E0E0"/>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginTop="6dp">
-
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/date"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            android:layout_marginLeft="77dp"
-            android:layout_gravity="center_vertical"
-            />
-
-        <TextView
-            android:id="@+id/date_tv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="10 maggio ..."
-            android:textSize="16sp"
-            android:layout_marginLeft="7dp"
-            android:layout_gravity="center_vertical"
-            />
-
-    </LinearLayout>
-
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginTop="6dp"
-        >
-
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/object"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            android:layout_marginLeft="77dp"
-            android:layout_gravity="center_vertical"
-            />
-
-        <TextView
-            android:id="@+id/object_tv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="oggetto ..."
-            android:textSize="16sp"
-            android:layout_marginLeft="7dp"
-            android:layout_gravity="center_vertical"
-            />
-
-    </LinearLayout>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/body"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        android:layout_marginLeft="77dp"
-        android:layout_marginTop="6dp"/>
-
-    <TextView
-        android:id="@+id/body_tv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginBottom="15dp"
-        android:textSize="16dp"
-        android:text="gjjfdgkjshòafjksghkjòhggfdgs ....."/>
-
-        -->
-
     <com.getbase.floatingactionbutton.FloatingActionsMenu
         android:id="@+id/multiple_actions_mailbox"
         android:layout_width="wrap_content"
@@ -326,7 +193,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             fab:fab_colorNormal="@color/ColorPrimary"
-            fab:fab_title="@string/respond_sender"
+            fab:fab_title="@string/reply_to_sender"
             fab:fab_colorPressed="@color/ColorPrimaryDark"/>
 
         <com.getbase.floatingactionbutton.FloatingActionButton
@@ -334,7 +201,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             fab:fab_colorNormal="@color/ColorPrimary"
-            fab:fab_title="@string/respond_all"
+            fab:fab_title="@string/reply_to_all"
             fab:fab_colorPressed="@color/ColorPrimaryDark"/>
 
 

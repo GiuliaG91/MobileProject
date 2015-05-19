@@ -33,6 +33,7 @@
     <string name="action_modify">modify</string>
     <string name="action_filter">filter</string>
     <string name="action_menu">menu</string>
+    <string name="action_edit">edit</string>
 
     <string name="drawer_open">Apri</string>
     <string name="drawer_close">Chiudi</string>
@@ -55,6 +56,18 @@
         <item>Messaggi</item>
         <item>Esci</item>
     </string-array>
+
+    <!--Registration -->
+    <string name="string_select_type">Seleziona un tipo</string>
+    <string name="string_type_student">Studente</string>
+    <string name="string_type_company">Azienda</string>
+
+    <!--Tabs -->
+    <string name="string_account_tab">Account</string>
+    <string name="string_basics_tab">Generale</string>
+    <string name="string_skills_tab">Competenze</string>
+    <string name="string_registry_tab">Recapiti</string>
+    <string name="string_office_tab">Le sedi</string>
 
     <!-- Student fragment strings: -->
     <string name="string_password">Password:</string>
@@ -295,9 +308,11 @@
     </string-array>
 
     <string name="delete_messages">Cancella messaggi</string>
-    <string name="respond_message">Rispondi</string>
+    <string name="reply_to_sender">Rispondi al mittente</string>
+    <string name="reply_to_all">Rispondi a tutti</string>
     <string name="on">Il</string>
     <string name="wrote">ha scritto</string>
+    <string name="me">Me</string>
 
     <string name="message_all_recipients_wrong">Il campo "destinatari" non contiene email registrate nell\'applicazione.</string>
 
@@ -307,9 +322,5 @@
     <string name="minute_ago">minuto fa</string>
     <string name="hour_ago">ora fa</string>
     <string name="day_ago">giorno fa</string>
-
-    <string name="respond_sender">Rispondi al mittente</string>
-    <string name="respond_all">Rispondi a tutti</string>
-    <string name="me">Me</string>
 
 </resources>

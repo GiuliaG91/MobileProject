@@ -112,6 +112,7 @@ public class MailBoxDetailFragment extends Fragment {
 
         //set list of recipients in the spinner
         Spinner sp = (Spinner)root.findViewById(R.id.recipients_list);
+
         String[] recipients = new String[message.getRecipients().size()];
         recipients[0] = globalData.getResources().getString(R.string.me);
         for(int i = 1; i < message.getRecipients().size(); i++)
@@ -125,6 +126,7 @@ public class MailBoxDetailFragment extends Fragment {
         //spinnerAdapter.addAll(message.getRecipients());
         //sp.setAdapter(spinnerAdapter);
 
+        //sp.setAdapter(new StringAdapter((String[])(message.getRecipients().toArray())));
 
 
         //set date
@@ -172,7 +174,6 @@ public class MailBoxDetailFragment extends Fragment {
         tv = (TextView) root.findViewById(R.id.body_tv);
         tv.setText(message.getBodyMessage());
 
-
         /*Attach on click listener to button menu */
 
         final FloatingActionButton respondSenderButton = (FloatingActionButton)root.findViewById(R.id.action_respond_sender);
@@ -183,9 +184,9 @@ public class MailBoxDetailFragment extends Fragment {
 
                 Bundle data = new Bundle();
 
-                ArrayList<CharSequence> recipients = new ArrayList<CharSequence>();
+                ArrayList<String> recipients = new ArrayList<String>();
                 recipients.add(message.getSender());
-                data.putCharSequenceArrayList(MailBoxDetailFragment.RECIPIENTS_KEY, recipients);
+                data.putStringArrayList(MailBoxDetailFragment.RECIPIENTS_KEY, recipients);
 
                 data.putString(MailBoxDetailFragment.OBJECT_KEY, message.getObject());
 
@@ -219,12 +220,12 @@ public class MailBoxDetailFragment extends Fragment {
 
                 Bundle data = new Bundle();
 
-                ArrayList<CharSequence> recipients = new ArrayList<CharSequence>();
+                ArrayList<String> recipients = new ArrayList<String>();
                 recipients.add(message.getSender());
                 for(String r: message.getRecipients())
-                    if(!r.equals(globalData.getUserObject().getMail()) && !message.getRecipients().contains(r))
+                    if(!r.equals(globalData.getUserObject().getMail()) && !recipients.contains(r))
                         recipients.add(r);
-                data.putCharSequenceArrayList(MailBoxDetailFragment.RECIPIENTS_KEY, recipients);
+                data.putStringArrayList(MailBoxDetailFragment.RECIPIENTS_KEY, recipients);
 
                 data.putString(MailBoxDetailFragment.OBJECT_KEY, message.getObject());
 
@@ -244,9 +245,7 @@ public class MailBoxDetailFragment extends Fragment {
                         .addToBackStack(message.getObject())
                         .commit();
 
-                Toolbar toolbar = (Toolbar) activity.findViewById(R.id.toolbar);
-                toolbar.setTitle(message.getObject());
-
+                Toolbar toolbar = (Toolbar) globalData.getToolbar();
             }
         });
 
@@ -314,9 +313,9 @@ public class MailBoxDetailFragment extends Fragment {
         public View getView(int position, View convertView, ViewGroup parent) {
 
             if(convertView == null)
-                convertView = getActivity().getLayoutInflater().inflate(R.layout.row_spinner,parent,false);
+                convertView = getActivity().getLayoutInflater().inflate(R.layout.list_text_element,parent,false);
 
-            TextView text = (TextView)convertView.findViewById(R.id.spinner_row);
+            TextView text = (TextView)convertView.findViewById(R.id.text_view);
             text.setTextSize(15);
             text.setText(stringArray[position]);
             return convertView;

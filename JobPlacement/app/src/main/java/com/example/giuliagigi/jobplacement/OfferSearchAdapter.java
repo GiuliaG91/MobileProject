@@ -8,8 +8,7 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
-import android.util.Log;
+import android.support.v7.widget.Toolbar;;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,6 +19,7 @@ import android.widget.TextView;
 
 
 import com.parse.ParseGeoPoint;
+
 import com.parse.ParseQuery;
 import com.parse.ParseQueryAdapter;
 
@@ -43,10 +43,10 @@ public class OfferSearchAdapter extends RecyclerView.Adapter<OfferSearchAdapter.
     private Student student;
     private Set<CompanyOffer> supportSet;
     private OfferSearchFragment parent;
-    private Integer currentPosition = 0;
+    private Integer currentPosition=0;
     private LinearLayoutManager mLayoutManager;
-    private final int pageSize = 15;
-    private int count = 0;
+    private final int pageSize=15;
+    private int count=0;
 
 
     private ParseQueryAdapter<CompanyOffer> parseAdapter;
@@ -56,36 +56,38 @@ public class OfferSearchAdapter extends RecyclerView.Adapter<OfferSearchAdapter.
     OfferSearchAdapter offerSearchAdapter = this;
 
 
-    public OfferSearchAdapter(FragmentActivity c, ViewGroup parentIn, OfferSearchFragment fragment, Integer pos, LinearLayoutManager layoutManager) {
+    public OfferSearchAdapter(FragmentActivity c, ViewGroup parentIn, OfferSearchFragment fragment,Integer pos, LinearLayoutManager layoutManager) {
         parseParent = parentIn;
         context = c;
         mDataset = new ArrayList<>();
         globalData = (GlobalData) context.getApplication();
         student = globalData.getStudentFromUser();
         supportSet = new HashSet<>();
-        parent = fragment;
-        currentPosition = pos;
-        mLayoutManager = layoutManager;
-        count = 0;
+        parent=fragment;
+        currentPosition=pos;
+        mLayoutManager=layoutManager;
+        count=0;
 
 
-        if (globalData.getOfferFilterStatus().isValid()) {
-            OfferFilterStatus status = globalData.getOfferFilterStatus();
-            setFactory(status.getTag_list(), status.getContract_list(), status.getTerm_list(), status.getField_list(), status.getLocation_list(),
-                    status.getSalary_list());
-        } else {
+        if(globalData.getOfferFilterStatus().isValid())
+        {
+            OfferFilterStatus status=globalData.getOfferFilterStatus();
+            setFactory(status.getTag_list(),status.getContract_list(),status.getTerm_list(),status.getField_list(),status.getLocation_list(),
+                        status.getSalary_list());
+        }
+        else {
 
             factory = new ParseQueryAdapter.QueryFactory<CompanyOffer>() {
                 @Override
                 public ParseQuery<CompanyOffer> create() {
                     ParseQuery query = new ParseQuery("CompanyOffer");
-                    query.whereEqualTo("publish", true);
+                    query.whereEqualTo("publish",true);
                     return query;
                 }
             };
 
         }
-        setAdapter();
+     setAdapter();
 
 
     }
@@ -95,28 +97,34 @@ public class OfferSearchAdapter extends RecyclerView.Adapter<OfferSearchAdapter.
                            final List<String> term_list,
                            final List<String> field_list,
                            final List<String> location_list,
-                           final List<String> salary_list) {
+                           final List<String> salary_list)
+    {
 
 
-        factory = new ParseQueryAdapter.QueryFactory<CompanyOffer>() {
+
+        factory=new ParseQueryAdapter.QueryFactory<CompanyOffer>() {
             @Override
             public ParseQuery<CompanyOffer> create() {
                 ParseQuery query = new ParseQuery("CompanyOffer");
-                query.whereEqualTo("publish", true);
-                if (!tag_list.isEmpty()) {
-                    query.whereContainedIn("tags", tag_list);
+                query.whereEqualTo("publish",true);
+               if(!tag_list.isEmpty())
+                {
+                    query.whereContainedIn("tags",tag_list);
                 }
-                if (!contract_list.isEmpty()) {
-                    query.whereContainedIn("contract", contract_list);
+                if(!contract_list.isEmpty())
+                {
+                    query.whereContainedIn("contract",contract_list);
                 }
-                if (!term_list.isEmpty()) {
-                    query.whereContainedIn("term", term_list);
+                if(!term_list.isEmpty())
+                {
+                    query.whereContainedIn("term",term_list);
                 }
-                if (!field_list.isEmpty()) {
-                    query.whereContainedIn("field", field_list);
+                if(!field_list.isEmpty())
+                {
+                    query.whereContainedIn("field",field_list);
                 }
 
-                if (!salary_list.isEmpty()) {
+                if(!salary_list.isEmpty()) {
                     Integer type = Integer.parseInt(salary_list.get(0));
                     Integer sal = Integer.parseInt(salary_list.get(1));
 
@@ -134,55 +142,55 @@ public class OfferSearchAdapter extends RecyclerView.Adapter<OfferSearchAdapter.
 
                     }
 
-                }
+                    if (!location_list.isEmpty()) {
+                        type = Integer.parseInt(location_list.get(0));
+                        Integer distance = Integer.parseInt(location_list.get(1));
+                        String nation = location_list.get(2);
+                        String city = location_list.get(3);
 
+                        List<Address> addressList = null;
 
-                if (!location_list.isEmpty()) {
-                    Integer type = Integer.parseInt(location_list.get(0));
-                    Integer distance = Integer.parseInt(location_list.get(1));
-                    String nation = location_list.get(2);
-                    String city = location_list.get(3);
-
-                    //make a geoPoint
-                    String geoAddress = nation + ", " + city.toString();
-                    Geocoder geocoder = new Geocoder(context);
-                    List<Address> addressList = null;
-                    try {
-                        addressList = geocoder.getFromLocationName(geoAddress, 5);
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-
-                    if (addressList.isEmpty()) {
-                        return null;
-                    } else {
-                        Address a = addressList.get(0);
-                        ParseGeoPoint geoPoint = new ParseGeoPoint(a.getLatitude(), a.getLongitude());
-
-                        if (type == 1) //city in general
-                        {
-
-                        } else if (type == 2) //less then
-                        {
-                        } else if (type == 3) //more then
-                        {
-
-                        } else if (type == 4) //equal to
-                        {
-
+                        Geocoder geocoder = new Geocoder(context);
+                        String geoAddress = nation + ", " + city;
+                        try {
+                            addressList = geocoder.getFromLocationName(geoAddress, 5);
+                        } catch (IOException e) {
+                            e.printStackTrace();
                         }
 
+                        if (addressList.isEmpty()) {
+                            return null;
+                        } else {
+                            Address a = addressList.get(0);
+                            ParseGeoPoint geoPoint = new ParseGeoPoint(a.getLatitude(), a.getLongitude());
+
+                            if (type == 1) //city in general
+                            {
+
+                                query.whereNear("location", geoPoint);
+
+
+                            } else if (type == 2) //less then
+                            {
+                            } else if (type == 3) //more then
+                            {
+
+                            } else if (type == 4) //equal to
+                            {
+
+                            }
+
+                        }
                     }
                 }
-
                 return query;
-
             }
-
         };
+
+
+
+
     }
-
-
 
     public void setAdapter(){
 
@@ -205,9 +213,8 @@ public class OfferSearchAdapter extends RecyclerView.Adapter<OfferSearchAdapter.
                 TextView date = (TextView) v.findViewById(R.id.date_row_tv);
                 CheckBox pref = (CheckBox) v.findViewById(R.id.star);
 
-              Bitmap img = null;
-//              img=object.getCompany().getProfilePhoto();
-
+              Bitmap img=null;
+                //img=object.getCompany().getProfilePhoto();
                 if(img!=null) {
                     logo.setImageBitmap(img);
                 }else {

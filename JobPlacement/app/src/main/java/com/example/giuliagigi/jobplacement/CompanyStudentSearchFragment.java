@@ -29,6 +29,8 @@ public class CompanyStudentSearchFragment extends Fragment {
 
     private OnFragmentInteractionListener mListener;
 
+
+
     public static CompanyStudentSearchFragment newInstance()
     {
         CompanyStudentSearchFragment fragment=new CompanyStudentSearchFragment();

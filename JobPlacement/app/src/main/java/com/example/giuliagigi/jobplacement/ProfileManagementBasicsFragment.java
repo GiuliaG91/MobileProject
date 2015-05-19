@@ -20,7 +20,7 @@ import java.io.IOException;
 
 public class ProfileManagementBasicsFragment extends ProfileManagementFragment {
 
-    private static final String TITLE = "Overview";
+    private static final String TITLE = GlobalData.getContext().getString(R.string.string_basics_tab);
     protected ImageView profilePhoto;
     public static final String BUNDLE_IDENTIFIER = "PROFILEMANAGEMENTBASICS";
     private static final String BUNDLE_KEY_USER = "bundle_key_user";
@@ -106,8 +106,9 @@ public class ProfileManagementBasicsFragment extends ProfileManagementFragment {
                     hasChanged = true;
                     application.getUserObject().setProfilePhoto(photoBitmap);
                     Bitmap bmImg = user.getProfilePhoto();
-                    BitmapDrawable background = new BitmapDrawable(bmImg);
-                    profilePhoto.setBackgroundDrawable(background);
+                    BitmapDrawable background = new BitmapDrawable(GlobalData.getContext().getResources(), bmImg);
+                    profilePhoto.setImageDrawable(background);
+                    profilePhoto.setScaleType(ImageView.ScaleType.CENTER_CROP);
                 }
 
             } catch (IOException e) {

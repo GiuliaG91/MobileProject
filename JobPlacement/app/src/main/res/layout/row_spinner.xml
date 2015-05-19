@@ -4,10 +4,10 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:textAppearance="?android:attr/textAppearanceLarge"
-    android:padding="5dp"
-    android:textSize="15sp"
+    android:paddingTop="3dp"
+    android:paddingBottom="3dp"
+    android:textSize="16sp"
     android:textColor="#00008B"
-    android:id="@+id/spinner_row"
-    android:background="@color/header_detail_mail_box">
+    android:id="@+id/spinner_row">
 
 </TextView>

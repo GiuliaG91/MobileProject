@@ -279,6 +279,7 @@ public class Home extends ActionBarActivity  implements TabHomeStudentFragment.O
     @Override
     public void onBackPressed() {
 
+
         if(getSupportFragmentManager().getBackStackEntryCount()>0) {
            getSupportFragmentManager().popBackStackImmediate();
         }
