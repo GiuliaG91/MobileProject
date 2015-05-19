@@ -1,6 +1,8 @@
 package com.example.giuliagigi.jobplacement;
 
 import android.graphics.Bitmap;
+import android.location.Address;
+import android.location.Geocoder;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.RecyclerView;
@@ -13,9 +15,12 @@ import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.parse.ParseException;
+import com.parse.ParseGeoPoint;
 import com.parse.ParseQuery;
 import com.parse.ParseQueryAdapter;
 
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -94,6 +99,70 @@ public class StudentCompanySearchAdapter extends RecyclerView.Adapter<StudentCom
                 if(!field_list.isEmpty())
                 {
                     query.whereContainedIn("field",field_list);
+                }
+                if (!location_list.isEmpty()) {
+                    Integer type = Integer.parseInt(location_list.get(0));
+                    Integer distance = Integer.parseInt(location_list.get(1));
+                    String nation = location_list.get(2);
+                    String city = location_list.get(3);
+
+                    List<Address> addressList = null;
+
+                    Geocoder geocoder = new Geocoder(context);
+                    String geoAddress = nation + ", " + city;
+                    try {
+                        addressList = geocoder.getFromLocationName(geoAddress, 5);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
+                    if (addressList.isEmpty()) {
+
+                    } else {
+                        Address a = addressList.get(0);
+                        ParseGeoPoint geoPoint = new ParseGeoPoint(a.getLatitude(), a.getLongitude());
+
+                        if (type == 1) //city in general
+                        {
+                            //Prendo tutti gli uffici vicini
+                            ParseQuery officeQuery=new ParseQuery("Office");
+                                officeQuery.whereWithinKilometers("location",geoPoint,100);
+
+                            List<Office> offices=null;
+
+                            try {
+                                offices=officeQuery.find();
+                            } catch (ParseException e) {
+                                e.printStackTrace();
+                            }
+                            if(offices!=null) {
+                                //prendo le company che contengono quegli uffici
+                                query.whereContainedIn("offices",offices);
+                            }
+
+
+                        } else if (type == 2) //less then
+                        {
+
+                            //Prendo tutti gli uffici vicini
+                            ParseQuery officeQuery=new ParseQuery("Office");
+                            officeQuery.whereWithinKilometers("location", geoPoint, distance);
+
+                            List<Office> offices=null;
+
+                            try {
+                                offices=officeQuery.find();
+                            } catch (ParseException e) {
+                                e.printStackTrace();
+                            }
+                            if(offices!=null) {
+                                //prendo le company che contengono quegli uffici
+                                query.whereContainedIn("offices",offices);
+                            }
+
+                        }
+
+                    }
                 }
 
                 return query;

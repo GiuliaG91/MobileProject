@@ -130,8 +130,8 @@ public class CompanyStudentSearchFragment extends Fragment {
         // TODO: Update argument type and name
         public void onFragmentInteraction(Uri uri);
     }
-    public void addFiters(List<Tag> tag_list, List<String> degree_list, List<String> field_list, List<String> location_list) {
-        adapter.setFactory(tag_list, degree_list, field_list, location_list);
+    public void addFiters(List<Tag> tag_list, List<String> degree_list, List<String> field_list) {
+        adapter.setFactory(tag_list, degree_list, field_list);
         adapter.setAdapter();
         adapter.notifyDataSetChanged();
 

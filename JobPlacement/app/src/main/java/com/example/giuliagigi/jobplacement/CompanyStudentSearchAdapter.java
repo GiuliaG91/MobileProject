@@ -14,6 +14,7 @@ import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.parse.ParseException;
 import com.parse.ParseQuery;
 import com.parse.ParseQueryAdapter;
 
@@ -43,8 +44,6 @@ public class CompanyStudentSearchAdapter extends RecyclerView.Adapter<CompanyStu
     private LinearLayoutManager mLayoutManager;
     private final int pageSize=15;
     private int count=0;
-    private boolean flagDegree=false;
-    private List<String> mydegree_list;
 
     private ParseQueryAdapter<Student> parseAdapter;
     private ParseQueryAdapter.QueryFactory<Student> factory;
@@ -62,13 +61,11 @@ public class CompanyStudentSearchAdapter extends RecyclerView.Adapter<CompanyStu
         company = globalData.getCompanyFromUser();
         supportSet = new HashSet<>();
         count = 0;
-        flagDegree=false;
-        mydegree_list=new ArrayList<>();
         mLayoutManager = layoutManager;
 
         if (globalData.getOfferFilterStatus().isValid()) {
             StudentFilterStatus status = globalData.getStudentFilterStatus();
-            setFactory(status.getTag_list(), status.getDegree_list(), status.getField_list(), status.getLocation_list());
+            setFactory(status.getTag_list(), status.getDegree_list(), status.getField_list());
         } else {
 
             factory = new ParseQueryAdapter.QueryFactory<Student>() {
@@ -90,8 +87,7 @@ public class CompanyStudentSearchAdapter extends RecyclerView.Adapter<CompanyStu
 
     public void setFactory(final List<Tag> tag_list,
                            final List<String> degree_list,
-                           final List<String> field_list,
-                           final List<String> location_list)
+                           final List<String> field_list)
     {
 
 
@@ -108,8 +104,36 @@ public class CompanyStudentSearchAdapter extends RecyclerView.Adapter<CompanyStu
                 }
                 if(!degree_list.isEmpty())
                 {
-                    flagDegree=true;
-                    mydegree_list=degree_list;
+                    String myTypeDegree=degree_list.get(1);
+                    int mark=Integer.parseInt(degree_list.get(2));
+                        //QUERY SU TUTTE LE LAUREE
+                    ParseQuery degreeQuery=new ParseQuery("Degree");
+                    List<Degree> degrees=null;
+
+                    try {
+                        degrees=degreeQuery.find();
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+
+                    if(degrees!=null)
+                    {
+                        List<Degree> results=new ArrayList<>();
+                        for (Degree d : degrees)
+                        {
+                            int myType=Degree.getTypeID(myTypeDegree);
+                            int thisType=Degree.getTypeID(d.getType());
+
+                            if(thisType>myType)
+                            {
+                                results.add(d);
+                            }
+
+                        }
+
+                        query.whereContainedIn("degrees",results);
+
+                    }
 
 
                 }

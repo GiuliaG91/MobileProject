@@ -141,9 +141,9 @@ public class OfferSearchAdapter extends RecyclerView.Adapter<OfferSearchAdapter.
                         query.whereEqualTo("salary", sal);
 
                     }
-
+                }
                     if (!location_list.isEmpty()) {
-                        type = Integer.parseInt(location_list.get(0));
+                        Integer type = Integer.parseInt(location_list.get(0));
                         Integer distance = Integer.parseInt(location_list.get(1));
                         String nation = location_list.get(2);
                         String city = location_list.get(3);
@@ -159,7 +159,7 @@ public class OfferSearchAdapter extends RecyclerView.Adapter<OfferSearchAdapter.
                         }
 
                         if (addressList.isEmpty()) {
-                            return null;
+
                         } else {
                             Address a = addressList.get(0);
                             ParseGeoPoint geoPoint = new ParseGeoPoint(a.getLatitude(), a.getLongitude());
@@ -167,22 +167,18 @@ public class OfferSearchAdapter extends RecyclerView.Adapter<OfferSearchAdapter.
                             if (type == 1) //city in general
                             {
 
-                                query.whereNear("location", geoPoint);
+                                query.whereWithinKilometers("location",geoPoint,100);
 
 
                             } else if (type == 2) //less then
                             {
-                            } else if (type == 3) //more then
-                            {
-
-                            } else if (type == 4) //equal to
-                            {
+                                query.whereWithinKilometers("location", geoPoint, distance);
 
                             }
 
                         }
                     }
-                }
+
                 return query;
             }
         };

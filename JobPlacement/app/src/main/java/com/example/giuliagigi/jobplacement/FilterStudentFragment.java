@@ -35,7 +35,6 @@ public class FilterStudentFragment  extends DialogFragment {
 
 
     View root;
-    // private addFilter mCallback;
 
     GlobalData globalData = null;
 
@@ -45,7 +44,6 @@ public class FilterStudentFragment  extends DialogFragment {
 
     private ImageButton addtagsButton = null;
     private ImageButton addfieldButton = null;
-    private ImageButton addlocationButton = null;
     private ImageButton remove = null;
 
     private Button okButton;
@@ -56,14 +54,12 @@ public class FilterStudentFragment  extends DialogFragment {
     private String[] typeOfDegrees;
 
     private MultiAutoCompleteTextView tagsView = null;
-    private MultiAutoCompleteTextView location = null;
 
     private Map<String, Tag> retriveTag = null;
     private Set<String> correct;
 
     private Set<String> supportTag;
     private Set<String> supportField;
-    private Set<String> supportLocation;
 
     /**
      * ************************FILTERS******************
@@ -71,7 +67,6 @@ public class FilterStudentFragment  extends DialogFragment {
     List<Tag> tag_list = null;
     List<String> degree_list = null;
     List<String> field_list = null;
-    List<String> location_list = null;
 
     /**
      * ***********************************************
@@ -91,13 +86,10 @@ public class FilterStudentFragment  extends DialogFragment {
 
         supportTag = new HashSet<>();
         supportField = new HashSet<>();
-        supportLocation = new HashSet<>();
-
 
         tag_list = new ArrayList<>();
         degree_list = new ArrayList<>();
         field_list = new ArrayList<>();
-        location_list = new ArrayList<>();
 
     }
 
@@ -113,7 +105,6 @@ public class FilterStudentFragment  extends DialogFragment {
 
         addtagsButton = (ImageButton) root.findViewById(R.id.filter_tag_add);
         addfieldButton = (ImageButton) root.findViewById(R.id.filter_field_add);
-        addlocationButton = (ImageButton) root.findViewById(R.id.filter_location_add);
         remove = (ImageButton) root.findViewById(R.id.filter_remove);
 
         okButton = (Button) root.findViewById(R.id.ok_button);
@@ -124,8 +115,6 @@ public class FilterStudentFragment  extends DialogFragment {
         degreeSpinner = (Spinner) root.findViewById(R.id.filter_degree_spinner);
         //MultiAutoCompletetextview
         tagsView = (MultiAutoCompleteTextView) root.findViewById(R.id.filter_tag_complete_tv);
-        location = (MultiAutoCompleteTextView) root.findViewById(R.id.filter_location_complete_tv);
-
 
         typeOfFields = getResources().getStringArray(R.array.new_offer_fragment_fields);
         fieldSpinner.setAdapter(new StringAdapter(typeOfFields));
@@ -179,12 +168,6 @@ public class FilterStudentFragment  extends DialogFragment {
             }
         });
 
-        addlocationButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onClickLocation(v);
-            }
-        });
 
         remove.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -221,7 +204,6 @@ public class FilterStudentFragment  extends DialogFragment {
             tag_list = globalData.getStudentFilterStatus().getTag_list();
             degree_list = globalData.getStudentFilterStatus().getDegree_list();
             field_list = globalData.getStudentFilterStatus().getField_list();
-            location_list = globalData.getStudentFilterStatus().getLocation_list();
 
             final GridLayout container = (GridLayout) root.findViewById(R.id.filter_tag_container);
 
@@ -262,26 +244,6 @@ public class FilterStudentFragment  extends DialogFragment {
             }
 
 
-            final GridLayout locationContainer = (GridLayout) root.findViewById(R.id.filter_location_container);
-            for (int i = 0; i < location_list.size(); i++) {
-                LayoutInflater inflater = (LayoutInflater) getActivity().getBaseContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                View mytagView = inflater.inflate(R.layout.taglayout, null);
-
-                mytagView.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        locationContainer.removeView(v);
-                        Toast.makeText(getActivity(), "Removed", Toast.LENGTH_SHORT).show();
-                    }
-                });
-
-                TextView t = (TextView) mytagView.findViewById(R.id.tag_tv);
-                t.setText(location_list.get(i));
-                locationContainer.addView(mytagView);
-            }
-
-
-
             if(!degree_list.isEmpty()) {
                 Integer pos = Integer.parseInt(degree_list.get(0));
                 degreeSpinner.setSelection(pos);
@@ -314,7 +276,7 @@ public class FilterStudentFragment  extends DialogFragment {
                     public void onClick(View v) {
                         container.removeView(v);
                         Toast.makeText(getActivity(), "Removed", Toast.LENGTH_SHORT).show();
-                        globalData.getStudentFilterStatus().setFilters(tag_list, degree_list, field_list, location_list);
+                        globalData.getStudentFilterStatus().setFilters(tag_list, degree_list, field_list);
                     }
                 });
 
@@ -350,7 +312,7 @@ public class FilterStudentFragment  extends DialogFragment {
                     public void onClick(View v) {
                         container.removeView(v);
                         Toast.makeText(getActivity(), "Removed", Toast.LENGTH_SHORT).show();
-                        globalData.getStudentFilterStatus().setFilters(tag_list, degree_list, field_list, location_list);
+                        globalData.getStudentFilterStatus().setFilters(tag_list, degree_list, field_list);
                     }
                 });
 
@@ -362,23 +324,6 @@ public class FilterStudentFragment  extends DialogFragment {
         fieldSpinner.setSelection(0);
     }
 
-    public void onClickLocation(View v) {
-
-      /*  LinearLayout container=(LinearLayout)root.findViewById(R.id.filter_tag_container);
-        String filter=tagsView.getText().toString().trim();
-        if(!supportTag.add(filter))
-        {
-            Toast.makeText(getActivity(),"Tag already present" , Toast.LENGTH_SHORT).show();
-        }
-        else
-        {
-            TextView tv=new TextView(getActivity());
-            tv.setText(filter);
-            container.addView(tv);
-        }
-
-        */
-    }
 
     /**
      * *******************APPLY FILTERS*******************************
@@ -386,55 +331,61 @@ public class FilterStudentFragment  extends DialogFragment {
 
     public void applyFilters(View v) {
 
-        GridLayout container = (GridLayout) root.findViewById(R.id.filter_tag_container);
-        if (container.getChildCount() > 0) {
-            for (int i = 0; i < container.getChildCount(); i++) {
-                View tv = container.getChildAt(i);
-                TextView t = (TextView) tv.findViewById(R.id.tag_tv);
-                tag_list.add(retriveTag.get(t.getText().toString().trim()));
-            }
-        }
+        tag_list.clear();
+        degree_list.clear();
+        field_list.clear();
 
-        container = (GridLayout) root.findViewById(R.id.filter_field_container);
-        if (container.getChildCount() > 0) {
-            for (int i = 0; i < container.getChildCount(); i++) {
-                View tv = container.getChildAt(i);
-                TextView t = (TextView) tv.findViewById(R.id.tag_tv);
-                field_list.add(t.getText().toString());
-            }
-        }
-
-        container = (GridLayout) root.findViewById(R.id.filter_location_container);
-        if (container.getChildCount() > 0) {
-            for (int i = 0; i < container.getChildCount(); i++) {
-                View tv = container.getChildAt(i);
-                TextView t = (TextView) tv.findViewById(R.id.tag_tv);
-                location_list.add(t.getText().toString().toLowerCase().trim());
-            }
-        }
-
-        Integer pos = degreeSpinner.getSelectedItemPosition();
-        if (pos != 0) {
-
-            degree_list.add(String.valueOf(pos));
-            degree_list.add(degreeSpinner.getSelectedItem().toString());
-            if(editGrade.getText().toString().equals(""))
-            {
-                degree_list.add("0");
-            }
-            degree_list.add(editGrade.getText().toString());
-        }
-        else
+        int flag=0;
+        if(editGrade.getText().length()>0 )
         {
-            degree_list.clear();
+            Integer tmp=Integer.parseInt(editGrade.getText().toString());
+            if(tmp<60 || tmp>110)
+            {
+                flag=1;
+                Toast.makeText(getActivity(),"Wrong grade",Toast.LENGTH_SHORT).show();
+            }
         }
+if(flag==0)
+ {
+    GridLayout container = (GridLayout) root.findViewById(R.id.filter_tag_container);
+    if (container.getChildCount() > 0) {
+        for (int i = 0; i < container.getChildCount(); i++) {
+            View tv = container.getChildAt(i);
+            TextView t = (TextView) tv.findViewById(R.id.tag_tv);
+            tag_list.add(retriveTag.get(t.getText().toString().trim()));
+        }
+    }
 
-        globalData.getStudentFilterStatus().setFilters(tag_list, degree_list, field_list, location_list);
-        globalData.getStudentFilterStatus().setValid(true);
+    container = (GridLayout) root.findViewById(R.id.filter_field_container);
+    if (container.getChildCount() > 0) {
+        for (int i = 0; i < container.getChildCount(); i++) {
+            View tv = container.getChildAt(i);
+            TextView t = (TextView) tv.findViewById(R.id.tag_tv);
+            field_list.add(t.getText().toString());
+        }
+    }
 
-        CompanyStudentSearchFragment fragment = (CompanyStudentSearchFragment) this.getParentFragment();
-        fragment.addFiters(tag_list, degree_list, field_list, location_list);
-        getDialog().dismiss();
+
+    Integer pos = degreeSpinner.getSelectedItemPosition();
+    if (pos != 0) {
+
+        degree_list.add(String.valueOf(pos));
+        degree_list.add(degreeSpinner.getSelectedItem().toString());
+        if (editGrade.getText().toString().equals("")) {
+            degree_list.add("0");
+        }
+        degree_list.add(editGrade.getText().toString());
+    } else {
+        degree_list.clear();
+    }
+
+    globalData.getStudentFilterStatus().setFilters(tag_list, degree_list, field_list);
+    globalData.getStudentFilterStatus().setValid(true);
+
+    CompanyStudentSearchFragment fragment = (CompanyStudentSearchFragment) this.getParentFragment();
+    fragment.addFiters(tag_list, degree_list, field_list);
+    getDialog().dismiss();
+      }
     }
 
 
@@ -459,11 +410,10 @@ public class FilterStudentFragment  extends DialogFragment {
         tag_list.clear();
        degree_list.clear();
         field_list.clear();
-        location_list.clear();
 
         //no filters
         globalData.getStudentFilterStatus().setValid(false);
-
+        Toast.makeText(getActivity(), "Removed", Toast.LENGTH_SHORT).show();
     }
 
 
@@ -506,6 +456,8 @@ public class FilterStudentFragment  extends DialogFragment {
             return convertView;
         }
     }
+
+
 
 }
 

@@ -232,7 +232,6 @@ public class GlobalData extends Application {
         return offerFilterStatus;
     }
     public StudentFilterStatus getStudentFilterStatus(){return  studentFilterStatus;}
-
     public CompanyFilterStatus getCompanyFilterStatus() {
         return companyFilterStatus;
     }

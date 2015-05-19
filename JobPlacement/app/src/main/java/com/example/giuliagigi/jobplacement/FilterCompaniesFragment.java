@@ -35,16 +35,15 @@ public class FilterCompaniesFragment extends DialogFragment {
 
 
     View root;
-    // private addFilter mCallback;
 
     GlobalData globalData = null;
 
 
     private Spinner fieldSpinner = null;
+    private Spinner distanceSpinner=null;
 
     private ImageButton addtagsButton = null;
     private ImageButton addfieldButton = null;
-    private ImageButton addlocationButton = null;
     private ImageButton remove = null;
 
     private Button okButton;
@@ -54,14 +53,18 @@ public class FilterCompaniesFragment extends DialogFragment {
     private String[] typeOfFields;
 
     private MultiAutoCompleteTextView tagsView = null;
-    private MultiAutoCompleteTextView location = null;
+
+    private EditText editDistance = null;
+    private EditText nation = null;
+    private EditText city = null;
 
     private Map<String, Tag> retriveTag = null;
     private Set<String> correct;
 
+    private String[] distances;
+
     private Set<String> supportTag;
     private Set<String> supportField;
-    private Set<String> supportLocation;
 
     /**
      * ************************FILTERS******************
@@ -87,8 +90,6 @@ public class FilterCompaniesFragment extends DialogFragment {
 
         supportTag = new HashSet<>();
         supportField = new HashSet<>();
-        supportLocation = new HashSet<>();
-
 
         tag_list = new ArrayList<>();
         field_list = new ArrayList<>();
@@ -109,7 +110,6 @@ public class FilterCompaniesFragment extends DialogFragment {
 
         addtagsButton = (ImageButton) root.findViewById(R.id.filter_tag_add);
         addfieldButton = (ImageButton) root.findViewById(R.id.filter_field_add);
-        addlocationButton = (ImageButton) root.findViewById(R.id.filter_location_add);
         remove = (ImageButton) root.findViewById(R.id.filter_remove);
 
         okButton = (Button) root.findViewById(R.id.ok_button);
@@ -117,14 +117,42 @@ public class FilterCompaniesFragment extends DialogFragment {
 
         //set all possible filters
         fieldSpinner = (Spinner) root.findViewById(R.id.filter_field_spinner);
+        distanceSpinner=(Spinner) root.findViewById(R.id.filter_distance_spinner);
 
         //MultiAutoCompletetextview
         tagsView = (MultiAutoCompleteTextView) root.findViewById(R.id.filter_tag_complete_tv);
-        location = (MultiAutoCompleteTextView) root.findViewById(R.id.filter_location_complete_tv);
+
+        editDistance=(EditText) root.findViewById(R.id.filter_edit_distance);
+        nation = (EditText) root.findViewById(R.id.filter_edit_nation);
+        city = (EditText) root.findViewById(R.id.filter_edit_city);
+
+
+
 
 
         typeOfFields = getResources().getStringArray(R.array.new_offer_fragment_fields);
         fieldSpinner.setAdapter(new StringAdapter(typeOfFields));
+
+
+
+        distances=  getResources().getStringArray(R.array.filter_location);
+        distanceSpinner.setAdapter(new StringAdapter(distances));
+
+        distanceSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if (position == 0 || position == 1) {
+                    editDistance.setEnabled(false);
+                } else {
+                    editDistance.setEnabled(true);
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
 
 
         //multiautocompletetextview
@@ -171,13 +199,6 @@ public class FilterCompaniesFragment extends DialogFragment {
             }
         });
 
-        addlocationButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onClickLocation(v);
-            }
-        });
-
         remove.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -208,11 +229,11 @@ public class FilterCompaniesFragment extends DialogFragment {
      */
     private void checkStatus() {
 
-        if (globalData.getStudentFilterStatus().isValid()) {
+        if (globalData.getCompanyFilterStatus().isValid()) {
 
-            tag_list = globalData.getStudentFilterStatus().getTag_list();
-            field_list = globalData.getStudentFilterStatus().getField_list();
-            location_list = globalData.getStudentFilterStatus().getLocation_list();
+            tag_list = globalData.getCompanyFilterStatus().getTag_list();
+            field_list = globalData.getCompanyFilterStatus().getField_list();
+            location_list = globalData.getCompanyFilterStatus().getLocation_list();
 
             final GridLayout container = (GridLayout) root.findViewById(R.id.filter_tag_container);
 
@@ -252,24 +273,15 @@ public class FilterCompaniesFragment extends DialogFragment {
                 fieldContainer.addView(mytagView);
             }
 
+            if (!location_list.isEmpty()) {
+                Integer pos = Integer.parseInt(location_list.get(0));
+                distanceSpinner.setSelection(pos);
+                editDistance.setText(location_list.get(1));
+                nation.setText(location_list.get(2));
+                city.setText(location_list.get(3));
 
-            final GridLayout locationContainer = (GridLayout) root.findViewById(R.id.filter_location_container);
-            for (int i = 0; i < location_list.size(); i++) {
-                LayoutInflater inflater = (LayoutInflater) getActivity().getBaseContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                View mytagView = inflater.inflate(R.layout.taglayout, null);
-
-                mytagView.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        locationContainer.removeView(v);
-                        Toast.makeText(getActivity(), "Removed", Toast.LENGTH_SHORT).show();
-                    }
-                });
-
-                TextView t = (TextView) mytagView.findViewById(R.id.tag_tv);
-                t.setText(location_list.get(i));
-                locationContainer.addView(mytagView);
             }
+
 
         }
     }
@@ -343,23 +355,6 @@ public class FilterCompaniesFragment extends DialogFragment {
         fieldSpinner.setSelection(0);
     }
 
-    public void onClickLocation(View v) {
-
-      /*  LinearLayout container=(LinearLayout)root.findViewById(R.id.filter_tag_container);
-        String filter=tagsView.getText().toString().trim();
-        if(!supportTag.add(filter))
-        {
-            Toast.makeText(getActivity(),"Tag already present" , Toast.LENGTH_SHORT).show();
-        }
-        else
-        {
-            TextView tv=new TextView(getActivity());
-            tv.setText(filter);
-            container.addView(tv);
-        }
-
-        */
-    }
 
     /**
      * *******************APPLY FILTERS*******************************
@@ -367,39 +362,61 @@ public class FilterCompaniesFragment extends DialogFragment {
 
     public void applyFilters(View v) {
 
-        GridLayout container = (GridLayout) root.findViewById(R.id.filter_tag_container);
-        if (container.getChildCount() > 0) {
-            for (int i = 0; i < container.getChildCount(); i++) {
-                View tv = container.getChildAt(i);
-                TextView t = (TextView) tv.findViewById(R.id.tag_tv);
-                tag_list.add(retriveTag.get(t.getText().toString().trim()));
-            }
+        tag_list.clear();
+        field_list.clear();
+        location_list.clear();
+        Integer pos=0;
+
+        int flag=0;
+
+
+        if(nation.getText().length()==0 && city.getText().length()!=0 ||
+                nation.getText().length()!=0 && city.getText().length()==0
+                ){
+            flag=1;
         }
+        if(flag==0) {
 
-        container = (GridLayout) root.findViewById(R.id.filter_field_container);
-        if (container.getChildCount() > 0) {
-            for (int i = 0; i < container.getChildCount(); i++) {
-                View tv = container.getChildAt(i);
-                TextView t = (TextView) tv.findViewById(R.id.tag_tv);
-                field_list.add(t.getText().toString());
+            GridLayout container = (GridLayout) root.findViewById(R.id.filter_tag_container);
+            if (container.getChildCount() > 0) {
+                for (int i = 0; i < container.getChildCount(); i++) {
+                    View tv = container.getChildAt(i);
+                    TextView t = (TextView) tv.findViewById(R.id.tag_tv);
+                    tag_list.add(retriveTag.get(t.getText().toString().trim()));
+                }
             }
-        }
 
-        container = (GridLayout) root.findViewById(R.id.filter_location_container);
-        if (container.getChildCount() > 0) {
-            for (int i = 0; i < container.getChildCount(); i++) {
-                View tv = container.getChildAt(i);
-                TextView t = (TextView) tv.findViewById(R.id.tag_tv);
-                location_list.add(t.getText().toString().toLowerCase().trim());
+            container = (GridLayout) root.findViewById(R.id.filter_field_container);
+            if (container.getChildCount() > 0) {
+                for (int i = 0; i < container.getChildCount(); i++) {
+                    View tv = container.getChildAt(i);
+                    TextView t = (TextView) tv.findViewById(R.id.tag_tv);
+                    field_list.add(t.getText().toString());
+                }
+
             }
+
+            pos = distanceSpinner.getSelectedItemPosition();
+            if (pos != 0) {
+
+                location_list.add(String.valueOf(pos));
+                if (editDistance.getText().toString().equals("")) {
+                    location_list.add("0");
+                } else {
+                    location_list.add(editDistance.getText().toString());
+                }
+                location_list.add(nation.getText().toString());
+                location_list.add(city.getText().toString());
+            }
+
+            globalData.getCompanyFilterStatus().setFilters(tag_list, field_list, location_list);
+            globalData.getCompanyFilterStatus().setValid(true);
+
+            StudentCompanySearchFragment fragment = (StudentCompanySearchFragment) this.getParentFragment();
+            fragment.addFiters(tag_list, field_list, location_list);
+            getDialog().dismiss();
         }
-
-        globalData.getCompanyFilterStatus().setFilters(tag_list, field_list, location_list);
-        globalData.getCompanyFilterStatus().setValid(true);
-
-        StudentCompanySearchFragment fragment = (StudentCompanySearchFragment) this.getParentFragment();
-        fragment.addFiters(tag_list,field_list,location_list);
-        getDialog().dismiss();
+        else Toast.makeText(getActivity(),"Please complete location fileds",Toast.LENGTH_SHORT).show();
     }
 
 
@@ -417,6 +434,12 @@ public class FilterCompaniesFragment extends DialogFragment {
         container.removeAllViews();
 
 
+        distanceSpinner.setSelection(0);
+        editDistance.setText("");
+        nation.setText("");
+        city.setText("");
+
+
 
 
         /*clear list*/
@@ -427,6 +450,8 @@ public class FilterCompaniesFragment extends DialogFragment {
 
         //no filters
         globalData.getCompanyFilterStatus().setValid(false);
+
+        Toast.makeText(getActivity(),"Removed",Toast.LENGTH_SHORT).show();
 
     }
 
