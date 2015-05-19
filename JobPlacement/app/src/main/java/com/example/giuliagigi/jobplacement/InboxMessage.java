@@ -1,9 +1,18 @@
 package com.example.giuliagigi.jobplacement;
 
+import android.util.Log;
+
 import com.parse.ParseClassName;
 import com.parse.ParseObject;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 
 
 /**
@@ -42,7 +51,29 @@ public class InboxMessage extends ParseObject {
         return this.getString(OBJECT);
     }
 
-    public Date getDate(){ return this.getDate(DATE);}
+    public Calendar getDate() throws JSONException {
+
+        /*
+        JSONObject obj = (JSONObject) this.get(DATE);
+
+        Calendar date = Calendar.getInstance();
+        date.set(Calendar.DAY_OF_MONTH, obj.getInt("day"));
+        date.set(Calendar.MONTH, obj.getInt("month"));
+        date.set(Calendar.YEAR, obj.getInt("year"));
+        date.set(Calendar.HOUR, obj.getInt("hour"));
+        date.set(Calendar.MINUTE, obj.getInt("minute"));
+        */
+
+        HashMap map = (HashMap) this.get(DATE);
+        Calendar date = Calendar.getInstance();
+        date.set(Calendar.DAY_OF_MONTH, (Integer) map.get("day"));
+        date.set(Calendar.MONTH, (Integer) map.get("month"));
+        date.set(Calendar.YEAR, (Integer) map.get("year"));
+        date.set(Calendar.HOUR, (Integer) map.get("hour"));
+        date.set(Calendar.MINUTE, (Integer) map.get("minute"));
+
+        return date;
+    }
 
     public String getBodyMessage() {
         return this.getString(BODY_MESSAGE);
@@ -90,9 +121,19 @@ public class InboxMessage extends ParseObject {
         this.put(IS_READ, isRead);
     }
 
-    public void setDate(Date date){
+    public void setDate(Calendar date){
 
-        this.put(DATE, date);
+        String s = "{\"day\": " + date.get(Calendar.DAY_OF_MONTH) + ", \"month\": " + date.get(Calendar.MONTH) + ", \"year\": " + date.get(Calendar.YEAR)
+                    + ", \"hour\": " + date.get(Calendar.HOUR) + ", \"minute\": " + date.get(Calendar.MINUTE) + "}";
+
+        try {
+            JSONObject obj = new JSONObject(s);
+            this.put(DATE, obj);
+        }catch (JSONException e){
+            e.printStackTrace();
+            Log.e("JSONException", e.toString());
+        }
+
     }
 
     public void setIsDeleting(Boolean flag){

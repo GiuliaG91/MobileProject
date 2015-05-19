@@ -18,7 +18,10 @@ import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 
+import org.json.JSONException;
+
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -101,22 +104,6 @@ public class MailBoxAdapter extends RecyclerView.Adapter<MailBoxAdapter.ViewHold
         if(mDataset.get(position).getPhotoSender() != null)
             holder.image.setImageBitmap(mDataset.get(position).getPhotoSender());
 
-        /*
-        ParseQuery<User> query = ParseQuery.getQuery("User");
-        query.whereEqualTo(User.MAIL_FIELD, mDataset.get(position).getSender());
-        query.findInBackground(new FindCallback<User>() {
-            @Override
-            public void done(List<User> list, ParseException e) {
-
-                User u = list.get(0);
-
-                holder.name.setText(u.getName());
-
-                holder.image.setImageBitmap(u.getProfilePhoto());
-            }
-
-        });
-        */
 
         if(mDataset.get(position).getObject().length() < 20)
             holder.object.setText(mDataset.get(position).getObject());
@@ -191,16 +178,20 @@ public class MailBoxAdapter extends RecyclerView.Adapter<MailBoxAdapter.ViewHold
             holder.rowLayout.setBackgroundColor(0xFFE0B2);
         }
 
-        Date now = new Date();
+        try {
+            Calendar dateMessage = mDataset.get(position).getDate();
+            Calendar now = Calendar.getInstance();
 
-        if(mDataset.get(position).getDate().getDay() == now.getDay() && mDataset.get(position).getDate().getMonth() == now.getMonth() && mDataset.get(position).getDate().getYear() == now.getYear())
-            holder.date.setText(mDataset.get(position).getDate().getHours() + ":" + mDataset.get(position).getDate().getMinutes());
-        else if(mDataset.get(position).getDate().getYear() == now.getYear())
-            holder.date.setText(mDataset.get(position).getDate().getDay() + " " + globalData.getResources().getStringArray(R.array.months)[mDataset.get(position).getDate().getMonth()]);
-        else
-            holder.date.setText(mDataset.get(position).getDate().getDay() + "/" + mDataset.get(position).getDate().getMonth() + "/" + mDataset.get(position).getDate().getYear() );
+            if(dateMessage.get(Calendar.DAY_OF_MONTH) == now.get(Calendar.DAY_OF_MONTH) && dateMessage.get(Calendar.MONTH) == now.get(Calendar.MONTH) && dateMessage.get(Calendar.YEAR) == now.get(Calendar.YEAR))
+                holder.date.setText(dateMessage.get(Calendar.HOUR_OF_DAY) + ":" + dateMessage.get(Calendar.MINUTE));
+            else if(dateMessage.get(Calendar.YEAR) == now.get(Calendar.YEAR))
+                holder.date.setText(dateMessage.get(Calendar.DAY_OF_MONTH) + " " + globalData.getResources().getStringArray(R.array.months)[dateMessage.get(Calendar.MONTH)]);
+            else
+                holder.date.setText(dateMessage.get(Calendar.DAY_OF_MONTH) + "/" + dateMessage.get(Calendar.MONTH) + "/" + dateMessage.get(Calendar.YEAR));
 
-
+        }catch(JSONException e){
+            e.printStackTrace();
+        }
 
     }
 

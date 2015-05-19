@@ -26,9 +26,11 @@ import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.StringTokenizer;
@@ -117,7 +119,8 @@ public class MailBoxNewFragment extends Fragment {
                 String bodyMessage = ((EditText)root.findViewById(R.id.body_new_message)).getText().toString();
                 message.setBodyMessage(bodyMessage);
 
-                message.setDate(new Date());
+                message.setDate(Calendar.getInstance());
+
                 message.setIsPreferred(false);
                 message.setIsRead(false);
                 message.setIsDeleting(false);
@@ -146,7 +149,11 @@ public class MailBoxNewFragment extends Fragment {
                     mr.setBodyMessage(message.getBodyMessage());
                     mr.setIsPreferred(false);
                     mr.setIsRead(false);
-                    mr.setDate(message.getDate());
+                    try {
+                        mr.setDate(message.getDate());
+                    }catch(JSONException e){
+                        e.printStackTrace();
+                    }
                     mr.setIsDeleting(false);
                     mr.setRecipient(recipient);
                     mr.setNameSender(globalData.getUserObject().getName());

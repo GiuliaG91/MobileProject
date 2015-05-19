@@ -330,6 +330,7 @@ public class Registration extends ActionBarActivity implements StudentRegistrati
                                             push.sendInBackground();
 
                                         }catch(JSONException jsonEx) {
+                                            jsonEx.printStackTrace();
                                             Log.println(Log.ASSERT, "REGISTRATION", jsonEx.toString());
                                         }
                                     }

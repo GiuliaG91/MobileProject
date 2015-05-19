@@ -26,8 +26,11 @@ import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
 
+import org.json.JSONException;
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
@@ -131,38 +134,44 @@ public class MailBoxDetailFragment extends Fragment {
 
         //set date
         tv = (TextView) root.findViewById(R.id.date_tv);
-        Date date = this.message.getDate();
-        Date now = new Date();
-        String format = "";
-        if(date.getDay() == now.getDay() && date.getMonth() == now.getMonth() && date.getYear() == now.getYear()){
+        try {
+            Calendar date = message.getDate();
+            Calendar now = Calendar.getInstance();
+            String format = "";
+            if (date.get(Calendar.DAY_OF_MONTH) == now.get(Calendar.DAY_OF_MONTH) && date.get(Calendar.MONTH) == now.get(Calendar.MONTH) && date.get(Calendar.YEAR) == now.get(Calendar.YEAR)) {
 
-            if(date.getHours() == now.getHours())
-                if(now.getMinutes() - date.getMinutes() == 1)
-                    format = date.getHours() + ":" + date.getMinutes() + " (" + (now.getMinutes() - date.getMinutes()) +" " + globalData.getResources().getString(R.string.minute_ago) + ")";
+                if (date.get(Calendar.HOUR_OF_DAY) == now.get(Calendar.HOUR_OF_DAY))
+                    if (now.get(Calendar.MINUTE) - date.get(Calendar.MINUTE) == 1)
+                        format = date.get(Calendar.HOUR_OF_DAY) + ":" + date.get(Calendar.MINUTE) + " (" + "1 " + globalData.getResources().getString(R.string.minute_ago) + ")";
+                    else
+                        format = date.get(Calendar.HOUR_OF_DAY) + ":" + date.get(Calendar.MINUTE) + " (" + (now.get(Calendar.MINUTE) - date.get(Calendar.MINUTE)) + " " + globalData.getResources().getString(R.string.minutes_ago) + ")";
+                else if (now.get(Calendar.HOUR_OF_DAY) - date.get(Calendar.HOUR_OF_DAY) == 1)
+                    format = date.get(Calendar.HOUR_OF_DAY) + ":" + date.get(Calendar.MINUTE) + " (" + "1 " + globalData.getResources().getString(R.string.hour_ago) + ")";
                 else
-                    format = date.getHours() + ":" + date.getMinutes() + " (" + (now.getMinutes() - date.getMinutes()) +" " + globalData.getResources().getString(R.string.minutes_ago) + ")";
-            else
-                if(now.getHours() - date.getHours() == 1)
-                    format = date.getHours() + ":" + date.getMinutes() + " (" + (now.getHours() - date.getHours()) + " " + globalData.getResources().getString(R.string.hour_ago) + ")";
-                else
-                    format = date.getHours() + ":" + date.getMinutes() + " (" + (now.getHours() - date.getHours()) + " " + globalData.getResources().getString(R.string.hours_ago) + ")";
-        }else if(date.getMonth() == now.getMonth() && date.getYear() == now.getYear()){
+                    format = date.get(Calendar.HOUR_OF_DAY) + ":" + date.get(Calendar.MINUTE) + " (" + (now.get(Calendar.HOUR_OF_DAY) - date.get(Calendar.HOUR_OF_DAY)) + " " + globalData.getResources().getString(R.string.hours_ago) + ")";
 
-            if(now.getDay() - date.getDay() <= 13)
-                if(now.getDay() - date.getDay() == 1)
-                    format = date.getDay() + " " + globalData.getResources().getStringArray(R.array.months)[date.getMonth()] + " (" + (now.getDay() - date.getDay()) + " " + globalData.getResources().getString(R.string.day_ago) + ")";
-                else
-                    format = date.getDay() + " " + globalData.getResources().getStringArray(R.array.months)[date.getMonth()] + " (" + (now.getDay() - date.getDay()) + " " + globalData.getResources().getString(R.string.days_ago) + ")";
+            } else if (date.get(Calendar.MONTH) == now.get(Calendar.MONTH) && date.get(Calendar.YEAR) == now.get(Calendar.YEAR)) {
 
-        }else if(date.getYear() == now.getYear()){
+                if (now.get(Calendar.DAY_OF_MONTH) - date.get(Calendar.DAY_OF_MONTH) <= 13)
+                    if (now.get(Calendar.DAY_OF_MONTH) - date.get(Calendar.DAY_OF_MONTH) == 1)
+                        format = date.get(Calendar.DAY_OF_MONTH) + " " + globalData.getResources().getStringArray(R.array.months)[date.get(Calendar.MONTH)] + " (1 " + globalData.getResources().getString(R.string.day_ago) + ")";
+                    else
+                        format = date.get(Calendar.DAY_OF_MONTH) + " " + globalData.getResources().getStringArray(R.array.months)[date.get(Calendar.MONTH)] + " (" + (now.get(Calendar.DAY_OF_MONTH) - date.get(Calendar.DAY_OF_MONTH)) + " " + globalData.getResources().getString(R.string.days_ago) + ")";
 
-            format = date.getDay() + " " + globalData.getResources().getStringArray(R.array.months)[date.getMonth()];
+                format = date.get(Calendar.DAY_OF_MONTH) + " " + globalData.getResources().getStringArray(R.array.months)[date.get(Calendar.MONTH)];
 
-        }else {
-            format = date.getDay() + "/" + date.getMonth() + "/" + date.getYear();
+            } else if (date.get(Calendar.YEAR) == now.get(Calendar.YEAR)) {
+
+                format = date.get(Calendar.DAY_OF_MONTH) + " " + globalData.getResources().getStringArray(R.array.months)[date.get(Calendar.MONTH)];
+
+            } else {
+                format = date.get(Calendar.DAY_OF_MONTH) + "/" + date.get(Calendar.MONTH) + "/" + date.get(Calendar.YEAR);
+            }
+
+            tv.setText(format);
+        }catch(JSONException e){
+            e.printStackTrace();
         }
-
-        tv.setText(format);
 
         //set object
         /*
@@ -190,13 +199,16 @@ public class MailBoxDetailFragment extends Fragment {
 
                 data.putString(MailBoxDetailFragment.OBJECT_KEY, message.getObject());
 
-                Date date = message.getDate();
-                Resources res = globalData.getResources();
-                String oldMessage = res.getString(R.string.on) + " " + date.getDay() + " " + res.getStringArray(R.array.months)[date.getMonth()] + " " + date.getYear() + ", ";
-                oldMessage = oldMessage + ((InboxMessageReceived)message).getNameSender() + " <" + message.getSender() + "> " + res.getString(R.string.wrote) + ":\n\"";
-                oldMessage = oldMessage + message.getBodyMessage() + "\"\n\n";
-                data.putString(MailBoxDetailFragment.OLD_MESSAGE_KEY, oldMessage);
-
+                try {
+                    Calendar date = message.getDate();
+                    Resources res = globalData.getResources();
+                    String oldMessage = res.getString(R.string.on) + " " + date.get(Calendar.DAY_OF_MONTH) + " " + res.getStringArray(R.array.months)[date.get(Calendar.MONTH)] + " " + date.get(Calendar.YEAR) + ", ";
+                    oldMessage = oldMessage + ((InboxMessageReceived) message).getNameSender() + " <" + message.getSender() + "> " + res.getString(R.string.wrote) + ":\n\"";
+                    oldMessage = oldMessage + message.getBodyMessage() + "\"\n\n";
+                    data.putString(MailBoxDetailFragment.OLD_MESSAGE_KEY, oldMessage);
+                }catch(JSONException e){
+                    e.printStackTrace();
+                }
 
                 FragmentManager fragmentManager = activity.getSupportFragmentManager();
 
@@ -229,12 +241,16 @@ public class MailBoxDetailFragment extends Fragment {
 
                 data.putString(MailBoxDetailFragment.OBJECT_KEY, message.getObject());
 
-                Date date = message.getDate();
-                Resources res = globalData.getResources();
-                String oldMessage = res.getString(R.string.on) + " " + date.getDay() + " " + res.getStringArray(R.array.months)[date.getMonth()] + " " + date.getYear() + ", ";
-                oldMessage = oldMessage + ((InboxMessageReceived)message).getNameSender() + " <" + message.getSender() + "> " + res.getString(R.string.wrote) + ":\n\"";
-                oldMessage = oldMessage + message.getBodyMessage() + "\"";
-                data.putString(MailBoxDetailFragment.OLD_MESSAGE_KEY, oldMessage);
+                try {
+                    Calendar date = message.getDate();
+                    Resources res = globalData.getResources();
+                    String oldMessage = res.getString(R.string.on) + " " + date.get(Calendar.DAY_OF_MONTH) + " " + res.getStringArray(R.array.months)[date.get(Calendar.MONTH)] + " " + date.get(Calendar.YEAR) + ", ";
+                    oldMessage = oldMessage + ((InboxMessageReceived) message).getNameSender() + " <" + message.getSender() + "> " + res.getString(R.string.wrote) + ":\n\"";
+                    oldMessage = oldMessage + message.getBodyMessage() + "\"\n\n";
+                    data.putString(MailBoxDetailFragment.OLD_MESSAGE_KEY, oldMessage);
+                }catch(JSONException e){
+                    e.printStackTrace();
+                }
 
                 FragmentManager fragmentManager = activity.getSupportFragmentManager();
 
