@@ -367,6 +367,13 @@
     <string name="on">On</string>
     <string name="wrote">wrote</string>
     <string name="me">Myself</string>
+    <string name="error">Error</string>
+    <string name="warning">Warning</string>
+    <string name="no_recipients_message_error">Specify at least one recipient!</string>
+    <string name="no_object_message_warning">Do you want to send the message without an object?</string>
+    <string name="ok">Ok</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
 
     <string name="messageEmailsWrong">The "recipients" field doesn\'t contain emails registered in this application.</string>
 
