@@ -80,7 +80,7 @@ android:layout_height="match_parent">
                         android:layout_height="wrap_content"
                         android:text="nome"
                         android:textSize="16sp"
-                        android:layout_marginLeft="7dp"
+                        android:layout_marginLeft="18dp"
                         android:layout_gravity="bottom"
                         />
 
@@ -130,7 +130,7 @@ android:layout_height="match_parent">
                         android:layout_height="wrap_content"
                         android:text="10 maggio ..."
                         android:textSize="16sp"
-                        android:layout_marginLeft="7dp"
+                        android:layout_marginLeft="18dp"
                         android:layout_gravity="bottom"
                         />
 

@@ -331,11 +331,12 @@
     <string name="new_message">Create new message</string>
     <string name="new_message_toolbar_title">New Message</string>
     <string name="sent_mail">Sent mails</string>
+    <string name="received_mail">Received mails</string>
     <string name="cancel_mails">Cancel mails</string>
-    <string name="sender">From:</string>
-    <string name="recipient">To:</string>
+    <string name="sender">From</string>
+    <string name="recipient">To</string>
     <string name="recipients">Recipients</string>
-    <string name="date">Date:</string>
+    <string name="date">Date</string>
     <string name="object">Object:</string>
     <string name="object1">Object</string>
     <string name="body_new">Reply:</string>
@@ -374,6 +375,7 @@
     <string name="ok">Ok</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>
+    <string name="to">To: </string>
 
     <string name="messageEmailsWrong">The "recipients" field doesn\'t contain emails registered in this application.</string>
 
@@ -390,5 +392,6 @@
 
 
     <string name="NoFavourites">No favourites found</string>
+    <string name="job_offer">Job Offer</string>
 
 </resources>

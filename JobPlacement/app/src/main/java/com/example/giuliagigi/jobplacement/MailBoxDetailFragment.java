@@ -110,14 +110,20 @@ public class MailBoxDetailFragment extends Fragment {
 
         //set sender name
         TextView tv = (TextView)root.findViewById(R.id.sender_tv);
-        tv.setText(sender.getName());
+        if(sender.getMail().equals(globalData.getUserObject().getMail()))
+            tv.setText(globalData.getResources().getString(R.string.me));
+        else
+            tv.setText(sender.getName());
 
 
         //set list of recipients in the spinner
         Spinner sp = (Spinner)root.findViewById(R.id.recipients_list);
 
         String[] recipients = new String[message.getRecipients().size()];
-        recipients[0] = globalData.getResources().getString(R.string.me);
+        if(sender.getMail().equals(globalData.getUserObject().getMail()))
+            recipients[0] = message.getRecipients().get(0);
+        else
+            recipients[0] = globalData.getResources().getString(R.string.me);
         for(int i = 1; i < message.getRecipients().size(); i++)
             if(message.getRecipients().get(i).equals(globalData.getUserObject().getMail()))
                 continue;

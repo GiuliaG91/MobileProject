@@ -278,6 +278,7 @@
     <string name="new_message">Crea nuovo messaggio</string>
     <string name="new_message_toolbar_title">Nuovo messaggio</string>
     <string name="sent_mail">Posta inviata</string>
+    <string name="received_mail">Posta ricevuta</string>
     <string name="cancel_mails">Cancella messaggi</string>
     <string name="sender">Da:</string>
     <string name="recipient">A:</string>
@@ -322,6 +323,7 @@
     <string name="ok">Ok</string>
     <string name="yes">Si</string>
     <string name="no">No</string>
+    <string name="to">A: </string>
 
     <string name="message_all_recipients_wrong">Il campo "destinatari" non contiene email registrate nell\'applicazione.</string>
 
@@ -331,5 +333,7 @@
     <string name="minute_ago">minuto fa</string>
     <string name="hour_ago">ora fa</string>
     <string name="day_ago">giorno fa</string>
+
+    <string name="job_offer">Offerta di lavoro</string>
 
 </resources>

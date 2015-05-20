@@ -91,102 +91,6 @@ public class MailBoxNewFragment extends Fragment {
 
     }
 
-    /*
-    @Override
-    public void onResume(){
-
-        super.onResume();
-
-        Calendar c = Calendar.getInstance();
-        Log.d("----------------->", "Passo da onResume() 2" + c.get(Calendar.HOUR) + ":" + c.get(Calendar.MINUTE));
-
-        if(send_flag == 2){
-
-            String object = ((EditText) root.findViewById(R.id.object_new_message)).getText().toString();
-            message.setObject(object);
-
-            String bodyMessage = ((EditText) root.findViewById(R.id.body_new_message)).getText().toString();
-            message.setBodyMessage(bodyMessage);
-
-            message.setDate(Calendar.getInstance());
-
-            message.setIsPreferred(false);
-            message.setIsRead(false);
-            message.setIsDeleting(false);
-
-
-            message.saveInBackground(new SaveCallback() {
-                @Override
-                public void done(ParseException e) {
-                    if (e == null)
-                        Toast.makeText(globalData, globalData.getResources().getString(R.string.message_sent), Toast.LENGTH_SHORT).show();
-                }
-            });
-
-            for (String recipient : message.getRecipients()) {
-
-                InboxMessageReceived mr = new InboxMessageReceived();
-
-                mr.setObject(message.getObject());
-                mr.setSender(message.getSender());
-                mr.setRecipients(message.getRecipients());
-                mr.setBodyMessage(message.getBodyMessage());
-                mr.setIsPreferred(false);
-                mr.setIsRead(false);
-                try {
-                    mr.setDate(message.getDate());
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-                mr.setIsDeleting(false);
-                mr.setRecipient(recipient);
-                mr.setNameSender(globalData.getUserObject().getName());
-
-                if (globalData.getUserObject().getProfilePhoto() != null)
-                    mr.setPhotoSender(globalData.getUserObject().getProfilePhoto());
-
-                mr.saveInBackground();
-
-                ParseQuery<User> query = ParseQuery.getQuery("User");
-                query.whereEqualTo(User.MAIL_FIELD, recipient.trim());
-                query.findInBackground(new FindCallback<User>() {
-                    @Override
-                    public void done(List<User> list, ParseException e) {
-                        if (list != null) {
-                            if (list.get(0).getType().equals(User.TYPE_STUDENT)) {
-
-                                ParseQuery pushQuery = ParseInstallation.getQuery();
-                                pushQuery.whereEqualTo(User.MAIL_FIELD, list.get(0).getMail());
-
-                                ParsePush push = new ParsePush();
-                                push.setQuery(pushQuery);
-                                push.setMessage("Nuovo messaggio da: " + globalData.getUserObject().getMail());
-                                push.sendInBackground();
-
-                            }
-                        }
-                    }
-
-                });
-
-            }
-
-            FragmentManager fragmentManager = activity.getSupportFragmentManager();
-
-            Fragment fragment = MailBoxFragment.newInstance();
-
-            fragmentManager.beginTransaction()
-                    .replace(R.id.tab_Home_container, fragment)
-                    .addToBackStack(globalData.getResources().getStringArray(R.array.Menu_items_student)[4])
-                    .commit();
-
-            globalData.getToolbar().setTitle(globalData.getResources().getStringArray(R.array.Menu_items_student)[4]);
-
-        }
-
-    }
-    */
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -374,6 +278,7 @@ public class MailBoxNewFragment extends Fragment {
             ed.setText(savedInstanceState.getString("bodyMessage"));
 
         }
+
 
         return root;
     }

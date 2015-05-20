@@ -261,15 +261,9 @@ public class menuAdapter extends RecyclerView.Adapter<menuAdapter.ViewHolder> {
                                             .addToBackStack(gd.getResources().getStringArray(R.array.Menu_items_student)[1])
                                             .commit();
 
-                                    // Highlight the selected item, update the title, and close the drawer
-                                    // Highlight the selected item, update the title, and close the drawer
-                                    TextView tv = (TextView) v.findViewById(R.id.rowText);
 
-                                    toolbar.setTitle(tv.getText());
+                                    toolbar.setTitle(gd.getResources().getString(R.string.received_mail));
 
-
-                                    //********
-                                    //activity.invalidateOptionsMenu();
                                 }
                                 mDrawerLayout.closeDrawers();
 
@@ -494,14 +488,7 @@ public class menuAdapter extends RecyclerView.Adapter<menuAdapter.ViewHolder> {
                                               .addToBackStack(gd.getResources().getStringArray(R.array.Menu_items_Company)[4])
                                               .commit();
 
-                                      // Highlight the selected item, update the title, and close the drawer
-                                      // Highlight the selected item, update the title, and close the drawer
-                                      TextView tv = (TextView) v.findViewById(R.id.rowText);
-
-                                      toolbar.setTitle(tv.getText());
-
-                                      //********
-                                      //activity.invalidateOptionsMenu();
+                                      toolbar.setTitle(gd.getResources().getString(R.string.received_mail));
                                   }
                                   mDrawerLayout.closeDrawers();
 

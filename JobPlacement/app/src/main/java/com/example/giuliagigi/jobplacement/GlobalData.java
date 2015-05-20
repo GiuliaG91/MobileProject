@@ -37,7 +37,7 @@ public class GlobalData extends Application {
     private HashMap<String,Tag> tags;
     private HashMap<String,Boolean> isCached;
     private SharedPreferences loginPreferences;
-    private InboxMessageReceived currentViewMessage;
+    private InboxMessage currentViewMessage;
     private static Context applicationContext;
 
 
@@ -242,7 +242,7 @@ public class GlobalData extends Application {
         return currentViewMessage;
     }
 
-    public void setCurrentViewMessage(InboxMessageReceived m){
+    public void setCurrentViewMessage(InboxMessage m){
         this.currentViewMessage = m;
     }
 

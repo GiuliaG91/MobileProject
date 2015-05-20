@@ -55,44 +55,6 @@ public class InboxMessage extends ParseObject {
 
         Calendar calendar = Calendar.getInstance();
 
-        /*
-        String jsonobj = "";
-        JSONObject obj;
-
-        if(this.get(DATE) instanceof HashMap){
-            HashMap hm = (HashMap)this.get(DATE);
-            jsonobj = "{\"day\": " + hm.get("day") + ", \"month\": " + hm.get("month") + ", \"year\": " + hm.get("year") + ", \"hour\": " + hm.get("hour") + ", \"minute\": " + hm.get("minute");
-            obj = new JSONObject(jsonobj);
-        }else {
-            obj = (JSONObject)this.get(DATE);
-        }
-
-        date.set(Calendar.DAY_OF_MONTH, obj.getInt("day"));
-        date.set(Calendar.MONTH, obj.getInt("month"));
-        date.set(Calendar.YEAR, obj.getInt("year"));
-        date.set(Calendar.HOUR, obj.getInt("hour"));
-        date.set(Calendar.MINUTE, obj.getInt("minute"));
-        */
-
-        /*
-        if(this.get(DATE) instanceof JSONObject) {
-            JSONObject obj = (JSONObject) this.get(DATE);
-            date.set(Calendar.DAY_OF_MONTH, obj.getInt("day"));
-            date.set(Calendar.MONTH, obj.getInt("month"));
-            date.set(Calendar.YEAR, obj.getInt("year"));
-            date.set(Calendar.HOUR, obj.getInt("hour"));
-            date.set(Calendar.MINUTE, obj.getInt("minute"));
-        } else {
-
-            HashMap map = (HashMap) this.get(DATE);
-            date.set(Calendar.DAY_OF_MONTH, (Integer) map.get("day"));
-            date.set(Calendar.MONTH, (Integer) map.get("month"));
-            date.set(Calendar.YEAR, (Integer) map.get("year"));
-            date.set(Calendar.HOUR, (Integer) map.get("hour"));
-            date.set(Calendar.MINUTE, (Integer) map.get("minute"));
-        }
-        */
-
         calendar.setTime((Date)this.get(DATE));
 
         return calendar;
@@ -145,23 +107,6 @@ public class InboxMessage extends ParseObject {
     }
 
     public void setDate(Calendar calendar){
-
-        //String s = "{\"day\": " + date.get(Calendar.DAY_OF_MONTH) + ", \"month\": " + date.get(Calendar.MONTH) + ", \"year\": " + date.get(Calendar.YEAR)
-                   // + ", \"hour\": " + date.get(Calendar.HOUR) + ", \"minute\": " + date.get(Calendar.MINUTE) + "}";
-        /*
-        try {
-            JSONObject obj = new JSONObject();
-            obj.put("day", date.get(Calendar.DAY_OF_MONTH));
-            obj.put("month", date.get(Calendar.MONTH));
-            obj.put("year", date.get(Calendar.YEAR));
-            obj.put("hour", date.get(Calendar.HOUR));
-            obj.put("minute", date.get(Calendar.MINUTE));
-            this.put(DATE, obj);
-        }catch (JSONException e){
-            e.printStackTrace();
-            Log.e("JSONException", e.toString());
-        }
-        */
 
         Date d = calendar.getTime();
         this.put(DATE, d);

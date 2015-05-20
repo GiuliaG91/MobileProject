@@ -44,6 +44,14 @@
             fab:fab_colorPressed="@color/ColorPrimaryDark"/>
 
         <com.getbase.floatingactionbutton.FloatingActionButton
+            android:id="@+id/action_received_mail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            fab:fab_colorNormal="@color/ColorPrimary"
+            fab:fab_title="@string/received_mail"
+            fab:fab_colorPressed="@color/ColorPrimaryDark"/>
+
+        <com.getbase.floatingactionbutton.FloatingActionButton
             android:id="@+id/action_sent_mail"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

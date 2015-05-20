@@ -226,6 +226,8 @@ public class OfferDetail extends  Fragment {
                 else {
                     Toast.makeText(getActivity(), "You are already applied", Toast.LENGTH_SHORT).show();
                     }
+
+                ((com.getbase.floatingactionbutton.FloatingActionsMenu)root.findViewById(R.id.multiple_actions)).collapse();
             }
         });
 
@@ -253,9 +255,11 @@ public class OfferDetail extends  Fragment {
                 Toolbar toolbar = (Toolbar) activity.findViewById(R.id.toolbar);
                 toolbar.setTitle(activity.getResources().getString(R.string.new_message_toolbar_title));
 
+                ((com.getbase.floatingactionbutton.FloatingActionsMenu)root.findViewById(R.id.multiple_actions)).collapse();
             }
         });
 
+        ((Toolbar)activity.findViewById(R.id.toolbar)).setTitle(activity.getResources().getString(R.string.job_offer));
 
         return root;
     }

@@ -1,9 +1,7 @@
 package com.example.giuliagigi.jobplacement;
 
-import android.annotation.TargetApi;
 import android.app.Activity;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -11,25 +9,17 @@ import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.ImageButton;
-import android.widget.Toast;
 
 import com.getbase.floatingactionbutton.FloatingActionButton;
-import com.parse.DeleteCallback;
-import com.parse.ParseException;
 import com.parse.ParseQuery;
 import com.parse.ParseQueryAdapter;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 
 
@@ -37,9 +27,11 @@ public class MailBoxFragment extends Fragment {
 
     View root;
     private RecyclerView mRecyclerView;
-    private MailBoxAdapter adapter;
+    private MailBoxSentAdapter adapterSent;
+    private MailBoxReceivedAdapter adapterReceived;
     private LinearLayoutManager mLayoutManager;
-    private ParseQueryAdapter<InboxMessageReceived> queryAdapter;
+    private ParseQueryAdapter<InboxMessageReceived> queryAdapterReceived;
+    private ParseQueryAdapter<InboxMessage> queryAdapterSent;
     private int currentMailBoxFragment;
 
     private boolean loading = true;
@@ -126,9 +118,7 @@ public class MailBoxFragment extends Fragment {
 
         /*ParseQueryAdapter */
 
-        // Instantiate a QueryFactory to define the ParseQuery to be used for fetching items in this
-        // Adapter.
-        ParseQueryAdapter.QueryFactory<InboxMessageReceived> factory =
+        ParseQueryAdapter.QueryFactory<InboxMessageReceived> factoryReceived =
                 new ParseQueryAdapter.QueryFactory<InboxMessageReceived>() {
                     public ParseQuery create() {
 
@@ -138,19 +128,32 @@ public class MailBoxFragment extends Fragment {
                     }
                 };
 
-        // Pass the factory into the ParseQueryAdapter's constructor.
+        final ParseQueryAdapter.QueryFactory<InboxMessage> factorySent =
+                new ParseQueryAdapter.QueryFactory<InboxMessage>() {
+                    public ParseQuery create() {
 
-        queryAdapter = new ParseQueryAdapter<>(getActivity(), factory);
-        queryAdapter.setObjectsPerPage(15);
-        queryAdapter.addOnQueryLoadListener(new OnQueryLoadListener());
+                        ParseQuery query = new ParseQuery("InboxMessage");
+                        query.whereEqualTo(InboxMessage.SENDER, ((GlobalData)((FragmentActivity)mListener).getApplication()).getUserObject().getMail());
+                        return query;
+                    }
+                };
+
+        queryAdapterReceived = new ParseQueryAdapter<>(getActivity(), factoryReceived);
+        queryAdapterReceived.setObjectsPerPage(15);
+        queryAdapterReceived.addOnQueryLoadListener(new OnQueryLoadListenerReceived());
+
+        queryAdapterSent = new ParseQueryAdapter<>(getActivity(), factorySent);
+        queryAdapterSent.setObjectsPerPage(15);
+        queryAdapterSent.addOnQueryLoadListener(new OnQueryLoadListenerSent());
 
 
-        adapter = new MailBoxAdapter(this.getActivity());
+        adapterReceived = new MailBoxReceivedAdapter(this.getActivity());
+        adapterSent = new MailBoxSentAdapter(this.getActivity());
 
         /*********************/
 
         // specify an adapter
-        mRecyclerView.setAdapter(adapter);
+        mRecyclerView.setAdapter(adapterReceived);
 
         mRecyclerView.setOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
@@ -159,9 +162,11 @@ public class MailBoxFragment extends Fragment {
                 int total=   mLayoutManager.getItemCount();
                 if(mLayoutManager.findLastVisibleItemPosition()== total-1)
                 {
-                    queryAdapter.loadNextPage();
+                    if(mRecyclerView.getAdapter() instanceof MailBoxReceivedAdapter)
+                        queryAdapterReceived.loadNextPage();
+                    else
+                        queryAdapterSent.loadNextPage();
                 }
-
             }
 
             @Override
@@ -170,8 +175,7 @@ public class MailBoxFragment extends Fragment {
             }
         });
 
-        queryAdapter.loadObjects();
-
+        queryAdapterReceived.loadObjects();
 
         /*Attach on click listener to button menu */
 
@@ -191,6 +195,7 @@ public class MailBoxFragment extends Fragment {
 
                 Toolbar toolbar = (Toolbar) ((Activity)mListener).findViewById(R.id.toolbar);
                 toolbar.setTitle(((Activity)mListener).getResources().getString(R.string.new_message_toolbar_title));
+                ((com.getbase.floatingactionbutton.FloatingActionsMenu)root.findViewById(R.id.multiple_actions_mailbox)).collapse();
             }
         });
 
@@ -200,8 +205,15 @@ public class MailBoxFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
-                //triggerare MailBoxSentFragment
+                if(mRecyclerView.getAdapter() instanceof MailBoxReceivedAdapter) {
+                    adapterReceived.resetMyDataset();
 
+                    mRecyclerView.setAdapter(adapterSent);
+                    queryAdapterSent.loadObjects();
+
+                    ((Toolbar)((FragmentActivity)mListener).findViewById(R.id.toolbar)).setTitle(((FragmentActivity)mListener).getResources().getString(R.string.sent_mail));
+                }
+                ((com.getbase.floatingactionbutton.FloatingActionsMenu)root.findViewById(R.id.multiple_actions_mailbox)).collapse();
             }
         });
 
@@ -211,11 +223,32 @@ public class MailBoxFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
-                MailBoxFragment.deleteMessages(root, adapter);
+                MailBoxFragment.deleteMessages(root, mRecyclerView);
+                ((com.getbase.floatingactionbutton.FloatingActionsMenu)root.findViewById(R.id.multiple_actions_mailbox)).collapse();
 
             }
         });
 
+        final FloatingActionButton receivedMailsButton = (FloatingActionButton)root.findViewById(R.id.action_received_mail);
+        receivedMailsButton.setIcon(R.drawable.ic_comment_white_36dp);
+        receivedMailsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if(mRecyclerView.getAdapter() instanceof MailBoxSentAdapter){
+                    adapterSent.resetMyDataset();
+
+                    mRecyclerView.setAdapter(adapterReceived);
+                    queryAdapterReceived.loadObjects();
+
+                    ((Toolbar)((FragmentActivity)mListener).findViewById(R.id.toolbar)).setTitle(((FragmentActivity)mListener).getResources().getString(R.string.received_mail));
+
+                }
+                ((com.getbase.floatingactionbutton.FloatingActionsMenu)root.findViewById(R.id.multiple_actions_mailbox)).collapse();
+            }
+        });
+
+        ((Toolbar)((FragmentActivity)mListener).findViewById(R.id.toolbar)).setTitle(((FragmentActivity)mListener).getResources().getString(R.string.received_mail));
 
         return root;
     }
@@ -259,7 +292,7 @@ public class MailBoxFragment extends Fragment {
         public void onFragmentInteraction(Uri uri);
     }
 
-    public class OnQueryLoadListener implements ParseQueryAdapter.OnQueryLoadListener<InboxMessageReceived> {
+    public class OnQueryLoadListenerReceived implements ParseQueryAdapter.OnQueryLoadListener<InboxMessageReceived> {
 
         public void onLoading() {
             //rotellina
@@ -268,8 +301,23 @@ public class MailBoxFragment extends Fragment {
         @Override
         public void onLoaded(List<InboxMessageReceived> inboxMessages, Exception e) {
 
-            adapter.updateMyDataset(inboxMessages);
-            adapter.notifyDataSetChanged();
+            ((MailBoxReceivedAdapter)mRecyclerView.getAdapter()).updateMyDataset(inboxMessages);
+            ((MailBoxReceivedAdapter)mRecyclerView.getAdapter()).notifyDataSetChanged();
+
+        }
+    }
+
+    public class OnQueryLoadListenerSent implements ParseQueryAdapter.OnQueryLoadListener<InboxMessage> {
+
+        public void onLoading() {
+            //rotellina
+        }
+
+        @Override
+        public void onLoaded(List<InboxMessage> inboxMessages, Exception e) {
+
+            ((MailBoxSentAdapter)mRecyclerView.getAdapter()).updateMyDataset(inboxMessages);
+            ((MailBoxSentAdapter)mRecyclerView.getAdapter()).notifyDataSetChanged();
 
         }
     }
@@ -322,9 +370,13 @@ public class MailBoxFragment extends Fragment {
 //        }
 //    }
 
-    public static void deleteMessages(View root, MailBoxAdapter adapter){
+    public static void deleteMessages(View root, RecyclerView mRecyclerView){
 
-        ArrayList<InboxMessageReceived> listMessages = adapter.getMyDataset();
+        ArrayList<InboxMessage> listMessages = null;
+        if(mRecyclerView.getAdapter() instanceof  MailBoxReceivedAdapter)
+            listMessages = ((MailBoxReceivedAdapter)mRecyclerView.getAdapter()).getMyDataset();
+        else
+            listMessages = ((MailBoxSentAdapter)mRecyclerView.getAdapter()).getMyDataset();
 
         for(int i = 0; i < listMessages.size(); i++){
 
@@ -332,13 +384,19 @@ public class MailBoxFragment extends Fragment {
 
             if(m.getIsDeleting()){
 
-                adapter.removeMessageFromMyDataset(i);
+                if(mRecyclerView.getAdapter() instanceof MailBoxReceivedAdapter)
+                    ((MailBoxReceivedAdapter)mRecyclerView.getAdapter()).removeMessageFromMyDataset(i);
+                else
+                    ((MailBoxSentAdapter)mRecyclerView.getAdapter()).removeMessageFromMyDataset(i);
 
                 m.deleteInBackground();
             }
         }
 
-        adapter.notifyDataSetChanged();
+        if(mRecyclerView.getAdapter() instanceof  MailBoxReceivedAdapter)
+            ((MailBoxReceivedAdapter)mRecyclerView.getAdapter()).notifyDataSetChanged();
+        else
+            ((MailBoxSentAdapter)mRecyclerView.getAdapter()).notifyDataSetChanged();
     }
 
     public int getCurrentMailBoxFragment(){
