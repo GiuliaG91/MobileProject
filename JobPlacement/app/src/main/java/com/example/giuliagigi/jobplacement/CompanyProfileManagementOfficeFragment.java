@@ -145,6 +145,7 @@ public class CompanyProfileManagementOfficeFragment extends ProfileManagementFra
             public void onClick(View v) {
 
                 try {
+
                     office.delete();
                     isRemoved = true;
                     company.removeOffice(office);

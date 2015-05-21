@@ -176,19 +176,6 @@ public class StudentProfileManagementDegreeFragment extends ProfileManagementFra
 
                             student.removeDegree(degree);
                             student.saveEventually();
-
-                            ParseQuery<Relation_StudentDegree> q = ParseQuery.getQuery(Relation_StudentDegree.class);
-                            q.whereEqualTo(Relation_StudentDegree.STUDENT_FIELD,student);
-                            q.whereEqualTo(Relation_StudentDegree.DEGREE_FIELD,degree);
-                            q.findInBackground(new FindCallback<Relation_StudentDegree>() {
-                                @Override
-                                public void done(List<Relation_StudentDegree> relation_studentDegrees, ParseException e) {
-
-                                    if(e == null && relation_studentDegrees.size() > 0)
-                                            relation_studentDegrees.get(0).deleteEventually();
-
-                                }
-                            });
                         }
                     }
                 });
@@ -355,26 +342,6 @@ public class StudentProfileManagementDegreeFragment extends ProfileManagementFra
                         Log.println(Log.ASSERT,"DEGREE FRAG","degree saved successfully. Adding...");
                         student.addDegree(degree);
                         student.saveEventually();
-
-                        ParseQuery<Relation_StudentDegree> q = ParseQuery.getQuery(Relation_StudentDegree.class);
-                        q.whereEqualTo(Relation_StudentDegree.STUDENT_FIELD,student);
-                        q.whereEqualTo(Relation_StudentDegree.DEGREE_FIELD,degree);
-                        q.findInBackground(new FindCallback<Relation_StudentDegree>() {
-                            @Override
-                            public void done(List<Relation_StudentDegree> relation_studentDegrees, ParseException e) {
-
-                                if(e == null){
-
-                                    if(relation_studentDegrees.size() == 0){
-
-                                        Relation_StudentDegree r = new Relation_StudentDegree();
-                                        r.setStudent(student);
-                                        r.setDegree(degree);
-                                        r.saveEventually();
-                                    }
-                                }
-                            }
-                        });
                     }
                 }
             });
