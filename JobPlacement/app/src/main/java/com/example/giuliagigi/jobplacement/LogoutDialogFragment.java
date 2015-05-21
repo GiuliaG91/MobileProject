@@ -51,19 +51,19 @@ public class LogoutDialogFragment extends DialogFragment {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
-        builder.setTitle("Do you want to logout?");
+        builder.setTitle(GlobalData.getContext().getString(R.string.string_logout));
 
-        builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+        builder.setPositiveButton(GlobalData.getContext().getString(R.string.string_logging_out_yes), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
 
-                Toast.makeText(getActivity(), "Logging out...", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), GlobalData.getContext().getString(R.string.string_logging_out), Toast.LENGTH_SHORT).show();
                 ParseUser.logOutInBackground();
                 completeLogoutProcedure();
             }
         });
 
-        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+        builder.setNegativeButton(GlobalData.getContext().getString(R.string.string_logging_out_no), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {}
         });
@@ -83,7 +83,7 @@ public class LogoutDialogFragment extends DialogFragment {
     private void completeLogoutProcedure(){
 
 
-        Toast.makeText(getActivity(), "Logout completed", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getActivity(), GlobalData.getContext().getString(R.string.string_logout_complete), Toast.LENGTH_SHORT).show();
 
          //updates currentUser in GlobalData
 

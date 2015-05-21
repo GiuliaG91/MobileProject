@@ -155,14 +155,14 @@ public class Login extends ActionBarActivity {
 
                 AlertDialog.Builder builder = new AlertDialog.Builder(Login.this);
 
-                builder.setTitle("Password reset?");
+                builder.setTitle(GlobalData.getContext().getString(R.string.string_password_reset));
                 final EditText mail = new EditText(getApplicationContext());
-                mail.setHint("Insert your mail");
+                mail.setHint(GlobalData.getContext().getString(R.string.string_insert_mail));
                 mail.setTextColor(Color.BLACK);
                 mail.setInputType(InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS);
                 builder.setView(mail);
 
-                builder.setPositiveButton("Send", new DialogInterface.OnClickListener() {
+                builder.setPositiveButton(GlobalData.getContext().getString(R.string.string_reset_send), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
 
@@ -171,13 +171,13 @@ public class Login extends ActionBarActivity {
                             @Override
                             public void done(ParseException e) {
 
-                                Toast.makeText(getApplicationContext(),"We will send you an eMail for password reset", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getApplicationContext(),GlobalData.getContext().getString(R.string.string_reset_message), Toast.LENGTH_SHORT).show();
                             }
                         });
                     }
                 });
 
-                builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                builder.setNegativeButton(GlobalData.getContext().getString(R.string.string_reset_cancel), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {}
                 });
@@ -199,7 +199,7 @@ public class Login extends ActionBarActivity {
             mailText.setText(latestMail);
             passwordText.setText(latestPassword);
 
-            Toast.makeText(getApplicationContext(),"Logging in ...",Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(),GlobalData.getContext().getString(R.string.string_loggin_in),Toast.LENGTH_SHORT).show();
             performLogin(latestMail,latestPassword); //COMMENTA PER DISABILITARE LOGIN AUTOMATICO
         }
 
@@ -249,7 +249,7 @@ public class Login extends ActionBarActivity {
                 if (e == null) {
 
                     Log.println(Log.ASSERT, "LOGIN", "login ok");
-                    result = "login successful";
+                    result = GlobalData.getContext().getString(R.string.string_login_successful);
                     Toast.makeText(getApplicationContext(),result,Toast.LENGTH_SHORT).show();
 
                     SharedPreferences sp = getPreferences(Context.MODE_PRIVATE);
@@ -288,7 +288,7 @@ public class Login extends ActionBarActivity {
 
                     Log.println(Log.ASSERT, "LOGIN", "login failed");
                     e.printStackTrace();
-                    result = "invalid username or password";
+                    result = GlobalData.getContext().getString(R.string.string_login_failed);
                     setEnable(true);
                     Toast.makeText(getApplicationContext(),result,Toast.LENGTH_SHORT).show();
                 }
