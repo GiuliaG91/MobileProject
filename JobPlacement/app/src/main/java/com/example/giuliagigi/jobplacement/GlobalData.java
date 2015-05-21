@@ -41,10 +41,6 @@ public class GlobalData extends Application {
     private static Context applicationContext;
 
 
-    private menuAdapter mAdapter=null;
-
-
-
     /* managing profile management display rotation*/
     private HashMap<String,MyBundle> bundles;
 
@@ -302,13 +298,5 @@ public class GlobalData extends Application {
 
     }
 
-
-    public menuAdapter getmAdapter() {
-        return mAdapter;
-    }
-
-    public void setmAdapter(menuAdapter mAdapter) {
-        this.mAdapter = mAdapter;
-    }
 }
 

@@ -104,7 +104,7 @@ public class ProfileManagementBasicsFragment extends ProfileManagementFragment {
                 else{
 
                     hasChanged = true;
-                    application.getUserObject().setProfilePhoto(photoBitmap,(GlobalData)getActivity().getApplication());
+                    application.getUserObject().setProfilePhoto(photoBitmap);
                     Bitmap bmImg = user.getProfilePhoto();
                     BitmapDrawable background = new BitmapDrawable(GlobalData.getContext().getResources(), bmImg);
                     profilePhoto.setImageDrawable(background);

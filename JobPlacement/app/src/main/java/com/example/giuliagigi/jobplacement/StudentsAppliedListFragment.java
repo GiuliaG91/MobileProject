@@ -20,7 +20,6 @@ public class StudentsAppliedListFragment extends Fragment {
     private RecyclerView mRecyclerView;
     private StudentAppliedListAdapter adapter;
     private LinearLayoutManager mLayoutManager;
-    private Integer position=0;
 
 
     public static StudentsAppliedListFragment newInstance()
@@ -29,22 +28,11 @@ public class StudentsAppliedListFragment extends Fragment {
           return fragment;
     }
 
-
-
     public void setStudents(List<Student> students)
     {
         this.students=students;
     }
 
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if(savedInstanceState!=null)
-        {
-            position=savedInstanceState.getInt("position");
-        }
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -60,7 +48,7 @@ public class StudentsAppliedListFragment extends Fragment {
         mLayoutManager = new LinearLayoutManager(this.getActivity());
         mRecyclerView.setLayoutManager(mLayoutManager);
 
-        adapter = new StudentAppliedListAdapter(this.getActivity(),students,position,mLayoutManager);
+        adapter = new StudentAppliedListAdapter(this.getActivity(),students);
 
         /*********************/
 
@@ -69,15 +57,5 @@ public class StudentsAppliedListFragment extends Fragment {
 
         return root;
 
-    }
-
-    @Override
-    public void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-        try {
-            outState.putInt("position", mLayoutManager.findFirstVisibleItemPosition());
-        }catch (Exception e){
-            outState.putInt("position",0);
-        }
     }
 }

@@ -26,9 +26,9 @@ public class CompanyStudentSearchFragment extends Fragment {
     private RecyclerView mRecyclerView;
     private CompanyStudentSearchAdapter adapter;
     private LinearLayoutManager mLayoutManager;
-    private Integer position=0;
 
     private OnFragmentInteractionListener mListener;
+
 
 
     public static CompanyStudentSearchFragment newInstance()
@@ -36,17 +36,6 @@ public class CompanyStudentSearchFragment extends Fragment {
         CompanyStudentSearchFragment fragment=new CompanyStudentSearchFragment();
         return fragment;
     }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setHasOptionsMenu(true);
-        if(savedInstanceState!=null)
-        {
-            position=savedInstanceState.getInt("position");
-        }
-    }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -66,7 +55,7 @@ public class CompanyStudentSearchFragment extends Fragment {
         mLayoutManager = new LinearLayoutManager(this.getActivity());
         mRecyclerView.setLayoutManager(mLayoutManager);
 
-        adapter = new CompanyStudentSearchAdapter(this.getActivity(), mRecyclerView,this,position,mLayoutManager);
+        adapter = new CompanyStudentSearchAdapter(this.getActivity(), mRecyclerView,this,mLayoutManager);
 
         /*********************/
 
@@ -76,6 +65,13 @@ public class CompanyStudentSearchFragment extends Fragment {
         return root;
     }
 
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        setHasOptionsMenu(true);
+        super.onCreate(savedInstanceState);
+
+
+    }
 
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
@@ -139,16 +135,6 @@ public class CompanyStudentSearchFragment extends Fragment {
         adapter.setAdapter();
         adapter.notifyDataSetChanged();
 
-    }
-
-    @Override
-    public void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-        try {
-            outState.putInt("position", mLayoutManager.findFirstVisibleItemPosition());
-        }catch (Exception e){
-            outState.putInt("position",0);
-        }
     }
 
 

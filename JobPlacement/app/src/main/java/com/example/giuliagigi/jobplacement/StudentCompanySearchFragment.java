@@ -26,7 +26,6 @@ public class StudentCompanySearchFragment extends Fragment {
     private RecyclerView mRecyclerView;
     private StudentCompanySearchAdapter adapter;
     private LinearLayoutManager mLayoutManager;
-    private Integer position=0;
 
     private OnFragmentInteractionListener mListener;
 
@@ -39,14 +38,11 @@ public class StudentCompanySearchFragment extends Fragment {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
-        if(savedInstanceState!=null)
-        {
-            position=savedInstanceState.getInt("position");
-        }
-    }
+        super.onCreate(savedInstanceState);
 
+
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -68,7 +64,7 @@ public class StudentCompanySearchFragment extends Fragment {
         mLayoutManager = new LinearLayoutManager(this.getActivity());
         mRecyclerView.setLayoutManager(mLayoutManager);
 
-        adapter = new StudentCompanySearchAdapter(this.getActivity(), mRecyclerView,this,position,mLayoutManager);
+        adapter = new StudentCompanySearchAdapter(this.getActivity(), mRecyclerView,this);
 
         /*********************/
 
@@ -140,16 +136,6 @@ public class StudentCompanySearchFragment extends Fragment {
         adapter.setAdapter();
         adapter.notifyDataSetChanged();
 
-    }
-
-    @Override
-    public void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-        try {
-            outState.putInt("position", mLayoutManager.findFirstVisibleItemPosition());
-        }catch (Exception e){
-            outState.putInt("position",0);
-        }
     }
 
 }

@@ -5,7 +5,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
@@ -36,8 +35,6 @@ public class FavouritesAdapter extends RecyclerView.Adapter<FavouritesAdapter.Vi
     private FavouritesAdapter favouritesAdapter=this;
     private RecyclerView mRecyclerView;
     private Fav_tab parent;
-    private Integer currentPosition=0;
-    private LinearLayoutManager mLayoutManager;
 
     // Provide a reference to the views for each data item
     // Complex data items may need more than one view per item, and
@@ -65,7 +62,7 @@ public class FavouritesAdapter extends RecyclerView.Adapter<FavouritesAdapter.Vi
         }
     }
 
-    public  FavouritesAdapter(FragmentActivity c, ArrayList<CompanyOffer> companyOffers, RecyclerView r,Fav_tab fragment,int pos,LinearLayoutManager manager)
+    public  FavouritesAdapter(FragmentActivity c, ArrayList<CompanyOffer> companyOffers, RecyclerView r,Fav_tab fragment)
     {
         context=c;
         mDataset=new ArrayList<>(companyOffers);
@@ -73,12 +70,7 @@ public class FavouritesAdapter extends RecyclerView.Adapter<FavouritesAdapter.Vi
         student=globalData.getStudentFromUser();
         mRecyclerView=r;
         parent=fragment;
-        currentPosition=pos;
-        mLayoutManager=manager;
-        if(currentPosition!=0)
-        {
-            mLayoutManager.scrollToPosition(currentPosition);
-        }
+
     }
 
 
@@ -129,12 +121,11 @@ public class FavouritesAdapter extends RecyclerView.Adapter<FavouritesAdapter.Vi
             holder.pref.setChecked(true);
 
 
-        holder.pref.setOnClickListener(new View.OnClickListener() {
+        holder.pref.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
-            public void onClick(View v) {
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 
-                CheckBox checkBox=(CheckBox)v;
-                if(checkBox.isChecked())
+                if(isChecked==true)
                 {
                     //add this offer to pref
                     student.addFavourites(mDataset.get(position));
@@ -146,8 +137,8 @@ public class FavouritesAdapter extends RecyclerView.Adapter<FavouritesAdapter.Vi
                     student.removeFavourites(mDataset.get(position));
                     student.saveInBackground();
 
-                    mDataset.remove(position);
-                    mRecyclerView.removeViewAt(position);
+                        mDataset.remove(position);
+                       mRecyclerView.removeViewAt(position);
 
 
                 }

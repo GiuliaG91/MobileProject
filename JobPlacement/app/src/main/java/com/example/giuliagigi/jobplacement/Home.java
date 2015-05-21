@@ -39,7 +39,7 @@ public class Home extends ActionBarActivity  implements TabHomeStudentFragment.O
      */
     private DrawerLayout mDrawerLayout;
     private RecyclerView mDrawerList;
-    private menuAdapter mAdapter;
+    private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
     private ActionBarDrawerToggle mDrawerToggle;
     private TypedArray ICONS;
@@ -155,7 +155,6 @@ public class Home extends ActionBarActivity  implements TabHomeStudentFragment.O
         mAdapter = new menuAdapter(TITLES, ICONS,user,this,mDrawerLayout,mDrawerList,toolbar,application);
         mDrawerList.setAdapter(mAdapter);
 
-        application.setmAdapter(mAdapter);
 
         mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, toolbar, R.string.drawer_open, R.string.drawer_close) {
 

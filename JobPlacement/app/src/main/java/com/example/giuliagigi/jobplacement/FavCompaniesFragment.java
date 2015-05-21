@@ -6,7 +6,6 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -24,22 +23,12 @@ public class FavCompaniesFragment extends Fragment {
     private RecyclerView mRecyclerView;
     private LinearLayoutManager mLayoutManager;
     private FavCompaniesAdapter adapter;
-    private Integer position=0;
 
 
     public static FavCompaniesFragment newInstance()
     {
         FavCompaniesFragment fragment=new FavCompaniesFragment();
         return fragment;
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if(savedInstanceState!=null)
-        {
-            position=savedInstanceState.getInt("position");
-        }
     }
 
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -67,23 +56,13 @@ public class FavCompaniesFragment extends Fragment {
             mRecyclerView.setAdapter(ad);
         }
         else {
-            adapter = new FavCompaniesAdapter(this.getActivity(), (ArrayList<Company>) companies, mRecyclerView, this,position,mLayoutManager);
+            adapter = new FavCompaniesAdapter(this.getActivity(), (ArrayList<Company>) companies, mRecyclerView, this);
             // specify an adapter
             mRecyclerView.setAdapter(adapter);
         }
 
 
         return root;
-    }
-
-    @Override
-    public void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-        try {
-            outState.putInt("position", mLayoutManager.findFirstVisibleItemPosition());
-        }catch (Exception e){
-            outState.putInt("position",0);
-        }
     }
 
 

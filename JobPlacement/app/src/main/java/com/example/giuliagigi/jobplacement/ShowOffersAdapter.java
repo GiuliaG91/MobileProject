@@ -4,7 +4,6 @@ package com.example.giuliagigi.jobplacement;
 import android.content.Context;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
@@ -34,8 +33,6 @@ public class ShowOffersAdapter extends RecyclerView.Adapter<ShowOffersAdapter.Vi
     private ArrayList<CompanyOffer> mDataset;
     private GlobalData globalData;
     private ShowOffersAdapter showOffersAdapter=this;
-    private Integer currentPosition=0;
-    private LinearLayoutManager mLayoutManager;
 
     //Ha messo il parse query qui
     //private Parsequery bla bla
@@ -65,13 +62,12 @@ public class ShowOffersAdapter extends RecyclerView.Adapter<ShowOffersAdapter.Vi
         }
     }
 
-   public ShowOffersAdapter(FragmentActivity c, Integer pos, LinearLayoutManager l)
+   public ShowOffersAdapter(FragmentActivity c)
    {
        context=c;
 
        mDataset=new ArrayList<>();
-        currentPosition=pos;
-       mLayoutManager=l;
+
         globalData=(GlobalData)c.getApplication();
        Company company = globalData.getCompanyFromUser();
        ParseQuery query = new ParseQuery("CompanyOffer").whereEqualTo("company",company);
@@ -82,11 +78,6 @@ public class ShowOffersAdapter extends RecyclerView.Adapter<ShowOffersAdapter.Vi
            e.printStackTrace();
        }
 
-
-       if(currentPosition!=0)
-       {
-           mLayoutManager.scrollToPosition(currentPosition);
-       }
    }
 
     // Create new views (invoked by the layout manager)
@@ -140,10 +131,11 @@ public class ShowOffersAdapter extends RecyclerView.Adapter<ShowOffersAdapter.Vi
         return mDataset.size();
     }
 
-  /*  public void updateMyDataset(List<CompanyOffer> offers)
+
+    public void updateMyDataset(List<CompanyOffer> offers)
     {
         if(offers!=null)  mDataset.addAll(offers);
-    }*/
+    }
 
 
 

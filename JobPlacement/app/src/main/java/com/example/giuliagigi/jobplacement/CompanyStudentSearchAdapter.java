@@ -38,10 +38,10 @@ public class CompanyStudentSearchAdapter extends RecyclerView.Adapter<CompanyStu
     private ArrayList<Student> mDataset;
     private GlobalData globalData;
     private Company company;
-    private List<Student> exists;
+    private Set<Student> supportSet;
     private CompanyStudentSearchFragment currentFragment;
-    private LinearLayoutManager mLayoutManager;
     private Integer currentPosition=0;
+    private LinearLayoutManager mLayoutManager;
     private final int pageSize=15;
     private int count=0;
 
@@ -52,17 +52,16 @@ public class CompanyStudentSearchAdapter extends RecyclerView.Adapter<CompanyStu
     CompanyStudentSearchAdapter companyStudentSearchAdapter=this;
 
 
-    public CompanyStudentSearchAdapter(FragmentActivity c, ViewGroup parentIn ,CompanyStudentSearchFragment fragment,Integer pos,LinearLayoutManager layoutManager) {
+    public CompanyStudentSearchAdapter(FragmentActivity c, ViewGroup parentIn ,CompanyStudentSearchFragment fragment,LinearLayoutManager layoutManager) {
         parseParent = parentIn;
         context = c;
         currentFragment = fragment;
         mDataset = new ArrayList<>();
         globalData = (GlobalData) context.getApplication();
         company = globalData.getCompanyFromUser();
-        exists = new ArrayList<>(company.getStudents());
+        supportSet = new HashSet<>();
         count = 0;
         mLayoutManager = layoutManager;
-        currentPosition=pos;
 
         if (globalData.getOfferFilterStatus().isValid()) {
             StudentFilterStatus status = globalData.getStudentFilterStatus();
@@ -205,34 +204,32 @@ public class CompanyStudentSearchAdapter extends RecyclerView.Adapter<CompanyStu
                         studentDegree.setText(context.getResources().getString(R.string.noDegree));
                         studentGrade.setText("");
                     }
+                    supportSet.clear();
+                    supportSet.addAll(company.getStudents());
 
-                   pref.setChecked(false);
-
-                    if (exists.contains(object)) {
+                    if (supportSet.add(object) == false) {
                         pref.setChecked(true);
+                    } else {
+                        pref.setChecked(false);
                     }
-
-                    pref.setOnClickListener(new View.OnClickListener() {
+                    pref.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                         @Override
-                        public void onClick(View v) {
-                            CheckBox checkBox=(CheckBox)v;
+                        public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 
-                            if (checkBox.isChecked()) {
+                            if (isChecked) {
                                 //add this offer to pref
                                 company.addStudent(object);
                                 company.saveInBackground();
-                                exists.add(object);
                             } else {
                                 //delete this offer from pref
                                 company.removeStudent(object);
                                 company.saveInBackground();
-                                exists.remove(object);
 
                             }
 
-
                         }
                     });
+
 
                 return v;
 
