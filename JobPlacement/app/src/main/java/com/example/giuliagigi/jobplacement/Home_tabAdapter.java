@@ -136,27 +136,27 @@ public class Home_tabAdapter extends RecyclerView.Adapter<Home_tabAdapter.ViewHo
 
                 switch (object.getType()) {
 
-                    case 0: icon.setImageResource(R.drawable.ic_offer);
-                            title.setText(context.getResources().getString(R.string.new_job_offer));
-                            break;
-
-                    case 1: if(object.getStudent().getProfilePhoto() != null)
-                                icon.setImageBitmap(object.getStudent().getProfilePhoto());
-                            title.setText(context.getResources().getString(R.string.new_student_applied));
-                            break;
-
-                    case 2: if(object.getCompanyOffer().getCompany().getProfilePhoto() != null)
-                                icon.setImageBitmap(object.getCompanyOffer().getCompany().getProfilePhoto());
-                            title.setText(context.getResources().getString(R.string.student_accepted));
-                            break;
-
-                    case 3: if(object.getCompany().getProfilePhoto() != null)
-                                icon.setImageBitmap(object.getCompany().getProfilePhoto());
-                            title.setText(context.getResources().getString(R.string.new_company_signed_up));
-                            break;
-
-                    case 4:
-                            break;
+//                    case 0: icon.setImageResource(R.drawable.ic_offer);
+//                            title.setText(context.getResources().getString(R.string.new_job_offer));
+//                            break;
+//
+//                    case 1: if(object.getStudent().getProfilePhoto() != null)
+//                                icon.setImageBitmap(object.getStudent().getProfilePhoto());
+//                            title.setText(context.getResources().getString(R.string.new_student_applied));
+//                            break;
+//
+//                    case 2: if(object.getCompanyOffer().getCompany().getProfilePhoto() != null)
+//                                icon.setImageBitmap(object.getCompanyOffer().getCompany().getProfilePhoto());
+//                            title.setText(context.getResources().getString(R.string.student_accepted));
+//                            break;
+//
+//                    case 3: if(object.getCompany().getProfilePhoto() != null)
+//                                icon.setImageBitmap(object.getCompany().getProfilePhoto());
+//                            title.setText(context.getResources().getString(R.string.new_company_signed_up));
+//                            break;
+//
+//                    case 4:
+//                            break;
 
                     default:
 

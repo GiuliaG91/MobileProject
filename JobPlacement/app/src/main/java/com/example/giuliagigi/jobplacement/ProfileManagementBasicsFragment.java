@@ -91,6 +91,8 @@ public class ProfileManagementBasicsFragment extends ProfileManagementFragment {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
+        Log.println(Log.ASSERT,"BASICS", "onActivityResult");
+
         if(requestCode == REQUEST_IMAGE_GET && resultCode == Activity.RESULT_OK){
 
             Uri photoUri = data.getData();
@@ -104,9 +106,8 @@ public class ProfileManagementBasicsFragment extends ProfileManagementFragment {
                 else{
 
                     hasChanged = true;
-                    application.getUserObject().setProfilePhoto(photoBitmap,(GlobalData)getActivity().getApplication());
-                    Bitmap bmImg = user.getProfilePhoto();
-                    BitmapDrawable background = new BitmapDrawable(GlobalData.getContext().getResources(), bmImg);
+                    user.setProfilePhoto(photoBitmap,(GlobalData)getActivity().getApplication());
+                    BitmapDrawable background = new BitmapDrawable(GlobalData.getContext().getResources(), photoBitmap);
                     profilePhoto.setImageDrawable(background);
                     profilePhoto.setScaleType(ImageView.ScaleType.CENTER_CROP);
                 }

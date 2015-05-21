@@ -181,6 +181,7 @@ public class CompanyProfileManagementBasicsFragment extends ProfileManagementBas
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        Log.println(Log.ASSERT,"COMP BASICS", "onActivityResult");
     }
 
 

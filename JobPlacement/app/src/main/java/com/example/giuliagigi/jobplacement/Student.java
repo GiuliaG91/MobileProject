@@ -3,6 +3,7 @@ package com.example.giuliagigi.jobplacement;
 import android.util.Log;
 
 import com.parse.FindCallback;
+import com.parse.GetDataCallback;
 import com.parse.ParseClassName;
 import com.parse.ParseException;
 import com.parse.ParseFile;
@@ -11,6 +12,7 @@ import com.parse.ParseRelation;
 import com.parse.SaveCallback;
 
 import java.io.File;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
@@ -59,6 +61,7 @@ public class Student extends User {
     protected ArrayList<Certificate> certificates;
     protected ArrayList<CompanyOffer> favourites;
     protected ArrayList<Company> companies;
+    protected byte[] tempBytes;
 
     public Student(){
 
@@ -291,6 +294,19 @@ public class Student extends User {
         }
         isCached.put(COMPANIES_FIELD,true);
         return result;
+    }
+
+    public byte[] getCurriculum() throws ParseException{
+
+        ParseFile curriculumFile = (ParseFile)get(CURRICULUM_FIELD);
+
+
+        if(curriculumFile!= null){
+
+            return curriculumFile.getData();
+        }
+
+        return null;
     }
 
     /* END GETTER METHODS*/
