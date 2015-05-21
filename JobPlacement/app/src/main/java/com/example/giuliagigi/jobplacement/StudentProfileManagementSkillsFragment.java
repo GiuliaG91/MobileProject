@@ -270,6 +270,7 @@ public class StudentProfileManagementSkillsFragment extends ProfileManagementFra
 
                     Log.println(Log.ASSERT,"SKILLS FRAG", "length: " + length);
 
+                    is = getActivity().getContentResolver().openInputStream(fileUri);
                     buffer = new BufferedInputStream(is);
                     byte[] byteArray = new byte[length];
                     buffer.read(byteArray,0,length);
