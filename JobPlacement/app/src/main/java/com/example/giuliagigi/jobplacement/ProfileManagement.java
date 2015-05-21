@@ -6,8 +6,6 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.res.Configuration;
-import android.graphics.drawable.Drawable;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
@@ -17,14 +15,11 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.OrientationEventListener;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.Toast;
 
 import java.util.ArrayList;
-import java.util.zip.Inflater;
 
 
 public class ProfileManagement extends Fragment{
@@ -225,13 +220,13 @@ public class ProfileManagement extends Fragment{
         else if(!isEditMode && editable)
             item.setIcon(R.drawable.ic_edit_white);
         else if(!editable)
-            item.setIcon(R.drawable.ic_send_white_36dp);
+            item.setIcon(R.drawable.ic_mail);
 
         if(item.getItemId() == R.id.action_send && !editable){
 
             AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-            builder.setTitle("Do you want to send a message to " + user.getMail() + "?");
-            builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+            builder.setTitle(GlobalData.getContext().getString(R.string.string_send_email) + user.getMail() + "?");
+            builder.setPositiveButton(GlobalData.getContext().getString(R.string.string_yes), new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
 
@@ -240,7 +235,7 @@ public class ProfileManagement extends Fragment{
                 }
             });
 
-            builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+            builder.setNegativeButton(GlobalData.getContext().getString(R.string.string_no), new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {}
             });
@@ -261,7 +256,7 @@ public class ProfileManagement extends Fragment{
             host.setEditMode(isEditMode);
         }
         else
-            Toast.makeText(getActivity(), "ERROR: you are not supposed to modify this account",Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), GlobalData.getContext().getString(R.string.string_cannot_edit),Toast.LENGTH_SHORT).show();
 
     }
 

@@ -4,16 +4,12 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.Toast;
-import com.parse.LogOutCallback;
-import com.parse.ParseException;
-import com.parse.ParseInstallation;
+
 import com.parse.ParseUser;
 
 /**
@@ -53,7 +49,7 @@ public class LogoutDialogFragment extends DialogFragment {
 
         builder.setTitle(GlobalData.getContext().getString(R.string.string_logout));
 
-        builder.setPositiveButton(GlobalData.getContext().getString(R.string.string_logging_out_yes), new DialogInterface.OnClickListener() {
+        builder.setPositiveButton(GlobalData.getContext().getString(R.string.string_yes), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
 
@@ -63,7 +59,7 @@ public class LogoutDialogFragment extends DialogFragment {
             }
         });
 
-        builder.setNegativeButton(GlobalData.getContext().getString(R.string.string_logging_out_no), new DialogInterface.OnClickListener() {
+        builder.setNegativeButton(GlobalData.getContext().getString(R.string.string_no), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {}
         });

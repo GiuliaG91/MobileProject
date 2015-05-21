@@ -93,8 +93,8 @@
     <string name="string_login_failed">username o password errati</string>
     <string name="string_logout">Vuoi disconnetterti?</string>
     <string name="string_logging_out">Logout in corso...</string>
-    <string name="string_logging_out_yes">si</string>
-    <string name="string_logging_out_no">no</string>
+    <string name="string_yes">si</string>
+    <string name="string_no">no</string>
     <string name="string_logout_complete">Logout completato</string>
 
     <!-- Student fragment strings: -->
@@ -194,6 +194,12 @@
     <string name="string_telephone_type_fax">Fax</string>
     <string name="string_telephone_type_office">Ufficio</string>
     <string name="string_telephone_type_other">Altro</string>
+
+
+    <!--Profile management -->
+    <string name="string_send_email">Vuoi mandare un messaggio a </string>
+    <string name="string_cannot_edit">ERRORE: non puoi modificare questo profilo</string>
+    <string name="string_email_not_verified">La tua mail non è ancora stata verificata. Per favore, clicca sul link che ti abbiamo inviato</string>
 
     
     <!-- New Offer Fragment -->

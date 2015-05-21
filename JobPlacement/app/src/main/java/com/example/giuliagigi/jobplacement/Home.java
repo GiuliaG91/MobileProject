@@ -180,7 +180,7 @@ public class Home extends ActionBarActivity  implements TabHomeStudentFragment.O
 
         /* email verification alert */
         if (!application.getCurrentUser().isEmailVerified())
-            Toast.makeText(getApplicationContext(),"Your email wasn't verified yet. Please click on the link we sent you",Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(),GlobalData.getContext().getString(R.string.string_email_not_verified),Toast.LENGTH_SHORT).show();
 
     }
 
