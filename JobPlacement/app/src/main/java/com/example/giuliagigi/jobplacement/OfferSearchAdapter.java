@@ -9,6 +9,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,11 +25,14 @@ import com.parse.ParseQuery;
 import com.parse.ParseQueryAdapter;
 
 import java.io.IOException;
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.TimeZone;
 
 /**
  * Created by pietro on 07/05/2015.
@@ -41,13 +45,12 @@ public class OfferSearchAdapter extends RecyclerView.Adapter<OfferSearchAdapter.
     private ArrayList<CompanyOffer> mDataset;
     private GlobalData globalData;
     private Student student;
-    private Set<CompanyOffer> supportSet;
     private OfferSearchFragment parent;
     private Integer currentPosition=0;
     private LinearLayoutManager mLayoutManager;
     private final int pageSize=15;
     private int count=0;
-
+    private List<String> exists;
 
     private ParseQueryAdapter<CompanyOffer> parseAdapter;
     private ParseQueryAdapter.QueryFactory<CompanyOffer> factory;
@@ -62,12 +65,16 @@ public class OfferSearchAdapter extends RecyclerView.Adapter<OfferSearchAdapter.
         mDataset = new ArrayList<>();
         globalData = (GlobalData) context.getApplication();
         student = globalData.getStudentFromUser();
-        supportSet = new HashSet<>();
         parent=fragment;
         currentPosition=pos;
         mLayoutManager=layoutManager;
         count=0;
+        exists=new ArrayList<>();
 
+        for(CompanyOffer o : student.getFavourites())
+        {
+            exists.add(o.getObjectId());
+        }
 
         if(globalData.getOfferFilterStatus().isValid())
         {
@@ -80,8 +87,20 @@ public class OfferSearchAdapter extends RecyclerView.Adapter<OfferSearchAdapter.
             factory = new ParseQueryAdapter.QueryFactory<CompanyOffer>() {
                 @Override
                 public ParseQuery<CompanyOffer> create() {
+
+                    Calendar today= Calendar.getInstance();
+
+                    today.set(Calendar.MILLISECOND, 0);
+                    today.set(Calendar.SECOND, 0);
+                    today.set(Calendar.MINUTE, 0);
+                    today.set(Calendar.HOUR_OF_DAY, 0);
+
                     ParseQuery query = new ParseQuery("CompanyOffer");
-                    query.whereEqualTo("publish",true);
+                    query.whereEqualTo("publish", true);
+                    query.whereGreaterThanOrEqualTo("validity", today.getTime());
+
+
+
                     return query;
                 }
             };
@@ -105,8 +124,19 @@ public class OfferSearchAdapter extends RecyclerView.Adapter<OfferSearchAdapter.
         factory=new ParseQueryAdapter.QueryFactory<CompanyOffer>() {
             @Override
             public ParseQuery<CompanyOffer> create() {
+
+                Calendar today= Calendar.getInstance();
+                today.set(Calendar.MILLISECOND, 0);
+                today.set(Calendar.SECOND, 0);
+                today.set(Calendar.MINUTE, 0);
+                today.set(Calendar.HOUR_OF_DAY, 0);
+                today.setTimeZone(TimeZone.getTimeZone("UTC"));
+
+                //pubblicate e valide + filtri
                 ParseQuery query = new ParseQuery("CompanyOffer");
                 query.whereEqualTo("publish",true);
+                query.whereGreaterThanOrEqualTo("validity",today.getTime());
+
                if(!tag_list.isEmpty())
                 {
                     query.whereContainedIn("tags",tag_list);
@@ -235,31 +265,35 @@ public class OfferSearchAdapter extends RecyclerView.Adapter<OfferSearchAdapter.
                 SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
                 String d = dateFormat.format(object.getValidity());
                 date.setText(d);
+                pref.setChecked(false);
 
-                supportSet.clear();
-                supportSet.addAll(student.getFavourites());
 
-                if (supportSet.add(object) == false) {
+                if (exists.contains(object.getObjectId())) {
                     pref.setChecked(true);
-                } else {
-                    pref.setChecked(false);
                 }
-                pref.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                    @Override
-                    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 
-                        if (isChecked) {
+                pref.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                        CheckBox checkBox=(CheckBox)v;
+
+
+                        if (checkBox.isChecked()) {
                             //add this offer to pref
                             student.addFavourites(object);
                             student.saveInBackground();
-                        } else {
+                            exists.add(object.getObjectId());
+                        } else if(!checkBox.isChecked()) {
                             //delete this offer from pref
                             student.removeFavourites(object);
                             student.saveInBackground();
+                            exists.remove(object.getObjectId());
                         }
 
                     }
                 });
+
 
 
                 return v;
@@ -344,14 +378,14 @@ public class OfferSearchAdapter extends RecyclerView.Adapter<OfferSearchAdapter.
 
         public void onLoaded(List<CompanyOffer> objects, Exception e) {
             offerSearchAdapter.notifyDataSetChanged();
-           if(currentPosition!=0) {
-               count += pageSize;
-               if (count < currentPosition) {
-                   parseAdapter.loadNextPage();
-               } else {
-                   mLayoutManager.scrollToPosition(currentPosition);
-               }
-           }
+            if(currentPosition!=0) {
+                count += pageSize;
+                if (count < currentPosition) {
+                    parseAdapter.loadNextPage();
+                } else {
+                    mLayoutManager.scrollToPosition(currentPosition);
+                }
+            }
         }
     }
 

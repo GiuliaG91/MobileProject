@@ -1,5 +1,7 @@
 package com.example.giuliagigi.jobplacement;
 
+import android.util.Log;
+
 import com.parse.ParseClassName;
 import com.parse.ParseGeoPoint;
 import com.parse.ParseObject;
@@ -9,8 +11,10 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.TimeZone;
 
 /**
  * Created by pietro on 03/05/2015.
@@ -127,8 +131,14 @@ public class CompanyOffer extends ParseObject {
     }
 
     public void setValidity(Date validity){
-
-        this.put(VALIDITY_FIELD,validity);
+        Calendar c=Calendar.getInstance();
+        c.setTime(validity);
+        c.set(Calendar.MILLISECOND, 0);
+        c.set(Calendar.SECOND, 0);
+        c.set(Calendar.MINUTE, 0);
+        c.set(Calendar.HOUR_OF_DAY, 0);
+        c.setTimeZone(TimeZone.getTimeZone("UTC+1"));
+        this.put(VALIDITY_FIELD, c.getTime());
     }
 
     public void setContract(String contract){

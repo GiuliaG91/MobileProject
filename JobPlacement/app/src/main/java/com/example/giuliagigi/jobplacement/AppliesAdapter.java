@@ -2,6 +2,7 @@ package com.example.giuliagigi.jobplacement;
 
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
@@ -27,6 +28,8 @@ public class AppliesAdapter extends RecyclerView.Adapter<AppliesAdapter.ViewHold
     private Student student;
     private AppliesAdapter appliesAdapter=this;
     private RecyclerView mRecyclerView;
+    private Integer currentPosition=0;
+    private LinearLayoutManager mLayoutManager;
 
     // Provide a reference to the views for each data item
     // Complex data items may need more than one view per item, and
@@ -37,7 +40,6 @@ public class AppliesAdapter extends RecyclerView.Adapter<AppliesAdapter.ViewHold
         private ImageView logo;
         private TextView object;
         private TextView descriprion;
-        private TextView status;
 
 
 
@@ -49,17 +51,18 @@ public class AppliesAdapter extends RecyclerView.Adapter<AppliesAdapter.ViewHold
             logo=(ImageView)v.findViewById(R.id.logo_img);
             object=(TextView)v.findViewById(R.id.objectOffer_tv);
             descriprion=(TextView)v.findViewById(R.id.description_tv);
-            status=(TextView)v.findViewById(R.id.applies_tv);
 
         }
     }
-    public AppliesAdapter (FragmentActivity c, RecyclerView r)
+    public AppliesAdapter (FragmentActivity c, RecyclerView r ,Integer pos , LinearLayoutManager linearLayoutManager)
     {
         context=c;
         mDataset=new ArrayList<>();
         globalData=(GlobalData)context.getApplication();
         student=globalData.getStudentFromUser();
         mRecyclerView=r;
+        currentPosition=pos;
+        mLayoutManager=linearLayoutManager;
     }
 
 
@@ -104,8 +107,6 @@ public class AppliesAdapter extends RecyclerView.Adapter<AppliesAdapter.ViewHold
             }
         }
 
-        holder.status.setText("Boh");
-
     }
 
     // Return the size of your dataset (invoked by the layout manager)
@@ -143,35 +144,14 @@ public class AppliesAdapter extends RecyclerView.Adapter<AppliesAdapter.ViewHold
 
     }
 
- /*   public void startItem(int position)
-    {
-
-
-        globalData.setCurrentOffer(mDataset.get(position));
-        //Pass Object to fragment
-        FragmentManager fragmentManager = context.getSupportFragmentManager();
-
-        //New Fragment
-        OfferDetail fragment=OfferDetail.newInstance();
-        // Insert the fragment by replacing any existing fragment
-        // Insert the fragment by replacing any existing fragment
-
-        fragmentManager.beginTransaction()
-                .replace(R.id.tab_Home_container, fragment)
-                .addToBackStack("PrefView")
-                .commit();
-
-        // Highlight the selected item, update the title, and close the drawer
-        // Highlight the selected item, update the title, and close the drawer
-        Toolbar toolbar= globalData.getToolbar();
-        toolbar.setTitle("Offer");
-
-    }
-*/
     public void updateDataset(List<CompanyOffer> off)
     {
         mDataset.addAll(off);
         notifyDataSetChanged();
+        if(currentPosition!=0)
+        {
+        mLayoutManager.scrollToPosition(currentPosition);
+        }
     }
 
 }
