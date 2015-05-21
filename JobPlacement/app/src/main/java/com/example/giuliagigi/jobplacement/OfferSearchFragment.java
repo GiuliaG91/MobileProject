@@ -47,6 +47,16 @@ public class OfferSearchFragment extends Fragment{
     }
 
     @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
+        if(savedInstanceState!=null)
+        {
+            position=savedInstanceState.getInt("position");
+        }
+    }
+
+    @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         menu.clear();
         inflater.inflate(R.menu.menu_search, menu);
@@ -64,15 +74,7 @@ public class OfferSearchFragment extends Fragment{
         return true;
     }
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setHasOptionsMenu(true);
-        if(savedInstanceState!=null)
-        {
-            position=savedInstanceState.getInt("position");
-        }
-    }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -164,4 +166,5 @@ public class OfferSearchFragment extends Fragment{
             outState.putInt("position",0);
         }
     }
+
 }

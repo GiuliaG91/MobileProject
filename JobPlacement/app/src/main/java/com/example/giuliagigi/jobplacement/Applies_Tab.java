@@ -31,13 +31,23 @@ public class Applies_Tab extends Fragment {
     private RecyclerView mRecyclerView;
     private  AppliesAdapter adapter;
     private LinearLayoutManager mLayoutManager;
-
+    private Integer position=0;
 
 
     public static Applies_Tab newInstance(){
         Applies_Tab fragment=new Applies_Tab();
         return fragment;
 
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
+        if(savedInstanceState!=null)
+        {
+            position=savedInstanceState.getInt("position");
+        }
     }
 
 
@@ -58,7 +68,7 @@ public class Applies_Tab extends Fragment {
         mRecyclerView.addItemDecoration(new DividerItemDecoration(this.getActivity(), DividerItemDecoration.VERTICAL_LIST));
         mRecyclerView.setLayoutManager(mLayoutManager);
 
-        adapter = new AppliesAdapter(this.getActivity(),mRecyclerView);
+        adapter = new AppliesAdapter(this.getActivity(),mRecyclerView,position,mLayoutManager);
         // specify an adapter
         mRecyclerView.setAdapter(adapter);
 
@@ -85,6 +95,16 @@ public class Applies_Tab extends Fragment {
             adapter.startItem(position);
         }*/
 
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        try {
+            outState.putInt("position", mLayoutManager.findFirstVisibleItemPosition());
+        }catch (Exception e){
+            outState.putInt("position",0);
+        }
     }
 
 }

@@ -5,6 +5,7 @@ import android.location.Address;
 import android.location.Geocoder;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
@@ -39,6 +40,10 @@ public class StudentCompanySearchAdapter extends RecyclerView.Adapter<StudentCom
     private Student student;
     private Set<Company> supportSet;
     private StudentCompanySearchFragment currentFragment;
+    private Integer currentPosition=0;
+    private LinearLayoutManager mLayoutManager;
+    private final int pageSize=15;
+    private int count=0;
 
     private ParseQueryAdapter<Company> parseAdapter;
     private ParseQueryAdapter.QueryFactory<Company> factory;
@@ -48,14 +53,17 @@ public class StudentCompanySearchAdapter extends RecyclerView.Adapter<StudentCom
     StudentCompanySearchAdapter studentCompanySearchAdapter=this;
 
 
-    public StudentCompanySearchAdapter(FragmentActivity c, ViewGroup parentIn , StudentCompanySearchFragment fragment) {
+    public StudentCompanySearchAdapter(FragmentActivity c, ViewGroup parentIn , StudentCompanySearchFragment fragment,int pos,LinearLayoutManager manager) {
+        count=0;
         parseParent = parentIn;
         context = c;
         currentFragment=fragment;
         mDataset = new ArrayList<>();
         globalData = (GlobalData) context.getApplication();
         student=globalData.getStudentFromUser();
-        supportSet = new HashSet<>();
+        supportSet = new HashSet<>(student.getCompanies());
+        currentPosition=pos;
+        mLayoutManager=manager;
 
         if(globalData.getCompanyFilterStatus().isValid())
         {
@@ -203,26 +211,27 @@ public class StudentCompanySearchAdapter extends RecyclerView.Adapter<StudentCom
                 logo.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_profile));
                 companyName.setText(object.getName());
 
-                supportSet.clear();
-                supportSet.addAll(student.getCompanies());
+
+                pref.setChecked(false);
 
                 if (supportSet.add(object) == false) {
                     pref.setChecked(true);
-                } else {
-                    pref.setChecked(false);
                 }
-                pref.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                pref.setOnClickListener(new View.OnClickListener() {
                     @Override
-                    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    public void onClick(View v) {
+                        CheckBox checkBox=(CheckBox)v;
 
-                        if (isChecked) {
+                        if (checkBox.isChecked()) {
                             //add this offer to pref
-                           student.addCompany(object);
+                            student.addCompany(object);
                             student.saveInBackground();
+                            supportSet.add(object);
                         } else {
                             //delete this offer from pref
-                           student.removeCompany(object);
+                            student.removeCompany(object);
                             student.saveInBackground();
+                            supportSet.remove(object);
 
                         }
 
@@ -233,11 +242,22 @@ public class StudentCompanySearchAdapter extends RecyclerView.Adapter<StudentCom
                 return v;
             }
 
+            @Override
+            public View getNextPageView(View v, ViewGroup parent) {
+                if (v == null) {
+                    // R.layout.adapter_next_page contains an ImageView with a custom graphic
+                    // and a TextView.
+                    v = View.inflate(getContext(), R.layout.favourites_row, null);
+                }
+                loadNextPage();
+                return v;
+            }
+
         };
 
 
         parseAdapter.addOnQueryLoadListener(new OnQueryLoadListener());
-        parseAdapter.setObjectsPerPage(15);
+        parseAdapter.setObjectsPerPage(pageSize);
         parseAdapter.loadObjects();
 
 
@@ -304,6 +324,14 @@ public class StudentCompanySearchAdapter extends RecyclerView.Adapter<StudentCom
 
         public void onLoaded(List<Company> objects, Exception e) {
             studentCompanySearchAdapter.notifyDataSetChanged();
+            if(currentPosition!=0) {
+                count += pageSize;
+                if (count < currentPosition) {
+                    parseAdapter.loadNextPage();
+                } else {
+                    mLayoutManager.scrollToPosition(currentPosition);
+                }
+            }
         }
     }
 
