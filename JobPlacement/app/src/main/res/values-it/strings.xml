@@ -62,6 +62,13 @@
     <string name="string_select_type">Seleziona un tipo</string>
     <string name="string_type_student">Studente</string>
     <string name="string_type_company">Azienda</string>
+    <string name="string_register">Registrati!</string>
+    <string name="string_mail_already_used">La mail inserita è già utilizzata da un altro account</string>
+    <string name="string_mail_not_valid">La mail inserita non è valida</string>
+    <string name="string_connection_not_available">Connessione al server non disponibile, riprovare più tardi</string>
+    <string name="string_mismatching_password">La password non coincide</string>
+    <string name="string_missing_info">Informazioni mancanti</string>
+    <string name="string_must_select_type">Seleziona una tipologia di utente per effettuare la registrazione</string>
 
     <!--Tabs -->
     <string name="string_account_tab">Account</string>

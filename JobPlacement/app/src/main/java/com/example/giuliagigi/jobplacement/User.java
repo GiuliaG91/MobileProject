@@ -45,8 +45,12 @@ public class User extends ParseObject{
     public static final String TYPE_COMPANY = "Company";
     public static final String TYPE_SELECT = "Select a type";
 
+    public static final String TYPE_STUDENT_TRANSLATED = GlobalData.getContext().getString(R.string.string_type_student);
+    public static final String TYPE_COMPANY_TRANSLATED = GlobalData.getContext().getString(R.string.string_type_company);
+    public static final String TYPE_SELECT_TRANSLATED = GlobalData.getContext().getString(R.string.string_select_type);
 
-    public static final String[] TYPES = new String[]{TYPE_SELECT,TYPE_STUDENT,TYPE_COMPANY};
+    public static final HashMap<String, String> USER_TYPES = new HashMap<>();
+    public static final String[] TYPES = new String[]{TYPE_SELECT_TRANSLATED,TYPE_STUDENT_TRANSLATED,TYPE_COMPANY_TRANSLATED};
 
 
     protected String mail;
@@ -184,6 +188,7 @@ public class User extends ParseObject{
     }
     public void setType(String type) {
 
+        //String typeTranslated = (String)getKeyByValue(USER_TYPES, type);
         this.type = type;
         isCached.put(TYPE_FIELD,true);
         this.put(TYPE_FIELD, type);
@@ -278,6 +283,23 @@ public class User extends ParseObject{
     public void setName(String name){
         this.put(User.NAME_FIELD, name);
     }
+
+    public static void initializeLangauges(){
+
+        USER_TYPES.put(TYPE_SELECT, TYPE_SELECT_TRANSLATED);
+        USER_TYPES.put(TYPE_STUDENT, TYPE_STUDENT_TRANSLATED);
+        USER_TYPES.put(TYPE_COMPANY, TYPE_COMPANY_TRANSLATED);
+    }
+
+    public static Object getKeyByValue(HashMap hm, Object value) {
+        for (Object o : hm.keySet()) {
+            if (hm.get(o).equals(value)) {
+                return o;
+            }
+        }
+        return null;
+    }
+
 
 }
 

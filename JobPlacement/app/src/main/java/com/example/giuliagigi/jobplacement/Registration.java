@@ -44,7 +44,6 @@ public class Registration extends ActionBarActivity implements StudentRegistrati
     private static final String BUNDLE_IDENTIFIER = "REGISTRATION";
     private static final String BUNDLE_KEY = "REGISTRATION";
 
-
     private Fragment currentFragment;
     private GlobalData application;
     private Button register;
@@ -66,14 +65,14 @@ public class Registration extends ActionBarActivity implements StudentRegistrati
 
                 FragmentTransaction ft = getFragmentManager().beginTransaction();
 
-                switch (User.TYPES[position]){
+                switch (position){
 
-                    case User.TYPE_STUDENT:
+                    case 1:
                         if(findViewById(R.id.fragment_student_register_layout) == null)
                             currentFragment = StudentRegistrationFragment.newInstance();
                         ft.replace(R.id.container_register_fragment,currentFragment);
                         break;
-                    case User.TYPE_COMPANY:
+                    case 2:
                         if(findViewById(R.id.fragment_company_register_layout) == null)
                             currentFragment = CompanyRegistrationFragment.newInstance();
                         ft.replace(R.id.container_register_fragment, currentFragment);
@@ -126,7 +125,7 @@ public class Registration extends ActionBarActivity implements StudentRegistrati
                 if(re == null){
 
                     if(user == null)
-                        Toast.makeText(getApplicationContext(),"You must select a type of user to register",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(),GlobalData.getContext().getString(R.string.string_must_select_type),Toast.LENGTH_SHORT).show();
 
                     else {
 
@@ -141,11 +140,11 @@ public class Registration extends ActionBarActivity implements StudentRegistrati
 
                         case RegistrationException.MISSING_INFORMATIONS:
 
-                            Toast.makeText(getApplicationContext(),"missing informations",Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplicationContext(),GlobalData.getContext().getString(R.string.string_missing_info),Toast.LENGTH_SHORT).show();
                             break;
                         case RegistrationException.MISMATCHING_PASSWORDS:
 
-                            Toast.makeText(getApplicationContext(),"mismatching passwords",Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplicationContext(),GlobalData.getContext().getString(R.string.string_mismatching_password),Toast.LENGTH_SHORT).show();
                             break;
                         default:
                             break;
@@ -357,17 +356,17 @@ public class Registration extends ActionBarActivity implements StudentRegistrati
 
                         case ParseException.EMAIL_TAKEN:
 
-                            Toast.makeText(getApplicationContext(),"The mail you are trying to use is already taken by another account",Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplicationContext(),GlobalData.getContext().getString(R.string.string_mail_already_used),Toast.LENGTH_SHORT).show();
                             break;
 
                         case ParseException.INVALID_EMAIL_ADDRESS:
 
-                            Toast.makeText(getApplicationContext(),"The mail you are trying to use is not valid",Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplicationContext(),GlobalData.getContext().getString(R.string.string_mail_not_valid),Toast.LENGTH_SHORT).show();
                             break;
 
                         case ParseException.CONNECTION_FAILED:
 
-                            Toast.makeText(getApplicationContext(),"Connection to sever is unavailable, try later",Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplicationContext(),GlobalData.getContext().getString(R.string.string_connection_not_available),Toast.LENGTH_SHORT).show();
                             break;
 
                         default:

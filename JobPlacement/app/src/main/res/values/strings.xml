@@ -85,6 +85,13 @@
     <string name="string_select_type">Select a type</string>
     <string name="string_type_student">Student</string>
     <string name="string_type_company">Company</string>
+    <string name="string_register">Register!</string>
+    <string name="string_mail_already_used">The mail you are trying to use is already taken by another account</string>
+    <string name="string_mail_not_valid">The mail you are trying to use is not valid</string>
+    <string name="string_connection_not_available">Connection to sever is unavailable, try later</string>
+    <string name="string_mismatching_password">mismatching passwords</string>
+    <string name="string_missing_info">missing information</string>
+    <string name="string_must_select_type">You must select a type of user to register</string>
 
     <!--Tabs -->
     <string name="string_account_tab">Account</string>
