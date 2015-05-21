@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -66,6 +67,8 @@ public class TabHomeCompanyFragment extends Fragment {
 
         globalData=(GlobalData)getActivity().getApplication();
         Titles=getResources().getStringArray(R.array.Home_Company_Tab);
+        Toolbar toolbar=globalData.getToolbar();
+        toolbar.setTitle(R.string.ToolbarTilteHome);
     }
 
     @Override

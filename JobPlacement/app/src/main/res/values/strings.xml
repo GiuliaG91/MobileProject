@@ -13,7 +13,6 @@
 <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_profile_management">ProfileManagement</string>
-
     <string name="title_activity_home">Home</string>
 
 
@@ -41,7 +40,10 @@
     <string name="ToolbarTitleMyCompanies">My Companies</string>
     <string name="ToolbarTitleMyStudents">Students</string>
     <string name="ToolbarTilteStudentSearch">Student Search</string>
+    <string name="ToolbarTilteCompanySearch">Company Search</string>
     <string name="ToolbarTilteMailBox">MailBox</string>
+
+    <string name="NoModify">Can\'t modify this offer</string>
 
     <string-array name="Home_Students_Tab">
 

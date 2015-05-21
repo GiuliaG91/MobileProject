@@ -626,7 +626,7 @@ public class NewOffer extends Fragment implements DatePickerFragment.OnDataSetLi
                         public void onClick(View v) {
 
                             if (!globalData.getCurrentViewOffer().getStudents().isEmpty()) {
-                                Toast.makeText(getActivity(), "Offerta non modificabile", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getActivity(),R.string.NoModify, Toast.LENGTH_SHORT).show();
                             } else {
 
 

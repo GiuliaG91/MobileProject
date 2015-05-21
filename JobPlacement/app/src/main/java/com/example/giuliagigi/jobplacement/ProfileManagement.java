@@ -10,6 +10,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -108,6 +109,8 @@ public class ProfileManagement extends Fragment{
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         host.setEditMode(isEditMode);
+        Toolbar toolbar=application.getToolbar();
+        toolbar.setTitle(R.string.ToolbarTilteProfile);
     }
 
 
@@ -115,17 +118,25 @@ public class ProfileManagement extends Fragment{
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
+
+        Toolbar toolbar=application.getToolbar();
+        toolbar.setTitle(R.string.ToolbarTilteProfile);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        Toolbar toolbar=application.getToolbar();
+        toolbar.setTitle(R.string.ToolbarTilteProfile);
         return inflater.inflate(R.layout.fragment_tab_home, container, false);
+
     }
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        Toolbar toolbar=application.getToolbar();
+        toolbar.setTitle(R.string.ToolbarTilteProfile);
 
         /*************ViewPager***************************/
 

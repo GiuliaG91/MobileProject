@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -40,6 +41,8 @@ public class StudentCompanySearchFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Toolbar toolbar=((GlobalData)getActivity().getApplication()).getToolbar();
+        toolbar.setTitle(R.string.ToolbarTilteCompanySearch);
         setHasOptionsMenu(true);
         if(savedInstanceState!=null)
         {

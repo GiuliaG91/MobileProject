@@ -17,13 +17,8 @@
     <string name="title_activity_home">Home</string>
 
 
-    <string name="title_section1">Menu</string>
-    <string name="title_section2">News</string>
-    <string name="title_section3">Preferred</string>
-    <string name="title_section4">Noti</string>
 
-
-  
+    <string name="NoModify">Non puoi modificare questa offerta</string>
 
     <string name="user_icon_description">UserIcon</string>
     <string name="nofavourites">No Favourites</string>
