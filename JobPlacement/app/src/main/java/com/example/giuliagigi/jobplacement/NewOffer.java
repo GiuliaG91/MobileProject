@@ -1124,7 +1124,6 @@ public class NewOffer extends Fragment implements DatePickerFragment.OnDataSetLi
             {
             }
             else {
-
                 //Creo il geopoint
                 //make a geoPoint
 

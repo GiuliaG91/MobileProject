@@ -2,6 +2,7 @@ package com.example.giuliagigi.jobplacement;
 
 
 import android.content.res.TypedArray;
+import android.graphics.Bitmap;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
@@ -558,7 +559,18 @@ public class menuAdapter extends RecyclerView.Adapter<menuAdapter.ViewHolder> {
             if(user.getType().toLowerCase().equals("student"))
             {
                Student s=gd.getStudentFromUser();
-            holder.profile.setImageResource(R.drawable.ic_profile);           // Similarly we set the resources for header view
+
+                Bitmap img=null;
+                try{
+                    img=s.getProfilePhoto();
+
+                }catch(Exception e){
+                    img=null;
+                }
+                if(img!=null)
+                {
+                    holder.profile.setImageBitmap(img);
+                }else holder.profile.setImageResource(R.drawable.ic_profile);           // Similarly we set the resources for header view
             holder.Name.setText(s.getName());
             holder.email.setText(s.getMail());
                 flag= 1;
@@ -567,7 +579,19 @@ public class menuAdapter extends RecyclerView.Adapter<menuAdapter.ViewHolder> {
             else
             {
                 Company c=gd.getCompanyFromUser();
-                holder.profile.setImageResource(R.drawable.ic_profile);           //logo azienda
+                Bitmap img=null;
+                try{
+                    img=c.getProfilePhoto();
+
+                }catch(Exception e){
+                    img=null;
+                }
+                if(img!=null)
+                {
+                    holder.profile.setImageBitmap(img);
+                }else holder.profile.setImageResource(R.drawable.ic_profile);
+
+
                 holder.Name.setText(c.getName());
                 holder.email.setText(c.getMail());
 

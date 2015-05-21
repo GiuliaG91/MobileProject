@@ -27,7 +27,7 @@ public class CompanyShowOfferFragment extends Fragment {
     private RecyclerView mRecyclerView;
     private  ShowOffersAdapter adapter;
     private LinearLayoutManager mLayoutManager;
-
+    private Integer position=0;
 
     public static CompanyShowOfferFragment newInstance() {
         CompanyShowOfferFragment fragment = new CompanyShowOfferFragment();
@@ -39,7 +39,12 @@ public class CompanyShowOfferFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if(savedInstanceState!=null)
+        {
+            position=savedInstanceState.getInt("position");
+        }
     }
+
 
 
     @Override
@@ -59,7 +64,7 @@ public class CompanyShowOfferFragment extends Fragment {
         mRecyclerView.setLayoutManager(mLayoutManager);
 
 
-          adapter = new ShowOffersAdapter(this.getActivity());
+          adapter = new ShowOffersAdapter(this.getActivity(),position,mLayoutManager);
 
         /*********************/
 
@@ -67,6 +72,17 @@ public class CompanyShowOfferFragment extends Fragment {
         mRecyclerView.setAdapter(adapter);
 
         return root;
+    }
+
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        try {
+            outState.putInt("position", mLayoutManager.findFirstVisibleItemPosition());
+        }catch (Exception e){
+            outState.putInt("position",0);
+        }
     }
 }
 

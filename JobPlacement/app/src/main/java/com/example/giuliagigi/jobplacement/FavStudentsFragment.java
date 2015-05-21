@@ -23,12 +23,21 @@ public class FavStudentsFragment extends Fragment {
     private RecyclerView mRecyclerView;
     private LinearLayoutManager mLayoutManager;
     private FavStudentsAdapter adapter;
-
+    private Integer position=0;
 
     public static FavStudentsFragment newInstance()
     {
         FavStudentsFragment fragment=new FavStudentsFragment();
         return fragment;
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        if(savedInstanceState!=null)
+        {
+            position=savedInstanceState.getInt("position");
+        }
     }
 
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -56,7 +65,7 @@ public class FavStudentsFragment extends Fragment {
             mRecyclerView.setAdapter(ad);
         }
         else {
-            adapter = new FavStudentsAdapter(this.getActivity(), (ArrayList<Student>) students, mRecyclerView, this);
+            adapter = new FavStudentsAdapter(this.getActivity(), (ArrayList<Student>) students, mRecyclerView, this,position,mLayoutManager);
             // specify an adapter
             mRecyclerView.setAdapter(adapter);
         }
@@ -65,5 +74,14 @@ public class FavStudentsFragment extends Fragment {
         return root;
     }
 
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        try {
+            outState.putInt("position", mLayoutManager.findFirstVisibleItemPosition());
+        }catch (Exception e){
+            outState.putInt("position",0);
+        }
+    }
 
 }

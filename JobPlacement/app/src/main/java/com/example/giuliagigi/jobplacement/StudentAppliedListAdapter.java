@@ -3,6 +3,7 @@ package com.example.giuliagigi.jobplacement;
 import android.graphics.Bitmap;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
@@ -24,12 +25,20 @@ public class StudentAppliedListAdapter extends RecyclerView.Adapter<StudentAppli
     private FragmentActivity context;
     List<Student> mdataset;
     GlobalData globalData;
+    private Integer currentPosition=0;
+    private LinearLayoutManager mLayoutManager;
 
-    public StudentAppliedListAdapter(FragmentActivity context, List<Student> students)
+    public StudentAppliedListAdapter(FragmentActivity context, List<Student> students,int pos,LinearLayoutManager manager)
     {
         globalData=(GlobalData)context.getApplication();
         this.context=context;
         mdataset=students;
+        currentPosition=pos;
+        mLayoutManager=manager;
+        if(currentPosition!=0)
+        {
+            mLayoutManager.scrollToPosition(currentPosition);
+        }
 
     }
 

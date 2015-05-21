@@ -194,7 +194,7 @@ public class User extends ParseObject{
         this.put(TYPE_FIELD, type);
     }
 
-    public void setProfilePhoto(Bitmap photoBitmap){
+    public void setProfilePhoto(Bitmap photoBitmap , final GlobalData globalData){
 
         profilePhoto = photoBitmap;
         isCached.put(PROFILE_PHOTO_FIELD,true);
@@ -208,9 +208,10 @@ public class User extends ParseObject{
             @Override
             public void done(ParseException e) {
 
-                Log.println(Log.ASSERT,"USER", "profile photo upload completed");
+                Log.println(Log.ASSERT, "USER", "profile photo upload completed");
                 User.this.put(PROFILE_PHOTO_FIELD, photoFile);
-                Log.println(Log.ASSERT,"USER", "user updated");
+                Log.println(Log.ASSERT, "USER", "user updated");
+                globalData.getmAdapter().notifyDataSetChanged();
             }
         });
     }

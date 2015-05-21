@@ -3,6 +3,7 @@ package com.example.giuliagigi.jobplacement;
 import android.graphics.Bitmap;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
@@ -31,6 +32,8 @@ public class FavStudentsAdapter extends RecyclerView.Adapter<FavStudentsAdapter.
     private FavStudentsAdapter favStudentsAdapter=this;
     private RecyclerView mRecyclerView;
     private FavStudentsFragment parent;
+    private Integer currentPosition=0;
+    private LinearLayoutManager mLayoutManager;
 
     // Provide a reference to the views for each data item
     // Complex data items may need more than one view per item, and
@@ -59,7 +62,7 @@ public class FavStudentsAdapter extends RecyclerView.Adapter<FavStudentsAdapter.
         }
     }
 
-    public  FavStudentsAdapter(FragmentActivity c, ArrayList<Student> students, RecyclerView r,FavStudentsFragment fragment)
+    public  FavStudentsAdapter(FragmentActivity c, ArrayList<Student> students, RecyclerView r,FavStudentsFragment fragment,int pos,LinearLayoutManager manager)
     {
         context=c;
         mDataset=new ArrayList<>(students);
@@ -67,6 +70,13 @@ public class FavStudentsAdapter extends RecyclerView.Adapter<FavStudentsAdapter.
         company=globalData.getCompanyFromUser();
         mRecyclerView=r;
         parent=fragment;
+        currentPosition=pos;
+        mLayoutManager=manager;
+
+        if(currentPosition!=0)
+        {
+            mLayoutManager.scrollToPosition(currentPosition);
+        }
 
     }
 
@@ -130,11 +140,12 @@ public class FavStudentsAdapter extends RecyclerView.Adapter<FavStudentsAdapter.
         }
 
         holder.pref.setChecked(true);
-        holder.pref.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        holder.pref.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+            public void onClick(View v) {
+                CheckBox checkBox=(CheckBox)v;
 
-                if (isChecked) {
+                if (checkBox.isChecked()) {
                     //add this offer to pref
                     company.addStudent(mDataset.get(position));
                     company.saveInBackground();
@@ -144,10 +155,8 @@ public class FavStudentsAdapter extends RecyclerView.Adapter<FavStudentsAdapter.
                     company.saveInBackground();
 
                 }
-
             }
         });
-
     }
     // Return the size of your dataset (invoked by the layout manager)
     @Override
