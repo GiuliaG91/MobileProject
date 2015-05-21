@@ -12,6 +12,7 @@ import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.ContextMenu;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -59,6 +60,13 @@ public class OfferDetail extends  Fragment {
     }
 
     @Override
+    public void onCreateOptionsMenu(
+            Menu menu, MenuInflater inflater) {
+        menu.clear();
+    }
+
+
+    @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         globalData=(GlobalData)getActivity().getApplication();
@@ -76,7 +84,6 @@ public class OfferDetail extends  Fragment {
         }
 
     }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

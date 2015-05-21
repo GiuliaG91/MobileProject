@@ -1,15 +1,16 @@
 package com.example.giuliagigi.jobplacement;
 
 import android.app.Activity;
-import android.net.Uri;
 import android.os.Bundle;
 
-import android.support.annotation.Nullable;
+
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
 
 
 /**
@@ -69,6 +70,10 @@ public class TabHomeStudentFragment extends Fragment {
         }
        globalData =(GlobalData)getActivity().getApplication();
         Titles=getActivity().getResources().getStringArray(R.array.Home_Students_Tab);
+
+        //set toolbar
+     Toolbar toolbar=globalData.getToolbar();
+        toolbar.setTitle(R.string.ToolbarTilteHome);
     }
 
     @Override

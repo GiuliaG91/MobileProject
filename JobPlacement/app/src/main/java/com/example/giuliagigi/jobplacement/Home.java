@@ -45,7 +45,7 @@ public class Home extends ActionBarActivity  implements TabHomeStudentFragment.O
     private TypedArray ICONS;
     private String[] TITLES;
     private Boolean init=false;
-
+    private String toolbarTitle=null;
 /********************************************************/
 /**
  *
@@ -85,6 +85,7 @@ public class Home extends ActionBarActivity  implements TabHomeStudentFragment.O
         toolbar = (Toolbar) findViewById(R.id.toolbar); // Attaching the layout to the toolbar object
         setSupportActionBar(toolbar);                   // Setting toolbar as the ActionBar with setSupportActionBar() call
         toolbar.setNavigationIcon(R.drawable.ic_menu_white);
+
         application.setToolbar(toolbar);
         //Setup Drawer
 
@@ -112,6 +113,7 @@ public class Home extends ActionBarActivity  implements TabHomeStudentFragment.O
 
                    if(init==false)//setUpMainFragment(1);
                    {
+
                        FragmentManager fragmentManager = getSupportFragmentManager();
                        //New Fragment
                            TabHomeStudentFragment homeFragment = TabHomeStudentFragment.newInstance();
@@ -226,7 +228,6 @@ public class Home extends ActionBarActivity  implements TabHomeStudentFragment.O
 
     }
 
-
     /* ------------------ PROFILE MANAGEMENT FRAGMENT INTERFACE ----------------------------------*/
 
     @Override
@@ -258,7 +259,6 @@ public class Home extends ActionBarActivity  implements TabHomeStudentFragment.O
 
     }
 
-
     /* -------------------- PROFILE MANAGEMENT INTERFACE -----------------------------------------*/
     @Override
     public void setEditMode(boolean editable) {
@@ -276,7 +276,6 @@ public class Home extends ActionBarActivity  implements TabHomeStudentFragment.O
     /* ---------------- END PROFILE MANAGEMENT INTERFACE -----------------------------------------*/
 
 
-
     @Override
     public void onBackPressed() {
 
@@ -291,9 +290,6 @@ public class Home extends ActionBarActivity  implements TabHomeStudentFragment.O
             LogoutDialogFragment newFragment = LogoutDialogFragment.newInstance();
             newFragment.show(getFragmentManager(),"Logout");
 
-
         }
     }
-
-
 }

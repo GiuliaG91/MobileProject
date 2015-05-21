@@ -125,11 +125,12 @@ public class menuAdapter extends RecyclerView.Adapter<menuAdapter.ViewHolder> {
                                             .replace(R.id.tab_Home_container, homeFragment)
                                             .commit();
 
-                                    // Highlight the selected item, update the title, and close the drawer
-                                    // Highlight the selected item, update the title, and close the drawer
-                                    TextView tv = (TextView) v.findViewById(R.id.rowText);
+                                   //clear backstack
+                                    int count = fragmentManager.getBackStackEntryCount();
+                                    for(int i = 0; i < count; ++i) {
+                                        fragmentManager.popBackStack();
+                                    }
 
-                                    toolbar.setTitle(tv.getText());
 
                                 }
                                 mDrawerLayout.closeDrawers();
@@ -159,11 +160,12 @@ public class menuAdapter extends RecyclerView.Adapter<menuAdapter.ViewHolder> {
                                             .replace(R.id.tab_Home_container, fragment)
                                             .commit();
 
-                                    // Highlight the selected item, update the title, and close the drawer
-                                    // Highlight the selected item, update the title, and close the drawer
-                                    TextView tv = (TextView) v.findViewById(R.id.rowText);
+                                    //clear backstack
+                                    int count = fragmentManager.getBackStackEntryCount();
+                                    for(int i = 0; i < count; ++i) {
+                                        fragmentManager.popBackStack();
+                                    }
 
-                                    toolbar.setTitle(tv.getText());
 
                                 }
                                 mDrawerLayout.closeDrawers();
@@ -193,11 +195,12 @@ public class menuAdapter extends RecyclerView.Adapter<menuAdapter.ViewHolder> {
                                             .replace(R.id.tab_Home_container, fragment)
                                             .commit();
 
-                                    // Highlight the selected item, update the title, and close the drawer
-                                    // Highlight the selected item, update the title, and close the drawer
-                                    TextView tv = (TextView) v.findViewById(R.id.rowText);
+                                    //clear backstack
+                                    int count = fragmentManager.getBackStackEntryCount();
+                                    for(int i = 0; i < count; ++i) {
+                                        fragmentManager.popBackStack();
+                                    }
 
-                                    toolbar.setTitle(tv.getText());
 
                                 }
                                 mDrawerLayout.closeDrawers();
@@ -228,11 +231,12 @@ public class menuAdapter extends RecyclerView.Adapter<menuAdapter.ViewHolder> {
                                             .addToBackStack("Home")
                                             .commit();
 
-                                    // Highlight the selected item, update the title, and close the drawer
-                                    // Highlight the selected item, update the title, and close the drawer
-                                    TextView tv = (TextView) v.findViewById(R.id.rowText);
+                                    //clear backstack
+                                    int count = fragmentManager.getBackStackEntryCount();
+                                    for(int i = 0; i < count; ++i) {
+                                        fragmentManager.popBackStack();
+                                    }
 
-                                    toolbar.setTitle(tv.getText());
 
                                 }
                                 mDrawerLayout.closeDrawers();
@@ -262,8 +266,12 @@ public class menuAdapter extends RecyclerView.Adapter<menuAdapter.ViewHolder> {
                                             .addToBackStack(gd.getResources().getStringArray(R.array.Menu_items_student)[1])
                                             .commit();
 
+                                    //clear backstack
+                                    int count = fragmentManager.getBackStackEntryCount();
+                                    for(int i = 0; i < count; ++i) {
+                                        fragmentManager.popBackStack();
+                                    }
 
-                                    toolbar.setTitle(gd.getResources().getString(R.string.received_mail));
 
                                 }
                                 mDrawerLayout.closeDrawers();
@@ -321,7 +329,12 @@ public class menuAdapter extends RecyclerView.Adapter<menuAdapter.ViewHolder> {
                                       // Highlight the selected item, update the title, and close the drawer
                                         TextView tv = (TextView) v.findViewById(R.id.rowText);
 
-                                      toolbar.setTitle(tv.getText());
+                                      //clear backstack
+                                      int count = fragmentManager.getBackStackEntryCount();
+                                      for(int i = 0; i < count; ++i) {
+                                          fragmentManager.popBackStack();
+                                      }
+
 
                                   }
                                   mDrawerLayout.closeDrawers();
@@ -352,11 +365,12 @@ public class menuAdapter extends RecyclerView.Adapter<menuAdapter.ViewHolder> {
                                               .replace(R.id.tab_Home_container, fragment)
                                               .commit();
 
-                                      // Highlight the selected item, update the title, and close the drawer
-                                      // Highlight the selected item, update the title, and close the drawer
-                                      TextView tv = (TextView) v.findViewById(R.id.rowText);
+                                      //clear backstack
+                                      int count = fragmentManager.getBackStackEntryCount();
+                                      for(int i = 0; i < count; ++i) {
+                                          fragmentManager.popBackStack();
+                                      }
 
-                                      toolbar.setTitle(tv.getText());
 
                                   }
                                   mDrawerLayout.closeDrawers();
@@ -387,11 +401,12 @@ public class menuAdapter extends RecyclerView.Adapter<menuAdapter.ViewHolder> {
                                               .addToBackStack("Home")
                                               .commit();
 
-                                      // Highlight the selected item, update the title, and close the drawer
-                                      // Highlight the selected item, update the title, and close the drawer
-                                      TextView tv = (TextView) v.findViewById(R.id.rowText);
+                                      //clear backstack
+                                      int count = fragmentManager.getBackStackEntryCount();
+                                      for(int i = 0; i < count; ++i) {
+                                          fragmentManager.popBackStack();
+                                      }
 
-                                      toolbar.setTitle(tv.getText());
 
                                   }
                                   mDrawerLayout.closeDrawers();
@@ -437,10 +452,14 @@ public class menuAdapter extends RecyclerView.Adapter<menuAdapter.ViewHolder> {
                                           // Highlight the selected item, update the title, and close the drawer
                                           TextView tv = (TextView) v.findViewById(R.id.rowText);
 
-                                          toolbar.setTitle(tv.getText());
-                                          mDrawerLayout.closeDrawers();
+                                          //clear backstack
+                                          int count = fragmentManager.getBackStackEntryCount();
+                                          for(int i = 0; i < count; ++i) {
+                                              fragmentManager.popBackStack();
+                                          }
 
                                       }
+                                      mDrawerLayout.closeDrawers();
 
                               }  else
                                   {
@@ -454,10 +473,12 @@ public class menuAdapter extends RecyclerView.Adapter<menuAdapter.ViewHolder> {
                                               .addToBackStack("Home")
                                               .commit();
 
-                                      // Highlight the selected item, update the title, and close the drawer
-                                      // Highlight the selected item, update the title, and close the drawer
-                                      TextView tv = (TextView) v.findViewById(R.id.rowText);
-                                      toolbar.setTitle(tv.getText());
+                                      //clear backstack
+                                      int count = fragmentManager.getBackStackEntryCount();
+                                      for(int i = 0; i < count; ++i) {
+                                          fragmentManager.popBackStack();
+                                      }
+
 
                                   }
                                   mDrawerLayout.closeDrawers();
@@ -489,7 +510,12 @@ public class menuAdapter extends RecyclerView.Adapter<menuAdapter.ViewHolder> {
                                               .addToBackStack(gd.getResources().getStringArray(R.array.Menu_items_Company)[4])
                                               .commit();
 
-                                      toolbar.setTitle(gd.getResources().getString(R.string.received_mail));
+                                      //clear backstack
+                                      int count = fragmentManager.getBackStackEntryCount();
+                                      for(int i = 0; i < count; ++i) {
+                                          fragmentManager.popBackStack();
+                                      }
+
                                   }
                                   mDrawerLayout.closeDrawers();
 

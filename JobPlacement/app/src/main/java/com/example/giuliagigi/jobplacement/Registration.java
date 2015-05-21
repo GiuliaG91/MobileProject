@@ -385,7 +385,7 @@ public class Registration extends ActionBarActivity implements StudentRegistrati
     private void saveLoginPreferences(User newUser){
 
         /* saving credentials for next automatic login */
-        SharedPreferences sp = application.getLoginPreferences();
+    /*    SharedPreferences sp = application.getLoginPreferences();
         if (sp != null) {
 
             SharedPreferences.Editor editor = sp.edit();
@@ -399,7 +399,7 @@ public class Registration extends ActionBarActivity implements StudentRegistrati
             editor.commit();
 
 
-        }
+        }*/
     }
 
 

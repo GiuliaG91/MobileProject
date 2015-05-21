@@ -38,7 +38,7 @@ public class StudentCompanySearchAdapter extends RecyclerView.Adapter<StudentCom
     private ArrayList<Company> mDataset;
     private GlobalData globalData;
     private Student student;
-    private Set<Company> supportSet;
+    private List<Company> supportSet;
     private StudentCompanySearchFragment currentFragment;
     private Integer currentPosition=0;
     private LinearLayoutManager mLayoutManager;
@@ -61,7 +61,7 @@ public class StudentCompanySearchAdapter extends RecyclerView.Adapter<StudentCom
         mDataset = new ArrayList<>();
         globalData = (GlobalData) context.getApplication();
         student=globalData.getStudentFromUser();
-        supportSet = new HashSet<>(student.getCompanies());
+        supportSet = new ArrayList<>(student.getCompanies());
         currentPosition=pos;
         mLayoutManager=manager;
 
@@ -214,7 +214,7 @@ public class StudentCompanySearchAdapter extends RecyclerView.Adapter<StudentCom
 
                 pref.setChecked(false);
 
-                if (supportSet.add(object) == false) {
+                if (supportSet.contains(object)) {
                     pref.setChecked(true);
                 }
                 pref.setOnClickListener(new View.OnClickListener() {
