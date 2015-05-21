@@ -226,7 +226,7 @@
     <!--Profile management -->
     <string name="string_send_email">Do you want to send a message to </string>
     <string name="string_cannot_edit">ERROR: you are not supposed to modify this account</string>
-    <string name="string_email_not_verified">Your email wasn't verified yet. Please click on the link we sent you</string>
+    <string name="string_email_not_verified">Your email was not verified yet. Please click on the link we sent you</string>
     
     <!-- New Offer Fragment -->
 
