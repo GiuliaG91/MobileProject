@@ -150,7 +150,7 @@ public class Home_tabAdapter extends RecyclerView.Adapter<Home_tabAdapter.ViewHo
                             title.setText(context.getResources().getString(R.string.student_accepted));
                             break;
 
-                    case 3: if(object.getCompany().getProfilePhoto() != null)
+                    case 3: if(((Company)object.getCompany()).getProfilePhoto() != null)
                                 icon.setImageBitmap(object.getCompany().getProfilePhoto());
                             title.setText(context.getResources().getString(R.string.new_company_signed_up));
                             break;
@@ -282,8 +282,10 @@ public class Home_tabAdapter extends RecyclerView.Adapter<Home_tabAdapter.ViewHo
 
                     fragmentManager.beginTransaction()
                         .replace(R.id.tab_Home_container, fragment)
-                        .addToBackStack(mDataset.get(vh.getPosition()).getStudent().getName() + " " + mDataset.get(vh.getPosition()).getStudent().getSurname() + globalData.getResources().getString(R.string.profile))
+                        .addToBackStack(globalData.getResources().getStringArray(R.array.Menu_items_Company)[0])
                         .commit();
+
+                //mDataset.get(vh.getPosition()).getCompany().getName() + " " + globalData.getResources().getString(R.string.profile)
 
                     globalData.getToolbar().setTitle(mDataset.get(vh.getPosition()).getCompany().getName() + " " + globalData.getResources().getString(R.string.profile));
 
@@ -337,7 +339,7 @@ public class Home_tabAdapter extends RecyclerView.Adapter<Home_tabAdapter.ViewHo
 
     public void orderMyDataset(){
 
-        for(int i = 0; i < mDataset.size()-2; i++)
+        for(int i = 0; i < mDataset.size()-1; i++)
             for(int j = i+1; j < mDataset.size()-1; j++)
                 if(mDataset.get(i).getDate().after(mDataset.get(j).getDate())) {
                     News tmp = mDataset.get(i);

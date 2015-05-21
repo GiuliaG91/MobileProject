@@ -4,6 +4,7 @@ import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.PersistableBundle;
 import android.support.v7.app.*;
@@ -274,11 +275,13 @@ public class Registration extends ActionBarActivity implements StudentRegistrati
                                                 u.setType(User.TYPE_STUDENT);
                                                 u.setPassword(newUser.getPassword());
                                                 u.setName(newUser.getName() + " " + ((Student)newUser).getSurname());
+
+
                                                 u.saveInBackground();
 
                                                 saveLoginPreferences(newUser);
 
-                                                startActivity(new Intent(getApplicationContext(),Login.class));
+                                                startActivity(new Intent(getApplicationContext(), Login.class));
                                             } else
                                                 Log.println(Log.ASSERT, "SIGNUP", "error while saving user object: " + e.getMessage());
                                         }
@@ -313,6 +316,9 @@ public class Registration extends ActionBarActivity implements StudentRegistrati
                                     u.saveInBackground();
 
                                     saveLoginPreferences(newUser);
+
+                                    News news = new News();
+                                    news.createNews(3, null, null, (GlobalData)getApplication());
 
                                     // invia notifica push agli studenti se il nuovo user registrato è una company
                                     if(newUser.getType().equals(User.TYPE_COMPANY)) {

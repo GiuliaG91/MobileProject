@@ -1,11 +1,17 @@
 package com.example.giuliagigi.jobplacement;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+
 import com.parse.FindCallback;
+import com.parse.GetDataCallback;
 import com.parse.Parse;
 import com.parse.ParseClassName;
 import com.parse.ParseException;
+import com.parse.ParseFile;
 import com.parse.ParseObject;
 import com.parse.ParseRelation;
+import com.parse.ProgressCallback;
 
 import java.util.ArrayList;
 import java.util.Arrays;
