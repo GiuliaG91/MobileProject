@@ -273,6 +273,15 @@ public class Home extends ActionBarActivity  implements TabHomeStudentFragment.O
                 l.onActivityStateChanged(OnActivityChangedListener.State.DISPLAY_MODE_STATE, OnActivityChangedListener.State.EDIT_MODE_STATE);
     }
 
+    @Override
+    public void openMailBox(User user) {
+
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        MailBoxNewFragment mailbox = MailBoxNewFragment.newInstance(new Bundle());
+        ft.replace(R.id.tab_Home_container,mailbox);
+        ft.commit();
+    }
+
     /* ---------------- END PROFILE MANAGEMENT INTERFACE -----------------------------------------*/
 
 
