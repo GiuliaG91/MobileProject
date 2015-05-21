@@ -34,6 +34,7 @@
     <string name="action_filter">filter</string>
     <string name="action_menu">menu</string>
     <string name="action_edit">edit</string>
+    <string name="action_send">send</string>
 
     <string name="drawer_open">Apri</string>
     <string name="drawer_close">Chiudi</string>

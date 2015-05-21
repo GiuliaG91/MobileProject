@@ -205,7 +205,10 @@ public class ProfileManagement extends Fragment{
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         menu.clear();
-        inflater.inflate(R.menu.menu_profile_management, menu);
+        if(editable)
+            inflater.inflate(R.menu.menu_profile_management, menu);
+        else
+            inflater.inflate(R.menu.menu_visit_profile, menu);
     }
 
     @Override
@@ -214,10 +217,20 @@ public class ProfileManagement extends Fragment{
         if (item.getItemId() == R.id.action_edit && editable) {
             switchMode();
             }
-        if(isEditMode)
+
+        if(isEditMode && editable)
             item.setIcon(R.drawable.ic_confirm_white);
-        else
+        else if(!isEditMode && editable)
             item.setIcon(R.drawable.ic_edit_white);
+        else if(!editable)
+            item.setIcon(R.drawable.ic_send_white_36dp);
+
+        if(item.getItemId() == R.id.action_send && !editable){
+
+            Log.println(Log.ASSERT,"PROFILE MANAG", "contatto");
+
+            //TODO
+        }
         return true;
     }
 
