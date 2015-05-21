@@ -375,5 +375,16 @@
     <string name="day_ago">giorno fa</string>
 
     <string name="job_offer">Offerta di lavoro</string>
+    <string name="new_job_offer_message">ha pubblicato una nuova offerta di lavoro su</string>
+    <string name="new_job_offer">Nuova offerta di lavoro</string>
+    <string name="new_student_applied">Nuovo studente candidato</string>
+    <string name="student_accepted">Candidatura accettata</string>
+    <string name="new_company_signed_up">Nuova azienda!!!</string>
+
+    <string name="profile">profilo</string>
+    <string name="new_application_message">si è candidato per l\'offerta di lavoro</string>
+    <string name="the_company">L\'azienda</string>
+    <string name="application_accepted_message">ha accettato la tua candidatura per l\'offerta di lavoro</string>
+    <string name="new_company_signed_up_message">si e\' registrata in</string>
 
 </resources>

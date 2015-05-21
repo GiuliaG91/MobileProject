@@ -68,7 +68,7 @@ public class TabHomeStudentFragment extends Fragment {
             currentPosition=savedInstanceState.getInt("position");
         }
        globalData =(GlobalData)getActivity().getApplication();
-        Titles=getActivity().getResources().getStringArray(R.array.Home_Students_Tab);
+       Titles = getActivity().getResources().getStringArray(R.array.Home_Students_Tab);
     }
 
     @Override
@@ -88,7 +88,7 @@ public class TabHomeStudentFragment extends Fragment {
         pager.setAdapter(adapter);
         pager.setCurrentItem(currentPosition);
 
-        // Assiging the Sliding Tab Layout View
+        // Assigning the Sliding Tab Layout View
         tabs = (SlidingTabLayout) root.findViewById(R.id.tabs);
         tabs.setDistributeEvenly(true); // To make the Tabs Fixed set this true, This makes the tabs Space Evenly in Available width
 

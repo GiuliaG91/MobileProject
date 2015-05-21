@@ -434,5 +434,16 @@
 
     <string name="NoFavourites">No favourites found</string>
     <string name="job_offer">Job Offer</string>
+    <string name="new_job_offer_message">published a new job offer on</string>
+    <string name="new_job_offer">New Job Offer</string>
+    <string name="new_student_applied">New Applied Student</string>
+    <string name="student_accepted">Application Accepted</string>
+    <string name="new_company_signed_up">New Company!!!</string>
+
+    <string name="profile">profile</string>
+    <string name="new_application_message">applied to the Job Offer</string>
+    <string name="the_company">The company</string>
+    <string name="application_accepted_message">accepted your application for the job offer</string>
+    <string name="new_company_signed_up_message">signed up in</string>
 
 </resources>

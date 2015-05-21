@@ -29,7 +29,7 @@ import java.util.ArrayList;
 public class Home extends ActionBarActivity  implements TabHomeStudentFragment.OnFragmentInteractionListener ,TabHomeCompanyFragment.OnFragmentInteractionListener, NewOffer.OnFragmentInteractionListener,
                                                 ProfileManagementFragment.OnInteractionListener, ProfileManagement.OnInteractionListener ,
                                                   OfferSearchFragment.OnFragmentInteractionListener , StudentCompanySearchFragment.OnFragmentInteractionListener,
-                                                    CompanyStudentSearchFragment.OnFragmentInteractionListener, MailBoxFragment.OnFragmentInteractionListener
+                                                    CompanyStudentSearchFragment.OnFragmentInteractionListener, MailBoxFragment.OnFragmentInteractionListener, Home_tab.OnFragmentInteractionListener
 
 {
     private Toolbar toolbar;   // Declaring the Toolbar Object
