@@ -1,9 +1,12 @@
 package com.example.giuliagigi.jobplacement;
 
 import android.app.Activity;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -210,7 +213,26 @@ public class StudentProfileManagementSkillsFragment extends ProfileManagementFra
             host.removeOnActivityChangedListener(f);
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if(requestCode == REQUEST_CONTENT_GET && resultCode == Activity.RESULT_OK){
+
+            Uri fileUri = data.getData();
+            Log.println(Log.ASSERT,"SKILLS FRAG", "Uri: " + fileUri);
+        }
+    }
+
     /*----------------------- AUXILIARY METHODS ------------------------------------------------------*/
+
+    private void pickFile(){
+
+        Intent i = new Intent(Intent.ACTION_GET_CONTENT);
+        i.addCategory(Intent.CATEGORY_OPENABLE);
+        Intent chooser = Intent.createChooser(i,"Choose a file");
+        startActivityForResult(chooser,REQUEST_CONTENT_GET);
+    }
 
     @Override
     protected void restoreStateFromBundle() {

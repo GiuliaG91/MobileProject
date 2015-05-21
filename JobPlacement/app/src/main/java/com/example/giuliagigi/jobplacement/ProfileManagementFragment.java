@@ -27,7 +27,7 @@ public class ProfileManagementFragment extends Fragment implements OnActivityCha
     protected static final String BUNDLE_KEY_HASCHANGED = "BUNDLE_KEY_HASCHANGED";
     protected static final String TITLE = "None";
     protected static final int REQUEST_IMAGE_GET = 1;
-
+    protected static final int REQUEST_CONTENT_GET = 2;
 
     protected OnInteractionListener host;
     protected ArrayList<EditText> textFields;
