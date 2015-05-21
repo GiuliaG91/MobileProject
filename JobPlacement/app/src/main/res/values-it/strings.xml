@@ -118,6 +118,8 @@
     <string name="string_student_fragment_languages">Lingue:</string>
     <string name="string_student_fragment_languages_title">Lingua:</string>
     <string name="string_student_fragment_language_level">Livello:</string>
+    <string name="string_student_cv">Curriculum vitae</string>
+    <string name="string_student_upload_cv">CV non caricato</string>
 
 
     <!-- Degree fragment strings: -->
