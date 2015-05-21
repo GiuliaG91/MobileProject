@@ -202,7 +202,7 @@ public class User extends ParseObject{
 
         photoBitmap.compress(Bitmap.CompressFormat.JPEG,100,os);
         byte[] photoByteArray = os.toByteArray();
-        final ParseFile photoFile = new ParseFile("profilePicture.jpg", photoByteArray);
+        final ParseFile photoFile = new ParseFile("profilePicture" + getObjectId() + ".jpg", photoByteArray);
 
         photoFile.saveInBackground(new SaveCallback() {
             @Override
@@ -210,6 +210,7 @@ public class User extends ParseObject{
 
                 Log.println(Log.ASSERT, "USER", "profile photo upload completed");
                 User.this.put(PROFILE_PHOTO_FIELD, photoFile);
+                User.this.saveEventually();
                 Log.println(Log.ASSERT, "USER", "user updated");
                 globalData.getmAdapter().notifyDataSetChanged();
             }

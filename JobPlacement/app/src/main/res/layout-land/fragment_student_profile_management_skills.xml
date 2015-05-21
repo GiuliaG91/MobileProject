@@ -76,7 +76,7 @@
                                 />
                         </LinearLayout>
                         <Button
-                            android:id="@+id/skills_upload_cv"
+                            android:id="@+id/skills_down_upload_cv"
                             android:gravity="center"
                             android:layout_width="30dp"
                             android:layout_height="30dp"

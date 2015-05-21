@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
@@ -11,7 +12,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 
+import java.io.BufferedInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 
 public class StudentProfileManagementSkillsFragment extends ProfileManagementFragment {
@@ -21,7 +30,9 @@ public class StudentProfileManagementSkillsFragment extends ProfileManagementFra
     private static final String BUNDLE_KEY_STUDENT = "BUNDLE_KEY_STUDENT";
 
     private Student student;
-    Button addDegree, addLanguage,addCertificate;
+    private boolean editable;
+    Button addDegree, addLanguage,addCertificate, curriculum;
+    TextView curriculumName;
     ArrayList<StudentProfileManagementDegreeFragment> degreeFragments;
     ArrayList<StudentProfileManagementLanguageFragment> languageFragments;
     ArrayList<StudentProfileManagementCertificateFragment> certificateFragments;
@@ -29,12 +40,13 @@ public class StudentProfileManagementSkillsFragment extends ProfileManagementFra
     /*----------------------- CONSTRUCTORS ------------------------------------------------------*/
 
     public StudentProfileManagementSkillsFragment() {super();}
-    public static StudentProfileManagementSkillsFragment newInstance(Student student) {
+    public static StudentProfileManagementSkillsFragment newInstance(Student student, boolean editable) {
         StudentProfileManagementSkillsFragment fragment = new StudentProfileManagementSkillsFragment();
         Bundle args = new Bundle();
         fragment.setArguments(args);
         fragment.setStudent(student);
         fragment.setUser(student);
+        fragment.setEditable(editable);
         return fragment;
     }
 
@@ -46,6 +58,10 @@ public class StudentProfileManagementSkillsFragment extends ProfileManagementFra
     public void setStudent(Student student){
 
         this.student = student;
+    }
+
+    public void setEditable(boolean editable) {
+        this.editable = editable;
     }
 
     @Override
@@ -119,6 +135,23 @@ public class StudentProfileManagementSkillsFragment extends ProfileManagementFra
             }
         });
 
+        curriculum = (Button)root.findViewById(R.id.skills_down_upload_cv);
+        curriculumName = (TextView)root.findViewById(R.id.student_cv_name);
+
+        if(editable){
+
+            curriculum.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    pickCurriculumFile();
+                }
+            });
+        }
+        else {
+
+
+        }
+
         return root;
     }
 
@@ -171,6 +204,7 @@ public class StudentProfileManagementSkillsFragment extends ProfileManagementFra
 
         }
 
+
         setEnable(host.isEditMode());
     }
 
@@ -220,18 +254,49 @@ public class StudentProfileManagementSkillsFragment extends ProfileManagementFra
         if(requestCode == REQUEST_CONTENT_GET && resultCode == Activity.RESULT_OK){
 
             Uri fileUri = data.getData();
-            Log.println(Log.ASSERT,"SKILLS FRAG", "Uri: " + fileUri);
+
+            if(fileUri != null){
+
+
+
+                try {
+
+                    InputStream is = getActivity().getContentResolver().openInputStream(fileUri);
+                    BufferedInputStream buffer = new BufferedInputStream(is);
+
+                    int length = 0;
+                    while(buffer.read()!= -1)
+                        length++;
+
+                    Log.println(Log.ASSERT,"SKILLS FRAG", "length: " + length);
+
+                    buffer = new BufferedInputStream(is);
+                    byte[] byteArray = new byte[length];
+                    buffer.read(byteArray,0,length);
+
+                    student.setCurriculum(byteArray);
+
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                    Log.println(Log.ASSERT,"SKILLS", "curriculum file not found");
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    Log.println(Log.ASSERT,"SKILLS", "error while reading file");
+                }
+
+            }
+
         }
     }
 
     /*----------------------- AUXILIARY METHODS ------------------------------------------------------*/
 
-    private void pickFile(){
+    private void pickCurriculumFile(){
 
         Intent i = new Intent(Intent.ACTION_GET_CONTENT);
-        i.addCategory(Intent.CATEGORY_OPENABLE);
-        Intent chooser = Intent.createChooser(i,"Choose a file");
-        startActivityForResult(chooser,REQUEST_CONTENT_GET);
+        i.setType("application/pdf/*");
+        startActivityForResult(i,REQUEST_CONTENT_GET);
+
     }
 
     @Override
@@ -263,6 +328,8 @@ public class StudentProfileManagementSkillsFragment extends ProfileManagementFra
         addCertificate.setVisibility(visibility);
         addDegree.setVisibility(visibility);
         addLanguage.setVisibility(visibility);
+
+        if(editable) curriculum.setEnabled(enable);
     }
 
     @Override

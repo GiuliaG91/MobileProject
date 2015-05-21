@@ -26,7 +26,7 @@ public class ProfileManagementViewAdapter extends FragmentPagerAdapter{
 
                 Student student = (Student)user;
                 fragments.add(StudentProfileManagementBasicsFragment.newInstance(student));
-                fragments.add(StudentProfileManagementSkillsFragment.newInstance(student));
+                fragments.add(StudentProfileManagementSkillsFragment.newInstance(student,editable));
                 fragments.add(StudentProfileManagementRegistryFragment.newInstance(student));
             }
             else if(user.getType().equals(User.TYPE_COMPANY)) {
