@@ -98,7 +98,7 @@ public class ProfileManagementTagsFragment extends ProfileManagementFragment {
                     user.removeTag(userTags.get(tagTextView.getText().toString().trim()));
                     userTags.remove(tagTextView.getText().toString().trim());
                     tagViews.remove(mytagView);
-                    Toast.makeText(getActivity(), "Removed", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), GlobalData.getContext().getString(R.string.string_tags_removed), Toast.LENGTH_SHORT).show();
                     hasChanged = true;
                 }
             });
@@ -153,18 +153,18 @@ public class ProfileManagementTagsFragment extends ProfileManagementFragment {
                                 user.removeTag(userTags.get(t.getText().toString().trim()));
                                 userTags.remove(t.getText().toString().trim());
                                 tagViews.remove(mytagView);
-                                Toast.makeText(getActivity(), "Removed", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getActivity(), GlobalData.getContext().getString(R.string.string_tags_removed), Toast.LENGTH_SHORT).show();
                             }
                         });
 
                         tagsText.setText("");
-                        Toast.makeText(getActivity(),"Added",Toast.LENGTH_SHORT ).show();
+                        Toast.makeText(getActivity(),GlobalData.getContext().getString(R.string.string_tags_added),Toast.LENGTH_SHORT ).show();
                         hasChanged = true;
 
-                    }else Toast.makeText(getActivity().getApplicationContext(),"Existent tag",Toast.LENGTH_SHORT).show();
+                    }else Toast.makeText(getActivity().getApplicationContext(),GlobalData.getContext().getString(R.string.string_tags_existent),Toast.LENGTH_SHORT).show();
 
                 }
-                else Toast.makeText(getActivity().getApplicationContext(),"Wrong tag",Toast.LENGTH_SHORT).show();
+                else Toast.makeText(getActivity().getApplicationContext(),GlobalData.getContext().getString(R.string.string_tags_wrong),Toast.LENGTH_SHORT).show();
 
             }
         });

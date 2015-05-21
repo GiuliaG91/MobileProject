@@ -29,7 +29,7 @@ import java.util.ArrayList;
 public class Home extends ActionBarActivity  implements TabHomeStudentFragment.OnFragmentInteractionListener ,TabHomeCompanyFragment.OnFragmentInteractionListener, NewOffer.OnFragmentInteractionListener,
                                                 ProfileManagementFragment.OnInteractionListener, ProfileManagement.OnInteractionListener ,
                                                   OfferSearchFragment.OnFragmentInteractionListener , StudentCompanySearchFragment.OnFragmentInteractionListener,
-                                                    CompanyStudentSearchFragment.OnFragmentInteractionListener, MailBoxFragment.OnFragmentInteractionListener
+                                                    CompanyStudentSearchFragment.OnFragmentInteractionListener, MailBoxFragment.OnFragmentInteractionListener, Home_tab.OnFragmentInteractionListener
 
 {
     private Toolbar toolbar;   // Declaring the Toolbar Object
@@ -182,7 +182,7 @@ public class Home extends ActionBarActivity  implements TabHomeStudentFragment.O
 
         /* email verification alert */
         if (!application.getCurrentUser().isEmailVerified())
-            Toast.makeText(getApplicationContext(),"Your email wasn't verified yet. Please click on the link we sent you",Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(),GlobalData.getContext().getString(R.string.string_email_not_verified),Toast.LENGTH_SHORT).show();
 
     }
 
@@ -271,6 +271,15 @@ public class Home extends ActionBarActivity  implements TabHomeStudentFragment.O
         else
             for (OnActivityChangedListener l:listeners)
                 l.onActivityStateChanged(OnActivityChangedListener.State.DISPLAY_MODE_STATE, OnActivityChangedListener.State.EDIT_MODE_STATE);
+    }
+
+    @Override
+    public void openMailBox(User user) {
+
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        MailBoxNewFragment mailbox = MailBoxNewFragment.newInstance(new Bundle());
+        ft.replace(R.id.tab_Home_container,mailbox);
+        ft.commit();
     }
 
     /* ---------------- END PROFILE MANAGEMENT INTERFACE -----------------------------------------*/

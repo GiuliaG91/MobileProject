@@ -3,9 +3,9 @@ package com.example.giuliagigi.jobplacement;
 
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.res.Configuration;
-import android.graphics.drawable.Drawable;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
@@ -16,14 +16,11 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.OrientationEventListener;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.Toast;
 
 import java.util.ArrayList;
-import java.util.zip.Inflater;
 
 
 public class ProfileManagement extends Fragment{
@@ -195,7 +192,7 @@ public class ProfileManagement extends Fragment{
     public void onDetach() {
         super.onDetach();
 
-            Log.println(Log.ASSERT,"PROFILE MANAG", "saving in bundle");
+            Log.println(Log.ASSERT, "PROFILE MANAG", "saving in bundle");
             MyBundle b = application.addBundle(BUNDLE_IDENTIFIER);
             b.putBoolean(BUNDLE_KEY_IS_EDIT,isEditMode);
             b.putBoolean(BUNDLE_KEY_EDITABLE,editable);
@@ -227,20 +224,34 @@ public class ProfileManagement extends Fragment{
 
         if (item.getItemId() == R.id.action_edit && editable) {
             switchMode();
-            }
+        }
 
         if(isEditMode && editable)
             item.setIcon(R.drawable.ic_confirm_white);
         else if(!isEditMode && editable)
             item.setIcon(R.drawable.ic_edit_white);
         else if(!editable)
-            item.setIcon(R.drawable.ic_send_white_36dp);
+            item.setIcon(R.drawable.ic_mail);
 
         if(item.getItemId() == R.id.action_send && !editable){
 
-            Log.println(Log.ASSERT,"PROFILE MANAG", "contatto");
+            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+            builder.setTitle(GlobalData.getContext().getString(R.string.string_send_email) + user.getMail() + "?");
+            builder.setPositiveButton(GlobalData.getContext().getString(R.string.string_yes), new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
 
-            //TODO
+                    Log.println(Log.ASSERT,"PROFILE MANAG", "Asking Home activity to open mailbox");
+                    host.openMailBox(user);
+                }
+            });
+
+            builder.setNegativeButton(GlobalData.getContext().getString(R.string.string_no), new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {}
+            });
+
+            builder.create().show();
         }
         return true;
     }
@@ -256,7 +267,7 @@ public class ProfileManagement extends Fragment{
             host.setEditMode(isEditMode);
         }
         else
-            Toast.makeText(getActivity(), "ERROR: you are not supposed to modify this account",Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), GlobalData.getContext().getString(R.string.string_cannot_edit),Toast.LENGTH_SHORT).show();
 
     }
 
@@ -267,6 +278,7 @@ public class ProfileManagement extends Fragment{
     public interface OnInteractionListener {
 
         public void setEditMode(boolean editable);
+        public void openMailBox(User user);
     }
 
 }

@@ -5,9 +5,12 @@ import android.util.Log;
 import com.parse.FindCallback;
 import com.parse.ParseClassName;
 import com.parse.ParseException;
+import com.parse.ParseFile;
 import com.parse.ParseGeoPoint;
 import com.parse.ParseRelation;
+import com.parse.SaveCallback;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
@@ -37,7 +40,8 @@ public class Student extends User {
     protected static final String ADDRESS_LOCATION_FIELD = "address_location";
     public static final String SEX_MALE = "Male";
     public static final String SEX_FEMALE = "Female";
-    public static final String COMPANIES_FIELD="companies";
+    public static final String COMPANIES_FIELD = "companies";
+    public static final String CURRICULUM_FIELD = "curriculum";
 
     protected String name;
     protected String surname;
@@ -412,6 +416,23 @@ public class Student extends User {
     {
         companies.remove(c);
         getRelation(COMPANIES_FIELD).remove(c);
+    }
+
+    public void setCurriculum(byte[] file){
+
+        final ParseFile curriculum = new ParseFile("curriculum" + getName() + getSurname() + ".pdf",file);
+        curriculum.saveInBackground(new SaveCallback() {
+            @Override
+            public void done(ParseException e) {
+
+                if(e == null){
+
+                    Log.println(Log.ASSERT,"STUDENT","curriculum updated successfully");
+                    Student.this.put(CURRICULUM_FIELD,curriculum);
+                    Student.this.saveEventually();
+                }
+            }
+        });
     }
     /*END SETTER METHODS*/
 

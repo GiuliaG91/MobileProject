@@ -72,6 +72,26 @@
     <string name="string_registry_tab">Recapiti</string>
     <string name="string_office_tab">Le sedi</string>
 
+    <!--Login e logout-->
+    <string name="string_hint_email">Indirizzo email</string>
+    <string name="string_hint_password">Password</string>
+    <string name="string_login_remember">Ricordami</string>
+    <string name="string_login_forgot">Password dimenticata?</string>
+    <string name="string_login_register">Registrati ora!</string>
+    <string name="string_password_reset">Vuoi resettare la password?</string>
+    <string name="string_insert_mail">Inserisci la tua mail</string>
+    <string name="string_reset_cancel">Annulla</string>
+    <string name="string_reset_send">Invia</string>
+    <string name="string_reset_message">Ti invieremo una mail per il reset della password</string>
+    <string name="string_loggin_in">Login in corso ...</string>
+    <string name="string_login_successful">login avvenuto con successo</string>
+    <string name="string_login_failed">username o password errati</string>
+    <string name="string_logout">Vuoi disconnetterti?</string>
+    <string name="string_logging_out">Logout in corso...</string>
+    <string name="string_yes">si</string>
+    <string name="string_no">no</string>
+    <string name="string_logout_complete">Logout completato</string>
+
     <!-- Student fragment strings: -->
     <string name="string_password">Password:</string>
     <string name="string_confirm_password">Conferma password:</string>
@@ -93,6 +113,8 @@
     <string name="string_student_fragment_languages">Lingue:</string>
     <string name="string_student_fragment_languages_title">Lingua:</string>
     <string name="string_student_fragment_language_level">Livello:</string>
+    <string name="string_student_cv">Curriculum vitae</string>
+    <string name="string_student_upload_cv">CV non caricato</string>
 
 
     <!-- Degree fragment strings: -->
@@ -113,6 +135,10 @@
     <string name="string_tags_what_is">Cos\'è un tag?</string>
     <string name="string_tags_info">Clicca per saperne di più!</string>
     <string name="string_tags_insert">Inserisci tag</string>
+    <string name="string_tags_added">Tag aggiunto</string>
+    <string name="string_tags_removed">Tag rimosso</string>
+    <string name="string_tags_existent">Tag esistente</string>
+    <string name="string_tags_wrong">Tag errato</string>
     <string name="string_tags_description_student">I tag sono delle parole chiave che descrivono le tue competenze e vengono utilizzati come chiavi di ricerca per trovare le offerte più adatte a te.</string>
     <string name="string_tags_description_company">I tag sono delle parole chiave che descrivono le vostre offerte di lavoro e vengono utilizzati come chiavi di ricerca per trovare gli studenti più adatti alle vostre offerte.</string>
 
@@ -165,6 +191,12 @@
     <string name="string_telephone_type_fax">Fax</string>
     <string name="string_telephone_type_office">Ufficio</string>
     <string name="string_telephone_type_other">Altro</string>
+
+
+    <!--Profile management -->
+    <string name="string_send_email">Vuoi mandare un messaggio a </string>
+    <string name="string_cannot_edit">ERRORE: non puoi modificare questo profilo</string>
+    <string name="string_email_not_verified">La tua mail non è ancora stata verificata. Per favore, clicca sul link che ti abbiamo inviato</string>
 
     
     <!-- New Offer Fragment -->
@@ -338,5 +370,16 @@
     <string name="day_ago">giorno fa</string>
 
     <string name="job_offer">Offerta di lavoro</string>
+    <string name="new_job_offer_message">ha pubblicato una nuova offerta di lavoro su</string>
+    <string name="new_job_offer">Nuova offerta di lavoro</string>
+    <string name="new_student_applied">Nuovo studente candidato</string>
+    <string name="student_accepted">Candidatura accettata</string>
+    <string name="new_company_signed_up">Nuova azienda!!!</string>
+
+    <string name="profile">profilo</string>
+    <string name="new_application_message">si è candidato per l\'offerta di lavoro</string>
+    <string name="the_company">L\'azienda</string>
+    <string name="application_accepted_message">ha accettato la tua candidatura per l\'offerta di lavoro</string>
+    <string name="new_company_signed_up_message">si e\' registrata in</string>
 
 </resources>

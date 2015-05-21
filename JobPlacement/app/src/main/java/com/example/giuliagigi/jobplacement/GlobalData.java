@@ -86,6 +86,7 @@ public class GlobalData extends Application {
         ParseObject.registerSubclass(Certificate.class);
         ParseObject.registerSubclass(InboxMessage.class);
         ParseObject.registerSubclass(InboxMessageReceived.class);
+        ParseObject.registerSubclass(News.class);
 
         Degree.initializeLangauges();
         Office.initializeLanguage();

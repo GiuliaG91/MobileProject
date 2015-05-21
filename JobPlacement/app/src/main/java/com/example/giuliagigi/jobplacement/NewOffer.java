@@ -113,7 +113,7 @@ public class NewOffer extends Fragment implements DatePickerFragment.OnDataSetLi
      final Set<String> existent=new HashSet<>();
 
 
-    public static NewOffer newInstance(boolean editMode,boolean isNew) {
+    public static NewOffer newInstance(boolean editMode, boolean isNew) {
         NewOffer fragment = new NewOffer();
         Bundle args = new Bundle();
         args.putBoolean("edit",editMode);
@@ -333,7 +333,7 @@ public class NewOffer extends Fragment implements DatePickerFragment.OnDataSetLi
 
        tagsView.setAdapter(adapter);
        tagsView.setTokenizer(new SpaceTokenizer());
-        tagsView.setThreshold(1);
+       tagsView.setThreshold(1);
 
 
 
@@ -546,6 +546,7 @@ public class NewOffer extends Fragment implements DatePickerFragment.OnDataSetLi
 
     private void buttonConfiguration() {
 
+
         if (editMode == false) {
 
             button_a.setIcon(R.drawable.ic_create);
@@ -558,7 +559,7 @@ public class NewOffer extends Fragment implements DatePickerFragment.OnDataSetLi
 
        if(buttonSave!=null)
        {buttonSave.setVisible(false);
-           buttonSave.setEnabled(false);}
+        buttonSave.setEnabled(false);}
 
             //already created
             if (isNew == false) {
@@ -571,6 +572,24 @@ public class NewOffer extends Fragment implements DatePickerFragment.OnDataSetLi
                         public void onClick(View v) {
 
                             publish(v);
+
+                            News news = new News();
+                            news.createNews(0, globalData.getCurrentViewOffer(), null, globalData);
+                            // ------------->
+
+
+                            /* Invio notifica push a studenti */
+                            ParseQuery<ParseUser> userQuery = ParseUser.getQuery();
+                            userQuery.whereEqualTo(ParseUserWrapper.TYPE_FIELD,User.TYPE_STUDENT);
+
+                            ParseQuery pushQuery = ParseInstallation.getQuery();
+                            pushQuery.whereMatchesQuery("user", userQuery);
+
+                            ParsePush push = new ParsePush();
+                            push.setQuery(pushQuery);
+                            push.setMessage("The company " + ((Company)globalData.getUserObject()).getName() + "has published a new offer");
+                            push.sendInBackground();
+
                         }
                     });
 
@@ -622,6 +641,9 @@ public class NewOffer extends Fragment implements DatePickerFragment.OnDataSetLi
                              @Override
                              public void onClick(View v) {
                                  deleteOffer(v);
+
+
+
                              }
                          });
 
@@ -867,19 +889,19 @@ public class NewOffer extends Fragment implements DatePickerFragment.OnDataSetLi
         CompanyOffer offer;
             //Make all check
                   if(editObject.getText().length()==0 ||
-                  fieldSpinner.getSelectedItemPosition()==0  ||
-                    places.getText().length()==0 ||
-                    validity.getText().length()==0 ||
-                    contractSpinner.getSelectedItemPosition()==0 ||
-                    termSpinner.getSelectedItemPosition() ==0 ||
-                   nation.getText().length()!=0 && city.getText().length()==0 ||
-                  nation.getText().length()==0 && city.getText().length()!=0
-                    )
+                     fieldSpinner.getSelectedItemPosition()==0  ||
+                     places.getText().length()==0 ||
+                     validity.getText().length()==0 ||
+                     contractSpinner.getSelectedItemPosition()==0 ||
+                     termSpinner.getSelectedItemPosition() ==0 ||
+                     nation.getText().length()!=0 && city.getText().length()==0 ||
+                     nation.getText().length()==0 && city.getText().length()!=0
+                  )
             {
-            Toast.makeText(getActivity(),"Missing field",Toast.LENGTH_SHORT ).show();
+                Toast.makeText(getActivity(),"Missing field",Toast.LENGTH_SHORT ).show();
             }
 
-         //Check for wrong thinks
+         //Check for wrong things
 
        else {
                 int flag = 0;
@@ -915,10 +937,12 @@ public class NewOffer extends Fragment implements DatePickerFragment.OnDataSetLi
 
                     if(isNew==true) {
                       offer = new CompanyOffer();
+
                     }
                     else
                     {
                        offer = globalData.getCurrentViewOffer();
+
                     }
 
                     offer.setObject(editObject.getText().toString());
@@ -1007,17 +1031,6 @@ public class NewOffer extends Fragment implements DatePickerFragment.OnDataSetLi
                         }
                     });
 
-                            /* Invio notifica push a studenti */
-                            ParseQuery<ParseUser> userQuery = ParseUser.getQuery();
-                            userQuery.whereEqualTo(ParseUserWrapper.TYPE_FIELD,User.TYPE_STUDENT);
-
-                            ParseQuery pushQuery = ParseInstallation.getQuery();
-                            pushQuery.whereMatchesQuery("user", userQuery);
-
-                            ParsePush push = new ParsePush();
-                            push.setQuery(pushQuery);
-                            push.setMessage("The company " + ((Company)gd.getUserObject()).getName() + "has published a new offer");
-                            push.sendInBackground();
                         }
 
 

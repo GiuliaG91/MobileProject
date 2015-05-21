@@ -16,6 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.getbase.floatingactionbutton.FloatingActionButton;
+import com.getbase.floatingactionbutton.FloatingActionsMenu;
 import com.parse.ParseQuery;
 import com.parse.ParseQueryAdapter;
 
@@ -195,7 +196,7 @@ public class MailBoxFragment extends Fragment {
 
                 Toolbar toolbar = (Toolbar) ((Activity)mListener).findViewById(R.id.toolbar);
                 toolbar.setTitle(((Activity)mListener).getResources().getString(R.string.new_message_toolbar_title));
-                ((com.getbase.floatingactionbutton.FloatingActionsMenu)root.findViewById(R.id.multiple_actions_mailbox)).collapse();
+                ((FloatingActionsMenu)root.findViewById(R.id.multiple_actions_mailbox)).collapse();
             }
         });
 
@@ -213,7 +214,7 @@ public class MailBoxFragment extends Fragment {
 
                     ((Toolbar)((FragmentActivity)mListener).findViewById(R.id.toolbar)).setTitle(((FragmentActivity)mListener).getResources().getString(R.string.sent_mail));
                 }
-                ((com.getbase.floatingactionbutton.FloatingActionsMenu)root.findViewById(R.id.multiple_actions_mailbox)).collapse();
+                ((FloatingActionsMenu)root.findViewById(R.id.multiple_actions_mailbox)).collapse();
             }
         });
 
@@ -224,7 +225,7 @@ public class MailBoxFragment extends Fragment {
             public void onClick(View v) {
 
                 MailBoxFragment.deleteMessages(root, mRecyclerView);
-                ((com.getbase.floatingactionbutton.FloatingActionsMenu)root.findViewById(R.id.multiple_actions_mailbox)).collapse();
+                ((FloatingActionsMenu)root.findViewById(R.id.multiple_actions_mailbox)).collapse();
 
             }
         });
@@ -244,7 +245,7 @@ public class MailBoxFragment extends Fragment {
                     ((Toolbar)((FragmentActivity)mListener).findViewById(R.id.toolbar)).setTitle(((FragmentActivity)mListener).getResources().getString(R.string.received_mail));
 
                 }
-                ((com.getbase.floatingactionbutton.FloatingActionsMenu)root.findViewById(R.id.multiple_actions_mailbox)).collapse();
+                ((FloatingActionsMenu)root.findViewById(R.id.multiple_actions_mailbox)).collapse();
             }
         });
 
