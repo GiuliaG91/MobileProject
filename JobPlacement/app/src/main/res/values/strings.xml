@@ -462,10 +462,14 @@
     <string name="Done">Done</string>
 
     <string name="ErrorStatus">Can\'t set this status</string>
+
     <string name="application_considering_message">is considering your candidature for the job offer</string>
     <string name="application_refused_message">refused your candidature for the job offer</string>
     <string name="application_processing_message">is processing your candidature for the job offer</string>
 
     <string name="offer">Offer</string>
+
+    <string name="string_account_verified">User not verified</string>
+    <string name="string_account_verified_yes">Verified user</string>
 
 </resources>

@@ -79,7 +79,6 @@ public class Login extends ActionBarActivity {
                     }
                 });
             installation.put(User.MAIL_FIELD, application.getUserObject().getMail());
-            installation.put(User.MAIL_FIELD, application.getUserObject().getMail());
             installation.put(User.TYPE_FIELD, application.getUserObject().getType());
             installation.saveInBackground();
 
