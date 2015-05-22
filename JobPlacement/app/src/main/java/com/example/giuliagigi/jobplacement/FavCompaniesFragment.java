@@ -3,6 +3,7 @@ package com.example.giuliagigi.jobplacement;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -25,7 +26,7 @@ public class FavCompaniesFragment extends Fragment {
     private LinearLayoutManager mLayoutManager;
     private FavCompaniesAdapter adapter;
     private Integer position=0;
-
+    private ToolbarTitleChange mcallback;
 
     public static FavCompaniesFragment newInstance()
     {
@@ -36,6 +37,7 @@ public class FavCompaniesFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         if(savedInstanceState!=null)
         {
             position=savedInstanceState.getInt("position");
@@ -43,10 +45,12 @@ public class FavCompaniesFragment extends Fragment {
     }
 
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+
         root  = inflater.inflate(R.layout.recycler_view_template,container,false);
 
+        mcallback=((Home)getActivity());
+        mcallback.SetNewTitle(getResources().getString(R.string.ToolbarTitleMyCompanies));
         globalData=(GlobalData)getActivity().getApplication();
-        globalData.getToolbar().setTitle(getResources().getString(R.string.ToolbarTitleMyCompanies));
         student=globalData.getStudentFromUser();
         mRecyclerView = (RecyclerView) root.findViewById(R.id.recycler_view_template);
 

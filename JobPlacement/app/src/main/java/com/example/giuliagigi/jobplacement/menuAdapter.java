@@ -116,14 +116,15 @@ public class menuAdapter extends RecyclerView.Adapter<menuAdapter.ViewHolder> {
                                 Fragment current = fragmentManager.findFragmentById(R.id.tab_Home_container);
 
                                 if (!(current instanceof TabHomeStudentFragment)) {
-                                    //New Fragment
-                                    TabHomeStudentFragment homeFragment = TabHomeStudentFragment.newInstance();
 
                                     //clear backstack
                                     int count = fragmentManager.getBackStackEntryCount();
                                     for(int i = 0; i < count; ++i) {
                                         fragmentManager.popBackStack();
                                     }
+
+                                    //New Fragment
+                                    TabHomeStudentFragment homeFragment = TabHomeStudentFragment.newInstance();
 
                                     fragmentManager.beginTransaction()
                                             .replace(R.id.tab_Home_container, homeFragment)
@@ -157,7 +158,6 @@ public class menuAdapter extends RecyclerView.Adapter<menuAdapter.ViewHolder> {
                                     if(activity instanceof Home)
                                         ((Home) activity).setProfileManagement((ProfileManagement)fragment);
 
-
                                     //clear backstack
                                     int count = fragmentManager.getBackStackEntryCount();
                                     for(int i = 0; i < count; ++i) {
@@ -167,7 +167,6 @@ public class menuAdapter extends RecyclerView.Adapter<menuAdapter.ViewHolder> {
                                     fragmentManager.beginTransaction()
                                             .replace(R.id.tab_Home_container, fragment)
                                             .commit();
-
 
                                 }
                                 mDrawerLayout.closeDrawers();
@@ -191,6 +190,7 @@ public class menuAdapter extends RecyclerView.Adapter<menuAdapter.ViewHolder> {
 
                                 if(!(current instanceof Fav_tab)) {
 
+
                                    Fav_tab fragment = Fav_tab.newInstance();
 
                                     //clear backstack
@@ -203,10 +203,8 @@ public class menuAdapter extends RecyclerView.Adapter<menuAdapter.ViewHolder> {
                                             .replace(R.id.tab_Home_container, fragment)
                                             .commit();
 
-
                                 }
                                 mDrawerLayout.closeDrawers();
-
                             }
                         });
 
@@ -218,11 +216,11 @@ public class menuAdapter extends RecyclerView.Adapter<menuAdapter.ViewHolder> {
                             @Override
                             public void onClick(View v) {
 
-
                                 FragmentManager fragmentManager = activity.getSupportFragmentManager();
                                 Fragment current = fragmentManager.findFragmentById(R.id.tab_Home_container);
 
                                 if (!(current instanceof FavCompaniesFragment)) {
+
                                     //New Fragment
                                     FavCompaniesFragment fragment = FavCompaniesFragment.newInstance();
 
@@ -234,9 +232,7 @@ public class menuAdapter extends RecyclerView.Adapter<menuAdapter.ViewHolder> {
 
                                     fragmentManager.beginTransaction()
                                             .replace(R.id.tab_Home_container, fragment)
-                                            .addToBackStack("Home")
                                             .commit();
-
                                 }
                                 mDrawerLayout.closeDrawers();
 
@@ -265,6 +261,7 @@ public class menuAdapter extends RecyclerView.Adapter<menuAdapter.ViewHolder> {
                                     for(int i = 0; i < count; ++i) {
                                         fragmentManager.popBackStack();
                                     }
+
 
                                     Fragment f1 = new TabHomeStudentFragment();
                                     fragmentManager.beginTransaction().replace(R.id.tab_Home_container, f1).commit();
@@ -330,10 +327,6 @@ public class menuAdapter extends RecyclerView.Adapter<menuAdapter.ViewHolder> {
                                       fragmentManager.beginTransaction()
                                               .replace(R.id.tab_Home_container, homeFragment)
                                               .commit();
-
-                                      TextView tv = (TextView) v.findViewById(R.id.rowText);
-
-
                                   }
                                   mDrawerLayout.closeDrawers();
 
@@ -393,7 +386,7 @@ public class menuAdapter extends RecyclerView.Adapter<menuAdapter.ViewHolder> {
                                   Fragment current = fragmentManager.findFragmentById(R.id.tab_Home_container);
 
                                   if (!(current instanceof CompanyStudentSearchFragment)) {
-                                      //New Fragment
+                                    //New Fragment
                                       CompanyStudentSearchFragment fragment = CompanyStudentSearchFragment.newInstance();
 
                                       //clear backstack
@@ -404,10 +397,7 @@ public class menuAdapter extends RecyclerView.Adapter<menuAdapter.ViewHolder> {
 
                                       fragmentManager.beginTransaction()
                                               .replace(R.id.tab_Home_container, fragment)
-                                              .addToBackStack("Home")
                                               .commit();
-
-
                                   }
                                   mDrawerLayout.closeDrawers();
 
@@ -438,43 +428,34 @@ public class menuAdapter extends RecyclerView.Adapter<menuAdapter.ViewHolder> {
                                       }
                                       else {
 
-                                          //New Fragment
-                                          NewOffer fragment = NewOffer.newInstance(true, true);
-
                                           //clear backstack
                                           int count = fragmentManager.getBackStackEntryCount();
                                           for(int i = 0; i < count; ++i) {
                                               fragmentManager.popBackStack();
                                           }
+                                          //New Fragment
+                                          NewOffer fragment = NewOffer.newInstance(true, true);
 
                                           fragmentManager.beginTransaction()
                                                   .replace(R.id.tab_Home_container, fragment)
-                                                  .addToBackStack("Home")
                                                   .commit();
-
-
-                                          TextView tv = (TextView) v.findViewById(R.id.rowText);
 
                                       }
                                       mDrawerLayout.closeDrawers();
 
                               }  else
                                   {
-                                      //New Fragment
-                                      NewOffer fragment = NewOffer.newInstance(true, true);
-
-                                      fragmentManager.beginTransaction()
-                                              .replace(R.id.tab_Home_container, fragment)
-                                              .addToBackStack("Home")
-                                              .commit();
-
                                       //clear backstack
                                       int count = fragmentManager.getBackStackEntryCount();
                                       for(int i = 0; i < count; ++i) {
                                           fragmentManager.popBackStack();
                                       }
+                                      //New Fragment
+                                      NewOffer fragment = NewOffer.newInstance(true, true);
 
-
+                                      fragmentManager.beginTransaction()
+                                              .replace(R.id.tab_Home_container, fragment)
+                                              .commit();
                                   }
                                   mDrawerLayout.closeDrawers();
                               }
@@ -498,7 +479,7 @@ public class menuAdapter extends RecyclerView.Adapter<menuAdapter.ViewHolder> {
 
                                   if(!(current instanceof MailBoxFragment)) {
 
-                                      Fragment fragment = MailBoxFragment.newInstance();
+                                         Fragment fragment = MailBoxFragment.newInstance();
 
                                       //clear backstack
                                       int count = fragmentManager.getBackStackEntryCount();
@@ -506,15 +487,16 @@ public class menuAdapter extends RecyclerView.Adapter<menuAdapter.ViewHolder> {
                                           fragmentManager.popBackStack();
                                       }
 
+
                                       Fragment f1 = new TabHomeCompanyFragment();
                                       fragmentManager.beginTransaction().replace(R.id.tab_Home_container, f1).commit();
+
 
                                       fragmentManager.beginTransaction()
                                               .replace(R.id.tab_Home_container, fragment)
                                               .addToBackStack("Home")
                                               .commit();
-
-                                  }
+      }
                                   mDrawerLayout.closeDrawers();
 
                               }

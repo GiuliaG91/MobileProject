@@ -26,7 +26,8 @@ import android.widget.Toast;
 import java.util.ArrayList;
 
 
-public class Home extends ActionBarActivity  implements TabHomeStudentFragment.OnFragmentInteractionListener ,TabHomeCompanyFragment.OnFragmentInteractionListener, NewOffer.OnFragmentInteractionListener,
+public class Home extends ActionBarActivity  implements ToolbarTitleChange,
+                                                    TabHomeStudentFragment.OnFragmentInteractionListener ,TabHomeCompanyFragment.OnFragmentInteractionListener, NewOffer.OnFragmentInteractionListener,
                                                 ProfileManagementFragment.OnInteractionListener, ProfileManagement.OnInteractionListener ,
                                                   OfferSearchFragment.OnFragmentInteractionListener , StudentCompanySearchFragment.OnFragmentInteractionListener,
                                                     CompanyStudentSearchFragment.OnFragmentInteractionListener, MailBoxFragment.OnFragmentInteractionListener, Home_tab.OnFragmentInteractionListener
@@ -313,5 +314,10 @@ public class Home extends ActionBarActivity  implements TabHomeStudentFragment.O
             newFragment.show(getFragmentManager(),"Logout");
 
         }
+    }
+
+    @Override
+    public void SetNewTitle(String title) {
+        toolbar.setTitle(title);
     }
 }
