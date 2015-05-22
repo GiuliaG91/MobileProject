@@ -122,7 +122,13 @@ public class SetOfferStatusDialogFragment extends DialogFragment {
             //perform change status
             myStatus.setType(StatusSpinner.getSelectedItem().toString());
             myStatus.saveInBackground();
-
+        if(pos==2)
+        {
+            CompanyOffer offer=globalData.getCurrentViewOffer();
+            int places=offer.getnPositions();
+            offer.setPositions(places-1);
+            offer.saveInBackground();
+        }
             Toast.makeText(getActivity(),R.string.Done,Toast.LENGTH_SHORT).show();
         }else
             Toast.makeText(getActivity(),R.string.ErrorStatus,Toast.LENGTH_SHORT).show();

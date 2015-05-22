@@ -462,6 +462,6 @@
 
     <string name="Done">Done</string>
 
-    <string name="ErrorStatus">Can't set this status</string>
+    <string name="ErrorStatus">Can\'t set this status</string>
 
 </resources>
