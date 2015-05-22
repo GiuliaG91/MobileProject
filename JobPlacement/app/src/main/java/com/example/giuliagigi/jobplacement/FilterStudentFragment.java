@@ -215,7 +215,7 @@ public class FilterStudentFragment  extends DialogFragment {
                     @Override
                     public void onClick(View v) {
                         container.removeView(v);
-                        Toast.makeText(getActivity(), "Removed", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity(), getString(R.string.new_offer_fragment_removed), Toast.LENGTH_SHORT).show();
                     }
                 });
 
@@ -234,7 +234,7 @@ public class FilterStudentFragment  extends DialogFragment {
                     @Override
                     public void onClick(View v) {
                         fieldContainer.removeView(v);
-                        Toast.makeText(getActivity(), "Removed", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity(),getString(R.string.new_offer_fragment_removed), Toast.LENGTH_SHORT).show();
                     }
                 });
 
@@ -264,7 +264,7 @@ public class FilterStudentFragment  extends DialogFragment {
         String filter = tagsView.getText().toString().trim();
         if (correct.contains(filter)) {
             if (!supportTag.add(filter)) {
-                Toast.makeText(getActivity(), "Filter already added", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(),getString(R.string.filter_AlreadyAdded), Toast.LENGTH_SHORT).show();
             } else {
 
 
@@ -275,7 +275,7 @@ public class FilterStudentFragment  extends DialogFragment {
                     @Override
                     public void onClick(View v) {
                         container.removeView(v);
-                        Toast.makeText(getActivity(), "Removed", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity(), getString(R.string.new_offer_fragment_removed), Toast.LENGTH_SHORT).show();
                         globalData.getStudentFilterStatus().setFilters(tag_list, degree_list, field_list);
                     }
                 });
@@ -287,7 +287,7 @@ public class FilterStudentFragment  extends DialogFragment {
             }
 
         } else {
-            Toast.makeText(getActivity(), "Wrong tag", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), getString(R.string.new_offer_fragment_WrongTag), Toast.LENGTH_SHORT).show();
         }
         tagsView.clearComposingText();
         ;
@@ -297,12 +297,12 @@ public class FilterStudentFragment  extends DialogFragment {
     public void onClickfield(View v) {
         final GridLayout container = (GridLayout) root.findViewById(R.id.filter_field_container);
         if (fieldSpinner.getSelectedItemPosition() == 0) {
-            Toast.makeText(getActivity(), "Please choose a field if you want", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), getString(R.string.filter_hint_field), Toast.LENGTH_SHORT).show();
         } else {
 
             String filter = fieldSpinner.getSelectedItem().toString().trim();
             if (!supportField.add(filter)) {
-                Toast.makeText(getActivity(), "Filter already added", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(),getString(R.string.filter_AlreadyAdded), Toast.LENGTH_SHORT).show();
             } else {
                 LayoutInflater inflater = (LayoutInflater) getActivity().getBaseContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                 View mytagView = inflater.inflate(R.layout.taglayout, null);
@@ -311,7 +311,7 @@ public class FilterStudentFragment  extends DialogFragment {
                     @Override
                     public void onClick(View v) {
                         container.removeView(v);
-                        Toast.makeText(getActivity(), "Removed", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity(), getString(R.string.new_offer_fragment_removed), Toast.LENGTH_SHORT).show();
                         globalData.getStudentFilterStatus().setFilters(tag_list, degree_list, field_list);
                     }
                 });
@@ -342,7 +342,7 @@ public class FilterStudentFragment  extends DialogFragment {
             if(tmp<60 || tmp>110)
             {
                 flag=1;
-                Toast.makeText(getActivity(),"Wrong grade",Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), getString(R.string.filter_WrongGrade),Toast.LENGTH_SHORT).show();
             }
         }
 if(flag==0)
@@ -402,9 +402,6 @@ if(flag==0)
         degreeSpinner.setSelection(0);
         editGrade.setText("");
 
-        container = (GridLayout) root.findViewById(R.id.filter_location_container);
-        container.removeAllViews();
-
         /*clear list*/
 
         tag_list.clear();
@@ -413,7 +410,7 @@ if(flag==0)
 
         //no filters
         globalData.getStudentFilterStatus().setValid(false);
-        Toast.makeText(getActivity(), "Removed", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getActivity(), getString(R.string.new_offer_fragment_removed), Toast.LENGTH_SHORT).show();
     }
 
 

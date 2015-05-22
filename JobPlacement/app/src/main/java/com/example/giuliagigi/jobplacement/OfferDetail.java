@@ -98,7 +98,7 @@ public class OfferDetail extends  Fragment {
         TextView hint=(TextView)linearLayout.findViewById(R.id.hint_tv);
         TextView content=(TextView)linearLayout.findViewById(R.id.content_tv);
         ImageView icon=(ImageView)linearLayout.findViewById(R.id.rowIcon);
-        hint.setText("Object");
+        hint.setText(getString(R.string.offer_detail_hint_object));
         content.setText(offer.getOfferObject());
         icon.setImageDrawable(getResources().getDrawable(R.drawable.ic_objectoffer));
 
@@ -107,7 +107,7 @@ public class OfferDetail extends  Fragment {
          hint=(TextView)linearLayout.findViewById(R.id.hint_tv);
          content=(TextView)linearLayout.findViewById(R.id.content_tv);
         icon=(ImageView)linearLayout.findViewById(R.id.rowIcon);
-        hint.setText("Mission");
+        hint.setText(getString(R.string.offer_detail_hint_mission));
         content.setText(offer.getOfferObject());
         icon.setImageDrawable(getResources().getDrawable(R.drawable.ic_mission));
 
@@ -116,7 +116,7 @@ public class OfferDetail extends  Fragment {
         hint=(TextView)linearLayout.findViewById(R.id.hint_tv);
         content=(TextView)linearLayout.findViewById(R.id.content_tv);
         icon=(ImageView)linearLayout.findViewById(R.id.rowIcon);
-        hint.setText("Field");
+        hint.setText(getString(R.string.offer_detail_hint_field));
         content.setText(offer.getWorkField());
         icon.setImageDrawable(getResources().getDrawable(R.drawable.ic_field));
 
@@ -125,7 +125,7 @@ public class OfferDetail extends  Fragment {
         hint=(TextView)linearLayout.findViewById(R.id.hint_tv);
         content=(TextView)linearLayout.findViewById(R.id.content_tv);
         icon=(ImageView)linearLayout.findViewById(R.id.rowIcon);
-        hint.setText("Places");
+        hint.setText(getString(R.string.offer_detail_hint_places));
         content.setText(String.valueOf(offer.getnPositions()));
         icon.setImageDrawable(getResources().getDrawable(R.drawable.ic_places));
 
@@ -134,7 +134,7 @@ public class OfferDetail extends  Fragment {
         hint=(TextView)linearLayout.findViewById(R.id.hint_tv);
         content=(TextView)linearLayout.findViewById(R.id.content_tv);
         icon=(ImageView)linearLayout.findViewById(R.id.rowIcon);
-        hint.setText("Validity");
+        hint.setText(getString(R.string.offer_detail_hint_validity));
         SimpleDateFormat dateformat=new SimpleDateFormat("dd/MM/yyyy");
         String date=dateformat.format(offer.getValidity());
         content.setText(date);
@@ -145,7 +145,7 @@ public class OfferDetail extends  Fragment {
         hint=(TextView)linearLayout.findViewById(R.id.hint_tv);
         content=(TextView)linearLayout.findViewById(R.id.content_tv);
         icon=(ImageView)linearLayout.findViewById(R.id.rowIcon);
-        hint.setText("Contract");
+        hint.setText(getString(R.string.offer_detail_hint_contract));
         content.setText(offer.getContract());
         icon.setImageDrawable(getResources().getDrawable(R.drawable.ic_contract));
 
@@ -154,7 +154,7 @@ public class OfferDetail extends  Fragment {
         hint=(TextView)linearLayout.findViewById(R.id.hint_tv);
         content=(TextView)linearLayout.findViewById(R.id.content_tv);
         icon=(ImageView)linearLayout.findViewById(R.id.rowIcon);
-        hint.setText("Term");
+        hint.setText(getString(R.string.offer_detail_hint_term));
         content.setText(offer.getTerm());
         icon.setImageDrawable(getResources().getDrawable(R.drawable.ic_term));
 
@@ -163,26 +163,26 @@ public class OfferDetail extends  Fragment {
         hint=(TextView)linearLayout.findViewById(R.id.hint_tv);
         content=(TextView)linearLayout.findViewById(R.id.content_tv);
         icon=(ImageView)linearLayout.findViewById(R.id.rowIcon);
-        hint.setText("Location");
+        hint.setText(getString(R.string.offer_detail_hint_location));
         icon.setImageDrawable(getResources().getDrawable(R.drawable.ic_location));
 
         if(offer.getLocation()!=null && !offer.getLocation().equals(""))
         content.setText(offer.getOfferObject());
-        else content.setText("To be defined");
+        else content.setText(getString(R.string.offer_detail_hint_Nodefined));
 
         //set salary
         linearLayout=(LinearLayout)root.findViewById(R.id.salary_row);
         hint=(TextView)linearLayout.findViewById(R.id.hint_tv);
         content=(TextView)linearLayout.findViewById(R.id.content_tv);
         icon=(ImageView)linearLayout.findViewById(R.id.rowIcon);
-        hint.setText("Salary:");
+        hint.setText(getString(R.string.offer_detail_hint_salary));
         Integer salary=offer.getSAlARY();
         if(salary!=-1) {
             content.setText(String.valueOf(salary).trim());
         }
         else
         {
-            content.setText("To be defined");
+            content.setText(getString(R.string.offer_detail_hint_Nodefined));
         }
         icon.setImageDrawable(getResources().getDrawable(R.drawable.ic_salary));
 
@@ -227,17 +227,17 @@ public class OfferDetail extends  Fragment {
                         offerStatus.saveInBackground();
                         //todo notify company
 
-                        Toast.makeText(getActivity(), "Done", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity(),getString(R.string.Done), Toast.LENGTH_SHORT).show();
 
                         News news = new News();
                         news.createNews(1, offer, (Student) globalData.getUserObject(), null, globalData);
 
 
                     } else {
-                        Toast.makeText(getActivity(), "Can't perform apply", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity(), getString(R.string.offer_detail_NoApply), Toast.LENGTH_SHORT).show();
                     }
                 } else {
-                    Toast.makeText(getActivity(), "You are already applied", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), getString(R.string.offer_detail_AlreadyApplied), Toast.LENGTH_SHORT).show();
                 }
 
                 ((FloatingActionsMenu) root.findViewById(R.id.multiple_actions)).collapse();

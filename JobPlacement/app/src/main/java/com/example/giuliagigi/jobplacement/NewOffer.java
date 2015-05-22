@@ -355,7 +355,7 @@ public class NewOffer extends Fragment implements DatePickerFragment.OnDataSetLi
                                  TextView tv=(TextView)v.findViewById(R.id.tag_tv);
                                 existent.remove((tv.getText().toString().toLowerCase().trim()));
                                 tagContainer.removeView(v);
-                                Toast.makeText(getActivity(),"Removed",Toast.LENGTH_SHORT ).show();
+                                Toast.makeText(getActivity(),getString(R.string.new_offer_fragment_removed),Toast.LENGTH_SHORT ).show();
 
 
                             }
@@ -366,12 +366,12 @@ public class NewOffer extends Fragment implements DatePickerFragment.OnDataSetLi
                         tagContainer.addView(mytagView);
 
                         tagsView.setText("");
-                        Toast.makeText(getActivity(),"Added",Toast.LENGTH_SHORT ).show();
+                        Toast.makeText(getActivity(),getString(R.string.new_offer_fragment_added),Toast.LENGTH_SHORT ).show();
 
-                    }else Toast.makeText(getActivity().getApplicationContext(),"Existent tag",Toast.LENGTH_SHORT).show();
+                    }else Toast.makeText(getActivity().getApplicationContext(),getString(R.string.new_offer_fragment_existenTtag),Toast.LENGTH_SHORT).show();
 
                 }
-                else Toast.makeText(getActivity().getApplicationContext(),"Wrong tag",Toast.LENGTH_SHORT).show();
+                else Toast.makeText(getActivity().getApplicationContext(),getString(R.string.new_offer_fragment_WrongTag),Toast.LENGTH_SHORT).show();
 
             }
         });
@@ -465,7 +465,7 @@ public class NewOffer extends Fragment implements DatePickerFragment.OnDataSetLi
                         @Override
                         public void onClick(View v) {
                             tagContainer.removeView(v);
-                            Toast.makeText(getActivity(),"Removed",Toast.LENGTH_SHORT ).show();
+                            Toast.makeText(getActivity(),getString(R.string.new_offer_fragment_removed),Toast.LENGTH_SHORT ).show();
                             existent.remove(tmp.getTag().toLowerCase().trim());
                         }
                     });
@@ -524,7 +524,7 @@ public class NewOffer extends Fragment implements DatePickerFragment.OnDataSetLi
                         @Override
                         public void onClick(View v) {
                             tagContainer.removeView(v);
-                            Toast.makeText(getActivity(),"Removed",Toast.LENGTH_SHORT ).show();
+                            Toast.makeText(getActivity(),getString(R.string.new_offer_fragment_removed),Toast.LENGTH_SHORT ).show();
                             existent.remove(text_tag.toLowerCase().trim());
                         }
                     });
@@ -907,7 +907,7 @@ public class NewOffer extends Fragment implements DatePickerFragment.OnDataSetLi
                      nation.getText().length()==0 && city.getText().length()!=0
                   )
             {
-                Toast.makeText(getActivity(),"Missing field",Toast.LENGTH_SHORT ).show();
+                Toast.makeText(getActivity(),getString(R.string.new_offer_fragment_MissingField),Toast.LENGTH_SHORT ).show();
             }
 
          //Check for wrong things
@@ -925,7 +925,7 @@ public class NewOffer extends Fragment implements DatePickerFragment.OnDataSetLi
                     Date today= Calendar.getInstance().getTime();
                     if(d.compareTo(today)<=0)
                     {
-                        Toast.makeText(getActivity(),"Can't set this date",Toast.LENGTH_SHORT ).show();
+                        Toast.makeText(getActivity(),getString(R.string.new_offer_fragment_WrongDate),Toast.LENGTH_SHORT ).show();
 
                         throw new Exception() ;
                     }
@@ -938,7 +938,7 @@ public class NewOffer extends Fragment implements DatePickerFragment.OnDataSetLi
                 } catch (Exception e) {
 
                     flag = 1;
-                    Toast.makeText(getActivity(),"Wrong data",Toast.LENGTH_SHORT ).show();
+                    Toast.makeText(getActivity(), getString(R.string.new_offer_fragment_Error), Toast.LENGTH_SHORT).show();
                 }
 
 
@@ -1043,7 +1043,7 @@ public class NewOffer extends Fragment implements DatePickerFragment.OnDataSetLi
                         }
 
 
-                    Toast.makeText(getActivity(),"Done",Toast.LENGTH_SHORT ).show();
+                    Toast.makeText(getActivity(), getString(R.string.Done), Toast.LENGTH_SHORT).show();
 
                         editMode=false;
                         isNew=false;
@@ -1078,7 +1078,7 @@ public class NewOffer extends Fragment implements DatePickerFragment.OnDataSetLi
                 nation.getText().length()!=0 && city.getText().length()==0 ||
                 nation.getText().length()==0 && city.getText().length()!=0
                 ) {
-            Toast.makeText(getActivity(), "Missing field", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), getString(R.string.new_offer_fragment_MissingField), Toast.LENGTH_SHORT).show();
         }
 
         //Check for wrong thinks
@@ -1095,7 +1095,7 @@ public class NewOffer extends Fragment implements DatePickerFragment.OnDataSetLi
                 d = dateFormat.parse(validity.getText().toString());
                 Date today = Calendar.getInstance().getTime();
                 if (d.compareTo(today) <= 0) {
-                    Toast.makeText(getActivity(), "Can't set this date", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), getString(R.string.new_offer_fragment_WrongDate), Toast.LENGTH_SHORT).show();
 
                     throw new Exception();
                 }
@@ -1107,7 +1107,7 @@ public class NewOffer extends Fragment implements DatePickerFragment.OnDataSetLi
             } catch (Exception e) {
 
                 flag = 1;
-                Toast.makeText(getActivity(), "Wrong data", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), getString(R.string.new_offer_fragment_Error), Toast.LENGTH_SHORT).show();
             }
 
             ParseQuery<CompanyOffer> query=new ParseQuery<CompanyOffer>("CompanyOffer");
@@ -1193,7 +1193,7 @@ public class NewOffer extends Fragment implements DatePickerFragment.OnDataSetLi
 
             }
             offer.saveInBackground();
-            Toast.makeText(getActivity(), "Done", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), getString(R.string.Done), Toast.LENGTH_SHORT).show();
 
             editMode = false;
             setResetEditMode();
@@ -1217,7 +1217,7 @@ public class NewOffer extends Fragment implements DatePickerFragment.OnDataSetLi
             getChildFragmentManager().popBackStackImmediate();
         } catch (ParseException e) {
             e.printStackTrace();
-            Toast.makeText(getActivity(),"Can't delete this object", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(),getString(R.string.new_offer_fragment_NoDelete), Toast.LENGTH_SHORT).show();
         }
 
 
@@ -1247,7 +1247,7 @@ public class NewOffer extends Fragment implements DatePickerFragment.OnDataSetLi
             Toolbar toolbar = globalData.getToolbar();
             toolbar.setTitle(globalData.getResources().getStringArray(R.array.Home_Company_Tab)[2]);
 
-        }else Toast.makeText(getActivity(),"No students applied",Toast.LENGTH_SHORT).show();
+        }else Toast.makeText(getActivity(),getString(R.string.new_offer_fragment_NoStudents),Toast.LENGTH_SHORT).show();
 
 
     }
