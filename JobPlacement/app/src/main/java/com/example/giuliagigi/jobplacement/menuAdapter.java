@@ -153,6 +153,11 @@ public class menuAdapter extends RecyclerView.Adapter<menuAdapter.ViewHolder> {
 
                                     Fragment fragment = ProfileManagement.newInstance(true,gd.getUserObject());
 
+
+                                    if(activity instanceof Home)
+                                        ((Home) activity).setProfileManagement((ProfileManagement)fragment);
+
+
                                     //clear backstack
                                     int count = fragmentManager.getBackStackEntryCount();
                                     for(int i = 0; i < count; ++i) {
@@ -220,8 +225,6 @@ public class menuAdapter extends RecyclerView.Adapter<menuAdapter.ViewHolder> {
                                 if (!(current instanceof FavCompaniesFragment)) {
                                     //New Fragment
                                     FavCompaniesFragment fragment = FavCompaniesFragment.newInstance();
-                                    // Insert the fragment by replacing any existing fragment
-                                    // Insert the fragment by replacing any existing fragment
 
                                     //clear backstack
                                     int count = fragmentManager.getBackStackEntryCount();
@@ -263,9 +266,12 @@ public class menuAdapter extends RecyclerView.Adapter<menuAdapter.ViewHolder> {
                                         fragmentManager.popBackStack();
                                     }
 
+                                    Fragment f1 = new TabHomeStudentFragment();
+                                    fragmentManager.beginTransaction().replace(R.id.tab_Home_container, f1).commit();
+
                                     fragmentManager.beginTransaction()
                                             .replace(R.id.tab_Home_container, fragment)
-                                            .addToBackStack(gd.getResources().getStringArray(R.array.Menu_items_student)[4])
+                                            .addToBackStack("Home")
                                             .commit();
 
                                 }
@@ -353,6 +359,11 @@ public class menuAdapter extends RecyclerView.Adapter<menuAdapter.ViewHolder> {
 
                                       Fragment fragment = ProfileManagement.newInstance(true,gd.getUserObject());
 
+
+                                      if(activity instanceof Home)
+                                          ((Home) activity).setProfileManagement((ProfileManagement)fragment);
+
+
                                       //clear backstack
                                       int count = fragmentManager.getBackStackEntryCount();
                                       for(int i = 0; i < count; ++i) {
@@ -384,8 +395,6 @@ public class menuAdapter extends RecyclerView.Adapter<menuAdapter.ViewHolder> {
                                   if (!(current instanceof CompanyStudentSearchFragment)) {
                                       //New Fragment
                                       CompanyStudentSearchFragment fragment = CompanyStudentSearchFragment.newInstance();
-                                      // Insert the fragment by replacing any existing fragment
-                                      // Insert the fragment by replacing any existing fragment
 
                                       //clear backstack
                                       int count = fragmentManager.getBackStackEntryCount();
@@ -497,9 +506,12 @@ public class menuAdapter extends RecyclerView.Adapter<menuAdapter.ViewHolder> {
                                           fragmentManager.popBackStack();
                                       }
 
+                                      Fragment f1 = new TabHomeCompanyFragment();
+                                      fragmentManager.beginTransaction().replace(R.id.tab_Home_container, f1).commit();
+
                                       fragmentManager.beginTransaction()
                                               .replace(R.id.tab_Home_container, fragment)
-                                              .addToBackStack(gd.getResources().getStringArray(R.array.Menu_items_Company)[4])
+                                              .addToBackStack("Home")
                                               .commit();
 
                                   }
