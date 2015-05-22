@@ -30,6 +30,7 @@ import com.parse.ParseInstallation;
 import com.parse.ParsePush;
 import com.parse.ParseUser;
 import com.parse.RequestPasswordResetCallback;
+import com.parse.SaveCallback;
 
 import java.util.Arrays;
 import java.util.HashSet;
@@ -67,7 +68,16 @@ public class Login extends ActionBarActivity {
 
             ParseInstallation installation = ParseInstallation.getCurrentInstallation();
             if(application.getCurrentUser().getType().equals(User.TYPE_STUDENT))
-                ParsePush.subscribeInBackground(User.TYPE_STUDENT);
+                ParsePush.subscribeInBackground(User.TYPE_STUDENT, new SaveCallback() {
+                    @Override
+                    public void done(ParseException e) {
+                        if(e == null){
+                            Log.d("com.parse.push", "successfully subscribed to the " + User.TYPE_STUDENT + " channel.");
+                        }else {
+                            Log.d("com.parse.push", "NOT subscribed to the " + User.TYPE_STUDENT + " channel.");
+                        }
+                    }
+                });
             installation.put(User.MAIL_FIELD, application.getUserObject().getMail());
             installation.put(User.MAIL_FIELD, application.getUserObject().getMail());
             installation.put(User.TYPE_FIELD, application.getUserObject().getType());
@@ -289,7 +299,16 @@ public class Login extends ActionBarActivity {
                     /* register an object Installation for receiving Push Notifications */
                     ParseInstallation installation = ParseInstallation.getCurrentInstallation();
                     if(gd.getCurrentUser().getType().equals(User.TYPE_STUDENT))
-                        ParsePush.subscribeInBackground(User.TYPE_STUDENT);
+                        ParsePush.subscribeInBackground(User.TYPE_STUDENT, new SaveCallback() {
+                            @Override
+                            public void done(ParseException e) {
+                                if(e == null){
+                                    Log.d("com.parse.push", "successfully subscribed to the " + User.TYPE_STUDENT + " channel.");
+                                }else {
+                                    Log.d("com.parse.push", "NOT subscribed to the " + User.TYPE_STUDENT + " channel.");
+                                }
+                            }
+                        });
                     installation.put(User.MAIL_FIELD, gd.getUserObject().getMail());
                     installation.put(User.TYPE_FIELD, gd.getUserObject().getType());
                     installation.saveInBackground();

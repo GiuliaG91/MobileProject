@@ -145,9 +145,22 @@ public class Home_tabAdapter extends RecyclerView.Adapter<Home_tabAdapter.ViewHo
                             title.setText(context.getResources().getString(R.string.new_student_applied));
                             break;
 
-                    case 2: if(object.getCompanyOffer().getCompany().getProfilePhoto() != null)
-                                icon.setImageBitmap(object.getCompanyOffer().getCompany().getProfilePhoto());
-                            title.setText(context.getResources().getString(R.string.student_accepted));
+                    case 2: try {
+                                if (object.getCompanyOffer().getCompany().getProfilePhoto() != null)
+                                    icon.setImageBitmap(object.getCompanyOffer().getCompany().getProfilePhoto());
+                            }catch(RuntimeException re){
+                            }
+
+                            switch (object.getOfferStatus().getType()) {
+                                case OfferStatus.TYPE_ACCEPTED: title.setText(context.getResources().getString(R.string.student_accepted));
+                                                                break;
+                                case OfferStatus.TYPE_START: title.setText(context.getResources().getString(R.string.student_processing));
+                                                             break;
+                                case OfferStatus.TYPE_CONSIDERING: title.setText(context.getResources().getString(R.string.student_considering));
+                                                                   break;
+                                case OfferStatus.TYPE_REFUSED: title.setText(context.getResources().getString(R.string.student_refused));
+                                                               break;
+                            }
                             break;
 
                     case 3: try {

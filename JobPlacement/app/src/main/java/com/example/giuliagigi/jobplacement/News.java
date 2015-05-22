@@ -19,6 +19,7 @@ public class News extends ParseObject {
     public static final String STUDENT = "student";
     public static final String COMPANY = "company";
     public static final String COMPANY_OFFER = "company_offer";
+    public static final String OFFER_STATUS = "offer_status";
 
     GlobalData globalData;
 
@@ -59,6 +60,11 @@ public class News extends ParseObject {
         return (CompanyOffer)get(News.COMPANY_OFFER);
     }
 
+    public OfferStatus getOfferStatus(){
+
+        return (OfferStatus) get(News.OFFER_STATUS);
+    }
+
     /*****   GETTER   *****/
 
     public void setType(int type){
@@ -85,12 +91,16 @@ public class News extends ParseObject {
         this.put(News.COMPANY_OFFER, companyOffer);
     }
 
-    public void createNews(int type, CompanyOffer co, Student student, GlobalData globalData){
+    public void setOfferStatus(OfferStatus offerStatus){
+        this.put(News.OFFER_STATUS, offerStatus);
+    }
+
+    public void createNews(int type, CompanyOffer co, Student student, OfferStatus os, GlobalData globalData){
 
         this.setType(type);
         this.setDate(Calendar.getInstance());
 
-        String message;
+        String message = "";
 
         switch (type){
 
@@ -115,12 +125,31 @@ public class News extends ParseObject {
 
                      break;
 
-            case 2:  // Student applied accepted
+            case 2:  // Student's application state changed
                      this.setCompanyOffer(co);
                      this.setStudent(student);
-                     message = globalData.getResources().getString(R.string.the_company) + " " + globalData.getUserObject().getName() + globalData.getResources().getString(R.string.application_accepted_message) + " \"" + co.getOfferObject() + "\"";
-                     this.setMessage(message);
+                     this.setOfferStatus(os);
+                     switch (os.getType()){
 
+                         case OfferStatus.TYPE_ACCEPTED:
+                                                        message = globalData.getResources().getString(R.string.the_company) + " " + globalData.getUserObject().getName() + " " + globalData.getResources().getString(R.string.application_accepted_message) + " \"" + co.getOfferObject() + "\"";
+                                                        break;
+
+                         case OfferStatus.TYPE_CONSIDERING:
+                                                             message = globalData.getResources().getString(R.string.the_company) + " " + globalData.getUserObject().getName() + " " + globalData.getResources().getString(R.string.application_considering_message) + " \"" + co.getOfferObject() + "\"";
+                                                             break;
+
+                         case OfferStatus.TYPE_REFUSED:
+                                                        message = globalData.getResources().getString(R.string.the_company) + " " + globalData.getUserObject().getName() + " " + globalData.getResources().getString(R.string.application_refused_message) + " \"" + co.getOfferObject() + "\"";
+                                                        break;
+
+                         case OfferStatus.TYPE_START:
+                                                        message = globalData.getResources().getString(R.string.the_company) + " " + globalData.getUserObject().getName() + " " + globalData.getResources().getString(R.string.application_processing_message) + " \"" + co.getOfferObject() + "\"";
+                                                        break;
+
+                         default:
+                     }
+                     this.setMessage(message);
 
                      this.saveInBackground();
 

@@ -170,7 +170,7 @@ public class ShowOffersAdapter extends RecyclerView.Adapter<ShowOffersAdapter.Vi
         // Highlight the selected item, update the title, and close the drawer
         // Highlight the selected item, update the title, and close the drawer
         Toolbar toolbar= globalData.getToolbar();
-        toolbar.setTitle("Offer");
+        toolbar.setTitle(context.getResources().getString(R.string.offer));
 
 
     }
