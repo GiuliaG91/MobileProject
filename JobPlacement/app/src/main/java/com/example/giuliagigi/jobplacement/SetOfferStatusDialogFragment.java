@@ -67,7 +67,7 @@ public class SetOfferStatusDialogFragment extends DialogFragment {
         okButton = (Button) root.findViewById(R.id.ok_button);
         cancelButton = (Button) root.findViewById(R.id.cancel_button);
 
-
+        items = new String[4];
         items[0]=getString(R.string.StatusChooseItem);
         items[1]=getString(R.string.OfferStatus_Considering);
         items[2]=getString(R.string.OfferStatus_Accepted);

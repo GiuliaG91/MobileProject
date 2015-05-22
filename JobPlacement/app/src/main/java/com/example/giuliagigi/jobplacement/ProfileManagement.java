@@ -201,8 +201,10 @@ public class ProfileManagement extends Fragment{
         menu.clear();
         if(editable)
             inflater.inflate(R.menu.menu_profile_management, menu);
+        else if(user.getType().equals(User.TYPE_STUDENT))
+            inflater.inflate(R.menu.menu_visit_profile_student, menu);
         else
-            inflater.inflate(R.menu.menu_visit_profile, menu);
+            inflater.inflate(R.menu.menu_visit_profile_company, menu);
     }
 
     @Override
@@ -220,7 +222,7 @@ public class ProfileManagement extends Fragment{
 
         }
 
-        if(item.getItemId() == R.id.action_send && !editable){
+        else if(item.getItemId() == R.id.action_send && !editable){
 
             AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
             builder.setTitle(GlobalData.getContext().getString(R.string.string_send_email) + " " + user.getMail() + "?");
@@ -238,21 +240,21 @@ public class ProfileManagement extends Fragment{
                 public void onClick(DialogInterface dialog, int which) {}
             });
 
-
-            if(item.getItemId() == R.id.action_see_candidatures && !editable){
-
-                SetOfferStatusDialogFragment statusDialogFragment=SetOfferStatusDialogFragment.newInstance((Student)user);
-                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-
-
-                fragmentManager.beginTransaction()
-                        .replace(R.id.tab_Home_container, statusDialogFragment)
-                        .addToBackStack("Status")
-                        .commit();
-            }
-
             builder.create().show();
         }
+
+        else if(item.getItemId() == R.id.action_see_candidatures && !editable){
+
+            SetOfferStatusDialogFragment statusDialogFragment=SetOfferStatusDialogFragment.newInstance((Student)user);
+            FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+
+
+            fragmentManager.beginTransaction()
+                    .replace(R.id.tab_Home_container, statusDialogFragment)
+                    .addToBackStack("Status")
+                    .commit();
+        }
+
         return true;
     }
 
