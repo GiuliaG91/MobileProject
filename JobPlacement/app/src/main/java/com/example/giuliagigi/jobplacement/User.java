@@ -40,6 +40,7 @@ public class User extends ParseObject{
     protected static final String TAG_FIELD = "tags";
     protected static final String PROFILE_PHOTO_FIELD = "profilePhoto";
     protected static final String NAME_FIELD = "name";
+    protected static final String PARSE_USER_FIELD = "parse_user";
 
     public static final String TYPE_STUDENT = "Student";
     public static final String TYPE_COMPANY = "Company";
@@ -248,6 +249,30 @@ public class User extends ParseObject{
         return profilePhoto;
     }
 
+
+    public void setParseUser(ParseUserWrapper parseUserWrapper){
+
+        put(PARSE_USER_FIELD,parseUserWrapper);
+    }
+
+    public ParseUserWrapper getParseUser(){
+
+        ParseUserWrapper u = (ParseUserWrapper)get(PARSE_USER_FIELD);
+
+        if(u!= null){
+
+            try {
+                u.fetchIfNeeded();
+                return u;
+            } catch (ParseException e) {
+                e.printStackTrace();
+                Log.println(Log.ASSERT,"USER","failed fetching parseUser");
+                return null;
+            }
+        }
+
+        return null;
+    }
 
     public void cacheData(){
 

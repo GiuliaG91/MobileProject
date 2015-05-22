@@ -246,7 +246,7 @@
 
     <!--Hint-->
 
-    <string name="new_offer_fragment_hint_object">Oggetto dell'offerta:</string>
+    <string name="new_offer_fragment_hint_object">Oggetto dell\'offerta:</string>
     <string name="new_offer_fragment_hint_duration">Scadenza contratto:</string>
     <string name="new_offer_fragment_hint_salary">Salario:</string>
     <string name="new_offer_fragment_hint_location">Posizione</string>
@@ -316,7 +316,7 @@
 <!-- OFFER DETAIL BUTTON -->
 
     <string name="offer_detail_apply_button">Apply</string>
-    <string name="offer_detail_contact_button">Contatta l'azienda</string>
+    <string name="offer_detail_contact_button">Contatta l\'azienda</string>
 
  <!-- New Offer Button -->
     <string name="new_offer_create_button">Crea</string>

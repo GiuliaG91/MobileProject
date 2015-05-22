@@ -275,7 +275,7 @@ public class Registration extends ActionBarActivity implements StudentRegistrati
                                                 u.setType(User.TYPE_STUDENT);
                                                 u.setPassword(newUser.getPassword());
                                                 u.setName(newUser.getName() + " " + ((Student)newUser).getSurname());
-
+                                                u.setParseUser(newParseUser);
 
                                                 u.saveInBackground(new SaveCallback() {
                                                     @Override
