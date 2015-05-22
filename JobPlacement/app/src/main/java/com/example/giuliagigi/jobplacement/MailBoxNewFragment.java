@@ -98,6 +98,7 @@ public class MailBoxNewFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
+        globalData.setToolbarTitle(getString(R.string.new_message_toolbar_title));
         root = inflater.inflate(R.layout.fragment_mail_box_new,container,false);
 
         if(message.getRecipients().size() > 0){

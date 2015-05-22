@@ -285,6 +285,7 @@ public class FilterFragment extends DialogFragment {
                 getDialog().dismiss();
             }
         });
+
         checkStatus();
 
         return root;

@@ -43,6 +43,16 @@
     <string name="ToolbarTilteStudentSearch">Student Search</string>
     <string name="ToolbarTilteCompanySearch">Company Search</string>
     <string name="ToolbarTilteMailBox">MailBox</string>
+    
+    
+    <string name="OfferStatus_Start">Processing</string>
+    <string name="OfferStatus_Considering">Considering</string>
+    <string name="OfferStatus_Refused">Filled</string>
+    <string name="OfferStatus_Accepted">Accepted</string>
+
+    <string name="StatusTextview">Apply Status:</string>
+    <string name="StatusChooseItem">Select next status:</string>
+    
 
     <string name="NoModify">Can\'t modify this offer</string>
 

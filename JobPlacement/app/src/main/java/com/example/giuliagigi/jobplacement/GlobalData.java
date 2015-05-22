@@ -39,6 +39,7 @@ public class GlobalData extends Application {
     private SharedPreferences loginPreferences;
     private InboxMessage currentViewMessage;
     private static Context applicationContext;
+    private String toolbarTitle;
 
 
     private menuAdapter mAdapter=null;
@@ -87,12 +88,14 @@ public class GlobalData extends Application {
         ParseObject.registerSubclass(InboxMessage.class);
         ParseObject.registerSubclass(InboxMessageReceived.class);
         ParseObject.registerSubclass(News.class);
+        ParseObject.registerSubclass(OfferStatus.class);
 
         Degree.initializeLangauges();
         Office.initializeLanguage();
         Language.initializeLangauges();
         Telephone.initializeLangauges();
         User.initializeLangauges();
+        OfferStatus.initializeLangauges();
 
 
         Parse.initialize(this, "EICiUy2eT7CZPXw8N6I1p6lE4844svLI73JTc2QY", "8I9HZ7AgMHgeIxQKk8k653jNBvBCz57nRuSH73pA");
@@ -311,5 +314,17 @@ public class GlobalData extends Application {
     public void setmAdapter(menuAdapter mAdapter) {
         this.mAdapter = mAdapter;
     }
+
+
+
+    public String getToolbarTitle() {
+        return toolbarTitle;
+    }
+
+    public void setToolbarTitle(String toolbarTitle) {
+        this.toolbarTitle = toolbarTitle;
+    }
+
+
 }
 

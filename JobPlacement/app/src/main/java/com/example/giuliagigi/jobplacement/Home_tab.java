@@ -101,8 +101,6 @@ public class Home_tab extends Fragment {
         // specify an adapter
         mRecyclerView.setAdapter(adapter);
 
-        ((Toolbar)this.getActivity().findViewById(R.id.toolbar)).setTitle(globalData.getResources().getString(R.string.home));
-
         return root;
     }
 

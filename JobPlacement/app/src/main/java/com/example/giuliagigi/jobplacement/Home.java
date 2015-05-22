@@ -2,6 +2,7 @@ package com.example.giuliagigi.jobplacement;
 
 
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.content.res.TypedArray;
 import android.net.Uri;
@@ -26,8 +27,7 @@ import android.widget.Toast;
 import java.util.ArrayList;
 
 
-public class Home extends ActionBarActivity  implements ToolbarTitleChange,
-                                                    TabHomeStudentFragment.OnFragmentInteractionListener ,TabHomeCompanyFragment.OnFragmentInteractionListener, NewOffer.OnFragmentInteractionListener,
+public class Home extends ActionBarActivity implements TabHomeStudentFragment.OnFragmentInteractionListener ,TabHomeCompanyFragment.OnFragmentInteractionListener, NewOffer.OnFragmentInteractionListener,
                                                 ProfileManagementFragment.OnInteractionListener, ProfileManagement.OnInteractionListener ,
                                                   OfferSearchFragment.OnFragmentInteractionListener , StudentCompanySearchFragment.OnFragmentInteractionListener,
                                                     CompanyStudentSearchFragment.OnFragmentInteractionListener, MailBoxFragment.OnFragmentInteractionListener, Home_tab.OnFragmentInteractionListener
@@ -47,7 +47,6 @@ public class Home extends ActionBarActivity  implements ToolbarTitleChange,
     private TypedArray ICONS;
     private String[] TITLES;
     private Boolean init=false;
-    private String toolbarTitle=null;
 /********************************************************/
 /**
  *
@@ -66,7 +65,7 @@ public class Home extends ActionBarActivity  implements ToolbarTitleChange,
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);
         Log.println(Log.ASSERT,"HOME","onCreate");
 
         if(savedInstanceState!=null)
@@ -84,12 +83,15 @@ public class Home extends ActionBarActivity  implements ToolbarTitleChange,
         listeners = new ArrayList<OnActivityChangedListener>();
         isEditMode = false;
 
+
         toolbar = (Toolbar) findViewById(R.id.toolbar); // Attaching the layout to the toolbar object
-        setSupportActionBar(toolbar);                   // Setting toolbar as the ActionBar with setSupportActionBar() call
+        if (toolbar != null) {
+            setSupportActionBar(toolbar);
+        }// Setting toolbar as the ActionBar with setSupportActionBar() call
         toolbar.setNavigationIcon(R.drawable.ic_menu_white);
 
-        application.setToolbar(toolbar);
-        //Setup Drawer
+      application.setToolbar(toolbar);
+      //Setup Drawer
 
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mDrawerList = (RecyclerView) findViewById(R.id.left_drawer);
@@ -156,13 +158,12 @@ public class Home extends ActionBarActivity  implements ToolbarTitleChange,
         }
 
         // specify an adapter (see also next example)
-        mAdapter = new menuAdapter(TITLES, ICONS,user,this,mDrawerLayout,mDrawerList,toolbar,application);
+        mAdapter = new menuAdapter(TITLES, ICONS,user,this,mDrawerLayout,application);
         mDrawerList.setAdapter(mAdapter);
 
         application.setmAdapter(mAdapter);
 
         mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, toolbar, R.string.drawer_open, R.string.drawer_close) {
-
             @Override
             public void onDrawerOpened(View drawerView) {
                 super.onDrawerOpened(drawerView);
@@ -174,10 +175,18 @@ public class Home extends ActionBarActivity  implements ToolbarTitleChange,
             public void onDrawerClosed(View drawerView) {
                 super.onDrawerClosed(drawerView);
                 // Code here will execute once drawer is closed
+
+
             }
 
-
+            @Override
+            public void onConfigurationChanged(Configuration newConfig) {
+                if(application.getToolbarTitle()!=null) {
+                    setTitle(application.getToolbarTitle());
+                }
+            }
         }; // Drawer Toggle Object Made
+
         mDrawerLayout.setDrawerListener(mDrawerToggle); // Drawer Listener set to the Drawer toggle
         mDrawerToggle.syncState();               // Finally we set the drawer toggle sync State
 
@@ -188,6 +197,10 @@ public class Home extends ActionBarActivity  implements ToolbarTitleChange,
 
     }
 
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        mDrawerToggle.onConfigurationChanged(newConfig);
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -316,8 +329,4 @@ public class Home extends ActionBarActivity  implements ToolbarTitleChange,
         }
     }
 
-    @Override
-    public void SetNewTitle(String title) {
-        toolbar.setTitle(title);
-    }
 }

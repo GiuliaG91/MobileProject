@@ -13,6 +13,10 @@ import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.parse.FindCallback;
+import com.parse.ParseException;
+import com.parse.ParseQuery;
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -40,6 +44,7 @@ public class AppliesAdapter extends RecyclerView.Adapter<AppliesAdapter.ViewHold
         private ImageView logo;
         private TextView object;
         private TextView descriprion;
+        private TextView status;
 
 
 
@@ -51,6 +56,7 @@ public class AppliesAdapter extends RecyclerView.Adapter<AppliesAdapter.ViewHold
             logo=(ImageView)v.findViewById(R.id.logo_img);
             object=(TextView)v.findViewById(R.id.objectOffer_tv);
             descriprion=(TextView)v.findViewById(R.id.description_tv);
+            status=(TextView)v.findViewById(R.id.applies_tv);
 
         }
     }
@@ -107,6 +113,17 @@ public class AppliesAdapter extends RecyclerView.Adapter<AppliesAdapter.ViewHold
             }
         }
 
+        ParseQuery query=new ParseQuery("OfferStatus");
+        query.whereEqualTo("student",student);
+        query.whereEqualTo("offer", mDataset.get(position));
+
+        final ViewHolder viewHolder=holder;
+        try {
+            List<OfferStatus> status=query.find();
+            holder.status.setText(status.get(0).getType());
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
     }
 
     // Return the size of your dataset (invoked by the layout manager)

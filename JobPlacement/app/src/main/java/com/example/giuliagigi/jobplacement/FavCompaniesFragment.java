@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -26,7 +27,6 @@ public class FavCompaniesFragment extends Fragment {
     private LinearLayoutManager mLayoutManager;
     private FavCompaniesAdapter adapter;
     private Integer position=0;
-    private ToolbarTitleChange mcallback;
 
     public static FavCompaniesFragment newInstance()
     {
@@ -42,15 +42,16 @@ public class FavCompaniesFragment extends Fragment {
         {
             position=savedInstanceState.getInt("position");
         }
+        globalData=(GlobalData)getActivity().getApplication();
+
     }
 
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
+        globalData.setToolbarTitle(getString(R.string.ToolbarTitleMyCompanies));
+
         root  = inflater.inflate(R.layout.recycler_view_template,container,false);
 
-        mcallback=((Home)getActivity());
-        mcallback.SetNewTitle(getResources().getString(R.string.ToolbarTitleMyCompanies));
-        globalData=(GlobalData)getActivity().getApplication();
         student=globalData.getStudentFromUser();
         mRecyclerView = (RecyclerView) root.findViewById(R.id.recycler_view_template);
 

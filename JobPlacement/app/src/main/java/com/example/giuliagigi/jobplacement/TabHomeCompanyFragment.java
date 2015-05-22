@@ -67,8 +67,6 @@ public class TabHomeCompanyFragment extends Fragment {
 
         globalData=(GlobalData)getActivity().getApplication();
         Titles=getResources().getStringArray(R.array.Home_Company_Tab);
-        Toolbar toolbar=globalData.getToolbar();
-        toolbar.setTitle(R.string.ToolbarTilteHome);
     }
 
     @Override

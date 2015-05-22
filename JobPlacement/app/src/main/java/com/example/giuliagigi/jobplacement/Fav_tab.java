@@ -37,13 +37,14 @@ public class Fav_tab extends Fragment{
         {
             position=savedInstanceState.getInt("position");
         }
+        globalData=(GlobalData)getActivity().getApplication();
     }
 
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         root  = inflater.inflate(R.layout.fragment_offer_search,container,false);
 
-        globalData=(GlobalData)getActivity().getApplication();
-        globalData.getToolbar().setTitle(getResources().getString(R.string.ToolbarTilteMyJobOffers));
+
+        globalData.setToolbarTitle(getString(R.string.ToolbarTilteMyJobOffers));
         student=globalData.getStudentFromUser();
         mRecyclerView = (RecyclerView) root.findViewById(R.id.recycler_view_offer_search);
 

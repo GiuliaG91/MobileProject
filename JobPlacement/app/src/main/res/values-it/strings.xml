@@ -30,6 +30,15 @@
 
     <string name="NoModify">Non puoi modificare questa offerta</string>
 
+    <string name="OfferStatus_Start">Lavorazione</string>
+    <string name="OfferStatus_Considering">PresaInCarico</string>
+    <string name="OfferStatus_Refused">Rifiutata</string>
+    <string name="OfferStatus_Accepted">Accettata</string>
+
+    <string name="StatusTextview">Stato Candidatura:</string>
+    <string name="StatusChooseItem">Seleziona il prossimo stato:</string>
+
+
     <string name="user_icon_description">UserIcon</string>
     <string name="nofavourites">No Favourites</string>
 
@@ -250,6 +259,8 @@
     <string name="new_offer_fragment_hint_number_of_place">Available places</string>
     <string name="new_offer_fragment_hint_validity">Validity</string>
     <string name="new_offer_fragment_hint_tags">Set Required Skills...</string>
+
+
 
 
     <string name="new_offer_fragment_date">Set</string>

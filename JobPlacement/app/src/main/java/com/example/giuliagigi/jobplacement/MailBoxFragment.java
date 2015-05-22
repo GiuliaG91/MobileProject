@@ -34,6 +34,7 @@ public class MailBoxFragment extends Fragment {
     private ParseQueryAdapter<InboxMessageReceived> queryAdapterReceived;
     private ParseQueryAdapter<InboxMessage> queryAdapterSent;
     private int currentMailBoxFragment;
+    private GlobalData globalData;
 
     private boolean loading = true;
 
@@ -54,6 +55,7 @@ public class MailBoxFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        globalData=(GlobalData)getActivity().getApplication();
         setHasOptionsMenu(true);
 
         mListener = (OnFragmentInteractionListener)this.getActivity();
@@ -106,6 +108,8 @@ public class MailBoxFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+        globalData.setToolbarTitle(getString(R.string.ToolbarTilteMailBox));
+
         root = inflater.inflate(R.layout.fragment_mailbox, container, false);
 
         mRecyclerView = (RecyclerView) root.findViewById(R.id.recycler_view_student_mailbox);

@@ -71,7 +71,7 @@ public class OfferDetail extends  Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         globalData=(GlobalData)getActivity().getApplication();
-        offer=globalData.currentViewOffer;
+        offer=globalData.getCurrentViewOffer();
         globalData.getToolbar().setTitle(getResources().getString(R.string.ToolbarTilteOffer));
         if(offer==null)
         {
@@ -220,26 +220,27 @@ public class OfferDetail extends  Fragment {
                         //Set apply
 
                         offer.addStudent(s);
-                        offer.setPositions(offer.getnPositions() - 1);
-
                         offer.saveInBackground();
+                        OfferStatus offerStatus=new OfferStatus();
+                        offerStatus.setOffer(offer);
+                        offerStatus.setStudent(s);
+                        offerStatus.saveInBackground();
                         //todo notify company
 
                         Toast.makeText(getActivity(), "Done", Toast.LENGTH_SHORT).show();
 
                         News news = new News();
-                        news.createNews(1, offer, (Student)globalData.getUserObject(), globalData);
+                        news.createNews(1, offer, (Student) globalData.getUserObject(), globalData);
 
 
                     } else {
                         Toast.makeText(getActivity(), "Can't perform apply", Toast.LENGTH_SHORT).show();
                     }
-                }
-                else {
+                } else {
                     Toast.makeText(getActivity(), "You are already applied", Toast.LENGTH_SHORT).show();
                 }
 
-                ((FloatingActionsMenu)root.findViewById(R.id.multiple_actions)).collapse();
+                ((FloatingActionsMenu) root.findViewById(R.id.multiple_actions)).collapse();
             }
         });
 
@@ -249,7 +250,7 @@ public class OfferDetail extends  Fragment {
             @Override
             public void onClick(View v) {
 
-                FragmentManager fragmentManager =activity.getSupportFragmentManager();
+                FragmentManager fragmentManager = activity.getSupportFragmentManager();
 
                 Bundle data = new Bundle();
 
@@ -267,7 +268,7 @@ public class OfferDetail extends  Fragment {
                 Toolbar toolbar = (Toolbar) activity.findViewById(R.id.toolbar);
                 toolbar.setTitle(activity.getResources().getString(R.string.new_message_toolbar_title));
 
-                ((FloatingActionsMenu)root.findViewById(R.id.multiple_actions)).collapse();
+                ((FloatingActionsMenu) root.findViewById(R.id.multiple_actions)).collapse();
             }
         });
 

@@ -42,9 +42,6 @@ public class menuAdapter extends RecyclerView.Adapter<menuAdapter.ViewHolder> {
     private  int flag;
     private  FragmentActivity activity;
     private DrawerLayout mDrawerLayout;
-    private RecyclerView mDrawerList;
-    private Toolbar toolbar;
-
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         // each data item is just a string in this case
@@ -80,7 +77,7 @@ public class menuAdapter extends RecyclerView.Adapter<menuAdapter.ViewHolder> {
     }
 
 
-    public menuAdapter(String Titles[], TypedArray Icons, ParseUserWrapper u, FragmentActivity act, DrawerLayout d, RecyclerView l, Toolbar t, GlobalData globalData)
+    public menuAdapter(String Titles[], TypedArray Icons, ParseUserWrapper u, FragmentActivity act, DrawerLayout d, GlobalData globalData)
     {
         // titles, icons, name, email, profile pic are passed from the main activity as we
         mNavTitles = Titles;                //have seen earlier
@@ -88,8 +85,6 @@ public class menuAdapter extends RecyclerView.Adapter<menuAdapter.ViewHolder> {
          user=u;
         activity=act;
         mDrawerLayout=d;
-        mDrawerList=l;
-        toolbar=t;
         gd=globalData;
     }
 

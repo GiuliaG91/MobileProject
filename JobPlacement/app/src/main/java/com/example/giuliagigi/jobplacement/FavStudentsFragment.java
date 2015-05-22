@@ -44,7 +44,8 @@ public class FavStudentsFragment extends Fragment {
         root  = inflater.inflate(R.layout.recycler_view_template,container,false);
 
         globalData=(GlobalData)getActivity().getApplication();
-        globalData.getToolbar().setTitle(getResources().getString(R.string.ToolbarTitleMyStudents));
+
+        globalData.setToolbarTitle(getString(R.string.ToolbarTitleMyStudents));
         company=globalData.getCompanyFromUser();
         mRecyclerView = (RecyclerView) root.findViewById(R.id.recycler_view_template);
 

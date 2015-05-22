@@ -404,9 +404,4 @@ public class OfferSearchAdapter extends RecyclerView.Adapter<OfferSearchAdapter.
         }
 
     }
-
-
-
-
-
 }

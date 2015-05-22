@@ -34,7 +34,6 @@ public class TabHomeStudentFragment extends Fragment {
     int Numboftabs = 4;
     GlobalData globalData;
     private Integer currentPosition=0;
-    ToolbarTitleChange mcallback;
     /***************************************************************/
 
 
@@ -80,11 +79,9 @@ public class TabHomeStudentFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
+        globalData.setToolbarTitle(getString(R.string.ToolbarTilteHome));
         // Inflate the layout for this fragment
       root= inflater.inflate(R.layout.fragment_tab_home, container, false);
-
-        mcallback=((Home)getActivity());
-        mcallback.SetNewTitle(getResources().getString(R.string.ToolbarTilteHome));
 
         /*************ViewPager***************************/
 

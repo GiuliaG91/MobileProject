@@ -135,9 +135,7 @@ public class ProfileManagement extends Fragment{
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        Toolbar toolbar=application.getToolbar();
-        toolbar.setTitle(R.string.ToolbarTilteProfile);
-
+        application.setToolbarTitle(getString(R.string.ToolbarTilteHome));
         /*************ViewPager***************************/
 
         // Creating The ViewPagerAdapter and Passing Fragment Manager, Titles fot the Tabs and Number Of Tabs.
