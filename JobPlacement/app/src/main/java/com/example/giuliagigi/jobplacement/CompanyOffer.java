@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.TimeZone;
 
@@ -39,7 +40,6 @@ public class CompanyOffer extends ParseObject {
     private static final String TAGS_FIELD=  "tags";
     private static final String APPLIES_FIELD="applies";
     private static final String PUBLISH_FIELD="publish";
-
 
     public CompanyOffer(){
         super();
