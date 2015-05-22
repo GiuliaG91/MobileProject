@@ -146,6 +146,7 @@
     <string name="string_student_fragment_language_level">Level:</string>
     <string name="string_student_cv">Curriculum vitae</string>
     <string name="string_student_upload_cv">CV not uploaded</string>
+    <string name="string_student_cv_only_pdf">Only PDF files accepted</string>
 
 
     <!-- Degree fragment strings: -->

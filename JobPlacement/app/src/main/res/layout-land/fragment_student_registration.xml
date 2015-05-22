@@ -50,7 +50,7 @@
                     android:layout_weight=".3"
                     android:paddingLeft="10dp"
                     android:gravity="bottom"
-                    android:textSize="10sp" />
+                    android:textSize="13dp" />
 
                 <EditText
                     android:layout_width="fill_parent"
@@ -83,7 +83,7 @@
                     android:layout_weight=".3"
                     android:paddingLeft="10dp"
                     android:gravity="bottom"
-                    android:textSize="10sp" />
+                    android:textSize="13dp"/>
 
                 <EditText
                     android:layout_width="fill_parent"
@@ -137,7 +137,7 @@
                         android:id="@+id/container_sex_hint"
                         android:layout_weight=".3"
                         android:gravity="center_vertical"
-                        android:textSize="10sp" />
+                        android:textSize="13dp"/>
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -186,7 +186,7 @@
                         android:paddingLeft="10dp"
                         android:textColor="@color/ColorPrimaryDark"
                         android:gravity="bottom"
-                        android:textSize="10sp" />
+                        android:textSize="13dp" />
 
                     <TextView
                         android:layout_width="fill_parent"
@@ -240,7 +240,7 @@
                         android:layout_weight=".3"
                         android:paddingLeft="10dp"
                         android:gravity="bottom"
-                        android:textSize="10sp" />
+                        android:textSize="13dp"/>
 
                     <Spinner
                         android:layout_width="match_parent"
@@ -267,7 +267,7 @@
                         android:layout_weight=".3"
                         android:paddingLeft="10dp"
                         android:gravity="bottom"
-                        android:textSize="10sp" />
+                        android:textSize="13dp"/>
 
                     <Spinner
                         android:layout_width="match_parent"
@@ -316,7 +316,7 @@
                         android:layout_weight=".3"
                         android:paddingLeft="10dp"
                         android:gravity="bottom"
-                        android:textSize="10sp" />
+                        android:textSize="13dp" />
 
                     <EditText
                         android:layout_width="fill_parent"
@@ -376,7 +376,7 @@
                             android:layout_weight=".3"
                             android:paddingLeft="10dp"
                             android:gravity="bottom"
-                            android:textSize="10sp" />
+                            android:textSize="13dp" />
 
                         <EditText
                             android:layout_width="fill_parent"
@@ -408,7 +408,7 @@
                             android:layout_weight=".3"
                             android:paddingLeft="10dp"
                             android:gravity="bottom"
-                            android:textSize="10sp" />
+                            android:textSize="13dp"/>
 
                         <EditText
                             android:layout_width="fill_parent"
