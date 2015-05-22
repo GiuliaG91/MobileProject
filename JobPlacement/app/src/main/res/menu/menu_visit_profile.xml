@@ -15,4 +15,9 @@
         android:title="@string/action_send"
         app:showAsAction="always"/>
 
+    <item android:id="@+id/action_see_candidatures"
+        android:icon="@drawable/ic_person_outline_white_36dp"
+        android:title="@string/action_see"
+        app:showAsAction="always"/>
+
 </menu>

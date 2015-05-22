@@ -256,6 +256,12 @@ public class ProfileManagement extends Fragment{
                 public void onClick(DialogInterface dialog, int which) {}
             });
 
+
+            if(item.getItemId() == R.id.action_see_candidatures && !editable){
+                //TODO
+
+            }
+
             builder.create().show();
         }
         return true;
