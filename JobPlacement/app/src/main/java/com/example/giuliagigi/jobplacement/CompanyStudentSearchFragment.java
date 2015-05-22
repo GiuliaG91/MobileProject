@@ -28,6 +28,7 @@ public class CompanyStudentSearchFragment extends Fragment {
     private CompanyStudentSearchAdapter adapter;
     private LinearLayoutManager mLayoutManager;
     private Integer position=0;
+    private GlobalData globalData;
 
     private OnFragmentInteractionListener mListener;
 
@@ -41,8 +42,6 @@ public class CompanyStudentSearchFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Toolbar toolbar=((GlobalData)getActivity().getApplication()).getToolbar();
-        toolbar.setTitle(R.string.ToolbarTilteCompanySearch);
 
         setHasOptionsMenu(true);
         if(savedInstanceState!=null)
@@ -55,12 +54,16 @@ public class CompanyStudentSearchFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-
+        globalData=(GlobalData)getActivity().getApplication();
         activity = getActivity();
 
         root = inflater.inflate(R.layout.fragment_offer_search, container, false);
 
         mRecyclerView = (RecyclerView) root.findViewById(R.id.recycler_view_offer_search);
+
+        Toolbar toolbar=globalData.getToolbar();
+        toolbar.setTitle(R.string.ToolbarTilteCompanySearch);
+        globalData.setToolbarTitle(getString(R.string.ToolbarTilteCompanySearch));
 
         // use this setting to improve performance if you know that changes
         // in content do not change the layout size of the RecyclerView

@@ -26,6 +26,7 @@
     <string name="ToolbarTilteStudentSearch">Cerca studenti</string>
     <string name="ToolbarTilteCompanySearch">Cerca aziende</string>
     <string name="ToolbarTilteMailBox">MailBox</string>
+    <string name="ToolbarTilteMyCompanies">Aziende preferite</string>
 
 
     <string name="NoModify">Non puoi modificare questa offerta</string>
@@ -76,7 +77,7 @@
     <string-array name="Home_Students_Tab">
 
         <item>News</item>
-        <item>Offerte di lavoro</item>
+        <item>Offerte</item>
         <item>Aziende</item>
         <item>Candidature</item>
 
@@ -85,10 +86,17 @@
     <string-array name="Home_Company_Tab">
 
         <item>News</item>
-        <item>Offerte di lavoro</item>
+        <item>Offerte</item>
         <item>Studenti</item>
 
     </string-array>
+
+    <string-array name="typeOfDegrees">
+    <item>Minimo Livello di laurea:</item>
+    <item>Triennale</item>
+    <item>Magistrale</item>
+    <item>Dottorato</item>
+</string-array>
 
     <!--Registration -->
     <string name="string_select_type">Seleziona un tipo</string>

@@ -159,6 +159,9 @@ public class NewOffer extends Fragment implements DatePickerFragment.OnDataSetLi
             buttonSave.setVisible(false);
             buttonSave.setEnabled(false);
         }
+
+
+
     }
 
 
@@ -180,6 +183,10 @@ public class NewOffer extends Fragment implements DatePickerFragment.OnDataSetLi
 
         globalData=(GlobalData)getActivity().getApplication();
         company=(Company)globalData.getUserObject();
+
+        Toolbar toolbar=globalData.getToolbar();
+        toolbar.setTitle(R.string.ToolbarTilteProfile);
+        globalData.setToolbarTitle(getString(R.string.ToolbarTilteProfile));
 
         // Inflate the layout for this fragment
         root= inflater.inflate(R.layout.fragment_new_offer, container, false);

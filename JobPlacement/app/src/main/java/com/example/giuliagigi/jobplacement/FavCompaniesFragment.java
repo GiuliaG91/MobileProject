@@ -48,7 +48,9 @@ public class FavCompaniesFragment extends Fragment {
 
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        globalData.setToolbarTitle(getString(R.string.ToolbarTitleMyCompanies));
+        Toolbar toolbar=globalData.getToolbar();
+        toolbar.setTitle(R.string.ToolbarTilteMyCompanies);
+        globalData.setToolbarTitle(getString(R.string.ToolbarTilteMyJobOffers));
 
         root  = inflater.inflate(R.layout.recycler_view_template,container,false);
 

@@ -43,6 +43,7 @@
     <string name="ToolbarTilteStudentSearch">Student Search</string>
     <string name="ToolbarTilteCompanySearch">Company Search</string>
     <string name="ToolbarTilteMailBox">MailBox</string>
+    <string name="ToolbarTilteMyCompanies">MyCompanies</string>
     
     
     <string name="OfferStatus_Start">Processing</string>

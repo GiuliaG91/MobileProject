@@ -90,6 +90,11 @@ public class OfferDetail extends  Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
+
+        Toolbar toolbar=globalData.getToolbar();
+        toolbar.setTitle(R.string.ToolbarTilteOffer);
+        globalData.setToolbarTitle(getString(R.string.ToolbarTilteOffer));
+
        root=inflater.inflate(R.layout.offer_layout,container,false);
             activity=getActivity();
         //set object

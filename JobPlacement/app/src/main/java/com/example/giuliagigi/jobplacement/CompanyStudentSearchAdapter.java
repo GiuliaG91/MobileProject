@@ -127,11 +127,11 @@ public class CompanyStudentSearchAdapter extends RecyclerView.Adapter<CompanyStu
 
                             if(thisType>=myType)
                             {
-                                if(mark!=0)
-                                {
-                                    if(mark<d.getMark())
-                                    {
-                                        results.add(d);
+                                if(thisType==myType) {
+                                    if (d.getMark() != null && mark != 0) {
+                                        if (mark < d.getMark()) {
+                                            results.add(d);
+                                        }
                                     }
                                 }
                                 else {
@@ -149,17 +149,24 @@ public class CompanyStudentSearchAdapter extends RecyclerView.Adapter<CompanyStu
                 }
                 if(!field_list.isEmpty())
                 {
-                    ParseQuery q=new ParseQuery("Degree");
-                    q.whereContainedIn("type",field_list);
-
-                    List<Degree> results=null;
-                    try {
-                        results=q.find();
-                    } catch (ParseException e) {
-                        e.printStackTrace();
+                    List<String> newList=new ArrayList<>();
+                    for(String s : field_list)
+                    {
+                        newList.add(Degree.getTranslatedString(s));
                     }
-                        if(results!=null && !results.isEmpty())
-                    query.whereContainedIn("field", results);
+                    if(!newList.isEmpty()) {
+                        ParseQuery q = new ParseQuery("Degree");
+                        q.whereContainedIn("studies", newList);
+
+                        List<Degree> results = null;
+                        try {
+                            results = q.find();
+                        } catch (ParseException e) {
+                            e.printStackTrace();
+                        }
+                        if (results != null && !results.isEmpty())
+                            query.whereContainedIn("degrees", results);
+                    }
                 }
 
                 return query;

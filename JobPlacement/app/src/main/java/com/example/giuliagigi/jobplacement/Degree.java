@@ -178,4 +178,10 @@ public class Degree extends ParseObject implements Comparable<Degree>{
         return null;
     }
 
+    public static String getTranslatedString(String s)
+    {
+        return (String)getKeyByValue(DEGREE_STUDIES,s);
+
+    }
+
 }

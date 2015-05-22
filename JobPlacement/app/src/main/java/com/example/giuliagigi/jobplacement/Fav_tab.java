@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -44,6 +45,8 @@ public class Fav_tab extends Fragment{
         root  = inflater.inflate(R.layout.fragment_offer_search,container,false);
 
 
+        Toolbar toolbar=globalData.getToolbar();
+        toolbar.setTitle(R.string.ToolbarTilteMyJobOffers);
         globalData.setToolbarTitle(getString(R.string.ToolbarTilteMyJobOffers));
         student=globalData.getStudentFromUser();
         mRecyclerView = (RecyclerView) root.findViewById(R.id.recycler_view_offer_search);
