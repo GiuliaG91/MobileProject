@@ -156,6 +156,9 @@ public class menuAdapter extends RecyclerView.Adapter<menuAdapter.ViewHolder> {
 
                                     Fragment fragment = ProfileManagement.newInstance(true,gd.getUserObject());
 
+                                    if(activity instanceof Home)
+                                        ((Home) activity).setProfileManagement((ProfileManagement)fragment);
+
                                     fragmentManager.beginTransaction()
                                             .replace(R.id.tab_Home_container, fragment)
                                             .commit();
@@ -360,6 +363,9 @@ public class menuAdapter extends RecyclerView.Adapter<menuAdapter.ViewHolder> {
                                   if(!(current instanceof ProfileManagement) || gd.getLatestDisplayedUser()!=gd.getUserObject()) {
 
                                       Fragment fragment = ProfileManagement.newInstance(true,gd.getUserObject());
+
+                                      if(activity instanceof Home)
+                                          ((Home) activity).setProfileManagement((ProfileManagement)fragment);
 
                                       fragmentManager.beginTransaction()
                                               .replace(R.id.tab_Home_container, fragment)
