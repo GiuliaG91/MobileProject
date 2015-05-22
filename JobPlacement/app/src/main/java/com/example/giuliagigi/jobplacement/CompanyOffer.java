@@ -41,6 +41,17 @@ public class CompanyOffer extends ParseObject {
     private static final String APPLIES_FIELD="applies";
     private static final String PUBLISH_FIELD="publish";
 
+
+    public static final String[] TYPE_WORK_FIELD_TRANSLATED =GlobalData.getContext().getResources().getStringArray(R.array.new_offer_fragment_fields);
+    public static final String[] TYPE_CONTRACT_FIELD_TRANSLATED =GlobalData.getContext().getResources().getStringArray(R.array.new_offer_fragment_typeOfContracts);
+    public static final String[] TYPE_TERM_FIELD_TRANSLATED =GlobalData.getContext().getResources().getStringArray(R.array.new_offer_fragment_termContracts);
+
+    public static final String[] TYPE_WORK_FIELD ={"Choose a field:",  "Mechanics", "Informatics","Chemistry", "Energy" ,"Materials"};
+    public static final String[] TYPE_CONTRACT_FIELD = {"Select a type of contract","Stage", "Part-Time", "Full-Time", "Tesi","Master"};
+    public static final String[] TYPE_TERM_FIELD={"Select term of contract...","Up to 6 months","One year","Two year","Five year","Indefinitely"};
+
+
+
     public CompanyOffer(){
         super();
     }
@@ -54,7 +65,8 @@ public class CompanyOffer extends ParseObject {
     }
 
     public String getWorkField() {
-        return this.getString(WORK_FIELD);
+        String res=getTranlatedWorkField( this.getString(WORK_FIELD));
+        return res;
     }
 
     public Integer getnPositions() {
@@ -64,11 +76,14 @@ public class CompanyOffer extends ParseObject {
     public Date getValidity(){ return this.getDate(VALIDITY_FIELD);}
 
     public String getContract() {
-        return this.getString(CONTRACT_FIELD);
+
+        String res=getTranslatedContractField( this.getString(CONTRACT_FIELD));
+        return res;
     }
 
     public String getTerm() {
-        return this.getString(TERM_FIELD);
+        String res=getTranslatedTermField( this.getString(TERM_FIELD));
+        return res;
     }
 
 
@@ -123,7 +138,9 @@ public class CompanyOffer extends ParseObject {
     }
     public void setWorkField(String workField){
 
-        this.put(WORK_FIELD,workField);
+        String result=getEnglishWorkField(workField);
+                if(result!=null)
+                  this.put(WORK_FIELD,result);
     }
     public void setPositions(Integer positions){
 
@@ -142,12 +159,14 @@ public class CompanyOffer extends ParseObject {
     }
 
     public void setContract(String contract){
-
-        this.put(CONTRACT_FIELD,contract);
+        String result=getEnglishContractField(contract);
+        if(result!=null)
+        this.put(CONTRACT_FIELD,result);
     }
     public void setTerm(String term){
-
-        this.put(TERM_FIELD,term);
+        String result=getEnglishTermField(term);
+        if(result!=null)
+        this.put(TERM_FIELD,result);
     }
     public void setLocation(String location){
 
@@ -171,7 +190,7 @@ public class CompanyOffer extends ParseObject {
     }
     public void setCity(String city)
     {
-        this.put(CITY_FIELD,city);
+        this.put(CITY_FIELD, city);
     }
 
 
@@ -194,7 +213,7 @@ public class CompanyOffer extends ParseObject {
 
     public void setPublishField(Boolean bool)
     {
-        this.put(PUBLISH_FIELD,bool);
+        this.put(PUBLISH_FIELD, bool);
     }
 
     /*END SETTER METHODS*/
@@ -207,6 +226,84 @@ public class CompanyOffer extends ParseObject {
 
         return (ParseGeoPoint)get(LOCATION_FIELD);
     }
+
+
+    /*********************AUXILIAR METHODS**********************************/
+
+    public static String getEnglishWorkField(String it)
+    {
+        for(int i=0;i<TYPE_WORK_FIELD_TRANSLATED.length;i++)
+        {
+            if(it.equals(TYPE_WORK_FIELD_TRANSLATED[i]))
+            {
+                return TYPE_WORK_FIELD[i];
+            }
+        }
+        return null;
+    }
+
+    public static String getEnglishContractField(String it)
+    {
+        for(int i=0;i<TYPE_CONTRACT_FIELD_TRANSLATED.length;i++)
+        {
+            if(it.equals(TYPE_CONTRACT_FIELD_TRANSLATED[i]))
+            {
+                return TYPE_CONTRACT_FIELD[i];
+            }
+        }
+        return null;
+    }
+
+    public static String getEnglishTermField(String it)
+    {
+        for(int i=0;i<TYPE_TERM_FIELD_TRANSLATED.length;i++)
+        {
+            if(it.equals(TYPE_TERM_FIELD_TRANSLATED[i]))
+            {
+                return TYPE_TERM_FIELD[i];
+            }
+        }
+        return null;
+    }
+
+
+    public static String getTranlatedWorkField(String it)
+    {
+        for(int i=0;i<TYPE_WORK_FIELD.length;i++)
+        {
+            if(it.equals(TYPE_WORK_FIELD[i]))
+            {
+                return TYPE_WORK_FIELD_TRANSLATED[i];
+            }
+        }
+        return null;
+    }
+
+    public static String getTranslatedContractField(String it)
+    {
+        for(int i=0;i<TYPE_CONTRACT_FIELD.length;i++)
+        {
+            if(it.equals(TYPE_CONTRACT_FIELD[i]))
+            {
+                return TYPE_CONTRACT_FIELD_TRANSLATED[i];
+            }
+        }
+        return null;
+    }
+
+    public static String getTranslatedTermField(String it)
+    {
+        for(int i=0;i<TYPE_TERM_FIELD.length;i++)
+        {
+            if(it.equals(TYPE_TERM_FIELD[i]))
+            {
+                return TYPE_TERM_FIELD_TRANSLATED[i];
+            }
+        }
+        return null;
+    }
+
+
 
 
 

@@ -176,8 +176,8 @@ public class ProfileManagement extends Fragment{
             Log.println(Log.ASSERT, "PROFILE MANAG", "saving in bundle");
             MyBundle b = application.addBundle(BUNDLE_IDENTIFIER);
             b.putBoolean(BUNDLE_KEY_IS_EDIT,isEditMode);
-            b.putBoolean(BUNDLE_KEY_EDITABLE,editable);
-            b.put(BUNDLE_KEY_USER,user);
+            b.putBoolean(BUNDLE_KEY_EDITABLE, editable);
+            b.put(BUNDLE_KEY_USER, user);
             orientationFlag = false;
 
     }
@@ -246,14 +246,9 @@ public class ProfileManagement extends Fragment{
         else if(item.getItemId() == R.id.action_see_candidatures && !editable){
 
             SetOfferStatusDialogFragment statusDialogFragment=SetOfferStatusDialogFragment.newInstance((Student)user);
-            FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
 
-
-            fragmentManager.beginTransaction()
-                    .replace(R.id.tab_Home_container, statusDialogFragment)
-                    .addToBackStack("Status")
-                    .commit();
-        }
+            statusDialogFragment.show(getChildFragmentManager(), "dialog");
+    }
 
         return true;
     }

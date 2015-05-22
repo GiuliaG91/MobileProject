@@ -88,7 +88,7 @@ public class SetOfferStatusDialogFragment extends DialogFragment {
         if(!status.isEmpty())
         {
             myStatus=status.get(0);
-            pos=OfferStatus.getTypeIndex(status.get(0).getType());
+            pos=OfferStatus.getTypeIndex(myStatus.getType());
             currentPos=pos;
         }
         StatusSpinner.setSelection(pos);

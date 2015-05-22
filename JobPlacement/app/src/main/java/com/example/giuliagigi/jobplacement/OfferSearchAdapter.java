@@ -143,14 +143,29 @@ public class OfferSearchAdapter extends RecyclerView.Adapter<OfferSearchAdapter.
                 }
                 if(!contract_list.isEmpty())
                 {
-                    query.whereContainedIn("contract",contract_list);
+                    List<String> newList=new ArrayList<>();
+                    for(String s : contract_list)
+                    {
+                        newList.add(CompanyOffer.getEnglishContractField(s));
+                    }
+                    query.whereContainedIn("contract",newList);
                 }
                 if(!term_list.isEmpty())
                 {
+                    List<String> newList=new ArrayList<>();
+                    for(String s : term_list)
+                    {
+                        newList.add(CompanyOffer.getEnglishTermField(s));
+                    }
                     query.whereContainedIn("term",term_list);
                 }
                 if(!field_list.isEmpty())
                 {
+                    List<String> newList=new ArrayList<>();
+                    for(String s : field_list)
+                    {
+                        newList.add(CompanyOffer.getEnglishWorkField(s));
+                    }
                     query.whereContainedIn("field",field_list);
                 }
 
