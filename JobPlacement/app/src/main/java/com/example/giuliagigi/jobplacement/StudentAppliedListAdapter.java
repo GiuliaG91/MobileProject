@@ -119,7 +119,7 @@ public class StudentAppliedListAdapter extends RecyclerView.Adapter<StudentAppli
         FragmentManager fragmentManager = context.getSupportFragmentManager();
 
         //New Fragment
-        ProfileManagement fragment=ProfileManagement.newInstance(false,mdataset.get(vh.getPosition()));
+        ProfileManagement fragment = ProfileManagement.newInstance(false,mdataset.get(vh.getPosition()));
         // Insert the fragment by replacing any existing fragment
         // Insert the fragment by replacing any existing fragment
 

@@ -230,7 +230,7 @@ public class OfferDetail extends  Fragment {
                         Toast.makeText(getActivity(), "Done", Toast.LENGTH_SHORT).show();
 
                         News news = new News();
-                        news.createNews(1, offer, (Student) globalData.getUserObject(), globalData);
+                        news.createNews(1, offer, (Student) globalData.getUserObject(), null, globalData);
 
 
                     } else {

@@ -574,7 +574,7 @@ public class NewOffer extends Fragment implements DatePickerFragment.OnDataSetLi
                             publish(v);
 
                             News news = new News();
-                            news.createNews(0, globalData.getCurrentViewOffer(), null, globalData);
+                            news.createNews(0, globalData.getCurrentViewOffer(), null, null, globalData);
                             // ------------->
 
 
@@ -1236,7 +1236,6 @@ public class NewOffer extends Fragment implements DatePickerFragment.OnDataSetLi
             StudentsAppliedListFragment fragment = StudentsAppliedListFragment.newInstance();
             fragment.setStudents(students);
             // Insert the fragment by replacing any existing fragment
-            // Insert the fragment by replacing any existing fragment
 
             fragmentManager.beginTransaction()
                     .replace(R.id.tab_Home_container, fragment)
@@ -1246,7 +1245,7 @@ public class NewOffer extends Fragment implements DatePickerFragment.OnDataSetLi
             // Highlight the selected item, update the title, and close the drawer
             // Highlight the selected item, update the title, and close the drawer
             Toolbar toolbar = globalData.getToolbar();
-            toolbar.setTitle("Students");
+            toolbar.setTitle(globalData.getResources().getStringArray(R.array.Home_Company_Tab)[2]);
 
         }else Toast.makeText(getActivity(),"No students applied",Toast.LENGTH_SHORT).show();
 

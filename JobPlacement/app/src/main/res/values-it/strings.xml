@@ -31,7 +31,7 @@
     <string name="NoModify">Non puoi modificare questa offerta</string>
 
     <string name="OfferStatus_Start">Lavorazione</string>
-    <string name="OfferStatus_Considering">PresaInCarico</string>
+    <string name="OfferStatus_Considering">Persa in considerazione</string>
     <string name="OfferStatus_Refused">Rifiutata</string>
     <string name="OfferStatus_Accepted">Accettata</string>
 
@@ -246,7 +246,7 @@
 
     <!--Hint-->
 
-    <string name="new_offer_fragment_hint_object">Oggetto dell'offerta:</string>
+    <string name="new_offer_fragment_hint_object">Oggetto dell\'offerta:</string>
     <string name="new_offer_fragment_hint_duration">Scadenza contratto:</string>
     <string name="new_offer_fragment_hint_salary">Salario:</string>
     <string name="new_offer_fragment_hint_location">Posizione</string>
@@ -316,7 +316,7 @@
 <!-- OFFER DETAIL BUTTON -->
 
     <string name="offer_detail_apply_button">Apply</string>
-    <string name="offer_detail_contact_button">Contatta l'azienda</string>
+    <string name="offer_detail_contact_button">Contatta l\'azienda</string>
 
  <!-- New Offer Button -->
     <string name="new_offer_create_button">Crea</string>
@@ -413,7 +413,12 @@
     <string name="new_job_offer_message">ha pubblicato una nuova offerta di lavoro su</string>
     <string name="new_job_offer">Nuova offerta di lavoro</string>
     <string name="new_student_applied">Nuovo studente candidato</string>
+
     <string name="student_accepted">Candidatura accettata</string>
+    <string name="student_processing">Candidatura sotto esame</string>
+    <string name="student_considering">Candidatura in considerazione</string>
+    <string name="student_refused">Candidatura rifiutata</string>
+
     <string name="new_company_signed_up">Nuova azienda!!!</string>
 
     <string name="profile">profilo</string>
@@ -422,6 +427,10 @@
     <string name="application_accepted_message">ha accettato la tua candidatura per l\'offerta di lavoro</string>
     <string name="new_company_signed_up_message">si e\' registrata in</string>
 
+    <string name="application_considering_message">sta considerando la tua candidatura per l\'offerta di lavoro</string>
+    <string name="application_refused_message">ha rifiutato la tua candidatura per l\'offerta di lavoro</string>
+    <string name="application_processing_message">sta processando la tua candidatura per l\'offerta di lavoro</string>
 
+    <string name="offer">Offerta</string>
 
 </resources>

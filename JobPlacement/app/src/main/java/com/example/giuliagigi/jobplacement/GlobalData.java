@@ -103,18 +103,6 @@ public class GlobalData extends Application {
 
         Parse.initialize(this, "EICiUy2eT7CZPXw8N6I1p6lE4844svLI73JTc2QY", "8I9HZ7AgMHgeIxQKk8k653jNBvBCz57nRuSH73pA");
 
-        ParsePush.subscribeInBackground("", new SaveCallback() {
-            @Override
-            public void done(ParseException e) {
-                if(e == null){
-                    Log.d("com.parse.push", "successfully subscribed to the broadcast channel.");
-
-                }else {
-                    Log.e("com.parse.push", "failed to subscribe for push", e);
-                }
-            }
-        });
-
         isCached = new HashMap<String,Boolean>();
         tags = new HashMap<String,Tag>();
         isCached.put("tag",false);

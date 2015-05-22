@@ -2,6 +2,8 @@ package com.example.giuliagigi.jobplacement;
 
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -103,7 +105,19 @@ public class SetOfferStatusDialogFragment extends DialogFragment {
         cancelButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getDialog().dismiss();
+                //getDialog().dismiss();
+                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+
+                //New Fragment
+                NewOffer fragment=NewOffer.newInstance(false,false);
+
+                fragmentManager.beginTransaction()
+                        .replace(R.id.tab_Home_container, fragment)
+                        .addToBackStack("OfferStatus")
+                        .commit();
+
+                Toolbar toolbar= globalData.getToolbar();
+                toolbar.setTitle(globalData.getResources().getString(R.string.offer));
             }
         });
 
@@ -122,14 +136,32 @@ public class SetOfferStatusDialogFragment extends DialogFragment {
             //perform change status
             myStatus.setType(StatusSpinner.getSelectedItem().toString());
             myStatus.saveInBackground();
-        if(pos==2)
-        {
-            CompanyOffer offer=globalData.getCurrentViewOffer();
-            int places=offer.getnPositions();
-            offer.setPositions(places-1);
-            offer.saveInBackground();
-        }
+
+            News news = new News();
+            news.createNews(2, globalData.getCurrentViewOffer(), student, myStatus, globalData);
+
+            if(pos==2)
+            {
+                CompanyOffer offer=globalData.getCurrentViewOffer();
+                int places=offer.getnPositions();
+                offer.setPositions(places-1);
+                offer.saveInBackground();
+            }
             Toast.makeText(getActivity(),R.string.Done,Toast.LENGTH_SHORT).show();
+
+            FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+
+            //New Fragment
+            NewOffer fragment=NewOffer.newInstance(false,false);
+
+            fragmentManager.beginTransaction()
+                    .replace(R.id.tab_Home_container, fragment)
+                    .addToBackStack("OfferStatus")
+                    .commit();
+
+            Toolbar toolbar= globalData.getToolbar();
+            toolbar.setTitle(globalData.getResources().getString(R.string.offer));
+
         }else
             Toast.makeText(getActivity(),R.string.ErrorStatus,Toast.LENGTH_SHORT).show();
 

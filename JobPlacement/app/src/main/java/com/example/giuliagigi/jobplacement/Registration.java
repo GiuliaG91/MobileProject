@@ -324,7 +324,7 @@ public class Registration extends ActionBarActivity implements StudentRegistrati
                                     saveLoginPreferences(newUser);
 
                                     News news = new News();
-                                    news.createNews(3, null, null, (GlobalData)getApplication());
+                                    news.createNews(3, null, null, null, (GlobalData)getApplication());
 
                                     ParsePush push = new ParsePush();
                                     push.setChannel(User.TYPE_STUDENT);
