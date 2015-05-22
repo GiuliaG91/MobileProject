@@ -161,24 +161,6 @@ public class ProfileManagement extends Fragment{
         // Setting the ViewPager For the SlidingTabsLayout
         tabs.setViewPager(pager);
 
-/*
-        if(editable){
-
-            final Button edit = new Button(getActivity().getApplicationContext());
-            edit.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-            //edit.setBackgroundDrawable(getResources().getDrawable(R.drawable.ic_edit));
-            edit.setText("edit profile");
-            edit.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-
-                    switchMode();
-                }
-            });
-            ViewGroup root = (ViewGroup)view.findViewById(R.id.fragment_tab_home);
-            root.addView(edit);
-        }*/
-
         /****************************************************/
 
 
@@ -227,14 +209,15 @@ public class ProfileManagement extends Fragment{
 
         if (item.getItemId() == R.id.action_edit && editable) {
             switchMode();
-        }
 
-        if(isEditMode && editable)
-            item.setIcon(R.drawable.ic_confirm_white);
-        else if(!isEditMode && editable)
-            item.setIcon(R.drawable.ic_edit_white);
-        else if(!editable)
-            item.setIcon(R.drawable.ic_mail);
+            if(isEditMode && editable)
+                item.setIcon(R.drawable.ic_confirm_white);
+            else if(!isEditMode && editable)
+                item.setIcon(R.drawable.ic_edit_white);
+            else if(!editable)
+                item.setIcon(R.drawable.ic_mail);
+
+        }
 
         if(item.getItemId() == R.id.action_send && !editable){
 
@@ -257,6 +240,7 @@ public class ProfileManagement extends Fragment{
 
             if(item.getItemId() == R.id.action_see_candidatures && !editable){
                 //TODO
+                item.setIcon(R.drawable.ic_person_outline_white_36dp);
 
             }
 
