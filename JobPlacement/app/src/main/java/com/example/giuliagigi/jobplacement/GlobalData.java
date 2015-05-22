@@ -12,8 +12,11 @@ import com.parse.FindCallback;
 import com.parse.Parse;
 import com.parse.ParseException;
 import com.parse.ParseObject;
+import com.parse.ParsePush;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
+import com.parse.SaveCallback;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -100,6 +103,17 @@ public class GlobalData extends Application {
 
         Parse.initialize(this, "EICiUy2eT7CZPXw8N6I1p6lE4844svLI73JTc2QY", "8I9HZ7AgMHgeIxQKk8k653jNBvBCz57nRuSH73pA");
 
+        ParsePush.subscribeInBackground("", new SaveCallback() {
+            @Override
+            public void done(ParseException e) {
+                if(e == null){
+                    Log.d("com.parse.push", "successfully subscribed to the broadcast channel.");
+
+                }else {
+                    Log.e("com.parse.push", "failed to subscribe for push", e);
+                }
+            }
+        });
 
         isCached = new HashMap<String,Boolean>();
         tags = new HashMap<String,Tag>();

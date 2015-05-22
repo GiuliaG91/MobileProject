@@ -579,6 +579,13 @@ public class NewOffer extends Fragment implements DatePickerFragment.OnDataSetLi
 
 
                             /* Invio notifica push a studenti */
+
+                            ParsePush push = new ParsePush();
+                            push.setChannel(User.TYPE_STUDENT);
+                            push.setMessage(globalData.getUserObject().getName() + " " + globalData.getResources().getString(R.string.new_job_offer_message) + " \"" + globalData.getCurrentViewOffer().getOfferObject() + "\"");
+                            push.sendInBackground();
+
+                            /*
                             ParseQuery<ParseUser> userQuery = ParseUser.getQuery();
                             userQuery.whereEqualTo(ParseUserWrapper.TYPE_FIELD,User.TYPE_STUDENT);
 
@@ -589,6 +596,8 @@ public class NewOffer extends Fragment implements DatePickerFragment.OnDataSetLi
                             push.setQuery(pushQuery);
                             push.setMessage("The company " + ((Company)globalData.getUserObject()).getName() + "has published a new offer");
                             push.sendInBackground();
+                            */
+
 
                         }
                     });

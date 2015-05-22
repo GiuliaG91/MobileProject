@@ -27,6 +27,7 @@ import android.widget.Toast;
 import com.parse.LogInCallback;
 import com.parse.ParseException;
 import com.parse.ParseInstallation;
+import com.parse.ParsePush;
 import com.parse.ParseUser;
 import com.parse.RequestPasswordResetCallback;
 
@@ -63,6 +64,14 @@ public class Login extends ActionBarActivity {
         if(application.getCurrentUser()!=null){
 
             Log.println(Log.ASSERT,"LOGIN", "User session already open. Entering home activity");
+
+            ParseInstallation installation = ParseInstallation.getCurrentInstallation();
+            if(application.getCurrentUser().getType().equals(User.TYPE_STUDENT))
+                ParsePush.subscribeInBackground(User.TYPE_STUDENT);
+            installation.put(User.MAIL_FIELD, application.getUserObject().getMail());
+            installation.put(User.TYPE_FIELD, application.getUserObject().getType());
+            installation.saveInBackground();
+
             startActivity(new Intent(getApplicationContext(),Home.class));
         }
 
@@ -278,6 +287,8 @@ public class Login extends ActionBarActivity {
 
                     /* register an object Installation for receiving Push Notifications */
                     ParseInstallation installation = ParseInstallation.getCurrentInstallation();
+                    if(gd.getCurrentUser().getType().equals(User.TYPE_STUDENT))
+                        ParsePush.subscribeInBackground(User.TYPE_STUDENT);
                     installation.put(User.MAIL_FIELD, gd.getUserObject().getMail());
                     installation.put(User.TYPE_FIELD, gd.getUserObject().getType());
                     installation.saveInBackground();

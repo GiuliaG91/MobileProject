@@ -326,25 +326,28 @@ public class Registration extends ActionBarActivity implements StudentRegistrati
                                     News news = new News();
                                     news.createNews(3, null, null, (GlobalData)getApplication());
 
-                                    // invia notifica push agli studenti se il nuovo user registrato è una company
-                                    if(newUser.getType().equals(User.TYPE_COMPANY)) {
+                                    ParsePush push = new ParsePush();
+                                    push.setChannel(User.TYPE_STUDENT);
+                                    push.setMessage(application.getResources().getString(R.string.the_company) + " " + application.getUserObject().getName() + " " + application.getResources().getString(R.string.new_company_signed_up_message) + " \"" + application.getResources().getString(R.string.app_name) + "\"");
+                                    push.sendInBackground();
 
-                                        ParseQuery pushQuery = ParseInstallation.getQuery();
-                                        pushQuery.whereEqualTo(User.TYPE_FIELD, User.TYPE_STUDENT);
+                                    /*
+                                    ParseQuery pushQuery = ParseInstallation.getQuery();
+                                    pushQuery.whereEqualTo(User.TYPE_FIELD, User.TYPE_STUDENT);
 
-                                        try {
+                                    try {
 
-                                            JSONObject data = new JSONObject("{\"alert\": \"The company " + ((Company) newUser).getName() + " is signed up to the application\", \"uri\": " + "www.google.com" + "\"}");
-                                            ParsePush push = new ParsePush();
-                                            push.setQuery(pushQuery);
-                                            push.setData(data);
-                                            push.sendInBackground();
+                                        JSONObject data = new JSONObject("{\"alert\": \"The company " + ((Company) newUser).getName() + " is signed up to the application\", \"uri\": " + "www.google.com" + "\"}");
+                                        ParsePush push = new ParsePush();
+                                        push.setQuery(pushQuery);
+                                        push.setData(data);
+                                        push.sendInBackground();
 
-                                        }catch(JSONException jsonEx) {
-                                            jsonEx.printStackTrace();
-                                            Log.println(Log.ASSERT, "REGISTRATION", jsonEx.toString());
-                                        }
+                                    }catch(JSONException jsonEx) {
+                                        jsonEx.printStackTrace();
+                                        Log.println(Log.ASSERT, "REGISTRATION", jsonEx.toString());
                                     }
+                                    */
 
                                     startActivity(new Intent(getApplicationContext(),Login.class));
                                 }
