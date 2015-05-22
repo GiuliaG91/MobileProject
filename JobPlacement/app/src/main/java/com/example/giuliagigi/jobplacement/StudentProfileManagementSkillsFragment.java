@@ -296,6 +296,8 @@ public class StudentProfileManagementSkillsFragment extends ProfileManagementFra
                     buffer.read(byteArray,0,length);
                     is.close();
 
+                    Log.println(Log.ASSERT,"SKILLS FRAG", "file read. proceed uploading");
+                    curriculumName.setText("Curriculum uploaded");
                     student.setCurriculum(byteArray);
 
                 } catch (FileNotFoundException e) {
@@ -378,12 +380,11 @@ public class StudentProfileManagementSkillsFragment extends ProfileManagementFra
 
     }
 
-
     private void pickCurriculumFile(){
 
         Intent i = new Intent(Intent.ACTION_GET_CONTENT);
         i.setType("application/pdf/*");
-        startActivityForResult(i,REQUEST_CONTENT_GET);
+        getActivity().startActivityForResult(i,REQUEST_CONTENT_GET);
 
     }
 

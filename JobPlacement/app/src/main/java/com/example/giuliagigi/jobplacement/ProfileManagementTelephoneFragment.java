@@ -53,7 +53,7 @@ public class ProfileManagementTelephoneFragment extends ProfileManagementFragmen
 
     public void setUser(User user){
 
-        Log.println(Log.ASSERT,"PM FRAG","setting user" + user);
+        Log.println(Log.ASSERT,"TEL FRAG","setting user" + user);
         this.user = user;
     }
 

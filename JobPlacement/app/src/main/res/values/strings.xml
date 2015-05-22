@@ -491,5 +491,7 @@
     <string name="Done">Done</string>
 
     <string name="ErrorStatus">Can\'t set this status</string>
+    <string name="string_account_verified">User not verified</string>
+    <string name="string_account_verified_yes">Verified user</string>
 
 </resources>

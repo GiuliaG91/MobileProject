@@ -348,6 +348,7 @@
 
 
 
+
     <!-- OFFER DETAIL BUTTON -->
 
 
@@ -365,7 +366,6 @@
     <string name="offer_detail_hint_location">Location</string>
     <string name="offer_detail_hint_Nodefined">Da definire</string>
     <string name="offer_detail_hint_salary">Stipendio</string>
-
 
 
     <!-- New Offer Button -->
@@ -503,4 +503,8 @@
     <string name="new_company_signed_up_message">si e\' registrata in</string>
 
 
+    <string name="string_account_verified">Utente non verificato</string>
+    <string name="string_account_verified_yes">Utente verificato</string>
+
+    
 </resources>
