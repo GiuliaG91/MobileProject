@@ -125,12 +125,11 @@ public class menuAdapter extends RecyclerView.Adapter<menuAdapter.ViewHolder> {
 
                                     //New Fragment
                                     TabHomeStudentFragment homeFragment = TabHomeStudentFragment.newInstance();
-                                    // Insert the fragment by replacing any existing fragment
-                                    // Insert the fragment by replacing any existing fragment
 
                                     fragmentManager.beginTransaction()
                                             .replace(R.id.tab_Home_container, homeFragment)
                                             .commit();
+
                                 }
                                 mDrawerLayout.closeDrawers();
 
@@ -153,17 +152,18 @@ public class menuAdapter extends RecyclerView.Adapter<menuAdapter.ViewHolder> {
 
                                 if(!(current instanceof ProfileManagement) || gd.getLatestDisplayedUser()!=gd.getUserObject()) {
 
+                                    Fragment fragment = ProfileManagement.newInstance(true,gd.getUserObject());
+
                                     //clear backstack
                                     int count = fragmentManager.getBackStackEntryCount();
                                     for(int i = 0; i < count; ++i) {
                                         fragmentManager.popBackStack();
                                     }
 
-                                    Fragment fragment = ProfileManagement.newInstance(true,gd.getUserObject());
-
                                     fragmentManager.beginTransaction()
                                             .replace(R.id.tab_Home_container, fragment)
                                             .commit();
+
                                 }
                                 mDrawerLayout.closeDrawers();
 
@@ -185,13 +185,15 @@ public class menuAdapter extends RecyclerView.Adapter<menuAdapter.ViewHolder> {
                                 Fragment current = fragmentManager.findFragmentById(R.id.tab_Home_container);
 
                                 if(!(current instanceof Fav_tab)) {
+
+
+                                   Fav_tab fragment = Fav_tab.newInstance();
+
                                     //clear backstack
                                     int count = fragmentManager.getBackStackEntryCount();
                                     for(int i = 0; i < count; ++i) {
                                         fragmentManager.popBackStack();
                                     }
-
-                                    Fav_tab fragment = Fav_tab.newInstance();
 
                                     fragmentManager.beginTransaction()
                                             .replace(R.id.tab_Home_container, fragment)
@@ -215,16 +217,14 @@ public class menuAdapter extends RecyclerView.Adapter<menuAdapter.ViewHolder> {
 
                                 if (!(current instanceof FavCompaniesFragment)) {
 
+                                    //New Fragment
+                                    FavCompaniesFragment fragment = FavCompaniesFragment.newInstance();
+
                                     //clear backstack
                                     int count = fragmentManager.getBackStackEntryCount();
                                     for(int i = 0; i < count; ++i) {
                                         fragmentManager.popBackStack();
                                     }
-
-                                    //New Fragment
-                                    FavCompaniesFragment fragment = FavCompaniesFragment.newInstance();
-                                    // Insert the fragment by replacing any existing fragment
-                                    // Insert the fragment by replacing any existing fragment
 
                                     fragmentManager.beginTransaction()
                                             .replace(R.id.tab_Home_container, fragment)
@@ -250,17 +250,18 @@ public class menuAdapter extends RecyclerView.Adapter<menuAdapter.ViewHolder> {
 
                                 if(!(current instanceof MailBoxFragment)) {
 
+                                    Fragment fragment = MailBoxFragment.newInstance();
+
                                     //clear backstack
                                     int count = fragmentManager.getBackStackEntryCount();
                                     for(int i = 0; i < count; ++i) {
                                         fragmentManager.popBackStack();
                                     }
-                                    Fragment fragment = MailBoxFragment.newInstance();
-
                                     fragmentManager.beginTransaction()
                                             .replace(R.id.tab_Home_container, fragment)
                                             .addToBackStack(gd.getResources().getStringArray(R.array.Menu_items_student)[1])
                                             .commit();
+
                                 }
                                 mDrawerLayout.closeDrawers();
 
@@ -304,17 +305,15 @@ public class menuAdapter extends RecyclerView.Adapter<menuAdapter.ViewHolder> {
                                   Fragment current = fragmentManager.findFragmentById(R.id.tab_Home_container);
 
                                   if (!(current instanceof TabHomeCompanyFragment)) {
+                                      //New Fragment
+                                      TabHomeCompanyFragment homeFragment = TabHomeCompanyFragment.newInstance();
+                                      // Insert the fragment by replacing any existing fragment
 
                                       //clear backstack
                                       int count = fragmentManager.getBackStackEntryCount();
                                       for(int i = 0; i < count; ++i) {
                                           fragmentManager.popBackStack();
                                       }
-
-                                      //New Fragment
-                                      TabHomeCompanyFragment homeFragment = TabHomeCompanyFragment.newInstance();
-                                      // Insert the fragment by replacing any existing fragment
-                                      // Insert the fragment by replacing any existing fragment
 
                                       fragmentManager.beginTransaction()
                                               .replace(R.id.tab_Home_container, homeFragment)
@@ -342,17 +341,17 @@ public class menuAdapter extends RecyclerView.Adapter<menuAdapter.ViewHolder> {
 
                                   if(!(current instanceof ProfileManagement) || gd.getLatestDisplayedUser()!=gd.getUserObject()) {
 
+                                      Fragment fragment = ProfileManagement.newInstance(true,gd.getUserObject());
                                       //clear backstack
                                       int count = fragmentManager.getBackStackEntryCount();
                                       for(int i = 0; i < count; ++i) {
                                           fragmentManager.popBackStack();
                                       }
 
-                                      Fragment fragment = ProfileManagement.newInstance(true,gd.getUserObject());
-
                                       fragmentManager.beginTransaction()
                                               .replace(R.id.tab_Home_container, fragment)
                                               .commit();
+
                                   }
                                   mDrawerLayout.closeDrawers();
 
@@ -372,6 +371,8 @@ public class menuAdapter extends RecyclerView.Adapter<menuAdapter.ViewHolder> {
                                   Fragment current = fragmentManager.findFragmentById(R.id.tab_Home_container);
 
                                   if (!(current instanceof CompanyStudentSearchFragment)) {
+                                    //New Fragment
+                                      CompanyStudentSearchFragment fragment = CompanyStudentSearchFragment.newInstance();
 
                                       //clear backstack
                                       int count = fragmentManager.getBackStackEntryCount();
@@ -379,12 +380,8 @@ public class menuAdapter extends RecyclerView.Adapter<menuAdapter.ViewHolder> {
                                           fragmentManager.popBackStack();
                                       }
 
-                                      //New Fragment
-                                      CompanyStudentSearchFragment fragment = CompanyStudentSearchFragment.newInstance();
-
                                       fragmentManager.beginTransaction()
                                               .replace(R.id.tab_Home_container, fragment)
-                                              .addToBackStack("Home")
                                               .commit();
                                   }
                                   mDrawerLayout.closeDrawers();
@@ -423,13 +420,11 @@ public class menuAdapter extends RecyclerView.Adapter<menuAdapter.ViewHolder> {
                                           }
                                           //New Fragment
                                           NewOffer fragment = NewOffer.newInstance(true, true);
-                                          // Insert the fragment by replacing any existing fragment
-                                          // Insert the fragment by replacing any existing fragment
 
                                           fragmentManager.beginTransaction()
                                                   .replace(R.id.tab_Home_container, fragment)
-                                                  .addToBackStack("Home")
                                                   .commit();
+
                                       }
                                       mDrawerLayout.closeDrawers();
 
@@ -442,12 +437,9 @@ public class menuAdapter extends RecyclerView.Adapter<menuAdapter.ViewHolder> {
                                       }
                                       //New Fragment
                                       NewOffer fragment = NewOffer.newInstance(true, true);
-                                      // Insert the fragment by replacing any existing fragment
-                                      // Insert the fragment by replacing any existing fragment
 
                                       fragmentManager.beginTransaction()
                                               .replace(R.id.tab_Home_container, fragment)
-                                              .addToBackStack("Home")
                                               .commit();
                                   }
                                   mDrawerLayout.closeDrawers();
@@ -472,19 +464,18 @@ public class menuAdapter extends RecyclerView.Adapter<menuAdapter.ViewHolder> {
 
                                   if(!(current instanceof MailBoxFragment)) {
 
+                                         Fragment fragment = MailBoxFragment.newInstance();
+
                                       //clear backstack
                                       int count = fragmentManager.getBackStackEntryCount();
                                       for(int i = 0; i < count; ++i) {
                                           fragmentManager.popBackStack();
                                       }
-
-                                      Fragment fragment = MailBoxFragment.newInstance();
-
                                       fragmentManager.beginTransaction()
                                               .replace(R.id.tab_Home_container, fragment)
                                               .addToBackStack(gd.getResources().getStringArray(R.array.Menu_items_Company)[4])
                                               .commit();
-                                  }
+      }
                                   mDrawerLayout.closeDrawers();
 
                               }
@@ -508,8 +499,6 @@ public class menuAdapter extends RecyclerView.Adapter<menuAdapter.ViewHolder> {
 
 
                           break;
-
-
 
 
                       default: break;

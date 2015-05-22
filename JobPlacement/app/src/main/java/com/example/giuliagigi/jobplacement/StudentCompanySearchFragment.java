@@ -78,6 +78,8 @@ public class StudentCompanySearchFragment extends Fragment {
         // specify an adapter
         mRecyclerView.setAdapter(adapter);
 
+        ((Toolbar)activity.findViewById(R.id.toolbar)).setTitle(activity.getResources().getString(R.string.home));
+
         return root;
     }
 

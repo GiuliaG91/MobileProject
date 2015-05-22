@@ -314,8 +314,6 @@
         <item>Master</item>
         <item>Doctorate</item>
 
-
-
     </string-array>
 
 
@@ -447,5 +445,8 @@
     <string name="the_company">The company</string>
     <string name="application_accepted_message">accepted your application for the job offer</string>
     <string name="new_company_signed_up_message">signed up in</string>
+
+    <string name="home">Home</string>
+
 
 </resources>

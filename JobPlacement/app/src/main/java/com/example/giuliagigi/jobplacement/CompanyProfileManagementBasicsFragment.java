@@ -114,10 +114,6 @@ public class CompanyProfileManagementBasicsFragment extends ProfileManagementBas
             public void onClick(View v) {
 
                 AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-
-
-
-
                 final DatePicker picker = new DatePicker(getActivity());
                 picker.setCalendarViewShown(false);
                 builder.setTitle("Edit birth date");
@@ -181,6 +177,7 @@ public class CompanyProfileManagementBasicsFragment extends ProfileManagementBas
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        Log.println(Log.ASSERT,"COMP BASICS", "onActivityResult");
     }
 
 

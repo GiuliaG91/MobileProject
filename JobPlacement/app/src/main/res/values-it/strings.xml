@@ -16,6 +16,16 @@
 
     <string name="title_activity_home">Home</string>
 
+    <string name="ToolbarTilteHome">Home</string>
+    <string name="ToolbarTilteProfile">Profilo</string>
+    <string name="ToolbarTilteOffer">Offerta di lavoro</string>
+    <string name="ToolbarTilteNewOffer">Nuova Offerta</string>
+    <string name="ToolbarTilteMyJobOffers">Le mie offerte di lavoro</string>
+    <string name="ToolbarTitleMyCompanies">Le mie aziende</string>
+    <string name="ToolbarTitleMyStudents">Studenti</string>
+    <string name="ToolbarTilteStudentSearch">Cerca studenti</string>
+    <string name="ToolbarTilteCompanySearch">Cerca aziende</string>
+    <string name="ToolbarTilteMailBox">MailBox</string>
 
 
     <string name="NoModify">Non puoi modificare questa offerta</string>
@@ -51,6 +61,23 @@
         <item>Nuova Offerta</item>
         <item>Messaggi</item>
         <item>Esci</item>
+    </string-array>
+
+    <string-array name="Home_Students_Tab">
+
+        <item>News</item>
+        <item>Offerte di lavoro</item>
+        <item>Aziende</item>
+        <item>Candidature</item>
+
+    </string-array>
+
+    <string-array name="Home_Company_Tab">
+
+        <item>News</item>
+        <item>Offerte di lavoro</item>
+        <item>Studenti</item>
+
     </string-array>
 
     <!--Registration -->
@@ -381,5 +408,7 @@
     <string name="the_company">L\'azienda</string>
     <string name="application_accepted_message">ha accettato la tua candidatura per l\'offerta di lavoro</string>
     <string name="new_company_signed_up_message">si e\' registrata in</string>
+
+
 
 </resources>

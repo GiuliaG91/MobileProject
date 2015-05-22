@@ -22,6 +22,7 @@ import android.widget.TextView;
 import android.support.v7.widget.Toolbar;
 
 import com.getbase.floatingactionbutton.FloatingActionButton;
+import com.getbase.floatingactionbutton.FloatingActionsMenu;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
@@ -67,6 +68,8 @@ public class MailBoxDetailFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        setHasOptionsMenu(true);
 
         globalData = (GlobalData)getActivity().getApplication();
         activity = this.getActivity();
@@ -131,12 +134,6 @@ public class MailBoxDetailFragment extends Fragment {
                 recipients[i] = message.getRecipients().get(i);
         sp.setAdapter(new StringAdapter(recipients));
 
-        //ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<String>(this.globalData, R.layout.row_spinner);
-        //spinnerAdapter.addAll(message.getRecipients());
-        //sp.setAdapter(spinnerAdapter);
-
-        //sp.setAdapter(new StringAdapter((String[])(message.getRecipients().toArray())));
-
 
         //set date
         tv = (TextView) root.findViewById(R.id.date_tv);
@@ -179,17 +176,18 @@ public class MailBoxDetailFragment extends Fragment {
             e.printStackTrace();
         }
 
-        //set object
-        /*
-        tv = (TextView) root.findViewById(R.id.object_tv);
-        tv.setText(message.getObject());
-        */
-
         //set body
         tv = (TextView) root.findViewById(R.id.body_tv);
         tv.setText(message.getBodyMessage());
 
         /*Attach on click listener to button menu */
+
+        FloatingActionsMenu actionsMenu = (FloatingActionsMenu) root.findViewById(R.id.multiple_actions_mailbox);
+
+        if(message.getSender().equals(globalData.getUserObject().getMail())) {
+            actionsMenu.setEnabled(false);
+            actionsMenu.setVisibility(View.INVISIBLE);
+        }
 
         final FloatingActionButton respondSenderButton = (FloatingActionButton)root.findViewById(R.id.action_respond_sender);
         respondSenderButton.setIcon(R.drawable.ic_person_outline_white_36dp);
@@ -212,7 +210,7 @@ public class MailBoxDetailFragment extends Fragment {
                     oldMessage = oldMessage + ((InboxMessageReceived) message).getNameSender() + " <" + message.getSender() + "> " + res.getString(R.string.wrote) + ":\n\"";
                     oldMessage = oldMessage + message.getBodyMessage() + "\"\n\n";
                     data.putString(MailBoxDetailFragment.OLD_MESSAGE_KEY, oldMessage);
-                }catch(JSONException e){
+                } catch (JSONException e) {
                     e.printStackTrace();
                 }
 
@@ -229,6 +227,7 @@ public class MailBoxDetailFragment extends Fragment {
                 toolbar.setTitle(message.getObject());
             }
         });
+
 
         final FloatingActionButton respondAllButton = (FloatingActionButton)root.findViewById(R.id.action_respond_all);
         respondAllButton.setIcon(R.drawable.ic_people_outline_white_36dp);
@@ -267,9 +266,13 @@ public class MailBoxDetailFragment extends Fragment {
                         .addToBackStack(message.getObject())
                         .commit();
 
-                Toolbar toolbar = (Toolbar) globalData.getToolbar();
+                Toolbar toolbar = (Toolbar) activity.findViewById(R.id.toolbar);
+                toolbar.setTitle(message.getObject());
             }
         });
+
+        Toolbar toolbar = (Toolbar) activity.findViewById(R.id.toolbar);
+        toolbar.setTitle(message.getObject());
 
         return root;
     }

@@ -198,6 +198,7 @@ public class User extends ParseObject{
 
         profilePhoto = photoBitmap;
         isCached.put(PROFILE_PHOTO_FIELD,true);
+        //this.put(PROFILE_PHOTO_FIELD, photoBitmap);
         ByteArrayOutputStream os = new ByteArrayOutputStream();
 
         photoBitmap.compress(Bitmap.CompressFormat.JPEG,100,os);

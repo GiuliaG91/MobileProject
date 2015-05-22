@@ -90,9 +90,14 @@ public class ProfileManagementBasicsFragment extends ProfileManagementFragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        Log.println(Log.ASSERT,"BASICS", "onActivityResult");
+
+        if(requestCode!=REQUEST_IMAGE_GET) Log.println(Log.ASSERT,"BASICS","requestcode not matching");
+        if(resultCode!=Activity.RESULT_OK) Log.println(Log.ASSERT,"BASICS","resultcode not matching");
 
         if(requestCode == REQUEST_IMAGE_GET && resultCode == Activity.RESULT_OK){
 
+            Log.println(Log.ASSERT,"BASICS", "getting data");
             Uri photoUri = data.getData();
             Bitmap photoBitmap = null;
 
@@ -100,13 +105,13 @@ public class ProfileManagementBasicsFragment extends ProfileManagementFragment {
                 photoBitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(),photoUri);
 
                 if(photoBitmap == null)
-                    Log.println(Log.ASSERT,"PM FRAG", "photoBitmap null");
+                    Log.println(Log.ASSERT,"BASICS", "photoBitmap null");
                 else{
 
+                    Log.println(Log.ASSERT,"BASICS", "setting photo");
                     hasChanged = true;
-                    application.getUserObject().setProfilePhoto(photoBitmap,(GlobalData)getActivity().getApplication());
-                    Bitmap bmImg = user.getProfilePhoto();
-                    BitmapDrawable background = new BitmapDrawable(GlobalData.getContext().getResources(), bmImg);
+                    user.setProfilePhoto(photoBitmap,(GlobalData)getActivity().getApplication());
+                    BitmapDrawable background = new BitmapDrawable(GlobalData.getContext().getResources(), photoBitmap);
                     profilePhoto.setImageDrawable(background);
                     profilePhoto.setScaleType(ImageView.ScaleType.CENTER_CROP);
                 }
@@ -150,7 +155,7 @@ public class ProfileManagementBasicsFragment extends ProfileManagementFragment {
                 Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
                 intent.setType("image/*");
                 if(intent.resolveActivity(getActivity().getPackageManager()) != null){
-                    startActivityForResult(intent,REQUEST_IMAGE_GET);
+                    getActivity().startActivityForResult(intent,REQUEST_IMAGE_GET);
                 }
             }
         });

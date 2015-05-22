@@ -41,6 +41,7 @@ public class Home extends ActionBarActivity  implements ToolbarTitleChange,
     private DrawerLayout mDrawerLayout;
     private RecyclerView mDrawerList;
     private menuAdapter mAdapter;
+    private ProfileManagement profileManagement;
     private RecyclerView.LayoutManager mLayoutManager;
     private ActionBarDrawerToggle mDrawerToggle;
     private TypedArray ICONS;
@@ -220,8 +221,9 @@ public class Home extends ActionBarActivity  implements ToolbarTitleChange,
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        Log.println(Log.ASSERT,"HOME ACTIVITY", "onActivityResult");
+
+        Log.println(Log.ASSERT,"HOME", "activity result. code = " + requestCode);
+        profileManagement.onActivityResult(requestCode,resultCode,data);
     }
 
     @Override
@@ -278,12 +280,23 @@ public class Home extends ActionBarActivity  implements ToolbarTitleChange,
     public void openMailBox(User user) {
 
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        MailBoxNewFragment mailbox = MailBoxNewFragment.newInstance(new Bundle());
+
+        Bundle data = new Bundle();
+        ArrayList<String> recipients = new ArrayList<String>();
+        recipients.add(user.getMail());
+        data.putStringArrayList(MailBoxDetailFragment.RECIPIENTS_KEY, recipients);
+
+        MailBoxNewFragment mailbox = MailBoxNewFragment.newInstance(data);
         ft.replace(R.id.tab_Home_container,mailbox);
         ft.commit();
+
     }
 
-    /* ---------------- END PROFILE MANAGEMENT INTERFACE -----------------------------------------*/
+    public void setProfileManagement(ProfileManagement profileManagement) {
+        this.profileManagement = profileManagement;
+    }
+
+/* ---------------- END PROFILE MANAGEMENT INTERFACE -----------------------------------------*/
 
 
     @Override

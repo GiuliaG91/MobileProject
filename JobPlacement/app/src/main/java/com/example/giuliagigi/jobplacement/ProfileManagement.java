@@ -205,8 +205,13 @@ public class ProfileManagement extends Fragment{
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        for (ProfileManagementFragment f: fragments)
+        Log.println(Log.ASSERT,"PROFILE MANAG", "onActivityResult");
+
+        for (ProfileManagementFragment f: fragments){
+
+            Log.println(Log.ASSERT,"PROFILE MANAG", "called on: " + f.getTitle());
             f.onActivityResult(requestCode,resultCode,data);
+        }
     }
 
 
@@ -236,7 +241,7 @@ public class ProfileManagement extends Fragment{
         if(item.getItemId() == R.id.action_send && !editable){
 
             AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-            builder.setTitle(GlobalData.getContext().getString(R.string.string_send_email) + user.getMail() + "?");
+            builder.setTitle(GlobalData.getContext().getString(R.string.string_send_email) + " " + user.getMail() + "?");
             builder.setPositiveButton(GlobalData.getContext().getString(R.string.string_yes), new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {

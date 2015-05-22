@@ -1,10 +1,13 @@
 package com.example.giuliagigi.jobplacement;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
+import android.os.Environment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
@@ -13,14 +16,18 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.parse.ParseException;
 
 import java.io.BufferedInputStream;
-import java.io.ByteArrayOutputStream;
+import java.io.BufferedOutputStream;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.ArrayList;
 
 public class StudentProfileManagementSkillsFragment extends ProfileManagementFragment {
@@ -138,6 +145,13 @@ public class StudentProfileManagementSkillsFragment extends ProfileManagementFra
         curriculum = (Button)root.findViewById(R.id.skills_down_upload_cv);
         curriculumName = (TextView)root.findViewById(R.id.student_cv_name);
 
+        try {
+            if(student.getCurriculum()!= null)
+                curriculumName.setText("Curriculum uploaded!");
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
         if(editable){
 
             curriculum.setOnClickListener(new View.OnClickListener() {
@@ -149,7 +163,14 @@ public class StudentProfileManagementSkillsFragment extends ProfileManagementFra
         }
         else {
 
+            curriculum.setBackgroundResource(R.drawable.ic_download);
+            curriculum.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
 
+                    downloadCurriculumFile();
+                }
+            });
         }
 
         return root;
@@ -257,8 +278,6 @@ public class StudentProfileManagementSkillsFragment extends ProfileManagementFra
 
             if(fileUri != null){
 
-
-
                 try {
 
                     InputStream is = getActivity().getContentResolver().openInputStream(fileUri);
@@ -267,6 +286,7 @@ public class StudentProfileManagementSkillsFragment extends ProfileManagementFra
                     int length = 0;
                     while(buffer.read()!= -1)
                         length++;
+                    is.close();
 
                     Log.println(Log.ASSERT,"SKILLS FRAG", "length: " + length);
 
@@ -274,6 +294,7 @@ public class StudentProfileManagementSkillsFragment extends ProfileManagementFra
                     buffer = new BufferedInputStream(is);
                     byte[] byteArray = new byte[length];
                     buffer.read(byteArray,0,length);
+                    is.close();
 
                     student.setCurriculum(byteArray);
 
@@ -291,6 +312,72 @@ public class StudentProfileManagementSkillsFragment extends ProfileManagementFra
     }
 
     /*----------------------- AUXILIARY METHODS ------------------------------------------------------*/
+
+    private void downloadCurriculumFile(){
+
+
+        Log.println(Log.ASSERT,"SKILLS FRAG", "download curriculum");
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setTitle("Do you want to download the curriculum?");
+
+        builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+                try {
+                    byte[] bytes = student.getCurriculum();
+
+                    if(bytes!= null){
+
+                        File appDirectory = new File(
+                                Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS),
+                                "TheJobProvider");
+                        appDirectory.mkdirs();
+
+                        File newFile = new File(appDirectory.getPath() + File.separator + "curriculum" + student.getName() + student.getSurname() + ".pdf");
+                        newFile.createNewFile();
+
+                        Log.println(Log.ASSERT,"SKILLS", "writing file...");
+//                        FileOutputStream outputStream = getActivity().getApplicationContext().openFileOutput("curriculum" + student.getName() + student.getSurname(), Context.MODE_PRIVATE);
+                        FileOutputStream outputStream = new FileOutputStream(newFile.getPath());
+                        BufferedOutputStream buffer = new BufferedOutputStream(outputStream);
+
+                        buffer.write(bytes,0,bytes.length);
+
+                        buffer.close();
+                        outputStream.close();
+                        Log.println(Log.ASSERT,"SKILLS", "done");
+                        Toast.makeText(getActivity(),"File available in Downloads inside folder TheJobProvider",Toast.LENGTH_LONG).show();
+                    }
+                    else
+                        Toast.makeText(getActivity(),"No curriculum available",Toast.LENGTH_SHORT).show();
+
+
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                    Toast.makeText(getActivity(),"Error downloading file",Toast.LENGTH_SHORT).show();
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                    Log.println(Log.ASSERT,"SKILLS FRAG", "output file not found");
+                    Toast.makeText(getActivity(),"Error saving file",Toast.LENGTH_SHORT).show();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    Log.println(Log.ASSERT,"SKILLS FRAG", "Error writing file");
+                    Toast.makeText(getActivity(),"Error saving file",Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {}
+        });
+
+        builder.create().show();
+
+    }
+
 
     private void pickCurriculumFile(){
 
@@ -331,6 +418,7 @@ public class StudentProfileManagementSkillsFragment extends ProfileManagementFra
         addLanguage.setVisibility(visibility);
 
         if(editable) curriculum.setEnabled(enable);
+        else         curriculum.setEnabled(true);
     }
 
     @Override

@@ -227,13 +227,17 @@ public class OfferDetail extends  Fragment {
 
                         Toast.makeText(getActivity(), "Done", Toast.LENGTH_SHORT).show();
 
-                       } else {
+                        News news = new News();
+                        news.createNews(1, offer, (Student)globalData.getUserObject(), globalData);
+
+
+                    } else {
                         Toast.makeText(getActivity(), "Can't perform apply", Toast.LENGTH_SHORT).show();
-                       }
+                    }
                 }
                 else {
                     Toast.makeText(getActivity(), "You are already applied", Toast.LENGTH_SHORT).show();
-                    }
+                }
 
                 ((FloatingActionsMenu)root.findViewById(R.id.multiple_actions)).collapse();
             }

@@ -5,6 +5,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,7 +30,7 @@ public class Applies_Tab extends Fragment {
     private GlobalData globalData;
     private Student student;
     private RecyclerView mRecyclerView;
-    private  AppliesAdapter adapter;
+    private AppliesAdapter adapter;
     private LinearLayoutManager mLayoutManager;
     private Integer position=0;
 
@@ -82,6 +83,8 @@ public class Applies_Tab extends Fragment {
                 adapter.updateDataset(list);
             }
         });
+
+        ((Toolbar)this.getActivity().findViewById(R.id.toolbar)).setTitle(globalData.getResources().getString(R.string.home));
 
         return root;
     }

@@ -99,7 +99,6 @@ public class News extends ParseObject {
                      message = globalData.getUserObject().getName() + " " + globalData.getResources().getString(R.string.new_job_offer_message) + " \"" + co.getOfferObject() + "\"";
                      this.setMessage(message);
 
-
                      this.saveInBackground();
 
                      break;
@@ -128,10 +127,10 @@ public class News extends ParseObject {
                      break;
 
             case 3:  // New Company signed up
+                     globalData.getCurrentUser();
                      this.setCompany((Company)globalData.getUserObject());
-                     message = globalData.getResources().getString(R.string.the_company) + " " + globalData.getUserObject().getName() + globalData.getResources().getString(R.string.new_company_signed_up_message) + " \"" + globalData.getResources().getString(R.string.app_name) + "\"";
+                     message = globalData.getResources().getString(R.string.the_company) + " " + globalData.getUserObject().getName() + " " + globalData.getResources().getString(R.string.new_company_signed_up_message) + " \"" + globalData.getResources().getString(R.string.app_name) + "\"";
                      this.setMessage(message);
-
 
                      this.saveInBackground();
 
