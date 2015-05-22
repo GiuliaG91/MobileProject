@@ -348,6 +348,10 @@
     </string-array>
 
 
+    <string name="Done">Fatto</string>
+
+    <string name="ErrorStatus">Non puoi settare questo stato</string>
+
     <!-- aggiunti da Sivlia -->
 
     <string name="new_message">Crea nuovo messaggio</string>

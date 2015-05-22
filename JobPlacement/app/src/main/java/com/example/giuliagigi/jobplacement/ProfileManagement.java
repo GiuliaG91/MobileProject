@@ -8,6 +8,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -161,24 +162,6 @@ public class ProfileManagement extends Fragment{
         // Setting the ViewPager For the SlidingTabsLayout
         tabs.setViewPager(pager);
 
-/*
-        if(editable){
-
-            final Button edit = new Button(getActivity().getApplicationContext());
-            edit.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-            //edit.setBackgroundDrawable(getResources().getDrawable(R.drawable.ic_edit));
-            edit.setText("edit profile");
-            edit.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-
-                    switchMode();
-                }
-            });
-            ViewGroup root = (ViewGroup)view.findViewById(R.id.fragment_tab_home);
-            root.addView(edit);
-        }*/
-
         /****************************************************/
 
 
@@ -227,14 +210,15 @@ public class ProfileManagement extends Fragment{
 
         if (item.getItemId() == R.id.action_edit && editable) {
             switchMode();
-        }
 
-        if(isEditMode && editable)
-            item.setIcon(R.drawable.ic_confirm_white);
-        else if(!isEditMode && editable)
-            item.setIcon(R.drawable.ic_edit_white);
-        else if(!editable)
-            item.setIcon(R.drawable.ic_mail);
+            if(isEditMode && editable)
+                item.setIcon(R.drawable.ic_confirm_white);
+            else if(!isEditMode && editable)
+                item.setIcon(R.drawable.ic_edit_white);
+            else if(!editable)
+                item.setIcon(R.drawable.ic_mail);
+
+        }
 
         if(item.getItemId() == R.id.action_send && !editable){
 
@@ -256,8 +240,15 @@ public class ProfileManagement extends Fragment{
 
 
             if(item.getItemId() == R.id.action_see_candidatures && !editable){
-                SetOfferStatusDialogFragment statusDialogFragment=SetOfferStatusDialogFragment.newInstance((Student)user);
 
+                SetOfferStatusDialogFragment statusDialogFragment=SetOfferStatusDialogFragment.newInstance((Student)user);
+                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+
+
+                fragmentManager.beginTransaction()
+                        .replace(R.id.tab_Home_container, statusDialogFragment)
+                        .addToBackStack("Status")
+                        .commit();
             }
 
             builder.create().show();

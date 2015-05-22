@@ -77,7 +77,21 @@ public class OfferStatus  extends ParseObject {
      public void init(){
          String typeTranslated = (String)getKeyByValue(STATUS_TYPES, TYPE_START);
          this.put(STATUS_FIELD,typeTranslated);
-
-
      }
+
+
+    public static int getTypeIndex(String type)
+    {
+        String result=(String)getKeyByValue(STATUS_TYPES,type);
+
+        for(int i=0;i<TYPES.length;i++)
+        {
+            if(TYPES[i].equals(result))
+            {
+                return i;
+            }
+        }
+
+        return -1;
+    }
 }
