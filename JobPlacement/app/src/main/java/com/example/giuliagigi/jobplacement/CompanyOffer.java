@@ -47,7 +47,7 @@ public class CompanyOffer extends ParseObject {
     public static final String[] TYPE_TERM_FIELD_TRANSLATED =GlobalData.getContext().getResources().getStringArray(R.array.new_offer_fragment_termContracts);
 
     public static final String[] TYPE_WORK_FIELD ={"Choose a field:",  "Mechanics", "Informatics","Chemistry", "Energy" ,"Materials"};
-    public static final String[] TYPE_CONTRACT_FIELD = {"Select a type of contract","Stage", "Part-Time", "Full-Time", "Tesi","Master"};
+    public static final String[] TYPE_CONTRACT_FIELD = {"Select a type of contract","Stage", "Part-Time", "Full-Time", "Thesis","Master"};
     public static final String[] TYPE_TERM_FIELD={"Select term of contract...","Up to 6 months","One year","Two year","Five year","Indefinitely"};
 
 

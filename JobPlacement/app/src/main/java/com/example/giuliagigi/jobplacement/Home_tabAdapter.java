@@ -17,6 +17,7 @@ import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.parse.ParseException;
 import com.parse.ParseGeoPoint;
 import com.parse.ParseQuery;
 import com.parse.ParseQueryAdapter;
@@ -150,8 +151,13 @@ public class Home_tabAdapter extends RecyclerView.Adapter<Home_tabAdapter.ViewHo
                                     icon.setImageBitmap(object.getCompanyOffer().getCompany().getProfilePhoto());
                             }catch(RuntimeException re){
                             }
-
-                            switch (object.getOfferStatus().getType()) {
+                        OfferStatus status= null;
+                        try {
+                            status = object.getOfferStatus().fetchIfNeeded();
+                        } catch (ParseException e) {
+                            e.printStackTrace();
+                        }
+                            switch (status.getType()) {
                                 case OfferStatus.TYPE_ACCEPTED: title.setText(context.getResources().getString(R.string.student_accepted));
                                                                 break;
                                 case OfferStatus.TYPE_START: title.setText(context.getResources().getString(R.string.student_processing));

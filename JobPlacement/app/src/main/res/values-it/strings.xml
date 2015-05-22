@@ -387,7 +387,11 @@
     <string name="filter_Remove">Rimuovi tutti i filtri</string>
     <string name="filter_AlreadyAdded">Filtro già presente</string>
     <string name="filterWrongGrade">Voto errato</string>
-    <string name="filter_hint_field">per favore seleziona un settore se vuoi</string>
+    <string name="filter_hint_field">Per favore seleziona un settore se vuoi</string>
+    <string name="filter_hint_term">Per favore seleziona una scadenza di contratto se vuoi</string>
+    <string name="filter_hint_location">Per favore completa i campi di indirizzo</string>
+    <string name="filter_hint_contract">Per favore seleziona un tipo di contratto se vuoi</string>
+
 
     <string-array name="filter_salary">
         <item>tutti i tipi</item>

@@ -247,7 +247,11 @@ public class FilterStudentFragment  extends DialogFragment {
             if(!degree_list.isEmpty()) {
                 Integer pos = Integer.parseInt(degree_list.get(0));
                 degreeSpinner.setSelection(pos);
-                editGrade.setText(degree_list.get(2));
+                int m=Integer.parseInt(degree_list.get((2)));
+                if(m!=0) {
+                    editGrade.setText(String.valueOf(m));
+                }
+                else editGrade.setText("");
             }
 
 

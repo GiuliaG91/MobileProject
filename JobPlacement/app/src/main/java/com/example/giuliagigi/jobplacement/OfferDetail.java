@@ -222,6 +222,7 @@ public class OfferDetail extends  Fragment {
                         offer.addStudent(s);
                         offer.saveInBackground();
                         OfferStatus offerStatus=new OfferStatus();
+                        offerStatus.init();
                         offerStatus.setOffer(offer);
                         offerStatus.setStudent(s);
                         offerStatus.saveInBackground();

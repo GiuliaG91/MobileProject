@@ -315,7 +315,7 @@ public class FilterFragment extends DialogFragment {
                     @Override
                     public void onClick(View v) {
                         container.removeView(v);
-                        Toast.makeText(getActivity(), "Removed", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity(), getString(R.string.new_offer_fragment_removed), Toast.LENGTH_SHORT).show();
                     }
                 });
 
@@ -334,7 +334,7 @@ public class FilterFragment extends DialogFragment {
                     @Override
                     public void onClick(View v) {
                         fieldContainer.removeView(v);
-                        Toast.makeText(getActivity(), "Removed", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity(), getString(R.string.new_offer_fragment_removed), Toast.LENGTH_SHORT).show();
                     }
                 });
 
@@ -352,7 +352,7 @@ public class FilterFragment extends DialogFragment {
                     @Override
                     public void onClick(View v) {
                         termContainer.removeView(v);
-                        Toast.makeText(getActivity(), "Removed", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity(), getString(R.string.new_offer_fragment_removed), Toast.LENGTH_SHORT).show();
                     }
                 });
 
@@ -370,7 +370,7 @@ public class FilterFragment extends DialogFragment {
                     @Override
                     public void onClick(View v) {
                         contractContainer.removeView(v);
-                        Toast.makeText(getActivity(), "Removed", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity(), getString(R.string.new_offer_fragment_removed), Toast.LENGTH_SHORT).show();
                     }
                 });
 
@@ -408,7 +408,7 @@ public class FilterFragment extends DialogFragment {
         String filter = tagsView.getText().toString().trim();
         if (correct.contains(filter)) {
             if (!supportTag.add(filter)) {
-                Toast.makeText(getActivity(), "Filter already added", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), getString(R.string.filter_AlreadyAdded), Toast.LENGTH_SHORT).show();
             } else {
 
 
@@ -419,7 +419,7 @@ public class FilterFragment extends DialogFragment {
                     @Override
                     public void onClick(View v) {
                         container.removeView(v);
-                        Toast.makeText(getActivity(), "Removed", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity(), getString(R.string.new_offer_fragment_removed), Toast.LENGTH_SHORT).show();
                         globalData.getOfferFilterStatus().setFilters(tag_list, contract_list, term_list, field_list, location_list, salary_list);
                     }
                 });
@@ -431,7 +431,7 @@ public class FilterFragment extends DialogFragment {
             }
 
         } else {
-            Toast.makeText(getActivity(), "Wrong tag", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), getString(R.string.new_offer_fragment_WrongTag), Toast.LENGTH_SHORT).show();
         }
         tagsView.clearComposingText();
         ;
@@ -440,12 +440,12 @@ public class FilterFragment extends DialogFragment {
     public void onClickterm(View v) {
         final GridLayout container = (GridLayout) root.findViewById(R.id.filter_term_container);
         if (termSpinner.getSelectedItemPosition() == 0) {
-            Toast.makeText(getActivity(), "Please choose a term if you want", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), getString(R.string.filter_hint_term), Toast.LENGTH_SHORT).show();
         } else {
 
             String filter = termSpinner.getSelectedItem().toString().trim();
             if (!supportTerm.add(filter)) {
-                Toast.makeText(getActivity(), "Filter already added", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), getString(R.string.filter_AlreadyAdded), Toast.LENGTH_SHORT).show();
             } else {
 
                 LayoutInflater inflater = (LayoutInflater) getActivity().getBaseContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -455,7 +455,7 @@ public class FilterFragment extends DialogFragment {
                     @Override
                     public void onClick(View v) {
                         container.removeView(v);
-                        Toast.makeText(getActivity(), "Removed", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity(), getString(R.string.new_offer_fragment_removed), Toast.LENGTH_SHORT).show();
                         globalData.getOfferFilterStatus().setFilters(tag_list, contract_list, term_list, field_list, location_list, salary_list);
                     }
                 });
@@ -471,12 +471,12 @@ public class FilterFragment extends DialogFragment {
     public void onClickContract(View v) {
         final GridLayout container = (GridLayout) root.findViewById(R.id.filter_contract_container);
         if (contractSpinner.getSelectedItemPosition() == 0) {
-            Toast.makeText(getActivity(), "Please choose a contract if you want", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), getString(R.string.filter_hint_contract), Toast.LENGTH_SHORT).show();
         } else {
 
             String filter = contractSpinner.getSelectedItem().toString().trim();
             if (!supportContract.add(filter)) {
-                Toast.makeText(getActivity(), "Filter already added", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), getString(R.string.filter_AlreadyAdded), Toast.LENGTH_SHORT).show();
             } else {
 
                 LayoutInflater inflater = (LayoutInflater) getActivity().getBaseContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -486,7 +486,7 @@ public class FilterFragment extends DialogFragment {
                     @Override
                     public void onClick(View v) {
                         container.removeView(v);
-                        Toast.makeText(getActivity(), "Removed", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity(),getString(R.string.new_offer_fragment_removed), Toast.LENGTH_SHORT).show();
                         globalData.getOfferFilterStatus().setFilters(tag_list, contract_list, term_list, field_list, location_list, salary_list);
                     }
                 });
@@ -502,12 +502,12 @@ public class FilterFragment extends DialogFragment {
     public void onClickfield(View v) {
         final GridLayout container = (GridLayout) root.findViewById(R.id.filter_field_container);
         if (fieldSpinner.getSelectedItemPosition() == 0) {
-            Toast.makeText(getActivity(), "Please choose a term if you want", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), getString(R.string.filter_hint_term), Toast.LENGTH_SHORT).show();
         } else {
 
             String filter = fieldSpinner.getSelectedItem().toString().trim();
             if (!supportField.add(filter)) {
-                Toast.makeText(getActivity(), "Filter already added", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), getString(R.string.filter_AlreadyAdded), Toast.LENGTH_SHORT).show();
             } else {
                 LayoutInflater inflater = (LayoutInflater) getActivity().getBaseContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                 View mytagView = inflater.inflate(R.layout.taglayout, null);
@@ -516,7 +516,7 @@ public class FilterFragment extends DialogFragment {
                     @Override
                     public void onClick(View v) {
                         container.removeView(v);
-                        Toast.makeText(getActivity(), "Removed", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity(), getString(R.string.new_offer_fragment_removed), Toast.LENGTH_SHORT).show();
                         globalData.getOfferFilterStatus().setFilters(tag_list, contract_list, term_list, field_list, location_list, salary_list);
                     }
                 });
@@ -619,7 +619,7 @@ if(flag==0) {
     OfferSearchFragment fragment = (OfferSearchFragment) this.getParentFragment();
     fragment.addFiters(tag_list, contract_list, term_list, field_list, location_list, salary_list);
     getDialog().dismiss();
-       }else Toast.makeText(getActivity(),"Please complete location fileds",Toast.LENGTH_SHORT).show();
+       }else Toast.makeText(getActivity(), getString(R.string.filter_hint_location),Toast.LENGTH_SHORT).show();
     }
 
 
@@ -663,7 +663,7 @@ if(flag==0) {
 
         //no filters
         globalData.getOfferFilterStatus().setValid(false);
-        Toast.makeText(getActivity(), "Removed", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getActivity(), getString(R.string.new_offer_fragment_removed), Toast.LENGTH_SHORT).show();
     }
 
 

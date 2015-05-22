@@ -37,6 +37,9 @@ public class OfferStatus  extends ParseObject {
         this.put(STATUS_FIELD, typeTranslated);
     }
     public String getType(){
+
+        String s=(String)this.get(STATUS_FIELD);
+        String r=STATUS_TYPES.get((String)s);
         return STATUS_TYPES.get(this.getString(STATUS_FIELD));
     }
 

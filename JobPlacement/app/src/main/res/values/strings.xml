@@ -384,6 +384,9 @@
     <string name="filter_AlreadyAdded">Filter Already Added</string>
     <string name="filter_WrongGrade">Wrong grade</string>
     <string name="filter_hint_field">Please choose a field if you want</string>
+    <string name="filter_hint_contract">Please choose a contract if you want</string>
+    <string name="filter_hint_term">Please choose a term if you want</string>
+    <string name="filter_hint_location">Please complete location fields</string>
 
     <string name="hint_grade">Write here:</string>
 

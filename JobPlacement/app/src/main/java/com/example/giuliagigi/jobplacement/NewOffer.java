@@ -190,6 +190,7 @@ public class NewOffer extends Fragment implements DatePickerFragment.OnDataSetLi
         editSalary=(EditText)root.findViewById(R.id.offerSalary);
         dateButton=(Button)root.findViewById(R.id.dateButton);
         validity=(TextView)root.findViewById(R.id.validity_tv);
+
         button_a=(FloatingActionButton)root.findViewById(R.id.action_a);
         button_b=(FloatingActionButton)root.findViewById(R.id.action_b);
         button_c=(FloatingActionButton)root.findViewById(R.id.action_c);
