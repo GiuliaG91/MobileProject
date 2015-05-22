@@ -328,7 +328,7 @@
     <TextView
         android:layout_width="fill_parent"
         android:layout_height="0dp"
-        android:text="@string/filter_Salary"
+        android:text="@string/filter_Location"
         android:id="@+id/distance_filter_tv"
         android:layout_weight="0.3"
         android:layout_marginLeft="3dp"
@@ -348,7 +348,8 @@
             android:layout_width="0dp"
             android:id="@+id/filter_edit_distance"
             android:layout_height="fill_parent"
-            android:layout_weight="1"/>
+            android:layout_weight="1"
+            android:backgroundTint="@color/blue_semi_transparent"/>
 
     </LinearLayout>
 </LinearLayout>
@@ -358,30 +359,30 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginBottom="5dp"
-        android:layout_marginTop="5dp"
         android:id="@+id/location_filter_layout">
 
 
 
             <EditText
                 android:layout_width="fill_parent"
-                android:height="0dp"
+                android:height="50dp"
                 android:id="@+id/filter_edit_nation"
                 android:hint="@string/new_offer_fragment_hint_nation"
                 android:layout_height="fill_parent"
-                android:backgroundTint="#00000000"
+                android:backgroundTint="@color/blue_semi_transparent"
                 android:layout_margin="3dp"
-                android:layout_weight="1"/>
+                android:layout_weight="1"
+                android:layout_marginTop="20dp"/>
         <EditText
             android:layout_width="fill_parent"
-            android:height="0dp"
+            android:height="50dp"
             android:hint="@string/new_offer_fragment_hint_city"
             android:id="@+id/filter_edit_city"
             android:layout_height="fill_parent"
-            android:backgroundTint="#00000000"
+            android:backgroundTint="@color/blue_semi_transparent"
             android:layout_weight="1"
-            android:layout_margin="3dp"/>
+            android:layout_margin="3dp"
+            />
 
 
         </LinearLayout>
