@@ -125,9 +125,18 @@ public class CompanyStudentSearchAdapter extends RecyclerView.Adapter<CompanyStu
                             int myType=Degree.getTypeID(myTypeDegree);
                             int thisType=Degree.getTypeID(d.getType());
 
-                            if(thisType>myType)
+                            if(thisType>=myType)
                             {
-                                results.add(d);
+                                if(mark!=0)
+                                {
+                                    if(mark<d.getMark())
+                                    {
+                                        results.add(d);
+                                    }
+                                }
+                                else {
+                                    results.add(d);
+                                }
                             }
 
                         }
@@ -140,7 +149,17 @@ public class CompanyStudentSearchAdapter extends RecyclerView.Adapter<CompanyStu
                 }
                 if(!field_list.isEmpty())
                 {
-                    query.whereContainedIn("field",field_list);
+                    ParseQuery q=new ParseQuery("Degree");
+                    q.whereContainedIn("type",field_list);
+
+                    List<Degree> results=null;
+                    try {
+                        results=q.find();
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+                        if(results!=null && !results.isEmpty())
+                    query.whereContainedIn("field", results);
                 }
 
                 return query;
