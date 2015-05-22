@@ -288,9 +288,9 @@ public class Home_tabAdapter extends RecyclerView.Adapter<Home_tabAdapter.ViewHo
                         .addToBackStack(globalData.getResources().getStringArray(R.array.Menu_items_Company)[0])
                         .commit();
 
-                //mDataset.get(vh.getPosition()).getCompany().getName() + " " + globalData.getResources().getString(R.string.profile)
+                    //mDataset.get(vh.getPosition()).getCompany().getName() + " " + globalData.getResources().getString(R.string.profile)
 
-                    globalData.getToolbar().setTitle(mDataset.get(vh.getPosition()).getCompany().getName() + " " + globalData.getResources().getString(R.string.profile));
+                    //globalData.getToolbar().setTitle(mDataset.get(vh.getPosition()).getCompany().getName() + " " + globalData.getResources().getString(R.string.profile));
 
                     break;
 
