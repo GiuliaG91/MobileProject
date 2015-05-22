@@ -147,6 +147,8 @@ public class ProfileManagementBasicsFragment extends ProfileManagementFragment {
     protected void setBasicsView(){
 
         profilePhoto = (ImageView)root.findViewById(R.id.basics_profilePhoto);
+        emailVerified = (TextView)root.findViewById(R.id.account_verified_tv);
+        emailVerifiedIcon = (ImageView)root.findViewById(R.id.account_verified_icon);
 
         if(user.getProfilePhoto() != null) {
             Bitmap bmImg = user.getProfilePhoto();
@@ -174,7 +176,7 @@ public class ProfileManagementBasicsFragment extends ProfileManagementFragment {
 
             if(u.isEmailVerified()){
 
-                emailVerified.setText("Verified user");
+                emailVerified.setText(GlobalData.getContext().getString(R.string.string_account_verified_yes));
                 emailVerifiedIcon.setImageResource(R.drawable.ic_tick);
             }
         }

@@ -61,26 +61,27 @@ public class Login extends ActionBarActivity {
         /* ero gia loggato? */
 
 
-//        if(application.getCurrentUser()!=null){
-//
-//            Log.println(Log.ASSERT,"LOGIN", "User session already open. Entering home activity");
-//
-//            ParseInstallation installation = ParseInstallation.getCurrentInstallation();
-//            if(application.getCurrentUser().getType().equals(User.TYPE_STUDENT))
-//                ParsePush.subscribeInBackground(User.TYPE_STUDENT);
-//            installation.put(User.MAIL_FIELD, application.getUserObject().getMail());
-//            installation.put(User.TYPE_FIELD, application.getUserObject().getType());
-//            installation.saveInBackground();
-//
-//            startActivity(new Intent(getApplicationContext(),Home.class));
-//        }
+        if(application.getCurrentUser()!=null){
+
+            Log.println(Log.ASSERT,"LOGIN", "User session already open. Entering home activity");
+
+            ParseInstallation installation = ParseInstallation.getCurrentInstallation();
+            if(application.getCurrentUser().getType().equals(User.TYPE_STUDENT))
+                ParsePush.subscribeInBackground(User.TYPE_STUDENT);
+            installation.put(User.MAIL_FIELD, application.getUserObject().getMail());
+            installation.put(User.MAIL_FIELD, application.getUserObject().getMail());
+            installation.put(User.TYPE_FIELD, application.getUserObject().getType());
+            installation.saveInBackground();
+
+            startActivity(new Intent(getApplicationContext(),Home.class));
+        }
 
 
 
         final SharedPreferences sp = getPreferences(Context.MODE_PRIVATE);
         application.setLoginPreferences(sp);
 
-       sp.edit().clear().apply(); // pulisce le Shared Preferences
+//       sp.edit().clear().apply(); // pulisce le Shared Preferences
 
         mailText = (MultiAutoCompleteTextView)findViewById(R.id.email_editText);
         passwordText = (EditText)findViewById(R.id.password_editText);

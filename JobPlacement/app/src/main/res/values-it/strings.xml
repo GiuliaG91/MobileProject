@@ -423,7 +423,8 @@
     <string name="new_company_signed_up_message">si e\' registrata in</string>
 
 
-    <string name="string_account_verified">Account verificato?</string>
+    <string name="string_account_verified">Utente non verificato</string>
+    <string name="string_account_verified_yes">Utente verificato</string>
 
 
 </resources>
