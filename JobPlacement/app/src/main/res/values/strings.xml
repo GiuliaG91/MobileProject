@@ -462,5 +462,6 @@
     <string name="Done">Done</string>
 
     <string name="ErrorStatus">Can\'t set this status</string>
+    <string name="string_account_verified">Account verified?</string>
 
 </resources>
