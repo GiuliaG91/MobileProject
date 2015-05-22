@@ -290,6 +290,59 @@
             <!-- end description -->
 
 
+            <!-- verified -->
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="100dp">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/account_verified"
+                    android:paddingLeft="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:src="@drawable/ic_confirm"
+                    android:layout_gravity="center_vertical"/>
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="0dp"
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"
+                    android:layout_gravity="center_vertical"
+                    android:paddingLeft="30dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="fill_parent"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:text="@string/string_account_verified"
+                        android:textColor="@color/ColorPrimaryDark"
+                        android:id="@+id/account_verified_tv"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical"
+                        android:textSize="15dp"
+                        android:paddingLeft="10dp"
+                        android:paddingTop="5dp" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/account_verified_icon"
+                        android:paddingLeft="10dp"
+                        android:layout_margin="10dp"
+                        android:src="@drawable/ic_cross"
+                        android:layout_gravity="center_vertical"/>
+
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+            <!-- end verified -->
+
         </LinearLayout>
 
     </ScrollView>

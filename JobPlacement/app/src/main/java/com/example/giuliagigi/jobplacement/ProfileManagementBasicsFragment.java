@@ -15,6 +15,10 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
+
+import com.parse.ParseQuery;
+import com.parse.ParseUser;
 
 import java.io.IOException;
 
@@ -22,6 +26,8 @@ public class ProfileManagementBasicsFragment extends ProfileManagementFragment {
 
     private static final String TITLE = GlobalData.getContext().getString(R.string.string_basics_tab);
     protected ImageView profilePhoto;
+    protected TextView emailVerified;
+    protected ImageView emailVerifiedIcon;
     public static final String BUNDLE_IDENTIFIER = "PROFILEMANAGEMENTBASICS";
     private static final String BUNDLE_KEY_USER = "bundle_key_user";
 
@@ -141,6 +147,8 @@ public class ProfileManagementBasicsFragment extends ProfileManagementFragment {
     protected void setBasicsView(){
 
         profilePhoto = (ImageView)root.findViewById(R.id.basics_profilePhoto);
+        emailVerified = (TextView)root.findViewById(R.id.account_verified_tv);
+        emailVerifiedIcon = (ImageView)root.findViewById(R.id.account_verified_icon);
 
         if(user.getProfilePhoto() != null) {
             Bitmap bmImg = user.getProfilePhoto();
@@ -162,5 +170,16 @@ public class ProfileManagementBasicsFragment extends ProfileManagementFragment {
 
         EditText emailText = (EditText)root.findViewById(R.id.basics_email_area);
         emailText.setText(user.getMail());
+
+        ParseUserWrapper u = user.getParseUser();
+        if(u != null){
+
+            if(u.isEmailVerified()){
+
+                emailVerified.setText(GlobalData.getContext().getString(R.string.string_account_verified_yes));
+                emailVerifiedIcon.setImageResource(R.drawable.ic_tick);
+            }
+        }
+
     }
 }
