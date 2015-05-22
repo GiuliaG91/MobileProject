@@ -205,8 +205,13 @@ public class ProfileManagement extends Fragment{
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        for (ProfileManagementFragment f: fragments)
+        Log.println(Log.ASSERT,"PROFILE MANAG", "onActivityResult");
+
+        for (ProfileManagementFragment f: fragments){
+
+            Log.println(Log.ASSERT,"PROFILE MANAG", "called on: " + f.getTitle());
             f.onActivityResult(requestCode,resultCode,data);
+        }
     }
 
 

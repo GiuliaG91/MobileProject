@@ -216,6 +216,7 @@ public class StudentProfileManagementBasicsFragment extends ProfileManagementBas
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        Log.println(Log.ASSERT,"STUD BASICS", "onActivityResult");
     }
 
     /* ----------------------- AUXILIARY METHODS ----------------------------------------------- */

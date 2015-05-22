@@ -40,6 +40,7 @@ public class Home extends ActionBarActivity  implements TabHomeStudentFragment.O
     private DrawerLayout mDrawerLayout;
     private RecyclerView mDrawerList;
     private menuAdapter mAdapter;
+    private ProfileManagement profileManagement;
     private RecyclerView.LayoutManager mLayoutManager;
     private ActionBarDrawerToggle mDrawerToggle;
     private TypedArray ICONS;
@@ -219,8 +220,9 @@ public class Home extends ActionBarActivity  implements TabHomeStudentFragment.O
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        Log.println(Log.ASSERT,"HOME ACTIVITY", "onActivityResult");
+
+        Log.println(Log.ASSERT,"HOME", "activity result. code = " + requestCode);
+        profileManagement.onActivityResult(requestCode,resultCode,data);
     }
 
     @Override
@@ -289,7 +291,11 @@ public class Home extends ActionBarActivity  implements TabHomeStudentFragment.O
 
     }
 
-    /* ---------------- END PROFILE MANAGEMENT INTERFACE -----------------------------------------*/
+    public void setProfileManagement(ProfileManagement profileManagement) {
+        this.profileManagement = profileManagement;
+    }
+
+/* ---------------- END PROFILE MANAGEMENT INTERFACE -----------------------------------------*/
 
 
     @Override
