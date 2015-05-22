@@ -154,6 +154,11 @@ public class menuAdapter extends RecyclerView.Adapter<menuAdapter.ViewHolder> {
 
                                     Fragment fragment = ProfileManagement.newInstance(true,gd.getUserObject());
 
+                                    if(activity instanceof Home)
+                                        ((Home) activity).setProfileManagement((ProfileManagement)fragment);
+
+
+
                                     //clear backstack
                                     int count = fragmentManager.getBackStackEntryCount();
                                     for(int i = 0; i < count; ++i) {
@@ -342,6 +347,11 @@ public class menuAdapter extends RecyclerView.Adapter<menuAdapter.ViewHolder> {
                                   if(!(current instanceof ProfileManagement) || gd.getLatestDisplayedUser()!=gd.getUserObject()) {
 
                                       Fragment fragment = ProfileManagement.newInstance(true,gd.getUserObject());
+
+                                      if(activity instanceof Home)
+                                          ((Home) activity).setProfileManagement((ProfileManagement)fragment);
+
+
                                       //clear backstack
                                       int count = fragmentManager.getBackStackEntryCount();
                                       for(int i = 0; i < count; ++i) {
