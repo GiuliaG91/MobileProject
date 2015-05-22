@@ -431,6 +431,11 @@
     <string name="application_refused_message">ha rifiutato la tua candidatura per l\'offerta di lavoro</string>
     <string name="application_processing_message">sta processando la tua candidatura per l\'offerta di lavoro</string>
 
+
     <string name="offer">Offerta</string>
+    <string name="string_account_verified">Utente non verificato</string>
+    <string name="string_account_verified_yes">Utente verificato</string>
+
+
 
 </resources>
