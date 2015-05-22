@@ -27,6 +27,7 @@ public class ProfileManagementBasicsFragment extends ProfileManagementFragment {
     private static final String TITLE = GlobalData.getContext().getString(R.string.string_basics_tab);
     protected ImageView profilePhoto;
     protected TextView emailVerified;
+    protected ImageView emailVerifiedIcon;
     public static final String BUNDLE_IDENTIFIER = "PROFILEMANAGEMENTBASICS";
     private static final String BUNDLE_KEY_USER = "bundle_key_user";
 
@@ -174,7 +175,7 @@ public class ProfileManagementBasicsFragment extends ProfileManagementFragment {
             if(u.isEmailVerified()){
 
                 emailVerified.setText("Verified user");
-                // TODO icona
+                emailVerifiedIcon.setImageResource(R.drawable.ic_tick);
             }
         }
 

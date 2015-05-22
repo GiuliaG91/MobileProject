@@ -246,8 +246,10 @@ public class Registration extends ActionBarActivity implements StudentRegistrati
 
                     Log.println(Log.ASSERT,"REGISTRATION", "signup ok");
                     Log.println(Log.ASSERT,"REGISTRATION","registration successful. Redirect to login activity");
+                    newUser.setParseUser(newParseUser);
 
                     if(newUser.getType().equals(User.TYPE_STUDENT)){
+
 
                         /*necessary saving degree before saving student*/
                         Student newStudent = (Student)newUser;
@@ -275,7 +277,6 @@ public class Registration extends ActionBarActivity implements StudentRegistrati
                                                 u.setType(User.TYPE_STUDENT);
                                                 u.setPassword(newUser.getPassword());
                                                 u.setName(newUser.getName() + " " + ((Student)newUser).getSurname());
-                                                u.setParseUser(newParseUser);
 
                                                 u.saveInBackground(new SaveCallback() {
                                                     @Override
