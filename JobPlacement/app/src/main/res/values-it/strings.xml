@@ -31,7 +31,7 @@
     <string name="NoModify">Non puoi modificare questa offerta</string>
 
     <string name="OfferStatus_Start">Lavorazione</string>
-    <string name="OfferStatus_Considering">Presa in considerazione</string>
+    <string name="OfferStatus_Considering">Persa in considerazione</string>
     <string name="OfferStatus_Refused">Rifiutata</string>
     <string name="OfferStatus_Accepted">Accettata</string>
 
@@ -308,35 +308,7 @@
         <item>Materiali</item>
     </string-array>
 
-    <!--New Offer Toast-->
-    <string name="new_offer_fragment_removed">Rimosso</string>
-    <string name="new_offer_fragment_added">Aggiunto</string>
-    <string name="new_offer_fragment_existenTtag">Skill esistente</string>
-    <string name="new_offer_fragment_WrongTag">Skill errata</string>
-    <string name="new_offer_fragment_MissingField">Campi mancanti</string>
-    <string name="new_offer_fragment_WrongDate">Non puoi settare questa data</string>
-    <string name="new_offer_fragment_Error">Errori: Non posso eseguire l\'operazione.</string>
-    <string name="new_offer_fragment_NoDelete">Errore: Non puoi cancellare questo oggetto.</string>
-    <string name="new_offer_fragment_NoStudents">Nessuno studente candidato</string>
-
-
-    <!--Hint-->
-
-    <string name="new_offer_fragment_hint_nation">Nazione</string>
-    <string name="new_offer_fragment_hint_city">Città</string>
-
-
-    <string-array name="typeOfDegrees">
-        <item>Minimo grado di laurea</item>
-        <item>Triennale</item>
-        <item>Magistrale</item>
-        <item>Dottorato</item>
-
-    </string-array>
-
-
-
-    <!-- SHOW OFFER -->
+<!-- SHOW OFFER -->
     <string name="show_offer_fragment_tags">Skills:</string>
     <string name="title_activity_geo_localization">Mappa</string>
 
@@ -346,34 +318,11 @@
     <string name="offer_detail_apply_button">Apply</string>
     <string name="offer_detail_contact_button">Contatta l\'azienda</string>
 
-
-
-
-    <!-- OFFER DETAIL BUTTON -->
-
-
-
-    <string name="offer_detail_NoApply">Can\'t perform apply</string>
-    <string name="offer_detail_AlreadyApplied">Already Applied</string>
-
-    <string name="offer_detail_hint_object">Oggetto:</string>
-    <string name="offer_detail_hint_mission">Missione aziendale</string>
-    <string name="offer_detail_hint_field">Settore</string>
-    <string name="offer_detail_hint_places">Posti disponibili</string>
-    <string name="offer_detail_hint_validity">Validità</string>
-    <string name="offer_detail_hint_contract">Contratto</string>
-    <string name="offer_detail_hint_term">Scadenza contratto</string>
-    <string name="offer_detail_hint_location">Location</string>
-    <string name="offer_detail_hint_Nodefined">Da definire</string>
-    <string name="offer_detail_hint_salary">Stipendio</string>
-
-
-    <!-- New Offer Button -->
+ <!-- New Offer Button -->
     <string name="new_offer_create_button">Crea</string>
     <string name="new_offer_publish_button">Pubblica</string>
     <string name="new_offer_modify_button">Modifica</string>
     <string name="new_offer_delete_button">Cancella</string>
-    <string name="new_offer_view_button">Studente candidato</string>
 
 
 <!--Filter -->
@@ -401,32 +350,6 @@
 
     </string-array>
 
-    <!--Filter -->
-
-
-    <string name="hint_grade">Scrivi qui</string>
-
-
-    <string name="filter_Degree">Laurea</string>
-    <string name="filter_Grade">Voto minimo</string>
-
-
-    <string-array name="filter_location">
-        <item>Scegli una distanza in Km</item>
-        <item>Vicino alla città</item>
-        <item>Meno di</item>
-
-    </string-array>
-
-
-
-
-    <string name="Mark">Voto:</string>
-    <string name="noDegree">Nessuna laurea registrata</string>
-    <string name="noMark">Nessun voto registrato</string>
-
-
-    <string name="NoFavourites">Nessun preferito trovato.</string>
 
     <string name="Done">Fatto</string>
 
@@ -515,10 +438,11 @@
     <string name="application_refused_message">ha rifiutato la tua candidatura per l\'offerta di lavoro</string>
     <string name="application_processing_message">sta processando la tua candidatura per l\'offerta di lavoro</string>
 
+
+    <string name="offer">Offerta</string>
     <string name="string_account_verified">Utente non verificato</string>
     <string name="string_account_verified_yes">Utente verificato</string>
 
 
-    <string name="offer">Offerta</string>
 
 </resources>
