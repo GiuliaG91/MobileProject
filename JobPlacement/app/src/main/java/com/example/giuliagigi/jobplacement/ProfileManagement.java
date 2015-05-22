@@ -236,7 +236,7 @@ public class ProfileManagement extends Fragment{
         if(item.getItemId() == R.id.action_send && !editable){
 
             AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-            builder.setTitle(GlobalData.getContext().getString(R.string.string_send_email) + user.getMail() + "?");
+            builder.setTitle(GlobalData.getContext().getString(R.string.string_send_email) + " " + user.getMail() + "?");
             builder.setPositiveButton(GlobalData.getContext().getString(R.string.string_yes), new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {

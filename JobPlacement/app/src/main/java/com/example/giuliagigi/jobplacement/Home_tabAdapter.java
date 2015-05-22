@@ -150,8 +150,11 @@ public class Home_tabAdapter extends RecyclerView.Adapter<Home_tabAdapter.ViewHo
                             title.setText(context.getResources().getString(R.string.student_accepted));
                             break;
 
-                    case 3: if(object.getCompany().getProfilePhoto() != null)
-                                icon.setImageBitmap(object.getCompany().getProfilePhoto());
+                    case 3: try {
+                                if (object.getCompany().getProfilePhoto() != null)
+                                    icon.setImageBitmap(object.getCompany().getProfilePhoto());
+                            }catch(RuntimeException re){
+                            }
                             title.setText(context.getResources().getString(R.string.new_company_signed_up));
                             break;
 

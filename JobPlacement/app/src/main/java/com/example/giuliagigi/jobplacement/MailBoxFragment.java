@@ -54,6 +54,8 @@ public class MailBoxFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        setHasOptionsMenu(true);
+
         mListener = (OnFragmentInteractionListener)this.getActivity();
 
         if(savedInstanceState != null){
@@ -323,15 +325,15 @@ public class MailBoxFragment extends Fragment {
         }
     }
 
+    /*
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater menuInflater){
 
         menu.clear();
-
-//        menuInflater.inflate(R.menu.menu_mailbox, menu);
+        menuInflater.inflate(R.menu.menu_mailbox, menu);
 
     }
-
+    */
 
     /*
     @Override

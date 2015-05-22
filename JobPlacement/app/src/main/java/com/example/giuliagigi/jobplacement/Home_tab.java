@@ -9,6 +9,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -100,6 +101,7 @@ public class Home_tab extends Fragment {
         // specify an adapter
         mRecyclerView.setAdapter(adapter);
 
+        ((Toolbar)this.getActivity().findViewById(R.id.toolbar)).setTitle(globalData.getResources().getString(R.string.home));
 
         return root;
     }

@@ -277,9 +277,16 @@ public class Home extends ActionBarActivity  implements TabHomeStudentFragment.O
     public void openMailBox(User user) {
 
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        MailBoxNewFragment mailbox = MailBoxNewFragment.newInstance(new Bundle());
+
+        Bundle data = new Bundle();
+        ArrayList<String> recipients = new ArrayList<String>();
+        recipients.add(user.getMail());
+        data.putStringArrayList(MailBoxDetailFragment.RECIPIENTS_KEY, recipients);
+
+        MailBoxNewFragment mailbox = MailBoxNewFragment.newInstance(data);
         ft.replace(R.id.tab_Home_container,mailbox);
         ft.commit();
+
     }
 
     /* ---------------- END PROFILE MANAGEMENT INTERFACE -----------------------------------------*/
