@@ -272,20 +272,6 @@ public class Registration extends ActionBarActivity implements StudentRegistrati
                                                 newParseUser.setUser(newUser);
                                                 newParseUser.saveEventually();
 
-                                                User u = new User();
-                                                u.setMail(newUser.getMail());
-                                                u.setType(User.TYPE_STUDENT);
-                                                u.setPassword(newUser.getPassword());
-                                                u.setName(newUser.getName() + " " + ((Student)newUser).getSurname());
-
-                                                u.saveInBackground(new SaveCallback() {
-                                                    @Override
-                                                    public void done(ParseException e) {
-                                                        if(e != null)
-                                                            e.printStackTrace();
-                                                    }
-                                                });
-
                                                 saveLoginPreferences(newUser);
 
                                                 startActivity(new Intent(getApplicationContext(), Login.class));
@@ -314,13 +300,6 @@ public class Registration extends ActionBarActivity implements StudentRegistrati
 
                                     newParseUser.setUser(newUser);
                                     newParseUser.saveEventually();
-
-                                    User u = new User();
-                                    u.setMail(newUser.getMail());
-                                    u.setType(User.TYPE_COMPANY);
-                                    u.setPassword(newUser.getPassword());
-                                    u.setName(newUser.getName());
-                                    u.saveInBackground();
 
                                     saveLoginPreferences(newUser);
 
@@ -401,21 +380,21 @@ public class Registration extends ActionBarActivity implements StudentRegistrati
     private void saveLoginPreferences(User newUser){
 
         /* saving credentials for next automatic login */
-    /*    SharedPreferences sp = application.getLoginPreferences();
+        SharedPreferences sp = application.getLoginPreferences();
         if (sp != null) {
 
             SharedPreferences.Editor editor = sp.edit();
-            editor.putBoolean(Login.SHAREDPREF_LATEST_LOGIN_PREFERENCE, true);
+//            editor.putBoolean(Login.SHAREDPREF_LATEST_LOGIN_PREFERENCE, true);
             Set<String> knownMails = sp.getStringSet(Login.SHAREDPREF_MAIL_LIST, new HashSet<String>());
             knownMails.add(newUser.getMail());
             editor.putStringSet(Login.SHAREDPREF_MAIL_LIST, knownMails);
             editor.putString(newUser.getMail(), newUser.getPassword());
-            editor.putString(Login.SHAREDPREF_LATEST_MAIL, newUser.getMail());
-            editor.putString(Login.SHAREDPREF_LATEST_PASSWORD, newUser.getPassword());
+//            editor.putString(Login.SHAREDPREF_LATEST_MAIL, newUser.getMail());
+//            editor.putString(Login.SHAREDPREF_LATEST_PASSWORD, newUser.getPassword());
             editor.commit();
 
 
-        }*/
+        }
     }
 
 
