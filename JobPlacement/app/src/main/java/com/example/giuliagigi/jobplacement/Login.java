@@ -65,7 +65,7 @@ public class Login extends ActionBarActivity {
             Log.println(Log.ASSERT, "LOGIN", "User session already open. Entering home activity");
 
            ParseInstallation installation = ParseInstallation.getCurrentInstallation();
-            installation.put("user", application.getCurrentUser());
+            installation.put("User",application.getCurrentUser());
             installation.saveInBackground();
 
             startActivity(new Intent(getApplicationContext(),Home.class));
@@ -279,7 +279,7 @@ public class Login extends ActionBarActivity {
                     /* register an object Installation for receiving Push Notifications */
 
                     ParseInstallation installation = ParseInstallation.getCurrentInstallation();
-                    installation.put("user",gd.getCurrentUser());
+                    installation.put("User",application.getCurrentUser());
                     installation.saveInBackground();
 
                     /* launch home activity */

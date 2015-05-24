@@ -57,7 +57,7 @@ public class LogoutDialogFragment extends DialogFragment {
                 Toast.makeText(getActivity(), GlobalData.getContext().getString(R.string.string_logging_out), Toast.LENGTH_SHORT).show();
 
                 ParseInstallation installation = ParseInstallation.getCurrentInstallation();
-                installation.remove("user");
+                installation.remove("User");
                 installation.saveInBackground();
 
                 ParseUser.logOutInBackground();
