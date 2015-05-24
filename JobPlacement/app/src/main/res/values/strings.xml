@@ -505,4 +505,14 @@
     <string name="string_account_verified">User not verified</string>
     <string name="string_account_verified_yes">Verified user</string>
 
+
+    <string name="Message_theCompany">Company </string>
+    <string name="Message_newOffer">has created a new offer that may interest you.</string>
+
+    <string name="Message_newMessage">New message from: </string>
+
+    <string name="Message_Apply">applied for your offer :</string>
+
+    <string name="Message_Update">Status of you application for the offer: </string>
+    <string name="Message_UpdateEnd">has been changed in</string>
 </resources>

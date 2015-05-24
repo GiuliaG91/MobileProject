@@ -451,6 +451,16 @@
     <string name="string_account_verified">Utente non verificato</string>
     <string name="string_account_verified_yes">Utente verificato</string>
 
+    <string name="Message_theCompany">L\'azienda </string>
+    <string name="Message_newOffer">ha creato una nuova offerta che potrebbe interessarti.</string>
+
+    <string name="Message_newMessage">Nuovo messaggio da: </string>
+
+    <string name="Message_Apply"> si è candidato per l\'offerta:</string>
+
+    <string name="Message_Update">Lo stato della tua candidatura per l\'offerta: </string>
+    <string name="Message_UpdateEnd">è stato cambiato in:</string>
+
 
 
 </resources>

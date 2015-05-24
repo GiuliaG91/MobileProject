@@ -141,16 +141,27 @@ public class Home_tabAdapter extends RecyclerView.Adapter<Home_tabAdapter.ViewHo
                             title.setText(context.getResources().getString(R.string.new_job_offer));
                             break;
 
-                    case 1: if(object.getStudent().getProfilePhoto() != null)
+                    case 1:
+                        try {
+                            Student student=object.getStudent().fetchIfNeeded();
+
+                        if(student.getProfilePhoto() != null)
                                 icon.setImageBitmap(object.getStudent().getProfilePhoto());
                             title.setText(context.getResources().getString(R.string.new_student_applied));
+
+                        } catch (ParseException e) {
+                            e.printStackTrace();
+                        }
                             break;
 
-                    case 2: try {
-                                if (object.getCompanyOffer().getCompany().getProfilePhoto() != null)
+                    case 2: try {CompanyOffer offer=object.getCompanyOffer().fetchIfNeeded();
+                                Company company=offer.getCompany().fetchIfNeeded();
+                        if (company.getProfilePhoto() != null)
                                     icon.setImageBitmap(object.getCompanyOffer().getCompany().getProfilePhoto());
                             }catch(RuntimeException re){
-                            }
+                            } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
                         OfferStatus status= null;
                         try {
                             status = object.getOfferStatus().fetchIfNeeded();
@@ -170,11 +181,15 @@ public class Home_tabAdapter extends RecyclerView.Adapter<Home_tabAdapter.ViewHo
                             break;
 
                     case 3: try {
-                                if (object.getCompany().getProfilePhoto() != null)
+                                        Company company=object.getCompany().fetchIfNeeded();
+
+                                if (company.getProfilePhoto() != null)
                                     icon.setImageBitmap(object.getCompany().getProfilePhoto());
                             }catch(RuntimeException re){
-                            }
-                            title.setText(context.getResources().getString(R.string.new_company_signed_up));
+                            } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+                        title.setText(context.getResources().getString(R.string.new_company_signed_up));
                             break;
 
                     case 4:

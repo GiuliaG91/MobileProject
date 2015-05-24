@@ -76,7 +76,7 @@ public class OfferStatus  extends ParseObject {
         return null;
     }
      public void init(){
-         String typeTranslated = (String)getKeyByValue(STATUS_TYPES, TYPE_START);
+         String typeTranslated = (String)getKeyByValue(STATUS_TYPES,TYPE_START_TRANSLATED);
          this.put(STATUS_FIELD,typeTranslated);
      }
 

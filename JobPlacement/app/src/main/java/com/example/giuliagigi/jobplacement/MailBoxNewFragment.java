@@ -34,6 +34,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -226,27 +227,29 @@ public class MailBoxNewFragment extends Fragment {
 
                         mr.saveInBackground();
 
-                        ParseQuery<User> query = ParseQuery.getQuery("User");
-                        query.whereEqualTo(User.MAIL_FIELD, recipient.trim());
-                        query.findInBackground(new FindCallback<User>() {
-                            @Override
-                            public void done(List<User> list, ParseException e) {
-                                if (list != null) {
-                                    if (list.get(0).getType().equals(User.TYPE_STUDENT)) {
 
-                                        ParseQuery pushQuery = ParseInstallation.getQuery();
-                                        pushQuery.whereEqualTo(User.MAIL_FIELD, list.get(0).getMail());
+                        ParseQuery inner= new ParseQuery("_User");
+                         inner.whereContainedIn("email", Arrays.asList(recipient));
 
-                                        ParsePush push = new ParsePush();
+                          List<ParseUser> users=null;
+
+                        try {
+                            users=inner.find();
+                        } catch (ParseException e) {
+                            e.printStackTrace();
+                        }
+
+                        ParseQuery pushQuery = ParseInstallation.getQuery();
+                        pushQuery.whereContainedIn("User",users);
+
+
+                        ParsePush push = new ParsePush();
                                         push.setQuery(pushQuery);
-                                        push.setMessage("Nuovo messaggio da: " + globalData.getUserObject().getMail());
+                                        push.setMessage(""+getString(R.string.Message_newMessage) + globalData.getUserObject().getMail());
                                         push.sendInBackground();
 
                                     }
-                                }
-                            }
 
-                        });
 
                     }
 
@@ -263,8 +266,6 @@ public class MailBoxNewFragment extends Fragment {
 
                 }
 
-
-            }
         });
 
         if(savedInstanceState != null){

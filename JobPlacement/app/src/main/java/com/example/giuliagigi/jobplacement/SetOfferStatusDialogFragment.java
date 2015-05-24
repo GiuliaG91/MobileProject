@@ -14,7 +14,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.parse.ParseException;
+import com.parse.ParseInstallation;
+import com.parse.ParsePush;
 import com.parse.ParseQuery;
+import com.parse.ParseUser;
 
 import java.util.List;
 import java.util.Set;
@@ -93,6 +96,7 @@ public class SetOfferStatusDialogFragment extends DialogFragment {
             pos=OfferStatus.getTypeIndex(myStatus.getType());
             currentPos=pos;
         }
+
         StatusSpinner.setSelection(pos);
 
         okButton.setOnClickListener(new View.OnClickListener() {
@@ -105,19 +109,8 @@ public class SetOfferStatusDialogFragment extends DialogFragment {
         cancelButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //getDialog().dismiss();
-                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                getDialog().dismiss();
 
-                //New Fragment
-                NewOffer fragment=NewOffer.newInstance(false,false);
-
-                fragmentManager.beginTransaction()
-                        .replace(R.id.tab_Home_container, fragment)
-                        .addToBackStack("OfferStatus")
-                        .commit();
-
-                Toolbar toolbar= globalData.getToolbar();
-                toolbar.setTitle(globalData.getResources().getString(R.string.offer));
             }
         });
 
@@ -136,31 +129,32 @@ public class SetOfferStatusDialogFragment extends DialogFragment {
             //perform change status
             myStatus.setType(StatusSpinner.getSelectedItem().toString());
             myStatus.saveInBackground();
-
+            CompanyOffer offer=globalData.getCurrentViewOffer();
             News news = new News();
             news.createNews(2, globalData.getCurrentViewOffer(), student, myStatus, globalData);
 
             if(pos==2)
             {
-                CompanyOffer offer=globalData.getCurrentViewOffer();
+
                 int places=offer.getnPositions();
                 offer.setPositions(places-1);
                 offer.saveInBackground();
             }
+
+            ParseUser user=student.getParseUser();
+            ParseQuery pushQuery = ParseInstallation.getQuery();
+            pushQuery.whereEqualTo("User", student.getParseUser());
+
+
+            ParsePush push = new ParsePush();
+            push.setQuery(pushQuery);
+            push.setMessage("" + getString(R.string.Message_Update) + " " + offer.getOfferObject() +
+                    " " + getString(R.string.Message_UpdateEnd) + " " + globalData.getUserObject().getMail());
+            push.sendInBackground();
+
             Toast.makeText(getActivity(),R.string.Done,Toast.LENGTH_SHORT).show();
+            getDialog().dismiss();
 
-            FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-
-            //New Fragment
-            NewOffer fragment=NewOffer.newInstance(false,false);
-
-            fragmentManager.beginTransaction()
-                    .replace(R.id.tab_Home_container, fragment)
-                    .addToBackStack("OfferStatus")
-                    .commit();
-
-            Toolbar toolbar= globalData.getToolbar();
-            toolbar.setTitle(globalData.getResources().getString(R.string.offer));
 
         }else
             Toast.makeText(getActivity(),R.string.ErrorStatus,Toast.LENGTH_SHORT).show();

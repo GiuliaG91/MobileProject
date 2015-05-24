@@ -28,12 +28,18 @@ import android.widget.Toast;
 import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.getbase.floatingactionbutton.FloatingActionsMenu;
 import com.parse.ParseException;
+import com.parse.ParseInstallation;
 import com.parse.ParseObject;
+import com.parse.ParsePush;
+import com.parse.ParseQuery;
+import com.parse.ParseUser;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
+import java.util.List;
 
 
 /**
@@ -232,8 +238,26 @@ public class OfferDetail extends  Fragment {
                         offerStatus.setStudent(s);
                         offerStatus.saveInBackground();
                         //todo notify company
+                        Company company=null;
+                        try {
+                            company =offer.getCompany().fetchIfNeeded();
+                        } catch (ParseException e) {
+                            e.printStackTrace();
+                        }
 
-                        Toast.makeText(getActivity(),getString(R.string.Done), Toast.LENGTH_SHORT).show();
+
+                        ParseQuery pushQuery = ParseInstallation.getQuery();
+                        pushQuery.whereEqualTo("User",company.getParseUser());
+
+
+                        ParsePush push = new ParsePush();
+                        push.setQuery(pushQuery);
+                        push.setMessage(""+s.getName()+" "+s.getSurname()+" "+getString(R.string.Message_Apply)+" "+offer.getOfferObject());
+                        push.sendInBackground();
+
+
+
+                    Toast.makeText(getActivity(),getString(R.string.Done), Toast.LENGTH_SHORT).show();
 
                         News news = new News();
                         news.createNews(1, offer, (Student) globalData.getUserObject(), null, globalData);

@@ -73,7 +73,7 @@ public class Degree extends ParseObject implements Comparable<Degree>{
     }
 
     public String getStudies(){
-        return DEGREE_STUDIES.get(this.getString(STUDENT_FIELD));
+        return DEGREE_STUDIES.get(this.getString(STUDIES_FIELD));
     }
     public void setStudies(String studies){
         String studiesTranslated = (String)getKeyByValue(DEGREE_STUDIES, studies);
