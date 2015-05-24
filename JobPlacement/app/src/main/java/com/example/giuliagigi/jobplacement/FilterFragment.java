@@ -545,7 +545,7 @@ public class FilterFragment extends DialogFragment {
         Integer pos=0;
 
         int flag=0;
-        
+
         if(nation.getText().length()==0 && city.getText().length()!=0 ||
                 nation.getText().length()!=0 && city.getText().length()==0
                 ){
