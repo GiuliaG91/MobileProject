@@ -273,8 +273,12 @@ public class Registration extends ActionBarActivity implements StudentRegistrati
                                                 newParseUser.saveEventually();
 
                                                  ParseInstallation installation=ParseInstallation.getCurrentInstallation();
-                                                 installation.put("user",newParseUser);
                                                  installation.saveInBackground();
+
+                                                ParsePush push = new ParsePush();
+                                                //  push.setMessage(application.getResources().getString(R.string.the_company) + " " + application.getUserObject().getName() + " " + application.getResources().getString(R.string.new_company_signed_up_message) + " \"" + application.getResources().getString(R.string.app_name) + "\"");
+                                                push.setMessage("Sucate tutti funziona");
+                                                push.sendInBackground();
 
 
                                                 saveLoginPreferences(newUser);
@@ -309,29 +313,22 @@ public class Registration extends ActionBarActivity implements StudentRegistrati
                                     saveLoginPreferences(newUser);
 
                                     News news = new News();
-                                    news.createNews(3, null, null, null, (GlobalData)getApplication());
-/*
+                                    news.createNews(3, null, null, null, (GlobalData) getApplication());
+
+
+
+                                    ParseInstallation installation=ParseInstallation.getCurrentInstallation();
+                                    installation.saveInBackground();
+
+
                                     ParsePush push = new ParsePush();
-                                    push.setMessage(application.getResources().getString(R.string.the_company) + " " + application.getUserObject().getName() + " " + application.getResources().getString(R.string.new_company_signed_up_message) + " \"" + application.getResources().getString(R.string.app_name) + "\"");
+                                    push.setMessage(application.getResources().getString(R.string.the_company) +
+                                            " " + application.getUserObject().getName() +
+                                            " " + application.getResources().getString(R.string.new_company_signed_up_message)
+                                            + " \"" + application.getResources().getString(R.string.app_name) + "\"");
+
                                     push.sendInBackground();
-*/
-                                    /*
-                                    ParseQuery pushQuery = ParseInstallation.getQuery();
-                                    pushQuery.whereEqualTo(User.TYPE_FIELD, User.TYPE_STUDENT);
 
-                                    try {
-
-                                        JSONObject data = new JSONObject("{\"alert\": \"The company " + ((Company) newUser).getName() + " is signed up to the application\", \"uri\": " + "www.google.com" + "\"}");
-                                        ParsePush push = new ParsePush();
-                                        push.setQuery(pushQuery);
-                                        push.setData(data);
-                                        push.sendInBackground();
-
-                                    }catch(JSONException jsonEx) {
-                                        jsonEx.printStackTrace();
-                                        Log.println(Log.ASSERT, "REGISTRATION", jsonEx.toString());
-                                    }
-                                    */
 
                                     startActivity(new Intent(getApplicationContext(),Login.class));
                                 }
