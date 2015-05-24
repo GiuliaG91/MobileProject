@@ -26,6 +26,7 @@ import com.getbase.floatingactionbutton.FloatingActionsMenu;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
+import com.parse.ParseUser;
 
 import org.json.JSONException;
 
@@ -80,20 +81,37 @@ public class MailBoxDetailFragment extends Fragment {
             getFragmentManager().popBackStackImmediate();
         }
 
-        if(message.getSender().equals(globalData.getUserObject().getMail()))
-            sender = globalData.getUserObject();
-        else{
+//        if(message.getSender().equals(globalData.getUserObject().getMail()))
+//            sender = globalData.getUserObject();
+//        else{
+//
+//            ParseQuery<User> query = ParseQuery.getQuery("User");
+//            query.whereEqualTo(User.MAIL_FIELD, message.getSender());
+//            try {
+//                List<User> users = query.find();
+//                if(users != null && users.size() > 0)
+//                    sender = users.get(0);
+//
+//            } catch (ParseException e) {
+//                e.printStackTrace();
+//            }
+//        }
 
-            ParseQuery<User> query = ParseQuery.getQuery("User");
-            query.whereEqualTo(User.MAIL_FIELD, message.getSender());
-            try {
-                List<User> users = query.find();
-                if(users != null && users.size() > 0)
-                    sender = users.get(0);
+        ParseQuery<ParseUser> parseUserQuery = ParseQuery.getQuery("_User");
+        parseUserQuery.whereEqualTo("email", message.getSender());
 
-            } catch (ParseException e) {
-                e.printStackTrace();
+        try {
+
+            List<ParseUser> parseUsers = parseUserQuery.find();
+
+            if(!parseUsers.isEmpty()){
+
+                ParseUserWrapper parseUserWrapper = (ParseUserWrapper)parseUsers.get(0);
+                sender = parseUserWrapper.getUser().fetchIfNeeded();
             }
+
+        } catch (ParseException e) {
+            e.printStackTrace();
         }
 
     }

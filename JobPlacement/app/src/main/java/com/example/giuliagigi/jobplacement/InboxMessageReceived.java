@@ -45,12 +45,12 @@ public class InboxMessageReceived extends InboxMessage{
         this.put(InboxMessageReceived.NAME_SENDER, name);
     }
 
-    public Bitmap getPhotoSender(){
-        return (Bitmap)this.get(InboxMessageReceived.PHOTO_SENDER);
-    }
+//    public Bitmap getPhotoSender(){
+//        return (Bitmap)this.get(InboxMessageReceived.PHOTO_SENDER);
+//    }
 
-    public void setPhotoSender(Bitmap photo){
-        this.put(InboxMessageReceived.PHOTO_SENDER, photo);
-    }
+//    public void setPhotoSender(Bitmap photo){
+//        this.put(InboxMessageReceived.PHOTO_SENDER, photo);
+//    }
 
 }

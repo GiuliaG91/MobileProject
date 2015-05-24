@@ -222,8 +222,8 @@ public class MailBoxNewFragment extends Fragment {
                         mr.setRecipient(recipient);
                         mr.setNameSender(globalData.getUserObject().getName());
 
-                        if (globalData.getUserObject().getProfilePhoto() != null)
-                            mr.setPhotoSender(globalData.getUserObject().getProfilePhoto());
+//                        if (globalData.getUserObject().getProfilePhoto() != null)
+//                            mr.setPhotoSender(globalData.getUserObject().getProfilePhoto());
 
                         mr.saveInBackground();
 

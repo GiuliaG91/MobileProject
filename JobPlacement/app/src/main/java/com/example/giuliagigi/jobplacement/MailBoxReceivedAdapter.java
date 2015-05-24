@@ -13,6 +13,10 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.parse.ParseException;
+import com.parse.ParseQuery;
+import com.parse.ParseUser;
+
 import org.json.JSONException;
 
 import java.util.ArrayList;
@@ -95,9 +99,31 @@ public class MailBoxReceivedAdapter extends RecyclerView.Adapter<MailBoxReceived
             holder.name.setText(mDataset.get(position).getNameSender().substring(0, 21) + "...");
         }
 
-        if(mDataset.get(position).getPhotoSender() != null)
-            holder.image.setImageBitmap(mDataset.get(position).getPhotoSender());
+//        if(mDataset.get(position).getPhotoSender() != null)
+//            holder.image.setImageBitmap(mDataset.get(position).getPhotoSender());
 
+        ParseQuery<ParseUser> userQuery = ParseQuery.getQuery("_User");
+        userQuery.whereEqualTo("email", mDataset.get(position));
+        try {
+
+            List<ParseUser> users = userQuery.find();
+            ParseUserWrapper u = null;
+
+            if(!users.isEmpty())
+                 u = (ParseUserWrapper)users.get(0);
+
+
+            if(u!= null){
+
+                u.fetchIfNeeded();
+                User user = u.getUser().fetchIfNeeded();
+                holder.image.setImageBitmap(user.getProfilePhoto());
+            }
+
+
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
 
         if(mDataset.get(position).getObject().length() < 20)
             holder.object.setText(mDataset.get(position).getObject());
@@ -201,8 +227,8 @@ public class MailBoxReceivedAdapter extends RecyclerView.Adapter<MailBoxReceived
         mDataset.addAll(messages);
 
         //carico dal server le immagini dei mittenti
-        for(InboxMessageReceived m: mDataset)
-            m.getPhotoSender();
+//        for(InboxMessageReceived m: mDataset)
+//            m.getPhotoSender();
 
     }
 
