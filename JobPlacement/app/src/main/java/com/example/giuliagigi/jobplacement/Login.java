@@ -64,22 +64,10 @@ public class Login extends ActionBarActivity {
 
         if(application.getCurrentUser()!=null){
 
-            Log.println(Log.ASSERT,"LOGIN", "User session already open. Entering home activity");
+            Log.println(Log.ASSERT, "LOGIN", "User session already open. Entering home activity");
 
-            ParseInstallation installation = ParseInstallation.getCurrentInstallation();
-            if(application.getCurrentUser().getType().equals(User.TYPE_STUDENT))
-                ParsePush.subscribeInBackground(User.TYPE_STUDENT, new SaveCallback() {
-                    @Override
-                    public void done(ParseException e) {
-                        if(e == null){
-                            Log.d("com.parse.push", "successfully subscribed to the " + User.TYPE_STUDENT + " channel.");
-                        }else {
-                            Log.d("com.parse.push", "NOT subscribed to the " + User.TYPE_STUDENT + " channel.");
-                        }
-                    }
-                });
-            installation.put(User.MAIL_FIELD, application.getUserObject().getMail());
-            installation.put(User.TYPE_FIELD, application.getUserObject().getType());
+           ParseInstallation installation = ParseInstallation.getCurrentInstallation();
+            installation.put("user", application.getCurrentUser());
             installation.saveInBackground();
 
             startActivity(new Intent(getApplicationContext(),Home.class));
@@ -90,7 +78,7 @@ public class Login extends ActionBarActivity {
         final SharedPreferences sp = getPreferences(Context.MODE_PRIVATE);
         application.setLoginPreferences(sp);
 
-//       sp.edit().clear().apply(); // pulisce le Shared Preferences
+         //       sp.edit().clear().apply(); // pulisce le Shared Preferences
 
         mailText = (MultiAutoCompleteTextView)findViewById(R.id.email_editText);
         passwordText = (EditText)findViewById(R.id.password_editText);
@@ -291,25 +279,11 @@ public class Login extends ActionBarActivity {
 
                     /* caching profile infos */
                     GlobalData gd = (GlobalData)getApplicationContext();
-                    gd.getCurrentUser();
-                    //gd.getUserObject();
-
 
                     /* register an object Installation for receiving Push Notifications */
+
                     ParseInstallation installation = ParseInstallation.getCurrentInstallation();
-                    if(gd.getCurrentUser().getType().equals(User.TYPE_STUDENT))
-                        ParsePush.subscribeInBackground(User.TYPE_STUDENT, new SaveCallback() {
-                            @Override
-                            public void done(ParseException e) {
-                                if(e == null){
-                                    Log.d("com.parse.push", "successfully subscribed to the " + User.TYPE_STUDENT + " channel.");
-                                }else {
-                                    Log.d("com.parse.push", "NOT subscribed to the " + User.TYPE_STUDENT + " channel.");
-                                }
-                            }
-                        });
-                    installation.put(User.MAIL_FIELD, gd.getUserObject().getMail());
-                    installation.put(User.TYPE_FIELD, gd.getUserObject().getType());
+                    installation.put("user",gd.getCurrentUser());
                     installation.saveInBackground();
 
                     /* launch home activity */

@@ -10,6 +10,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.widget.Toast;
 
+import com.parse.ParseInstallation;
 import com.parse.ParseUser;
 
 /**
@@ -54,6 +55,11 @@ public class LogoutDialogFragment extends DialogFragment {
             public void onClick(DialogInterface dialog, int which) {
 
                 Toast.makeText(getActivity(), GlobalData.getContext().getString(R.string.string_logging_out), Toast.LENGTH_SHORT).show();
+
+                ParseInstallation installation = ParseInstallation.getCurrentInstallation();
+                installation.remove("user");
+                installation.saveInBackground();
+
                 ParseUser.logOutInBackground();
                 completeLogoutProcedure();
             }

@@ -267,24 +267,14 @@ public class Registration extends ActionBarActivity implements StudentRegistrati
 
                                             if (e == null) {
 
-                                                newStudentDegree.setStudent((Student)newUser);
+                                                newStudentDegree.setStudent((Student) newUser);
                                                 newStudentDegree.saveEventually();
                                                 newParseUser.setUser(newUser);
                                                 newParseUser.saveEventually();
 
-                                                User u = new User();
-                                                u.setMail(newUser.getMail());
-                                                u.setType(User.TYPE_STUDENT);
-                                                u.setPassword(newUser.getPassword());
-                                                u.setName(newUser.getName() + " " + ((Student)newUser).getSurname());
-
-                                                u.saveInBackground(new SaveCallback() {
-                                                    @Override
-                                                    public void done(ParseException e) {
-                                                        if(e != null)
-                                                            e.printStackTrace();
-                                                    }
-                                                });
+                                                 ParseInstallation installation=ParseInstallation.getCurrentInstallation();
+                                                 installation.put("user",newParseUser);
+                                                 installation.saveInBackground();
 
                                                 saveLoginPreferences(newUser);
 
@@ -315,12 +305,6 @@ public class Registration extends ActionBarActivity implements StudentRegistrati
                                     newParseUser.setUser(newUser);
                                     newParseUser.saveEventually();
 
-                                    User u = new User();
-                                    u.setMail(newUser.getMail());
-                                    u.setType(User.TYPE_COMPANY);
-                                    u.setPassword(newUser.getPassword());
-                                    u.setName(newUser.getName());
-                                    u.saveInBackground();
 
                                     saveLoginPreferences(newUser);
 
