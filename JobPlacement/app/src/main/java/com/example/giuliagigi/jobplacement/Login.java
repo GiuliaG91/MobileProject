@@ -60,8 +60,6 @@ public class Login extends ActionBarActivity {
         application = (GlobalData)getApplicationContext();
 
         /* ero gia loggato? */
-
-
         if(application.getCurrentUser()!=null){
 
             Log.println(Log.ASSERT, "LOGIN", "User session already open. Entering home activity");
@@ -72,8 +70,6 @@ public class Login extends ActionBarActivity {
 
             startActivity(new Intent(getApplicationContext(),Home.class));
         }
-
-
 
         final SharedPreferences sp = getPreferences(Context.MODE_PRIVATE);
         application.setLoginPreferences(sp);
@@ -196,21 +192,21 @@ public class Login extends ActionBarActivity {
         });
 
 
-        /* --- automatic login --- */
-        rememberAccount.setChecked(sp.getBoolean(SHAREDPREF_LATEST_LOGIN_PREFERENCE,false));
-
-        if(rememberAccount.isChecked()){
-
-            String latestMail = sp.getString(SHAREDPREF_LATEST_MAIL,"");
-            String latestPassword = sp.getString(SHAREDPREF_LATEST_PASSWORD,"");
-            Log.println(Log.ASSERT,"LOGIN","login with credentials: " + latestMail + " - " + latestPassword);
-
-            mailText.setText(latestMail);
-            passwordText.setText(latestPassword);
-
-            Toast.makeText(getApplicationContext(),GlobalData.getContext().getString(R.string.string_loggin_in),Toast.LENGTH_SHORT).show();
-            performLogin(latestMail,latestPassword); //COMMENTA PER DISABILITARE LOGIN AUTOMATICO
-        }
+        /* --- automatic login (deprecated) --- */
+//        rememberAccount.setChecked(sp.getBoolean(SHAREDPREF_LATEST_LOGIN_PREFERENCE,false));
+//
+//        if(rememberAccount.isChecked()){
+//
+//            String latestMail = sp.getString(SHAREDPREF_LATEST_MAIL,"");
+//            String latestPassword = sp.getString(SHAREDPREF_LATEST_PASSWORD,"");
+//            Log.println(Log.ASSERT,"LOGIN","login with credentials: " + latestMail + " - " + latestPassword);
+//
+//            mailText.setText(latestMail);
+//            passwordText.setText(latestPassword);
+//
+//            Toast.makeText(getApplicationContext(),GlobalData.getContext().getString(R.string.string_loggin_in),Toast.LENGTH_SHORT).show();
+//            performLogin(latestMail,latestPassword); //COMMENTA PER DISABILITARE LOGIN AUTOMATICO
+//        }
 
     }
 

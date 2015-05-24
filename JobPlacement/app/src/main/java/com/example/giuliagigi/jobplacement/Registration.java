@@ -276,6 +276,7 @@ public class Registration extends ActionBarActivity implements StudentRegistrati
                                                  installation.put("user",newParseUser);
                                                  installation.saveInBackground();
 
+
                                                 saveLoginPreferences(newUser);
 
                                                 startActivity(new Intent(getApplicationContext(), Login.class));
@@ -305,17 +306,15 @@ public class Registration extends ActionBarActivity implements StudentRegistrati
                                     newParseUser.setUser(newUser);
                                     newParseUser.saveEventually();
 
-
                                     saveLoginPreferences(newUser);
 
                                     News news = new News();
                                     news.createNews(3, null, null, null, (GlobalData)getApplication());
-
+/*
                                     ParsePush push = new ParsePush();
-                                    push.setChannel(User.TYPE_STUDENT);
                                     push.setMessage(application.getResources().getString(R.string.the_company) + " " + application.getUserObject().getName() + " " + application.getResources().getString(R.string.new_company_signed_up_message) + " \"" + application.getResources().getString(R.string.app_name) + "\"");
                                     push.sendInBackground();
-
+*/
                                     /*
                                     ParseQuery pushQuery = ParseInstallation.getQuery();
                                     pushQuery.whereEqualTo(User.TYPE_FIELD, User.TYPE_STUDENT);
@@ -385,21 +384,21 @@ public class Registration extends ActionBarActivity implements StudentRegistrati
     private void saveLoginPreferences(User newUser){
 
         /* saving credentials for next automatic login */
-    /*    SharedPreferences sp = application.getLoginPreferences();
+        SharedPreferences sp = application.getLoginPreferences();
         if (sp != null) {
 
             SharedPreferences.Editor editor = sp.edit();
-            editor.putBoolean(Login.SHAREDPREF_LATEST_LOGIN_PREFERENCE, true);
+//            editor.putBoolean(Login.SHAREDPREF_LATEST_LOGIN_PREFERENCE, true);
             Set<String> knownMails = sp.getStringSet(Login.SHAREDPREF_MAIL_LIST, new HashSet<String>());
             knownMails.add(newUser.getMail());
             editor.putStringSet(Login.SHAREDPREF_MAIL_LIST, knownMails);
             editor.putString(newUser.getMail(), newUser.getPassword());
-            editor.putString(Login.SHAREDPREF_LATEST_MAIL, newUser.getMail());
-            editor.putString(Login.SHAREDPREF_LATEST_PASSWORD, newUser.getPassword());
+//            editor.putString(Login.SHAREDPREF_LATEST_MAIL, newUser.getMail());
+//            editor.putString(Login.SHAREDPREF_LATEST_PASSWORD, newUser.getPassword());
             editor.commit();
 
 
-        }*/
+        }
     }
 
 
