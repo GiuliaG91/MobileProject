@@ -555,6 +555,7 @@ public class NewOffer extends Fragment implements DatePickerFragment.OnDataSetLi
                             publish(v);
 
                             News news = new News();
+
                             news.createNews(0, globalData.getCurrentViewOffer(), null, null, globalData);
                             // ------------->
 
@@ -565,19 +566,6 @@ public class NewOffer extends Fragment implements DatePickerFragment.OnDataSetLi
                             push.setChannel(User.TYPE_STUDENT);
                             push.setMessage(globalData.getUserObject().getName() + " " + globalData.getResources().getString(R.string.new_job_offer_message) + " \"" + globalData.getCurrentViewOffer().getOfferObject() + "\"");
                             push.sendInBackground();
-
-                            /*
-                            ParseQuery<ParseUser> userQuery = ParseUser.getQuery();
-                            userQuery.whereEqualTo(ParseUserWrapper.TYPE_FIELD,User.TYPE_STUDENT);
-
-                            ParseQuery pushQuery = ParseInstallation.getQuery();
-                            pushQuery.whereMatchesQuery("user", userQuery);
-
-                            ParsePush push = new ParsePush();
-                            push.setQuery(pushQuery);
-                            push.setMessage("The company " + ((Company)globalData.getUserObject()).getName() + "has published a new offer");
-                            push.sendInBackground();
-                            */
 
 
                         }

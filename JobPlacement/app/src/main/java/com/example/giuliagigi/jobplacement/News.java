@@ -1,6 +1,7 @@
 package com.example.giuliagigi.jobplacement;
 
 import com.parse.ParseClassName;
+import com.parse.ParseException;
 import com.parse.ParseObject;
 
 import java.util.Calendar;
@@ -129,7 +130,10 @@ public class News extends ParseObject {
                      this.setCompanyOffer(co);
                      this.setStudent(student);
                      this.setOfferStatus(os);
-                     switch (os.getType()){
+
+                                String status=os.getType();
+                                String eng=OfferStatus.getEnglishType(os.getType());
+                switch (OfferStatus.getEnglishType(os.getType())){
 
                          case OfferStatus.TYPE_ACCEPTED:
                                                         message = globalData.getResources().getString(R.string.the_company) + " " + globalData.getUserObject().getName() + " " + globalData.getResources().getString(R.string.application_accepted_message) + " \"" + co.getOfferObject() + "\"";

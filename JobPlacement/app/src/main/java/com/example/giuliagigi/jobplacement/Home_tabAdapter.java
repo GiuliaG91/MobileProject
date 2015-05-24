@@ -164,7 +164,9 @@ public class Home_tabAdapter extends RecyclerView.Adapter<Home_tabAdapter.ViewHo
                     }
                         OfferStatus status= null;
                         try {
-                            status = object.getOfferStatus().fetchIfNeeded();
+                            OfferStatus offerStatus=object.getOfferStatus().fetchIfNeeded();
+                            status = offerStatus;
+
                         } catch (ParseException e) {
                             e.printStackTrace();
                         }
@@ -230,7 +232,6 @@ public class Home_tabAdapter extends RecyclerView.Adapter<Home_tabAdapter.ViewHo
 
 
         parseAdapter.addOnQueryLoadListener(new OnQueryLoadListener());
-
         parseAdapter.setObjectsPerPage(pageSize);
         parseAdapter.loadObjects();
 
@@ -251,7 +252,7 @@ public class Home_tabAdapter extends RecyclerView.Adapter<Home_tabAdapter.ViewHo
     public void onBindViewHolder(ViewHolder holder, int position) {
         parseAdapter.getView(position, holder.myView, parseParent);
 
-        holder.type = mDataset.get(position).getType();
+     //   holder.type = mDataset.get(position).getType();
 
     }
 
@@ -339,12 +340,10 @@ public class Home_tabAdapter extends RecyclerView.Adapter<Home_tabAdapter.ViewHo
         }
 
         public void onLoaded(List<News> objects, Exception e) {
-
-            orderMyDataset();
-
+             orderMyDataset();
             newsAdapter.notifyDataSetChanged();
 
-            /*
+       /*
             if(currentPosition!=0) {
                 count += pageSize;
                 if (count < currentPosition) {
@@ -352,8 +351,8 @@ public class Home_tabAdapter extends RecyclerView.Adapter<Home_tabAdapter.ViewHo
                 } else {
                     mLayoutManager.scrollToPosition(currentPosition);
                 }
-            }
-            */
+            }*/
+
         }
     }
 
