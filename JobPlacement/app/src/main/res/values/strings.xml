@@ -515,4 +515,39 @@
 
     <string name="Message_Update">Status of you application for the offer: </string>
     <string name="Message_UpdateEnd">has been changed in</string>
+
+<string name = "WEEK_Monday">Mon</string>
+    <string name = "WEEK_Tuesday">Tue</string>
+    <string name = "WEEK_Wednesday">Wed</string>
+    <string name = "WEEK_Thursday">Thu</string>
+    <string name = "WEEK_Friday">Fri</string>
+    <string name = "WEEK_Saturday">Sat</string>
+    <string name = "WEEK_Sunday">Sun</string>
+
+    <string name="ora8">8 am</string>
+    <string name="ora9">9 am</string>
+    <string name="ora10">10 am</string>
+    <string name="ora11">11 am</string>
+    <string name="ora12">12 am</string>
+    <string name="ora13">1 pm</string>
+    <string name="ora14">2 pm</string>
+    <string name="ora15">3 pm</string>
+    <string name="ora16">4 pm</string>
+    <string name="ora17">5 pm</string>
+    <string name="ora18">6 pm</string>
+    <string name="ora19">7 pm</string>
+
+    <string name = "Text_InsertProfessor">Insert professor name:</string>
+    <string name = "Text_InsertCourse">Insert course name:</string>
+    <string name = "button_searchButtonText">SEARCH</string>
+    <string name = "HINT_Professor">Professor name</string>
+    <string name = "HINT_Course">Course</string>
+
+    <string name = "LECTURE_standard_title">Course name</string>
+    <string name = "LECTURE_standard_day_schedule">aa:bb - cc:dd</string>
+    <string name = "LECTURE_standard_room">Room</string>
+    <string name = "LECTURE_standard_Professor">Professor</string>
+    <string name="title_activity_lecture_display">LectureDisplayActivity</string>
+    <string name="title_activity_week_display">WeekDisplayActivity</string>
+    <string name="lecture_dialog_title">Lecture details</string>
 </resources>

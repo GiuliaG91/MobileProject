@@ -51,6 +51,13 @@
             android:label="@string/title_activity_home">
         </activity>
 
+	<activity
+            android:name=".WeekDisplayActivity"
+            android:label="@string/title_activity_week_display"
+            android:parentActivityName=".TimetableSearch" >
+
+        </activity>
+
         <service android:name="com.parse.PushService" />
         <receiver android:name="com.parse.ParseBroadcastReceiver">
             <intent-filter>

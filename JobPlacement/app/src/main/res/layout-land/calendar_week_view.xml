@@ -1,0 +1,299 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin" tools:context=".CalendarWeekView">
+
+    <LinearLayout
+        android:id="@+id/global_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/days_header_linear_layout"
+            android:layout_width="fill_parent"
+            android:layout_height="@dimen/days_header_height_land"
+            android:orientation="horizontal"
+            android:layout_alignParentTop="true">
+
+            <TextView
+                android:id="@+id/empty_corner"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight=".1"
+                />
+
+            <TextView
+                android:id="@+id/mon_text"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight=".18"
+                android:textSize="@dimen/days_size_land"
+                android:textStyle="bold"
+                android:textColor="@color/ColorPrimary"
+                android:text="@string/WEEK_Monday"
+                android:gravity="center"/>
+
+            <TextView
+                android:id="@+id/tue_text"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.18"
+                android:textSize="@dimen/days_size_land"
+                android:textStyle="bold"
+                android:textColor="@color/ColorPrimary"
+                android:text="@string/WEEK_Tuesday"
+                android:gravity="center"/>
+
+            <TextView
+                android:id="@+id/wed_text"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.18"
+                android:textSize="@dimen/days_size_land"
+                android:textStyle="bold"
+                android:textColor="@color/ColorPrimary"
+                android:text="@string/WEEK_Wednesday"
+                android:gravity="center"/>
+
+            <TextView
+                android:id="@+id/thu_text"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.18"
+                android:textSize="@dimen/days_size_land"
+                android:textStyle="bold"
+                android:textColor="@color/ColorPrimary"
+                android:text="@string/WEEK_Thursday"
+                android:gravity="center"/>
+
+            <TextView
+                android:id="@+id/fri_text"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.18"
+                android:textSize="@dimen/days_size_land"
+                android:textStyle="bold"
+                android:textColor="@color/ColorPrimary"
+                android:text="@string/WEEK_Friday"
+                android:gravity="center"/>
+
+
+
+        </LinearLayout>
+
+        <View
+            android:id="@+id/separator_line"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/ColorPrimaryDark"
+            android:layout_below="@+id/days_header_linear_layout"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true">
+        </View>
+
+        <ScrollView
+            android:id="@+id/calendar_scoll_view"
+            android:layout_width="match_parent"
+            android:layout_height="fill_parent">
+
+
+            <LinearLayout
+                android:id="@+id/calendar_view"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:id="@+id/hours_label_layout"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight=".1"
+                    android:orientation="vertical"
+                    android:paddingRight="1dp">
+
+
+                    <TextView
+                        android:id="@+id/ora8"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/hour_height"
+                        android:text="@string/ora8"
+                        android:textSize="@dimen/hours_size_land"
+                        android:textColor="@color/ColorPrimaryDark"
+                        />
+
+                    <TextView
+                        android:id="@+id/ora9"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/hour_height"
+                        android:text="@string/ora9"
+                        android:textSize="@dimen/hours_size_land"
+                        android:textColor="@color/ColorPrimaryDark"
+                        />
+                    <TextView
+                        android:id="@+id/ora10"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/hour_height"
+                        android:text="@string/ora10"
+                        android:textSize="@dimen/hours_size_land"
+                        android:textColor="@color/ColorPrimaryDark"
+                        />
+                    <TextView
+                        android:id="@+id/ora11"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/hour_height"
+                        android:text="@string/ora11"
+                        android:textSize="@dimen/hours_size_land"
+                        android:textColor="@color/ColorPrimaryDark"
+                        />
+                    <TextView
+                        android:id="@+id/ora12"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/hour_height"
+                        android:text="@string/ora12"
+                        android:textSize="@dimen/hours_size_land"
+                        android:textColor="@color/ColorPrimaryDark"
+                        />
+                    <TextView
+                        android:id="@+id/ora13"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/hour_height"
+                        android:text="@string/ora13"
+                        android:textSize="@dimen/hours_size_land"
+                        android:textColor="@color/ColorPrimaryDark"
+                        />
+                    <TextView
+                        android:id="@+id/ora14"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/hour_height"
+                        android:text="@string/ora14"
+                        android:textSize="@dimen/hours_size_land"
+                        android:textColor="@color/ColorPrimaryDark"
+                        />
+                    <TextView
+                        android:id="@+id/ora15"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/hour_height"
+                        android:text="@string/ora15"
+                        android:textSize="@dimen/hours_size_land"
+                        android:textColor="@color/ColorPrimaryDark"
+                        />
+                    <TextView
+                        android:id="@+id/ora16"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/hour_height"
+                        android:text="@string/ora16"
+                        android:textSize="@dimen/hours_size_land"
+                        android:textColor="@color/ColorPrimaryDark"
+                        />
+                    <TextView
+                        android:id="@+id/ora17"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/hour_height"
+                        android:text="@string/ora17"
+                        android:textSize="@dimen/hours_size_land"
+                        android:textColor="@color/ColorPrimaryDark"
+                        />
+                    <TextView
+                        android:id="@+id/ora18"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/hour_height"
+                        android:text="@string/ora18"
+                        android:textSize="@dimen/hours_size_land"
+                        android:textColor="@color/ColorPrimaryDark"
+                        />
+                    <TextView
+                        android:id="@+id/ora19"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/hour_height"
+                        android:text="@string/ora19"
+                        android:textSize="@dimen/hours_size_land"
+                        android:textColor="@color/ColorPrimaryDark"
+                        />
+
+
+                </LinearLayout>
+
+                <!-- All'interno di ogni linear layout vado ad aggiungere gli eventi-->
+
+                <RelativeLayout
+                    android:id="@+id/mon_relative_layout"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight=".18"
+                    android:background="@color/ColorPrimaryTransparent">
+                    <include layout="@layout/calendar_columns_background" />
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/tue_relative_layout"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight=".18">
+                    <include layout="@layout/calendar_columns_background" />
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/wed_relative_layout"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight=".18"
+                    android:background="@color/ColorPrimaryTransparent">
+                    <include layout="@layout/calendar_columns_background" />
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/thu_relative_layout"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight=".18">
+                    <include layout="@layout/calendar_columns_background" />
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/fri_relative_layout"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight=".18"
+                    android:background="@color/ColorPrimaryTransparent">>
+                    <include layout="@layout/calendar_columns_background" />
+
+                </RelativeLayout>
+
+
+                <!--
+                <RelativeLayout
+                    android:id="@+id/sab_relative_layout"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight=".12">
+                    <include layout="@layout/calendar_columns_background" />
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/dom_relative_layout"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight=".12"
+                    android:background="@color/ColorPrimaryTransparent">>
+                    <include layout="@layout/calendar_columns_background" />
+
+                </RelativeLayout>
+                -->
+
+
+            </LinearLayout>
+
+        </ScrollView>
+
+
+    </LinearLayout>
+
+</RelativeLayout>

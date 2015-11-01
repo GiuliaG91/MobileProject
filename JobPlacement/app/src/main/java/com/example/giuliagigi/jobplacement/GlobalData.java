@@ -62,6 +62,17 @@ public class GlobalData extends Application {
     private CompanyFilterStatus companyFilterStatus=new CompanyFilterStatus();
 
     /***********************************/
+    
+    /*******TIMETABLE**********/
+    public static final String BUNDLE_KEY_COURSE_NAME = "TIMETABLE_APPLICATION_CourseName";
+    public static final String BUNDLE_KEY_PROFESSOR_NAME = "TIMETABLE_APPLICATION_ProfessorName";
+    public static final String BUNDLE_KEY_CONTAINS_COURSE_NAME = "TIMETABLE_APPLICATION_isCourseRequested";
+    public static final String BUNDLE_KEY_CONTAINS_PROFESSOR_NAME = "TIMETABLE_APPLICATION_isProfessorRequested";
+    public static final String BUNDLE_KEY_LECTURE_OBJECT = "TIMETABLE_APPLICATION_LectureObject";
+    private Model model;
+    private static AssetManager assetManager;
+    
+    
 
     @Override
     public void onCreate() {
@@ -69,6 +80,8 @@ public class GlobalData extends Application {
 
 
         applicationContext = getApplicationContext();
+        assetManager = applicationContext.getAssets();
+        model = new Model();
 //        currentUser = null;
         currentUserObject = null;
         currentViewMessage = null;
@@ -325,6 +338,15 @@ public class GlobalData extends Application {
 
     public void setToolbarTitle(String toolbarTitle) {
         this.toolbarTitle = toolbarTitle;
+    }
+    
+    public Model getModel(){
+        
+        return model;
+    }
+    
+    public static AssetManager getAssetManager() {
+        return assetManager;
     }
 
 
