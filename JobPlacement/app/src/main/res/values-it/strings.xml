@@ -451,6 +451,40 @@
     <string name="string_account_verified">Utente non verificato</string>
     <string name="string_account_verified_yes">Utente verificato</string>
 
+    <string name = "WEEK_Monday">Lun</string>
+    <string name = "WEEK_Tuesday">Mar</string>
+    <string name = "WEEK_Wednesday">Mer</string>
+    <string name = "WEEK_Thursday">Gio</string>
+    <string name = "WEEK_Friday">Ven</string>
+    <string name = "WEEK_Saturday">Sab</string>
+    <string name = "WEEK_Sunday">Dom</string>
 
+    <string name="ora8">8:00</string>
+    <string name="ora9">9:00</string>
+    <string name="ora10">10:00</string>
+    <string name="ora11">11:00</string>
+    <string name="ora12">12:00</string>
+    <string name="ora13">13:00</string>
+    <string name="ora14">14:00</string>
+    <string name="ora15">15:00</string>
+    <string name="ora16">16:00</string>
+    <string name="ora17">17:00</string>
+    <string name="ora18">18:00</string>
+    <string name="ora19">19:00</string>
+
+
+    <string name = "Text_InsertProfessor">Inserire il nome del professore:</string>
+    <string name = "Text_InsertCourse">Inserire il nome del corso:</string>
+    <string name = "button_searchButtonText">CERCA</string>
+    <string name = "HINT_Professor">Nome del professore</string>
+    <string name = "HINT_Course">Corso</string>
+
+    <string name = "LECTURE_standard_title">Nome del corso</string>
+    <string name = "LECTURE_standard_day_schedule">aa:bb - cc:dd</string>
+    <string name = "LECTURE_standard_room">Aula</string>
+    <string name = "LECTURE_standard_Professor">Professore</string>
+    <string name="title_activity_lecture_display">LectureDisplayActivity</string>
+    <string name="title_activity_week_display">WeekDisplayActivity</string>
+    <string name="lecture_dialog_title">Dettagli della lezione</string>
 
 </resources>

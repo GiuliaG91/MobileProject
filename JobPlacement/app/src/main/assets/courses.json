@@ -1,0 +1,265 @@
+[
+  {
+    "code" : "02JGROV",
+    "name" : "Applicazioni Internet",
+    "professor" : "Giovanni Malnati",
+    "lectures" : [
+      {
+        "dayInWeek": "1",
+        "startHour": "10",
+        "startMinute": "0",
+        "endHour": "11",
+        "endMinute": "30",
+        "room": "4D"
+      },
+      {
+        "dayInWeek": "2",
+        "startHour": "13",
+        "startMinute": "0",
+        "endHour": "16",
+        "endMinute": "0",
+        "room": "4D"
+      }
+    ]
+  },
+  {
+    "code" : "02GRSOV",
+    "name" : "Programmazione di sistema",
+    "professor" : "Gianpiero Cabodi",
+    "lectures" : [
+      {
+        "dayInWeek": "1",
+        "startHour": "13",
+        "startMinute": "0",
+        "endHour": "16",
+        "endMinute": "0",
+        "room": "3I"
+      },
+      {
+        "dayInWeek": "2",
+        "startHour": "14",
+        "startMinute": "30",
+        "endHour": "17",
+        "endMinute": "30",
+        "room": "LAIB4D"
+      },
+      {
+        "dayInWeek": "2",
+        "startHour": "8",
+        "startMinute": "30",
+        "endHour": "10",
+        "endMinute": "0",
+        "room": "4D"
+      },
+      {
+        "dayInWeek": "5",
+        "startHour": "14",
+        "startMinute": "30",
+        "endHour": "17",
+        "endMinute": "30",
+        "room": "3I"
+      }
+    ]
+  },
+  {
+    "code" : "01BITOV",
+    "name" : "Intelligenza Artificiale",
+    "professor" : "Elio Piccolo",
+    "lectures" : [
+      {
+        "dayInWeek": "2",
+        "startHour": "13",
+        "startMinute": "0",
+        "endHour": "16",
+        "endMinute": "0",
+        "room": "5P"
+      },
+      {
+        "dayInWeek": "5",
+        "startHour": "14",
+        "startMinute": "30",
+        "endHour": "16",
+        "endMinute": "0",
+        "room": "5N"
+      }
+    ]
+  },
+  {
+    "code" : "01PFPOV",
+    "name" : "Mobile Applications",
+    "professor" : "Giovanni Malnati",
+    "lectures" : [
+      {
+        "dayInWeek": "1",
+        "startHour": "11",
+        "startMinute": "30",
+        "endHour": "13",
+        "endMinute": "0",
+        "room": "4D"
+      },
+      {
+        "dayInWeek": "4",
+        "startHour": "8",
+        "startMinute": "30",
+        "endHour": "11",
+        "endMinute": "30",
+        "room": "4D"
+      },
+      {
+        "dayInWeek": "5",
+        "startHour": "14",
+        "startMinute": "30",
+        "endHour": "17",
+        "endMinute": "30",
+        "room": "LABINF"
+      }
+    ]
+  },
+  {
+    "code" : "03GSDOV",
+    "name" : "Sicurezza dei Sistemi Informatici",
+    "professor" : "Antonio Lioy",
+    "lectures" : [
+      {
+        "dayInWeek": "1",
+        "startHour": "13",
+        "startMinute": "0",
+        "endHour": "16",
+        "endMinute": "0",
+        "room": "8C"
+      },
+      {
+        "dayInWeek": "2",
+        "startHour": "16",
+        "startMinute": "0",
+        "endHour": "17",
+        "endMinute": "30",
+        "room": "8C"
+      }
+    ]
+  },
+  {
+    "code" : "05BIDOV",
+    "name" : "Ingegneria del Software",
+    "professor" : "Giorgio Bruno",
+    "lectures" : [
+      {
+        "dayInWeek": "3",
+        "startHour": "11",
+        "startMinute": "30",
+        "endHour": "14",
+        "endMinute": "30",
+        "room": "10A"
+      },
+      {
+        "dayInWeek": "4",
+        "startHour": "16",
+        "startMinute": "0",
+        "endHour": "19",
+        "endMinute": "0",
+        "room": "8M"
+      },
+      {
+        "dayInWeek": "5",
+        "startHour": "8",
+        "startMinute": "30",
+        "endHour": "11",
+        "endMinute": "30",
+        "room": "4"
+      }
+    ]
+  },
+  {
+    "code" : "02GPJOV",
+    "name" : "Elaborazione e Trasmissione di Informazioni Multimediali",
+    "professor" : "Enrico Masala",
+    "lectures" : [
+      {
+        "dayInWeek": "1",
+        "startHour": "16",
+        "startMinute": "0",
+        "endHour": "17",
+        "endMinute": "30",
+        "room": "5I"
+      },
+      {
+        "dayInWeek": "3",
+        "startHour": "10",
+        "startMinute": "0",
+        "endHour": "11",
+        "endMinute": "30",
+        "room": "2T"
+      },
+      {
+        "dayInWeek": "4",
+        "startHour": "13",
+        "startMinute": "0",
+        "endHour": "14",
+        "endMinute": "30",
+        "room": "5I"
+      }
+    ]
+  },
+  {
+    "code" : "02KPNOV",
+    "name" : "Tecnologie e servizi di rete",
+    "professor" : "Mario Baldi",
+    "lectures" : [
+      {
+        "dayInWeek": "2",
+        "startHour": "10",
+        "startMinute": "0",
+        "endHour": "13",
+        "endMinute": "0",
+        "room": "8D"
+      },
+      {
+        "dayInWeek": "3",
+        "startHour": "13",
+        "startMinute": "0",
+        "endHour": "16",
+        "endMinute": "0",
+        "room": "LABINF"
+      },
+      {
+        "dayInWeek": "5",
+        "startHour": "11",
+        "startMinute": "30",
+        "endHour": "13",
+        "endMinute": "0",
+        "room": "8D"
+      }
+    ]
+  },
+  {
+    "code" : "02GOLOV",
+    "name" : "Architetture dei Sistemi di Elaborazione",
+    "professor" : "Marco Mezzalama",
+    "lectures" : [
+      {
+        "dayInWeek": "1",
+        "startHour": "8",
+        "startMinute": "30",
+        "endHour": "11",
+        "endMinute": "30",
+        "room": "10D"
+      },
+      {
+        "dayInWeek": "2",
+        "startHour": "11",
+        "startMinute": "30",
+        "endHour": "14",
+        "endMinute": "30",
+        "room": "8D"
+      },
+      {
+        "dayInWeek": "5",
+        "startHour": "16",
+        "startMinute": "0",
+        "endHour": "19",
+        "endMinute": "0",
+        "room": "10D"
+      }
+    ]
+  }
+]

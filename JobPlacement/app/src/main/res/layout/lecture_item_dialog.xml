@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/lecture_dialog_background"
+    >
+
+    <TextView
+        android:id="@+id/lecture_item_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="9dp"
+        android:textStyle="bold"
+        android:gravity="center_horizontal"
+        android:padding="4dp"
+        android:textColor="@color/ColorPrimary"
+        android:text="@string/lecture_dialog_title"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/LECTURE_standard_title"
+        android:textSize="@dimen/LECTUREITEM_Title_textSize_large"
+        android:textColor="@color/ColorPrimaryDark"
+        android:textStyle="bold"
+        android:layout_marginRight="4dp"
+        android:layout_marginLeft="4dp"
+        android:id="@+id/LECTUREITEM_textView_courseName" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/LECTURE_standard_day_schedule"
+        android:textSize="@dimen/LECTUREITEM_textSize_large"
+        android:textColor="@color/ColorPrimaryDark"
+        android:layout_marginRight="4dp"
+        android:layout_marginLeft="4dp"
+        android:id="@+id/LECTUREITEM_textView_schedule" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/LECTURE_standard_room"
+        android:textSize="@dimen/LECTUREITEM_textSize_large"
+        android:textColor="@color/ColorPrimaryDark"
+        android:layout_marginRight="4dp"
+        android:layout_marginLeft="4dp"
+        android:id="@+id/LECTUREITEM_textView_Room" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/LECTURE_standard_Professor"
+        android:textSize="@dimen/LECTUREITEM_textSize_large"
+        android:textColor="@color/ColorPrimaryDark"
+        android:layout_marginRight="4dp"
+        android:layout_marginLeft="4dp"
+        android:id="@+id/LECTUREITEM_textView_Professor" />
+
+    <Button
+        android:layout_width="150dp"
+        android:layout_height="30dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_margin="5dp"
+        android:text="OK"
+        android:background="@drawable/lecture_dialog_background"
+        android:textSize="12dp"
+        android:textColor="@color/ColorPrimaryDark"
+        android:id="@+id/lecture_item_ok_button"
+        />
+
+
+
+</LinearLayout>
