@@ -3,6 +3,7 @@ package com.example.giuliagigi.jobplacement;
 import android.app.Activity;
 import android.app.Dialog;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -16,8 +17,11 @@ import android.view.WindowManager;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.GridLayout;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -103,23 +107,6 @@ public class LectureDisplayFragment extends Fragment {
             ArrayList<Lecture> lectures = lecturesFileReader.getDayLectures(course,professor,i+1);
             Collections.sort(lectures, new hourComparator());
 
-            /*for (int j = 0; j < lectures.size(); j++){
-                final Lecture cur = lectures.get(j);
-                for (int z = 0; z < lectures.size(); z++){
-                    if(z!=j){
-                        final Lecture compare = lectures.get(z);
-                        if(compareSchedule(cur.getSchedule(), compare.getSchedule()) && !compare.containsOverlapse(cur)){
-                            compare.setNumOverlapse(compare.getNumOverlapse()+1);
-                            cur.setNumOverlapse(cur.getNumOverlapse()+1);
-                            compare.addLectureOverlapse(cur);
-                            cur.addLectureOverlapse(compare);
-                        }
-                    }
-                }
-
-            }*/
-
-
             for (int it = 0; it < lectures.size(); it++){
                 Lecture showedLecture = lectures.get(it);
                 for (int z = 0; z < lectures.size(); z++){
@@ -133,20 +120,12 @@ public class LectureDisplayFragment extends Fragment {
                         }
                     }
                 }
-                View item = setLectureView(showedLecture);
-
-                float density = GlobalData.getContext().getResources().getDisplayMetrics().density;
-
-                RelativeLayout.LayoutParams param = new  RelativeLayout.LayoutParams( RelativeLayout.LayoutParams.WRAP_CONTENT,  (int)(showedLecture.getSchedule().getMinuteDuration()*density));
-                param.setMargins(0, (int)(showedLecture.getSchedule().getStartPxl()*density),0,0);
-                item.setLayoutParams(param);
-
+                RelativeLayout item = setLectureView(showedLecture);
                 lecturesRelativeLayouts[i].addView(item);
 
             }
 
         }
-
 
         return root;
     }
@@ -188,32 +167,32 @@ public class LectureDisplayFragment extends Fragment {
 
 
     public boolean compareSchedule(Schedule s1, Schedule s2){
-        if(((s1.getStartHour() < s2.getStartHour() || (s1.getStartHour() == s2.getStartHour() && s1.getStartMinute()<=s2.getStartMinute()))
+        if(((s2.getStartHour() < s1.getStartHour() || (s2.getStartHour() == s1.getStartHour() && s2.getStartMinute()<=s1.getStartMinute()))
                 && s1.getEndHour() < s2.getEndHour() ||  (s1.getEndHour() == s2.getEndHour() && s1.getEndMinute() <= s2.getEndMinute())) ||
-                (s2.getStartHour() < s1.getStartHour() || (s2.getStartHour() == s1.getStartHour() && s2.getStartMinute()<=s1.getStartMinute()))
+                (s1.getStartHour() < s2.getStartHour() || (s1.getStartHour() == s2.getStartHour() && s1.getStartMinute()<=s2.getStartMinute()))
                         && s2.getEndHour() < s1.getEndHour() ||  (s2.getEndHour() == s1.getEndHour() && s2.getEndMinute() <= s1.getEndMinute())){
-
-
 
             return true;
         }
         else return false;
     }
 
-    public View setLectureView(Lecture lect){
-        GridLayout grid = new GridLayout(GlobalData.getContext());
+    public RelativeLayout setLectureView(Lecture lect) {
+        RelativeLayout container = new RelativeLayout(GlobalData.getContext());
         final String name = lect.getCourseName();
         final String professorName = lect.getProfessor();
         final String timeTable = lect.getTimeTable();
         final String roomName = lect.getRoomName();
+        final int numOverlapse = lect.getNumOverlapse();
+        final float density = GlobalData.getContext().getResources().getDisplayMetrics().density;
 
-        if(lect.getNumOverlapse() == 0) {
-            grid.setColumnCount(1);
-            grid.setRowCount(1);
+        //container.setOrientation(LinearLayout.HORIZONTAL);
+
+        if (numOverlapse == 0) {
             View item = getActivity().getLayoutInflater().inflate(R.layout.lecture_item, null);
 
             TextView title = (TextView) item.findViewById(R.id.LECTUREITEM_textView_courseName);
-            title.setText(name);
+            title.setText(String.valueOf(numOverlapse));
 
             TextView dayAndSchedule = (TextView) item.findViewById(R.id.LECTUREITEM_textView_schedule);
             dayAndSchedule.setText(timeTable);
@@ -256,17 +235,95 @@ public class LectureDisplayFragment extends Fragment {
                     lectureDialog.show();
                 }
             });
-            grid.addView(item);
-        }
-        else {
-            int numOverlapse = lect.getNumOverlapse();
-            grid.setColumnCount(numOverlapse);
-            grid.setRowCount(1);
 
-        }
+            RelativeLayout.LayoutParams param = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, (int) (lect.getSchedule().getMinuteDuration() * density));
+            param.setMargins(0, (int) (lect.getSchedule().getStartPxl() * density), 0, 0);
+            container.setLayoutParams(param);
+            container.addView(item);
 
-        return grid;
+        } else {
+            ArrayList<Lecture> tempArray = lect.getLectureOverlapse();
+            tempArray.add(lect);
+            Collections.sort(tempArray, new hourComparator());
+
+            final int duration = (60 - tempArray.get(0).getSchedule().getStartMinute()) + tempArray.get(numOverlapse - 1).getSchedule().getEndMinute() + 60 * (tempArray.get(numOverlapse - 1).getSchedule().getEndHour() - tempArray.get(0).getSchedule().getStartHour() - 1);
+            RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, (int) (duration * density));
+            layoutParams.setMargins(0, (int) (tempArray.get(0).getSchedule().getStartPxl() * density), 0, 0);
+            container.setLayoutParams(layoutParams);
+
+            //container.setLayoutParams(param);
+            LinearLayout allViews = new LinearLayout(GlobalData.getContext());
+
+            for(int i = 0; i< tempArray.size(); i++) {
+                final Lecture l = tempArray.get(i);
+                if (!l.isShown()) {
+                    l.setShown(true);
+
+                    LinearLayout itemLayout = new LinearLayout(GlobalData.getContext());
+                    View item = getActivity().getLayoutInflater().inflate(R.layout.lecture_item, null);
+
+                    TextView title = (TextView) item.findViewById(R.id.LECTUREITEM_textView_courseName);
+                    title.setText(String.valueOf(numOverlapse));
+
+                    TextView dayAndSchedule = (TextView) item.findViewById(R.id.LECTUREITEM_textView_schedule);
+                    dayAndSchedule.setText(String.valueOf(duration));
+
+                    TextView room = (TextView) item.findViewById(R.id.LECTUREITEM_textView_Room);
+                    room.setText(l.getRoomName());
+
+                    TextView professor = (TextView) item.findViewById(R.id.LECTUREITEM_textView_Professor);
+                    professor.setText(l.getProfessor());
+
+                    LinearLayout.LayoutParams itemParams = new  LinearLayout.LayoutParams( LinearLayout.LayoutParams.MATCH_PARENT,  (int)(lect.getSchedule().getMinuteDuration()*density), .5f);
+                    itemParams.setMargins(0, (int)(lect.getSchedule().getStartPxl()*density),0,0);
+                    item.setLayoutParams(itemParams);
+
+                    item.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            final Dialog lectureDialog = new Dialog(getActivity());
+                            View dialogItem = getActivity().getLayoutInflater().inflate(R.layout.lecture_item_dialog, null);
+
+                            TextView title = (TextView) dialogItem.findViewById(R.id.LECTUREITEM_textView_courseName);
+                            title.setText(l.getCourseName());
+
+                            TextView dayAndSchedule = (TextView) dialogItem.findViewById(R.id.LECTUREITEM_textView_schedule);
+                            dayAndSchedule.setText(l.getTimeTable());
+
+                            TextView room = (TextView) dialogItem.findViewById(R.id.LECTUREITEM_textView_Room);
+                            room.setText(l.getRoomName());
+
+                            TextView professor = (TextView) dialogItem.findViewById(R.id.LECTUREITEM_textView_Professor);
+                            professor.setText(l.getProfessor());
+
+                            lectureDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                            lectureDialog.getWindow().setLayout(WindowManager.LayoutParams.WRAP_CONTENT, WindowManager.LayoutParams.WRAP_CONTENT);
+                            lectureDialog.setContentView(dialogItem);
+                            Button closingButton = (Button) dialogItem.findViewById(R.id.lecture_item_ok_button);
+                            closingButton.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    lectureDialog.dismiss();
+                                }
+                            });
+
+                            lectureDialog.show();
+                        }
+                    });
+                    //singleView.addView(item);
+
+                    allViews.addView(item,i);
+
+                }
+                container.removeAllViews();
+                container.addView(allViews);
+            }
+        }
+        return container;
     }
+
+
+
 
 
     //////////////////////////////////////////////////////////////////////////////////////

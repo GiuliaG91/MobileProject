@@ -59,6 +59,8 @@
     <string-array name="Menu_items_student">
         <item>Home</item>
         <item>Profilo</item>
+        <item>Orari delle lezioni</item>
+        <item>Mappa</item>
         <item>Offerte Preferite</item>
         <item>Aziende Preferite</item>
         <item>Messaggi</item>

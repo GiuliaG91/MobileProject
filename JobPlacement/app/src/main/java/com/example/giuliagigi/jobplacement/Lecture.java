@@ -14,6 +14,7 @@ public class Lecture {
     private int dayInWeek;
     private int numOverlapse;
     private ArrayList<Lecture> lectureOverlapse;
+    private boolean isShown;
 
     public Lecture(String course, String professor){
 
@@ -32,6 +33,7 @@ public class Lecture {
         this.dayInWeek = dayInWeek;
         this.numOverlapse = 0;
         this.lectureOverlapse = new ArrayList<Lecture>();
+        this.isShown = false;
     }
 
 
@@ -117,6 +119,14 @@ public class Lecture {
     public boolean containsOverlapse(Lecture other){
         if(lectureOverlapse.contains(other)) return true;
         else return false;
+    }
+
+    public boolean isShown(){
+        return this.isShown;
+    }
+
+    public void setShown(boolean b){
+        this.isShown = b;
     }
 
     // --------------------------------------------------------------------

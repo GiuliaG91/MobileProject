@@ -4,7 +4,15 @@
     "name" : "Applicazioni Internet",
     "professor" : "Giovanni Malnati",
     "lectures" : [
-      {
+{
+        "dayInWeek": "1",
+        "startHour": "11",
+        "startMinute": "30",
+        "endHour": "13",
+        "endMinute": "0",
+        "room": "4D"
+      },      
+{
         "dayInWeek": "1",
         "startHour": "10",
         "startMinute": "0",
