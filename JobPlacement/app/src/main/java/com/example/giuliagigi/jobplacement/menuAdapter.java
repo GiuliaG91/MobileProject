@@ -8,7 +8,6 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,8 +15,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import java.security.acl.LastOwnerException;
 
 
 /**
@@ -182,19 +179,40 @@ public class menuAdapter extends RecyclerView.Adapter<menuAdapter.ViewHolder> {
 
                             break;
 
+
                         case TYPE_LECTURES:
 
                             v.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
 
-                                    //TODO: opening lecture search page
                                     Log.println(Log.ASSERT, "MANUADAPTER", "must open lectures section");
+
+                                    FragmentManager fragmentManager = activity.getSupportFragmentManager();
+                                    Fragment current = fragmentManager.findFragmentById(R.id.tab_Home_container);
+
+                                    if(!(current instanceof LectureSearch) || gd.getLatestDisplayedUser()!=gd.getUserObject()) {
+
+                                        Fragment fragment = LectureSearch.newInstance();
+
+                                        //clear backstack
+                                        int count = fragmentManager.getBackStackEntryCount();
+                                        for(int i = 0; i < count; ++i) {
+                                            fragmentManager.popBackStack();
+                                        }
+
+                                        fragmentManager.beginTransaction()
+                                                .replace(R.id.tab_Home_container, fragment)
+                                                .commit();
+
+                                    }
+
                                     mDrawerLayout.closeDrawers();
                                 }
                             });
 
                             break;
+
 
                         case TYPE_MAP:
 
@@ -211,8 +229,8 @@ public class menuAdapter extends RecyclerView.Adapter<menuAdapter.ViewHolder> {
                             break;
 
 
-                        case TYPE_MYJOBOFFERS :
 
+                        case TYPE_MYJOBOFFERS :
 
                             v.setOnClickListener(new View.OnClickListener() {
                                 @Override

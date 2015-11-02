@@ -1,9 +1,13 @@
 package com.example.giuliagigi.jobplacement;
 
+import android.app.Activity;
 import android.app.Dialog;
+
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
-import android.view.Menu;
+import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
+import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,11 +26,30 @@ import java.util.Comparator;
 /**
  * Created by GiuliaGiGi on 25/10/15.
  */
-public class WeekDisplayActivity extends ActionBarActivity {
+public class LectureDisplayFragment extends Fragment {
 
     private static final String TAG = "Week Display Activity - LOG: ";
     private RelativeLayout[] lecturesRelativeLayouts = new RelativeLayout[5];
     private LecturesFileReader lecturesFileReader;
+    private String professor, course;
+
+    public static LectureDisplayFragment newInstance(String course, String professor){
+
+        LectureDisplayFragment fragment = new LectureDisplayFragment();
+        fragment.setCourse(course);
+        fragment.setProfessor(professor);
+        return fragment;
+    }
+
+    public LectureDisplayFragment(){}
+
+    public void setProfessor(String professor) {
+        this.professor = professor;
+    }
+
+    public void setCourse(String course) {
+        this.course = course;
+    }
 
     //////////////////////////////////////////////////////////////////////////////////////
     // --------------------- STANDARD METHODS ------------------------------------------//
@@ -35,39 +58,49 @@ public class WeekDisplayActivity extends ActionBarActivity {
 
     // ------------- ON CREATE -----------------------------------------------------------
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onAttach(Activity activity) {
 
+        super.onAttach(activity);
+        Log.println(Log.ASSERT,"LECTUREFRAGMENT", "lecture Fragment attach");
+//        setContentView(R.layout.calendar_week_view);
 
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.calendar_week_view);
-
-        GlobalData app = (GlobalData)getApplicationContext();
+        GlobalData app = (GlobalData)activity.getApplicationContext();
         lecturesFileReader = app.getLecturesFileReader();
 
-        lecturesRelativeLayouts[0] = (RelativeLayout)findViewById(R.id.mon_relative_layout);
-        lecturesRelativeLayouts[1] = (RelativeLayout)findViewById(R.id.tue_relative_layout);
-        lecturesRelativeLayouts[2] = (RelativeLayout)findViewById(R.id.wed_relative_layout);
-        lecturesRelativeLayouts[3] = (RelativeLayout)findViewById(R.id.thu_relative_layout);
-        lecturesRelativeLayouts[4] = (RelativeLayout)findViewById(R.id.fri_relative_layout);
+
+    }
+
+    // --------- END ON CREATE -----------------------------------------------------------
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+
+        View root = inflater.inflate(R.layout.calendar_week_view, container, false);
+
+        lecturesRelativeLayouts[0] = (RelativeLayout)root.findViewById(R.id.mon_relative_layout);
+        lecturesRelativeLayouts[1] = (RelativeLayout)root.findViewById(R.id.tue_relative_layout);
+        lecturesRelativeLayouts[2] = (RelativeLayout)root.findViewById(R.id.wed_relative_layout);
+        lecturesRelativeLayouts[3] = (RelativeLayout)root.findViewById(R.id.thu_relative_layout);
+        lecturesRelativeLayouts[4] = (RelativeLayout)root.findViewById(R.id.fri_relative_layout);
 
 
-        Bundle extras = getIntent().getExtras();
-        String requestedCourse,requestedProfessor;
-
-        if(extras.getBoolean(GlobalData.BUNDLE_KEY_CONTAINS_COURSE_NAME))
-            requestedCourse = extras.getString(GlobalData.BUNDLE_KEY_COURSE_NAME);
-        else
-            requestedCourse = null;
-
-        if(extras.getBoolean(GlobalData.BUNDLE_KEY_CONTAINS_PROFESSOR_NAME))
-            requestedProfessor = extras.getString(GlobalData.BUNDLE_KEY_PROFESSOR_NAME);
-        else
-            requestedProfessor = null;
+//        Bundle extras = getIntent().getExtras();
+//        String course = "Programmazione di sistema",professor = null;
+//
+//        if(extras.getBoolean(GlobalData.BUNDLE_KEY_CONTAINS_COURSE_NAME))
+//            requestedCourse = extras.getString(GlobalData.BUNDLE_KEY_COURSE_NAME);
+//        else
+//            requestedCourse = null;
+//
+//        if(extras.getBoolean(GlobalData.BUNDLE_KEY_CONTAINS_PROFESSOR_NAME))
+//            requestedProfessor = extras.getString(GlobalData.BUNDLE_KEY_PROFESSOR_NAME);
+//        else
+//            requestedProfessor = null;
 
 
         for(int i=0;i<5;i++){
 
-            ArrayList<Lecture> lectures = lecturesFileReader.getDayLectures(requestedCourse,requestedProfessor,i+1);
+            ArrayList<Lecture> lectures = lecturesFileReader.getDayLectures(course,professor,i+1);
             Collections.sort(lectures, new hourComparator());
 
             /*for (int j = 0; j < lectures.size(); j++){
@@ -113,23 +146,10 @@ public class WeekDisplayActivity extends ActionBarActivity {
             }
 
         }
+
+
+        return root;
     }
-
-
-
-    // --------- END ON CREATE -----------------------------------------------------------
-
-
-
-    // ------------- ON CREATE MENU OPTIONS ----------------------------------------------
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_week_display, menu);
-        return true;
-    }
-    // --------- END ON CREATE MENU OPTIONS ----------------------------------------------
-
 
 
     // ------------- ON OPTIONS ITEM SELECTED --------------------------------------------
@@ -190,7 +210,7 @@ public class WeekDisplayActivity extends ActionBarActivity {
         if(lect.getNumOverlapse() == 0) {
             grid.setColumnCount(1);
             grid.setRowCount(1);
-            View item = getLayoutInflater().inflate(R.layout.lecture_item, null);
+            View item = getActivity().getLayoutInflater().inflate(R.layout.lecture_item, null);
 
             TextView title = (TextView) item.findViewById(R.id.LECTUREITEM_textView_courseName);
             title.setText(name);
@@ -207,8 +227,8 @@ public class WeekDisplayActivity extends ActionBarActivity {
             item.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    final Dialog lectureDialog = new Dialog(WeekDisplayActivity.this);
-                    View dialogItem = getLayoutInflater().inflate(R.layout.lecture_item_dialog, null);
+                    final Dialog lectureDialog = new Dialog(getActivity());
+                    View dialogItem = getActivity().getLayoutInflater().inflate(R.layout.lecture_item_dialog, null);
 
                     TextView title = (TextView) dialogItem.findViewById(R.id.LECTUREITEM_textView_courseName);
                     title.setText(name);
@@ -273,7 +293,7 @@ public class WeekDisplayActivity extends ActionBarActivity {
 
         public LectureListAdapter(ArrayList<Lecture> lectures) {
 
-            super(getApplicationContext(),R.layout.lecture_item,lectures);
+            super(getActivity().getApplicationContext(),R.layout.lecture_item,lectures);
             this.lectures = lectures;
 
 
@@ -285,7 +305,7 @@ public class WeekDisplayActivity extends ActionBarActivity {
             Lecture l = lectures.get(position);
 
             if(convertView == null)
-                convertView = getLayoutInflater().inflate(R.layout.lecture_item,parent,false);
+                convertView = getActivity().getLayoutInflater().inflate(R.layout.lecture_item,parent,false);
 
             TextView title = (TextView)convertView.findViewById(R.id.LECTUREITEM_textView_courseName);
             title.setText(l.getCourseName());

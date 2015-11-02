@@ -30,7 +30,7 @@
 
         <!--
         <activity
-            android:name=".TimetableSearch"
+            android:name=".LectureSearch"
             android:label="@string/app_name" >
 
             <intent-filter>
@@ -65,9 +65,9 @@
         </activity>
 
 	<activity
-            android:name=".WeekDisplayActivity"
+            android:name=".LectureDisplayFragment"
             android:label="@string/title_activity_week_display"
-            android:parentActivityName=".TimetableSearch" >
+            android:parentActivityName=".LectureSearch" >
 
         </activity>
 
