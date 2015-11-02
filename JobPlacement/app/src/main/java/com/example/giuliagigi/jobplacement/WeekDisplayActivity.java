@@ -1,23 +1,16 @@
 package com.example.giuliagigi.jobplacement;
 
-import android.app.ActionBar;
-import android.app.AlertDialog;
 import android.app.Dialog;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
-import android.util.Log;
-import android.util.TypedValue;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -32,7 +25,7 @@ public class WeekDisplayActivity extends ActionBarActivity {
 
     private static final String TAG = "Week Display Activity - LOG: ";
     private RelativeLayout[] lecturesRelativeLayouts = new RelativeLayout[5];
-    private Model model;
+    private LecturesFileReader lecturesFileReader;
 
     //////////////////////////////////////////////////////////////////////////////////////
     // --------------------- STANDARD METHODS ------------------------------------------//
@@ -48,7 +41,7 @@ public class WeekDisplayActivity extends ActionBarActivity {
         setContentView(R.layout.calendar_week_view);
 
         GlobalData app = (GlobalData)getApplicationContext();
-        model = app.getModel();
+        lecturesFileReader = app.getLecturesFileReader();
 
         lecturesRelativeLayouts[0] = (RelativeLayout)findViewById(R.id.mon_relative_layout);
         lecturesRelativeLayouts[1] = (RelativeLayout)findViewById(R.id.tue_relative_layout);
@@ -73,7 +66,7 @@ public class WeekDisplayActivity extends ActionBarActivity {
 
         for(int i=0;i<5;i++){
 
-            ArrayList<Lecture> lectures = model.getDayLectures(requestedCourse,requestedProfessor,i+1);
+            ArrayList<Lecture> lectures = lecturesFileReader.getDayLectures(requestedCourse,requestedProfessor,i+1);
             Collections.sort(lectures, new hourComparator());
 
             for (int it = 0; it < lectures.size(); it++){

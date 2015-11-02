@@ -13,10 +13,8 @@ import com.parse.FindCallback;
 import com.parse.Parse;
 import com.parse.ParseException;
 import com.parse.ParseObject;
-import com.parse.ParsePush;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
-import com.parse.SaveCallback;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -70,7 +68,7 @@ public class GlobalData extends Application {
     public static final String BUNDLE_KEY_CONTAINS_COURSE_NAME = "TIMETABLE_APPLICATION_isCourseRequested";
     public static final String BUNDLE_KEY_CONTAINS_PROFESSOR_NAME = "TIMETABLE_APPLICATION_isProfessorRequested";
     public static final String BUNDLE_KEY_LECTURE_OBJECT = "TIMETABLE_APPLICATION_LectureObject";
-    private Model model;
+    private LecturesFileReader lecturesFileReader;
     private static AssetManager assetManager;
     
     
@@ -82,7 +80,7 @@ public class GlobalData extends Application {
 
         applicationContext = getApplicationContext();
         assetManager = applicationContext.getAssets();
-        model = new Model();
+        lecturesFileReader = new LecturesFileReader();
 //        currentUser = null;
         currentUserObject = null;
         currentViewMessage = null;
@@ -341,9 +339,9 @@ public class GlobalData extends Application {
         this.toolbarTitle = toolbarTitle;
     }
     
-    public Model getModel(){
+    public LecturesFileReader getLecturesFileReader(){
         
-        return model;
+        return lecturesFileReader;
     }
     
     public static AssetManager getAssetManager() {

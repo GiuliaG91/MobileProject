@@ -14,7 +14,7 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class Model {
+public class LecturesFileReader {
 
     /* STATIC FIELDS        */
 
@@ -29,7 +29,7 @@ public class Model {
     public static final String LECTURE_ROOM_FIELD = "room";
     public static final String LECTURE_ENDHOUR_FIELD = "endHour";
     public static final String LECTURE_ENDMINUTE_FIELD = "endMinute";
-    private final static String TAG = "Model - LOG: ";
+    private final static String TAG = "LecturesReader - LOG: ";
 
     /* DATA FIELDS        */
 
@@ -38,7 +38,7 @@ public class Model {
 
     /*  CONSTRUCTOR     */
 
-    public Model(){
+    public LecturesFileReader(){
 
         courses = new HashMap<String,Course>();
         readCoursesFromFile();
