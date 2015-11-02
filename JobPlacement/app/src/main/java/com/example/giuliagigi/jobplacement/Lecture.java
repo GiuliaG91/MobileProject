@@ -1,5 +1,7 @@
 package com.example.giuliagigi.jobplacement;
 
+import java.util.ArrayList;
+
 /**
  * Created by GiuliaGiGi on 25/10/15.
  */
@@ -10,6 +12,8 @@ public class Lecture {
     private Schedule schedule;
     private String room;
     private int dayInWeek;
+    private int numOverlapse;
+    private ArrayList<Lecture> lectureOverlapse;
 
     public Lecture(String course, String professor){
 
@@ -26,6 +30,8 @@ public class Lecture {
         this.room = room;
         this.schedule = new Schedule(startHour,startMinute,endHour,endMinute);
         this.dayInWeek = dayInWeek;
+        this.numOverlapse = 0;
+        this.lectureOverlapse = new ArrayList<Lecture>();
     }
 
 
@@ -92,6 +98,26 @@ public class Lecture {
         this.schedule.setEndMinute(endMinute);
     }
 
+    public void setNumOverlapse(int num){
+        this.numOverlapse = num;
+    }
+
+    public int getNumOverlapse(){
+        return this.numOverlapse;
+    }
+
+    public void addLectureOverlapse(Lecture l){
+        this.lectureOverlapse.add(l);
+    }
+
+    public ArrayList<Lecture> getLectureOverlapse(){
+        return this.lectureOverlapse;
+    }
+
+    public boolean containsOverlapse(Lecture other){
+        if(lectureOverlapse.contains(other)) return true;
+        else return false;
+    }
 
     // --------------------------------------------------------------------
     // ------------ END GETTERS AND SETTERS -------------------------------

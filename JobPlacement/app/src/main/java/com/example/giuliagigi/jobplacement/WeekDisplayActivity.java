@@ -11,6 +11,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.GridLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -69,8 +70,36 @@ public class WeekDisplayActivity extends ActionBarActivity {
             ArrayList<Lecture> lectures = lecturesFileReader.getDayLectures(requestedCourse,requestedProfessor,i+1);
             Collections.sort(lectures, new hourComparator());
 
+            /*for (int j = 0; j < lectures.size(); j++){
+                final Lecture cur = lectures.get(j);
+                for (int z = 0; z < lectures.size(); z++){
+                    if(z!=j){
+                        final Lecture compare = lectures.get(z);
+                        if(compareSchedule(cur.getSchedule(), compare.getSchedule()) && !compare.containsOverlapse(cur)){
+                            compare.setNumOverlapse(compare.getNumOverlapse()+1);
+                            cur.setNumOverlapse(cur.getNumOverlapse()+1);
+                            compare.addLectureOverlapse(cur);
+                            cur.addLectureOverlapse(compare);
+                        }
+                    }
+                }
+
+            }*/
+
+
             for (int it = 0; it < lectures.size(); it++){
                 Lecture showedLecture = lectures.get(it);
+                for (int z = 0; z < lectures.size(); z++){
+                    if(z!=it){
+                        final Lecture compare = lectures.get(z);
+                        if(compareSchedule(showedLecture.getSchedule(), compare.getSchedule()) && !compare.containsOverlapse(showedLecture)){
+                            compare.setNumOverlapse(compare.getNumOverlapse()+1);
+                            showedLecture.setNumOverlapse(showedLecture.getNumOverlapse()+1);
+                            compare.addLectureOverlapse(showedLecture);
+                            showedLecture.addLectureOverlapse(compare);
+                        }
+                    }
+                }
                 View item = setLectureView(showedLecture);
 
                 float density = GlobalData.getContext().getResources().getDisplayMetrics().density;
@@ -85,6 +114,8 @@ public class WeekDisplayActivity extends ActionBarActivity {
 
         }
     }
+
+
 
     // --------- END ON CREATE -----------------------------------------------------------
 
@@ -135,61 +166,86 @@ public class WeekDisplayActivity extends ActionBarActivity {
     // --------------------- AUXILIARY METHODS -----------------------------------------//
     //////////////////////////////////////////////////////////////////////////////////////
 
+
+    public boolean compareSchedule(Schedule s1, Schedule s2){
+        if(((s1.getStartHour() < s2.getStartHour() || (s1.getStartHour() == s2.getStartHour() && s1.getStartMinute()<=s2.getStartMinute()))
+                && s1.getEndHour() < s2.getEndHour() ||  (s1.getEndHour() == s2.getEndHour() && s1.getEndMinute() <= s2.getEndMinute())) ||
+                (s2.getStartHour() < s1.getStartHour() || (s2.getStartHour() == s1.getStartHour() && s2.getStartMinute()<=s1.getStartMinute()))
+                        && s2.getEndHour() < s1.getEndHour() ||  (s2.getEndHour() == s1.getEndHour() && s2.getEndMinute() <= s1.getEndMinute())){
+
+
+
+            return true;
+        }
+        else return false;
+    }
+
     public View setLectureView(Lecture lect){
-        View item;
+        GridLayout grid = new GridLayout(GlobalData.getContext());
         final String name = lect.getCourseName();
         final String professorName = lect.getProfessor();
         final String timeTable = lect.getTimeTable();
         final String roomName = lect.getRoomName();
 
-        item = getLayoutInflater().inflate(R.layout.lecture_item, null);
+        if(lect.getNumOverlapse() == 0) {
+            grid.setColumnCount(1);
+            grid.setRowCount(1);
+            View item = getLayoutInflater().inflate(R.layout.lecture_item, null);
 
-        TextView title = (TextView)item.findViewById(R.id.LECTUREITEM_textView_courseName);
-        title.setText(name);
+            TextView title = (TextView) item.findViewById(R.id.LECTUREITEM_textView_courseName);
+            title.setText(name);
 
-        TextView dayAndSchedule = (TextView)item.findViewById(R.id.LECTUREITEM_textView_schedule);
-        dayAndSchedule.setText(timeTable);
+            TextView dayAndSchedule = (TextView) item.findViewById(R.id.LECTUREITEM_textView_schedule);
+            dayAndSchedule.setText(timeTable);
 
-        TextView room = (TextView)item.findViewById(R.id.LECTUREITEM_textView_Room);
-        room.setText(roomName);
+            TextView room = (TextView) item.findViewById(R.id.LECTUREITEM_textView_Room);
+            room.setText(roomName);
 
-        TextView professor = (TextView)item.findViewById(R.id.LECTUREITEM_textView_Professor);
-        professor.setText(professorName);
+            TextView professor = (TextView) item.findViewById(R.id.LECTUREITEM_textView_Professor);
+            professor.setText(professorName);
 
-        item.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                final Dialog lectureDialog = new Dialog(WeekDisplayActivity.this);
-                View dialogItem = getLayoutInflater().inflate(R.layout.lecture_item_dialog, null);
+            item.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    final Dialog lectureDialog = new Dialog(WeekDisplayActivity.this);
+                    View dialogItem = getLayoutInflater().inflate(R.layout.lecture_item_dialog, null);
 
-                TextView title = (TextView)dialogItem.findViewById(R.id.LECTUREITEM_textView_courseName);
-                title.setText(name);
+                    TextView title = (TextView) dialogItem.findViewById(R.id.LECTUREITEM_textView_courseName);
+                    title.setText(name);
 
-                TextView dayAndSchedule = (TextView)dialogItem.findViewById(R.id.LECTUREITEM_textView_schedule);
-                dayAndSchedule.setText(timeTable);
+                    TextView dayAndSchedule = (TextView) dialogItem.findViewById(R.id.LECTUREITEM_textView_schedule);
+                    dayAndSchedule.setText(timeTable);
 
-                TextView room = (TextView)dialogItem.findViewById(R.id.LECTUREITEM_textView_Room);
-                room.setText(roomName);
+                    TextView room = (TextView) dialogItem.findViewById(R.id.LECTUREITEM_textView_Room);
+                    room.setText(roomName);
 
-                TextView professor = (TextView)dialogItem.findViewById(R.id.LECTUREITEM_textView_Professor);
-                professor.setText(professorName);
+                    TextView professor = (TextView) dialogItem.findViewById(R.id.LECTUREITEM_textView_Professor);
+                    professor.setText(professorName);
 
-                lectureDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-                lectureDialog.getWindow().setLayout(WindowManager.LayoutParams.WRAP_CONTENT, WindowManager.LayoutParams.WRAP_CONTENT);
-                lectureDialog.setContentView(dialogItem);
-                Button closingButton = (Button)dialogItem.findViewById(R.id.lecture_item_ok_button);
-                closingButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        lectureDialog.dismiss();
-                    }
-                });
+                    lectureDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                    lectureDialog.getWindow().setLayout(WindowManager.LayoutParams.WRAP_CONTENT, WindowManager.LayoutParams.WRAP_CONTENT);
+                    lectureDialog.setContentView(dialogItem);
+                    Button closingButton = (Button) dialogItem.findViewById(R.id.lecture_item_ok_button);
+                    closingButton.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            lectureDialog.dismiss();
+                        }
+                    });
 
-                lectureDialog.show();
-            }
-        });
+                    lectureDialog.show();
+                }
+            });
+            grid.addView(item);
+        }
+        else {
+            int numOverlapse = lect.getNumOverlapse();
+            grid.setColumnCount(numOverlapse);
+            grid.setRowCount(1);
 
-        return item;
+        }
+
+        return grid;
     }
 
 
@@ -245,6 +301,8 @@ public class WeekDisplayActivity extends ActionBarActivity {
 
             return convertView;
         }
+
+
 
     }
     //--------- END LECTURE LIST ADAPTER -------------------------------------------------
