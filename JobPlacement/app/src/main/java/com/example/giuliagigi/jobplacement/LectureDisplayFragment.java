@@ -235,11 +235,10 @@ public class LectureDisplayFragment extends Fragment {
                     lectureDialog.show();
                 }
             });
-
             RelativeLayout.LayoutParams param = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, (int) (lect.getSchedule().getMinuteDuration() * density));
             param.setMargins(0, (int) (lect.getSchedule().getStartPxl() * density), 0, 0);
-            container.setLayoutParams(param);
-            container.addView(item);
+
+            container.addView(item, param);
 
         } else {
             ArrayList<Lecture> tempArray = lect.getLectureOverlapse();
@@ -249,17 +248,21 @@ public class LectureDisplayFragment extends Fragment {
             final int duration = (60 - tempArray.get(0).getSchedule().getStartMinute()) + tempArray.get(numOverlapse - 1).getSchedule().getEndMinute() + 60 * (tempArray.get(numOverlapse - 1).getSchedule().getEndHour() - tempArray.get(0).getSchedule().getStartHour() - 1);
             RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, (int) (duration * density));
             layoutParams.setMargins(0, (int) (tempArray.get(0).getSchedule().getStartPxl() * density), 0, 0);
-            container.setLayoutParams(layoutParams);
+            //container.setLayoutParams(layoutParams);
 
             //container.setLayoutParams(param);
-            LinearLayout allViews = new LinearLayout(GlobalData.getContext());
+            //LinearLayout allViews = new LinearLayout(GlobalData.getContext());
+            GridLayout itemContainer = new GridLayout(GlobalData.getContext());
+            int previous_id=0;
 
             for(int i = 0; i< tempArray.size(); i++) {
                 final Lecture l = tempArray.get(i);
                 if (!l.isShown()) {
                     l.setShown(true);
 
-                    LinearLayout itemLayout = new LinearLayout(GlobalData.getContext());
+                    RelativeLayout temp = new RelativeLayout(GlobalData.getContext());
+                    itemContainer.setColumnCount(numOverlapse+1);
+                    itemContainer.setRowCount(1);
                     View item = getActivity().getLayoutInflater().inflate(R.layout.lecture_item, null);
 
                     TextView title = (TextView) item.findViewById(R.id.LECTUREITEM_textView_courseName);
@@ -274,8 +277,8 @@ public class LectureDisplayFragment extends Fragment {
                     TextView professor = (TextView) item.findViewById(R.id.LECTUREITEM_textView_Professor);
                     professor.setText(l.getProfessor());
 
-                    LinearLayout.LayoutParams itemParams = new  LinearLayout.LayoutParams( LinearLayout.LayoutParams.MATCH_PARENT,  (int)(lect.getSchedule().getMinuteDuration()*density), .5f);
-                    itemParams.setMargins(0, (int)(lect.getSchedule().getStartPxl()*density),0,0);
+                    RelativeLayout.LayoutParams itemParams = new  RelativeLayout.LayoutParams( RelativeLayout.LayoutParams.MATCH_PARENT,  (int)(lect.getSchedule().getMinuteDuration()*density));
+                    //itemParams.setMargins(0, (int)(lect.getSchedule().getStartPxl()*density),0,0);
                     item.setLayoutParams(itemParams);
 
                     item.setOnClickListener(new View.OnClickListener() {
@@ -310,13 +313,24 @@ public class LectureDisplayFragment extends Fragment {
                             lectureDialog.show();
                         }
                     });
-                    //singleView.addView(item);
 
-                    allViews.addView(item,i);
+                    /*if(i != 0) {
+                        itemParams.addRule(RelativeLayout.RIGHT_OF,previous_id);
+                    }
+                    previous_id = item.getId();*/
+                    //item.setLayoutParams(itemParams);
+                    temp.addView(item, itemParams);
+
+                    GridLayout.Spec rowSpan = GridLayout.spec(0, 1);
+                    GridLayout.Spec colspan = GridLayout.spec(i, 1);
+                    GridLayout.LayoutParams gridParam = new GridLayout.LayoutParams(
+                            rowSpan, colspan);
+                    itemContainer.addView(temp, i, gridParam);
 
                 }
                 container.removeAllViews();
-                container.addView(allViews);
+                container.addView(itemContainer, layoutParams); //mantenere qui layoutParams se no non funziona
+                //container.removeAllViews();
             }
         }
         return container;
