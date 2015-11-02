@@ -3,7 +3,11 @@ package com.example.giuliagigi.jobplacement;
 import android.util.Log;
 
 import com.parse.ParseClassName;
+import com.parse.ParseException;
 import com.parse.ParseObject;
+import com.parse.ParseQuery;
+import com.parse.ParseRelation;
+import com.parse.ParseUser;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -13,6 +17,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 
 
 /**
@@ -24,13 +29,15 @@ public class InboxMessage extends ParseObject {
 
     protected static final String OBJECT = "object";
     protected static final String SENDER = "sender";
-    private static final String  RECIPIENTS = "recipients";
-    private static final String  BODY_MESSAGE = "body_message";
-    private static final String  IS_PREFERRED = "is_preferred";
-    private static final String  IS_READ = "is_read";
-    private static final String  DATE = "date";
-    private static final String IS_DELETING = "is_deleting";
+    protected static final String RECIPIENTS = "recipients";
+    protected static final String TYPE = "type";
+    protected static final String BODY_MESSAGE = "body_message";
+    protected static final String IS_PREFERRED = "is_preferred";
+    protected static final String DATE = "date";
+    protected static final String IS_DELETING = "is_deleting";
 
+    public static final String TYPE_SENT = "sent";
+    public static final String TYPE_RECEIVED = "received";
 
     public InboxMessage(){
         super();
@@ -39,18 +46,29 @@ public class InboxMessage extends ParseObject {
 
     /*GETTER*/
 
-    public String getSender() {
-        return (String)this.get(SENDER);
-    }
-
-    public ArrayList<String> getRecipients() {
-        return (ArrayList<String>)this.get(RECIPIENTS);
-    }
-
     public String getObject() {
         return this.getString(OBJECT);
     }
 
+    public ParseUserWrapper getSender() {
+        return (ParseUserWrapper)this.get(SENDER);
+    }
+
+
+
+    public List<ParseUserWrapper> getRecipients() {
+
+        ParseRelation<ParseUserWrapper> tmp = getRelation(RECIPIENTS);
+        List<ParseUserWrapper> results = null;
+
+        try {
+            results = tmp.getQuery().find();
+        } catch (com.parse.ParseException e) {
+            e.printStackTrace();
+        }
+
+        return results;
+    }
     public Calendar getDate() throws JSONException {
 
         Calendar calendar = Calendar.getInstance();
@@ -68,27 +86,51 @@ public class InboxMessage extends ParseObject {
         return this.getBoolean(IS_PREFERRED);
     }
 
-    public Boolean getIsRead() {
-        return this.getBoolean(IS_READ);
-    }
-
     public Boolean getIsDeleting() { return this.getBoolean(IS_DELETING); }
 
+    public String getType(){
+
+        return this.getString(TYPE);
+    }
+
     /***************END GETTER****************/
-
-
 
     public void setObject(String object){
 
         this.put(OBJECT,object);
     }
-    public void setSender(String sender){
+
+    public void setSender(ParseUserWrapper sender){
 
         this.put(SENDER, sender);
     }
-    public void setRecipients(ArrayList<String> recipients){
 
-        this.put(RECIPIENTS, recipients);
+    public void addRecipient(String recipient) throws UnknownRecipientException {
+
+        ParseQuery<ParseUser> userQuery = ParseQuery.getQuery("_User");
+        userQuery.whereEqualTo("email",recipient);
+        try {
+
+            List<ParseUser> users = userQuery.find();
+
+            if(users.isEmpty()){
+
+                throw new UnknownRecipientException();
+            }
+            else {
+
+                getRelation(RECIPIENTS).add(users.get(0));
+            }
+
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    public void addRecipient(ParseUserWrapper recipient) {
+
+        getRelation(RECIPIENTS).add(recipient);
     }
 
     public void setBodyMessage(String bodyMessage){
@@ -99,11 +141,6 @@ public class InboxMessage extends ParseObject {
     public void setIsPreferred(Boolean isPreferred){
 
         this.put(IS_PREFERRED, isPreferred);
-    }
-
-    public void setIsRead(Boolean isRead){
-
-        this.put(IS_READ, isRead);
     }
 
     public void setDate(Calendar calendar){
@@ -118,6 +155,20 @@ public class InboxMessage extends ParseObject {
         this.put(IS_DELETING, flag);
     }
 
+    public void setType(String type){
+
+        this.put(TYPE,type);
+    }
+
     /*END SETTER METHODS*/
+
+    public class UnknownRecipientException extends Exception{
+
+        private static final String ERROR_MESSAGE = "Error: this recipient does not exist";
+
+        public String getMessage(){
+            return ERROR_MESSAGE;
+        }
+    }
 
 }

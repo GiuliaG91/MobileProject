@@ -4,7 +4,6 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,7 +24,7 @@ import java.util.List;
 public class MailBoxSentAdapter extends RecyclerView.Adapter<MailBoxSentAdapter.ViewHolder> implements View.OnClickListener, MailBoxAdapter{
 
     private FragmentActivity context;
-    private ArrayList<InboxMessage> mDataset;
+    private ArrayList<InboxMessageSent> messageList;
     private GlobalData globalData;
 
 
@@ -66,7 +65,7 @@ public class MailBoxSentAdapter extends RecyclerView.Adapter<MailBoxSentAdapter.
     public MailBoxSentAdapter(FragmentActivity c)
     {
         context = c;
-        mDataset = new ArrayList<InboxMessage>();
+        messageList = new ArrayList<InboxMessageSent>();
         globalData = (GlobalData)context.getApplication();
     }
 
@@ -90,8 +89,8 @@ public class MailBoxSentAdapter extends RecyclerView.Adapter<MailBoxSentAdapter.
     public void onBindViewHolder(final ViewHolder holder, final int position) {
 
         String recipients = "";
-        for(String s: mDataset.get(position).getRecipients())
-            recipients = recipients + s + ", ";
+        for(ParseUserWrapper s: messageList.get(position).getRecipients())
+            recipients = recipients + s.getEmail() + ", ";
         recipients = recipients.substring(0, recipients.length()-2);
 
         if(recipients.length() < 15)
@@ -104,48 +103,48 @@ public class MailBoxSentAdapter extends RecyclerView.Adapter<MailBoxSentAdapter.
             holder.image.setImageBitmap(globalData.getUserObject().getProfilePhoto());
 
 
-        if(mDataset.get(position).getObject().length() < 20)
-            holder.object.setText(mDataset.get(position).getObject());
+        if(messageList.get(position).getObject().length() < 20)
+            holder.object.setText(messageList.get(position).getObject());
         else
-            holder.object.setText(mDataset.get(position).getObject().substring(0, 19) + "...");
+            holder.object.setText(messageList.get(position).getObject().substring(0, 19) + "...");
 
 
-        holder.pref.setChecked(mDataset.get(position).getIsPreferred());
+        holder.pref.setChecked(messageList.get(position).getIsPreferred());
         holder.pref.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v){
                 if(((CheckBox)v).isChecked()) {
-                    mDataset.get(position).setIsPreferred(true);
-                    mDataset.get(position).saveInBackground();
+                    messageList.get(position).setIsPreferred(true);
+                    messageList.get(position).saveInBackground();
 
                 }else {
-                    mDataset.get(position).setIsPreferred(false);
-                    mDataset.get(position).saveInBackground();
+                    messageList.get(position).setIsPreferred(false);
+                    messageList.get(position).saveInBackground();
 
                 }
             }
         });
 
-        holder.cancel.setChecked(mDataset.get(position).getIsDeleting());
+        holder.cancel.setChecked(messageList.get(position).getIsDeleting());
 
         holder.cancel.setOnClickListener(new View.OnClickListener(){
 
             public void onClick(View v){
 
                 if(((CheckBox)v).isChecked()) {
-                    mDataset.get(position).setIsDeleting(true);
-                    mDataset.get(position).saveInBackground();
+                    messageList.get(position).setIsDeleting(true);
+                    messageList.get(position).saveInBackground();
                     holder.cardLayout.setCardBackgroundColor(0xFFE0B2);
                     holder.rowLayout.setBackgroundColor(0xFFE0B2);
                 }else {
-                    mDataset.get(position).setIsDeleting(false);
-                    mDataset.get(position).saveInBackground();
-                    if(mDataset.get(position).getIsRead()) {
-                        holder.cardLayout.setCardBackgroundColor(0xB2EBF2);
-                        holder.rowLayout.setBackgroundColor(0xB2EBF2);
-                    }else {
-                        holder.cardLayout.setCardBackgroundColor(0xFFFFFF);
-                        holder.rowLayout.setBackgroundColor(0xFFFFFF);
-                    }
+                    messageList.get(position).setIsDeleting(false);
+                    messageList.get(position).saveInBackground();
+//                    if(messageList.get(position).getIsRead()) {
+//                        holder.cardLayout.setCardBackgroundColor(0xB2EBF2);
+//                        holder.rowLayout.setBackgroundColor(0xB2EBF2);
+//                    }else {
+//                        holder.cardLayout.setCardBackgroundColor(0xFFFFFF);
+//                        holder.rowLayout.setBackgroundColor(0xFFFFFF);
+//                    }
                 }
 
             }
@@ -154,7 +153,7 @@ public class MailBoxSentAdapter extends RecyclerView.Adapter<MailBoxSentAdapter.
 
         if(holder.message != null) {
 
-            String message = mDataset.get(position).getBodyMessage();
+            String message = messageList.get(position).getBodyMessage();
             if (message.length() < 25) {
                 holder.message.setText(message);
             } else {
@@ -164,20 +163,20 @@ public class MailBoxSentAdapter extends RecyclerView.Adapter<MailBoxSentAdapter.
 
         holder.position = position;
 
-        if(mDataset.get(position).getIsRead()){
-            //holder.name.setTextColor(0x424242);
-            //holder.object.setTextColor(0x424242);
-            holder.cardLayout.setCardBackgroundColor(0xB2EBF2);
-            holder.rowLayout.setBackgroundColor(0xB2EBF2);
-        }
+//        if(messageList.get(position).getIsRead()){
+//            //holder.name.setTextColor(0x424242);
+//            //holder.object.setTextColor(0x424242);
+//            holder.cardLayout.setCardBackgroundColor(0xB2EBF2);
+//            holder.rowLayout.setBackgroundColor(0xB2EBF2);
+//        }
 
-        if(mDataset.get(position).getIsDeleting()){
+        if(messageList.get(position).getIsDeleting()){
             holder.cardLayout.setCardBackgroundColor(0xFFE0B2);
             holder.rowLayout.setBackgroundColor(0xFFE0B2);
         }
 
         try {
-            Calendar dateMessage = mDataset.get(position).getDate();
+            Calendar dateMessage = messageList.get(position).getDate();
             Calendar now = Calendar.getInstance();
 
             if(dateMessage.get(Calendar.DAY_OF_MONTH) == now.get(Calendar.DAY_OF_MONTH) && dateMessage.get(Calendar.MONTH) == now.get(Calendar.MONTH) && dateMessage.get(Calendar.YEAR) == now.get(Calendar.YEAR))
@@ -196,23 +195,23 @@ public class MailBoxSentAdapter extends RecyclerView.Adapter<MailBoxSentAdapter.
     // Return the size of your dataset (invoked by the layout manager)
     @Override
     public int getItemCount() {
-        return mDataset.size();
+        return messageList.size();
     }
 
 
-    public void updateMyDataset(List<InboxMessage> messages)
-    {
-        mDataset.addAll(messages);
+    public void updateMyDataset(List<InboxMessageSent> messages){
+
+        messageList.addAll(messages);
 
     }
 
     public void resetMyDataset(){
-        mDataset.clear();
+        messageList.clear();
     }
 
     public void removeMessageFromMyDataset(int index){
 
-        mDataset.remove(index);
+        messageList.remove(index);
 
     }
 
@@ -223,10 +222,10 @@ public class MailBoxSentAdapter extends RecyclerView.Adapter<MailBoxSentAdapter.
 
         ViewHolder vh = (ViewHolder)v.getTag();
 
-        mDataset.get(vh.position).setIsRead(true);
-        mDataset.get(vh.position).saveInBackground();
+//        messageList.get(vh.position).setIsRead(true);
+        messageList.get(vh.position).saveInBackground();
 
-        globalData.setCurrentViewMessage(mDataset.get(vh.position));
+        globalData.setCurrentViewMessage(messageList.get(vh.position));
 
         FragmentManager fragmentManager = context.getSupportFragmentManager();
 
@@ -243,9 +242,9 @@ public class MailBoxSentAdapter extends RecyclerView.Adapter<MailBoxSentAdapter.
 
     }
 
-    public ArrayList<InboxMessage> getMyDataset(){
+    public ArrayList<InboxMessageSent> getMessageList(){
 
-        return this.mDataset;
+        return this.messageList;
 
     }
 

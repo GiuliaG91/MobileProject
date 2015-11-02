@@ -102,6 +102,7 @@ public class GlobalData extends Application {
         ParseObject.registerSubclass(Certificate.class);
         ParseObject.registerSubclass(InboxMessage.class);
         ParseObject.registerSubclass(InboxMessageReceived.class);
+        ParseObject.registerSubclass(InboxMessageSent.class);
         ParseObject.registerSubclass(News.class);
         ParseObject.registerSubclass(OfferStatus.class);
 

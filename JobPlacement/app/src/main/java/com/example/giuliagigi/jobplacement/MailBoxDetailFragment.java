@@ -47,6 +47,7 @@ public class MailBoxDetailFragment extends Fragment {
     protected static final String RECIPIENTS_KEY = "recipients";
     protected static final String OBJECT_KEY = "object";
     protected static final String OLD_MESSAGE_KEY = "old_message";
+    public static final String BUNDLE_IDENTIFIER = "MAILBOX";
 
     View root;
     InboxMessage message;
@@ -76,8 +77,8 @@ public class MailBoxDetailFragment extends Fragment {
         activity = this.getActivity();
 
         message = globalData.getCurrentViewMessage();
-        if(message == null)
-        {
+
+        if(message == null){
             getFragmentManager().popBackStackImmediate();
         }
 
@@ -97,23 +98,24 @@ public class MailBoxDetailFragment extends Fragment {
 //            }
 //        }
 
-        ParseQuery<ParseUser> parseUserQuery = ParseQuery.getQuery("_User");
-        parseUserQuery.whereEqualTo("email", message.getSender());
+//        ParseQuery<ParseUser> parseUserQuery = ParseQuery.getQuery("_User");
+//        parseUserQuery.whereEqualTo("email", message.getSender());
+//
+//        try {
+//
+//            List<ParseUser> parseUsers = parseUserQuery.find();
+//
+//            if(!parseUsers.isEmpty()){
+//
+//                ParseUserWrapper parseUserWrapper = (ParseUserWrapper)parseUsers.get(0);
+//                sender = parseUserWrapper.getUser().fetchIfNeeded();
+//            }
+//
+//        } catch (ParseException e) {
+//            e.printStackTrace();
+//        }
 
-        try {
-
-            List<ParseUser> parseUsers = parseUserQuery.find();
-
-            if(!parseUsers.isEmpty()){
-
-                ParseUserWrapper parseUserWrapper = (ParseUserWrapper)parseUsers.get(0);
-                sender = parseUserWrapper.getUser().fetchIfNeeded();
-            }
-
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-
+        sender = message.getSender().getUser();
     }
 
     @Override
@@ -140,18 +142,26 @@ public class MailBoxDetailFragment extends Fragment {
         //set list of recipients in the spinner
         Spinner sp = (Spinner)root.findViewById(R.id.recipients_list);
 
-        String[] recipients = new String[message.getRecipients().size()];
-        if(sender.getMail().equals(globalData.getUserObject().getMail()))
-            recipients[0] = message.getRecipients().get(0);
-        else
-            recipients[0] = globalData.getResources().getString(R.string.me);
-        for(int i = 1; i < message.getRecipients().size(); i++)
-            if(message.getRecipients().get(i).equals(globalData.getUserObject().getMail()))
-                continue;
-            else
-                recipients[i] = message.getRecipients().get(i);
-        sp.setAdapter(new StringAdapter(recipients));
+//        String[] recipients = new String[message.getRecipients().size()];
+//        if(sender.getMail().equals(globalData.getUserObject().getMail()))
+//            recipients[0] = message.getRecipients().get(0);
+//        else
+//            recipients[0] = globalData.getResources().getString(R.string.me);
+//        for(int i = 1; i < message.getRecipients().size(); i++)
+//            if(message.getRecipients().get(i).equals(globalData.getUserObject().getMail()))
+//                continue;
+//            else
+//                recipients[i] = message.getRecipients().get(i);
 
+
+        ArrayList<String> recipients = new ArrayList<String>();
+
+        for(ParseUserWrapper p: message.getRecipients()){
+
+            recipients.add(p.getEmail());
+        }
+
+        sp.setAdapter(new StringAdapter((String[])recipients.toArray()));
 
         //set date
         tv = (TextView) root.findViewById(R.id.date_tv);
@@ -213,28 +223,23 @@ public class MailBoxDetailFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
-                Bundle data = new Bundle();
-
-                ArrayList<String> recipients = new ArrayList<String>();
+                ArrayList<ParseUserWrapper> recipients = new ArrayList<ParseUserWrapper>();
                 recipients.add(message.getSender());
-                data.putStringArrayList(MailBoxDetailFragment.RECIPIENTS_KEY, recipients);
 
-                data.putString(MailBoxDetailFragment.OBJECT_KEY, message.getObject());
-
+                String oldMessage = "";
                 try {
                     Calendar date = message.getDate();
                     Resources res = globalData.getResources();
-                    String oldMessage = res.getString(R.string.on) + " " + date.get(Calendar.DAY_OF_MONTH) + " " + res.getStringArray(R.array.months)[date.get(Calendar.MONTH)] + " " + date.get(Calendar.YEAR) + ", ";
-                    oldMessage = oldMessage + ((InboxMessageReceived) message).getNameSender() + " <" + message.getSender() + "> " + res.getString(R.string.wrote) + ":\n\"";
+                    oldMessage = res.getString(R.string.on) + " " + date.get(Calendar.DAY_OF_MONTH) + " " + res.getStringArray(R.array.months)[date.get(Calendar.MONTH)] + " " + date.get(Calendar.YEAR) + ", ";
+                    oldMessage = oldMessage + message.getSender().getEmail() + " <" + message.getSender().getEmail() + "> " + res.getString(R.string.wrote) + ":\n\"";
                     oldMessage = oldMessage + message.getBodyMessage() + "\"\n\n";
-                    data.putString(MailBoxDetailFragment.OLD_MESSAGE_KEY, oldMessage);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
 
                 FragmentManager fragmentManager = activity.getSupportFragmentManager();
 
-                Fragment fragment = MailBoxNewFragment.newInstance(data);
+                Fragment fragment = MailBoxNewFragment.newInstance(recipients,message.getObject(),oldMessage);
 
                 fragmentManager.beginTransaction()
                         .replace(R.id.tab_Home_container, fragment)
@@ -253,31 +258,31 @@ public class MailBoxDetailFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
-                Bundle data = new Bundle();
-
-                ArrayList<String> recipients = new ArrayList<String>();
+                ArrayList<ParseUserWrapper> recipients = new ArrayList<ParseUserWrapper>();
                 recipients.add(message.getSender());
-                for(String r: message.getRecipients())
-                    if(!r.equals(globalData.getUserObject().getMail()) && !recipients.contains(r))
-                        recipients.add(r);
-                data.putStringArrayList(MailBoxDetailFragment.RECIPIENTS_KEY, recipients);
 
-                data.putString(MailBoxDetailFragment.OBJECT_KEY, message.getObject());
+                for(ParseUserWrapper p: message.getRecipients()){
+
+                    if(p.equals(globalData.getCurrentUser()))
+                        continue;
+                    recipients.add(p);
+                }
+
+                String oldMessage = null;
 
                 try {
                     Calendar date = message.getDate();
                     Resources res = globalData.getResources();
-                    String oldMessage = res.getString(R.string.on) + " " + date.get(Calendar.DAY_OF_MONTH) + " " + res.getStringArray(R.array.months)[date.get(Calendar.MONTH)] + " " + date.get(Calendar.YEAR) + ", ";
-                    oldMessage = oldMessage + ((InboxMessageReceived) message).getNameSender() + " <" + message.getSender() + "> " + res.getString(R.string.wrote) + ":\n\"";
+                    oldMessage = res.getString(R.string.on) + " " + date.get(Calendar.DAY_OF_MONTH) + " " + res.getStringArray(R.array.months)[date.get(Calendar.MONTH)] + " " + date.get(Calendar.YEAR) + ", ";
+                    oldMessage = oldMessage + message.getSender().getEmail() + " <" + message.getSender().getEmail() + "> " + res.getString(R.string.wrote) + ":\n\"";
                     oldMessage = oldMessage + message.getBodyMessage() + "\"\n\n";
-                    data.putString(MailBoxDetailFragment.OLD_MESSAGE_KEY, oldMessage);
                 }catch(JSONException e){
                     e.printStackTrace();
                 }
 
                 FragmentManager fragmentManager = activity.getSupportFragmentManager();
 
-                Fragment fragment = MailBoxNewFragment.newInstance(data);
+                Fragment fragment = MailBoxNewFragment.newInstance(recipients,message.getObject(),oldMessage);
 
                 fragmentManager.beginTransaction()
                         .replace(R.id.tab_Home_container, fragment)

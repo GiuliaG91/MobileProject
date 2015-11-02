@@ -186,8 +186,6 @@ public class menuAdapter extends RecyclerView.Adapter<menuAdapter.ViewHolder> {
                                 @Override
                                 public void onClick(View v) {
 
-                                    Log.println(Log.ASSERT, "MANUADAPTER", "must open lectures section");
-
                                     FragmentManager fragmentManager = activity.getSupportFragmentManager();
                                     Fragment current = fragmentManager.findFragmentById(R.id.tab_Home_container);
 

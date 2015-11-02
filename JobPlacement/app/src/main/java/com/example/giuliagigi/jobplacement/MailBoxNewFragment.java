@@ -1,27 +1,20 @@
 package com.example.giuliagigi.jobplacement;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseInstallation;
 import com.parse.ParseObject;
@@ -31,12 +24,10 @@ import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
 import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 import java.util.StringTokenizer;
 
@@ -47,29 +38,33 @@ public class MailBoxNewFragment extends Fragment {
     InboxMessage message;
     GlobalData globalData;
     FragmentActivity activity;
-    Boolean send_flag;
+    Boolean sendFlag;
     Boolean flag;
 
 
-    public static MailBoxNewFragment newInstance(Bundle data) {
+    public static MailBoxNewFragment newInstance(){
+
+        return MailBoxNewFragment.newInstance(null,null,null);
+    }
+
+    public static MailBoxNewFragment newInstance(ArrayList<ParseUserWrapper> recipients, String object, String oldMessage) {
         MailBoxNewFragment fragment = new MailBoxNewFragment();
 
-        fragment.message = new InboxMessage();
-        fragment.send_flag = false;
+        fragment.message = new InboxMessageSent();
+        fragment.sendFlag = false;
         fragment.flag = true;
 
-        if(data.getStringArrayList(MailBoxDetailFragment.RECIPIENTS_KEY) != null)
-            fragment.message.setRecipients(data.getStringArrayList(MailBoxDetailFragment.RECIPIENTS_KEY));
-        else
-            fragment.message.setRecipients(new ArrayList<String>());
+        if(recipients != null)
+            for(ParseUserWrapper p : recipients)
+                fragment.message.addRecipient(p);
 
-        if(data.getString(MailBoxDetailFragment.OBJECT_KEY) != null)
-            fragment.message.setObject(data.getString(MailBoxDetailFragment.OBJECT_KEY));
-        else
-            fragment.message.setObject("");
+        if(object != null)
+            fragment.message.setObject(object);
 
-        if(data.getString(MailBoxDetailFragment.OLD_MESSAGE_KEY) != null)
-            fragment.message.setBodyMessage(data.getString(MailBoxDetailFragment.OLD_MESSAGE_KEY));
+        if(oldMessage != null){
+
+            fragment.message.setBodyMessage(oldMessage);
+        }
         else
             fragment.message.setBodyMessage("");
 
@@ -90,7 +85,7 @@ public class MailBoxNewFragment extends Fragment {
         globalData = (GlobalData)getActivity().getApplication();
         activity = this.getActivity();
 
-        message.setSender(globalData.getUserObject().getMail());
+        message.setSender(globalData.getCurrentUser());
 
 
     }
@@ -105,8 +100,8 @@ public class MailBoxNewFragment extends Fragment {
         if(message.getRecipients().size() > 0){
             EditText ed = (EditText)root.findViewById(R.id.recipients_list_new_message);
             String list_rec = "";
-            for(String r: message.getRecipients()){
-                list_rec = list_rec + r + "   ";
+            for(ParseUserWrapper p: message.getRecipients()){
+                list_rec = list_rec + p.getEmail() + "   ";
             }
             ed.setText(list_rec);
         }
@@ -130,7 +125,34 @@ public class MailBoxNewFragment extends Fragment {
 
                 StringTokenizer st = new StringTokenizer(recipientsList, ", ;");
                 while (st.hasMoreTokens())
-                    message.getRecipients().add(st.nextToken());
+                    try {
+                        message.addRecipient(st.nextToken());
+                    } catch (InboxMessage.UnknownRecipientException e) {
+
+                        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+
+                        View view = activity.getLayoutInflater().inflate(R.layout.error_message_mail_box, null);
+                        TextView tv = (TextView)view.findViewById(R.id.textView_error_message);
+                        tv.setText("some of recipients do not exist. Send anyway? The message will be sent only to the existing recipients");
+                        builder.setView(view);
+
+                        builder.setPositiveButton(globalData.getResources().getString(R.string.ok), new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                sendFlag = true;
+                            }
+                        });
+
+                        builder.setNegativeButton(globalData.getResources().getString(R.string.no), new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                sendFlag = false;
+                            }
+                        });
+                        builder.create().show();
+                        e.printStackTrace();
+
+                    }
 
                 //control that recipients filed is not empty
                 if (message.getRecipients().size() == 0) {
@@ -143,7 +165,7 @@ public class MailBoxNewFragment extends Fragment {
                     builder.setPositiveButton(globalData.getResources().getString(R.string.ok), new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            send_flag = false;
+                            sendFlag = false;
                         }
                     });
                     builder.create().show();
@@ -159,7 +181,7 @@ public class MailBoxNewFragment extends Fragment {
                     builder.setPositiveButton(globalData.getResources().getString(R.string.yes), new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                                send_flag = true;
+                                sendFlag = true;
                                 flag = false;
                                 send.callOnClick();
                         }
@@ -168,7 +190,7 @@ public class MailBoxNewFragment extends Fragment {
                     builder.setNegativeButton(globalData.getResources().getString(R.string.no), new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                                send_flag = false;
+                                sendFlag = false;
                                 message.getRecipients().clear();
                         }
                     });
@@ -176,12 +198,12 @@ public class MailBoxNewFragment extends Fragment {
                     builder.create().show();
 
                 } else {
-                    send_flag = true;
+                    sendFlag = true;
                 }
 
 
 
-                if (send_flag) {
+                if (sendFlag) {
 
                     message.setObject(object);
 
@@ -191,7 +213,7 @@ public class MailBoxNewFragment extends Fragment {
                     message.setDate(Calendar.getInstance());
 
                     message.setIsPreferred(false);
-                    message.setIsRead(false);
+//                    message.setIsRead(false);
                     message.setIsDeleting(false);
 
 
@@ -203,13 +225,14 @@ public class MailBoxNewFragment extends Fragment {
                         }
                     });
 
-                    for (String recipient : message.getRecipients()) {
+                    for (ParseUserWrapper recipient : message.getRecipients()) {
 
                         InboxMessageReceived mr = new InboxMessageReceived();
 
                         mr.setObject(message.getObject());
                         mr.setSender(message.getSender());
-                        mr.setRecipients(message.getRecipients());
+                        for(ParseUserWrapper p : message.getRecipients())
+                            mr.addRecipient(p);
                         mr.setBodyMessage(message.getBodyMessage());
                         mr.setIsPreferred(false);
                         mr.setIsRead(false);
@@ -219,8 +242,8 @@ public class MailBoxNewFragment extends Fragment {
                             e.printStackTrace();
                         }
                         mr.setIsDeleting(false);
-                        mr.setRecipient(recipient);
-                        mr.setNameSender(globalData.getUserObject().getName());
+                        mr.setOwner(recipient);
+                        mr.setSender(globalData.getCurrentUser());
 
 //                        if (globalData.getUserObject().getProfilePhoto() != null)
 //                            mr.setPhotoSender(globalData.getUserObject().getProfilePhoto());

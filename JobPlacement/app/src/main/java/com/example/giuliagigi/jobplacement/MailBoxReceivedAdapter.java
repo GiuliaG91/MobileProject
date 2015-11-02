@@ -28,8 +28,8 @@ import java.util.List;
  */
 public class MailBoxReceivedAdapter extends RecyclerView.Adapter<MailBoxReceivedAdapter.ViewHolder> implements View.OnClickListener, MailBoxAdapter{
 
-    private FragmentActivity context;
-    private ArrayList<InboxMessageReceived> mDataset;
+    private FragmentActivity activity;
+    private ArrayList<InboxMessageReceived> messageList;
     private GlobalData globalData;
 
 
@@ -67,21 +67,20 @@ public class MailBoxReceivedAdapter extends RecyclerView.Adapter<MailBoxReceived
         }
     }
 
-    public MailBoxReceivedAdapter(FragmentActivity c)
-    {
-        context = c;
-        mDataset = new ArrayList<InboxMessageReceived>();
-        globalData = (GlobalData)context.getApplication();
+    public MailBoxReceivedAdapter(FragmentActivity a){
+
+        activity = a;
+        messageList = new ArrayList<InboxMessageReceived>();
+        globalData = (GlobalData) activity.getApplication();
     }
+
 
 
     // Create new views (invoked by the layout manager)
     @Override
     public  MailBoxReceivedAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        // create a new view
-        View v = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.inbox_message_row, parent, false);
-        // set the view's size, margins, paddings and layout parameters
+
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.inbox_message_row, parent, false);
         v.setClickable(true);
         v.setOnClickListener(MailBoxReceivedAdapter.this);
 
@@ -93,75 +92,72 @@ public class MailBoxReceivedAdapter extends RecyclerView.Adapter<MailBoxReceived
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
 
-        if(mDataset.get(position).getNameSender().length() < 22)
-            holder.name.setText(mDataset.get(position).getNameSender());
-        else{
-            holder.name.setText(mDataset.get(position).getNameSender().substring(0, 21) + "...");
-        }
-
-//        if(mDataset.get(position).getPhotoSender() != null)
-//            holder.image.setImageBitmap(mDataset.get(position).getPhotoSender());
-
-        ParseQuery<ParseUser> userQuery = ParseQuery.getQuery("_User");
-        userQuery.whereEqualTo("email", mDataset.get(position));
-        try {
-
-            List<ParseUser> users = userQuery.find();
-            ParseUserWrapper u = null;
-
-            if(!users.isEmpty())
-                 u = (ParseUserWrapper)users.get(0);
-
-
-            if(u!= null){
-
-                u.fetchIfNeeded();
-                User user = u.getUser().fetchIfNeeded();
-                holder.image.setImageBitmap(user.getProfilePhoto());
-            }
-
-
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-
-        if(mDataset.get(position).getObject().length() < 20)
-            holder.object.setText(mDataset.get(position).getObject());
+        if(messageList.get(position).getSender().getEmail().length() < 22)
+            holder.name.setText(messageList.get(position).getSender().getEmail());
         else
-            holder.object.setText(mDataset.get(position).getObject().substring(0, 19) + "...");
+            holder.name.setText(messageList.get(position).getSender().getEmail().substring(0, 21) + "...");
 
 
-        holder.pref.setChecked(mDataset.get(position).getIsPreferred());
+//        ParseQuery<ParseUser> userQuery = ParseQuery.getQuery("_User");
+//        userQuery.whereEqualTo("email", messageList.get(position).getRecipient());
+//        try {
+//
+//            List<ParseUser> users = userQuery.find();
+//            ParseUserWrapper u = null;
+//
+//            if(!users.isEmpty())
+//                 u = (ParseUserWrapper)users.get(0);
+//
+//
+//            if(u!= null){
+//
+//                u.fetchIfNeeded();
+//                User user = u.getUser().fetchIfNeeded();
+//                holder.image.setImageBitmap(user.getProfilePhoto());
+//            }
+//
+//
+//        } catch (ParseException e) {
+//            e.printStackTrace();
+//        }
+
+        if(messageList.get(position).getObject().length() < 20)
+            holder.object.setText(messageList.get(position).getObject());
+        else
+            holder.object.setText(messageList.get(position).getObject().substring(0, 19) + "...");
+
+
+        holder.pref.setChecked(messageList.get(position).getIsPreferred());
         holder.pref.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v){
                 if(((CheckBox)v).isChecked()) {
-                    mDataset.get(position).setIsPreferred(true);
-                    mDataset.get(position).saveInBackground();
+                    messageList.get(position).setIsPreferred(true);
+                    messageList.get(position).saveInBackground();
 
                 }else {
-                    mDataset.get(position).setIsPreferred(false);
-                    mDataset.get(position).saveInBackground();
+                    messageList.get(position).setIsPreferred(false);
+                    messageList.get(position).saveInBackground();
 
                 }
             }
         });
 
 
-        holder.cancel.setChecked(mDataset.get(position).getIsDeleting());
+        holder.cancel.setChecked(messageList.get(position).getIsDeleting());
 
         holder.cancel.setOnClickListener(new View.OnClickListener(){
 
             public void onClick(View v){
 
                 if(((CheckBox)v).isChecked()) {
-                    mDataset.get(position).setIsDeleting(true);
-                    mDataset.get(position).saveInBackground();
+                    messageList.get(position).setIsDeleting(true);
+                    messageList.get(position).saveInBackground();
                     holder.cardLayout.setCardBackgroundColor(0xFFE0B2);
                     holder.rowLayout.setBackgroundColor(0xFFE0B2);
                 }else {
-                    mDataset.get(position).setIsDeleting(false);
-                    mDataset.get(position).saveInBackground();
-                    if(mDataset.get(position).getIsRead()) {
+                    messageList.get(position).setIsDeleting(false);
+                    messageList.get(position).saveInBackground();
+                    if(messageList.get(position).getIsRead()) {
                         holder.cardLayout.setCardBackgroundColor(0xB2EBF2);
                         holder.rowLayout.setBackgroundColor(0xB2EBF2);
                     }else {
@@ -176,7 +172,7 @@ public class MailBoxReceivedAdapter extends RecyclerView.Adapter<MailBoxReceived
 
         if(holder.message != null) {
 
-            String message = mDataset.get(position).getBodyMessage();
+            String message = messageList.get(position).getBodyMessage();
             if (message.length() < 25) {
                 holder.message.setText(message);
             } else {
@@ -186,20 +182,20 @@ public class MailBoxReceivedAdapter extends RecyclerView.Adapter<MailBoxReceived
 
         holder.position = position;
 
-        if(mDataset.get(position).getIsRead()){
+        if(messageList.get(position).getIsRead()){
             //holder.name.setTextColor(0x424242);
             //holder.object.setTextColor(0x424242);
             holder.cardLayout.setCardBackgroundColor(0xB2EBF2);
             holder.rowLayout.setBackgroundColor(0xB2EBF2);
         }
 
-        if(mDataset.get(position).getIsDeleting()){
+        if(messageList.get(position).getIsDeleting()){
             holder.cardLayout.setCardBackgroundColor(0xFFE0B2);
             holder.rowLayout.setBackgroundColor(0xFFE0B2);
         }
 
         try {
-            Calendar dateMessage = mDataset.get(position).getDate();
+            Calendar dateMessage = messageList.get(position).getDate();
             Calendar now = Calendar.getInstance();
 
             if(dateMessage.get(Calendar.DAY_OF_MONTH) == now.get(Calendar.DAY_OF_MONTH) && dateMessage.get(Calendar.MONTH) == now.get(Calendar.MONTH) && dateMessage.get(Calendar.YEAR) == now.get(Calendar.YEAR))
@@ -218,27 +214,27 @@ public class MailBoxReceivedAdapter extends RecyclerView.Adapter<MailBoxReceived
     // Return the size of your dataset (invoked by the layout manager)
     @Override
     public int getItemCount() {
-        return mDataset.size();
+        return messageList.size();
     }
 
 
     public void updateMyDataset(List<InboxMessageReceived> messages)
     {
-        mDataset.addAll(messages);
+        messageList.addAll(messages);
 
         //carico dal server le immagini dei mittenti
-//        for(InboxMessageReceived m: mDataset)
+//        for(InboxMessageReceived m: messageList)
 //            m.getPhotoSender();
 
     }
 
-    public void resetMyDataset(){
-        mDataset.clear();
+    public void resetMessageList(){
+        messageList.clear();
     }
 
-    public void removeMessageFromMyDataset(int index){
+    public void removeMessage(int index){
 
-        mDataset.remove(index);
+        messageList.remove(index);
 
     }
 
@@ -249,12 +245,12 @@ public class MailBoxReceivedAdapter extends RecyclerView.Adapter<MailBoxReceived
 
         ViewHolder vh = (ViewHolder)v.getTag();
 
-        mDataset.get(vh.position).setIsRead(true);
-        mDataset.get(vh.position).saveInBackground();
+        messageList.get(vh.position).setIsRead(true);
+        messageList.get(vh.position).saveInBackground();
 
-        globalData.setCurrentViewMessage(mDataset.get(vh.position));
+        globalData.setCurrentViewMessage(messageList.get(vh.position));
 
-        FragmentManager fragmentManager = context.getSupportFragmentManager();
+        FragmentManager fragmentManager = activity.getSupportFragmentManager();
 
         //New Fragment
         MailBoxDetailFragment fragment = MailBoxDetailFragment.newInstance();
@@ -271,9 +267,9 @@ public class MailBoxReceivedAdapter extends RecyclerView.Adapter<MailBoxReceived
 
     }
 
-    public ArrayList getMyDataset(){
+    public ArrayList<InboxMessageReceived> getMessageList(){
 
-        return this.mDataset;
+        return this.messageList;
 
     }
 

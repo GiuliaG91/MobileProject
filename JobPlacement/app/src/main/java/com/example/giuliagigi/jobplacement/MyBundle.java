@@ -46,7 +46,7 @@ public class MyBundle {
         return integers.get(key);
     }
 
-    public void putList(String key, ArrayList<Object> list){
+    public void putList(String key, ArrayList list){
 
         lists.put(key, list);
     }

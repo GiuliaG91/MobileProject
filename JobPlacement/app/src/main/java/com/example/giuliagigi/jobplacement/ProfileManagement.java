@@ -34,7 +34,7 @@ public class ProfileManagement extends Fragment{
     private GlobalData application;
     private OnInteractionListener host;
     private ArrayList<ProfileManagementFragment> fragments;
-    private boolean isEditMode,editable,orientationFlag;
+    private boolean isEditMode,editable;
     private User user;
 
 
@@ -82,7 +82,6 @@ public class ProfileManagement extends Fragment{
 
 
         isEditMode = false;
-        orientationFlag = false;
 
         try {
             host = (OnInteractionListener)activity;
@@ -178,7 +177,6 @@ public class ProfileManagement extends Fragment{
             b.putBoolean(BUNDLE_KEY_IS_EDIT,isEditMode);
             b.putBoolean(BUNDLE_KEY_EDITABLE, editable);
             b.put(BUNDLE_KEY_USER, user);
-            orientationFlag = false;
 
     }
 

@@ -306,7 +306,7 @@ public class Home extends ActionBarActivity
         recipients.add(user.getMail());
         data.putStringArrayList(MailBoxDetailFragment.RECIPIENTS_KEY, recipients);
 
-        MailBoxNewFragment mailbox = MailBoxNewFragment.newInstance(data);
+        MailBoxNewFragment mailbox = MailBoxNewFragment.newInstance();
         ft.replace(R.id.tab_Home_container,mailbox);
         ft.commit();
 

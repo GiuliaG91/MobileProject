@@ -10,47 +10,30 @@ import com.parse.ParseClassName;
 @ParseClassName("InboxMessageReceived")
 public class InboxMessageReceived extends InboxMessage{
 
-    protected static final String RECIPIENT = "recipient";
-    protected static final String NAME_SENDER = "name_sender";
-    protected  static final String PHOTO_SENDER = "photo_sender";
-    //protected  static final String FROM_COMPANY = "from_company";
+    protected static final String  IS_READ = "is_read";
+    protected static final String  OWNER = "owner";
 
     public InboxMessageReceived(){
         super();
     }
 
-    public String getRecipient(){
-        return this.getString(InboxMessageReceived.RECIPIENT);
+    public Boolean getIsRead() {
+        return this.getBoolean(IS_READ);
     }
 
-    public void setRecipient(String recipient){
-        this.put(InboxMessageReceived.RECIPIENT, recipient);
+    public void setIsRead(Boolean isRead){
+
+        this.put(IS_READ, isRead);
     }
 
-    /*
-    public boolean getFromCompany(){
-        return this.getBoolean(InboxMessageReceived.FROM_COMPANY);
+    public ParseUserWrapper getOwner(){
+
+        return (ParseUserWrapper)get(OWNER);
     }
 
-    public void setFromCompany(boolean flag){
-        this.put(InboxMessageReceived.FROM_COMPANY, flag);
+    public void setOwner(ParseUserWrapper owner){
+
+        put(OWNER,owner);
     }
-    */
-
-    public String getNameSender(){
-        return this.getString(InboxMessageReceived.NAME_SENDER);
-    }
-
-    public void setNameSender(String name){
-        this.put(InboxMessageReceived.NAME_SENDER, name);
-    }
-
-//    public Bitmap getPhotoSender(){
-//        return (Bitmap)this.get(InboxMessageReceived.PHOTO_SENDER);
-//    }
-
-//    public void setPhotoSender(Bitmap photo){
-//        this.put(InboxMessageReceived.PHOTO_SENDER, photo);
-//    }
 
 }
