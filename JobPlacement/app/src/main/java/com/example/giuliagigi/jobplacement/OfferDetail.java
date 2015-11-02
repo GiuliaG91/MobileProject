@@ -237,7 +237,6 @@ public class OfferDetail extends  Fragment {
                         offerStatus.setOffer(offer);
                         offerStatus.setStudent(s);
                         offerStatus.saveInBackground();
-                        //todo notify company
                         Company company=null;
                         try {
                             company =offer.getCompany().fetchIfNeeded();
