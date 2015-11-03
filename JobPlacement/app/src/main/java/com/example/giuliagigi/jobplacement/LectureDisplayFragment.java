@@ -167,15 +167,107 @@ public class LectureDisplayFragment extends Fragment {
 
 
     public boolean compareSchedule(Schedule s1, Schedule s2){
-        if(((s2.getStartHour() < s1.getStartHour() || (s2.getStartHour() == s1.getStartHour() && s2.getStartMinute()<=s1.getStartMinute()))
-                && s1.getEndHour() < s2.getEndHour() ||  (s1.getEndHour() == s2.getEndHour() && s1.getEndMinute() <= s2.getEndMinute())) ||
-                (s1.getStartHour() < s2.getStartHour() || (s1.getStartHour() == s2.getStartHour() && s1.getStartMinute()<=s2.getStartMinute()))
-                        && s2.getEndHour() < s1.getEndHour() ||  (s2.getEndHour() == s1.getEndHour() && s2.getEndMinute() <= s1.getEndMinute())){
-
+        if(s1.getStartHour()==s2.getStartHour() && s1.getStartMinute()==s2.getStartMinute()){
+            //se due orari iniziano alla stessa ora si sovrappongono per forza -- TYPE = 1
+            s1.setOverlapsType(1);
+            s2.setOverlapsType(1);
+            return true;
+        }
+        else if(s1.getEndHour()==s2.getEndHour() && s1.getEndMinute()==s2.getEndMinute()){
+            //se due orari finiscono alla stessa ora si sovrappongono per forza -- TYPE = 2
+            s1.setOverlapsType(2);
+            s2.setOverlapsType(2);
+            return true;
+        }
+        else if(s1.getStartHour()<s2.getStartHour() && s2.getStartHour()<s1.getEndHour()){
+            //caso in cui s2 inizia mentre s1 è in corso e finisce dopo s1 -- TYPE = 3
+            s1.setOverlapsType(3);
+            s2.setOverlapsType(4);
+            return true;
+        }
+        else if(s1.getStartHour() > s2.getStartHour() && s1.getStartHour() < s2.getEndHour() ){
+            //caso opposto al precedente -- TYPE = 4
+            s1.setOverlapsType(4);
+            s2.setOverlapsType(3);
+            return true;
+        }
+        else if(s1.getStartHour()<s2.getStartHour() && s1.getEndHour()>s2.getEndHour()){
+            //caso in cui s2 inizia e finisce mentre s1 è in corso -- TYPE = 5
+            s1.setOverlapsType(5);
+            s2.setOverlapsType(6);
+            return true;
+        }
+        else if(s1.getStartHour() > s2.getStartHour() && s1.getEndHour()<s2.getEndHour()){
+            //caso opposto al precedente -- TYPE = 6
+            s1.setOverlapsType(6);
+            s2.setOverlapsType(5);
             return true;
         }
         else return false;
     }
+
+    public int calculateOverlapseDuration(Schedule s1, Schedule s2, int type){
+        int duration = 0;
+        if(type == 1 || type == 2){
+            duration = Math.max(s1.getMinuteDuration(), s2.getMinuteDuration());
+        }
+        if(type == 3){
+           //somma delle due durate meno la loro sovrapposizione
+           duration = s1.getMinuteDuration() + s2.getMinuteDuration() - ((60-s2.getStartMinute()) + s1.getEndMinute() + 60*(s1.getEndHour()-s2.getStartHour()-1));
+        }
+        if(type == 4){
+            //somma delle due durate meno la loro sovrapposizione
+           duration = s1.getMinuteDuration() + s2.getMinuteDuration() - ((60-s1.getStartMinute()) + s2.getEndMinute() + 60*(s2.getEndHour()-s1.getStartHour()-1));
+        }
+        if(type == 5){
+            duration = s1.getMinuteDuration();
+        }
+        if(type == 6){
+            duration = s2.getMinuteDuration();
+        }
+        return duration;
+    }
+
+        /*public RelativeLayout setLectureView(Lecture lect) {
+
+        RelativeLayout container = new RelativeLayout(GlobalData.getContext());
+        final Lecture lecture = lect;
+        final int numOverlapse = lect.getNumOverlapse();
+        final float density = GlobalData.getContext().getResources().getDisplayMetrics().density;
+
+        View item = setFields(lecture,0);
+
+        item.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final Dialog lectureDialog = new Dialog(getActivity());
+
+                View dialogItem = setFields(lecture,1);
+                lectureDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                lectureDialog.getWindow().setLayout(WindowManager.LayoutParams.WRAP_CONTENT, WindowManager.LayoutParams.WRAP_CONTENT);
+                lectureDialog.setContentView(dialogItem);
+                Button closingButton = (Button) dialogItem.findViewById(R.id.lecture_item_ok_button);
+                closingButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        lectureDialog.dismiss();
+                    }
+                });
+
+                lectureDialog.show();
+            }
+        });
+
+        RelativeLayout.LayoutParams param = new RelativeLayout.LayoutParams(col_width/(numOverlapse+1), (int) (lect.getSchedule().getMinuteDuration() * density));
+        param.setMargins(0, (int) (lect.getSchedule().getStartPxl() * density), 0, 0);
+        item.setLayoutParams(param);
+
+        container.addView(item);
+
+
+        return container;
+    }*/
+
 
     public RelativeLayout setLectureView(Lecture lect) {
         RelativeLayout container = new RelativeLayout(GlobalData.getContext());
@@ -214,9 +306,9 @@ public class LectureDisplayFragment extends Fragment {
         } else { //caso in cui ho almeno una sovrapposizione
             ArrayList<Lecture> tempArray = lect.getLectureOverlapse();
             tempArray.add(lect);
-            Collections.sort(tempArray, new hourComparator());
+            Collections.sort(tempArray, new durationComparator());
 
-            final int overlapseDuration = (60 - tempArray.get(0).getSchedule().getStartMinute()) + tempArray.get(numOverlapse - 1).getSchedule().getEndMinute() + 60 * (tempArray.get(numOverlapse - 1).getSchedule().getEndHour() - tempArray.get(0).getSchedule().getStartHour() - 1);
+            final int overlapseDuration = calculateOverlapseDuration(tempArray.get(0).getSchedule(), tempArray.get(1).getSchedule(), tempArray.get(0).getSchedule().getOverlapsType());
             RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, (int) (overlapseDuration * density));
             layoutParams.setMargins(0, (int) (tempArray.get(0).getSchedule().getStartPxl() * density), 0, 0);
 
@@ -226,7 +318,7 @@ public class LectureDisplayFragment extends Fragment {
 
             //GridLayout itemContainer = new GridLayout(GlobalData.getContext());
             LinearLayout itemContainer = new LinearLayout(GlobalData.getContext());
-            //itemContainer.setWeightSum(numOverlapse+1);
+            itemContainer.setWeightSum(numOverlapse+1);
 
             for(int i = 0; i< tempArray.size(); i++) {
                 final Lecture l = tempArray.get(i);
@@ -238,9 +330,10 @@ public class LectureDisplayFragment extends Fragment {
 
                     View item = setFields(l,0);
 
-                    LinearLayout.LayoutParams itemParams = new  LinearLayout.LayoutParams( RelativeLayout.LayoutParams.MATCH_PARENT,  (int)(lect.getSchedule().getMinuteDuration()*density), .3f);
+                    LinearLayout.LayoutParams itemParams = new  LinearLayout.LayoutParams(0,  (int)(l.getSchedule().getMinuteDuration()*density), 1);
+                    //itemParams.weight = 1;
                     //itemParams.setMargins(0, (int)(lect.getSchedule().getStartPxl()*density),0,0);
-                    item.setLayoutParams(itemParams);
+                    //item.setLayoutParams(itemParams);
 
                     item.setOnClickListener(new View.OnClickListener() {
                         @Override
@@ -264,10 +357,7 @@ public class LectureDisplayFragment extends Fragment {
                         }
                     });
 
-                    /*if(i != 0) {
-                        itemParams.addRule(RelativeLayout.RIGHT_OF,previous_id);
-                    }
-                    previous_id = item.getId();*/
+
                     //item.setLayoutParams(itemParams);
 
                     //GridLayout.Spec rowSpan = GridLayout.spec(0, 1);
@@ -283,7 +373,6 @@ public class LectureDisplayFragment extends Fragment {
         }
         return container;
     }
-
 
 
 
@@ -382,6 +471,14 @@ public class LectureDisplayFragment extends Fragment {
                 return l1.getSchedule().getStartMinute() - l2.getSchedule().getStartMinute();
 
             return l1.getSchedule().getStartHour() - l2.getSchedule().getStartHour();
+        }
+    }
+
+    class durationComparator implements Comparator<Lecture> {
+        @Override
+        public int compare(Lecture l1, Lecture l2) {
+
+            return l1.getSchedule().getMinuteDuration() - l2.getSchedule().getMinuteDuration();
         }
     }
     //--------- END HOUR COMPARATOR ------------------------------------------------------

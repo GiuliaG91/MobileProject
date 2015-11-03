@@ -10,6 +10,7 @@ public class Schedule {
     private int endHour;
     private int endMinute;
     private int minuteDuration;
+    private int overlapsType;
 
 
     // --------------------------------------------------------------------
@@ -43,6 +44,7 @@ public class Schedule {
         this.startMinute = startMinute;
         this.endHour = endHour;
         this.endMinute = endMinute;
+        this.overlapsType = 0;
 
         setMinuteDuration();
     }
@@ -105,6 +107,16 @@ public class Schedule {
 
         this.minuteDuration = (60-startMinute) + endMinute + 60*(endHour-startHour-1);
     }
+
+    public void setOverlapsType(int type){
+        this.overlapsType = type;
+    }
+
+    public int getOverlapsType(){
+        return this.overlapsType;
+    }
+
+
 
     // --------------------------------------------------------------------
     // ------------ END GETTERS AND SETTERS -------------------------------

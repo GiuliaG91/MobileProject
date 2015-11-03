@@ -8,8 +8,8 @@
         "dayInWeek": "1",
         "startHour": "11",
         "startMinute": "30",
-        "endHour": "13",
-        "endMinute": "0",
+        "endHour": "14",
+        "endMinute": "30",
         "room": "4D"
       },      
 {
@@ -26,6 +26,29 @@
         "startMinute": "0",
         "endHour": "16",
         "endMinute": "0",
+        "room": "4D"
+      }
+    ]
+  },
+{
+    "code" : "02JGLOV",
+    "name" : "Programmazione a Oggetti",
+    "professor" : "Giovanni Malnati",
+    "lectures" : [
+{
+        "dayInWeek": "1",
+        "startHour": "13",
+        "startMinute": "0",
+        "endHour": "14",
+        "endMinute": "30",
+        "room": "4D"
+      },
+      {
+        "dayInWeek": "2",
+        "startHour": "13",
+        "startMinute": "0",
+        "endHour": "14",
+        "endMinute": "30",
         "room": "4D"
       }
     ]
