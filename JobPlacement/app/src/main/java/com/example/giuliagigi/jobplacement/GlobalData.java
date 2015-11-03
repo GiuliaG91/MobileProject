@@ -133,11 +133,7 @@ public class GlobalData extends Application {
         currentUser = (ParseUserWrapper)ParseUser.getCurrentUser();
 
         if(currentUser != null)
-            try {
-                currentUserObject = currentUser.getUser().fetchIfNeeded();
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
+                currentUserObject = currentUser.getUser();
         else
             Log.println(Log.ASSERT,"GLOBAL DATA", "currentUser is null");
 
@@ -152,13 +148,7 @@ public class GlobalData extends Application {
 
         if(currentUserObject == null){
 
-            try {
-                currentUserObject = getCurrentUser().getUser().fetchIfNeeded();
-            } catch (ParseException e) {
-                e.printStackTrace();
-                Log.println(Log.ASSERT,"GLOBAL DATA", "error fetching user info");
-                return null;
-            }
+            currentUserObject = getCurrentUser().getUser();
         }
 
         return (Student)currentUserObject;
@@ -172,13 +162,7 @@ public class GlobalData extends Application {
 
         if(currentUserObject == null){
 
-            try {
-                currentUserObject = getCurrentUser().getUser().fetchIfNeeded();
-            } catch (ParseException e) {
-                e.printStackTrace();
-                Log.println(Log.ASSERT,"GLOBAL DATA", "error fetching user info");
-                return null;
-            }
+            currentUserObject = getCurrentUser().getUser();
         }
 
         return (Company)currentUserObject;

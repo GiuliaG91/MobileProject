@@ -140,7 +140,7 @@ public class ShowOffersAdapter extends RecyclerView.Adapter<ShowOffersAdapter.Vi
         return mDataset.size();
     }
 
-  /*  public void updateMyDataset(List<CompanyOffer> offers)
+  /*  public void updateMessageList(List<CompanyOffer> offers)
     {
         if(offers!=null)  mDataset.addAll(offers);
     }*/

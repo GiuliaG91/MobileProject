@@ -56,12 +56,23 @@ public class ParseUserWrapper extends ParseUser {
 
     public User getUser(){
 
-        if(getType().equals(User.TYPE_STUDENT))
-            return (User)get(STUDENT_FIELD);
-        else if (getType().equals(User.TYPE_COMPANY))
-            return (User)get(COMPANY_FIELD);
+        User u = null;
+        if(getType().equals(User.TYPE_STUDENT)){
 
-        return null;
+             u = (User)get(STUDENT_FIELD);
+        }
+        else if (getType().equals(User.TYPE_COMPANY)){
+
+            u = (User)get(COMPANY_FIELD);
+        }
+
+        try {
+            u.fetchIfNeeded();
+        } catch (ParseException e) {
+            e.printStackTrace();
+            Log.println(Log.ASSERT, "PARSEUSWRAP", "error fetching user object");
+        }
+        return u;
     }
 
     public void setUser(User user){

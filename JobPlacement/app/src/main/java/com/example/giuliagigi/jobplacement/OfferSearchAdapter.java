@@ -71,8 +71,8 @@ public class OfferSearchAdapter extends RecyclerView.Adapter<OfferSearchAdapter.
         count=0;
         exists=new ArrayList<>();
 
-        for(CompanyOffer o : student.getFavourites())
-        {
+        for(CompanyOffer o : student.getFavourites()){
+
             exists.add(o.getObjectId());
         }
 

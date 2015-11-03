@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -144,6 +145,12 @@ public class MailBoxNewFragment extends Fragment {
 
                     try {
 
+                        if(r.equals(globalData.getCurrentUser().getEmail())){
+
+                            Log.println(Log.ASSERT, "MAILBOXNEW", "trying to send a message to myself! not a valid recipient");
+                            continue;
+                        }
+
                         message.addRecipient(r);
                         validRecipients++;
                     }
@@ -164,12 +171,6 @@ public class MailBoxNewFragment extends Fragment {
                             }
                         });
 
-//                        builder.setNegativeButton(globalData.getResources().getString(R.string.no), new DialogInterface.OnClickListener() {
-//                            @Override
-//                            public void onClick(DialogInterface dialog, int which) {
-//                                sendFlag = false;
-//                            }
-//                        });
                         builder.create().show();
                         e.printStackTrace();
                     }
@@ -227,15 +228,12 @@ public class MailBoxNewFragment extends Fragment {
 
                     /* ------------------ saving message in sent messages (for sender) -------------- */
                     message.setSender(globalData.getCurrentUser());
-
-
-
+                    message.setType(InboxMessage.TYPE_SENT);
                     message.setObject(object);
                     String bodyMessage = ((EditText) root.findViewById(R.id.body_new_message)).getText().toString();
                     message.setBodyMessage(bodyMessage);
                     message.setDate(Calendar.getInstance());
                     message.setIsPreferred(false);
-                    message.setIsDeleting(false);
                     message.saveInBackground(new SaveCallback() {
                         @Override
                         public void done(ParseException e) {
@@ -248,13 +246,14 @@ public class MailBoxNewFragment extends Fragment {
 
                                     InboxMessageReceived mr = new InboxMessageReceived();
 
-                                    mr.setObject(message.getObject());
                                     mr.setSender(globalData.getCurrentUser());
                                     mr.setOwner(recipient);
 
                                     for(ParseUserWrapper p : message.getRecipients())
                                         mr.addRecipient(p);
 
+                                    mr.setType(InboxMessage.TYPE_RECEIVED);
+                                    mr.setObject(message.getObject());
                                     mr.setBodyMessage(message.getBodyMessage());
                                     mr.setIsPreferred(false);
                                     mr.setIsRead(false);
@@ -266,9 +265,7 @@ public class MailBoxNewFragment extends Fragment {
                                         e1.printStackTrace();
                                     }
 
-                                    mr.setIsDeleting(false);
                                     mr.saveInBackground();
-
 
                                     /* ------------------ push notifications -------------------------------------*/
                                     ParseQuery inner= new ParseQuery("_User");

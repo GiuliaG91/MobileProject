@@ -10,13 +10,9 @@ import com.parse.ParseRelation;
 import com.parse.ParseUser;
 
 import org.json.JSONException;
-import org.json.JSONObject;
 
-import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 
 
@@ -34,10 +30,12 @@ public class InboxMessage extends ParseObject {
     protected static final String BODY_MESSAGE = "body_message";
     protected static final String IS_PREFERRED = "is_preferred";
     protected static final String DATE = "date";
-    protected static final String IS_DELETING = "is_deleting";
+    protected static final String IS_DELETE = "is_deleting";
 
     public static final String TYPE_SENT = "sent";
     public static final String TYPE_RECEIVED = "received";
+
+    private boolean isDelete = false;
 
     public InboxMessage(){
         super();
@@ -51,10 +49,19 @@ public class InboxMessage extends ParseObject {
     }
 
     public ParseUserWrapper getSender() {
-        return (ParseUserWrapper)this.get(SENDER);
+
+        ParseUserWrapper puw = (ParseUserWrapper)this.get(SENDER);
+
+        try {
+            puw.fetchIfNeeded();
+        }
+        catch (ParseException e) {
+            Log.println(Log.ASSERT, "INBOX MESSAGE", "error fetching parseUser");
+            e.printStackTrace();
+        }
+
+        return puw;
     }
-
-
 
     public List<ParseUserWrapper> getRecipients() {
 
@@ -69,6 +76,7 @@ public class InboxMessage extends ParseObject {
 
         return results;
     }
+
     public Calendar getDate() throws JSONException {
 
         Calendar calendar = Calendar.getInstance();
@@ -86,7 +94,7 @@ public class InboxMessage extends ParseObject {
         return this.getBoolean(IS_PREFERRED);
     }
 
-    public Boolean getIsDeleting() { return this.getBoolean(IS_DELETING); }
+    public Boolean isDelete() { return this.getBoolean(IS_DELETE); }
 
     public String getType(){
 
@@ -150,9 +158,9 @@ public class InboxMessage extends ParseObject {
 
     }
 
-    public void setIsDeleting(Boolean flag){
+    public void deleteMessage(boolean delete){
 
-        this.put(IS_DELETING, flag);
+        isDelete = delete;
     }
 
     public void setType(String type){

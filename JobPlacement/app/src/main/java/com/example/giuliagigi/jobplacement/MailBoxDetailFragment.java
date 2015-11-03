@@ -44,11 +44,7 @@ import static java.util.Calendar.YEAR;
  */
 public class MailBoxDetailFragment extends Fragment {
 
-    protected static final String RECIPIENTS_KEY = "recipients";
-    protected static final String OBJECT_KEY = "object";
-    protected static final String OLD_MESSAGE_KEY = "old_message";
-    public static final String BUNDLE_IDENTIFIER = "MAILBOX";
-
+    public static final String RECIPIENTS_KEY = "recipients";
     View root;
     InboxMessage message;
     GlobalData globalData;
@@ -57,8 +53,11 @@ public class MailBoxDetailFragment extends Fragment {
     FragmentActivity activity;
 
 
-    public static MailBoxDetailFragment newInstance() {
+    /* ------------------------- CONSTRUCTORS, SETTERS ------------------------------------------- */
+
+    public static MailBoxDetailFragment newInstance(InboxMessage message) {
         MailBoxDetailFragment fragment = new MailBoxDetailFragment();
+        fragment.message = message;
         return fragment;
     }
 
@@ -66,6 +65,8 @@ public class MailBoxDetailFragment extends Fragment {
         // Required empty public constructor
     }
 
+
+    /* ------------------------- STANDARD CALLBACKS ---------------------------------------------- */
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -76,47 +77,13 @@ public class MailBoxDetailFragment extends Fragment {
         globalData = (GlobalData)getActivity().getApplication();
         activity = this.getActivity();
 
-        message = globalData.getCurrentViewMessage();
-
         if(message == null){
             getFragmentManager().popBackStackImmediate();
         }
 
-//        if(message.getSender().equals(globalData.getUserObject().getMail()))
-//            sender = globalData.getUserObject();
-//        else{
-//
-//            ParseQuery<User> query = ParseQuery.getQuery("User");
-//            query.whereEqualTo(User.MAIL_FIELD, message.getSender());
-//            try {
-//                List<User> users = query.find();
-//                if(users != null && users.size() > 0)
-//                    sender = users.get(0);
-//
-//            } catch (ParseException e) {
-//                e.printStackTrace();
-//            }
-//        }
-
-//        ParseQuery<ParseUser> parseUserQuery = ParseQuery.getQuery("_User");
-//        parseUserQuery.whereEqualTo("email", message.getSender());
-//
-//        try {
-//
-//            List<ParseUser> parseUsers = parseUserQuery.find();
-//
-//            if(!parseUsers.isEmpty()){
-//
-//                ParseUserWrapper parseUserWrapper = (ParseUserWrapper)parseUsers.get(0);
-//                sender = parseUserWrapper.getUser().fetchIfNeeded();
-//            }
-//
-//        } catch (ParseException e) {
-//            e.printStackTrace();
-//        }
-
         sender = message.getSender().getUser();
     }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -125,13 +92,13 @@ public class MailBoxDetailFragment extends Fragment {
         root = inflater.inflate(R.layout.fragment_mail_box_detail,container,false);
 
 
-        //set profile photo
+        // ------------------------ set profile photo ----------------------------------
         if(sender.getProfilePhoto() != null) {
             ImageView img = (ImageView) root.findViewById(R.id.sender_img);
             img.setImageBitmap(sender.getProfilePhoto());
         }
 
-        //set sender name
+        // ----------------------- set sender name -------------------------------------
         TextView tv = (TextView)root.findViewById(R.id.sender_tv);
         if(sender.getMail().equals(globalData.getUserObject().getMail()))
             tv.setText(globalData.getResources().getString(R.string.me));
@@ -139,20 +106,8 @@ public class MailBoxDetailFragment extends Fragment {
             tv.setText(sender.getName());
 
 
-        //set list of recipients in the spinner
+        // -------- set list of recipients in the spinner ------------------------------
         Spinner sp = (Spinner)root.findViewById(R.id.recipients_list);
-
-//        String[] recipients = new String[message.getRecipients().size()];
-//        if(sender.getMail().equals(globalData.getUserObject().getMail()))
-//            recipients[0] = message.getRecipients().get(0);
-//        else
-//            recipients[0] = globalData.getResources().getString(R.string.me);
-//        for(int i = 1; i < message.getRecipients().size(); i++)
-//            if(message.getRecipients().get(i).equals(globalData.getUserObject().getMail()))
-//                continue;
-//            else
-//                recipients[i] = message.getRecipients().get(i);
-
 
         String[] recipients = new String[message.getRecipients().size()];
         for(int i = 0; i< recipients.length; i++)
@@ -160,7 +115,7 @@ public class MailBoxDetailFragment extends Fragment {
 
         sp.setAdapter(new StringAdapter(recipients));
 
-        //set date
+        // --------------------------------- set date ---------------------------------
         tv = (TextView) root.findViewById(R.id.date_tv);
         try {
             Calendar date = message.getDate();
@@ -201,11 +156,11 @@ public class MailBoxDetailFragment extends Fragment {
             e.printStackTrace();
         }
 
-        //set body
+        // ---------------------- set body -----------------------------------
         tv = (TextView) root.findViewById(R.id.body_tv);
         tv.setText(message.getBodyMessage());
 
-        /*Attach on click listener to button menu */
+        /* -------------------------------- Attach on click listener to button menu --------------------------------------------- */
 
         FloatingActionsMenu actionsMenu = (FloatingActionsMenu) root.findViewById(R.id.multiple_actions_mailbox);
 
@@ -303,31 +258,6 @@ public class MailBoxDetailFragment extends Fragment {
 //        menuInflater.inflate(R.menu.menu_mail_box_detail, menu);
 
     }
-
-//    public boolean onOptionsItemSelected(MenuItem item){
-//
-//        switch(item.getItemId()){
-//
-//            case R.id.respond_action_button:    FragmentManager fragmentManager = ((FragmentActivity)this.getActivity()).getSupportFragmentManager();
-//
-//                Fragment fragment = MailBoxRespondFragment.newInstance();
-//
-//                fragmentManager.beginTransaction()
-//                        .replace(R.id.tab_Home_container, fragment)
-//                        .commit();
-//
-//                Toolbar toolbar = (Toolbar) globalData.getToolbar();
-//
-//                // ---> eliminare action button precedenti dalla toolbar
-//
-//                return true;
-//
-//            default:    return false;
-//
-//        }
-//
-//    }
-
 
 
     private class StringAdapter extends BaseAdapter {
