@@ -179,48 +179,19 @@ public class LectureDisplayFragment extends Fragment {
 
     public RelativeLayout setLectureView(Lecture lect) {
         RelativeLayout container = new RelativeLayout(GlobalData.getContext());
-        final String name = lect.getCourseName();
-        final String professorName = lect.getProfessor();
-        final String timeTable = lect.getTimeTable();
-        final String roomName = lect.getRoomName();
+        final Lecture lecture = lect;
         final int numOverlapse = lect.getNumOverlapse();
         final float density = GlobalData.getContext().getResources().getDisplayMetrics().density;
 
-        //container.setOrientation(LinearLayout.HORIZONTAL);
-
-        if (numOverlapse == 0) {
-            View item = getActivity().getLayoutInflater().inflate(R.layout.lecture_item, null);
-
-            TextView title = (TextView) item.findViewById(R.id.LECTUREITEM_textView_courseName);
-            title.setText(String.valueOf(numOverlapse));
-
-            TextView dayAndSchedule = (TextView) item.findViewById(R.id.LECTUREITEM_textView_schedule);
-            dayAndSchedule.setText(timeTable);
-
-            TextView room = (TextView) item.findViewById(R.id.LECTUREITEM_textView_Room);
-            room.setText(roomName);
-
-            TextView professor = (TextView) item.findViewById(R.id.LECTUREITEM_textView_Professor);
-            professor.setText(professorName);
+        if (numOverlapse == 0) { //caso in cui non ci sono sovrapposizioni di orario
+            View item = setFields(lecture,0);
 
             item.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     final Dialog lectureDialog = new Dialog(getActivity());
-                    View dialogItem = getActivity().getLayoutInflater().inflate(R.layout.lecture_item_dialog, null);
 
-                    TextView title = (TextView) dialogItem.findViewById(R.id.LECTUREITEM_textView_courseName);
-                    title.setText(name);
-
-                    TextView dayAndSchedule = (TextView) dialogItem.findViewById(R.id.LECTUREITEM_textView_schedule);
-                    dayAndSchedule.setText(timeTable);
-
-                    TextView room = (TextView) dialogItem.findViewById(R.id.LECTUREITEM_textView_Room);
-                    room.setText(roomName);
-
-                    TextView professor = (TextView) dialogItem.findViewById(R.id.LECTUREITEM_textView_Professor);
-                    professor.setText(professorName);
-
+                    View dialogItem = setFields(lecture,1);
                     lectureDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
                     lectureDialog.getWindow().setLayout(WindowManager.LayoutParams.WRAP_CONTENT, WindowManager.LayoutParams.WRAP_CONTENT);
                     lectureDialog.setContentView(dialogItem);
@@ -237,47 +208,37 @@ public class LectureDisplayFragment extends Fragment {
             });
             RelativeLayout.LayoutParams param = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, (int) (lect.getSchedule().getMinuteDuration() * density));
             param.setMargins(0, (int) (lect.getSchedule().getStartPxl() * density), 0, 0);
-
             container.addView(item, param);
 
-        } else {
+
+        } else { //caso in cui ho almeno una sovrapposizione
             ArrayList<Lecture> tempArray = lect.getLectureOverlapse();
             tempArray.add(lect);
             Collections.sort(tempArray, new hourComparator());
 
-            final int duration = (60 - tempArray.get(0).getSchedule().getStartMinute()) + tempArray.get(numOverlapse - 1).getSchedule().getEndMinute() + 60 * (tempArray.get(numOverlapse - 1).getSchedule().getEndHour() - tempArray.get(0).getSchedule().getStartHour() - 1);
-            RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, (int) (duration * density));
+            final int overlapseDuration = (60 - tempArray.get(0).getSchedule().getStartMinute()) + tempArray.get(numOverlapse - 1).getSchedule().getEndMinute() + 60 * (tempArray.get(numOverlapse - 1).getSchedule().getEndHour() - tempArray.get(0).getSchedule().getStartHour() - 1);
+            RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, (int) (overlapseDuration * density));
             layoutParams.setMargins(0, (int) (tempArray.get(0).getSchedule().getStartPxl() * density), 0, 0);
-            //container.setLayoutParams(layoutParams);
 
+            //container.setLayoutParams(layoutParams);
             //container.setLayoutParams(param);
             //LinearLayout allViews = new LinearLayout(GlobalData.getContext());
-            GridLayout itemContainer = new GridLayout(GlobalData.getContext());
-            int previous_id=0;
+
+            //GridLayout itemContainer = new GridLayout(GlobalData.getContext());
+            LinearLayout itemContainer = new LinearLayout(GlobalData.getContext());
+            //itemContainer.setWeightSum(numOverlapse+1);
 
             for(int i = 0; i< tempArray.size(); i++) {
                 final Lecture l = tempArray.get(i);
                 if (!l.isShown()) {
                     l.setShown(true);
 
-                    RelativeLayout temp = new RelativeLayout(GlobalData.getContext());
-                    itemContainer.setColumnCount(numOverlapse+1);
-                    itemContainer.setRowCount(1);
-                    View item = getActivity().getLayoutInflater().inflate(R.layout.lecture_item, null);
+                    //itemContainer.setColumnCount(numOverlapse+1);
+                    //itemContainer.setRowCount(1);
 
-                    TextView title = (TextView) item.findViewById(R.id.LECTUREITEM_textView_courseName);
-                    title.setText(String.valueOf(numOverlapse));
+                    View item = setFields(l,0);
 
-                    TextView dayAndSchedule = (TextView) item.findViewById(R.id.LECTUREITEM_textView_schedule);
-                    dayAndSchedule.setText(String.valueOf(duration));
-
-                    TextView room = (TextView) item.findViewById(R.id.LECTUREITEM_textView_Room);
-                    room.setText(l.getRoomName());
-
-                    TextView professor = (TextView) item.findViewById(R.id.LECTUREITEM_textView_Professor);
-                    professor.setText(l.getProfessor());
-
-                    RelativeLayout.LayoutParams itemParams = new  RelativeLayout.LayoutParams( RelativeLayout.LayoutParams.MATCH_PARENT,  (int)(lect.getSchedule().getMinuteDuration()*density));
+                    LinearLayout.LayoutParams itemParams = new  LinearLayout.LayoutParams( RelativeLayout.LayoutParams.MATCH_PARENT,  (int)(lect.getSchedule().getMinuteDuration()*density), .3f);
                     //itemParams.setMargins(0, (int)(lect.getSchedule().getStartPxl()*density),0,0);
                     item.setLayoutParams(itemParams);
 
@@ -285,19 +246,8 @@ public class LectureDisplayFragment extends Fragment {
                         @Override
                         public void onClick(View v) {
                             final Dialog lectureDialog = new Dialog(getActivity());
-                            View dialogItem = getActivity().getLayoutInflater().inflate(R.layout.lecture_item_dialog, null);
 
-                            TextView title = (TextView) dialogItem.findViewById(R.id.LECTUREITEM_textView_courseName);
-                            title.setText(l.getCourseName());
-
-                            TextView dayAndSchedule = (TextView) dialogItem.findViewById(R.id.LECTUREITEM_textView_schedule);
-                            dayAndSchedule.setText(l.getTimeTable());
-
-                            TextView room = (TextView) dialogItem.findViewById(R.id.LECTUREITEM_textView_Room);
-                            room.setText(l.getRoomName());
-
-                            TextView professor = (TextView) dialogItem.findViewById(R.id.LECTUREITEM_textView_Professor);
-                            professor.setText(l.getProfessor());
+                            View dialogItem = setFields(l,1);
 
                             lectureDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
                             lectureDialog.getWindow().setLayout(WindowManager.LayoutParams.WRAP_CONTENT, WindowManager.LayoutParams.WRAP_CONTENT);
@@ -319,13 +269,11 @@ public class LectureDisplayFragment extends Fragment {
                     }
                     previous_id = item.getId();*/
                     //item.setLayoutParams(itemParams);
-                    temp.addView(item, itemParams);
 
-                    GridLayout.Spec rowSpan = GridLayout.spec(0, 1);
-                    GridLayout.Spec colspan = GridLayout.spec(i, 1);
-                    GridLayout.LayoutParams gridParam = new GridLayout.LayoutParams(
-                            rowSpan, colspan);
-                    itemContainer.addView(temp, i, gridParam);
+                    //GridLayout.Spec rowSpan = GridLayout.spec(0, 1);
+                    //GridLayout.Spec colspan = GridLayout.spec(i, 1);
+                    //GridLayout.LayoutParams gridParam = new GridLayout.LayoutParams(rowSpan, colspan);
+                    itemContainer.addView(item, itemParams);
 
                 }
                 container.removeAllViews();
@@ -334,6 +282,32 @@ public class LectureDisplayFragment extends Fragment {
             }
         }
         return container;
+    }
+
+
+
+
+    private View setFields(Lecture l, int type){ //metodo utilizzato per riempire i campi delle viste di ogni lezione. Type == 0 --> lecture_ite, Type == 1 --> lecture_dialog_item
+        View item;
+        if(type == 0) {
+            item = getActivity().getLayoutInflater().inflate(R.layout.lecture_item, null);
+        }else{
+            item = getActivity().getLayoutInflater().inflate(R.layout.lecture_item_dialog, null);
+        }
+
+        TextView title = (TextView) item.findViewById(R.id.LECTUREITEM_textView_courseName);
+        title.setText(String.valueOf(l.getCourseName()));
+
+        TextView dayAndSchedule = (TextView) item.findViewById(R.id.LECTUREITEM_textView_schedule);
+        dayAndSchedule.setText(l.getTimeTable());
+
+        TextView room = (TextView) item.findViewById(R.id.LECTUREITEM_textView_Room);
+        room.setText(l.getRoomName());
+
+        TextView professor = (TextView) item.findViewById(R.id.LECTUREITEM_textView_Professor);
+        professor.setText(l.getProfessor());
+
+        return item;
     }
 
 
