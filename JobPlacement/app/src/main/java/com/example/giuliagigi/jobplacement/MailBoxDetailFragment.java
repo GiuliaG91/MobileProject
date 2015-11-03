@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -44,20 +45,25 @@ import static java.util.Calendar.YEAR;
  */
 public class MailBoxDetailFragment extends Fragment {
 
-    public static final String RECIPIENTS_KEY = "recipients";
+    private static final String BUNDLE_IDENTIFIER_HEADER = "mailboxDetail_bundle";
+    private static final String BUNDLE_IDENTIFIER_TAIL_KEY = "mailboxDetail_bundle_id_tail";
+    private static final String BUNDLE_KEY_MESSAGE = "mailboxDetail_bundle_message";
+
+
     View root;
     InboxMessage message;
     GlobalData globalData;
-    User sender;
-
     FragmentActivity activity;
+    String bundleIdentifierTail;
 
-
-    /* ------------------------- CONSTRUCTORS, SETTERS ------------------------------------------- */
+    /* -------------------------------------------------------------------------------------------------------------------- */
+    /* ----------------------- CONSTRUCTORS, SETTERS ---------------------------------------------------------------------- */
+    /* -------------------------------------------------------------------------------------------------------------------- */
 
     public static MailBoxDetailFragment newInstance(InboxMessage message) {
         MailBoxDetailFragment fragment = new MailBoxDetailFragment();
         fragment.message = message;
+        fragment.bundleIdentifierTail = fragment.message.toString();
         return fragment;
     }
 
@@ -66,23 +72,33 @@ public class MailBoxDetailFragment extends Fragment {
     }
 
 
-    /* ------------------------- STANDARD CALLBACKS ---------------------------------------------- */
+    public InboxMessage getMessage(){
+        return message;
+    }
+
+
+    /* --------------------------------------------------------------------------------------------------------------------- */
+    /* ----------------------- STANDARD CALLBACKS -------------------------------------------------------------------------- */
+    /* --------------------------------------------------------------------------------------------------------------------- */
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setHasOptionsMenu(true);
+        Log.println(Log.ASSERT, "MAILBOXDETAIL", "onCreate");
 
+        setHasOptionsMenu(true);
         globalData = (GlobalData)getActivity().getApplication();
         activity = this.getActivity();
-
-        if(message == null){
-            getFragmentManager().popBackStackImmediate();
-        }
-
-        sender = message.getSender().getUser();
     }
+
+
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater menuInflater){
+        menu.clear();
+    }
+
 
 
     @Override
@@ -91,8 +107,21 @@ public class MailBoxDetailFragment extends Fragment {
 
         root = inflater.inflate(R.layout.fragment_mail_box_detail,container,false);
 
+        if(savedInstanceState != null){
+
+            bundleIdentifierTail = savedInstanceState.getString(BUNDLE_IDENTIFIER_TAIL_KEY);
+
+            MyBundle b = globalData.getBundle(BUNDLE_IDENTIFIER_HEADER + bundleIdentifierTail);
+            if(b != null){
+
+                Log.println(Log.ASSERT, "MAILBOXDETAIL", "found a bundle");
+                message = (InboxMessage)b.get(BUNDLE_KEY_MESSAGE);
+            }
+        }
 
         // ------------------------ set profile photo ----------------------------------
+        User sender = message.getSender().getUser();
+
         if(sender.getProfilePhoto() != null) {
             ImageView img = (ImageView) root.findViewById(R.id.sender_img);
             img.setImageBitmap(sender.getProfilePhoto());
@@ -252,13 +281,21 @@ public class MailBoxDetailFragment extends Fragment {
         return root;
     }
 
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
 
-    public void onCreateOptionsMenu(Menu menu, MenuInflater menuInflater){
-        menu.clear();
-//        menuInflater.inflate(R.menu.menu_mail_box_detail, menu);
+        Log.println(Log.ASSERT,"MAILBOXDETAIL", "saving message to bundle");
+        MyBundle b = globalData.addBundle(BUNDLE_IDENTIFIER_HEADER + bundleIdentifierTail);
+        b.put(MailBoxFragment.BUNDLE_KEY_MESSAGE,message);
 
+        outState.putString(BUNDLE_IDENTIFIER_TAIL_KEY, bundleIdentifierTail);
     }
 
+
+    /* --------------------------------------------------------------------------------------------------------------------- */
+    /* ----------------------- ADAPTERS ------------------------------------------------------------------------------------ */
+    /* --------------------------------------------------------------------------------------------------------------------- */
 
     private class StringAdapter extends BaseAdapter {
 

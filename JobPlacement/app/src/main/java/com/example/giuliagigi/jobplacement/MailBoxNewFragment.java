@@ -18,7 +18,6 @@ import android.widget.Toast;
 
 import com.parse.ParseException;
 import com.parse.ParseInstallation;
-import com.parse.ParseObject;
 import com.parse.ParsePush;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
@@ -35,15 +34,28 @@ import java.util.StringTokenizer;
 
 public class MailBoxNewFragment extends Fragment {
 
+    private static final String BUNDLE_IDENTIFIER_HEADER = "mailboxNew_bundle";
+    private static final String RECIPIENTS_KEY = "mailboxNew_bundle_recipients";
+    private static final String OBJECT_KEY = "mailboxNew_bundle_object";
+    private static final String MESSAGE_TEXT_KEY = "mailboxNew_bundle_messageText";
+    private static final String BUNDLE_IDENTIFIER_TAIL_KEY = "mailboxNew_bundle_id_tail";
+
     View root;
     InboxMessage message;
     GlobalData globalData;
     FragmentActivity activity;
     Boolean sendFlag;
+    String bundleIdentifierTail;
+
+
+    EditText recipientsEdit, objectEdit, messageTextEdit;
 
     ArrayList<ParseUserWrapper> recipients;
     String object, messageText;
 
+    /* -------------------------------------------------------------------------------------------------------------------- */
+    /* ----------------------- CONSTRUCTORS, SETTERS ---------------------------------------------------------------------- */
+    /* -------------------------------------------------------------------------------------------------------------------- */
 
     public static MailBoxNewFragment newInstance(){
 
@@ -54,79 +66,90 @@ public class MailBoxNewFragment extends Fragment {
         MailBoxNewFragment fragment = new MailBoxNewFragment();
 
         fragment.message = new InboxMessageSent();
+        fragment.bundleIdentifierTail = fragment.message.toString();
         fragment.sendFlag = false;
 
         fragment.recipients = recipients;
-//        if(recipients != null)
-//            for(ParseUserWrapper p : recipients)
-//                fragment.message.addRecipient(p);
 
-//        if(object != null)
-//            fragment.message.setObject(object);
+        if(object != null)
+            fragment.object = object;
+        else
+            fragment.object = "";
 
-
-
-        if(oldMessage != null){
-
+        if(oldMessage != null)
             fragment.messageText = oldMessage;
-//            fragment.message.setBodyMessage(messageText);
-        }
-        else{
-
-//            fragment.message.setBodyMessage("");
-            fragment.messageText = oldMessage;
-        }
+        else
+            fragment.messageText = "";
 
         return fragment;
     }
 
-    public MailBoxNewFragment() {
-        // Required empty public constructor
-    }
+    public MailBoxNewFragment() {}
 
+
+    /* --------------------------------------------------------------------------------------------------------------------- */
+    /* ----------------------- STANDARD CALLBACKS -------------------------------------------------------------------------- */
+    /* --------------------------------------------------------------------------------------------------------------------- */
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
+        Log.println(Log.ASSERT, "MAILBOXNEW", "onCreate");
 
         setHasOptionsMenu(true);
-
         globalData = (GlobalData)getActivity().getApplication();
         activity = this.getActivity();
 
-        message.setSender(globalData.getCurrentUser());
-
-
     }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
+        // 1) finding UI elements ----------------------------------------------------------------------------------------
         globalData.setToolbarTitle(getString(R.string.new_message_toolbar_title));
         root = inflater.inflate(R.layout.fragment_mail_box_new,container,false);
+        recipientsEdit = (EditText)root.findViewById(R.id.recipients_list_new_message);
+        objectEdit = (EditText) root.findViewById(R.id.object_new_message);
+        messageTextEdit = (EditText) root.findViewById(R.id.body_new_message);
 
-        if(recipients != null && recipients.size() > 0){
+        // 2) setting view -----------------------------------------------------------------------------------------------
+        if(savedInstanceState != null){ // restoring state after rotation //////////////////////////////////////
 
-            EditText ed = (EditText)root.findViewById(R.id.recipients_list_new_message);
+            bundleIdentifierTail = savedInstanceState.getString(BUNDLE_IDENTIFIER_TAIL_KEY);
+            Log.println(Log.ASSERT, "MAILBOXNEW", "looking for a bundle with key: " + BUNDLE_IDENTIFIER_HEADER +bundleIdentifierTail);
+            MyBundle b = globalData.getBundle(BUNDLE_IDENTIFIER_HEADER + bundleIdentifierTail);
 
-            String recipientsMails = "";
-            for(ParseUserWrapper p: recipients)
-                recipientsMails = recipientsMails + p.getEmail() + "   ";
+            if(b!= null){
 
-            ed.setText(recipientsMails);
+                Log.println(Log.ASSERT, "MAILBOXNEW", "bundle found");
+                recipientsEdit.setText(b.getString(RECIPIENTS_KEY));
+                objectEdit.setText(b.getString(OBJECT_KEY));
+                messageTextEdit.setText(b.getString(MESSAGE_TEXT_KEY));
+            }
+        }
+        else { // view is initialized for the first time (using constructor parameters) //////
+
+            if(recipients != null && recipients.size() > 0){
+
+                String recipientsMails = "";
+                for(ParseUserWrapper p: recipients)
+                    recipientsMails = recipientsMails + p.getEmail() + "   ";
+
+                recipientsEdit.setText(recipientsMails);
+            }
+
+            if(object != null && object.length() > 0)
+                objectEdit.setText(object);
+
+            if(messageText != null && messageText.length() > 0)
+                messageTextEdit.setText(messageText);
         }
 
-        if(object != null && object.length() > 0){
-            EditText ed = (EditText) root.findViewById(R.id.object_new_message);
-            ed.setText(object);
-        }
 
-        if(messageText != null && messageText.length() > 0){
-            EditText ed = (EditText) root.findViewById(R.id.body_new_message);
-            ed.setText(messageText);
-        }
-
+        // 3) setting buttons ---------------------------------------------------------------------------------------------
         final Button send = (Button) root.findViewById(R.id.send_new_message_btn);
         send.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -313,42 +336,20 @@ public class MailBoxNewFragment extends Fragment {
             }
         });
 
-        if(savedInstanceState != null){
-
-            // setto lista recipients col contenuto già inserito dall'utente
-            EditText ed = (EditText)root.findViewById(R.id.recipients_list_new_message);
-            ed.setText(savedInstanceState.getString("recipients"));
-
-            // setto object col contenuto già inserito dall'utente
-            ed = (EditText)root.findViewById(R.id.object_new_message);
-            ed.setText(savedInstanceState.getString("object"));
-
-            //setto body message con il contenuto già inserito dall'utente
-            ed = (EditText)root.findViewById(R.id.body_new_message);
-            ed.setText(savedInstanceState.getString("bodyMessage"));
-
-        }
-
         ((Toolbar)activity.findViewById(R.id.toolbar)).setTitle(activity.getResources().getString(R.string.new_message_toolbar_title));
-
         return root;
     }
 
+
     public void onSaveInstanceState(Bundle savedInstanceState){
 
-        savedInstanceState.putString("recipients", ((EditText)root.findViewById(R.id.recipients_list_new_message)).getText().toString());
-        savedInstanceState.putString("object", ((EditText)root.findViewById(R.id.object_new_message)).getText().toString());
-        savedInstanceState.putString("bodyMessage", ((EditText)root.findViewById(R.id.body_new_message)).getText().toString());
+        Log.println(Log.ASSERT,"MAILBOXDETAIL", "saving to bundle with key: " + BUNDLE_IDENTIFIER_HEADER + bundleIdentifierTail);
+        MyBundle b = globalData.addBundle(BUNDLE_IDENTIFIER_HEADER + bundleIdentifierTail);
+        b.putString(OBJECT_KEY, objectEdit.getText().toString());
+        b.putString(MESSAGE_TEXT_KEY, messageTextEdit.getText().toString());
+        b.putString(RECIPIENTS_KEY, recipientsEdit.getText().toString());
 
-    }
-
-    private static boolean isMailPresent(String mail, List<ParseObject> userList){
-
-        for(ParseObject u: userList){
-            if(((User)u).getMail().equals(mail)) return true;
-        }
-
-        return false;
+        savedInstanceState.putString(BUNDLE_IDENTIFIER_TAIL_KEY, bundleIdentifierTail);
     }
 
 }

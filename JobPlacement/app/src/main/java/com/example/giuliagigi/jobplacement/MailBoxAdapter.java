@@ -153,19 +153,6 @@ public class MailBoxAdapter extends RecyclerView.Adapter<MailBoxAdapter.ViewHold
 
         });
 
-//        // 5) displaying the message text (if any)
-//        if(holder.message != null && messageList.get(position).getBodyMessage() != null) {
-//
-//            String messageText = messageList.get(position).getBodyMessage();
-//
-//            if (messageText.length() < 25) {
-//                holder.message.setText(messageText);
-//            }
-//            else {
-//                holder.message.setText(messageText.substring(0, 24) + "...");
-//            }
-//        }
-
         // 6) displaying the message text (if any)
         holder.position = position;
         if(messageList.get(position).getType().equals(InboxMessage.TYPE_RECEIVED)){
@@ -242,13 +229,11 @@ public class MailBoxAdapter extends RecyclerView.Adapter<MailBoxAdapter.ViewHold
     @Override
     public void onClick(View v) {
 
+        // 1) obtain message
         ViewHolder vh = (ViewHolder)v.getTag();
-
-//        messageList.get(vh.position).setIsRead(true);
-//        messageList.get(vh.position).saveInBackground();
-//        globalData.setCurrentViewMessage(messageList.get(vh.position));
-
         MailBoxDetailFragment fragment = MailBoxDetailFragment.newInstance(messageList.get(vh.position));
+
+
 
         FragmentManager fragmentManager = activity.getSupportFragmentManager();
         fragmentManager.beginTransaction()

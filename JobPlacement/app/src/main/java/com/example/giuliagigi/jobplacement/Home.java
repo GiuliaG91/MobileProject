@@ -301,10 +301,10 @@ public class Home extends ActionBarActivity
 
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
 
-        Bundle data = new Bundle();
-        ArrayList<String> recipients = new ArrayList<String>();
-        recipients.add(user.getMail());
-        data.putStringArrayList(MailBoxDetailFragment.RECIPIENTS_KEY, recipients);
+//        Bundle data = new Bundle();
+//        ArrayList<String> recipients = new ArrayList<String>();
+//        recipients.add(user.getMail());
+//        data.putStringArrayList(MailBoxDetailFragment.RECIPIENTS_KEY, recipients);
 
         MailBoxNewFragment mailbox = MailBoxNewFragment.newInstance();
         ft.replace(R.id.tab_Home_container,mailbox);

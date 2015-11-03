@@ -255,7 +255,7 @@ public class GlobalData extends Application {
     }
 
 
-    /* ----------------- PROFILE BUNDLE --------------------------------------------------------- */
+    /* ----------------- BUNDLE --------------------------------------------------------- */
 
     public MyBundle addBundle(String key){
 
