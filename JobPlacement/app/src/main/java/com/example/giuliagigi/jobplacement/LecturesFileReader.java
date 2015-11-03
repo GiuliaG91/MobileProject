@@ -36,6 +36,7 @@ public class LecturesFileReader {
     private HashMap<String,Course> courses;
 
 
+
     /*  CONSTRUCTOR     */
 
     public LecturesFileReader(){
@@ -154,6 +155,43 @@ public class LecturesFileReader {
         }
 
         return retrievedCourses;
+    }
+
+    public ArrayList<String> getAutocompleteCourses(){
+        ArrayList<Course> allCourses = new ArrayList<Course>(courses.values());
+        ArrayList<String> coursesName = new ArrayList<>();
+
+        for(int i = 0; i < allCourses.size(); i++){
+            String name = allCourses.get(i).getName();
+            if(!coursesName.contains(name)){
+                coursesName.add(name);
+            }
+        }
+
+        return coursesName;
+    }
+
+    public ArrayList<String> getAutocompleteProfessors(){
+        ArrayList<Course> allCourses = new ArrayList<Course>(courses.values());
+        ArrayList<String> professorsName = new ArrayList<>();
+
+        for(int i = 0; i < allCourses.size(); i++){
+            String name = allCourses.get(i).getProfessor();
+            if(!professorsName.contains(name)){
+                professorsName.add(name);
+            }
+        }
+
+        return professorsName;
+    }
+
+    public String getProfessorByCourse(String course){
+        ArrayList<Course> allCourses = getCoursesByName(course);
+        if(allCourses.size()==1) {
+            String professor = allCourses.get(0).getProfessor();
+            return professor;
+        }
+        return null;
     }
 
     //////////////////////////////////////////////////////////////////////////////////

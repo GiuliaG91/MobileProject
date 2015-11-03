@@ -11,6 +11,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
@@ -23,8 +25,9 @@ public class LectureSearch extends Fragment {
     private static final String TAG = "Main activity - LOG: ";
 
     Button display;
-    EditText etCourse, etProfessor;
+    AutoCompleteTextView etCourse, etProfessor;
     FrameLayout lectureDisplayContainer;
+    private LecturesFileReader lecturesFileReader;
 
     public static LectureSearch newInstance(){
 
@@ -42,6 +45,9 @@ public class LectureSearch extends Fragment {
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
+        GlobalData app = (GlobalData)activity.getApplicationContext();
+        lecturesFileReader = app.getLecturesFileReader();
+
 
     }
 
@@ -51,15 +57,23 @@ public class LectureSearch extends Fragment {
         View root = inflater.inflate(R.layout.timetable_search, container, false);
 
         display = (Button)root.findViewById(R.id.displayButton);
-        etCourse = (EditText)root.findViewById(R.id.editTextCourse);
-        etProfessor = (EditText)root.findViewById(R.id.editTextProfessor);
+        etCourse = (AutoCompleteTextView)root.findViewById(R.id.editTextCourse);
+        etProfessor = (AutoCompleteTextView)root.findViewById(R.id.editTextProfessor);
         lectureDisplayContainer = (FrameLayout)root.findViewById(R.id.lecture_display_container);
+
+        ArrayAdapter<String> adapterCourses = new ArrayAdapter<String>(GlobalData.getContext(),R.layout.row_spinner, lecturesFileReader.getAutocompleteCourses());
+        etCourse.setAdapter(adapterCourses);
+
+
+        ArrayAdapter<String> adapterProfessors = new ArrayAdapter<String>(GlobalData.getContext(),R.layout.row_spinner, lecturesFileReader.getAutocompleteProfessors());
+        etProfessor.setAdapter(adapterProfessors);
 
         display.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 String requestedCourse = etCourse.getText().toString();
+
                 String requestedProfessor = etProfessor.getText().toString();
 
                 Log.println(Log.ASSERT, TAG, "Recovering information from the model");
@@ -83,6 +97,11 @@ public class LectureSearch extends Fragment {
             public void onTextChanged(CharSequence s, int start, int before, int count) {
 
                 display.setEnabled(!etCourse.getText().toString().trim().isEmpty() || !etProfessor.getText().toString().trim().isEmpty());
+
+                if(lecturesFileReader.getProfessorByCourse(etCourse.getText().toString())!=null){
+                    etProfessor.setText(lecturesFileReader.getProfessorByCourse(etCourse.getText().toString()));
+                }
+
             }
         });
 
