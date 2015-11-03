@@ -154,14 +154,11 @@ public class MailBoxDetailFragment extends Fragment {
 //                recipients[i] = message.getRecipients().get(i);
 
 
-        ArrayList<String> recipients = new ArrayList<String>();
+        String[] recipients = new String[message.getRecipients().size()];
+        for(int i = 0; i< recipients.length; i++)
+            recipients[i] = message.getRecipients().get(i).getEmail();
 
-        for(ParseUserWrapper p: message.getRecipients()){
-
-            recipients.add(p.getEmail());
-        }
-
-        sp.setAdapter(new StringAdapter((String[])recipients.toArray()));
+        sp.setAdapter(new StringAdapter(recipients));
 
         //set date
         tv = (TextView) root.findViewById(R.id.date_tv);

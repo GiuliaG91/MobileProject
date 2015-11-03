@@ -263,8 +263,6 @@ public class MailBoxReceivedAdapter extends RecyclerView.Adapter<MailBoxReceived
 
         Toolbar toolbar = globalData.getToolbar();
         toolbar.setTitle(vh.object.getText());
-
-
     }
 
     public ArrayList<InboxMessageReceived> getMessageList(){

@@ -9,6 +9,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -127,7 +128,7 @@ public class MailBoxFragment extends Fragment {
                 new ParseQueryAdapter.QueryFactory<InboxMessageReceived>() {
                     public ParseQuery create() {
 
-                        ParseQuery query = new ParseQuery("InboxMessageReceived");
+                        ParseQuery<InboxMessageReceived> query = new ParseQuery<InboxMessageReceived>(InboxMessageReceived.class);
                         query.whereEqualTo(InboxMessageReceived.OWNER, globalData.getCurrentUser());
                         return query;
                     }
@@ -137,8 +138,8 @@ public class MailBoxFragment extends Fragment {
                 new ParseQueryAdapter.QueryFactory<InboxMessageSent>() {
                     public ParseQuery create() {
 
-                        ParseQuery query = new ParseQuery("InboxMessage");
-                        query.whereEqualTo(InboxMessageSent.SENDER, globalData.getCurrentUser());
+                        ParseQuery<InboxMessageSent> query = new ParseQuery<InboxMessageSent>(InboxMessageSent.class);
+                        query.whereEqualTo(InboxMessage.SENDER, globalData.getCurrentUser());
                         return query;
                     }
                 };
@@ -150,7 +151,6 @@ public class MailBoxFragment extends Fragment {
         queryAdapterSent = new ParseQueryAdapter<>(getActivity(), factorySent);
         queryAdapterSent.setObjectsPerPage(15);
         queryAdapterSent.addOnQueryLoadListener(new OnQueryLoadListenerSent());
-
 
         adapterReceived = new MailBoxReceivedAdapter(this.getActivity());
         adapterSent = new MailBoxSentAdapter(this.getActivity());
@@ -164,9 +164,10 @@ public class MailBoxFragment extends Fragment {
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
 
-                int total=   mLayoutManager.getItemCount();
-                if(mLayoutManager.findLastVisibleItemPosition()== total-1)
-                {
+                int total = mLayoutManager.getItemCount();
+
+                if(mLayoutManager.findLastVisibleItemPosition()== total-1){
+
                     if(mRecyclerView.getAdapter() instanceof MailBoxReceivedAdapter)
                         queryAdapterReceived.loadNextPage();
                     else
@@ -211,8 +212,8 @@ public class MailBoxFragment extends Fragment {
             public void onClick(View v) {
 
                 if(mRecyclerView.getAdapter() instanceof MailBoxReceivedAdapter) {
-                    adapterReceived.resetMessageList();
 
+                    adapterReceived.resetMessageList();
                     mRecyclerView.setAdapter(adapterSent);
                     queryAdapterSent.loadObjects();
 
