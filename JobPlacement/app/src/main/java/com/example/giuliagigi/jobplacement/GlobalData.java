@@ -4,6 +4,7 @@ import android.app.Application;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.res.AssetManager;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -69,6 +70,7 @@ public class GlobalData extends Application {
     public static final String BUNDLE_KEY_CONTAINS_PROFESSOR_NAME = "TIMETABLE_APPLICATION_isProfessorRequested";
     public static final String BUNDLE_KEY_LECTURE_OBJECT = "TIMETABLE_APPLICATION_LectureObject";
     private LecturesFileReader lecturesFileReader;
+    private boolean lectureFileReadingComplete = false;
     private static AssetManager assetManager;
     
     
@@ -80,7 +82,25 @@ public class GlobalData extends Application {
 
         applicationContext = getApplicationContext();
         assetManager = applicationContext.getAssets();
+
+        // reading json file in a secondary thread ------------------------------------------------
         lecturesFileReader = new LecturesFileReader();
+        AsyncTask<Void, Boolean, Void> fileReadingTask = new AsyncTask<Void, Boolean, Void>() {
+            @Override
+            protected Void doInBackground(Void... params) {
+                lecturesFileReader.readCoursesFromFile();
+                return null;
+            }
+
+            @Override
+            protected void onPostExecute(Void aVoid) {
+                super.onPostExecute(aVoid);
+                lectureFileReadingComplete = true;
+            }
+        };
+        fileReadingTask.execute();
+        // ----------------------------------------------------------------------------------------
+
 //        currentUser = null;
         currentUserObject = null;
         currentViewMessage = null;

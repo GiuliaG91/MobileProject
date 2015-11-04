@@ -34,15 +34,13 @@ public class LecturesFileReader {
     /* DATA FIELDS        */
 
     private HashMap<String,Course> courses;
-
-
+    private ArrayList<String> courseNames, professorNames;
 
     /*  CONSTRUCTOR     */
 
     public LecturesFileReader(){
 
         courses = new HashMap<String,Course>();
-        readCoursesFromFile();
     }
 
 
@@ -157,32 +155,40 @@ public class LecturesFileReader {
         return retrievedCourses;
     }
 
-    public ArrayList<String> getAutocompleteCourses(){
+    public ArrayList<String> getCourseNames(){
+
+        if(this.courseNames != null) return  this.courseNames;
+
         ArrayList<Course> allCourses = new ArrayList<Course>(courses.values());
-        ArrayList<String> coursesName = new ArrayList<>();
+        ArrayList<String> coursesNames = new ArrayList<>();
 
         for(int i = 0; i < allCourses.size(); i++){
             String name = allCourses.get(i).getName();
-            if(!coursesName.contains(name)){
-                coursesName.add(name);
+            if(!coursesNames.contains(name)){
+                coursesNames.add(name);
             }
         }
 
-        return coursesName;
+        this.courseNames = coursesNames;
+        return coursesNames;
     }
 
-    public ArrayList<String> getAutocompleteProfessors(){
+    public ArrayList<String> getProfessorNames(){
+
+        if(this.professorNames != null) return professorNames;
+
         ArrayList<Course> allCourses = new ArrayList<Course>(courses.values());
-        ArrayList<String> professorsName = new ArrayList<>();
+        ArrayList<String> professorNames = new ArrayList<>();
 
         for(int i = 0; i < allCourses.size(); i++){
             String name = allCourses.get(i).getProfessor();
-            if(!professorsName.contains(name)){
-                professorsName.add(name);
+            if(!professorNames.contains(name)){
+                professorNames.add(name);
             }
         }
 
-        return professorsName;
+        this.professorNames = professorNames;
+        return professorNames;
     }
 
     public String getProfessorByCourse(String course){
@@ -351,7 +357,7 @@ public class LecturesFileReader {
         return c;
     }
 
-    private void readCoursesFromFile(){
+    public void readCoursesFromFile(){
 
         try{
 

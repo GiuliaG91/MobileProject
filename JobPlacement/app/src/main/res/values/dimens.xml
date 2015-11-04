@@ -15,9 +15,9 @@
 
 
 
-    <dimen name = "textView_textSize">28dp</dimen>
-    <dimen name = "button_textSize">25dp</dimen>
-    <dimen name = "editText_textSize">22dp</dimen>
+    <dimen name = "textView_textSize">20dp</dimen>
+    <dimen name = "button_textSize">20dp</dimen>
+    <dimen name = "editText_textSize">15dp</dimen>
 
     <dimen name = "DAY_textSize">35sp</dimen>
     <dimen name = "LECTUREITEM_Title_textSize">10dp</dimen>

@@ -32,6 +32,9 @@ import java.util.Comparator;
  */
 public class LectureDisplayFragment extends Fragment {
 
+    private static final String BUNDLE_KEY_COURSE = "lectureDisplay_bundle_course";
+    private static final String BUNDLE_KEY_PROFESSOR = "lectureDisplay_bundle_professor";
+
     private static final String TAG = "Week Display Activity - LOG: ";
     private RelativeLayout[] lecturesRelativeLayouts = new RelativeLayout[5];
     private LecturesFileReader lecturesFileReader;
@@ -65,19 +68,20 @@ public class LectureDisplayFragment extends Fragment {
     public void onAttach(Activity activity) {
 
         super.onAttach(activity);
-        Log.println(Log.ASSERT,"LECTUREFRAGMENT", "lecture Fragment attach");
-//        setContentView(R.layout.calendar_week_view);
-
         GlobalData app = (GlobalData)activity.getApplicationContext();
         lecturesFileReader = app.getLecturesFileReader();
-
-
     }
 
     // --------- END ON CREATE -----------------------------------------------------------
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+
+        if(savedInstanceState != null){
+
+            course = savedInstanceState.getString(BUNDLE_KEY_COURSE);
+            professor = savedInstanceState.getString(BUNDLE_KEY_PROFESSOR);
+        }
 
         View root = inflater.inflate(R.layout.calendar_week_view, container, false);
 
@@ -86,21 +90,6 @@ public class LectureDisplayFragment extends Fragment {
         lecturesRelativeLayouts[2] = (RelativeLayout)root.findViewById(R.id.wed_relative_layout);
         lecturesRelativeLayouts[3] = (RelativeLayout)root.findViewById(R.id.thu_relative_layout);
         lecturesRelativeLayouts[4] = (RelativeLayout)root.findViewById(R.id.fri_relative_layout);
-
-
-//        Bundle extras = getIntent().getExtras();
-//        String course = "Programmazione di sistema",professor = null;
-//
-//        if(extras.getBoolean(GlobalData.BUNDLE_KEY_CONTAINS_COURSE_NAME))
-//            requestedCourse = extras.getString(GlobalData.BUNDLE_KEY_COURSE_NAME);
-//        else
-//            requestedCourse = null;
-//
-//        if(extras.getBoolean(GlobalData.BUNDLE_KEY_CONTAINS_PROFESSOR_NAME))
-//            requestedProfessor = extras.getString(GlobalData.BUNDLE_KEY_PROFESSOR_NAME);
-//        else
-//            requestedProfessor = null;
-
 
         for(int i=0;i<5;i++){
 
@@ -130,16 +119,25 @@ public class LectureDisplayFragment extends Fragment {
         return root;
     }
 
+    // ------------- ON SAVE INSTANCE STATE ----------------------------------------------
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        outState.putString(BUNDLE_KEY_COURSE,course);
+        outState.putString(BUNDLE_KEY_PROFESSOR,professor);
+    }
+
+
+    // --------- END ON SAVE INSTANCE STATE ----------------------------------------------
+
 
     // ------------- ON OPTIONS ITEM SELECTED --------------------------------------------
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
         }

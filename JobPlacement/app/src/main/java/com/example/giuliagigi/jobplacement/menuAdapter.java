@@ -201,6 +201,7 @@ public class menuAdapter extends RecyclerView.Adapter<menuAdapter.ViewHolder> {
 
                                         fragmentManager.beginTransaction()
                                                 .replace(R.id.tab_Home_container, fragment)
+                                                .addToBackStack("Home")
                                                 .commit();
 
                                     }

@@ -292,5 +292,36 @@
         "room": "10D"
       }
     ]
-  }
+  },
+  {
+      "code" : "02JGROX",
+      "name" : "Applicazioni Internet",
+      "professor" : "Enrico Masala",
+      "lectures" : [
+        {
+          "dayInWeek": "1",
+          "startHour": "13",
+          "startMinute": "0",
+          "endHour": "15",
+          "endMinute": "0",
+          "room": "4D"
+        },
+        {
+          "dayInWeek": "13",
+          "startHour": "10",
+          "startMinute": "0",
+          "endHour": "11",
+          "endMinute": "30",
+          "room": "4D"
+        },
+        {
+          "dayInWeek": "5",
+          "startHour": "13",
+          "startMinute": "0",
+          "endHour": "16",
+          "endMinute": "0",
+          "room": "4D"
+        }
+      ]
+    }
 ]

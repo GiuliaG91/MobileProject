@@ -1,66 +1,86 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<FrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:orientation="vertical"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    tools:context=".MainActivity"
-    android:weightSum="1"
-    android:background="#ffffff">
+    tools:context="com.example.giuliagigi.jobplacement.LectureSearch">
 
-    <TextView
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/Text_InsertCourse"
-        android:textSize="@dimen/textView_textSize"
-        android:layout_margin="5dp"
-        android:textColor="#002E6B"
-        android:id="@+id/textViewCourse" />
+        android:layout_height="match_parent"
+        android:background="@color/tabsColor">
 
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="@string/HINT_Course"
-        android:textSize="@dimen/editText_textSize"
-        android:textColor="#0050B8"
-        android:layout_margin="5dp"
-        android:id="@+id/editTextCourse" />
+        <LinearLayout
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/Text_InsertProfessor"
-        android:textSize="@dimen/textView_textSize"
-        android:textColor="#002E6B"
-        android:layout_margin="5dp"
-        android:id="@+id/textViewProfessor" />
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:paddingTop="@dimen/activity_vertical_margin"
+            android:paddingBottom="@dimen/activity_vertical_margin"
+            android:weightSum="1"
+            android:background="#ffffff">
 
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="@string/HINT_Professor"
-        android:textSize="@dimen/editText_textSize"
-        android:textColor="#0050B8"
-        android:layout_margin="5dp"
-        android:id="@+id/editTextProfessor"
-        />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/Text_InsertCourse"
+                android:textSize="@dimen/textView_textSize"
+                android:layout_margin="5dp"
+                android:textColor="#002E6B"
+                android:id="@+id/textViewCourse" />
 
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/button_searchButtonText"
-        android:id="@+id/displayButton"
-        android:textSize="@dimen/button_textSize"
-        android:layout_gravity="center_horizontal"
-        android:layout_weight="0.11"
-        android:textColor="#002E6B"
-        android:layout_margin="10dp"
-        android:background="@drawable/button_background"/>
+            <MultiAutoCompleteTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/HINT_Course"
+                android:textSize="@dimen/editText_textSize"
+                android:textColor="#0050B8"
+                android:layout_margin="5dp"
+                android:id="@+id/editTextCourse" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/Text_InsertProfessor"
+                android:textSize="@dimen/textView_textSize"
+                android:textColor="#002E6B"
+                android:layout_margin="5dp"
+                android:id="@+id/textViewProfessor" />
+
+            <MultiAutoCompleteTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/HINT_Professor"
+                android:textSize="@dimen/editText_textSize"
+                android:textColor="#0050B8"
+                android:layout_margin="5dp"
+                android:id="@+id/editTextProfessor"
+                />
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/button_searchButtonText"
+                android:id="@+id/displayButton"
+                android:textSize="@dimen/button_textSize"
+                android:layout_gravity="center_horizontal"
+                android:layout_weight="0.11"
+                android:textColor="#002E6B"
+                android:background="@drawable/button_background"/>
+
+            <FrameLayout
+                android:id="@+id/lecture_display_container"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"/>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</FrameLayout>
 
 
-</LinearLayout>
+
+
+

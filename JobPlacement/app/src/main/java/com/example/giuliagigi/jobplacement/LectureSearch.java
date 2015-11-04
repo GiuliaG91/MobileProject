@@ -14,7 +14,6 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.FrameLayout;
 
 /**
@@ -23,6 +22,7 @@ import android.widget.FrameLayout;
 public class LectureSearch extends Fragment {
 
     private static final String TAG = "Main activity - LOG: ";
+
 
     Button display;
     AutoCompleteTextView etCourse, etProfessor;
@@ -45,14 +45,16 @@ public class LectureSearch extends Fragment {
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
+
+        Log.println(Log.ASSERT,"LECTURESEARCH", "onAttach");
         GlobalData app = (GlobalData)activity.getApplicationContext();
         lecturesFileReader = app.getLecturesFileReader();
-
-
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+
+        Log.println(Log.ASSERT,"LECTURESEARCH", "onCreateView");
 
         View root = inflater.inflate(R.layout.timetable_search, container, false);
 
@@ -61,11 +63,11 @@ public class LectureSearch extends Fragment {
         etProfessor = (AutoCompleteTextView)root.findViewById(R.id.editTextProfessor);
         lectureDisplayContainer = (FrameLayout)root.findViewById(R.id.lecture_display_container);
 
-        ArrayAdapter<String> adapterCourses = new ArrayAdapter<String>(GlobalData.getContext(),R.layout.row_spinner, lecturesFileReader.getAutocompleteCourses());
+        ArrayAdapter<String> adapterCourses = new ArrayAdapter<String>(GlobalData.getContext(),R.layout.row_spinner, lecturesFileReader.getCourseNames());
         etCourse.setAdapter(adapterCourses);
 
 
-        ArrayAdapter<String> adapterProfessors = new ArrayAdapter<String>(GlobalData.getContext(),R.layout.row_spinner, lecturesFileReader.getAutocompleteProfessors());
+        ArrayAdapter<String> adapterProfessors = new ArrayAdapter<String>(GlobalData.getContext(),R.layout.row_spinner, lecturesFileReader.getProfessorNames());
         etProfessor.setAdapter(adapterProfessors);
 
         display.setOnClickListener(new View.OnClickListener() {
@@ -81,7 +83,7 @@ public class LectureSearch extends Fragment {
                 Log.println(Log.ASSERT, TAG, "Requested professor: " + requestedProfessor);
 
                 LectureDisplayFragment ldf = LectureDisplayFragment.newInstance(requestedCourse,requestedProfessor);
-                FragmentTransaction ft = getFragmentManager().beginTransaction();
+                FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
                 ft.replace(R.id.lecture_display_container, ldf);
                 ft.commit();
             }
@@ -121,77 +123,8 @@ public class LectureSearch extends Fragment {
         return root;
     }
 
-
     //////////////////////////////////////////////////////////////////////////////////////
     // ----------------- END STANDARD METHODS ------------------------------------------//
     //////////////////////////////////////////////////////////////////////////////////////
-
-
-
-    // old method
-//    @Override
-//    protected void onCreate(Bundle savedInstanceState) {
-//        super.onCreate(savedInstanceState);
-//        setContentView(R.layout.timetable_search);
-//
-//        final Button b = (Button)findViewById(R.id.displayButton);
-//        etCourse = (EditText)findViewById(R.id.editTextCourse);
-//        EditText etProfessor = (EditText)findViewById(R.id.editTextProfessor);
-//
-//        b.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//
-//                String requestedCourse = etCourse.getText().toString();
-//                String requestedProfessor = etProfessor.getText().toString();
-//
-//                Log.println(Log.ASSERT, TAG, "Recovering information from the model");
-//                Log.println(Log.ASSERT, TAG, "Requested course: " + requestedCourse);
-//                Log.println(Log.ASSERT, TAG, "Requested professor: " + requestedProfessor);
-//
-//                Intent i = new Intent(getApplicationContext(),LectureDisplayFragment.class);
-//                boolean isCourseRequested = false, isProfessorRequested = false;
-//
-//                if(!requestedCourse.trim().isEmpty())       isCourseRequested = true;
-//                if(!requestedProfessor.trim().isEmpty())    isProfessorRequested = true;
-//
-//                i.putExtra(GlobalData.BUNDLE_KEY_CONTAINS_COURSE_NAME,isCourseRequested);
-//                i.putExtra(GlobalData.BUNDLE_KEY_CONTAINS_PROFESSOR_NAME,isProfessorRequested);
-//
-//                i.putExtra(GlobalData.BUNDLE_KEY_COURSE_NAME, requestedCourse);
-//                i.putExtra(GlobalData.BUNDLE_KEY_PROFESSOR_NAME, requestedProfessor);
-//                startActivity(i);
-//            }
-//        });
-//
-//
-//        etCourse.addTextChangedListener(new TextWatcher() {
-//
-//            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
-//            public void afterTextChanged(Editable s) {}
-//
-//            @Override
-//            public void onTextChanged(CharSequence s, int start, int before, int count) {
-//
-//                b.setEnabled(!etCourse.getText().toString().trim().isEmpty() || !etProfessor.getText().toString().trim().isEmpty());
-//            }
-//        });
-//
-//        etProfessor.addTextChangedListener(new TextWatcher() {
-//
-//            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
-//            public void afterTextChanged(Editable s) {}
-//
-//            @Override
-//            public void onTextChanged(CharSequence s, int start, int before, int count) {
-//
-//                b.setEnabled(!etCourse.getText().toString().trim().isEmpty() || !etProfessor.getText().toString().trim().isEmpty());
-//            }
-//        });
-//
-//    }
-
-
-
 
 }
