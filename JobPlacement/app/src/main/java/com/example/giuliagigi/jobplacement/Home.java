@@ -7,7 +7,6 @@ import android.content.res.Configuration;
 import android.content.res.TypedArray;
 import android.net.Uri;
 import android.os.PersistableBundle;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
@@ -36,7 +35,7 @@ public class Home extends ActionBarActivity
         OfferSearchFragment.OnFragmentInteractionListener ,
         StudentCompanySearchFragment.OnFragmentInteractionListener,
         CompanyStudentSearchFragment.OnFragmentInteractionListener,
-        MailBoxFragment.OnFragmentInteractionListener,
+        MailBoxDisplayFragment.OnFragmentInteractionListener,
         Home_tab.OnFragmentInteractionListener
 
 {
@@ -73,7 +72,7 @@ public class Home extends ActionBarActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);
-        Log.println(Log.ASSERT,"HOME","onCreate");
+//        Log.println(Log.ASSERT,"HOME","onCreate");
 
         if(savedInstanceState!=null)
         {

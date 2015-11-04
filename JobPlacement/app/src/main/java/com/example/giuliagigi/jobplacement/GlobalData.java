@@ -265,7 +265,6 @@ public class GlobalData extends Application {
         if(bundles.containsKey(key))
             return bundles.get(key);
 
-        Log.println(Log.ASSERT,"GLOBAL DATA", "adding a bundle");
         MyBundle b = new MyBundle();
         bundles.put(key, b);
         return b;
@@ -288,7 +287,6 @@ public class GlobalData extends Application {
             return;
 
         MyBundle toBeRemoved = bundles.get(key);
-        Log.println(Log.ASSERT,"GLOBAL DATA", "removing bundle: " + key + ", " + toBeRemoved);
         bundles.remove(toBeRemoved);
     }
 

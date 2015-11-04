@@ -233,8 +233,6 @@ public class MailBoxAdapter extends RecyclerView.Adapter<MailBoxAdapter.ViewHold
         ViewHolder vh = (ViewHolder)v.getTag();
         MailBoxDetailFragment fragment = MailBoxDetailFragment.newInstance(messageList.get(vh.position));
 
-
-
         FragmentManager fragmentManager = activity.getSupportFragmentManager();
         fragmentManager.beginTransaction()
                 .replace(R.id.tab_Home_container, fragment)

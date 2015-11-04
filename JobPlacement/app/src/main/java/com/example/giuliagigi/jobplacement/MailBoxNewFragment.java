@@ -317,7 +317,7 @@ public class MailBoxNewFragment extends Fragment {
 
                                 /* -------------- opening mailbox main view -------------------------------------*/
                                 FragmentManager fragmentManager = activity.getSupportFragmentManager();
-                                Fragment fragment = MailBoxFragment.newInstance();
+                                Fragment fragment = MailBoxDisplayFragment.newInstance();
                                 fragmentManager.beginTransaction()
                                         .replace(R.id.tab_Home_container, fragment)
                                         .addToBackStack(globalData.getResources().getStringArray(R.array.Menu_items_student)[4])
@@ -343,7 +343,7 @@ public class MailBoxNewFragment extends Fragment {
 
     public void onSaveInstanceState(Bundle savedInstanceState){
 
-        Log.println(Log.ASSERT,"MAILBOXDETAIL", "saving to bundle with key: " + BUNDLE_IDENTIFIER_HEADER + bundleIdentifierTail);
+        Log.println(Log.ASSERT,"MAILBOXNEW", "saving to bundle with key: " + BUNDLE_IDENTIFIER_HEADER + bundleIdentifierTail);
         MyBundle b = globalData.addBundle(BUNDLE_IDENTIFIER_HEADER + bundleIdentifierTail);
         b.putString(OBJECT_KEY, objectEdit.getText().toString());
         b.putString(MESSAGE_TEXT_KEY, messageTextEdit.getText().toString());

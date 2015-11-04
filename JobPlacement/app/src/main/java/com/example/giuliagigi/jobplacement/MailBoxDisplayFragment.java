@@ -23,15 +23,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class MailBoxFragment extends Fragment {
+public class MailBoxDisplayFragment extends Fragment {
 
     public static final String BUNDLE_IDENTIFIER = "mailbox_bundle";
-    public static final String BUNDLE_KEY_MODE = "mode";
-    public static final String BUNDLE_KEY_MESSAGE = "message";
+//    public static final String BUNDLE_KEY_MODE = "mailbox_bundle_mode";
+    public static final String BUNDLE_KEY_LIST = "mailbox_bundle_list";
+    public static final String BUNDLE_KEY_MESSAGE = "mailbox_bundle_message";
 
-    public static final int MODE_DISPLAY = 1;
-    public static final int MODE_NEW = 2;
-    public static final int MODE_DETAIL = 3;
+//    public static final int MODE_DISPLAY = 1;
+//    public static final int MODE_NEW = 2;
+//    public static final int MODE_DETAIL = 3;
+
+    public static final int LIST_RECEIVED = 1;
+    public static final int LIST_SENT = 2;
 
     protected View root;
     private GlobalData globalData;
@@ -43,19 +47,19 @@ public class MailBoxFragment extends Fragment {
     private ParseQueryAdapter<InboxMessageReceived> queryAdapterReceived;
     private ParseQueryAdapter<InboxMessageSent> queryAdapterSent;
 
-    private int currentMode = 1;
+    private int currentList = 1;
 
 
     /* -------------------------------------------------------------------------------------------------------------------- */
     /* ----------------------- CONSTRUCTORS, SETTERS ---------------------------------------------------------------------- */
     /* -------------------------------------------------------------------------------------------------------------------- */
 
-    public static MailBoxFragment newInstance() {
-        MailBoxFragment fragment = new MailBoxFragment();
+    public static MailBoxDisplayFragment newInstance() {
+        MailBoxDisplayFragment fragment = new MailBoxDisplayFragment();
         return fragment;
     }
 
-    public MailBoxFragment() {}
+    public MailBoxDisplayFragment() {}
 
 
 
@@ -89,49 +93,56 @@ public class MailBoxFragment extends Fragment {
         MyBundle b = globalData.getBundle(BUNDLE_IDENTIFIER);
         if(b != null){
 
-            Log.println(Log.ASSERT, "MAILBOX", "found a bundle");
-            currentMode = b.getInt(BUNDLE_KEY_MODE);
-//            this.currentMode = savedInstanceState.getInt("currentMode");
-            switch(currentMode){
+            currentList = b.getInt(BUNDLE_KEY_LIST);
 
-                case MODE_DISPLAY:  // MessageBox principale
-
-                    // TODO: aprire messaggi ricevuti o inviati
-
-                    break;
-
-                case MODE_NEW:  // MessageBox creazione nuovo messaggio
-
-                    FragmentManager fragmentManager = ((FragmentActivity)mListener).getSupportFragmentManager();
-                    Fragment fragment = MailBoxNewFragment.newInstance();
-
-                    fragmentManager.beginTransaction()
-                            .replace(R.id.tab_Home_container, fragment)
-                            .addToBackStack(((FragmentActivity)mListener).getResources().getString(R.string.new_message_toolbar_title))
-                            .commit();
-
-                    Toolbar toolbar = (Toolbar) ((Activity)mListener).findViewById(R.id.toolbar);
-                    toolbar.setTitle(((FragmentActivity)mListener).getResources().getString(R.string.new_message_toolbar_title));
-
-                    break;
-
-                case MODE_DETAIL:  // MessageBox vista dettaglio
-
-                    fragmentManager = ((FragmentActivity)mListener).getSupportFragmentManager();
-                    fragment = MailBoxDetailFragment.newInstance((InboxMessage)b.get(BUNDLE_KEY_MESSAGE));
-
-                    fragmentManager.beginTransaction()
-                            .replace(R.id.tab_Home_container, fragment)
-                            .addToBackStack(((GlobalData)((Activity)mListener).getApplication()).getCurrentViewMessage().getObject())
-                            .commit();
-
-                    toolbar = (Toolbar) ((Activity)mListener).findViewById(R.id.toolbar);
-                    toolbar.setTitle((CharSequence)((GlobalData)((Activity)mListener).getApplication()).getCurrentViewMessage().getObject());
-
-                    break;
-
-                default: break;
-            }
+//            Log.println(Log.ASSERT, "MAILBOX", "found a bundle: " + b.toString());
+//            currentMode = b.getInt(BUNDLE_KEY_MODE);
+////            this.currentMode = savedInstanceState.getInt("currentMode");
+//            switch(currentMode){
+//
+//                case MODE_DISPLAY:  // MessageBox principale
+//
+//                    currentList = b.getInt(BUNDLE_KEY_LIST);
+//                    Log.println(Log.ASSERT, "MAILBOX", "restorind display mode with list: " + currentList);
+//
+//                    break;
+//
+//                case MODE_NEW:  // MessageBox creazione nuovo messaggio
+//
+//                    Log.println(Log.ASSERT, "MAILBOX", "restorind new mode");
+//
+//                    FragmentManager fragmentManager = ((FragmentActivity)mListener).getSupportFragmentManager();
+//                    Fragment fragment = MailBoxNewFragment.newInstance();
+//
+//                    fragmentManager.beginTransaction()
+//                            .replace(R.id.tab_Home_container, fragment)
+//                            .addToBackStack(((FragmentActivity)mListener).getResources().getString(R.string.new_message_toolbar_title))
+//                            .commit();
+//
+//                    Toolbar toolbar = (Toolbar) ((Activity)mListener).findViewById(R.id.toolbar);
+//                    toolbar.setTitle(((FragmentActivity)mListener).getResources().getString(R.string.new_message_toolbar_title));
+//
+//                    break;
+//
+//                case MODE_DETAIL:  // MessageBox vista dettaglio
+//
+//                    Log.println(Log.ASSERT, "MAILBOX", "restorind detail mode");
+//
+//                    fragmentManager = ((FragmentActivity)mListener).getSupportFragmentManager();
+//                    fragment = MailBoxDetailFragment.newInstance((InboxMessage)b.get(BUNDLE_KEY_MESSAGE));
+//
+//                    fragmentManager.beginTransaction()
+//                            .replace(R.id.tab_Home_container, fragment)
+//                            .addToBackStack(((GlobalData)((Activity)mListener).getApplication()).getCurrentViewMessage().getObject())
+//                            .commit();
+//
+//                    toolbar = (Toolbar) ((Activity)mListener).findViewById(R.id.toolbar);
+//                    toolbar.setTitle((CharSequence)((GlobalData)((Activity)mListener).getApplication()).getCurrentViewMessage().getObject());
+//
+//                    break;
+//
+//                default: break;
+//            }
         }
 
     }
@@ -190,11 +201,22 @@ public class MailBoxFragment extends Fragment {
         adapterSent = new MailBoxAdapter(this.getActivity());
 
 
-        // 4) ---------- setting default view behaviour (received messages) ------------
+        // 4) ---------- setting the proper mail list -----------------------------------
 
-        messageRecyclerView.setAdapter(adapterReceived);
-        queryAdapterReceived.loadObjects();
-        ((Toolbar) ((FragmentActivity) mListener).findViewById(R.id.toolbar)).setTitle(((FragmentActivity) mListener).getResources().getString(R.string.received_mail));
+        Log.println(Log.ASSERT, "MAILBOX", "list: " + currentList);
+
+        if(currentList == LIST_RECEIVED){
+            messageRecyclerView.setAdapter(adapterReceived);
+            queryAdapterReceived.loadObjects();
+            ((Toolbar) ((FragmentActivity) mListener).findViewById(R.id.toolbar)).setTitle(globalData.getResources().getString(R.string.received_mail));
+        }
+        else {
+
+            messageRecyclerView.setAdapter(adapterSent);
+            queryAdapterSent.loadObjects();
+            ((Toolbar) ((FragmentActivity) mListener).findViewById(R.id.toolbar)).setTitle(globalData.getResources().getString(R.string.sent_mail));
+        }
+
 
 
         // 5) ---------- paged queries management --------------------------------------
@@ -234,11 +256,11 @@ public class MailBoxFragment extends Fragment {
 
                 fragmentManager.beginTransaction()
                         .replace(R.id.tab_Home_container, fragment)
-                        .addToBackStack(((FragmentActivity) mListener).getResources().getString(R.string.new_message_toolbar_title))
+                        .addToBackStack(globalData.getResources().getString(R.string.new_message_toolbar_title))
                         .commit();
 
                 Toolbar toolbar = (Toolbar) ((Activity) mListener).findViewById(R.id.toolbar);
-                toolbar.setTitle(((Activity) mListener).getResources().getString(R.string.new_message_toolbar_title));
+                toolbar.setTitle(globalData.getResources().getString(R.string.new_message_toolbar_title));
                 ((FloatingActionsMenu) root.findViewById(R.id.multiple_actions_mailbox)).collapse();
             }
         });
@@ -252,7 +274,7 @@ public class MailBoxFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
-                MailBoxFragment.deleteMessages(root, messageRecyclerView);
+                MailBoxDisplayFragment.deleteMessages(root, messageRecyclerView);
                 ((FloatingActionsMenu) root.findViewById(R.id.multiple_actions_mailbox)).collapse();
 
             }
@@ -272,8 +294,8 @@ public class MailBoxFragment extends Fragment {
                     adapterSent.resetMessageList();
                     messageRecyclerView.setAdapter(adapterReceived);
                     queryAdapterReceived.loadObjects();
-
-                    ((Toolbar) ((FragmentActivity) mListener).findViewById(R.id.toolbar)).setTitle(((FragmentActivity) mListener).getResources().getString(R.string.received_mail));
+                    currentList = LIST_RECEIVED;
+                    ((Toolbar) ((FragmentActivity) mListener).findViewById(R.id.toolbar)).setTitle(globalData.getResources().getString(R.string.received_mail));
 
                 }
                 ((FloatingActionsMenu) root.findViewById(R.id.multiple_actions_mailbox)).collapse();
@@ -294,8 +316,8 @@ public class MailBoxFragment extends Fragment {
                     adapterReceived.resetMessageList();
                     messageRecyclerView.setAdapter(adapterSent);
                     queryAdapterSent.loadObjects();
-
-                    ((Toolbar) ((FragmentActivity) mListener).findViewById(R.id.toolbar)).setTitle(((FragmentActivity) mListener).getResources().getString(R.string.sent_mail));
+                    currentList = LIST_SENT;
+                    ((Toolbar) ((FragmentActivity) mListener).findViewById(R.id.toolbar)).setTitle(globalData.getResources().getString(R.string.sent_mail));
                 }
                 ((FloatingActionsMenu) root.findViewById(R.id.multiple_actions_mailbox)).collapse();
             }
@@ -310,8 +332,9 @@ public class MailBoxFragment extends Fragment {
     public void onSaveInstanceState(Bundle savedInstanceState){
 
         MyBundle b = globalData.addBundle(BUNDLE_IDENTIFIER);
-        b.putInt(BUNDLE_KEY_MODE,currentMode);
-
+        Log.println(Log.ASSERT, "MAILBOX", "saving state to bundle: " + b.toString());
+//        b.putInt(BUNDLE_KEY_MODE,currentMode);
+        b.putInt(BUNDLE_KEY_LIST,currentList);
 //        savedInstanceState.putInt("currentMode", this.currentMode);
     }
 
@@ -358,6 +381,7 @@ public class MailBoxFragment extends Fragment {
             else
                 Log.println(Log.ASSERT,"MAILBOX", "Error loading query results");
 
+            Log.println(Log.ASSERT, "MAILBOX", "messages updated completely");
             ((MailBoxAdapter) messageRecyclerView.getAdapter()).notifyDataSetChanged();
 
         }
@@ -378,6 +402,7 @@ public class MailBoxFragment extends Fragment {
             else
                 Log.println(Log.ASSERT,"MAILBOX", "Error loading query results");
 
+            Log.println(Log.ASSERT, "MAILBOX", "messages updated completely");
             ((MailBoxAdapter) messageRecyclerView.getAdapter()).notifyDataSetChanged();
         }
     }

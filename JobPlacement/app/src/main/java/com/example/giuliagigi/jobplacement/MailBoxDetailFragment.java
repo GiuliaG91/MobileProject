@@ -105,6 +105,7 @@ public class MailBoxDetailFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
+        Log.println(Log.ASSERT, "MAILBOXDETAIL", "onCreateView");
         root = inflater.inflate(R.layout.fragment_mail_box_detail,container,false);
 
         if(savedInstanceState != null){
@@ -114,8 +115,10 @@ public class MailBoxDetailFragment extends Fragment {
             MyBundle b = globalData.getBundle(BUNDLE_IDENTIFIER_HEADER + bundleIdentifierTail);
             if(b != null){
 
-                Log.println(Log.ASSERT, "MAILBOXDETAIL", "found a bundle");
+                Log.println(Log.ASSERT, "MAILBOXDETAIL", "found a bundle: " + b.toString());
                 message = (InboxMessage)b.get(BUNDLE_KEY_MESSAGE);
+                if(message == null)
+                    Log.println(Log.ASSERT, "MAILBOXDETAIL", "null message");
             }
         }
 
@@ -285,9 +288,10 @@ public class MailBoxDetailFragment extends Fragment {
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
 
-        Log.println(Log.ASSERT,"MAILBOXDETAIL", "saving message to bundle");
         MyBundle b = globalData.addBundle(BUNDLE_IDENTIFIER_HEADER + bundleIdentifierTail);
-        b.put(MailBoxFragment.BUNDLE_KEY_MESSAGE,message);
+        Log.println(Log.ASSERT,"MAILBOXDETAIL", "saving message to bundle: " + b.toString());
+
+        b.put(BUNDLE_KEY_MESSAGE,message);
 
         outState.putString(BUNDLE_IDENTIFIER_TAIL_KEY, bundleIdentifierTail);
     }

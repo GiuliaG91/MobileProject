@@ -302,9 +302,9 @@ public class menuAdapter extends RecyclerView.Adapter<menuAdapter.ViewHolder> {
                                     FragmentManager fragmentManager = activity.getSupportFragmentManager();
                                     Fragment current = fragmentManager.findFragmentById(R.id.tab_Home_container);
 
-                                    if(!(current instanceof MailBoxFragment)) {
+                                    if(!(current instanceof MailBoxDisplayFragment)) {
 
-                                        Fragment fragment = MailBoxFragment.newInstance();
+                                        Fragment fragment = MailBoxDisplayFragment.newInstance();
 
                                         //clear backstack
                                         int count = fragmentManager.getBackStackEntryCount();
@@ -527,9 +527,9 @@ public class menuAdapter extends RecyclerView.Adapter<menuAdapter.ViewHolder> {
                                       FragmentManager fragmentManager = activity.getSupportFragmentManager();
                                       Fragment current = fragmentManager.findFragmentById(R.id.tab_Home_container);
 
-                                      if(!(current instanceof MailBoxFragment)) {
+                                      if(!(current instanceof MailBoxDisplayFragment)) {
 
-                                             Fragment fragment = MailBoxFragment.newInstance();
+                                             Fragment fragment = MailBoxDisplayFragment.newInstance();
 
                                           //clear backstack
                                           int count = fragmentManager.getBackStackEntryCount();
