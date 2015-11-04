@@ -157,7 +157,7 @@ public class MailBoxNewFragment extends Fragment {
         }
 
 
-        // 3) setting buttons ---------------------------------------------------------------------------------------------
+        // 3) send button ---------------------------------------------------------------------------------------------
         final Button send = (Button) root.findViewById(R.id.send_new_message_btn);
         send.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -165,9 +165,9 @@ public class MailBoxNewFragment extends Fragment {
                 ArrayList<Integer> warnings = new ArrayList<Integer>();
                 ArrayList<Integer> errors = new ArrayList<Integer>();
 
-                String object = ((EditText) root.findViewById(R.id.object_new_message)).getText().toString();
+                object = ((EditText) root.findViewById(R.id.object_new_message)).getText().toString();
                 String recipientsList = ((EditText) root.findViewById(R.id.recipients_list_new_message)).getText().toString();
-                String messageText = ((EditText)root.findViewById(R.id.body_new_message)).getText().toString();
+                messageText = ((EditText)root.findViewById(R.id.body_new_message)).getText().toString();
 
                 StringTokenizer st = new StringTokenizer(recipientsList, ", ;");
                 ArrayList<String> recipientsMails = new ArrayList<String>();
@@ -194,186 +194,29 @@ public class MailBoxNewFragment extends Fragment {
 
                         if(!warnings.contains(WARNING_UNKNOWN_RECIPIENT))
                             warnings.add(WARNING_UNKNOWN_RECIPIENT);
-
-//                        View view = activity.getLayoutInflater().inflate(R.layout.error_message_mail_box, null);
-//                        TextView tv = (TextView)view.findViewById(R.id.textView_error_message);
-//                        tv.setText("some of recipients do not exist. Remove or correct the recipients name and try again");
-//
-//                        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-//                        builder.setView(view);
-//
-//                        builder.setPositiveButton(globalData.getResources().getString(R.string.ok), new DialogInterface.OnClickListener() {
-//                            @Override
-//                            public void onClick(DialogInterface dialog, int which) {
-//                                sendFlag = false;
-//                            }
-//                        });
-//
-//                        builder.create().show();
-//                        e.printStackTrace();
                     }
                 }
 
                 /* ---------------- performing some checks before sending the message --------------- */
-                if (validRecipients == 0) {
-
+                if (validRecipients == 0)
                     errors.add(ERROR_NO_RECIPIENTS);
 
-//                    AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-//
-//                    View view = activity.getLayoutInflater().inflate(R.layout.error_message_mail_box, null);
-//                    builder.setView(view);
-//
-//                    builder.setPositiveButton(globalData.getResources().getString(R.string.ok), new DialogInterface.OnClickListener() {
-//                        @Override
-//                        public void onClick(DialogInterface dialog, int which) {
-//                            sendFlag = false;
-//                        }
-//                    });
-//                    builder.create().show();
-
-                }
-
-                if(messageText.trim().length() == 0){
-
+                if(messageText.trim().length() == 0)
                     errors.add(ERROR_NO_TEXT);
-                }
 
-
-                if (object.trim().length() == 0) {
-
+                if (object.trim().length() == 0)
                     warnings.add(WARNING_NO_OBJECT);
 
-//                    AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-//
-//                    View view = activity.getLayoutInflater().inflate(R.layout.warning_message_mail_box, null);
-//                    builder.setView(view);
-//
-//
-//                    builder.setPositiveButton(globalData.getResources().getString(R.string.yes), new DialogInterface.OnClickListener() {
-//                        @Override
-//                        public void onClick(DialogInterface dialog, int which) {
-//                                sendFlag = true;
-//                        }
-//                    });
-//
-//                    builder.setNegativeButton(globalData.getResources().getString(R.string.no), new DialogInterface.OnClickListener() {
-//                        @Override
-//                        public void onClick(DialogInterface dialog, int which) {
-//                                sendFlag = false;
-//                        }
-//                    });
-//
-//                    builder.create().show();
 
-                }
-
-
+                /* ---------------- send the message only if everything is ok ----------------------- */
                 if(errors.size()!=0){
 
                     message = new InboxMessage();
                     showError(errors);
                 }
-                else if(warnings.size()!=0){
+                else if(warnings.size()!=0) showWarning(warnings);
+                else                        sendMessage();
 
-                    showWarning(warnings);
-                }
-                else
-                    sendMessage();
-
-
-//                else {
-//                    sendFlag = true;
-//                }
-
-
-                // if checks are ok, send the message
-//                if (sendFlag) {
-//
-//                    /* ------------------ saving message in sent messages (for sender) -------------- */
-//                    message.setSender(globalData.getCurrentUser());
-//                    message.setType(InboxMessage.TYPE_SENT);
-//                    message.setObject(object);
-//                    String bodyMessage = ((EditText) root.findViewById(R.id.body_new_message)).getText().toString();
-//                    message.setBodyMessage(bodyMessage);
-//                    message.setDate(Calendar.getInstance());
-//                    message.setIsPreferred(false);
-//                    message.saveInBackground(new SaveCallback() {
-//                        @Override
-//                        public void done(ParseException e) {
-//
-//
-//                            /* ------------ saving message in received messages (one per recipient) --------- */
-//                            if(e == null){
-//
-//                                for (ParseUserWrapper recipient : message.getRecipients()) {
-//
-//                                    InboxMessageReceived mr = new InboxMessageReceived();
-//
-//                                    mr.setSender(globalData.getCurrentUser());
-//                                    mr.setOwner(recipient);
-//
-//                                    for(ParseUserWrapper p : message.getRecipients())
-//                                        mr.addRecipient(p);
-//
-//                                    mr.setType(InboxMessage.TYPE_RECEIVED);
-//                                    mr.setObject(message.getObject());
-//                                    mr.setBodyMessage(message.getBodyMessage());
-//                                    mr.setIsPreferred(false);
-//                                    mr.setIsRead(false);
-//
-//                                    try {
-//                                        mr.setDate(message.getDate());
-//                                    }
-//                                    catch (JSONException e1) {
-//                                        e1.printStackTrace();
-//                                    }
-//
-//                                    mr.saveInBackground();
-//
-//                                    /* ------------------ push notifications -------------------------------------*/
-//                                    ParseQuery inner= new ParseQuery("_User");
-//                                    inner.whereContainedIn("email", Arrays.asList(recipient));
-//
-//                                    List<ParseUser> users=null;
-//
-//                                    try {
-//                                        users=inner.find();
-//                                    } catch (ParseException e2) {
-//                                        e2.printStackTrace();
-//                                    }
-//
-//                                    ParseQuery pushQuery = ParseInstallation.getQuery();
-//                                    pushQuery.whereContainedIn("User",users);
-//
-//
-//                                    ParsePush push = new ParsePush();
-//                                    push.setQuery(pushQuery);
-//                                    push.setMessage(""+getString(R.string.Message_newMessage) + globalData.getUserObject().getMail());
-//                                    push.sendInBackground();
-//
-//                                }
-//
-//                                Toast.makeText(globalData,"Message sent",Toast.LENGTH_SHORT).show();
-//
-//                                /* -------------- opening mailbox main view -------------------------------------*/
-//                                FragmentManager fragmentManager = activity.getSupportFragmentManager();
-//                                Fragment fragment = MailBoxDisplayFragment.newInstance();
-//                                fragmentManager.beginTransaction()
-//                                        .replace(R.id.tab_Home_container, fragment)
-//                                        .addToBackStack(globalData.getResources().getStringArray(R.array.Menu_items_student)[4])
-//                                        .commit();
-//
-//                                globalData.getToolbar().setTitle(globalData.getResources().getStringArray(R.array.Menu_items_student)[4]);
-//                            }
-//                            else {
-//
-//                                Toast.makeText(globalData,"Some error occured while sending the message. The message was eliminated", Toast.LENGTH_SHORT).show();
-//                                message.deleteEventually();
-//                            }
-//                        }
-//                    });
-//                }
             }
         });
 
@@ -513,8 +356,7 @@ public class MailBoxNewFragment extends Fragment {
         message.setSender(globalData.getCurrentUser());
         message.setType(InboxMessage.TYPE_SENT);
         message.setObject(object);
-        String bodyMessage = ((EditText) root.findViewById(R.id.body_new_message)).getText().toString();
-        message.setBodyMessage(bodyMessage);
+        message.setBodyMessage(messageText);
         message.setDate(Calendar.getInstance());
         message.setIsPreferred(false);
         message.saveInBackground(new SaveCallback() {
@@ -536,8 +378,8 @@ public class MailBoxNewFragment extends Fragment {
                             mr.addRecipient(p);
 
                         mr.setType(InboxMessage.TYPE_RECEIVED);
-                        mr.setObject(message.getObject());
-                        mr.setBodyMessage(message.getBodyMessage());
+                        mr.setObject(object);
+                        mr.setBodyMessage(messageText);
                         mr.setIsPreferred(false);
                         mr.setIsRead(false);
 
