@@ -456,9 +456,13 @@
     <string name="wrote">wrote</string>
     <string name="me">Myself</string>
     <string name="error">Error</string>
-    <string name="warning">Warning</string>
-    <string name="no_recipients_message_error">Specify at least one recipient!</string>
-    <string name="no_object_message_warning">Do you want to send the message without an object?</string>
+    <string name="warning">Warning!</string>
+    <string name="no_recipients_message_error">Specify at least one valid recipient</string>
+    <string name="no_text_message_error">The message you are trying to send is empty</string>
+    <string name="no_object_message_warning">The message does not contain an object</string>
+    <string name="unknown_recipient_message_warning">Some of the recipients you specified do not exist (the message will be sent only to the existing recipients)</string>
+    <string name="send_myself_message_warning">You are trying to send the message to yourself!</string>
+    <string name="send_anyway_warning">Do you want to send the message anyway?</string>
     <string name="ok">Ok</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>

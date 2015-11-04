@@ -584,7 +584,7 @@ public class menuAdapter extends RecyclerView.Adapter<menuAdapter.ViewHolder> {
             }
 
 
-            ViewHolder vhItem = new ViewHolder(v, viewType); //Creating ViewHolder and passing the object of type view
+            ViewHolder vhItem = new ViewHolder(v, viewType); //Creating MailboxViewHolder and passing the object of type view
             return vhItem; // Returning the created object
 
             //inflate your layout and pass it to view holder
@@ -593,7 +593,7 @@ public class menuAdapter extends RecyclerView.Adapter<menuAdapter.ViewHolder> {
 
             View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.header, parent, false); //Inflating the layout
 
-            ViewHolder vhHeader = new ViewHolder(v, viewType); //Creating ViewHolder and passing the object of type view
+            ViewHolder vhHeader = new ViewHolder(v, viewType); //Creating MailboxViewHolder and passing the object of type view
 
             return vhHeader; //returning the object created
 

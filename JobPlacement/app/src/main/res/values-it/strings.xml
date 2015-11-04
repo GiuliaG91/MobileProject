@@ -409,7 +409,7 @@
     <string name="wrote">ha scritto</string>
     <string name="me">Me</string>
     <string name="error">Errore</string>
-    <string name="warning">Attenzione</string>
+    <string name="warning">Attenzione!</string>
     <string name="no_recipients_message_error">Specifica almeno un destinatario!</string>
     <string name="no_object_message_warning">Vuoi inviare il messaggio senza oggetto?</string>
     <string name="ok">Ok</string>

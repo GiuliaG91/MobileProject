@@ -10,7 +10,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -18,11 +17,13 @@ import org.json.JSONException;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * Created by Silvia on 10/05/2015.
  */
-public class MailBoxAdapter extends RecyclerView.Adapter<MailBoxAdapter.ViewHolder> implements View.OnClickListener{
+public class MailBoxAdapter extends RecyclerView.Adapter<MailBoxAdapter.MailboxViewHolder> implements View.OnClickListener{
 
     private FragmentActivity activity;
     private ArrayList<InboxMessage> messageList;
@@ -41,28 +42,31 @@ public class MailBoxAdapter extends RecyclerView.Adapter<MailBoxAdapter.ViewHold
 
     /* ----------------------- class definition --------------------------- */
 
-    public static class ViewHolder extends RecyclerView.ViewHolder {
+    public static class MailboxViewHolder extends RecyclerView.ViewHolder {
 
         // Provide a reference to the views for each data item
         // Complex data items may need more than one view per item, and
         // you provide access to all the views for a data item in a view holder
 
+        private int position; // the item must know its index inside the list
+
         private CheckBox cancel;
-        private TextView name;
+        private TextView recipients;
+        private TextView sender;
         private TextView object;
         private CheckBox pref;
-        private int position; // the item must know its index inside the list
         private CardView cardLayout;
         private LinearLayout rowLayout;
         private TextView date;
 
 
-        public ViewHolder(View v) {
+        public MailboxViewHolder(View v) {
             super(v);
             v.setTag(this);
 
             object = (TextView)v.findViewById(R.id.object_message);
-            name = (TextView)v.findViewById(R.id.sender);
+            sender = (TextView)v.findViewById(R.id.sender);
+            recipients = (TextView)v.findViewById(R.id.recipients_list);
             pref = (CheckBox)v.findViewById(R.id.star_message);
             cancel = (CheckBox)v.findViewById(R.id.delete_message);
             cardLayout = (CardView) v.findViewById(R.id.card_view_mail_box);
@@ -75,35 +79,44 @@ public class MailBoxAdapter extends RecyclerView.Adapter<MailBoxAdapter.ViewHold
 
     /* ----------------------- onCreate --------------------------- */
     @Override
-    public  MailBoxAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public MailboxViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
         // Create new views (invoked by the layout manager)
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.inbox_message_row, parent, false);
         v.setClickable(true);
         v.setOnClickListener(MailBoxAdapter.this);
 
-        ViewHolder vh = new ViewHolder(v);
+        MailboxViewHolder vh = new MailboxViewHolder(v);
         return vh;
     }
 
 
     /* ----------------------- onBind --------------------------- */
     @Override
-    public void onBindViewHolder(final ViewHolder holder, final int position) {
+    public void onBindViewHolder(final MailboxViewHolder holder, final int position) {
 
         // Replace the contents of a view (invoked by the layout manager)
 
-        // 1) displaying sender's mail
+        // 1) displaying sender and recipients mails
         if(messageList.get(position).getSender().getEmail().length() < 22)
-            holder.name.setText(messageList.get(position).getSender().getEmail());
+            holder.sender.setText(messageList.get(position).getSender().getEmail());
         else
-            holder.name.setText(messageList.get(position).getSender().getEmail().substring(0, 21) + "...");
+            holder.sender.setText(messageList.get(position).getSender().getEmail().substring(0, 19) + "...");
+
+        String recipients = "";
+        for(ParseUserWrapper u : messageList.get(position).getRecipients())
+            recipients += u.getEmail() + ", ";
+
+        if(recipients.length() < 22)
+            holder.recipients.setText(recipients);
+        else
+            holder.recipients.setText(recipients.substring(0, 19) + "...");
 
         // 2) displaying mail's object
-        if(messageList.get(position).getObject().length() < 20)
+        if(messageList.get(position).getObject().length() < 8)
             holder.object.setText(messageList.get(position).getObject());
         else
-            holder.object.setText(messageList.get(position).getObject().substring(0, 19) + "...");
+            holder.object.setText(messageList.get(position).getObject().substring(0, 5) + "...");
 
         // 3) setting "preferred" checkbox
         holder.pref.setChecked(messageList.get(position).getIsPreferred());
@@ -203,6 +216,7 @@ public class MailBoxAdapter extends RecyclerView.Adapter<MailBoxAdapter.ViewHold
     public void addMessageToList(InboxMessage message){
         Log.println(Log.ASSERT, "MREC ADAPTER", "updating message list");
         messageList.add(message);
+        Collections.sort(messageList);
     }
 
     public void resetMessageList(){
@@ -217,7 +231,6 @@ public class MailBoxAdapter extends RecyclerView.Adapter<MailBoxAdapter.ViewHold
     public ArrayList<InboxMessage> getMessageList(){
 
         return this.messageList;
-
     }
 
 
@@ -230,7 +243,7 @@ public class MailBoxAdapter extends RecyclerView.Adapter<MailBoxAdapter.ViewHold
     public void onClick(View v) {
 
         // 1) obtain message
-        ViewHolder vh = (ViewHolder)v.getTag();
+        MailboxViewHolder vh = (MailboxViewHolder)v.getTag();
         MailBoxDetailFragment fragment = MailBoxDetailFragment.newInstance(messageList.get(vh.position));
 
         FragmentManager fragmentManager = activity.getSupportFragmentManager();

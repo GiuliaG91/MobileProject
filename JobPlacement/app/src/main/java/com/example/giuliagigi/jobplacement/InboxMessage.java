@@ -11,6 +11,7 @@ import com.parse.ParseUser;
 
 import org.json.JSONException;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -21,7 +22,7 @@ import java.util.List;
  */
 
 @ParseClassName("InboxMessage")
-public class InboxMessage extends ParseObject {
+public class InboxMessage extends ParseObject implements Comparable{
 
     protected static final String OBJECT = "object";
     protected static final String SENDER = "sender";
@@ -168,8 +169,36 @@ public class InboxMessage extends ParseObject {
         this.put(TYPE,type);
     }
 
-    /*END SETTER METHODS*/
 
+    // default order: by date
+    @Override
+    public int compareTo(Object other) {
+
+        if(!(other instanceof InboxMessage)){
+
+            Log.println(Log.ASSERT, "INBOXMESSAGE", "trying to compare an inbox message with another class object");
+            return 0;
+        }
+
+        InboxMessage message = (InboxMessage) other;
+
+        try {
+
+            Calendar c1 = message.getDate();
+            Calendar c2 = this.getDate();
+            return - c2.compareTo(c1);
+        }
+        catch (JSONException e) {
+
+            Log.println(Log.ASSERT, "INBOXMESSAGE", "JSONexception while comparing");
+            e.printStackTrace();
+        }
+
+        return 0;
+    }
+
+
+    // this exception is raised when a recipient mail does not exist
     public class UnknownRecipientException extends Exception{
 
         private static final String ERROR_MESSAGE = "Error: this recipient does not exist";

@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -33,6 +34,13 @@ import java.util.StringTokenizer;
 
 
 public class MailBoxNewFragment extends Fragment {
+
+    private static final int WARNING_NO_OBJECT = 0;
+    private static final int WARNING_UNKNOWN_RECIPIENT = 1;
+    private static final int WARNING_SEND_MYSELF = 2;
+
+    private static final int ERROR_NO_RECIPIENTS = 0;
+    private static final int ERROR_NO_TEXT = 1;
 
     private static final String BUNDLE_IDENTIFIER_HEADER = "mailboxNew_bundle";
     private static final String RECIPIENTS_KEY = "mailboxNew_bundle_recipients";
@@ -154,11 +162,15 @@ public class MailBoxNewFragment extends Fragment {
         send.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
 
-                ArrayList<String> recipientsMails = new ArrayList<String>();
-                String recipientsList = ((EditText) root.findViewById(R.id.recipients_list_new_message)).getText().toString();
+                ArrayList<Integer> warnings = new ArrayList<Integer>();
+                ArrayList<Integer> errors = new ArrayList<Integer>();
+
                 String object = ((EditText) root.findViewById(R.id.object_new_message)).getText().toString();
+                String recipientsList = ((EditText) root.findViewById(R.id.recipients_list_new_message)).getText().toString();
+                String messageText = ((EditText)root.findViewById(R.id.body_new_message)).getText().toString();
 
                 StringTokenizer st = new StringTokenizer(recipientsList, ", ;");
+                ArrayList<String> recipientsMails = new ArrayList<String>();
                 int validRecipients = 0;
 
                 while (st.hasMoreTokens())
@@ -170,7 +182,8 @@ public class MailBoxNewFragment extends Fragment {
 
                         if(r.equals(globalData.getCurrentUser().getEmail())){
 
-                            Log.println(Log.ASSERT, "MAILBOXNEW", "trying to send a message to myself! not a valid recipient");
+                            if(!warnings.contains(WARNING_SEND_MYSELF))
+                                warnings.add(WARNING_SEND_MYSELF);
                             continue;
                         }
 
@@ -179,160 +192,188 @@ public class MailBoxNewFragment extends Fragment {
                     }
                     catch (InboxMessage.UnknownRecipientException e) {
 
+                        if(!warnings.contains(WARNING_UNKNOWN_RECIPIENT))
+                            warnings.add(WARNING_UNKNOWN_RECIPIENT);
 
-                        View view = activity.getLayoutInflater().inflate(R.layout.error_message_mail_box, null);
-                        TextView tv = (TextView)view.findViewById(R.id.textView_error_message);
-                        tv.setText("some of recipients do not exist. Remove or correct the recipients name and try again");
-
-                        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                        builder.setView(view);
-
-                        builder.setPositiveButton(globalData.getResources().getString(R.string.ok), new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                sendFlag = false;
-                            }
-                        });
-
-                        builder.create().show();
-                        e.printStackTrace();
+//                        View view = activity.getLayoutInflater().inflate(R.layout.error_message_mail_box, null);
+//                        TextView tv = (TextView)view.findViewById(R.id.textView_error_message);
+//                        tv.setText("some of recipients do not exist. Remove or correct the recipients name and try again");
+//
+//                        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+//                        builder.setView(view);
+//
+//                        builder.setPositiveButton(globalData.getResources().getString(R.string.ok), new DialogInterface.OnClickListener() {
+//                            @Override
+//                            public void onClick(DialogInterface dialog, int which) {
+//                                sendFlag = false;
+//                            }
+//                        });
+//
+//                        builder.create().show();
+//                        e.printStackTrace();
                     }
                 }
 
                 /* ---------------- performing some checks before sending the message --------------- */
                 if (validRecipients == 0) {
 
-                    AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                    errors.add(ERROR_NO_RECIPIENTS);
 
-                    View view = activity.getLayoutInflater().inflate(R.layout.error_message_mail_box, null);
-                    builder.setView(view);
+//                    AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+//
+//                    View view = activity.getLayoutInflater().inflate(R.layout.error_message_mail_box, null);
+//                    builder.setView(view);
+//
+//                    builder.setPositiveButton(globalData.getResources().getString(R.string.ok), new DialogInterface.OnClickListener() {
+//                        @Override
+//                        public void onClick(DialogInterface dialog, int which) {
+//                            sendFlag = false;
+//                        }
+//                    });
+//                    builder.create().show();
 
-                    builder.setPositiveButton(globalData.getResources().getString(R.string.ok), new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            sendFlag = false;
-                        }
-                    });
-                    builder.create().show();
-
-                } else if (object.length() == 0) {
-
-                    AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-
-                    View view = activity.getLayoutInflater().inflate(R.layout.warning_message_mail_box, null);
-                    builder.setView(view);
-
-
-                    builder.setPositiveButton(globalData.getResources().getString(R.string.yes), new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                                sendFlag = true;
-                                send.callOnClick();
-                        }
-                    });
-
-                    builder.setNegativeButton(globalData.getResources().getString(R.string.no), new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                                sendFlag = false;
-                                message.getRecipients().clear();
-                        }
-                    });
-
-                    builder.create().show();
-
-                } else {
-                    sendFlag = true;
                 }
+
+                if(messageText.trim().length() == 0){
+
+                    errors.add(ERROR_NO_TEXT);
+                }
+
+
+                if (object.trim().length() == 0) {
+
+                    warnings.add(WARNING_NO_OBJECT);
+
+//                    AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+//
+//                    View view = activity.getLayoutInflater().inflate(R.layout.warning_message_mail_box, null);
+//                    builder.setView(view);
+//
+//
+//                    builder.setPositiveButton(globalData.getResources().getString(R.string.yes), new DialogInterface.OnClickListener() {
+//                        @Override
+//                        public void onClick(DialogInterface dialog, int which) {
+//                                sendFlag = true;
+//                        }
+//                    });
+//
+//                    builder.setNegativeButton(globalData.getResources().getString(R.string.no), new DialogInterface.OnClickListener() {
+//                        @Override
+//                        public void onClick(DialogInterface dialog, int which) {
+//                                sendFlag = false;
+//                        }
+//                    });
+//
+//                    builder.create().show();
+
+                }
+
+
+                if(errors.size()!=0){
+
+                    message = new InboxMessage();
+                    showError(errors);
+                }
+                else if(warnings.size()!=0){
+
+                    showWarning(warnings);
+                }
+                else
+                    sendMessage();
+
+
+//                else {
+//                    sendFlag = true;
+//                }
 
 
                 // if checks are ok, send the message
-                if (sendFlag) {
-
-                    /* ------------------ saving message in sent messages (for sender) -------------- */
-                    message.setSender(globalData.getCurrentUser());
-                    message.setType(InboxMessage.TYPE_SENT);
-                    message.setObject(object);
-                    String bodyMessage = ((EditText) root.findViewById(R.id.body_new_message)).getText().toString();
-                    message.setBodyMessage(bodyMessage);
-                    message.setDate(Calendar.getInstance());
-                    message.setIsPreferred(false);
-                    message.saveInBackground(new SaveCallback() {
-                        @Override
-                        public void done(ParseException e) {
-
-
-                            /* ------------ saving message in received messages (one per recipient) --------- */
-                            if(e == null){
-
-                                for (ParseUserWrapper recipient : message.getRecipients()) {
-
-                                    InboxMessageReceived mr = new InboxMessageReceived();
-
-                                    mr.setSender(globalData.getCurrentUser());
-                                    mr.setOwner(recipient);
-
-                                    for(ParseUserWrapper p : message.getRecipients())
-                                        mr.addRecipient(p);
-
-                                    mr.setType(InboxMessage.TYPE_RECEIVED);
-                                    mr.setObject(message.getObject());
-                                    mr.setBodyMessage(message.getBodyMessage());
-                                    mr.setIsPreferred(false);
-                                    mr.setIsRead(false);
-
-                                    try {
-                                        mr.setDate(message.getDate());
-                                    }
-                                    catch (JSONException e1) {
-                                        e1.printStackTrace();
-                                    }
-
-                                    mr.saveInBackground();
-
-                                    /* ------------------ push notifications -------------------------------------*/
-                                    ParseQuery inner= new ParseQuery("_User");
-                                    inner.whereContainedIn("email", Arrays.asList(recipient));
-
-                                    List<ParseUser> users=null;
-
-                                    try {
-                                        users=inner.find();
-                                    } catch (ParseException e2) {
-                                        e2.printStackTrace();
-                                    }
-
-                                    ParseQuery pushQuery = ParseInstallation.getQuery();
-                                    pushQuery.whereContainedIn("User",users);
-
-
-                                    ParsePush push = new ParsePush();
-                                    push.setQuery(pushQuery);
-                                    push.setMessage(""+getString(R.string.Message_newMessage) + globalData.getUserObject().getMail());
-                                    push.sendInBackground();
-
-                                }
-
-                                Toast.makeText(globalData,"Message sent",Toast.LENGTH_SHORT).show();
-
-                                /* -------------- opening mailbox main view -------------------------------------*/
-                                FragmentManager fragmentManager = activity.getSupportFragmentManager();
-                                Fragment fragment = MailBoxDisplayFragment.newInstance();
-                                fragmentManager.beginTransaction()
-                                        .replace(R.id.tab_Home_container, fragment)
-                                        .addToBackStack(globalData.getResources().getStringArray(R.array.Menu_items_student)[4])
-                                        .commit();
-
-                                globalData.getToolbar().setTitle(globalData.getResources().getStringArray(R.array.Menu_items_student)[4]);
-                            }
-                            else {
-
-                                Toast.makeText(globalData,"Some error occured while sending the message. The message was eliminated", Toast.LENGTH_SHORT).show();
-                                message.deleteEventually();
-                            }
-                        }
-                    });
-                }
+//                if (sendFlag) {
+//
+//                    /* ------------------ saving message in sent messages (for sender) -------------- */
+//                    message.setSender(globalData.getCurrentUser());
+//                    message.setType(InboxMessage.TYPE_SENT);
+//                    message.setObject(object);
+//                    String bodyMessage = ((EditText) root.findViewById(R.id.body_new_message)).getText().toString();
+//                    message.setBodyMessage(bodyMessage);
+//                    message.setDate(Calendar.getInstance());
+//                    message.setIsPreferred(false);
+//                    message.saveInBackground(new SaveCallback() {
+//                        @Override
+//                        public void done(ParseException e) {
+//
+//
+//                            /* ------------ saving message in received messages (one per recipient) --------- */
+//                            if(e == null){
+//
+//                                for (ParseUserWrapper recipient : message.getRecipients()) {
+//
+//                                    InboxMessageReceived mr = new InboxMessageReceived();
+//
+//                                    mr.setSender(globalData.getCurrentUser());
+//                                    mr.setOwner(recipient);
+//
+//                                    for(ParseUserWrapper p : message.getRecipients())
+//                                        mr.addRecipient(p);
+//
+//                                    mr.setType(InboxMessage.TYPE_RECEIVED);
+//                                    mr.setObject(message.getObject());
+//                                    mr.setBodyMessage(message.getBodyMessage());
+//                                    mr.setIsPreferred(false);
+//                                    mr.setIsRead(false);
+//
+//                                    try {
+//                                        mr.setDate(message.getDate());
+//                                    }
+//                                    catch (JSONException e1) {
+//                                        e1.printStackTrace();
+//                                    }
+//
+//                                    mr.saveInBackground();
+//
+//                                    /* ------------------ push notifications -------------------------------------*/
+//                                    ParseQuery inner= new ParseQuery("_User");
+//                                    inner.whereContainedIn("email", Arrays.asList(recipient));
+//
+//                                    List<ParseUser> users=null;
+//
+//                                    try {
+//                                        users=inner.find();
+//                                    } catch (ParseException e2) {
+//                                        e2.printStackTrace();
+//                                    }
+//
+//                                    ParseQuery pushQuery = ParseInstallation.getQuery();
+//                                    pushQuery.whereContainedIn("User",users);
+//
+//
+//                                    ParsePush push = new ParsePush();
+//                                    push.setQuery(pushQuery);
+//                                    push.setMessage(""+getString(R.string.Message_newMessage) + globalData.getUserObject().getMail());
+//                                    push.sendInBackground();
+//
+//                                }
+//
+//                                Toast.makeText(globalData,"Message sent",Toast.LENGTH_SHORT).show();
+//
+//                                /* -------------- opening mailbox main view -------------------------------------*/
+//                                FragmentManager fragmentManager = activity.getSupportFragmentManager();
+//                                Fragment fragment = MailBoxDisplayFragment.newInstance();
+//                                fragmentManager.beginTransaction()
+//                                        .replace(R.id.tab_Home_container, fragment)
+//                                        .addToBackStack(globalData.getResources().getStringArray(R.array.Menu_items_student)[4])
+//                                        .commit();
+//
+//                                globalData.getToolbar().setTitle(globalData.getResources().getStringArray(R.array.Menu_items_student)[4]);
+//                            }
+//                            else {
+//
+//                                Toast.makeText(globalData,"Some error occured while sending the message. The message was eliminated", Toast.LENGTH_SHORT).show();
+//                                message.deleteEventually();
+//                            }
+//                        }
+//                    });
+//                }
             }
         });
 
@@ -352,4 +393,191 @@ public class MailBoxNewFragment extends Fragment {
         savedInstanceState.putString(BUNDLE_IDENTIFIER_TAIL_KEY, bundleIdentifierTail);
     }
 
+
+
+    /* -------------------------------------------------------------------------------------------------------------------- */
+    /* ----------------------- WARNING AND ERRORS ------------------------------------------------------------------------- */
+    /* -------------------------------------------------------------------------------------------------------------------- */
+
+    private void showWarning(ArrayList<Integer> warnings){
+
+
+        Log.println(Log.ASSERT,"MAILBOXNEW", "showing warnings");
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+
+        View view = activity.getLayoutInflater().inflate(R.layout.warning_message_mail_box, null);
+        LinearLayout container = (LinearLayout)view.findViewById(R.id.warning_message_container);
+
+        for(Integer code: warnings){
+
+            TextView et = new TextView(globalData);
+
+            switch (code){
+
+                case WARNING_NO_OBJECT:
+
+                    et.setText(globalData.getResources().getString(R.string.no_object_message_warning));
+
+                    break;
+
+                case WARNING_UNKNOWN_RECIPIENT:
+
+                    et.setText(globalData.getResources().getString(R.string.unknown_recipient_message_warning));
+                    break;
+
+                case WARNING_SEND_MYSELF:
+
+                    et.setText(globalData.getResources().getString(R.string.send_myself_message_warning));
+                    break;
+
+                default: break;
+            }
+
+            container.addView(et);
+        }
+
+        builder.setView(view);
+
+
+        builder.setPositiveButton(globalData.getResources().getString(R.string.yes), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+                sendMessage();
+            }
+        });
+
+        builder.setNegativeButton(globalData.getResources().getString(R.string.no), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {}
+        });
+
+        builder.create().show();
+    }
+
+
+
+    private void showError(ArrayList<Integer> errors){
+
+        Log.println(Log.ASSERT,"MAILBOXNEW", "showing errors");
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+
+        View view = activity.getLayoutInflater().inflate(R.layout.error_message_mail_box, null);
+        LinearLayout container = (LinearLayout)view.findViewById(R.id.error_message_container);
+
+        for(Integer code: errors){
+
+            TextView et = new TextView(globalData);
+
+            switch (code){
+
+                case ERROR_NO_RECIPIENTS:
+
+                    et.setText(globalData.getResources().getString(R.string.no_recipients_message_error));
+
+                    break;
+
+                case ERROR_NO_TEXT:
+
+                    et.setText(globalData.getResources().getString(R.string.no_text_message_error));
+                    break;
+
+                default: break;
+            }
+
+            container.addView(et);
+        }
+
+        builder.setView(view);
+
+
+        builder.setPositiveButton(globalData.getResources().getString(R.string.yes), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {}
+        });
+
+        builder.create().show();
+    }
+
+
+    /* -------------------------------------------------------------------------------------------------------------------- */
+    /* ----------------------- SEND MESSAGE ------------------------------------------------------------------------------- */
+    /* -------------------------------------------------------------------------------------------------------------------- */
+
+    public void sendMessage() {
+
+        Log.println(Log.ASSERT, "MAILBOXNEW", "sending message");
+
+        /* ------------------ saving message in sent messages (for sender) -------------- */
+        message.setSender(globalData.getCurrentUser());
+        message.setType(InboxMessage.TYPE_SENT);
+        message.setObject(object);
+        String bodyMessage = ((EditText) root.findViewById(R.id.body_new_message)).getText().toString();
+        message.setBodyMessage(bodyMessage);
+        message.setDate(Calendar.getInstance());
+        message.setIsPreferred(false);
+        message.saveInBackground(new SaveCallback() {
+
+            @Override
+            public void done(ParseException e) {
+
+                /* ------------ saving message in received messages (one per recipient) --------- */
+                if (e == null) {
+
+                    for (ParseUserWrapper recipient : message.getRecipients()) {
+
+                        InboxMessageReceived mr = new InboxMessageReceived();
+
+                        mr.setSender(globalData.getCurrentUser());
+                        mr.setOwner(recipient);
+
+                        for (ParseUserWrapper p : message.getRecipients())
+                            mr.addRecipient(p);
+
+                        mr.setType(InboxMessage.TYPE_RECEIVED);
+                        mr.setObject(message.getObject());
+                        mr.setBodyMessage(message.getBodyMessage());
+                        mr.setIsPreferred(false);
+                        mr.setIsRead(false);
+
+                        try {
+                            mr.setDate(message.getDate());
+                        } catch (JSONException e1) {
+                            e1.printStackTrace();
+                        }
+
+                        mr.saveInBackground();
+
+                        /* ------------------ push notifications -------------------------------------*/
+                        ParseQuery pushQuery = ParseInstallation.getQuery();
+                        pushQuery.whereEqualTo("_User", recipient);
+                        ParsePush push = new ParsePush();
+                        push.setQuery(pushQuery);
+                        push.setMessage("" + getString(R.string.Message_newMessage) + globalData.getUserObject().getMail());
+                        push.sendInBackground();
+                    }
+
+                    Toast.makeText(globalData, "Message sent", Toast.LENGTH_SHORT).show();
+
+                    /* -------------- opening mailbox main view -------------------------------------*/
+                    FragmentManager fragmentManager = activity.getSupportFragmentManager();
+                    Fragment fragment = MailBoxDisplayFragment.newInstance();
+                    fragmentManager.beginTransaction()
+                            .replace(R.id.tab_Home_container, fragment)
+                            .addToBackStack(globalData.getResources().getStringArray(R.array.Menu_items_student)[4])
+                            .commit();
+
+                    globalData.getToolbar().setTitle(globalData.getResources().getStringArray(R.array.Menu_items_student)[4]);
+
+                }
+                else {
+
+                    Toast.makeText(globalData, "Some error occured while sending the message. The message was eliminated", Toast.LENGTH_SHORT).show();
+                    message.deleteEventually();
+                }
+            }
+        });
+    }
 }
+
