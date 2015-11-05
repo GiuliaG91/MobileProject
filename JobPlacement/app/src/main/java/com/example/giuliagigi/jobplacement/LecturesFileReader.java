@@ -363,8 +363,6 @@ public class LecturesFileReader {
 
             InputStream in = GlobalData.getAssetManager().open(COURSES_JSON_FILE_NAME);
             JsonReader reader = new JsonReader(new InputStreamReader(in));
-
-
             reader.beginArray();
 
             while (reader.hasNext()){

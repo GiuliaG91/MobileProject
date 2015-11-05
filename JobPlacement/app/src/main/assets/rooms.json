@@ -1,0 +1,45 @@
+[
+  {
+    "name" : "3I",
+    "floor" : "0",
+    "building" : "Ingegneria del Cinema / Aule T"
+  },
+  {
+    "name" : "2M",
+    "floor" : "0",
+    "building" : "Sede Architettura"
+  },
+  {
+    "name" : "4",
+    "floor" : "0",
+    "building" : "Sede Centrale"
+  },
+  {
+    "name" : "10D",
+    "floor" : "3",
+    "building" : "Fabbricato A"
+  },
+  {
+    "name" : "Biblioteca Ingegneria Informatica",
+    "floor" : "4",
+    "building" : "Cittadella Politecnica",
+    "startHour" : "8",
+    "startMinute" : "30",
+    "endHour" : "18",
+    "endMinute" : "0"
+  },
+  {
+     "name" : "Mensa",
+     "floor" : "0",
+     "building" : "Mensa",
+     "startHour" : "11",
+     "startMinute" : "30",
+     "endHour" : "22",
+     "endMinute" : "30"
+  },
+  {
+     "name" : "4T",
+     "floor" : "0",
+     "building" : "Aule T"
+  }
+]

@@ -70,7 +70,7 @@ public class GlobalData extends Application {
     public static final String BUNDLE_KEY_CONTAINS_PROFESSOR_NAME = "TIMETABLE_APPLICATION_isProfessorRequested";
     public static final String BUNDLE_KEY_LECTURE_OBJECT = "TIMETABLE_APPLICATION_LectureObject";
     private LecturesFileReader lecturesFileReader;
-    private boolean lectureFileReadingComplete = false;
+    private RoomsFileReader roomsFileReader;
     private static AssetManager assetManager;
     
     
@@ -83,9 +83,9 @@ public class GlobalData extends Application {
         applicationContext = getApplicationContext();
         assetManager = applicationContext.getAssets();
 
-        // reading json file in a secondary thread ------------------------------------------------
+        // reading lectures json file in a secondary thread ---------------------------------------
         lecturesFileReader = new LecturesFileReader();
-        AsyncTask<Void, Boolean, Void> fileReadingTask = new AsyncTask<Void, Boolean, Void>() {
+        AsyncTask<Void, Boolean, Void> lecturesFileReadingTask = new AsyncTask<Void, Boolean, Void>() {
             @Override
             protected Void doInBackground(Void... params) {
                 lecturesFileReader.readCoursesFromFile();
@@ -95,10 +95,26 @@ public class GlobalData extends Application {
             @Override
             protected void onPostExecute(Void aVoid) {
                 super.onPostExecute(aVoid);
-                lectureFileReadingComplete = true;
             }
         };
-        fileReadingTask.execute();
+        lecturesFileReadingTask.execute();
+        // ----------------------------------------------------------------------------------------
+
+        // reading lectures json file in a secondary thread ---------------------------------------
+        roomsFileReader = new RoomsFileReader();
+        AsyncTask<Void, Boolean, Void> roomsFileReadingTask = new AsyncTask<Void, Boolean, Void>() {
+            @Override
+            protected Void doInBackground(Void... params) {
+                roomsFileReader.readRooms();
+                return null;
+            }
+
+            @Override
+            protected void onPostExecute(Void aVoid) {
+                super.onPostExecute(aVoid);
+            }
+        };
+        roomsFileReadingTask.execute();
         // ----------------------------------------------------------------------------------------
 
 //        currentUser = null;
