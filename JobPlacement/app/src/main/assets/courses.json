@@ -4,19 +4,12 @@
     "name" : "Applicazioni Internet",
     "professor" : "Giovanni Malnati",
     "lectures" : [
-{
-        "dayInWeek": "1",
-        "startHour": "11",
-        "startMinute": "30",
-        "endHour": "14",
-        "endMinute": "30",
-        "room": "4D"
-      },      
-{
+
+      {
         "dayInWeek": "1",
         "startHour": "10",
         "startMinute": "0",
-        "endHour": "11",
+        "endHour": "14",
         "endMinute": "30",
         "room": "4D"
       },
@@ -25,11 +18,58 @@
         "startHour": "13",
         "startMinute": "0",
         "endHour": "16",
-        "endMinute": "0",
+        "endMinute": "30",
+        "room": "4D"
+      },
+      {
+        "dayInWeek": "4",
+        "startHour": "8",
+        "startMinute": "30",
+        "endHour": "11",
+        "endMinute": "30",
         "room": "4D"
       }
     ]
   },
+    {
+        "code" : "02JGROX",
+        "name" : "Applicazioni Internet",
+        "professor" : "Enrico Masala",
+        "lectures" : [
+          {
+            "dayInWeek": "1",
+            "startHour": "13",
+            "startMinute": "0",
+            "endHour": "15",
+            "endMinute": "0",
+            "room": "4D"
+          },
+          {
+            "dayInWeek": "2",
+            "startHour": "11",
+            "startMinute": "30",
+            "endHour": "14",
+            "endMinute": "30",
+            "room": "4D"
+          },
+          {
+            "dayInWeek": "2",
+            "startHour": "14",
+            "startMinute": "0",
+            "endHour": "19",
+            "endMinute": "0",
+            "room": "4D"
+          },
+          {
+            "dayInWeek": "5",
+            "startHour": "13",
+            "startMinute": "0",
+            "endHour": "16",
+            "endMinute": "0",
+            "room": "4D"
+          }
+        ]
+      },
 {
     "code" : "02JGLOV",
     "name" : "Programmazione a Oggetti",
@@ -292,36 +332,5 @@
         "room": "10D"
       }
     ]
-  },
-  {
-      "code" : "02JGROX",
-      "name" : "Applicazioni Internet",
-      "professor" : "Enrico Masala",
-      "lectures" : [
-        {
-          "dayInWeek": "1",
-          "startHour": "13",
-          "startMinute": "0",
-          "endHour": "15",
-          "endMinute": "0",
-          "room": "4D"
-        },
-        {
-          "dayInWeek": "13",
-          "startHour": "10",
-          "startMinute": "0",
-          "endHour": "11",
-          "endMinute": "30",
-          "room": "4D"
-        },
-        {
-          "dayInWeek": "5",
-          "startHour": "13",
-          "startMinute": "0",
-          "endHour": "16",
-          "endMinute": "0",
-          "room": "4D"
-        }
-      ]
-    }
+  }
 ]
