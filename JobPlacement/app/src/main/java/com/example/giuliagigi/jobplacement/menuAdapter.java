@@ -189,7 +189,7 @@ public class menuAdapter extends RecyclerView.Adapter<menuAdapter.ViewHolder> {
                                     FragmentManager fragmentManager = activity.getSupportFragmentManager();
                                     Fragment current = fragmentManager.findFragmentById(R.id.tab_Home_container);
 
-                                    if(!(current instanceof LectureSearch) || gd.getLatestDisplayedUser()!=gd.getUserObject()) {
+                                    if(!(current instanceof LectureSearch)) {
 
                                         Fragment fragment = LectureSearch.newInstance();
 
@@ -219,8 +219,27 @@ public class menuAdapter extends RecyclerView.Adapter<menuAdapter.ViewHolder> {
                                 @Override
                                 public void onClick(View v) {
 
-                                    //TODO: opening map search page
                                     Log.println(Log.ASSERT,"MANUADAPTER", "must open map section");
+                                    FragmentManager fragmentManager = activity.getSupportFragmentManager();
+                                    Fragment current = fragmentManager.findFragmentById(R.id.tab_Home_container);
+
+                                    if(!(current instanceof RoomSearch)) {
+
+                                        Fragment fragment = RoomSearch.newInstance();
+
+                                        //clear backstack
+                                        int count = fragmentManager.getBackStackEntryCount();
+                                        for(int i = 0; i < count; ++i) {
+                                            fragmentManager.popBackStack();
+                                        }
+
+                                        fragmentManager.beginTransaction()
+                                                .replace(R.id.tab_Home_container, fragment)
+                                                .addToBackStack("Home")
+                                                .commit();
+
+                                    }
+
                                     mDrawerLayout.closeDrawers();
                                 }
                             });

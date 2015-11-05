@@ -219,7 +219,7 @@
                         android:layout_weight="1"
                         android:backgroundTint="#00000000"
                         android:inputType="number"
-                        android:hint="@string/hint_grade"
+                        android:hint="@string/filter_hint_grade"
                         android:id="@+id/filter_grade_editbox"></EditText>
 
                 </LinearLayout>

@@ -48,13 +48,13 @@ public class LogoutDialogFragment extends DialogFragment {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
-        builder.setTitle(GlobalData.getContext().getString(R.string.string_logout));
+        builder.setTitle(GlobalData.getContext().getString(R.string.logout_want_logout));
 
-        builder.setPositiveButton(GlobalData.getContext().getString(R.string.string_yes), new DialogInterface.OnClickListener() {
+        builder.setPositiveButton(GlobalData.getContext().getString(R.string.yes), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
 
-                Toast.makeText(getActivity(), GlobalData.getContext().getString(R.string.string_logging_out), Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), GlobalData.getContext().getString(R.string.logout_logging_out), Toast.LENGTH_SHORT).show();
 
                 ParseInstallation installation = ParseInstallation.getCurrentInstallation();
                 installation.remove("User");
@@ -65,7 +65,7 @@ public class LogoutDialogFragment extends DialogFragment {
             }
         });
 
-        builder.setNegativeButton(GlobalData.getContext().getString(R.string.string_no), new DialogInterface.OnClickListener() {
+        builder.setNegativeButton(GlobalData.getContext().getString(R.string.no), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {}
         });
@@ -85,7 +85,7 @@ public class LogoutDialogFragment extends DialogFragment {
     private void completeLogoutProcedure(){
 
 
-        Toast.makeText(getActivity(), GlobalData.getContext().getString(R.string.string_logout_complete), Toast.LENGTH_SHORT).show();
+        Toast.makeText(getActivity(), GlobalData.getContext().getString(R.string.logout_complete), Toast.LENGTH_SHORT).show();
 
          //updates currentUser in GlobalData
 

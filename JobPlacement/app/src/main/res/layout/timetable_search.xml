@@ -25,7 +25,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/Text_InsertCourse"
+                android:text="@string/lectureSearch_InsertCourse"
                 android:textSize="@dimen/textView_textSize"
                 android:layout_margin="5dp"
                 android:textColor="#002E6B"
@@ -34,7 +34,7 @@
             <AutoCompleteTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/HINT_Course"
+                android:hint="@string/lectureSearch_hintCourse"
                 android:textSize="@dimen/editText_textSize"
                 android:textColor="#0050B8"
                 android:layout_margin="5dp"
@@ -43,7 +43,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/Text_InsertProfessor"
+                android:text="@string/lectureSearch_InsertProfessor"
                 android:textSize="@dimen/textView_textSize"
                 android:textColor="#002E6B"
                 android:layout_margin="5dp"
@@ -52,7 +52,7 @@
             <AutoCompleteTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/HINT_Professor"
+                android:hint="@string/lectureSearch_hintProfessor"
                 android:textSize="@dimen/editText_textSize"
                 android:textColor="#0050B8"
                 android:layout_margin="5dp"
@@ -62,7 +62,7 @@
             <Button
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/button_searchButtonText"
+                android:text="@string/SEARCH"
                 android:id="@+id/displayButton"
                 android:textSize="@dimen/button_textSize"
                 android:layout_gravity="center_horizontal"

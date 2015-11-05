@@ -12,7 +12,7 @@
 
     <item android:id="@+id/action_edit"
         android:icon="@drawable/ic_edit_white"
-        android:title="@string/action_edit"
+        android:title="@string/edit"
         app:showAsAction="always"/>
 
 </menu>

@@ -45,7 +45,7 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:padding="15dp"
-            android:hint="@string/string_hint_email"
+            android:hint="@string/login_hint_email"
             android:id="@+id/email_editText"
             android:inputType="textEmailAddress"/>
 
@@ -53,7 +53,7 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:padding="15dp"
-            android:hint="@string/string_hint_password"
+            android:hint="@string/login_hint_password"
             android:id="@+id/password_editText"
             android:inputType="textPassword"/>
 
@@ -71,7 +71,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="fill_parent"
-                android:text="@string/string_login_remember"
+                android:text="@string/login_remember"
                 android:padding="5dp"
                 android:textSize="15sp"
                 android:id="@+id/login_stayConnected_text"/>
@@ -100,7 +100,7 @@
             android:layout_width="fill_parent"
             android:layout_height="0dp"
             android:layout_weight=".4"
-            android:text="@string/string_login_register"
+            android:text="@string/login_register"
             android:textColor="#191970"
             android:layout_margin="5dp"
             android:textSize="15dp"
@@ -109,7 +109,7 @@
         <TextView
             android:layout_width="fill_parent"
             android:layout_height="0dp"
-            android:text="@string/string_login_forgot"
+            android:text="@string/login_forgot"
             android:layout_weight=".5"
             android:textSize="15dp"
             android:id="@+id/login_passwordReset_text"

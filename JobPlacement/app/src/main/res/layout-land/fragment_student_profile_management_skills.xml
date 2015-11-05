@@ -60,7 +60,7 @@
                                 android:layout_weight=".4"
                                 android:gravity="center_vertical"
                                 android:padding="5dp"
-                                android:text="@string/string_student_cv"
+                                android:text="@string/profile_student_cv"
                                 />
 
                             <TextView
@@ -72,7 +72,7 @@
                                 android:layout_weight=".3"
                                 android:layout_marginLeft="10dp"
                                 android:padding="5dp"
-                                android:text="@string/string_student_upload_cv"
+                                android:text="@string/profile_student_upload_cv"
                                 />
                             <TextView
                                 android:layout_width="match_parent"
@@ -83,7 +83,7 @@
                                 android:layout_weight=".3"
                                 android:layout_marginLeft="10dp"
                                 android:padding="5dp"
-                                android:text="@string/string_student_cv_only_pdf"
+                                android:text="@string/profile_student_cv_only_pdf"
                                 />
                         </LinearLayout>
                         <Button
@@ -133,7 +133,7 @@
                             android:textColor="@color/ColorPrimaryDark"
                             android:layout_weight=".9"
                             android:padding="10dp"
-                            android:text="@string/string_student_fragment_languages"
+                            android:text="@string/profile_student_fragment_languages"
                             />
 
                         <Button
@@ -203,7 +203,7 @@
                             android:textAppearance="?android:textAppearanceMedium"
                             android:layout_weight=".9"
                             android:padding="10dp"
-                            android:text="@string/string_student_fragment_degrees"
+                            android:text="@string/profile_student_fragment_degrees"
                             android:textColor="@color/ColorPrimaryDark"
                             />
 

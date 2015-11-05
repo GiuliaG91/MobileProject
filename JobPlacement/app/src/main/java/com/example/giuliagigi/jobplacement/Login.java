@@ -27,12 +27,9 @@ import android.widget.Toast;
 import com.parse.LogInCallback;
 import com.parse.ParseException;
 import com.parse.ParseInstallation;
-import com.parse.ParsePush;
 import com.parse.ParseUser;
 import com.parse.RequestPasswordResetCallback;
-import com.parse.SaveCallback;
 
-import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -160,14 +157,14 @@ public class Login extends ActionBarActivity {
 
                 AlertDialog.Builder builder = new AlertDialog.Builder(Login.this);
 
-                builder.setTitle(GlobalData.getContext().getString(R.string.string_password_reset));
+                builder.setTitle(GlobalData.getContext().getString(R.string.login_password_reset));
                 final EditText mail = new EditText(getApplicationContext());
-                mail.setHint(GlobalData.getContext().getString(R.string.string_insert_mail));
+                mail.setHint(GlobalData.getContext().getString(R.string.login_insert_mail));
                 mail.setTextColor(Color.BLACK);
                 mail.setInputType(InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS);
                 builder.setView(mail);
 
-                builder.setPositiveButton(GlobalData.getContext().getString(R.string.string_reset_send), new DialogInterface.OnClickListener() {
+                builder.setPositiveButton(GlobalData.getContext().getString(R.string.login_reset_send), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
 
@@ -176,13 +173,13 @@ public class Login extends ActionBarActivity {
                             @Override
                             public void done(ParseException e) {
 
-                                Toast.makeText(getApplicationContext(),GlobalData.getContext().getString(R.string.string_reset_message), Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getApplicationContext(),GlobalData.getContext().getString(R.string.login_reset_message), Toast.LENGTH_SHORT).show();
                             }
                         });
                     }
                 });
 
-                builder.setNegativeButton(GlobalData.getContext().getString(R.string.string_reset_cancel), new DialogInterface.OnClickListener() {
+                builder.setNegativeButton(GlobalData.getContext().getString(R.string.login_reset_cancel), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {}
                 });
@@ -254,7 +251,7 @@ public class Login extends ActionBarActivity {
                 if (e == null) {
 
                     Log.println(Log.ASSERT, "LOGIN", "login ok");
-                    result = GlobalData.getContext().getString(R.string.string_login_successful);
+                    result = GlobalData.getContext().getString(R.string.login_successful);
                     Toast.makeText(getApplicationContext(),result,Toast.LENGTH_SHORT).show();
 
                     SharedPreferences sp = getPreferences(Context.MODE_PRIVATE);
@@ -290,7 +287,7 @@ public class Login extends ActionBarActivity {
 
                     Log.println(Log.ASSERT, "LOGIN", "login failed");
                     e.printStackTrace();
-                    result = GlobalData.getContext().getString(R.string.string_login_failed);
+                    result = GlobalData.getContext().getString(R.string.login_failed);
                     setEnable(true);
                     Toast.makeText(getApplicationContext(),result,Toast.LENGTH_SHORT).show();
                 }

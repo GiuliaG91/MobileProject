@@ -1,11 +1,7 @@
 package com.example.giuliagigi.jobplacement;
 
-import android.app.Application;
-import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.net.Uri;
-import android.provider.MediaStore;
 import android.util.Log;
 
 import com.parse.FindCallback;
@@ -19,12 +15,8 @@ import com.parse.ProgressCallback;
 import com.parse.SaveCallback;
 
 import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -46,9 +38,9 @@ public class User extends ParseObject{
     public static final String TYPE_COMPANY = "Company";
     public static final String TYPE_SELECT = "Select a type";
 
-    public static final String TYPE_STUDENT_TRANSLATED = GlobalData.getContext().getString(R.string.string_type_student);
-    public static final String TYPE_COMPANY_TRANSLATED = GlobalData.getContext().getString(R.string.string_type_company);
-    public static final String TYPE_SELECT_TRANSLATED = GlobalData.getContext().getString(R.string.string_select_type);
+    public static final String TYPE_STUDENT_TRANSLATED = GlobalData.getContext().getString(R.string.registration_type_student);
+    public static final String TYPE_COMPANY_TRANSLATED = GlobalData.getContext().getString(R.string.registration_type_company);
+    public static final String TYPE_SELECT_TRANSLATED = GlobalData.getContext().getString(R.string.registration_select_type);
 
     public static final HashMap<String, String> USER_TYPES = new HashMap<>();
     public static final String[] TYPES = new String[]{TYPE_SELECT_TRANSLATED,TYPE_STUDENT_TRANSLATED,TYPE_COMPANY_TRANSLATED};

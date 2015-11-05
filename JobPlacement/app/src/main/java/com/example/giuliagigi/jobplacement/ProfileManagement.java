@@ -8,7 +8,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -224,7 +223,7 @@ public class ProfileManagement extends Fragment{
 
             AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
             builder.setTitle(GlobalData.getContext().getString(R.string.string_send_email) + " " + user.getMail() + "?");
-            builder.setPositiveButton(GlobalData.getContext().getString(R.string.string_yes), new DialogInterface.OnClickListener() {
+            builder.setPositiveButton(GlobalData.getContext().getString(R.string.yes), new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
 
@@ -233,7 +232,7 @@ public class ProfileManagement extends Fragment{
                 }
             });
 
-            builder.setNegativeButton(GlobalData.getContext().getString(R.string.string_no), new DialogInterface.OnClickListener() {
+            builder.setNegativeButton(GlobalData.getContext().getString(R.string.no), new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {}
             });

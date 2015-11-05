@@ -36,7 +36,7 @@
                 android:layout_marginRight="12dp"
                 android:layout_marginLeft="12dp"
                 android:layout_marginTop="10dp"
-                android:hint="@string/object1"/>
+                android:hint="@string/object:"/>
 
         </LinearLayout>
 

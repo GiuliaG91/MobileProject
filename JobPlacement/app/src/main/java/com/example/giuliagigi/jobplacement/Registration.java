@@ -4,9 +4,6 @@ import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Bitmap;
-import android.graphics.Color;
-import android.os.PersistableBundle;
 import android.support.v7.app.*;
 import android.os.Bundle;
 import android.util.Log;
@@ -15,27 +12,18 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.Button;
-import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.parse.DeleteCallback;
 import com.parse.ParseException;
 import com.parse.ParseInstallation;
 import com.parse.ParsePush;
-import com.parse.ParseQuery;
 import com.parse.SaveCallback;
 import com.parse.SignUpCallback;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.util.Arrays;
-import java.util.Currency;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -126,7 +114,7 @@ public class Registration extends ActionBarActivity implements StudentRegistrati
                 if(re == null){
 
                     if(user == null)
-                        Toast.makeText(getApplicationContext(),GlobalData.getContext().getString(R.string.string_must_select_type),Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(),GlobalData.getContext().getString(R.string.registration_must_select_type),Toast.LENGTH_SHORT).show();
 
                     else {
 
@@ -141,11 +129,11 @@ public class Registration extends ActionBarActivity implements StudentRegistrati
 
                         case RegistrationException.MISSING_INFORMATIONS:
 
-                            Toast.makeText(getApplicationContext(),GlobalData.getContext().getString(R.string.string_missing_info),Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplicationContext(),GlobalData.getContext().getString(R.string.registration_missing_info),Toast.LENGTH_SHORT).show();
                             break;
                         case RegistrationException.MISMATCHING_PASSWORDS:
 
-                            Toast.makeText(getApplicationContext(),GlobalData.getContext().getString(R.string.string_mismatching_password),Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplicationContext(),GlobalData.getContext().getString(R.string.registration_mismatching_password),Toast.LENGTH_SHORT).show();
                             break;
                         default:
                             break;
@@ -352,17 +340,17 @@ public class Registration extends ActionBarActivity implements StudentRegistrati
 
                         case ParseException.EMAIL_TAKEN:
 
-                            Toast.makeText(getApplicationContext(),GlobalData.getContext().getString(R.string.string_mail_already_used),Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplicationContext(),GlobalData.getContext().getString(R.string.registration_mail_already_used),Toast.LENGTH_SHORT).show();
                             break;
 
                         case ParseException.INVALID_EMAIL_ADDRESS:
 
-                            Toast.makeText(getApplicationContext(),GlobalData.getContext().getString(R.string.string_mail_not_valid),Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplicationContext(),GlobalData.getContext().getString(R.string.registration_mail_not_valid),Toast.LENGTH_SHORT).show();
                             break;
 
                         case ParseException.CONNECTION_FAILED:
 
-                            Toast.makeText(getApplicationContext(),GlobalData.getContext().getString(R.string.string_connection_not_available),Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplicationContext(),GlobalData.getContext().getString(R.string.registration_connection_not_available),Toast.LENGTH_SHORT).show();
                             break;
 
                         default:

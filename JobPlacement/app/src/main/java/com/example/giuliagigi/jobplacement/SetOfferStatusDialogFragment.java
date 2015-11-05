@@ -2,8 +2,6 @@ package com.example.giuliagigi.jobplacement;
 
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,7 +18,6 @@ import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
 import java.util.List;
-import java.util.Set;
 
 /**
  * Created by pietro on 22/05/2015.
@@ -67,13 +64,13 @@ public class SetOfferStatusDialogFragment extends DialogFragment {
 
         title=(TextView)root.findViewById(R.id.SetStatusTitle);
         StatusSpinner=(Spinner)root.findViewById(R.id.StatusSpinner);
-        title.setText(getString(R.string.StatusTextview));
+        title.setText(getString(R.string.OfferStatus_applyStatus));
 
         okButton = (Button) root.findViewById(R.id.ok_button);
         cancelButton = (Button) root.findViewById(R.id.cancel_button);
 
         items = new String[4];
-        items[0]=getString(R.string.StatusChooseItem);
+        items[0]=getString(R.string.OfferStatus_ChooseItem);
         items[1]=getString(R.string.OfferStatus_Considering);
         items[2]=getString(R.string.OfferStatus_Accepted);
         items[3]=getString(R.string.OfferStatus_Refused);

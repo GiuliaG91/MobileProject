@@ -8,12 +8,10 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -27,7 +25,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.GridLayout;
 import android.widget.ImageButton;
-import android.widget.LinearLayout;
 import android.widget.MultiAutoCompleteTextView;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -35,12 +32,9 @@ import android.widget.Toast;
 
 import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.getbase.floatingactionbutton.FloatingActionsMenu;
-import com.google.android.gms.appstate.AppStateManager;
-import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseGeoPoint;
 import com.parse.ParseInstallation;
-import com.parse.ParseObject;
 import com.parse.ParsePush;
 import com.parse.ParseQuery;
 
@@ -604,7 +598,7 @@ public class NewOffer extends Fragment implements DatePickerFragment.OnDataSetLi
                         public void onClick(View v) {
 
                             if (!globalData.getCurrentViewOffer().getStudents().isEmpty()) {
-                                Toast.makeText(getActivity(), R.string.NoModify, Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getActivity(), R.string.OfferStatus_NoModify, Toast.LENGTH_SHORT).show();
                             } else {
 
 

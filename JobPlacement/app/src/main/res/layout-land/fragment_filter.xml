@@ -335,10 +335,11 @@
                 android:layout_width="fill_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1">
-            <MultiAutoCompleteTextView
+
+                <MultiAutoCompleteTextView
                 android:layout_width="0dp"
                 android:layout_height="fill_parent"
-                android:hint="@string/new_offer_fragment_hint_location"
+                android:hint="@string/location"
                 android:id="@+id/filter_location_complete_tv"
                 android:layout_weight="1"
                 android:completionThreshold="1"

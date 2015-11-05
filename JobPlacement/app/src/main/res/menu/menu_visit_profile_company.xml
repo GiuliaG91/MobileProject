@@ -12,7 +12,7 @@
 
     <item android:id="@+id/action_send"
         android:icon="@drawable/ic_mail"
-        android:title="@string/action_send"
+        android:title="@string/send"
         app:showAsAction="always"/>
 
 

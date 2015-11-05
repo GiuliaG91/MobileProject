@@ -7,6 +7,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
@@ -24,14 +25,43 @@ public class RoomsFileReader {
     public static final String ROOM_END_MINUTE_FIELD = "endMinute";
 
     private HashMap<String,Room> rooms;
-
+    private ArrayList<String> roomNames;
 
     public RoomsFileReader(){
 
         rooms = new HashMap<String,Room>();
+        roomNames = new ArrayList<String>();
     }
 
+    //////////////////////////////////////////////////////////////////////////////////////
+    // --------------------- GETTER METHODS --------------------------------------------//
+    //////////////////////////////////////////////////////////////////////////////////////
 
+    public ArrayList<String> getRoomNames(){
+
+        if(rooms.isEmpty() || !roomNames.isEmpty()) return this.roomNames;
+
+        ArrayList<String> roomNames = new ArrayList<String>();
+
+        for(Room r: rooms.values()){
+
+            roomNames.add(r.getName());
+        }
+
+        this.roomNames = roomNames;
+        return roomNames;
+    }
+
+    public Room getRoom(String roomName){
+
+        if(!rooms.keySet().contains(roomName)) return null;
+
+        return rooms.get(roomName);
+    }
+
+    //////////////////////////////////////////////////////////////////////////////////////
+    // --------------------- FILE READING METHODS --------------------------------------//
+    //////////////////////////////////////////////////////////////////////////////////////
 
     public void readRooms(){
 

@@ -14,7 +14,7 @@ import java.util.ArrayList;
 
 public class CompanyProfileManagementRegistryFragment extends ProfileManagementFragment {
 
-    private static final String TITLE = GlobalData.getContext().getString(R.string.string_registry_tab);
+    private static final String TITLE = GlobalData.getContext().getString(R.string.profile_registry_tab);
     public static final String BUNDLE_IDENTIFIER = "COMPANYPROFILEREGISTRY";
     private static final String BUNDLE_KEY_COMPANY = "BUNDLE_KEY_COMPANY";
 

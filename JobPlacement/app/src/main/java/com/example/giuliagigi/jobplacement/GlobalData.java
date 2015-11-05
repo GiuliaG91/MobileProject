@@ -100,7 +100,7 @@ public class GlobalData extends Application {
         lecturesFileReadingTask.execute();
         // ----------------------------------------------------------------------------------------
 
-        // reading lectures json file in a secondary thread ---------------------------------------
+        // reading rooms json file in a secondary thread ------------------------------------------
         roomsFileReader = new RoomsFileReader();
         AsyncTask<Void, Boolean, Void> roomsFileReadingTask = new AsyncTask<Void, Boolean, Void>() {
             @Override
@@ -368,5 +368,8 @@ public class GlobalData extends Application {
     }
 
 
+    public RoomsFileReader getRoomsFileReader() {
+        return roomsFileReader;
+    }
 }
 

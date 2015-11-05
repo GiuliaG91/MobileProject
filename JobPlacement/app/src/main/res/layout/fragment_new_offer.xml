@@ -229,7 +229,7 @@
             <Button
                 android:layout_width="0dp"
                 android:layout_height="fill_parent"
-                android:text="@string/new_offer_fragment_date"
+                android:text="@string/set"
                 android:id="@+id/dateButton"
                 android:layout_weight="0.5" />
         </LinearLayout>
@@ -597,7 +597,7 @@ Li
             android:id="@+id/action_d"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            fab:fab_title="@string/new_offer_view_button"
+            fab:fab_title="@string/see"
             fab:fab_colorNormal="@color/ColorPrimary"
             fab:fab_colorPressed="@color/ColorPrimaryDark"/>
 
@@ -607,7 +607,7 @@ Li
             android:id="@+id/action_a"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            fab:fab_title="@string/new_offer_publish_button"
+            fab:fab_title="@string/publish"
             fab:fab_colorNormal="@color/ColorPrimary"
             fab:fab_colorPressed="@color/ColorPrimaryDark"/>
 
@@ -615,7 +615,7 @@ Li
             android:id="@+id/action_b"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            fab:fab_title="@string/new_offer_modify_button"
+            fab:fab_title="@string/modify"
             fab:fab_colorNormal="@color/ColorPrimary"
             fab:fab_colorPressed="@color/ColorPrimaryDark"/>
 
@@ -623,7 +623,7 @@ Li
             android:id="@+id/action_c"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            fab:fab_title="@string/new_offer_delete_button"
+            fab:fab_title="@string/delete_messages"
             fab:fab_colorNormal="@color/ColorPrimary"
             fab:fab_colorPressed="@color/ColorPrimaryDark"/>
 

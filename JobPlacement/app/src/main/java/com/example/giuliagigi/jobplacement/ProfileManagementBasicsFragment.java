@@ -14,17 +14,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
-
-import com.parse.ParseQuery;
-import com.parse.ParseUser;
 
 import java.io.IOException;
 
 public class ProfileManagementBasicsFragment extends ProfileManagementFragment {
 
-    private static final String TITLE = GlobalData.getContext().getString(R.string.string_basics_tab);
+    private static final String TITLE = GlobalData.getContext().getString(R.string.profile_basics_tab);
     protected ImageView profilePhoto;
     protected TextView emailVerified;
     protected ImageView emailVerifiedIcon;

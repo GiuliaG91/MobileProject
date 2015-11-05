@@ -21,7 +21,7 @@ import android.widget.FrameLayout;
  */
 public class LectureSearch extends Fragment {
 
-    private static final String TAG = "Main activity - LOG: ";
+    private static final String TAG = "LECTURESEARCH";
 
 
     Button display;

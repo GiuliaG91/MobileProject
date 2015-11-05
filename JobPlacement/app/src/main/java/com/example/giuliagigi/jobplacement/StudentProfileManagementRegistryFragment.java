@@ -26,7 +26,7 @@ import java.util.ArrayList;
 public class StudentProfileManagementRegistryFragment extends ProfileManagementFragment implements OnMapReadyCallback{
 
 
-    private static final String TITLE = GlobalData.getContext().getString(R.string.string_registry_tab);
+    private static final String TITLE = GlobalData.getContext().getString(R.string.profile_registry_tab);
     public static final String BUNDLE_IDENTIFIER = "STUDENTPROFILEREGISTRY";
     private static final String BUNDLE_KEY_STUDENT = "BUNDLE_KEY_STUDENT";
 

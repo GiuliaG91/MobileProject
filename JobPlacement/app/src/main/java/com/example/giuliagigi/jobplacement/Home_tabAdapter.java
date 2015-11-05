@@ -173,11 +173,11 @@ public class Home_tabAdapter extends RecyclerView.Adapter<Home_tabAdapter.ViewHo
                             switch (status.getType()) {
                                 case OfferStatus.TYPE_ACCEPTED: title.setText(context.getResources().getString(R.string.student_accepted));
                                                                 break;
-                                case OfferStatus.TYPE_START: title.setText(context.getResources().getString(R.string.student_processing));
+                                case OfferStatus.TYPE_START: title.setText(context.getResources().getString(R.string.OfferStatus_Start));
                                                              break;
-                                case OfferStatus.TYPE_CONSIDERING: title.setText(context.getResources().getString(R.string.student_considering));
+                                case OfferStatus.TYPE_CONSIDERING: title.setText(context.getResources().getString(R.string.OfferStatus_Considering));
                                                                    break;
-                                case OfferStatus.TYPE_REFUSED: title.setText(context.getResources().getString(R.string.student_refused));
+                                case OfferStatus.TYPE_REFUSED: title.setText(context.getResources().getString(R.string.OfferStatus_Refused));
                                                                break;
                             }
                             break;

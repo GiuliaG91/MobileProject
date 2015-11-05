@@ -2,14 +2,12 @@ package com.example.giuliagigi.jobplacement;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.content.res.Configuration;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,7 +19,7 @@ import java.util.ArrayList;
 
 public class ProfileManagementFragment extends Fragment implements OnActivityChangedListener{
 
-    protected static final String INSERT_FIELD = GlobalData.getContext().getString(R.string.string_insert);
+    protected static final String INSERT_FIELD = GlobalData.getContext().getString(R.string.insert);
     protected static final String BUNDLE_IDENTIFIER = "PROFILEMANAGEMENTFRAG";
     protected static final String BUNDLE_KEY_USER = "BUNDLE_KEY_USER";
     protected static final String BUNDLE_KEY_HASCHANGED = "BUNDLE_KEY_HASCHANGED";
