@@ -96,8 +96,6 @@ public class LectureDisplayFragment extends Fragment {
                 public void onGlobalLayout() {
 
                     DAY_WIDTH = lecturesRelativeLayouts[0].getWidth();
-                    Log.println(Log.ASSERT, "LECTUREDISPLAY", "measured width = " + DAY_WIDTH);
-
                     if(!isViewPopulated){
 
                         isViewPopulated = true;
@@ -503,14 +501,17 @@ public class LectureDisplayFragment extends Fragment {
 
             int maxOverlap = getClusterMaxOverlap(cluster);
 
-            final float density = GlobalData.getContext().getResources().getDisplayMetrics().density;
+//            final float density = GlobalData.getContext().getResources().getDisplayMetrics().density;
             float hourHeight = GlobalData.getContext().getResources().getDimension(R.dimen.hour_height);
-            int height = (int)(lecture.getSchedule().getMinuteDuration() * density * hourHeight / 60);
-            int topMargin = (int)(((lecture.getSchedule().getStartHour()-8)*60+lecture.getSchedule().getStartMinute())*density*hourHeight/60);
-            int width = (int)(((float)DAY_WIDTH)/maxOverlap*density);
-            int leftMargin = (int)((i%maxOverlap)*DAY_WIDTH*density);
+            int height = (int)(lecture.getSchedule().getMinuteDuration() * hourHeight / 60);
+            int startMinute = ((lecture.getSchedule().getStartHour()-8)*60+lecture.getSchedule().getStartMinute());
+            int topMargin = (int)(startMinute*hourHeight/60);
+            int width = (int)(((float)DAY_WIDTH)/maxOverlap);
+            int leftMargin = (int)((i%maxOverlap)*width);
 
-            Log.println(Log.ASSERT,"LECTUREDISPLAY", "density = " + density + "; height = " + height + "; topMargin = " + topMargin + "; width = " + width + "; leftMargin" + leftMargin);
+            Log.println(Log.ASSERT, "LECTUREDISPLAY", "hourheight = " + hourHeight + "; startMinute = " + startMinute);
+            Log.println(Log.ASSERT, "LECTUREDISPLAY", "dayWidth = " + DAY_WIDTH);
+            Log.println(Log.ASSERT,"LECTUREDISPLAY", "height = " + height + "; topMargin = " + topMargin + "; width = " + width + "; leftMargin" + leftMargin);
 
             RelativeLayout.LayoutParams param = new RelativeLayout.LayoutParams(width, height);
             param.setMargins(leftMargin, topMargin, 0, 0);

@@ -22,6 +22,14 @@
         "room": "4D"
       },
       {
+        "dayInWeek": "2",
+        "startHour": "15",
+        "startMinute": "0",
+        "endHour": "17",
+        "endMinute": "30",
+        "room": "4D"
+      },
+      {
         "dayInWeek": "4",
         "startHour": "8",
         "startMinute": "30",
