@@ -108,26 +108,6 @@ public class LectureDisplayFragment extends Fragment {
 //        for(int i=0;i<5;i++){
 //
 //            ArrayList<Lecture> dayLectures = lecturesFileReader.getDayLectures(course,professor,i+1);
-//            ArrayList<ArrayList<Lecture>> clusters = getClusters(dayLectures);
-//
-//            Log.println(Log.ASSERT, "LECTUREDISPLAY", "day" + i + ": ");
-//            int n = 1;
-//            for (ArrayList<Lecture> c : clusters){
-//
-//                Log.println(Log.ASSERT, "LECTUREDISPLAY", "cluster" + n++ + ": ");
-//
-//                int n2 = 1;
-//                for (Lecture lec: c){
-//
-//                    Log.println(Log.ASSERT, "LECTUREDISPLAY", "lec" + n2++ + ": " + lec.getSchedule().toString());
-//                }
-//
-//                Log.println(Log.ASSERT, "LECTUREDISPLAY", "maxWidth = " + getClusterMaxOverlap(c));
-//
-//                for(RelativeLayout r: getLectureViews(c))
-//                    lecturesRelativeLayouts[i].addView(r);
-//            }
-//
 //
 //            for (int it = 0; it < lectures.size(); it++){
 //                Lecture showedLecture = lectures.get(it);
