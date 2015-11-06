@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -86,7 +87,12 @@ public class RoomSearch extends Fragment {
 
                 if(r != null){
 
-                    Log.println(Log.ASSERT, "ROOMSEARCH", "found a room");
+                    FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+                    RoomDisplayFragment rdf = RoomDisplayFragment.newInstance(r);
+
+                    ft.replace(R.id.rooms_display_container,rdf)
+                            .commit();
+
                 }
             }
         });

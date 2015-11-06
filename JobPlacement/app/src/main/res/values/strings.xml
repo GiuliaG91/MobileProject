@@ -44,6 +44,19 @@
     <string name="publish">Publish</string>
     <string name="save">Save</string>
     <string name="location">Location</string>
+    <string name="floor">Floor</string>
+
+    <string name="ground_floor">Ground floor</string>
+
+    <string-array name="cardinal_numbers">
+        <item>1st</item>
+        <item>2nd</item>
+        <item>3rd</item>
+        <item>4th</item>
+        <item>5th</item>
+        <item>6th</item>
+    </string-array>
+
 
     <!-- ________________ GENERAL ______________________________________________________________ -->
     <string name="app_name">JobPlacement</string>
