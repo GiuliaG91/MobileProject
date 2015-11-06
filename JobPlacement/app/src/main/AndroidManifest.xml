@@ -16,10 +16,16 @@
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
     <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
 
-    <permission android:protectionLevel="signature"
+    <permission
+        android:protectionLevel="signature"
         android:name="com.example.giuliagigi.jobplacement.permission.C2D_MESSAGE" />
-    <uses-permission android:name="com.example.giuliagigi.jobplacement.permission.C2D_MESSAGE" />
 
+    <uses-permission
+        android:name="com.example.giuliagigi.jobplacement.permission.C2D_MESSAGE" />
+
+    <uses-feature
+        android:glEsVersion="0x00020000"
+        android:required="true"/>
 
     <application
         android:name=".GlobalData"
@@ -62,13 +68,6 @@
         <activity
             android:name=".Home"
             android:label="@string/title_activity_home">
-        </activity>
-
-	<activity
-            android:name=".LectureDisplayFragment"
-            android:label="@string/title_activity_week_display"
-            android:parentActivityName=".LectureSearch" >
-
         </activity>
 
         <service android:name="com.parse.PushService" />
