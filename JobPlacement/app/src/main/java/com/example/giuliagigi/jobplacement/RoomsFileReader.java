@@ -23,6 +23,8 @@ public class RoomsFileReader {
     public static final String ROOM_START_MINUTE_FIELD = "startMinute";
     public static final String ROOM_END_HOUR_FIELD = "endHour";
     public static final String ROOM_END_MINUTE_FIELD = "endMinute";
+    public static final String ROOM_X_FIELD = "xCoordinate";
+    public static final String ROOM_Y_FIELD = "yCoordinate";
 
     private HashMap<String,Room> rooms;
     private ArrayList<String> roomNames;
@@ -86,19 +88,6 @@ public class RoomsFileReader {
             e.printStackTrace();
         }
 
-        for(Room r: rooms.values()){
-
-            Log.println(Log.ASSERT, "ROOMSFILEREAD", "room: ");
-            Log.println(Log.ASSERT, "ROOMSFILEREAD", "      name: " + r.getName());
-            Log.println(Log.ASSERT, "ROOMSFILEREAD", "      floor: " + r.getFloor());
-            Log.println(Log.ASSERT, "ROOMSFILEREAD", "      building: " + r.getBuilding());
-
-            Schedule s = r.getTime();
-            if(s != null){
-
-                Log.println(Log.ASSERT, "ROOMSFILEREAD", "      schedule: " + s.getStartHour() + ":" + s.getStartMinute() + "-" + s.getEndHour() + ":" + s.getEndMinute());
-            }
-        }
     }
 
     private Room readRoom(JsonReader reader) throws IOException{
@@ -119,6 +108,8 @@ public class RoomsFileReader {
             else if(courseField.equals(ROOM_START_MINUTE_FIELD))startMinute = reader.nextInt();
             else if(courseField.equals(ROOM_END_HOUR_FIELD))    endHour = reader.nextInt();
             else if(courseField.equals(ROOM_END_MINUTE_FIELD))  endMinute = reader.nextInt();
+            else if(courseField.equals(ROOM_X_FIELD))           r.setXCoordinate((float)reader.nextDouble());
+            else if(courseField.equals(ROOM_Y_FIELD))           r.setYCoordinate((float)reader.nextDouble());
             else {
 
                 reader.skipValue();

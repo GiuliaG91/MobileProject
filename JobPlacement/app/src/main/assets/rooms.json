@@ -35,7 +35,9 @@
      "startHour" : "11",
      "startMinute" : "30",
      "endHour" : "22",
-     "endMinute" : "30"
+     "endMinute" : "30",
+     "xCoordinate" : "0.7322",
+     "yCoordinate" : "0.3926"
   },
   {
      "name" : "4T",

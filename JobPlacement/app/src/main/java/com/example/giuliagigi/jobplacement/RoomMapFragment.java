@@ -16,6 +16,7 @@ import com.threed.jpct.FrameBuffer;
 import com.threed.jpct.Object3D;
 import com.threed.jpct.Primitives;
 import com.threed.jpct.RGBColor;
+import com.threed.jpct.SimpleVector;
 import com.threed.jpct.Texture;
 import com.threed.jpct.TextureManager;
 import com.threed.jpct.World;
@@ -40,7 +41,7 @@ public class RoomMapFragment extends Fragment implements GLSurfaceView.Renderer,
     /* these two object must be manipulated only in the background thread */
     private World world;
     private FrameBuffer frameBuffer;
-    private Object3D mapPlane;
+    private Object3D mapPlane, roomMarker;
     float lastX,lastY, lastSpan;
     boolean isScaling = false;
 
@@ -114,9 +115,7 @@ public class RoomMapFragment extends Fragment implements GLSurfaceView.Renderer,
 
         world = new World();
 
-        mapPlane = Primitives.getPlane(1,3.0f);
         InputStream in = null;
-
         try {
             in = GlobalData.getAssetManager().open("polito_map.jpg");
         }
@@ -125,17 +124,37 @@ public class RoomMapFragment extends Fragment implements GLSurfaceView.Renderer,
             e.printStackTrace();
         }
 
+        /* -------- creating textures ------------------------- */
         Texture mapTexture = null;
         if(in != null)  mapTexture = new Texture(in);
         else            mapTexture = new Texture(1024,1024, RGBColor.RED);
 
-        TextureManager.getInstance().addTexture("mapTexture", mapTexture);
+        if(!TextureManager.getInstance().containsTexture("mapTexture"))
+            TextureManager.getInstance().addTexture("mapTexture", mapTexture);
+
+        Texture markerTexture = new Texture(64,64,RGBColor.RED);
+        if(!TextureManager.getInstance().containsTexture("markerTexture"))
+            TextureManager.getInstance().addTexture("markerTexture",markerTexture);
+
+        /* -------- creating objects ------------------------- */
+        mapPlane = Primitives.getPlane(1, 1);
         mapPlane.setTexture("mapTexture");
+        roomMarker = Primitives.getSphere(1);
+        roomMarker.setTexture("markerTexture");
+
+        roomMarker.setCenter(new SimpleVector(mapPlane.getCenter().x,mapPlane.getCenter().y,mapPlane.getCenter().z));
+        float dx = (room.getXCoordinate() - 0.5f);
+        float dy = (room.getYCoordinate() - 0.5f);
+        roomMarker.translate(dx,dy,0);
+        mapPlane.addChild(roomMarker);
+
         mapPlane.translate(2.5f, 0, 10);
         mapPlane.scale(10);
+        roomMarker.scale(0.0033f);
 
         world.setAmbientLight(255,255,255);
         world.addObject(mapPlane);
+        world.addObject(roomMarker);
     }
 
     @Override
@@ -163,38 +182,6 @@ public class RoomMapFragment extends Fragment implements GLSurfaceView.Renderer,
 
     @Override
     public boolean onTouch(View v, MotionEvent event) {
-
-//        switch (event.getAction()){
-//
-//            case MotionEvent.ACTION_DOWN:
-//
-//                lastX = event.getX();
-//                lastY= event.getY();
-//
-//                return true;
-//
-//            case MotionEvent.ACTION_MOVE:
-//
-//                final float dx = event.getX() - lastX;
-//                final float dy = event.getY() - lastY;
-//
-//                lastX = event.getX();
-//                lastY = event.getY();
-//
-//                /* we cannot manipulate 3D objects in the UI thread, so we enqueue a runnable
-//                * for the surface view*/
-//                surfaceView.queueEvent(new Runnable() {
-//                    @Override
-//                    public void run() {
-//
-//                        mapPlane.translate(dx*0.01f,dy*0.01f,0);
-//                    }
-//                });
-//
-//                return true;
-//
-//            default: return true;
-//        }
 
         scaleGestureDetector.onTouchEvent(event);
         gestureDetector.onTouchEvent(event);

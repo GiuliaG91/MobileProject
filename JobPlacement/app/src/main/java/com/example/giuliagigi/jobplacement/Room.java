@@ -9,8 +9,8 @@ public class Room {
     private Schedule time;
     private int floor;
     private String building;
-    //TODO: coordinate
-
+    private float xCoordinate;
+    private float yCoordinate;
 
     public Room() {}
 
@@ -44,5 +44,21 @@ public class Room {
 
     public void setBuilding(String building) {
         this.building = building;
+    }
+
+    public float getXCoordinate() {
+        return xCoordinate;
+    }
+
+    public void setXCoordinate(float xCoordinate) {
+        this.xCoordinate = xCoordinate;
+    }
+
+    public float getYCoordinate() {
+        return yCoordinate;
+    }
+
+    public void setYCoordinate(float yCoordinate) {
+        this.yCoordinate = yCoordinate;
     }
 }
