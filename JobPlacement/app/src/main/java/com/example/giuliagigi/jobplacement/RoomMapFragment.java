@@ -32,6 +32,9 @@ public class RoomMapFragment extends Fragment implements GLSurfaceView.Renderer,
 
     private static final float MOVE_SCALE_FACTOR = 0.05f;
     private static final float SCALE_SCALE_FACTOR = 0.005f;
+    private static final int MAX_SCALE = 40;
+    private static final int MIN_SCALE = 10;
+
 
     private Room room;
     private GLSurfaceView surfaceView;
@@ -206,9 +209,13 @@ public class RoomMapFragment extends Fragment implements GLSurfaceView.Renderer,
             @Override
             public void run() {
 
-                float newScale = 1 + ds*SCALE_SCALE_FACTOR;
-                mapPlane.scale(newScale);
-                mapPlane.translate(dx*MOVE_SCALE_FACTOR,dy*MOVE_SCALE_FACTOR,0);
+                float newScale = (mapPlane.getScale())*(1 + ds * SCALE_SCALE_FACTOR);
+
+                newScale = Math.min(MAX_SCALE, newScale);
+                newScale = Math.max(MIN_SCALE, newScale);
+                mapPlane.setScale(newScale);
+
+                mapPlane.translate(dx * MOVE_SCALE_FACTOR, dy * MOVE_SCALE_FACTOR, 0);
             }
         });
 
@@ -222,6 +229,7 @@ public class RoomMapFragment extends Fragment implements GLSurfaceView.Renderer,
         lastX = detector.getFocusX();
         lastY = detector.getFocusY();
         isScaling = true;
+
         return true;
     }
 
@@ -236,71 +244,51 @@ public class RoomMapFragment extends Fragment implements GLSurfaceView.Renderer,
     @Override
     public boolean onDown(MotionEvent e) {
 
-        if(!isScaling){
+        if (isScaling) return true;
 
-            lastX = e.getX();
-            lastY = e.getY();
-        }
+        lastX = e.getX();
+        lastY = e.getY();
         return false;
     }
 
     @Override
     public void onShowPress(MotionEvent e) {
 
-        if(!isScaling){
-
-
-        }
     }
 
     @Override
     public boolean onSingleTapUp(MotionEvent e) {
 
-        if(!isScaling){
-
-
-        }
         return true;
     }
 
     @Override
     public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
 
-        if(!isScaling){
+        if (isScaling) return false;
 
-            final float dx = e2.getX() - lastX;
-            final float dy = e2.getY() - lastY;
+        final float dx = e2.getX() - lastX;
+        final float dy = e2.getY() - lastY;
 
-            lastX = e2.getX();
-            lastY = e2.getY();
+        lastX = e2.getX();
+        lastY = e2.getY();
 
-            surfaceView.queueEvent(new Runnable() {
-                @Override
-                public void run() {
+        surfaceView.queueEvent(new Runnable() {
+            @Override
+            public void run() {
 
-                    mapPlane.translate(dx*MOVE_SCALE_FACTOR,dy*MOVE_SCALE_FACTOR,0);
-                }
-            });
-        }
+                mapPlane.translate(dx * MOVE_SCALE_FACTOR, dy * MOVE_SCALE_FACTOR, 0);
+            }
+        });
+
         return false;
     }
 
     @Override
-    public void onLongPress(MotionEvent e) {
-
-        if(!isScaling){
-
-
-        }
-    }
+    public void onLongPress(MotionEvent e) {    }
 
     @Override
     public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
-
-        if(!isScaling){
-
-
-        }
         return false;
     }
 }
