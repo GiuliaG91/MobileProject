@@ -198,6 +198,7 @@
     <string name = "lectureSearch_hintCourse">Course</string>
     <string name = "LECTURE_standard_title">Course name</string>
     <string name = "LECTURE_standard_day_schedule">aa:bb - cc:dd</string>
+    <string name = "LECTURE_standard_schedule">Schedule</string>
     <string name = "LECTURE_standard_room">Room</string>
     <string name = "LECTURE_standard_Professor">Professor</string>
     <string name="title_activity_lecture_display">LectureDisplayActivity</string>
@@ -208,6 +209,10 @@
     <string name="roomSearch_InsertRoom">Insert room name:</string>
     <string name="roomSearch_hintRoom">room here</string>
     <string name="roomSearch_show_map">Show on map</string>
+    <string name="room_type">Room type:</string>
+    <string name="room_building">Building:</string>
+    <string name="room_floor">Floor:</string>
+    <string name="room_timetable">Opening hours:</string>
 
     <!-- ________________ MAILBOX ______________________________________________________________ -->
     <string name="message_sent">The message was sent!</string>

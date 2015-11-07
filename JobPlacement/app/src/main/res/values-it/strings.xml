@@ -195,6 +195,10 @@
     <!-- ________________ ROOMS SEARCH / DISPLAY _______________________________________________ -->
     <string name="roomSearch_InsertRoom">Insert room name:</string>
     <string name="roomSearch_hintRoom">room here</string>
+    <string name="roomSearch_show_map">Show on map</string>
+    <string name="room_type">Room type:</string>
+    <string name="room_floor">Floor:</string>
+    <string name="room_timetable">Opening hours:</string>
 
     <!-- ________________ MAILBOX ______________________________________________________________ -->
     <string name="message_sent">The message was sent!</string>

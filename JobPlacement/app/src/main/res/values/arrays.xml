@@ -4,8 +4,8 @@
     <string-array name="StudentMenuicons">
         <item>@drawable/ic_home</item>
         <item>@drawable/ic_profile</item>
-        <item>@drawable/ic_preferite</item>
-        <item>@drawable/ic_preferite</item>
+        <item>@drawable/ic_schedule</item>
+        <item>@drawable/ic_marker</item>
         <item>@drawable/ic_preferite</item>
         <item>@drawable/ic_preferite</item>
         <item>@drawable/ic_action</item>

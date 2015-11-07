@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:padding="5dp"
     tools:context="com.example.giuliagigi.jobplacement.RoomDisplayFragment">
 
     <TextView
@@ -13,29 +14,165 @@
         android:textSize="15dp"
         android:textColor="@color/ColorPrimaryDark"/>
 
-    <TextView
-        android:id="@+id/room_building_textView"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:textColor="@color/ColorPrimary"/>
 
-    <TextView
-        android:id="@+id/room_floor_textView"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:textColor="@color/ColorPrimary" />
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="50dp">
 
-    <TextView
-        android:id="@+id/room_schedule_textView"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:textColor="@color/ColorPrimary" />
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="10dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginBottom="5dp"
+            android:src="@drawable/ic_uni_buinding"
+            android:layout_gravity="bottom"/>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
+            android:paddingLeft="10dp">
+
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="0dp"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="@string/room_building"
+                android:textColor="@color/ColorPrimaryDark"
+                android:layout_weight="1"
+                android:paddingLeft="10dp"
+                android:gravity="bottom"
+                android:textSize="10sp" />
+
+            <TextView
+                android:id="@+id/room_building_textView"
+                android:layout_width="fill_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:textColor="@color/ColorPrimary"
+                android:background="#00000000"
+                android:textSize="15dp"
+                android:paddingLeft="10dp"
+                android:paddingTop="5dp"
+                android:enabled="false"/>
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="50dp">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="10dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginBottom="5dp"
+            android:src="@drawable/ic_floor"
+            android:layout_gravity="bottom"/>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
+            android:paddingLeft="10dp">
+
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="0dp"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="@string/room_floor"
+                android:textColor="@color/ColorPrimaryDark"
+                android:layout_weight="1"
+                android:paddingLeft="10dp"
+                android:gravity="bottom"
+                android:textSize="10sp" />
+
+            <TextView
+                android:id="@+id/room_floor_textView"
+                android:layout_width="fill_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:textColor="@color/ColorPrimary"
+                android:background="#00000000"
+                android:textSize="15dp"
+                android:paddingLeft="10dp"
+                android:paddingTop="5dp"
+                android:enabled="false"/>
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="50dp">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="10dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginBottom="5dp"
+            android:src="@drawable/ic_clock"
+            android:layout_gravity="bottom"/>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
+            android:paddingLeft="10dp">
+
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="0dp"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="@string/room_timetable"
+                android:textColor="@color/ColorPrimaryDark"
+                android:layout_weight="1"
+                android:paddingLeft="10dp"
+                android:gravity="bottom"
+                android:textSize="10sp" />
+
+            <TextView
+                android:id="@+id/room_schedule_textView"
+                android:layout_width="fill_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:textColor="@color/ColorPrimary"
+                android:background="#00000000"
+                android:textSize="15dp"
+                android:paddingLeft="10dp"
+                android:paddingTop="5dp"
+                android:enabled="false"/>
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+
+
     
     <Button
         android:id="@+id/room_show_map_button"
         android:text="@string/roomSearch_show_map"
-        android:layout_width="fill_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:layout_gravity="center_horizontal"
+        android:textSize="@dimen/button_textSize_small"
         android:textColor="@color/ColorPrimaryDark"
         android:background="@drawable/button_background"/>
 
