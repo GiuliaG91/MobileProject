@@ -1,7 +1,6 @@
 package com.example.giuliagigi.jobplacement;
 
 import android.app.Activity;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -15,7 +14,6 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.FrameLayout;
-import android.widget.MultiAutoCompleteTextView;
 
 
 public class RoomSearch extends Fragment {
@@ -91,6 +89,7 @@ public class RoomSearch extends Fragment {
                     RoomDisplayFragment rdf = RoomDisplayFragment.newInstance(r);
 
                     ft.replace(R.id.rooms_display_container,rdf)
+                            .addToBackStack(null)
                             .commit();
 
                 }

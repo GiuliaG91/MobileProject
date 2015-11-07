@@ -9,28 +9,35 @@
     <TextView
         android:id="@+id/room_name_textView"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:textSize="15dp"
+        android:textColor="@color/ColorPrimaryDark"/>
 
     <TextView
         android:id="@+id/room_building_textView"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:textColor="@color/ColorPrimary"/>
 
     <TextView
         android:id="@+id/room_floor_textView"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:textColor="@color/ColorPrimary" />
 
     <TextView
         android:id="@+id/room_schedule_textView"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:textColor="@color/ColorPrimary" />
     
     <Button
         android:id="@+id/room_show_map_button"
         android:text="@string/roomSearch_show_map"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:textColor="@color/ColorPrimaryDark"
+        android:background="@drawable/button_background"/>
 
 
 </LinearLayout>

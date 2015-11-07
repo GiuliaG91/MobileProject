@@ -26,7 +26,7 @@
                 android:text="@string/roomSearch_InsertRoom"
                 android:textSize="@dimen/textView_textSize"
                 android:layout_margin="5dp"
-                android:textColor="#002E6B"
+                android:textColor="@color/ColorPrimaryDark"
                 android:id="@+id/textViewCourse" />
 
             <AutoCompleteTextView
@@ -34,7 +34,7 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/roomSearch_hintRoom"
                 android:textSize="@dimen/editText_textSize"
-                android:textColor="#0050B8"
+                android:textColor="@color/ColorPrimary"
                 android:layout_margin="5dp"
                 android:id="@+id/editTextRoom" />
 
@@ -46,7 +46,7 @@
                 android:textSize="@dimen/button_textSize"
                 android:layout_gravity="center_horizontal"
                 android:layout_weight="0.11"
-                android:textColor="#002E6B"
+                android:textColor="@color/ColorPrimaryDark"
                 android:background="@drawable/button_background"/>
 
             <FrameLayout

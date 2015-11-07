@@ -31,9 +31,9 @@ import javax.microedition.khronos.opengles.GL10;
 public class RoomMapFragment extends Fragment implements GLSurfaceView.Renderer, View.OnTouchListener, ScaleGestureDetector.OnScaleGestureListener, GestureDetector.OnGestureListener {
 
     private static final float MOVE_SCALE_FACTOR = 0.05f;
-    private static final float SCALE_SCALE_FACTOR = 0.005f;
-    private static final int MAX_SCALE = 40;
-    private static final int MIN_SCALE = 10;
+    private static final float SCALE_SCALE_FACTOR = 0.01f;
+    private static final int MAX_SCALE = 80;
+    private static final int MIN_SCALE = 40;
 
 
     private Room room;
