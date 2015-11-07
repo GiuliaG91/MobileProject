@@ -14,20 +14,21 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:background="#E3F2FD">
+        android:background="@color/tabsColor">
 
         <ImageView
             android:id="@+id/sender_img"
             android:layout_width="70dp"
             android:layout_height="70dp"
             android:src="@drawable/ic_profile"
-            android:layout_marginLeft="7dp"
+            android:layout_margin="7dp"
             />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/sender"
+            android:textColor="@color/ColorPrimary"
             android:textSize="18sp"
             android:textStyle="bold"
             android:layout_marginLeft="7dp"
@@ -39,6 +40,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="nome"
+            android:textColor="@color/ColorPrimaryDark"
             android:textSize="16sp"
             android:layout_marginLeft="7dp"
             android:layout_gravity="center_vertical"
@@ -52,6 +54,7 @@
         android:text="@string/recipient"
         android:textSize="18sp"
         android:textStyle="bold"
+        android:textColor="@color/ColorPrimary"
         android:layout_marginLeft="77dp"
         android:layout_marginTop="6dp"
         android:layout_gravity="center_vertical"
@@ -59,6 +62,7 @@
 
     <Spinner
         android:id="@+id/recipients_list"
+        android:textColor="@color/ColorPrimaryDark"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="77dp"
@@ -76,6 +80,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/date"
+            android:textColor="@color/ColorPrimary"
             android:textSize="18sp"
             android:textStyle="bold"
             android:layout_marginLeft="77dp"
@@ -87,6 +92,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="10 maggio ..."
+            android:textColor="@color/ColorPrimaryDark"
             android:textSize="16sp"
             android:layout_marginLeft="7dp"
             android:layout_gravity="center_vertical"
@@ -106,7 +112,8 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/object:"
+            android:textColor="@color/ColorPrimary"
+            android:text="@string/object_"
             android:textSize="18sp"
             android:textStyle="bold"
             android:layout_marginLeft="77dp"
@@ -117,6 +124,7 @@
             android:id="@+id/object_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textColor="@color/ColorPrimaryDark"
             android:text="oggetto ..."
             android:textSize="16sp"
             android:layout_marginLeft="7dp"
@@ -128,6 +136,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textColor="@color/ColorPrimary"
         android:text="@string/body"
         android:textSize="18sp"
         android:textStyle="bold"
@@ -137,6 +146,7 @@
     <TextView
         android:id="@+id/body_tv"
         android:layout_width="wrap_content"
+        android:textColor="@color/ColorPrimaryDark"
         android:layout_height="wrap_content"
         android:layout_marginTop="15dp"
         android:layout_marginLeft="10dp"

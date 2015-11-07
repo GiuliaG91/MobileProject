@@ -13,7 +13,7 @@
     <string name="recipient">To</string>
     <string name="recipients">Recipients</string>
     <string name="date">Date</string>
-    <string name="object:">Object:</string>
+    <string name="object_">Object:</string>
     <string name="object">Object</string>
     <string name="body_new">Reply:</string>
     <string name="body">Body:</string>
@@ -44,7 +44,19 @@
     <string name="publish">Publish</string>
     <string name="save">Save</string>
     <string name="location">Location</string>
-    <string name="delete">Delete</string>
+    <string name="floor">Floor</string>
+
+    <string name="ground_floor">Ground floor</string>
+
+    <string-array name="cardinal_numbers">
+        <item>1st</item>
+        <item>2nd</item>
+        <item>3rd</item>
+        <item>4th</item>
+        <item>5th</item>
+        <item>6th</item>
+    </string-array>
+
 
     <!-- ________________ GENERAL ______________________________________________________________ -->
     <string name="app_name">JobPlacement</string>
@@ -186,6 +198,7 @@
     <string name = "lectureSearch_hintCourse">Course</string>
     <string name = "LECTURE_standard_title">Course name</string>
     <string name = "LECTURE_standard_day_schedule">aa:bb - cc:dd</string>
+    <string name = "LECTURE_standard_schedule">Schedule</string>
     <string name = "LECTURE_standard_room">Room</string>
     <string name = "LECTURE_standard_Professor">Professor</string>
     <string name="title_activity_lecture_display">LectureDisplayActivity</string>
@@ -197,6 +210,7 @@
     <string name="roomSearch_hintRoom">room here</string>
     <string name="roomSearch_show_map">Show on map</string>
     <string name="room_type">Room type:</string>
+    <string name="room_building">Building:</string>
     <string name="room_floor">Floor:</string>
     <string name="room_timetable">Opening hours:</string>
 
@@ -300,6 +314,7 @@
     <string name="new_offer_fragment_hint_number_of_place">Available places</string>
     <string name="new_offer_fragment_hint_validity">Validity</string>
     <string name="new_offer_fragment_hint_tags">Set Required Skills...</string>
+
     <string name="new_offer_validity_date_dialog">Set validity date:</string>
 
     <!-- ________________ SHOW OFFER ___________________________________________________________ -->

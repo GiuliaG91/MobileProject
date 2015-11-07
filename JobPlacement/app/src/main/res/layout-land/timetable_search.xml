@@ -30,7 +30,7 @@
                 android:textColor="#002E6B"
                 android:id="@+id/textViewCourse" />
 
-            <MultiAutoCompleteTextView
+            <AutoCompleteTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/lectureSearch_hintCourse"
@@ -48,7 +48,7 @@
                 android:layout_margin="5dp"
                 android:id="@+id/textViewProfessor" />
 
-            <MultiAutoCompleteTextView
+            <AutoCompleteTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/lectureSearch_hintProfessor"

@@ -28,7 +28,7 @@
             card_view:cardCornerRadius="10dp"
             card_view:cardMaxElevation="5dp"
             android:layout_margin="3dp"
-            card_view:cardBackgroundColor="@color/header_detail_mail_box">
+            android:background="@color/tabsColor">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -54,6 +54,7 @@
                     android:layout_height="70dp"
                     android:src="@drawable/ic_profile"
                     android:layout_gravity="center_vertical"
+                    android:layout_margin="7dp"
                     />
 
                 <TableLayout
@@ -71,6 +72,7 @@
                             android:text="@string/sender"
                             android:textSize="18sp"
                             android:textStyle="bold"
+                            android:textColor="@color/ColorPrimary"
                             android:layout_gravity="bottom"
                             />
 
@@ -81,6 +83,7 @@
                             android:text="nome"
                             android:textSize="16sp"
                             android:layout_marginLeft="7dp"
+                            android:textColor="@color/ColorPrimaryDark"
                             android:layout_gravity="bottom"
                             />
 
@@ -97,6 +100,7 @@
                             android:textSize="18sp"
                             android:textStyle="bold"
                             android:layout_gravity="center_vertical"
+                            android:textColor="@color/ColorPrimary"
                             />
 
                         <Spinner
@@ -106,7 +110,8 @@
                             android:layout_weight="1"
                             android:layout_marginLeft="7dp"
                             android:background="@color/header_detail_mail_box"
-                            android:layout_gravity="bottom"/>
+                            android:layout_gravity="bottom"
+                            android:textColor="@color/ColorPrimaryDark"/>
 
                     </TableRow>
 
@@ -118,6 +123,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/date"
+                            android:textColor="@color/ColorPrimary"
                             android:textSize="18sp"
                             android:textStyle="bold"
                             android:layout_marginTop="3dp"
@@ -129,6 +135,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="10 maggio ..."
+                            android:textColor="@color/ColorPrimaryDark"
                             android:textSize="16sp"
                             android:layout_marginLeft="7dp"
                             android:layout_gravity="bottom"
@@ -159,7 +166,7 @@
                 android:id="@+id/body_tv"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:textColor="#000000"
+                android:textColor="@color/ColorPrimaryDark"
                 android:textSize="15sp"
                 android:background="#00000000"
                 android:layout_marginRight="12dp"
