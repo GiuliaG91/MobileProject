@@ -1,12 +1,20 @@
 package com.example.giuliagigi.jobplacement;
 
 
+import com.parse.FindCallback;
+import com.parse.ParseClassName;
+import com.parse.ParseException;
+import com.parse.ParseRelation;
+
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by GiuliaGiGi on 07/11/15.
  */
+
+@ParseClassName("Professor")
 public class Professor extends User {
 
     protected static final String NAME_FIELD = "name";
@@ -15,9 +23,8 @@ public class Professor extends User {
     protected static final String SEX_FIELD = "sex";
     protected static final String BIRTH_DATE_FIELD = "birthDate";
     protected static final String BIRTH_CITY_FIELD = "birthCity";
-    protected static final String CITY_FIELD = "city";
+//    protected static final String CITY_FIELD = "city";
     protected static final String NATION_FIELD = "nation";
-    protected static final String DESCRIPTION_FIELD = "description";
 
     protected String name;
     protected String surname;
@@ -27,7 +34,6 @@ public class Professor extends User {
     protected String birthCity;
     protected String city;
     protected String nation;
-    protected String description;
 
 
     public Professor(){
@@ -41,7 +47,6 @@ public class Professor extends User {
         this.birthCity = null;
         this.city = null;
         this.nation = null;
-        this.description = null;
 
         isCached.put(NAME_FIELD,false);
         isCached.put(SURNAME_FIELD,false);
@@ -49,9 +54,8 @@ public class Professor extends User {
         isCached.put(SEX_FIELD,false);
         isCached.put(BIRTH_CITY_FIELD,false);
         isCached.put(BIRTH_DATE_FIELD,false);
-        isCached.put(CITY_FIELD,false);
+//        isCached.put(CITY_FIELD,false);
         isCached.put(NATION_FIELD,false);
-        isCached.put(DESCRIPTION_FIELD,false);
     }
 
     // --------- GETTERS -----------
@@ -74,10 +78,20 @@ public class Professor extends User {
     }
 
     public ArrayList<Course> getCourses() {
+
         if(isCached.get(COURSES_FIELD))
             return this.courses;
 
-        //da capire come gestire la relazione corsi-insegnante (ovvero se via parse o no)
+        ParseRelation<Course> tmp= getRelation(COURSES_FIELD);
+        tmp.getQuery().findInBackground(new FindCallback<Course>() {
+            @Override
+            public void done(List<Course> coursesList, ParseException e) {
+
+                if(coursesList!= null)
+                    for(Course c:coursesList)
+                        courses.add(c);
+            }
+        });
 
         isCached.put(COURSES_FIELD, true);
         return courses;
@@ -110,14 +124,14 @@ public class Professor extends User {
         return birthCity;
     }
 
-    public String getCity(){
-        if(isCached.get(CITY_FIELD))
-            return city;
-
-        city = this.getString(CITY_FIELD);
-        isCached.put(CITY_FIELD,true);
-        return city;
-    }
+//    public String getCity(){
+//        if(isCached.get(CITY_FIELD))
+//            return city;
+//
+//        city = this.getString(CITY_FIELD);
+//        isCached.put(CITY_FIELD,true);
+//        return city;
+//    }
 
     public String getNation(){
         if(isCached.get(NATION_FIELD))
@@ -126,15 +140,6 @@ public class Professor extends User {
         nation = this.getString(NATION_FIELD);
         isCached.put(NATION_FIELD,true);
         return nation;
-    }
-
-    public String getDescription() {
-        if(isCached.get(DESCRIPTION_FIELD))
-            return description;
-
-        description = this.getString(DESCRIPTION_FIELD);
-        isCached.put(DESCRIPTION_FIELD,true);
-        return description;
     }
 
     // ----- END GETTERS -------
@@ -154,12 +159,12 @@ public class Professor extends User {
 
     public void addCourse(Course course){
         courses.add(course);
-        //capire come gestire
+        getRelation(COURSES_FIELD).add(course);
     }
 
     public void removeCourse(Course course){
         courses.remove(course);
-        //capire come gestire
+        getRelation(COURSES_FIELD).remove(course);
     }
 
     public void setSex(String sex){
@@ -180,22 +185,16 @@ public class Professor extends User {
         this.put(BIRTH_CITY_FIELD,birthCity);
     }
 
-    public void setCity(String city){
-        this.city = city;
-        isCached.put(CITY_FIELD,true);
-        this.put(CITY_FIELD,city);
-    }
+//    public void setCity(String city){
+//        this.city = city;
+//        isCached.put(CITY_FIELD,true);
+//        this.put(CITY_FIELD,city);
+//    }
 
     public void setNation(String nation){
         this.nation = nation;
         isCached.put(NATION_FIELD, true);
         this.put(NATION_FIELD,nation);
-    }
-
-    public void setDescription(String description){
-        this.description = description;
-        isCached.put(DESCRIPTION_FIELD,true);
-        this.put(DESCRIPTION_FIELD,description);
     }
 
     // ---- END SETTERS -------
@@ -210,9 +209,8 @@ public class Professor extends User {
         getCourses();
         getBirth();
         getBirthCity();
-        getCity();
+//        getCity();
         getNation();
-        getDescription();
     }
 
 }

@@ -83,22 +83,7 @@ public class GlobalData extends Application {
         applicationContext = getApplicationContext();
         assetManager = applicationContext.getAssets();
 
-        // reading lectures json file in a secondary thread ---------------------------------------
-        lecturesFileReader = new LecturesFileReader();
-        AsyncTask<Void, Boolean, Void> lecturesFileReadingTask = new AsyncTask<Void, Boolean, Void>() {
-            @Override
-            protected Void doInBackground(Void... params) {
-                lecturesFileReader.readCoursesFromFile();
-                return null;
-            }
 
-            @Override
-            protected void onPostExecute(Void aVoid) {
-                super.onPostExecute(aVoid);
-            }
-        };
-        lecturesFileReadingTask.execute();
-        // ----------------------------------------------------------------------------------------
 
         // reading rooms json file in a secondary thread ------------------------------------------
         roomsFileReader = new RoomsFileReader();
@@ -141,6 +126,10 @@ public class GlobalData extends Application {
         ParseObject.registerSubclass(InboxMessageSent.class);
         ParseObject.registerSubclass(News.class);
         ParseObject.registerSubclass(OfferStatus.class);
+        ParseObject.registerSubclass(Professor.class);
+        ParseObject.registerSubclass(Course.class);
+        ParseObject.registerSubclass(Lecture.class);
+
 
         Degree.initializeLangauges();
         Office.initializeLanguage();
@@ -151,6 +140,26 @@ public class GlobalData extends Application {
 
 
         Parse.initialize(this, "EICiUy2eT7CZPXw8N6I1p6lE4844svLI73JTc2QY", "8I9HZ7AgMHgeIxQKk8k653jNBvBCz57nRuSH73pA");
+
+        // reading lectures json file in a secondary thread ---------------------------------------
+        lecturesFileReader = new LecturesFileReader();
+//        lecturesFileReader.readFromFile(); // only when updating DB
+
+//        AsyncTask<Void, Boolean, Void> lecturesFileReadingTask = new AsyncTask<Void, Boolean, Void>() {
+//            @Override
+//            protected Void doInBackground(Void... params) {
+//                lecturesFileReader.readFromFile();
+//                return null;
+//            }
+//
+//            @Override
+//            protected void onPostExecute(Void aVoid) {
+//                super.onPostExecute(aVoid);
+//            }
+//        };
+//        lecturesFileReadingTask.execute();
+        // ----------------------------------------------------------------------------------------
+
 
         isCached = new HashMap<String,Boolean>();
         tags = new HashMap<String,Tag>();
@@ -204,12 +213,28 @@ public class GlobalData extends Application {
         return (Company)currentUserObject;
     }
 
+    public Professor getProfessorFromUser(){
+
+        getCurrentUser();
+
+        if(currentUser == null)
+            return null;
+
+        if(currentUserObject == null){
+            currentUserObject = getCurrentUser().getUser();
+        }
+
+        return (Professor)currentUserObject;
+    }
+
     public User getUserObject(){
 
         if(getCurrentUser().getType().equals(User.TYPE_STUDENT))
             return getStudentFromUser();
-        else
+        else if(getCurrentUser().getType().equals(User.TYPE_COMPANY))
             return getCompanyFromUser();
+        else
+            return getProfessorFromUser();
     }
 
 

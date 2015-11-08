@@ -513,7 +513,7 @@ public class LectureDisplayFragment extends Fragment {
         }
 
         TextView title = (TextView) item.findViewById(R.id.LECTUREITEM_textView_courseName);
-        title.setText(String.valueOf(l.getCourseName()));
+        title.setText(String.valueOf(l.getCourse().getName()));
 
         TextView dayAndSchedule = (TextView) item.findViewById(R.id.LECTUREITEM_textView_schedule);
         dayAndSchedule.setText(l.getTimeTable());
@@ -522,7 +522,7 @@ public class LectureDisplayFragment extends Fragment {
         room.setText(l.getRoomName());
 
         TextView professor = (TextView) item.findViewById(R.id.LECTUREITEM_textView_Professor);
-        professor.setText(l.getProfessor());
+        professor.setText(l.getCourse().getProfessor().getName() + " " + l.getCourse().getProfessor().getSurname());
 
         return item;
     }

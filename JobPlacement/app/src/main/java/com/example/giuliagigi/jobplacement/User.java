@@ -36,6 +36,7 @@ public class User extends ParseObject{
 
     public static final String TYPE_STUDENT = "Student";
     public static final String TYPE_COMPANY = "Company";
+    public static final String TYPE_PROFESSOR = "Professor";
     public static final String TYPE_SELECT = "Select a type";
 
     public static final String TYPE_STUDENT_TRANSLATED = GlobalData.getContext().getString(R.string.registration_type_student);

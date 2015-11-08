@@ -21,6 +21,7 @@ public class ParseUserWrapper extends ParseUser {
     public static final String USER_FIELD = "user";
     private static final String STUDENT_FIELD = "student";
     private static final String COMPANY_FIELD = "company";
+    private static final String PROFESSOR_FIELD = "professor";
     protected static final String EMAIL_VERIFIED_FIELD = "emailVerified";
 
     public static final String[] TYPES = new String[]{TYPE_STUDENT,TYPE_COMPANY};
@@ -65,6 +66,10 @@ public class ParseUserWrapper extends ParseUser {
 
             u = (User)get(COMPANY_FIELD);
         }
+        else if (getType().equals(User.TYPE_PROFESSOR)){
+
+            u = (User)get(PROFESSOR_FIELD);
+        }
 
         try {
             u.fetchIfNeeded();
@@ -107,6 +112,22 @@ public class ParseUserWrapper extends ParseUser {
 
             put(COMPANY_FIELD,companyUser);
 
+        }
+        else if(getType().equals(User.TYPE_PROFESSOR)){
+
+            Professor professorUser;
+
+            try{
+
+                professorUser = (Professor)user;
+            }
+            catch (ClassCastException e){
+
+                e.printStackTrace();
+                return;
+            }
+
+            put(PROFESSOR_FIELD,professorUser);
         }
     }
 

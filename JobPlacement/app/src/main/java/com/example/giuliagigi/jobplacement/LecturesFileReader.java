@@ -7,6 +7,10 @@ package com.example.giuliagigi.jobplacement;
 import android.util.JsonReader;
 import android.util.Log;
 
+import com.parse.ParseException;
+import com.parse.SaveCallback;
+import com.parse.SignUpCallback;
+
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
@@ -18,10 +22,10 @@ public class LecturesFileReader {
 
     /* STATIC FIELDS        */
 
-    public static final String COURSES_JSON_FILE_NAME = "courses.json";
+    public static final String COURSES_JSON_FILE_NAME = "professors.json";
     public static final String COURSES_CODE_FIELD = "code";
     public static final String COURSE_NAME_FIELD = "name";
-    public static final String COURSE_PROFESSOR_FIELD = "professor";
+//    public static final String COURSE_PROFESSOR_FIELD = "professor";
     public static final String COURSE_LECTURES_FIELD = "lectures";
     public static final String LECTURE_DAYINWEEK_FIELD = "dayInWeek";
     public static final String LECTURE_STARTHOUR_FIELD = "startHour";
@@ -100,8 +104,12 @@ public class LecturesFileReader {
 
         ArrayList<Course> retrievedCourses = new ArrayList<Course>(courses.values());
 
-        for(int i = 0; i<retrievedCourses.size();i++)
-            if(retrievedCourses.get(i).getProfessor().equalsIgnoreCase(professorName)) return true;
+        for(int i = 0; i<retrievedCourses.size();i++){
+
+            String name = retrievedCourses.get(i).getProfessor().getName() + " " + retrievedCourses.get(i).getProfessor().getSurname();
+
+            if(name.equalsIgnoreCase(professorName)) return true;
+        }
 
 
         Log.println(Log.ASSERT, TAG, "no course found");
@@ -117,8 +125,8 @@ public class LecturesFileReader {
 
         for(int i=0;i<allCourses.size();i++){
 
-
-            if(allCourses.get(i).getProfessor().equalsIgnoreCase(professorName)){
+            String name = allCourses.get(i).getProfessor().getName() + " " + allCourses.get(i).getProfessor().getSurname();
+            if(name.equalsIgnoreCase(professorName)){
 
                 retrievedCourses.add(allCourses.get(i));
             }
@@ -146,9 +154,14 @@ public class LecturesFileReader {
 
                 ArrayList<Course> coursesByName = getCoursesByName(course);
 
-                for(int i=0; i<coursesByName.size();i++)
-                    if(coursesByName.get(i).getProfessor().equalsIgnoreCase(professor))
+                for(int i=0; i<coursesByName.size();i++){
+
+                    String professorName = coursesByName.get(i).getProfessor().getName() + " " + coursesByName.get(i).getProfessor().getSurname();
+
+                    if(professorName.equalsIgnoreCase(professor))
                         retrievedCourses.add(coursesByName.get(i));
+                }
+
             }
         }
 
@@ -181,7 +194,7 @@ public class LecturesFileReader {
         ArrayList<String> professorNames = new ArrayList<>();
 
         for(int i = 0; i < allCourses.size(); i++){
-            String name = allCourses.get(i).getProfessor();
+            String name = allCourses.get(i).getProfessor().getName() + " " + allCourses.get(i).getProfessor().getSurname();
             if(!professorNames.contains(name)){
                 professorNames.add(name);
             }
@@ -194,7 +207,7 @@ public class LecturesFileReader {
     public String getProfessorByCourse(String course){
         ArrayList<Course> allCourses = getCoursesByName(course);
         if(allCourses.size()==1) {
-            String professor = allCourses.get(0).getProfessor();
+            String professor = allCourses.get(0).getProfessor().getName() + " " + allCourses.get(0).getProfessor().getSurname();
             return professor;
         }
         return null;
@@ -223,7 +236,7 @@ public class LecturesFileReader {
 
         Log.println(Log.ASSERT,TAG,"getDayLecturesByCourse searching.....");
         for(int i=0; i<retrievedCourses.size();i++)
-            for(int j=0; j<retrievedCourses.get(i).getLecturesList().size();j++)
+            for(int j=0; j<retrievedCourses.get(i).getLectures().size();j++)
                 if(retrievedCourses.get(i).getLecture(j).getDayInWeek() == day)
                     lectures.add(retrievedCourses.get(i).getLecture(j));
 
@@ -242,7 +255,7 @@ public class LecturesFileReader {
         ArrayList<Course> retrievedCourses = getCoursesByProfessorName(professor);
 
         for(int i=0; i<retrievedCourses.size();i++)
-            for(int j=0; j<retrievedCourses.get(i).getLecturesList().size();j++)
+            for(int j=0; j<retrievedCourses.get(i).getLectures().size();j++)
                 if(retrievedCourses.get(i).getLecture(j).getDayInWeek() == day)
                     lectures.add(retrievedCourses.get(i).getLecture(j));
 
@@ -269,7 +282,7 @@ public class LecturesFileReader {
         Log.println(Log.ASSERT,TAG,"Searching day lectures........");
 
         for(int i=0;i<retrievedCourses.size();i++)
-            for(int j=0;j<retrievedCourses.get(i).getLecturesList().size();j++)
+            for(int j=0;j<retrievedCourses.get(i).getLectures().size();j++)
                 if(retrievedCourses.get(i).getLecture(j).getDayInWeek()==day)
                     lectures.add(retrievedCourses.get(i).getLecture(j));
 
@@ -290,21 +303,23 @@ public class LecturesFileReader {
     ///////// JSON FILE READING METHODS /////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////////////
 
-    private void readLecture(JsonReader reader,Course c) throws IOException {
+    private Lecture readLecture(JsonReader reader) throws IOException, ParseException {
 
-
-        Lecture l = new Lecture(c.getName(),c.getProfessor());
+        Log.println(Log.ASSERT,TAG,"Start reading object lecture");
+        Lecture l = new Lecture();
         reader.beginObject();
+
+        int startHour = 0, startMinute = 0, endHour = 0, endMinute = 0;
 
         while (reader.hasNext()){
 
             String lectureField = reader.nextName();
 
             if(lectureField.equals(LECTURE_DAYINWEEK_FIELD))        l.setDayInWeek(Integer.parseInt(reader.nextString()));
-            else if(lectureField.equals(LECTURE_STARTHOUR_FIELD))   l.setStartHour(Integer.parseInt(reader.nextString()));
-            else if(lectureField.equals(LECTURE_STARTMINUTE_FIELD)) l.setStartMinute(Integer.parseInt(reader.nextString()));
-            else if(lectureField.equals(LECTURE_ENDHOUR_FIELD))     l.setEndHour(Integer.parseInt(reader.nextString()));
-            else if(lectureField.equals(LECTURE_ENDMINUTE_FIELD))   l.setEndMinute(Integer.parseInt(reader.nextString()));
+            else if(lectureField.equals(LECTURE_STARTHOUR_FIELD))   startHour = Integer.parseInt(reader.nextString());
+            else if(lectureField.equals(LECTURE_STARTMINUTE_FIELD)) startMinute = Integer.parseInt(reader.nextString());
+            else if(lectureField.equals(LECTURE_ENDHOUR_FIELD))     endHour = Integer.parseInt(reader.nextString());
+            else if(lectureField.equals(LECTURE_ENDMINUTE_FIELD))   endMinute = Integer.parseInt(reader.nextString());
             else if(lectureField.equals(LECTURE_ROOM_FIELD))        l.setRoom(reader.nextString());
             else {
 
@@ -312,23 +327,29 @@ public class LecturesFileReader {
             }
         }
 
+        l.setSchedule(startHour, startMinute, endHour, endMinute);
         reader.endObject();
-        c.addLecture(l);
+        l.save();
+        return l;
     }
 
-    private void readLecturesList(JsonReader reader, Course c) throws IOException{
+    private void readLecturesList(JsonReader reader, Course c) throws IOException, ParseException {
 
         reader.beginArray();
 
         while (reader.hasNext()){
 
-            readLecture(reader,c);
+            Lecture l = readLecture(reader);
+            c.addLecture(l);
+            c.save();
+            l.setCourse(c);
+            l.save();
         }
         reader.endArray();
 
     }
 
-    private Course readCourse(JsonReader reader) throws IOException{
+    private Course readCourse(JsonReader reader) throws IOException, ParseException {
 
         Course c = new Course();
         Log.println(Log.ASSERT,TAG,"Start reading object course");
@@ -340,7 +361,6 @@ public class LecturesFileReader {
 
             if(courseField.equals(COURSES_CODE_FIELD))    c.setCode(reader.nextString());
             else if(courseField.equals(COURSE_NAME_FIELD)) c.setName(reader.nextString());
-            else if(courseField.equals(COURSE_PROFESSOR_FIELD)) c.setProfessor(reader.nextString());
             else if(courseField.equals(COURSE_LECTURES_FIELD)){
 
                 readLecturesList(reader,c);
@@ -353,11 +373,55 @@ public class LecturesFileReader {
 
         }
         reader.endObject();
+        c.save();
 
         return c;
     }
 
-    public void readCoursesFromFile(){
+    private void readCoursesList(JsonReader reader, Professor p) throws IOException, ParseException {
+
+        reader.beginArray();
+
+        while (reader.hasNext()){
+
+            Course c = readCourse(reader);
+            c.setProfessor(p);
+            p.addCourse(c);
+        }
+
+        reader.endArray();
+    }
+
+    private Professor readProfessor(JsonReader reader) throws IOException, ParseException {
+
+        Log.println(Log.ASSERT,TAG,"Start reading object professor");
+        Professor p = new Professor();
+
+        reader.beginObject();
+
+        while (reader.hasNext()){
+
+
+            String fieldName = reader.nextName();
+
+            if(fieldName.equals(Professor.NAME_FIELD)) p.setName(reader.nextString());
+            else if(fieldName.equals(Professor.SURNAME_FIELD)) p.setSurname(reader.nextString());
+            else if(fieldName.equals(Professor.SEX_FIELD)) p.setSex(reader.nextString());
+            else if(fieldName.equals(Professor.NATION_FIELD)) p.setNation(reader.nextString());
+            else if(fieldName.equals(Professor.BIRTH_CITY_FIELD)) p.setBirthCity(reader.nextString());
+            else if(fieldName.equals(Professor.COURSES_FIELD)){
+
+                readCoursesList(reader,p);
+            }
+            else
+                reader.skipValue();
+        }
+        reader.endObject();
+
+        return p;
+    }
+
+    public void readFromFile(){
 
         try{
 
@@ -365,18 +429,35 @@ public class LecturesFileReader {
             JsonReader reader = new JsonReader(new InputStreamReader(in));
             reader.beginArray();
 
+            int n = 0;
             while (reader.hasNext()){
 
-                Course c = readCourse(reader);
-                courses.put(c.getCode(),c);
+                final ParseUserWrapper newParseUser = new ParseUserWrapper();
+                newParseUser.setEmail("p" + ++n + "@professor.com");
+                newParseUser.setUsername("p" + n + "@professor.com");
+                newParseUser.setPassword("p" + n);
+                newParseUser.setType(User.TYPE_PROFESSOR);
+                Professor p = readProfessor(reader);
+
+                newParseUser.signUp();
+                p.setParseUser(newParseUser);
+                p.save();
+
+                newParseUser.setUser(p);
+                newParseUser.save();
+
+                for(Course c: p.getCourses())
+                    courses.put(c.getCode(),c);
+
             }
 
             reader.endArray();
-
         }
         catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ParseException e) {
             e.printStackTrace();
         }
 

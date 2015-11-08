@@ -77,7 +77,7 @@ public class Home_tabAdapter extends RecyclerView.Adapter<Home_tabAdapter.ViewHo
 
             @Override
             public ParseQuery<News> create() {
-                ParseQuery query;
+                ParseQuery query = null;
 
                 if(globalData.getUserObject() instanceof Student) {
 
@@ -99,12 +99,11 @@ public class Home_tabAdapter extends RecyclerView.Adapter<Home_tabAdapter.ViewHo
                     query = ParseQuery.or(queries);
 
 
-                }else{
+                }else if(globalData.getUserObject() instanceof Company){
 
                     query = new ParseQuery("News");
                     query.whereEqualTo(News.TYPE, 1);
                     query.whereEqualTo(News.COMPANY, (Company)globalData.getUserObject());
-
                 }
 
                 return query;
