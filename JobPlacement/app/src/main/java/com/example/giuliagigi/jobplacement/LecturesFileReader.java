@@ -441,6 +441,8 @@ public class LecturesFileReader {
 
                 newParseUser.signUp();
                 p.setParseUser(newParseUser);
+                p.setType(User.TYPE_PROFESSOR);
+                p.setMail("p" + n + "@professor.com");
                 p.save();
 
                 newParseUser.setUser(p);

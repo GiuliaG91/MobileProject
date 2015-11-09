@@ -57,16 +57,16 @@ public class Login extends ActionBarActivity {
         application = (GlobalData)getApplicationContext();
 
         /* if any session is still open (no need to login) */
-//        if(application.getCurrentUser()!=null){
-//
-//            Log.println(Log.ASSERT, "LOGIN", "User session already open. Entering home activity");
-//
-//           ParseInstallation installation = ParseInstallation.getCurrentInstallation();
-//            installation.put("User",application.getCurrentUser());
-//            installation.saveInBackground();
-//
-//            startActivity(new Intent(getApplicationContext(),Home.class));
-//        }
+        if (application.getCurrentUser() != null) {
+
+            Log.println(Log.ASSERT, "LOGIN", "User session already open. Entering home activity");
+
+            ParseInstallation installation = ParseInstallation.getCurrentInstallation();
+            installation.put("User", application.getCurrentUser());
+            installation.saveInBackground();
+
+            startActivity(new Intent(getApplicationContext(), Home.class));
+        }
 
         final SharedPreferences sp = getPreferences(Context.MODE_PRIVATE);
         application.setLoginPreferences(sp);

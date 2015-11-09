@@ -132,8 +132,6 @@ public class menuAdapter extends RecyclerView.Adapter<menuAdapter.ViewHolder> {
             /* -----------------------------------------------------------------------------------*/
             switch (viewType) {
 
-
-
                 case ACTION_PROFILE:
 
                     v.setOnClickListener(new View.OnClickListener() {
@@ -147,7 +145,6 @@ public class menuAdapter extends RecyclerView.Adapter<menuAdapter.ViewHolder> {
                             if (!(current instanceof ProfileManagement) || gd.getLatestDisplayedUser() != gd.getUserObject()) {
 
                                 Fragment fragment = ProfileManagement.newInstance(true, gd.getUserObject());
-
 
                                 if (activity instanceof Home)
                                     ((Home) activity).setProfileManagement((ProfileManagement) fragment);

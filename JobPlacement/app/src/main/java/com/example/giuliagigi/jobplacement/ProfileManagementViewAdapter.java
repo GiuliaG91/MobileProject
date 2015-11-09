@@ -37,7 +37,8 @@ public class ProfileManagementViewAdapter extends FragmentPagerAdapter{
             }
             else if(user.getType().equals(User.TYPE_PROFESSOR)){
 
-                //TODO
+                Professor professor = (Professor)user;
+                fragments.add(ProfessorProfileManagementBasicsFragment.newInstance(professor));
             }
 
             if(editable){

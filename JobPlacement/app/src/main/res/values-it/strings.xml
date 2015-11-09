@@ -112,12 +112,12 @@
 
     <string name="profile_confirm_password">Confirm password:</string>
     <string name="profile_date_hint">Click to insert date</string>
-    <string name="profile_student_fragment_name_title">Name:</string>
-    <string name="profile_student_fragment_surname_title">Surname:</string>
-    <string name="profile_student_fragment_sex_title">Sex:</string>
-    <string name="profile_student_fragment_birth_title">Date of birth:</string>
-    <string name="profile_student_fragment_birth_city_title">Birth city:</string>
-    <string name="profile_student_fragment_email_title">Email address:</string>
+    <string name="profile_person_fragment_name_title">Name:</string>
+    <string name="profile_person_fragment_surname_title">Surname:</string>
+    <string name="profile_person_fragment_sex_title">Sex:</string>
+    <string name="profile_person_fragment_birth_title">Date of birth:</string>
+    <string name="profile_person_fragment_birth_city_title">Birth city:</string>
+    <string name="profile_person_fragment_email_title">Email address:</string>
     <string name="profile_student_fragment_description">Short description:</string>
     <string name="profile_student_fragment_address">Address:</string>
     <string name="profile_student_fragment_cap">Postal code:</string>

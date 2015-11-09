@@ -20,42 +20,37 @@ import com.parse.SaveCallback;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Locale;
 
-public class StudentProfileManagementBasicsFragment extends ProfileManagementBasicsFragment {
 
-    public static final String TITLE = GlobalData.getContext().getString(R.string.profile_basics_tab);
-    public static final String BUNDLE_IDENTIFIER = "STUDENTPROFILEMANAGEMENTBASICS";
-    private static final String BUNDLE_KEY_STUDENT = "bundle_key_student";
+public class ProfessorProfileManagementBasicsFragment extends ProfileManagementBasicsFragment {
 
-    private Student student;
+    private static final String BUNDLE_KEY_PROFESSOR = "bundle_key_professor";
+    public static final String BUNDLE_IDENTIFIER = "PROFESSORPROFILEMANAGEMENTBASICS";
+
+    private Professor professor;
+
     private Date date;
     private boolean birthDateChanged;
-    EditText nameText,surnameText, birthCityText, descriptionText;
+    EditText nameText,surnameText, birthCityText;
     TextView birthPicker;
     CheckBox male,female;
-
 
     /* -------------------------------------------------------------------------------------------*/
     /* ---------------------- CONSTRUCTORS GETTERS SETTERS ---------------------------------------*/
     /* -------------------------------------------------------------------------------------------*/
 
-    public StudentProfileManagementBasicsFragment() {super();}
-    public static StudentProfileManagementBasicsFragment newInstance(Student student) {
-        StudentProfileManagementBasicsFragment fragment = new StudentProfileManagementBasicsFragment();
-        Bundle args = new Bundle();
-        fragment.setArguments(args);
-        fragment.setStudent(student);
-        fragment.setUser(student);
+    public static ProfessorProfileManagementBasicsFragment newInstance(Professor professor) {
+
+        ProfessorProfileManagementBasicsFragment fragment = new ProfessorProfileManagementBasicsFragment();
+        fragment.professor = professor;
+        fragment.setUser(professor);
         return fragment;
     }
 
-    public void setStudent(Student student){
-
-        this.student = student;
-    }
+    public ProfessorProfileManagementBasicsFragment() {super();}
 
     @Override
     public String getBundleID() {
@@ -63,17 +58,15 @@ public class StudentProfileManagementBasicsFragment extends ProfileManagementBas
         return BUNDLE_IDENTIFIER + ";" + getTag();
     }
 
-
     /* -------------------------------------------------------------------------------------------*/
-    /* ---------------------------- STANDARD CALLBACKS -------------------------------------------*/
+    /* -------------------------------- STANDARD CALLBACKS ---------------------------------------*/
     /* -------------------------------------------------------------------------------------------*/
 
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-
-        birthDateChanged = false;
     }
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -81,43 +74,42 @@ public class StudentProfileManagementBasicsFragment extends ProfileManagementBas
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        root = inflater.inflate(R.layout.fragment_student_profile_management_basics, container, false);
+        root = inflater.inflate(R.layout.fragment_professor_profile_management_basics, container, false);
 
         if(root == null)
             Log.println(Log.ASSERT,"STUD BASICS", "layout not found");
 
-        nameText = (EditText)root.findViewById(R.id.student_name_area);
-        if(student.getName() == null)
+        nameText = (EditText)root.findViewById(R.id.professor_name_area);
+        if(professor.getName() == null)
             nameText.setText(INSERT_FIELD);
         else
-            nameText.setText(student.getName());
+            nameText.setText(professor.getName());
 
-        surnameText = (EditText)root.findViewById(R.id.student_surname_area);
-        if(student.getSurname() == null)
+        surnameText = (EditText)root.findViewById(R.id.professor_surname_area);
+        if(professor.getSurname() == null)
             surnameText.setText(INSERT_FIELD);
         else
-            surnameText.setText(student.getSurname());
+            surnameText.setText(professor.getSurname());
 
-        birthCityText = (EditText)root.findViewById(R.id.student_birthCity_et);
-        if(student.getBirthCity() == null)
+        birthCityText = (EditText)root.findViewById(R.id.professor_birthCity_et);
+        if(professor.getBirthCity() == null)
             birthCityText.setText(INSERT_FIELD);
         else
-            birthCityText.setText(student.getBirthCity());
+            birthCityText.setText(professor.getBirthCity());
 
 
-        birthPicker = (TextView)root.findViewById(R.id.student_birth_et);
-        if(student.getBirth() == null){
+        birthPicker = (TextView)root.findViewById(R.id.professor_birth_et);
+        if(professor.getBirth() == null){
 
             birthPicker.setText(INSERT_FIELD);
         }
 
         else{
 
-            DateFormat df=SimpleDateFormat.getDateInstance(SimpleDateFormat.MEDIUM,Locale.getDefault());
-            birthPicker.setText(df.format(student.getBirth()));
+            DateFormat df= SimpleDateFormat.getDateInstance(SimpleDateFormat.MEDIUM, Locale.getDefault());
+            birthPicker.setText(df.format(professor.getBirth()));
         }
 
 
@@ -160,16 +152,10 @@ public class StudentProfileManagementBasicsFragment extends ProfileManagementBas
         });
 
 
-        descriptionText = (EditText)root.findViewById(R.id.student_description_et);
-        if(student.getDescription() == null)
-            descriptionText.setText(INSERT_FIELD);
-        else
-            descriptionText.setText(student.getDescription());
 
         textFields.add(nameText);
         textFields.add(surnameText);
         textFields.add(birthCityText);
-        textFields.add(descriptionText);
 
         OnFieldChangedListener hasChangedListener = new OnFieldChangedListener();
         for(EditText et:textFields)
@@ -208,26 +194,26 @@ public class StudentProfileManagementBasicsFragment extends ProfileManagementBas
     @Override
     public void onDetach() {
         super.onDetach();
-        host = null;
-
-        MyBundle b = application.addBundle(BUNDLE_IDENTIFIER);
-        b.put(BUNDLE_KEY_STUDENT,student);
     }
+
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        Log.println(Log.ASSERT,"STUD BASICS", "onActivityResult");
+        Log.println(Log.ASSERT, "PROF BASICS", "onActivityResult");
     }
 
-    /* ----------------------- AUXILIARY METHODS ----------------------------------------------- */
+
+    /* ------------------------------------------------------------------------------------------ */
+    /* ----------------------- AUXILIARY METHODS ------------------------------------------------ */
+    /* ------------------------------------------------------------------------------------------ */
 
     @Override
     protected void restoreStateFromBundle() {
         super.restoreStateFromBundle();
 
         if(bundle!=null)
-            student = (Student)bundle.get(BUNDLE_KEY_STUDENT);
+            professor = (Professor)bundle.get(BUNDLE_KEY_PROFESSOR);
     }
 
     @Override
@@ -236,22 +222,21 @@ public class StudentProfileManagementBasicsFragment extends ProfileManagementBas
 
         if(bundle!=null){
 
-            bundle.put(BUNDLE_KEY_STUDENT,student);
+            bundle.put(BUNDLE_KEY_PROFESSOR,professor);
         }
     }
 
     @Override
-    public void setEnable(boolean enable){
+    public void setEnable(boolean enable) {
 
         super.setEnable(enable);
 
-        boolean isMale = student.getSex().equals(Student.SEX_MALE);
+        boolean isMale = professor.getSex().equals(Student.SEX_MALE);
         male.setChecked(isMale);
         female.setChecked(!isMale);
         male.setEnabled(enable);
         female.setEnabled(enable);
         birthPicker.setEnabled(enable);
-//        profilePhoto.setEnabled(enable);
     }
 
 
@@ -265,22 +250,21 @@ public class StudentProfileManagementBasicsFragment extends ProfileManagementBas
         else
             sex = Student.SEX_FEMALE;
 
-        if(!nameText.getText().toString().equals(INSERT_FIELD)) student.setName(nameText.getText().toString());
-        if(!surnameText.getText().toString().equals(INSERT_FIELD)) student.setSurname(surnameText.getText().toString());
-        if(!birthCityText.getText().toString().equals(INSERT_FIELD)) student.setBirthCity(birthCityText.getText().toString());
-        if(!descriptionText.getText().toString().equals(INSERT_FIELD)) student.setDescription(descriptionText.getText().toString());
-        student.setSex(sex);
+        if(!nameText.getText().toString().equals(INSERT_FIELD)) professor.setName(nameText.getText().toString());
+        if(!surnameText.getText().toString().equals(INSERT_FIELD)) professor.setSurname(surnameText.getText().toString());
+        if(!birthCityText.getText().toString().equals(INSERT_FIELD)) professor.setBirthCity(birthCityText.getText().toString());
+        professor.setSex(sex);
 
         if(birthDateChanged){
 
 
             Log.println(Log.ASSERT,"Basics", "data: " + date.toString());
-            student.setBirth(date);
+            professor.setBirth(date);
             birthDateChanged = false;
         }
 
-        Log.println(Log.ASSERT, "BASICS", "now saving..." + student.getObjectId());
-        student.saveInBackground(new SaveCallback() {
+        Log.println(Log.ASSERT, "BASICS", "now saving..." + professor.getObjectId());
+        professor.saveInBackground(new SaveCallback() {
             @Override
             public void done(ParseException e) {
 
@@ -289,6 +273,4 @@ public class StudentProfileManagementBasicsFragment extends ProfileManagementBas
             }
         });
     }
-
-
 }
