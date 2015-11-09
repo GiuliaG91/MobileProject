@@ -424,6 +424,8 @@
     <string-array name="Home_Professor_Tab">
 
         <item>News</item>
+        <item>Students</item>
+        <item>Companies</item>
 
     </string-array>
 

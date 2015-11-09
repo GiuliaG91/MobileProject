@@ -25,13 +25,28 @@ public class ProfessorViewPagerAdapter extends FragmentPagerAdapter {
     @Override
     public Fragment getItem(int position) {
 
-        if (position == 0) // if the position is 0 we are returning the First tab
-        {
+        if (position == 0){
+
+            TabHome tab1 = TabHome.newInstance();
+            return tab1;
+        }
+        if (position == 1){
+
+            TabHome tab1 = TabHome.newInstance();
+            return tab1;
+        }
+        if (position == 2){
+
             TabHome tab1 = TabHome.newInstance();
             return tab1;
         }
         else
             return null;
+    }
+
+    @Override
+    public CharSequence getPageTitle(int position) {
+        return titles[position];
     }
 
     @Override

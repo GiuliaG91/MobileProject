@@ -640,12 +640,8 @@ public class menuAdapter extends RecyclerView.Adapter<menuAdapter.ViewHolder> {
         } else if (viewType == TYPE_HEADER) {
 
             View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.header, parent, false); //Inflating the layout
-
             ViewHolder vhHeader = new ViewHolder(v, viewType); //Creating MailboxViewHolder and passing the object of type view
-
-            return vhHeader; //returning the object created
-
-
+            return vhHeader;
         }
         return null;
     }
@@ -683,57 +679,12 @@ public class menuAdapter extends RecyclerView.Adapter<menuAdapter.ViewHolder> {
             holder.Name.setText(u.getName());
             holder.email.setText(u.getMail());
 
-            if(user.getType().toLowerCase().equals(User.TYPE_STUDENT))
-            {
-//                Student s = gd.getStudentFromUser();
-//                Bitmap img = null;
-//
-//                try{
-//                    img=s.getProfilePhoto();
-//                }
-//                catch(Exception e){
-//                    img=null;
-//                }
-//
-//                if(img!=null){
-//
-//                    holder.profile.setImageBitmap(img);
-//                }
-//                else
-//                    holder.profile.setImageResource(R.drawable.ic_profile); // Similarly we set the resources for header view
-//
-//                holder.Name.setText(s.getName());
-//                holder.email.setText(s.getMail());
+            if(user.getType().equalsIgnoreCase(User.TYPE_STUDENT))
                 flag = 1;
-
-            }
-            else if(user.getType().toLowerCase().equals(User.TYPE_COMPANY))
-            {
-//                Company c = gd.getCompanyFromUser();
-//                Bitmap img = null;
-//
-//                try{
-//                    img=c.getProfilePhoto();
-//
-//                }catch(Exception e){
-//                    img=null;
-//                }
-//
-//                if(img!=null){
-//
-//                    holder.profile.setImageBitmap(img);
-//                }
-//                else
-//                    holder.profile.setImageResource(R.drawable.ic_profile);
-//
-//                holder.Name.setText(c.getName());
-//                holder.email.setText(c.getMail());
+            else if(user.getType().equalsIgnoreCase(User.TYPE_COMPANY))
                 flag = 2;
-            }
-            else if(user.getType().toLowerCase().equals(User.TYPE_PROFESSOR)){
-
+            else if(user.getType().equalsIgnoreCase(User.TYPE_PROFESSOR))
                 flag = 3;
-            }
 
 
         }
@@ -745,27 +696,10 @@ public class menuAdapter extends RecyclerView.Adapter<menuAdapter.ViewHolder> {
     }
 
 
-    // Witht the following method we check what type of view is being passed
     @Override
     public int getItemViewType(int position) {
-
-        if (isPositionHeader(position))
-            return TYPE_HEADER;
-
-        else if(position == 1) return TYPE_HOME;
-        else if(position == 2) return TYPE_PROFILE;
-        else if(position == 3) return TYPE_LECTURES;
-        else if(position == 4) return TYPE_MAP;
-        else if(position == 5) return TYPE_MYJOBOFFERS;
-        else if(position == 6) return TYPE_MY_COMPANIES;  // for student is autocandidature for companies is new offer
-        else if(position == 7) return TYPE_MAILBOX;       // after it became mail box
-        else if(position == 8) return TYPE_LOGOUT;
-
-        return TYPE_HOME;
+        return position;
     }
 
-    private boolean isPositionHeader(int position) {
-        return position == 0;
-    }
 
 }
