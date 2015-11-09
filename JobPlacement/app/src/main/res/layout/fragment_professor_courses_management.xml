@@ -1,13 +1,21 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context="com.example.giuliagigi.jobplacement.ProfessorCoursesManagementFragment">
 
-    <!-- TODO: Update blank fragment layout -->
     <TextView
-        android:layout_width="match_parent"
-        android:id="@+id/temp_tv"
-        android:layout_height="match_parent"
-        android:text="this is professor courses management" />
+        android:text="courses:"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" />
 
-</FrameLayout>
+    <android.support.v7.widget.RecyclerView
+        android:scrollbars="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/professor_courses_recyclerView"/>
+
+
+</LinearLayout>

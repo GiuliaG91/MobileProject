@@ -177,8 +177,11 @@ public class GlobalData extends Application {
 
         currentUser = (ParseUserWrapper)ParseUser.getCurrentUser();
 
-        if(currentUser != null)
-                currentUserObject = currentUser.getUser();
+        if(currentUser != null){
+
+            currentUserObject = currentUser.getUser();
+            if(currentUserObject.isCachingNeeded()) currentUserObject.cacheData();
+        }
         else
             Log.println(Log.ASSERT,"GLOBAL DATA", "currentUser is null");
 

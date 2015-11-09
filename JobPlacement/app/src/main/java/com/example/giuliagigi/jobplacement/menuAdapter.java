@@ -118,8 +118,6 @@ public class menuAdapter extends RecyclerView.Adapter<menuAdapter.ViewHolder> {
     @Override
     public menuAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
-        Log.println(Log.ASSERT, "MENUADAPTER", "viewType = " + viewType);
-
         if (!(viewType == TYPE_HEADER)) {
             View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_row, parent, false);
 
@@ -285,7 +283,6 @@ public class menuAdapter extends RecyclerView.Adapter<menuAdapter.ViewHolder> {
                                 @Override
                                 public void onClick(View v) {
 
-                                    Log.println(Log.ASSERT, "MANUADAPTER", "must open map section");
                                     FragmentManager fragmentManager = activity.getSupportFragmentManager();
                                     Fragment current = fragmentManager.findFragmentById(R.id.tab_Home_container);
 
@@ -634,13 +631,12 @@ public class menuAdapter extends RecyclerView.Adapter<menuAdapter.ViewHolder> {
 
             }
 
+            //Creating MailboxViewHolder and passing the object of type view
+            ViewHolder vhItem = new ViewHolder(v, viewType);
+            return vhItem;
 
-            ViewHolder vhItem = new ViewHolder(v, viewType); //Creating MailboxViewHolder and passing the object of type view
-            return vhItem; // Returning the created object
-
-            //inflate your layout and pass it to view holder
-
-        } else if (viewType == TYPE_HEADER) {
+        }
+        else if (viewType == TYPE_HEADER) {
 
             View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.header, parent, false); //Inflating the layout
             ViewHolder vhHeader = new ViewHolder(v, viewType); //Creating MailboxViewHolder and passing the object of type view
