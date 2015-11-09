@@ -583,7 +583,33 @@ public class menuAdapter extends RecyclerView.Adapter<menuAdapter.ViewHolder> {
 
                         case PROFESSOR_ACTION_COURSES:
 
-                            Log.println(Log.ASSERT, "MenuAdapter", "professor courses");
+                            v.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+
+                                    FragmentManager fragmentManager = activity.getSupportFragmentManager();
+                                    Fragment current = fragmentManager.findFragmentById(R.id.tab_Home_container);
+
+                                    if (!(current instanceof ProfessorCoursesManagementFragment)) {
+
+                                        //clear backstack
+                                        int count = fragmentManager.getBackStackEntryCount();
+                                        for (int i = 0; i < count; ++i) {
+                                            fragmentManager.popBackStack();
+                                        }
+
+                                        //New Fragment
+                                        ProfessorCoursesManagementFragment homeFragment = ProfessorCoursesManagementFragment.newInstance((Professor)gd.getUserObject());
+
+                                        fragmentManager.beginTransaction()
+                                                .replace(R.id.tab_Home_container, homeFragment)
+                                                .commit();
+
+                                    }
+                                    mDrawerLayout.closeDrawers();
+                                }
+                            });
+
                             break;
 
 
