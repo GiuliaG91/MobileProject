@@ -57,7 +57,7 @@ public class InboxMessage extends ParseObject implements Comparable{
             puw.fetchIfNeeded();
         }
         catch (ParseException e) {
-            Log.println(Log.ASSERT, "INBOX MESSAGE", "error fetching parseUser");
+            Log.println(Log.ASSERT, "INBOX MESSAGE_FIELD", "error fetching parseUser");
             e.printStackTrace();
         }
 

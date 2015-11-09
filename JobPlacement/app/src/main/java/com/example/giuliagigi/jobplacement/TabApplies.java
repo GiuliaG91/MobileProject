@@ -9,20 +9,17 @@ import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.parse.FindCallback;
 import com.parse.ParseException;
-import com.parse.ParseObject;
 import com.parse.ParseQuery;
 
-import java.util.Arrays;
 import java.util.List;
 
 /**
  * Created by pietro on 12/05/2015.
  */
-public class Applies_Tab extends Fragment {
+public class TabApplies extends Fragment {
 
 
 
@@ -35,8 +32,8 @@ public class Applies_Tab extends Fragment {
     private Integer position=0;
 
 
-    public static Applies_Tab newInstance(){
-        Applies_Tab fragment=new Applies_Tab();
+    public static TabApplies newInstance(){
+        TabApplies fragment=new TabApplies();
         return fragment;
 
     }

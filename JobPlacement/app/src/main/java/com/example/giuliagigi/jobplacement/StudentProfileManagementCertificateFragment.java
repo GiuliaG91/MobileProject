@@ -289,7 +289,7 @@ public class StudentProfileManagementCertificateFragment extends ProfileManageme
                 Calendar c = GregorianCalendar.getInstance();
                 c.set(day,month,year);
                 date = c.getTime();
-                Log.println(Log.ASSERT, "CERTIFICATE FRAG", "DATE:" + date.toString());
+                Log.println(Log.ASSERT, "CERTIFICATE FRAG", "DATE_FIELD:" + date.toString());
                 certificate.setDate(date);
             }
 

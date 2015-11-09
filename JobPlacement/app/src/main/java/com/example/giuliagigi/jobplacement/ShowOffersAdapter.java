@@ -65,29 +65,28 @@ public class ShowOffersAdapter extends RecyclerView.Adapter<ShowOffersAdapter.Vi
         }
     }
 
-   public ShowOffersAdapter(FragmentActivity c, Integer pos, LinearLayoutManager l)
-   {
-       context=c;
+    public ShowOffersAdapter(FragmentActivity c, Integer pos, LinearLayoutManager l) {
 
-       mDataset=new ArrayList<>();
-        currentPosition=pos;
-       mLayoutManager=l;
-        globalData=(GlobalData)c.getApplication();
-       Company company = globalData.getCompanyFromUser();
-       ParseQuery query = new ParseQuery("CompanyOffer").whereEqualTo("company",company);
+        context = c;
+        mDataset = new ArrayList<>();
+        currentPosition = pos;
+        mLayoutManager = l;
+        globalData = (GlobalData) c.getApplication();
+        Company company = globalData.getCompanyFromUser();
+        ParseQuery query = new ParseQuery("CompanyOffer").whereEqualTo("company", company);
 
-  try {
-           mDataset.addAll(query.find());
-       } catch (ParseException e) {
-           e.printStackTrace();
-       }
+        try {
+            mDataset.addAll(query.find());
+        }
+        catch (ParseException e) {
+            e.printStackTrace();
+        }
 
 
-       if(currentPosition!=0)
-       {
-           mLayoutManager.scrollToPosition(currentPosition);
-       }
-   }
+        if (currentPosition != 0) {
+            mLayoutManager.scrollToPosition(currentPosition);
+        }
+    }
 
     // Create new views (invoked by the layout manager)
     @Override

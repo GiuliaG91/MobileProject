@@ -4,13 +4,10 @@ package com.example.giuliagigi.jobplacement;
 import android.app.Activity;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -18,31 +15,29 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
-import java.util.List;
-
 /**
  * Created by pietro on 25/04/2015.
  */
 
-public class Home_tab extends Fragment {
+public class TabHome extends Fragment {
 
     GlobalData globalData;
 
     View root;
     FragmentActivity activity;
     private RecyclerView mRecyclerView;
-    private Home_tabAdapter adapter;
+    private TabHomeAdapter adapter;
     private LinearLayoutManager mLayoutManager;
 
     Integer position;
 
     private OnFragmentInteractionListener mListener;
 
-   public Home_tab(){}
+   public TabHome(){}
 
-    public static Home_tab newInstance(){
+    public static TabHome newInstance(){
 
-        Home_tab fragment = new Home_tab();
+        TabHome fragment = new TabHome();
         return fragment;
 
     }
@@ -94,7 +89,7 @@ public class Home_tab extends Fragment {
         mRecyclerView.addItemDecoration(new DividerItemDecoration(this.getActivity(), DividerItemDecoration.VERTICAL_LIST));
         mRecyclerView.setLayoutManager(mLayoutManager);
 
-        adapter = new Home_tabAdapter(this.getActivity(), mRecyclerView, this, position, mLayoutManager);
+        adapter = new TabHomeAdapter(this.getActivity(), mRecyclerView, this, position, mLayoutManager);
 
         /*********************/
 

@@ -443,7 +443,7 @@ public class Student extends User {
 
                 if(e == null){
 
-                    Log.println(Log.ASSERT,"STUDENT","curriculum updated successfully");
+                    Log.println(Log.ASSERT,"STUDENT_FIELD","curriculum updated successfully");
                     Student.this.put(CURRICULUM_FIELD,curriculum);
                     Student.this.saveEventually();
                 }
@@ -478,12 +478,12 @@ public class Student extends User {
     public void printCacheContent(){
 
         super.printCacheContent();
-        Log.println(Log.ASSERT,"STUDENT","name: " + name);
-        Log.println(Log.ASSERT,"STUDENT","surname: " + surname);
-        Log.println(Log.ASSERT,"STUDENT","sex: " + sex);
-        Log.println(Log.ASSERT,"STUDENT","address: " + address);
-        Log.println(Log.ASSERT,"STUDENT","city: " + city);
-        Log.println(Log.ASSERT,"STUDENT","birthCity: " + birthCity);
-        Log.println(Log.ASSERT,"STUDENT","birthDate: " + birthDate.toString());
+        Log.println(Log.ASSERT,"STUDENT_FIELD","name: " + name);
+        Log.println(Log.ASSERT,"STUDENT_FIELD","surname: " + surname);
+        Log.println(Log.ASSERT,"STUDENT_FIELD","sex: " + sex);
+        Log.println(Log.ASSERT,"STUDENT_FIELD","address: " + address);
+        Log.println(Log.ASSERT,"STUDENT_FIELD","city: " + city);
+        Log.println(Log.ASSERT,"STUDENT_FIELD","birthCity: " + birthCity);
+        Log.println(Log.ASSERT,"STUDENT_FIELD","birthDate: " + birthDate.toString());
     }
 }

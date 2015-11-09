@@ -27,6 +27,7 @@
     <string name="ok">Ok</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>
+    <string name="from">From:</string>
     <string name="to">To: </string>
     <string name="password:">Password:</string>
     <string name="insert">Insert</string>
@@ -439,6 +440,16 @@
         <item>Profile</item>
         <item>Search</item>
         <item>NewOffer</item>
+        <item>MessageBox</item>
+        <item>Logout</item>
+
+    </string-array>
+
+    <string-array name="Menu_items_Professor">
+
+        <item>Home</item>
+        <item>Profile</item>
+        <item>Search</item>
         <item>MessageBox</item>
         <item>Logout</item>
 

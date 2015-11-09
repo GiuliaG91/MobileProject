@@ -1,35 +1,22 @@
 package com.example.giuliagigi.jobplacement;
 
-import android.graphics.Bitmap;
-import android.location.Address;
-import android.location.Geocoder;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CheckBox;
-import android.widget.CompoundButton;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.parse.ParseException;
-import com.parse.ParseGeoPoint;
 import com.parse.ParseQuery;
 import com.parse.ParseQueryAdapter;
 
-import java.io.IOException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Calendar;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -37,13 +24,13 @@ import de.hdodenhof.circleimageview.CircleImageView;
  * Created by Silvia on 21/05/2015.
  */
 
-public class Home_tabAdapter extends RecyclerView.Adapter<Home_tabAdapter.ViewHolder> implements View.OnClickListener {
+public class TabHomeAdapter extends RecyclerView.Adapter<TabHomeAdapter.ViewHolder> implements View.OnClickListener {
 
 
     private FragmentActivity context;
     private ArrayList<News> mDataset;
     private GlobalData globalData;
-    private Home_tab parent;
+    private TabHome parent;
     private Integer currentPosition;
     private LinearLayoutManager mLayoutManager;
     private final int pageSize = 15;
@@ -54,10 +41,11 @@ public class Home_tabAdapter extends RecyclerView.Adapter<Home_tabAdapter.ViewHo
     private ParseQueryAdapter.QueryFactory<News> factory;
 
     private ViewGroup parseParent;
-    Home_tabAdapter newsAdapter = this;
+    TabHomeAdapter newsAdapter = this;
 
 
-    public Home_tabAdapter(FragmentActivity c, ViewGroup parentIn, Home_tab fragment, Integer pos, LinearLayoutManager layoutManager) {
+    public TabHomeAdapter(FragmentActivity c, ViewGroup parentIn, TabHome fragment, Integer pos, LinearLayoutManager layoutManager) {
+
         parseParent = parentIn;
         context = c;
         mDataset = new ArrayList<>();
@@ -68,7 +56,6 @@ public class Home_tabAdapter extends RecyclerView.Adapter<Home_tabAdapter.ViewHo
         count = 0;
 
         setAdapter();
-
     }
 
     public void setFactory(){
@@ -82,14 +69,14 @@ public class Home_tabAdapter extends RecyclerView.Adapter<Home_tabAdapter.ViewHo
                 if(globalData.getUserObject() instanceof Student) {
 
                     ParseQuery<News> query1 = ParseQuery.getQuery("News");
-                    query1.whereEqualTo(News.TYPE, 0);
+                    query1.whereEqualTo(News.TYPE_FIELD, News.TYPE_NEW_OFFER);
 
                     ParseQuery<News> query2 = ParseQuery.getQuery("News");
-                    query2.whereEqualTo(News.TYPE, 2);
-                    query2.whereEqualTo(News.STUDENT, (Student)globalData.getUserObject());
+                    query2.whereEqualTo(News.TYPE_FIELD, News.TYPE_APPLICATION_STATE);
+                    query2.whereEqualTo(News.STUDENT_FIELD, (Student)globalData.getUserObject());
 
                     ParseQuery<News> query3 = ParseQuery.getQuery("News");
-                    query3.whereEqualTo(News.TYPE, 3);
+                    query3.whereEqualTo(News.TYPE_FIELD, News.TYPE_NEW_COMPANY);
 
                     List<ParseQuery<News>> queries = new ArrayList<ParseQuery<News>>();
                     queries.add(query1);
@@ -97,13 +84,19 @@ public class Home_tabAdapter extends RecyclerView.Adapter<Home_tabAdapter.ViewHo
                     queries.add(query3);
 
                     query = ParseQuery.or(queries);
+                }
 
-
-                }else if(globalData.getUserObject() instanceof Company){
+                else if(globalData.getUserObject() instanceof Company){
 
                     query = new ParseQuery("News");
-                    query.whereEqualTo(News.TYPE, 1);
-                    query.whereEqualTo(News.COMPANY, (Company)globalData.getUserObject());
+                    query.whereEqualTo(News.TYPE_FIELD, News.TYPE_OFFER_APPLICATION);
+                    query.whereEqualTo(News.COMPANY_FIELD, (Company)globalData.getUserObject());
+                }
+
+                else if(globalData.getUserObject() instanceof Professor){
+
+                    query = new ParseQuery("News");
+                    query.whereEqualTo(News.TYPE_FIELD, News.TYPE_NEW_NOTICE);
                 }
 
                 return query;
@@ -136,11 +129,11 @@ public class Home_tabAdapter extends RecyclerView.Adapter<Home_tabAdapter.ViewHo
 
                 switch (object.getType()) {
 
-                    case 0: icon.setImageResource(R.drawable.ic_offer);
+                    case News.TYPE_NEW_OFFER: icon.setImageResource(R.drawable.ic_offer);
                             title.setText(context.getResources().getString(R.string.new_job_offer));
                             break;
 
-                    case 1:
+                    case News.TYPE_OFFER_APPLICATION:
                         try {
                             Student student=object.getStudent().fetchIfNeeded();
 
@@ -148,52 +141,71 @@ public class Home_tabAdapter extends RecyclerView.Adapter<Home_tabAdapter.ViewHo
                                 icon.setImageBitmap(object.getStudent().getProfilePhoto());
                             title.setText(context.getResources().getString(R.string.new_student_applied));
 
-                        } catch (ParseException e) {
+                        }
+                        catch (ParseException e) {
                             e.printStackTrace();
                         }
                             break;
 
-                    case 2: try {CompanyOffer offer=object.getCompanyOffer().fetchIfNeeded();
-                                Company company=offer.getCompany().fetchIfNeeded();
-                        if (company.getProfilePhoto() != null)
-                                    icon.setImageBitmap(object.getCompanyOffer().getCompany().getProfilePhoto());
-                            }catch(RuntimeException re){
-                            } catch (ParseException e) {
-                        e.printStackTrace();
-                    }
-                        OfferStatus status= null;
+                    case News.TYPE_APPLICATION_STATE:
                         try {
-                            OfferStatus offerStatus=object.getOfferStatus().fetchIfNeeded();
+
+                            CompanyOffer offer = object.getCompanyOffer().fetchIfNeeded();
+                            Company company = offer.getCompany().fetchIfNeeded();
+
+                            if (company.getProfilePhoto() != null)
+                                icon.setImageBitmap(object.getCompanyOffer().getCompany().getProfilePhoto());
+                        } catch (RuntimeException re) {
+                            re.printStackTrace();
+                        } catch (ParseException e) {
+                            e.printStackTrace();
+                        }
+
+                        OfferStatus status = null;
+
+                        try {
+
+                            OfferStatus offerStatus = object.getOfferStatus().fetchIfNeeded();
                             status = offerStatus;
 
                         } catch (ParseException e) {
                             e.printStackTrace();
                         }
-                            switch (status.getType()) {
-                                case OfferStatus.TYPE_ACCEPTED: title.setText(context.getResources().getString(R.string.student_accepted));
-                                                                break;
-                                case OfferStatus.TYPE_START: title.setText(context.getResources().getString(R.string.OfferStatus_Start));
-                                                             break;
-                                case OfferStatus.TYPE_CONSIDERING: title.setText(context.getResources().getString(R.string.OfferStatus_Considering));
-                                                                   break;
-                                case OfferStatus.TYPE_REFUSED: title.setText(context.getResources().getString(R.string.OfferStatus_Refused));
-                                                               break;
-                            }
-                            break;
 
-                    case 3: try {
-                                        Company company=object.getCompany().fetchIfNeeded();
+                        switch (status.getType()) {
+                            case OfferStatus.TYPE_ACCEPTED:
+                                title.setText(context.getResources().getString(R.string.student_accepted));
+                                break;
+                            case OfferStatus.TYPE_START:
+                                title.setText(context.getResources().getString(R.string.OfferStatus_Start));
+                                break;
+                            case OfferStatus.TYPE_CONSIDERING:
+                                title.setText(context.getResources().getString(R.string.OfferStatus_Considering));
+                                break;
+                            case OfferStatus.TYPE_REFUSED:
+                                title.setText(context.getResources().getString(R.string.OfferStatus_Refused));
+                                break;
+                        }
+                        break;
 
-                                if (company.getProfilePhoto() != null)
-                                    icon.setImageBitmap(object.getCompany().getProfilePhoto());
-                            }catch(RuntimeException re){
-                            } catch (ParseException e) {
-                        e.printStackTrace();
-                    }
+                    case News.TYPE_NEW_COMPANY:
+
+                        try {
+                            Company company = object.getCompany().fetchIfNeeded();
+
+                            if (company.getProfilePhoto() != null)
+                                icon.setImageBitmap(object.getCompany().getProfilePhoto());
+                        }
+                        catch (RuntimeException re) {
+                        }
+                        catch (ParseException e) {
+                            e.printStackTrace();
+                        }
+
                         title.setText(context.getResources().getString(R.string.new_company_signed_up));
-                            break;
+                        break;
 
-                    case 4:
+                    case News.TYPE_ADVERTISEMENT:
                             break;
 
                     default:
@@ -237,11 +249,11 @@ public class Home_tabAdapter extends RecyclerView.Adapter<Home_tabAdapter.ViewHo
     }
 
     @Override
-    public Home_tabAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public TabHomeAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.news_row, parent, false);
         v.setClickable(true);
-        v.setOnClickListener(Home_tabAdapter.this);
+        v.setOnClickListener(TabHomeAdapter.this);
 
         ViewHolder vh = new ViewHolder(v);
         return vh;

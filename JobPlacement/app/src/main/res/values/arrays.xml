@@ -23,6 +23,15 @@
 
     </string-array>
 
+    <string-array name="ProfessorMenuicons">
+        <item>@drawable/ic_home</item>
+        <item>@drawable/ic_profile</item>
+        <item>@drawable/ic_search</item>
+        <item>@drawable/ic_action</item>
+        <item>@drawable/ic_logoutoff</item>
+
+    </string-array>
+
 
 
 

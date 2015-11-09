@@ -9,8 +9,8 @@ import android.support.v4.app.FragmentPagerAdapter;
  */
 public class CompanyViewPagerAdapter extends FragmentPagerAdapter {
 
-    CharSequence Titles[]; // This will Store the Titles of the Tabs which are Going to be passed when ViewPagerAdapter is created
-    int NumbOfTabs; // Store the number of tabs, this will also be passed when the ViewPagerAdapter is created
+    CharSequence Titles[]; // This will Store the Titles of the Tabs which are Going to be passed when StudentViewPagerAdapter is created
+    int NumbOfTabs; // Store the number of tabs, this will also be passed when the StudentViewPagerAdapter is created
 
       CompanyViewPagerAdapter(FragmentManager fm, CharSequence mTitles[], int mNumbOfTabsumb){
         super(fm);
@@ -25,7 +25,7 @@ public class CompanyViewPagerAdapter extends FragmentPagerAdapter {
     public Fragment getItem(int position) {
         if(position==0)
         {
-            return new Home_tab();
+            return new TabHome();
         }
         else if(position==1)
         {

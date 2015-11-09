@@ -33,8 +33,8 @@ public class CompanyShowOfferFragment extends Fragment {
     private Integer position=0;
 
     public static CompanyShowOfferFragment newInstance() {
-        CompanyShowOfferFragment fragment = new CompanyShowOfferFragment();
 
+        CompanyShowOfferFragment fragment = new CompanyShowOfferFragment();
         return fragment;
     }
 
@@ -42,9 +42,11 @@ public class CompanyShowOfferFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setHasOptionsMenu(true);
-        if(savedInstanceState!=null)
-        {
+
+        if(savedInstanceState!=null){
+
             position=savedInstanceState.getInt("position");
         }
     }

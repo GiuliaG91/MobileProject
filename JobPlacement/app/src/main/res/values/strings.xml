@@ -358,7 +358,7 @@
 
     <!-- ________________ TIME _________________________________________________________________ -->
 
-        <!-- Months -->
+    <!-- Months -->
     <string-array name="months">
         <item>January</item>
         <item>February</item>
@@ -421,6 +421,12 @@
 
     </string-array>
 
+    <string-array name="Home_Professor_Tab">
+
+        <item>News</item>
+
+    </string-array>
+
     <string-array name="Menu_items_student">
 
         <item>Home</item>
@@ -440,6 +446,16 @@
         <item>Profile</item>
         <item>Search</item>
         <item>NewOffer</item>
+        <item>MessageBox</item>
+        <item>Logout</item>
+
+    </string-array>
+
+    <string-array name="Menu_items_Professor">
+
+        <item>Home</item>
+        <item>Profile</item>
+        <item>Search</item>
         <item>MessageBox</item>
         <item>Logout</item>
 

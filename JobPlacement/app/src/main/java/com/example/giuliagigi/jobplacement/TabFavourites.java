@@ -15,7 +15,7 @@ import android.view.ViewGroup;
 /**
  * Created by pietro on 25/04/2015.
  */
-public class Fav_tab extends Fragment{
+public class TabFavourites extends Fragment{
 
     private   View root;
     private GlobalData globalData;
@@ -26,8 +26,8 @@ public class Fav_tab extends Fragment{
     private Integer position=0;
 
 
-   public static Fav_tab newInstance(){
-       Fav_tab fragment=new Fav_tab();
+   public static TabFavourites newInstance(){
+       TabFavourites fragment=new TabFavourites();
        return fragment;
 
    }

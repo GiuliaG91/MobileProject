@@ -36,7 +36,7 @@ public class Home extends ActionBarActivity
         StudentCompanySearchFragment.OnFragmentInteractionListener,
         CompanyStudentSearchFragment.OnFragmentInteractionListener,
         MailBoxDisplayFragment.OnFragmentInteractionListener,
-        Home_tab.OnFragmentInteractionListener
+        TabHome.OnFragmentInteractionListener
 
 {
     private Toolbar toolbar;   // Declaring the Toolbar Object
@@ -75,9 +75,7 @@ public class Home extends ActionBarActivity
 //        Log.println(Log.ASSERT,"HOME","onCreate");
 
         if(savedInstanceState!=null)
-        {
-            init=true;
-        }
+            init = true;
 
         application = (GlobalData)getApplication();
 
@@ -89,11 +87,11 @@ public class Home extends ActionBarActivity
         listeners = new ArrayList<OnActivityChangedListener>();
         isEditMode = false;
 
+        // Attaching the layout to the toolbar object
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        if (toolbar != null) setSupportActionBar(toolbar);
 
-        toolbar = (Toolbar) findViewById(R.id.toolbar); // Attaching the layout to the toolbar object
-        if (toolbar != null) {
-            setSupportActionBar(toolbar);
-        }// Setting toolbar as the ActionBar with setSupportActionBar() call
+        // Setting toolbar as the ActionBar with setSupportActionBar() call
         toolbar.setNavigationIcon(R.drawable.ic_menu_white);
 
       application.setToolbar(toolbar);
@@ -108,7 +106,6 @@ public class Home extends ActionBarActivity
         // use this setting to improve performance if you know that changes
         // in content do not change the layout size of the RecyclerView
         mDrawerList.setHasFixedSize(true);
-
         mLayoutManager = new LinearLayoutManager(this);
 
         // use a linear layout manager
@@ -116,55 +113,65 @@ public class Home extends ActionBarActivity
 
         /*********************Different menu for Student and companies******/
         ParseUserWrapper user = application.getCurrentUser();
-        if(user.getType().toLowerCase().equals("student"))
-        {
-            TITLES=getResources().getStringArray(R.array.Menu_items_student);
-            ICONS=getResources().obtainTypedArray(R.array.StudentMenuicons);
+        Log.println(Log.ASSERT,"HOME", "type: " + user.getType());
 
-                   if(init==false)//setUpMainFragment(1);
-                   {
+        if (user.getType().equalsIgnoreCase(User.TYPE_STUDENT)) {
 
-                       FragmentManager fragmentManager = getSupportFragmentManager();
-                       //New Fragment
-                           TabHomeStudentFragment homeFragment = TabHomeStudentFragment.newInstance();
-                           // Insert the fragment by replacing any existing fragment
-                           // Insert the fragment by replacing any existing fragment
+            Log.println(Log.ASSERT,"HOME", "creating tab home student");
 
-                           fragmentManager.beginTransaction()
-                                   .replace(R.id.tab_Home_container, homeFragment)
-                                   .addToBackStack("Home")
-                                   .commit();
+            TITLES = getResources().getStringArray(R.array.Menu_items_student);
+            ICONS = getResources().obtainTypedArray(R.array.StudentMenuicons);
 
-                   }
+            if (init == false){
 
-
+                FragmentManager fragmentManager = getSupportFragmentManager();
+                TabHomeStudentFragment homeFragment = TabHomeStudentFragment.newInstance();
+                fragmentManager.beginTransaction()
+                        .replace(R.id.tab_Home_container, homeFragment)
+                        .addToBackStack("Home")
+                        .commit();
+                mDrawerLayout.closeDrawers();
+            }
         }
-      else
-        {
-            TITLES=getResources().getStringArray(R.array.Menu_items_Company);
-            ICONS=getResources().obtainTypedArray(R.array.CompanytMenuicons);
+        else if (user.getType().equalsIgnoreCase(User.TYPE_COMPANY)) {
 
-              // setUpMainFragment(2);
-            if(init==false)
-            {
-                FragmentManager fragmentManager =getSupportFragmentManager();
+            Log.println(Log.ASSERT,"HOME", "creating tab home company");
 
-                //New Fragment
+            TITLES = getResources().getStringArray(R.array.Menu_items_Company);
+            ICONS = getResources().obtainTypedArray(R.array.CompanytMenuicons);
+
+            if (init == false) {
+
+                FragmentManager fragmentManager = getSupportFragmentManager();
                 TabHomeCompanyFragment homeFragment = TabHomeCompanyFragment.newInstance();
-                // Insert the fragment by replacing any existing fragment
-                // Insert the fragment by replacing any existing fragment
 
                 fragmentManager.beginTransaction()
                         .replace(R.id.tab_Home_container, homeFragment)
                         .commit();
                 mDrawerLayout.closeDrawers();
-
             }
+        }
+        else if (user.getType().equalsIgnoreCase(User.TYPE_PROFESSOR)) {
 
+            Log.println(Log.ASSERT,"HOME", "creating tab home professor");
+
+            TITLES = getResources().getStringArray(R.array.Menu_items_Professor);
+            ICONS = getResources().obtainTypedArray(R.array.ProfessorMenuicons);
+
+            if (init == false) {
+
+                FragmentManager fragmentManager = getSupportFragmentManager();
+                TabHomeProfessorFragment homeFragment = TabHomeProfessorFragment.newInstance();
+
+                fragmentManager.beginTransaction()
+                        .replace(R.id.tab_Home_container, homeFragment)
+                        .commit();
+                mDrawerLayout.closeDrawers();
+            }
         }
 
         // specify an adapter (see also next example)
-        mAdapter = new menuAdapter(TITLES, ICONS,user,this,mDrawerLayout,application);
+        mAdapter = new menuAdapter(TITLES, ICONS, user, this, mDrawerLayout,application);
         mDrawerList.setAdapter(mAdapter);
 
         application.setmAdapter(mAdapter);

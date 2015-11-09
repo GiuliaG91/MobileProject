@@ -1,10 +1,7 @@
 package com.example.giuliagigi.jobplacement;
 
-import android.content.Context;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -12,16 +9,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
 
 /**
  * Created by pietro on 07/05/2015.
@@ -35,7 +28,7 @@ public class FavouritesAdapter extends RecyclerView.Adapter<FavouritesAdapter.Vi
     private Student student;
     private FavouritesAdapter favouritesAdapter=this;
     private RecyclerView mRecyclerView;
-    private Fav_tab parent;
+    private TabFavourites parent;
     private Integer currentPosition=0;
     private LinearLayoutManager mLayoutManager;
 
@@ -65,7 +58,7 @@ public class FavouritesAdapter extends RecyclerView.Adapter<FavouritesAdapter.Vi
         }
     }
 
-    public  FavouritesAdapter(FragmentActivity c, ArrayList<CompanyOffer> companyOffers, RecyclerView r,Fav_tab fragment,int pos,LinearLayoutManager manager)
+    public  FavouritesAdapter(FragmentActivity c, ArrayList<CompanyOffer> companyOffers, RecyclerView r,TabFavourites fragment,int pos,LinearLayoutManager manager)
     {
         context=c;
         mDataset=new ArrayList<>(companyOffers);

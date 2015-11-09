@@ -24,15 +24,14 @@ public class menuAdapter extends RecyclerView.Adapter<menuAdapter.ViewHolder> {
 
     private static final int TYPE_HEADER = 0;  // Declaring Variable to Understand which View is being worked on
     // IF the view under inflation and population is header or Item
-    private static final int TYPE_HOME =1 ;
-
-    private static final int TYPE_PROFILE=2;
-    private static final int TYPE_LECTURES=3;
-    private static final int TYPE_MAP=4;
-    private static final int TYPE_MYJOBOFFERS=5;
-    private static final int TYPE_MY_COMPANIES=6;
-    private static final int TYPE_MAILBOX=7;
-    private static final int TYPE_LOGOUT=8;
+    private static final int TYPE_HOME = 1 ;
+    private static final int TYPE_PROFILE = 2;
+    private static final int TYPE_LECTURES = 3;
+    private static final int TYPE_MAP = 4;
+    private static final int TYPE_MYJOBOFFERS = 5;
+    private static final int TYPE_MY_COMPANIES = 6;
+    private static final int TYPE_MAILBOX = 7;
+    private static final int TYPE_LOGOUT = 8;
 
     private String mNavTitles[]; // String Array to store the passed titles Value from MainActivity.java
     private TypedArray ICONS;      // Int Array to store the passed icons resource value from MainActivity.java
@@ -256,10 +255,10 @@ public class menuAdapter extends RecyclerView.Adapter<menuAdapter.ViewHolder> {
                                     FragmentManager fragmentManager = activity.getSupportFragmentManager();
                                     Fragment current = fragmentManager.findFragmentById(R.id.tab_Home_container);
 
-                                    if(!(current instanceof Fav_tab)) {
+                                    if(!(current instanceof TabFavourites)) {
 
 
-                                       Fav_tab fragment = Fav_tab.newInstance();
+                                       TabFavourites fragment = TabFavourites.newInstance();
 
                                         //clear backstack
                                         int count = fragmentManager.getBackStackEntryCount();
@@ -366,7 +365,7 @@ public class menuAdapter extends RecyclerView.Adapter<menuAdapter.ViewHolder> {
 
                     }
                  break;
-    /*****************************************************END STUDENT******************************************************/
+    /*****************************************************END STUDENT_FIELD******************************************************/
                 case 2 : // company
 
                       switch (viewType)
@@ -595,9 +594,40 @@ public class menuAdapter extends RecyclerView.Adapter<menuAdapter.ViewHolder> {
 
 
                     break;
-    /********************************************COMPANY******************************************************************/
+    /***************************************** END COMPANY ******************************************************************/
 
-                default :       break;  //caso default dello switch dei flag
+                case 3: //professor
+
+                    switch (viewType){
+
+                        case 1:
+
+                            Log.println(Log.ASSERT, "MenuAdapter", "professor profile");
+                            break;
+
+                        case 2:
+
+                            Log.println(Log.ASSERT, "MenuAdapter", "professor search");
+                            break;
+
+                        case 3:
+
+                            Log.println(Log.ASSERT, "MenuAdapter", "professor message");
+                            break;
+
+                        case 4:
+
+                            Log.println(Log.ASSERT, "MenuAdapter", "professor logout");
+                            break;
+
+                        default:
+                            break;
+                    }
+
+                    break;
+
+                default :
+                    break;
 
             }
 
@@ -623,58 +653,86 @@ public class menuAdapter extends RecyclerView.Adapter<menuAdapter.ViewHolder> {
     // this method fills the recycler view items with their proper content
     @Override
     public void onBindViewHolder(menuAdapter.ViewHolder holder, int position) {
+
         if (holder.Holderid == 1) {                              // as the list view is going to be called after the header view so we decrement the
                                                                  // position by 1 and pass it to the holder while setting the text and image
             holder.textView.setText(mNavTitles[position - 1]); // Setting the Text with the array of our Titles
             holder.imageView.setImageResource(ICONS.getResourceId(position - 1,0));// Settimg the image with array of our icons
 
-        } else {
-            if(user.getType().toLowerCase().equals("student"))
+        }
+        else {
+
+            /* ----------------- setting the drawer header ---------------------------------- */
+            User u = gd.getUserObject();
+            Bitmap img = null;
+
+            try{
+                img = u.getProfilePhoto();
+            }
+            catch(Exception e){
+                img = null;
+            }
+
+            if(img != null){
+
+                holder.profile.setImageBitmap(img);
+            }
+            else
+                holder.profile.setImageResource(R.drawable.ic_profile);
+
+            holder.Name.setText(u.getName());
+            holder.email.setText(u.getMail());
+
+            if(user.getType().toLowerCase().equals(User.TYPE_STUDENT))
             {
-                Student s=gd.getStudentFromUser();
-                Bitmap img=null;
-
-                try{
-                    img=s.getProfilePhoto();
-                }
-                catch(Exception e){
-                    img=null;
-                }
-
-                if(img!=null){
-
-                    holder.profile.setImageBitmap(img);
-                }
-                else
-                    holder.profile.setImageResource(R.drawable.ic_profile); // Similarly we set the resources for header view
-
-                holder.Name.setText(s.getName());
-                holder.email.setText(s.getMail());
+//                Student s = gd.getStudentFromUser();
+//                Bitmap img = null;
+//
+//                try{
+//                    img=s.getProfilePhoto();
+//                }
+//                catch(Exception e){
+//                    img=null;
+//                }
+//
+//                if(img!=null){
+//
+//                    holder.profile.setImageBitmap(img);
+//                }
+//                else
+//                    holder.profile.setImageResource(R.drawable.ic_profile); // Similarly we set the resources for header view
+//
+//                holder.Name.setText(s.getName());
+//                holder.email.setText(s.getMail());
                 flag = 1;
 
             }
-            else
+            else if(user.getType().toLowerCase().equals(User.TYPE_COMPANY))
             {
-                Company c=gd.getCompanyFromUser();
-                Bitmap img=null;
+//                Company c = gd.getCompanyFromUser();
+//                Bitmap img = null;
+//
+//                try{
+//                    img=c.getProfilePhoto();
+//
+//                }catch(Exception e){
+//                    img=null;
+//                }
+//
+//                if(img!=null){
+//
+//                    holder.profile.setImageBitmap(img);
+//                }
+//                else
+//                    holder.profile.setImageResource(R.drawable.ic_profile);
+//
+//                holder.Name.setText(c.getName());
+//                holder.email.setText(c.getMail());
+                flag = 2;
+            }
+            else if(user.getType().toLowerCase().equals(User.TYPE_PROFESSOR)){
 
-                try{
-                    img=c.getProfilePhoto();
-
-                }catch(Exception e){
-                    img=null;
-                }
-
-                if(img!=null){
-
-                    holder.profile.setImageBitmap(img);
-                }
-                else
-                    holder.profile.setImageResource(R.drawable.ic_profile);
-
-                holder.Name.setText(c.getName());
-                holder.email.setText(c.getMail());
-                flag=2;
+                flag = 3;
             }
 
 
@@ -690,17 +748,19 @@ public class menuAdapter extends RecyclerView.Adapter<menuAdapter.ViewHolder> {
     // Witht the following method we check what type of view is being passed
     @Override
     public int getItemViewType(int position) {
+
         if (isPositionHeader(position))
             return TYPE_HEADER;
 
-        else if(position==1) return TYPE_HOME;
-        else if(position==2) return TYPE_PROFILE;
-        else if(position==3) return TYPE_LECTURES;
-        else if(position==4) return TYPE_MAP;
-        else if(position==5) return TYPE_MYJOBOFFERS;
-        else if(position==6) return TYPE_MY_COMPANIES;  // for student is autocandidature for companies is new offer
-        else if(position==7) return TYPE_MAILBOX;   // after it became mail box
-        else if(position==8) return TYPE_LOGOUT;
+        else if(position == 1) return TYPE_HOME;
+        else if(position == 2) return TYPE_PROFILE;
+        else if(position == 3) return TYPE_LECTURES;
+        else if(position == 4) return TYPE_MAP;
+        else if(position == 5) return TYPE_MYJOBOFFERS;
+        else if(position == 6) return TYPE_MY_COMPANIES;  // for student is autocandidature for companies is new offer
+        else if(position == 7) return TYPE_MAILBOX;       // after it became mail box
+        else if(position == 8) return TYPE_LOGOUT;
+
         return TYPE_HOME;
     }
 

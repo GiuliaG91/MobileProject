@@ -241,37 +241,37 @@ public class LectureDisplayFragment extends Fragment {
 
 //    public boolean compareSchedule(Schedule s1, Schedule s2){
 //        if(s1.getStartHour()==s2.getStartHour() && s1.getStartMinute()==s2.getStartMinute()){
-//            //se due orari iniziano alla stessa ora si sovrappongono per forza -- TYPE = 1
+//            //se due orari iniziano alla stessa ora si sovrappongono per forza -- TYPE_FIELD = 1
 //            s1.setOverlapsType(1);
 //            s2.setOverlapsType(1);
 //            return true;
 //        }
 //        else if(s1.getEndHour()==s2.getEndHour() && s1.getEndMinute()==s2.getEndMinute()){
-//            //se due orari finiscono alla stessa ora si sovrappongono per forza -- TYPE = 2
+//            //se due orari finiscono alla stessa ora si sovrappongono per forza -- TYPE_FIELD = 2
 //            s1.setOverlapsType(2);
 //            s2.setOverlapsType(2);
 //            return true;
 //        }
 //        else if(s1.getStartHour()<s2.getStartHour() && s2.getStartHour()<s1.getEndHour()){
-//            //caso in cui s2 inizia mentre s1 è in corso e finisce dopo s1 -- TYPE = 3
+//            //caso in cui s2 inizia mentre s1 è in corso e finisce dopo s1 -- TYPE_FIELD = 3
 //            s1.setOverlapsType(3);
 //            s2.setOverlapsType(4);
 //            return true;
 //        }
 //        else if(s1.getStartHour() > s2.getStartHour() && s1.getStartHour() < s2.getEndHour() ){
-//            //caso opposto al precedente -- TYPE = 4
+//            //caso opposto al precedente -- TYPE_FIELD = 4
 //            s1.setOverlapsType(4);
 //            s2.setOverlapsType(3);
 //            return true;
 //        }
 //        else if(s1.getStartHour()<s2.getStartHour() && s1.getEndHour()>s2.getEndHour()){
-//            //caso in cui s2 inizia e finisce mentre s1 è in corso -- TYPE = 5
+//            //caso in cui s2 inizia e finisce mentre s1 è in corso -- TYPE_FIELD = 5
 //            s1.setOverlapsType(5);
 //            s2.setOverlapsType(6);
 //            return true;
 //        }
 //        else if(s1.getStartHour() > s2.getStartHour() && s1.getEndHour()<s2.getEndHour()){
-//            //caso opposto al precedente -- TYPE = 6
+//            //caso opposto al precedente -- TYPE_FIELD = 6
 //            s1.setOverlapsType(6);
 //            s2.setOverlapsType(5);
 //            return true;

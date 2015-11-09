@@ -6,21 +6,12 @@ import android.os.Bundle;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
-import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 
 
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link TabHomeStudentFragment.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link TabHomeStudentFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class TabHomeStudentFragment extends Fragment {
 
     /**
@@ -28,7 +19,7 @@ public class TabHomeStudentFragment extends Fragment {
      */
     View root;
     ViewPager pager;
-    ViewPagerAdapter adapter;
+    StudentViewPagerAdapter adapter;
     SlidingTabLayout tabs;
     CharSequence Titles[] =null;
     int Numboftabs = 4;
@@ -40,9 +31,10 @@ public class TabHomeStudentFragment extends Fragment {
     private OnFragmentInteractionListener mListener;
 
     public TabHomeStudentFragment() {    }
-    public static TabHomeStudentFragment newInstance() {
-        TabHomeStudentFragment fragment = new TabHomeStudentFragment();
 
+    public static TabHomeStudentFragment newInstance() {
+
+        TabHomeStudentFragment fragment = new TabHomeStudentFragment();
         return fragment;
     }
 
@@ -52,27 +44,18 @@ public class TabHomeStudentFragment extends Fragment {
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-        try {
-            mListener = (OnFragmentInteractionListener) activity;
-        } catch (ClassCastException e) {
-            throw new ClassCastException(activity.toString()
-                    + " must implement OnFragmentInteractionListener");
-        }
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        if(savedInstanceState!=null)
-        {
-            currentPosition=savedInstanceState.getInt("position");
+        if (savedInstanceState != null) {
+            currentPosition = savedInstanceState.getInt("position");
         }
-       globalData =(GlobalData)getActivity().getApplication();
-        Titles=getActivity().getResources().getStringArray(R.array.Home_Students_Tab);
 
-
-
+        globalData = (GlobalData) getActivity().getApplication();
+        Titles = getActivity().getResources().getStringArray(R.array.Home_Students_Tab);
     }
 
     @Override
@@ -80,13 +63,14 @@ public class TabHomeStudentFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         globalData.setToolbarTitle(getString(R.string.ToolbarTilteHome));
+
         // Inflate the layout for this fragment
-      root= inflater.inflate(R.layout.fragment_tab_home, container, false);
+        root = inflater.inflate(R.layout.fragment_tab_home, container, false);
 
         /*************ViewPager***************************/
 
-        // Creating The ViewPagerAdapter and Passing Fragment Manager, Titles fot the Tabs and Number Of Tabs.
-        adapter = new ViewPagerAdapter(getChildFragmentManager(), Titles, Numboftabs,this);
+        // Creating The StudentViewPagerAdapter and Passing Fragment Manager, Titles fot the Tabs and Number Of Tabs.
+        adapter = new StudentViewPagerAdapter(getChildFragmentManager(), Titles, Numboftabs, this);
 
         // Assigning ViewPager View and setting the adapter
         pager = (ViewPager) root.findViewById(R.id.pager);
@@ -108,28 +92,24 @@ public class TabHomeStudentFragment extends Fragment {
 
         // Setting the ViewPager For the SlidingTabsLayout
         tabs.setViewPager(pager);
+        tabs.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 
+            }
 
+            @Override
+            public void onPageSelected(int position) {
+                currentPosition = position;
+            }
 
-      tabs.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-          @Override
-          public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+            @Override
+            public void onPageScrollStateChanged(int state) {
 
-          }
+            }
+        });
 
-          @Override
-          public void onPageSelected(int position) {
-                currentPosition=position;
-          }
-
-          @Override
-          public void onPageScrollStateChanged(int state) {
-
-          }
-      });
         /****************************************************/
-
-
         return root;
     }
 

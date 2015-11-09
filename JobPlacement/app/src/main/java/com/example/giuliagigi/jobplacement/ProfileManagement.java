@@ -137,7 +137,7 @@ public class ProfileManagement extends Fragment{
         application.setToolbarTitle(getString(R.string.ToolbarTilteHome));
         /*************ViewPager***************************/
 
-        // Creating The ViewPagerAdapter and Passing Fragment Manager, Titles fot the Tabs and Number Of Tabs.
+        // Creating The StudentViewPagerAdapter and Passing Fragment Manager, Titles fot the Tabs and Number Of Tabs.
         adapter = new ProfileManagementViewAdapter(getChildFragmentManager(),user,editable);
         // Assigning ViewPager View and setting the adapter
         pager = (ViewPager) view.findViewById(R.id.pager);
