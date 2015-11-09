@@ -422,22 +422,18 @@
     </string-array>
 
     <string-array name="Home_Professor_Tab">
-
         <item>News</item>
-        <item>Students</item>
-        <item>Companies</item>
-
     </string-array>
 
     <string-array name="Menu_items_student">
 
         <item>Home</item>
         <item>Profile</item>
+        <item>MessageBox</item>
         <item>Lectures</item>
         <item>Map</item>
         <item>My Job Offers </item>
         <item>My Companies</item>
-        <item>MessageBox</item>
         <item>Logout</item>
 
     </string-array>
@@ -446,9 +442,9 @@
 
         <item>Home</item>
         <item>Profile</item>
+        <item>MessageBox</item>
         <item>Search</item>
         <item>NewOffer</item>
-        <item>MessageBox</item>
         <item>Logout</item>
 
     </string-array>
@@ -457,8 +453,8 @@
 
         <item>Home</item>
         <item>Profile</item>
-        <item>Search</item>
         <item>MessageBox</item>
+        <item>Courses</item>
         <item>Logout</item>
 
     </string-array>

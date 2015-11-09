@@ -35,6 +35,10 @@ public class ProfileManagementViewAdapter extends FragmentPagerAdapter{
                 fragments.add(CompanyProfileManagementBasicsFragment.newInstance(company));
                 fragments.add(CompanyProfileManagementRegistryFragment.newInstance(company));
             }
+            else if(user.getType().equals(User.TYPE_PROFESSOR)){
+
+                //TODO
+            }
 
             if(editable){
 

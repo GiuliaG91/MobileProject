@@ -422,11 +422,7 @@
     </string-array>
 
     <string-array name="Home_Professor_Tab">
-
         <item>News</item>
-        <item>Students</item>
-        <item>Companies</item>
-
     </string-array>
 
     <string-array name="Menu_items_student">

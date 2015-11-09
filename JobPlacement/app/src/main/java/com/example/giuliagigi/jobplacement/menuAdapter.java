@@ -24,21 +24,42 @@ public class menuAdapter extends RecyclerView.Adapter<menuAdapter.ViewHolder> {
 
     private static final int TYPE_HEADER = 0;  // Declaring Variable to Understand which View is being worked on
     // IF the view under inflation and population is header or Item
-    private static final int TYPE_HOME = 1 ;
-    private static final int TYPE_PROFILE = 2;
-    private static final int TYPE_LECTURES = 3;
-    private static final int TYPE_MAP = 4;
-    private static final int TYPE_MYJOBOFFERS = 5;
-    private static final int TYPE_MY_COMPANIES = 6;
-    private static final int TYPE_MAILBOX = 7;
-    private static final int TYPE_LOGOUT = 8;
+
+    /* ----- for any user type ------------- */
+
+    private static final int ACTION_PROFILE = 2;
+    private static final int ACTION_MAILBOX = 3;
+
+    /* ----- for students ------------- */
+    private static final int STUDENT_ACTION_HOME = 1 ;
+    private static final int STUDENT_ACTION_LECTURES = 4;
+    private static final int STUDENT_ACTION_MAP = 5;
+    private static final int STUDENT_ACTION_MYJOBOFFERS = 6;
+    private static final int STUDENT_ACTION_MY_COMPANIES = 7;
+    private static final int STUDENT_ACTION_LOGOUT = 8;
+
+    /* ----- for companies ------------- */
+    private static final int COMPANY_ACTION_HOME = 1 ;
+    private static final int COMPANY_ACTION_SEARCH = 4;
+    private static final int COMPANY_ACTION_OFFER = 5;
+    private static final int COMPANY_ACTION_LOGOUT = 6;
+
+    /* ----- for professors ------------- */
+    private static final int PROFESSOR_ACTION_HOME = 1 ;
+    private static final int PROFESSOR_ACTION_COURSES = 4;
+    private static final int PROFESSOR_ACTION_LOGOUT = 5;
+
+
+    private static final int USER_STUDENT = 1;
+    private static final int USER_COMPANY = 2;
+    private static final int USER_PROFESSOR = 3;
 
     private String mNavTitles[]; // String Array to store the passed titles Value from MainActivity.java
     private TypedArray ICONS;      // Int Array to store the passed icons resource value from MainActivity.java
 
     private  GlobalData gd;
     private  ParseUserWrapper user;
-    private  int flag;
+    private  int userFlag;
     private  FragmentActivity activity;
     private DrawerLayout mDrawerLayout;
 
@@ -79,15 +100,15 @@ public class menuAdapter extends RecyclerView.Adapter<menuAdapter.ViewHolder> {
     }
 
 
-    public menuAdapter(String Titles[], TypedArray Icons, ParseUserWrapper u, FragmentActivity act, DrawerLayout d, GlobalData globalData)
-    {
+    public menuAdapter(String Titles[], TypedArray Icons, ParseUserWrapper u, FragmentActivity act, DrawerLayout d, GlobalData globalData) {
+
         // titles, icons, name, email, profile pic are passed from the main activity as we
         mNavTitles = Titles;                //have seen earlier
         ICONS = Icons;
-         user=u;
-        activity=act;
-        mDrawerLayout=d;
-        gd=globalData;
+        user = u;
+        activity = act;
+        mDrawerLayout = d;
+        gd = globalData;
     }
 
 
@@ -97,18 +118,107 @@ public class menuAdapter extends RecyclerView.Adapter<menuAdapter.ViewHolder> {
     @Override
     public menuAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
-        if (!(viewType == TYPE_HEADER ) ) {
+        Log.println(Log.ASSERT, "MENUADAPTER", "viewType = " + viewType);
+
+        if (!(viewType == TYPE_HEADER)) {
             View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_row, parent, false);
 
             // the View "v" s a row inside the recycler view. depending on "viewType", the corresponding
             // fragment will be inserted
 
-            switch (flag) {
 
-                case 1: // student
+            /* -----------------------------------------------------------------------------------*/
+            /* ------------------------- ANY-USER MENU -------------------------------------------*/
+            /* -----------------------------------------------------------------------------------*/
+            switch (viewType) {
+
+
+
+                case ACTION_PROFILE:
+
+                    v.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+
+
+                            FragmentManager fragmentManager = activity.getSupportFragmentManager();
+                            Fragment current = fragmentManager.findFragmentById(R.id.tab_Home_container);
+
+                            if (!(current instanceof ProfileManagement) || gd.getLatestDisplayedUser() != gd.getUserObject()) {
+
+                                Fragment fragment = ProfileManagement.newInstance(true, gd.getUserObject());
+
+
+                                if (activity instanceof Home)
+                                    ((Home) activity).setProfileManagement((ProfileManagement) fragment);
+
+                                //clear backstack
+                                int count = fragmentManager.getBackStackEntryCount();
+                                for (int i = 0; i < count; ++i) {
+                                    fragmentManager.popBackStack();
+                                }
+
+                                fragmentManager.beginTransaction()
+                                        .replace(R.id.tab_Home_container, fragment)
+                                        .commit();
+
+                            }
+                            mDrawerLayout.closeDrawers();
+
+                        }
+                    });
+
+                    break;
+
+                case ACTION_MAILBOX:
+
+                    v.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+
+                            FragmentManager fragmentManager = activity.getSupportFragmentManager();
+                            Fragment current = fragmentManager.findFragmentById(R.id.tab_Home_container);
+
+                            if (!(current instanceof MailBoxDisplayFragment)) {
+
+                                Fragment fragment = MailBoxDisplayFragment.newInstance();
+
+                                //clear backstack
+                                int count = fragmentManager.getBackStackEntryCount();
+                                for (int i = 0; i < count; ++i) {
+                                    fragmentManager.popBackStack();
+                                }
+
+
+                                Fragment f1 = new TabHomeStudentFragment();
+                                fragmentManager.beginTransaction().replace(R.id.tab_Home_container, f1).commit();
+
+                                fragmentManager.beginTransaction()
+                                        .replace(R.id.tab_Home_container, fragment)
+                                        .addToBackStack("Home")
+                                        .commit();
+
+                            }
+                            mDrawerLayout.closeDrawers();
+
+                        }
+                    });
+                    break;
+
+                default:
+                    break;
+            }
+
+            switch (userFlag) {
+
+                /* -------------------------------------------------------------------------------*/
+                /* ------------------------- STUDENT MENU ----------------------------------------*/
+                /* -------------------------------------------------------------------------------*/
+                case USER_STUDENT:
 
                     switch (viewType) {
-                        case TYPE_HOME:
+
+                        case STUDENT_ACTION_HOME:
                             v.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
@@ -121,7 +231,7 @@ public class menuAdapter extends RecyclerView.Adapter<menuAdapter.ViewHolder> {
 
                                         //clear backstack
                                         int count = fragmentManager.getBackStackEntryCount();
-                                        for(int i = 0; i < count; ++i) {
+                                        for (int i = 0; i < count; ++i) {
                                             fragmentManager.popBackStack();
                                         }
 
@@ -136,50 +246,11 @@ public class menuAdapter extends RecyclerView.Adapter<menuAdapter.ViewHolder> {
                                     mDrawerLayout.closeDrawers();
 
                                 }
-
-
                             });
 
                             break;
 
-                        case TYPE_PROFILE:
-
-                            v.setOnClickListener(new View.OnClickListener() {
-                                @Override
-                                public void onClick(View v) {
-
-
-                                    FragmentManager fragmentManager = activity.getSupportFragmentManager();
-                                    Fragment current = fragmentManager.findFragmentById(R.id.tab_Home_container);
-
-                                    if(!(current instanceof ProfileManagement) || gd.getLatestDisplayedUser()!=gd.getUserObject()) {
-
-                                        Fragment fragment = ProfileManagement.newInstance(true,gd.getUserObject());
-
-
-                                        if(activity instanceof Home)
-                                            ((Home) activity).setProfileManagement((ProfileManagement)fragment);
-
-                                        //clear backstack
-                                        int count = fragmentManager.getBackStackEntryCount();
-                                        for(int i = 0; i < count; ++i) {
-                                            fragmentManager.popBackStack();
-                                        }
-
-                                        fragmentManager.beginTransaction()
-                                                .replace(R.id.tab_Home_container, fragment)
-                                                .commit();
-
-                                    }
-                                    mDrawerLayout.closeDrawers();
-
-                                }
-                            });
-
-                            break;
-
-
-                        case TYPE_LECTURES:
+                        case STUDENT_ACTION_LECTURES:
 
                             v.setOnClickListener(new View.OnClickListener() {
                                 @Override
@@ -188,13 +259,13 @@ public class menuAdapter extends RecyclerView.Adapter<menuAdapter.ViewHolder> {
                                     FragmentManager fragmentManager = activity.getSupportFragmentManager();
                                     Fragment current = fragmentManager.findFragmentById(R.id.tab_Home_container);
 
-                                    if(!(current instanceof LectureSearch)) {
+                                    if (!(current instanceof LectureSearch)) {
 
                                         Fragment fragment = LectureSearch.newInstance();
 
                                         //clear backstack
                                         int count = fragmentManager.getBackStackEntryCount();
-                                        for(int i = 0; i < count; ++i) {
+                                        for (int i = 0; i < count; ++i) {
                                             fragmentManager.popBackStack();
                                         }
 
@@ -211,23 +282,23 @@ public class menuAdapter extends RecyclerView.Adapter<menuAdapter.ViewHolder> {
                             break;
 
 
-                        case TYPE_MAP:
+                        case STUDENT_ACTION_MAP:
 
                             v.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
 
-                                    Log.println(Log.ASSERT,"MANUADAPTER", "must open map section");
+                                    Log.println(Log.ASSERT, "MANUADAPTER", "must open map section");
                                     FragmentManager fragmentManager = activity.getSupportFragmentManager();
                                     Fragment current = fragmentManager.findFragmentById(R.id.tab_Home_container);
 
-                                    if(!(current instanceof RoomSearch)) {
+                                    if (!(current instanceof RoomSearch)) {
 
                                         Fragment fragment = RoomSearch.newInstance();
 
                                         //clear backstack
                                         int count = fragmentManager.getBackStackEntryCount();
-                                        for(int i = 0; i < count; ++i) {
+                                        for (int i = 0; i < count; ++i) {
                                             fragmentManager.popBackStack();
                                         }
 
@@ -243,9 +314,7 @@ public class menuAdapter extends RecyclerView.Adapter<menuAdapter.ViewHolder> {
 
                             break;
 
-
-
-                        case TYPE_MYJOBOFFERS :
+                        case STUDENT_ACTION_MYJOBOFFERS:
 
                             v.setOnClickListener(new View.OnClickListener() {
                                 @Override
@@ -255,14 +324,14 @@ public class menuAdapter extends RecyclerView.Adapter<menuAdapter.ViewHolder> {
                                     FragmentManager fragmentManager = activity.getSupportFragmentManager();
                                     Fragment current = fragmentManager.findFragmentById(R.id.tab_Home_container);
 
-                                    if(!(current instanceof TabFavourites)) {
+                                    if (!(current instanceof TabFavourites)) {
 
 
-                                       TabFavourites fragment = TabFavourites.newInstance();
+                                        TabFavourites fragment = TabFavourites.newInstance();
 
                                         //clear backstack
                                         int count = fragmentManager.getBackStackEntryCount();
-                                        for(int i = 0; i < count; ++i) {
+                                        for (int i = 0; i < count; ++i) {
                                             fragmentManager.popBackStack();
                                         }
 
@@ -275,9 +344,9 @@ public class menuAdapter extends RecyclerView.Adapter<menuAdapter.ViewHolder> {
                                 }
                             });
 
-                             break;
+                            break;
 
-                        case TYPE_MY_COMPANIES :
+                        case STUDENT_ACTION_MY_COMPANIES:
 
                             v.setOnClickListener(new View.OnClickListener() {
                                 @Override
@@ -293,7 +362,7 @@ public class menuAdapter extends RecyclerView.Adapter<menuAdapter.ViewHolder> {
 
                                         //clear backstack
                                         int count = fragmentManager.getBackStackEntryCount();
-                                        for(int i = 0; i < count; ++i) {
+                                        for (int i = 0; i < count; ++i) {
                                             fragmentManager.popBackStack();
                                         }
 
@@ -309,33 +378,58 @@ public class menuAdapter extends RecyclerView.Adapter<menuAdapter.ViewHolder> {
                             });
 
 
-                        break;
-                        case  TYPE_MAILBOX :
+                            break;
+
+
+                        case STUDENT_ACTION_LOGOUT:
 
                             v.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
+
+                                    openLogoutDialog();
+                                }
+                            });
+
+
+                            break;
+
+                        default:
+                            break;
+
+                    }
+
+                    break;
+
+                /* -------------------------------------------------------------------------------*/
+                /* ------------------------- COMPANY MENU ----------------------------------------*/
+                /* -------------------------------------------------------------------------------*/
+                case USER_COMPANY:
+
+                    switch (viewType) {
+
+                        case COMPANY_ACTION_HOME:
+                            v.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+
 
                                     FragmentManager fragmentManager = activity.getSupportFragmentManager();
                                     Fragment current = fragmentManager.findFragmentById(R.id.tab_Home_container);
 
-                                    if(!(current instanceof MailBoxDisplayFragment)) {
-
-                                        Fragment fragment = MailBoxDisplayFragment.newInstance();
+                                    if (!(current instanceof TabHomeCompanyFragment)) {
 
                                         //clear backstack
                                         int count = fragmentManager.getBackStackEntryCount();
-                                        for(int i = 0; i < count; ++i) {
+                                        for (int i = 0; i < count; ++i) {
                                             fragmentManager.popBackStack();
                                         }
 
-
-                                        Fragment f1 = new TabHomeStudentFragment();
-                                        fragmentManager.beginTransaction().replace(R.id.tab_Home_container, f1).commit();
+                                        //New Fragment
+                                        TabHomeCompanyFragment homeFragment = TabHomeCompanyFragment.newInstance();
 
                                         fragmentManager.beginTransaction()
-                                                .replace(R.id.tab_Home_container, fragment)
-                                                .addToBackStack("Home")
+                                                .replace(R.id.tab_Home_container, homeFragment)
                                                 .commit();
 
                                     }
@@ -343,281 +437,167 @@ public class menuAdapter extends RecyclerView.Adapter<menuAdapter.ViewHolder> {
 
                                 }
                             });
+
                             break;
 
-                        case TYPE_LOGOUT :
+                        case COMPANY_ACTION_SEARCH:
 
                             v.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
 
-                                    LogoutDialogFragment fragment = LogoutDialogFragment.newInstance();
-                                    fragment.show(activity.getFragmentManager(), "Logout");
 
+                                    FragmentManager fragmentManager = activity.getSupportFragmentManager();
+                                    Fragment current = fragmentManager.findFragmentById(R.id.tab_Home_container);
+
+                                    if (!(current instanceof CompanyStudentSearchFragment)) {
+                                        //New Fragment
+                                        CompanyStudentSearchFragment fragment = CompanyStudentSearchFragment.newInstance();
+
+                                        //clear backstack
+                                        int count = fragmentManager.getBackStackEntryCount();
+                                        for (int i = 0; i < count; ++i) {
+                                            fragmentManager.popBackStack();
+                                        }
+
+                                        fragmentManager.beginTransaction()
+                                                .replace(R.id.tab_Home_container, fragment)
+                                                .commit();
+                                    }
                                     mDrawerLayout.closeDrawers();
+
+                                }
+
+
+                            });
+
+
+                            break;
+
+                        case COMPANY_ACTION_OFFER:
+
+                            v.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+
+
+                                    FragmentManager fragmentManager = activity.getSupportFragmentManager();
+                                    Fragment current = fragmentManager.findFragmentById(R.id.tab_Home_container);
+
+                                    if ((current instanceof NewOffer)) {
+                                        NewOffer o = (NewOffer) current;
+                                        if (o.isInEditMode()) {
+                                            Toast.makeText(activity, "Please save changes", Toast.LENGTH_SHORT).show();
+                                        } else {
+
+                                            //clear backstack
+                                            int count = fragmentManager.getBackStackEntryCount();
+                                            for (int i = 0; i < count; ++i) {
+                                                fragmentManager.popBackStack();
+                                            }
+                                            //New Fragment
+                                            NewOffer fragment = NewOffer.newInstance(true, true);
+
+                                            fragmentManager.beginTransaction()
+                                                    .replace(R.id.tab_Home_container, fragment)
+                                                    .commit();
+
+                                        }
+                                        mDrawerLayout.closeDrawers();
+
+                                    } else {
+                                        //clear backstack
+                                        int count = fragmentManager.getBackStackEntryCount();
+                                        for (int i = 0; i < count; ++i) {
+                                            fragmentManager.popBackStack();
+                                        }
+                                        //New Fragment
+                                        NewOffer fragment = NewOffer.newInstance(true, true);
+
+                                        fragmentManager.beginTransaction()
+                                                .replace(R.id.tab_Home_container, fragment)
+                                                .commit();
+                                    }
+                                    mDrawerLayout.closeDrawers();
+                                }
+
+
+                            });
+
+
+                            break;
+
+                        case COMPANY_ACTION_LOGOUT:
+
+                            v.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+
+                                    openLogoutDialog();
                                 }
                             });
 
 
                             break;
 
-                        default:  break;
-
+                        default:
+                            break;
                     }
-                 break;
-    /*****************************************************END STUDENT_FIELD******************************************************/
-                case 2 : // company
-
-                      switch (viewType)
-                      {
-                          case TYPE_HOME :
-
-                              v.setOnClickListener(new View.OnClickListener() {
-                                  @Override
-                                  public void onClick(View v) {
-
-
-                                      FragmentManager fragmentManager = activity.getSupportFragmentManager();
-                                      Fragment current = fragmentManager.findFragmentById(R.id.tab_Home_container);
-
-                                      if (!(current instanceof TabHomeCompanyFragment)) {
-                                          //New Fragment
-                                          TabHomeCompanyFragment homeFragment = TabHomeCompanyFragment.newInstance();
-                                          // Insert the fragment by replacing any existing fragment
-
-                                          //clear backstack
-                                          int count = fragmentManager.getBackStackEntryCount();
-                                          for(int i = 0; i < count; ++i) {
-                                              fragmentManager.popBackStack();
-                                          }
-
-                                          fragmentManager.beginTransaction()
-                                                  .replace(R.id.tab_Home_container, homeFragment)
-                                                  .commit();
-                                      }
-                                      mDrawerLayout.closeDrawers();
-
-                                  }
-
-
-                              });
-
-
-                              break;
-
-                          case TYPE_PROFILE:
-
-                              v.setOnClickListener(new View.OnClickListener() {
-                                  @Override
-                                  public void onClick(View v) {
-
-
-                                      FragmentManager fragmentManager = activity.getSupportFragmentManager();
-                                      Fragment current = fragmentManager.findFragmentById(R.id.tab_Home_container);
-
-                                      if(!(current instanceof ProfileManagement) || gd.getLatestDisplayedUser()!=gd.getUserObject()) {
-
-                                          Fragment fragment = ProfileManagement.newInstance(true,gd.getUserObject());
-
-
-                                          if(activity instanceof Home)
-                                              ((Home) activity).setProfileManagement((ProfileManagement)fragment);
-
-
-                                          //clear backstack
-                                          int count = fragmentManager.getBackStackEntryCount();
-                                          for(int i = 0; i < count; ++i) {
-                                              fragmentManager.popBackStack();
-                                          }
-
-                                          fragmentManager.beginTransaction()
-                                                  .replace(R.id.tab_Home_container, fragment)
-                                                  .commit();
-
-                                      }
-                                      mDrawerLayout.closeDrawers();
-
-                                  }
-                              });
-
-                              break;
-
-                          case TYPE_MYJOBOFFERS: //Il nome nn centra richiama la search per studente
-
-                              v.setOnClickListener(new View.OnClickListener() {
-                                  @Override
-                                  public void onClick(View v) {
-
-
-                                      FragmentManager fragmentManager = activity.getSupportFragmentManager();
-                                      Fragment current = fragmentManager.findFragmentById(R.id.tab_Home_container);
-
-                                      if (!(current instanceof CompanyStudentSearchFragment)) {
-                                        //New Fragment
-                                          CompanyStudentSearchFragment fragment = CompanyStudentSearchFragment.newInstance();
-
-                                          //clear backstack
-                                          int count = fragmentManager.getBackStackEntryCount();
-                                          for(int i = 0; i < count; ++i) {
-                                              fragmentManager.popBackStack();
-                                          }
-
-                                          fragmentManager.beginTransaction()
-                                                  .replace(R.id.tab_Home_container, fragment)
-                                                  .commit();
-                                      }
-                                      mDrawerLayout.closeDrawers();
-
-                                  }
-
-
-                              });
-
-
-                              break;
-
-                          case TYPE_MY_COMPANIES : //NUOVA OFFERTA
-
-
-                              v.setOnClickListener(new View.OnClickListener() {
-                                  @Override
-                                  public void onClick(View v) {
-
-
-                                      FragmentManager fragmentManager = activity.getSupportFragmentManager();
-                                      Fragment current = fragmentManager.findFragmentById(R.id.tab_Home_container);
-
-                                      if ((current instanceof NewOffer)){
-                                          NewOffer o=(NewOffer)current;
-                                          if (o.isInEditMode())
-                                          {
-                                              Toast.makeText(activity,"Please save changes",Toast.LENGTH_SHORT).show();
-                                          }
-                                          else {
-
-                                              //clear backstack
-                                              int count = fragmentManager.getBackStackEntryCount();
-                                              for(int i = 0; i < count; ++i) {
-                                                  fragmentManager.popBackStack();
-                                              }
-                                              //New Fragment
-                                              NewOffer fragment = NewOffer.newInstance(true, true);
-
-                                              fragmentManager.beginTransaction()
-                                                      .replace(R.id.tab_Home_container, fragment)
-                                                      .commit();
-
-                                          }
-                                          mDrawerLayout.closeDrawers();
-
-                                  }  else
-                                      {
-                                          //clear backstack
-                                          int count = fragmentManager.getBackStackEntryCount();
-                                          for(int i = 0; i < count; ++i) {
-                                              fragmentManager.popBackStack();
-                                          }
-                                          //New Fragment
-                                          NewOffer fragment = NewOffer.newInstance(true, true);
-
-                                          fragmentManager.beginTransaction()
-                                                  .replace(R.id.tab_Home_container, fragment)
-                                                  .commit();
-                                      }
-                                      mDrawerLayout.closeDrawers();
-                                  }
-
-
-                              });
-
-
-                              break;
-
-
-                          case  TYPE_MAILBOX :
-
-                              v.setOnClickListener(new View.OnClickListener() {
-                                  @Override
-                                  public void onClick(View v) {
-
-
-                                      FragmentManager fragmentManager = activity.getSupportFragmentManager();
-                                      Fragment current = fragmentManager.findFragmentById(R.id.tab_Home_container);
-
-                                      if(!(current instanceof MailBoxDisplayFragment)) {
-
-                                             Fragment fragment = MailBoxDisplayFragment.newInstance();
-
-                                          //clear backstack
-                                          int count = fragmentManager.getBackStackEntryCount();
-                                          for(int i = 0; i < count; ++i) {
-                                              fragmentManager.popBackStack();
-                                          }
-
-
-                                          Fragment f1 = new TabHomeCompanyFragment();
-                                          fragmentManager.beginTransaction().replace(R.id.tab_Home_container, f1).commit();
-
-
-                                          fragmentManager.beginTransaction()
-                                                  .replace(R.id.tab_Home_container, fragment)
-                                                  .addToBackStack("Home")
-                                                  .commit();
-                                      }
-                                      mDrawerLayout.closeDrawers();
-
-                                  }
-                              });
-
-                                break;
-
-                          case TYPE_LOGOUT :
-
-                              v.setOnClickListener(new View.OnClickListener() {
-                                  @Override
-                                  public void onClick(View v) {
-
-                                      LogoutDialogFragment fragment = LogoutDialogFragment.newInstance();
-                                      fragment.show(activity.getFragmentManager(), "Logout");
-
-
-                                      mDrawerLayout.closeDrawers();
-                                  }
-                              });
-
-
-                              break;
-
-
-                          default: break;
-                      }
-
 
                     break;
-    /***************************************** END COMPANY ******************************************************************/
+                /* -------------------------------------------------------------------------------*/
+                /* --------------------- PROFESSOR MENU ------------------------------------------*/
+                /* -------------------------------------------------------------------------------*/
+                case USER_PROFESSOR:
 
-                case 3: //professor
+                    switch (viewType) {
 
-                    switch (viewType){
+                        case PROFESSOR_ACTION_HOME:
+                            v.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
 
-                        case 1:
 
-                            Log.println(Log.ASSERT, "MenuAdapter", "professor profile");
+                                    FragmentManager fragmentManager = activity.getSupportFragmentManager();
+                                    Fragment current = fragmentManager.findFragmentById(R.id.tab_Home_container);
+
+                                    if (!(current instanceof TabHomeProfessorFragment)) {
+
+                                        //clear backstack
+                                        int count = fragmentManager.getBackStackEntryCount();
+                                        for (int i = 0; i < count; ++i) {
+                                            fragmentManager.popBackStack();
+                                        }
+
+                                        //New Fragment
+                                        TabHomeProfessorFragment homeFragment = TabHomeProfessorFragment.newInstance();
+
+                                        fragmentManager.beginTransaction()
+                                                .replace(R.id.tab_Home_container, homeFragment)
+                                                .commit();
+
+                                    }
+                                    mDrawerLayout.closeDrawers();
+
+                                }
+                            });
+
                             break;
 
-                        case 2:
+                        case PROFESSOR_ACTION_COURSES:
 
-                            Log.println(Log.ASSERT, "MenuAdapter", "professor search");
+                            Log.println(Log.ASSERT, "MenuAdapter", "professor courses");
                             break;
 
-                        case 3:
 
-                            Log.println(Log.ASSERT, "MenuAdapter", "professor message");
-                            break;
+                        case PROFESSOR_ACTION_LOGOUT:
 
-                        case 4:
-
-                            Log.println(Log.ASSERT, "MenuAdapter", "professor logout");
+                            v.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    openLogoutDialog();
+                                }
+                            });
                             break;
 
                         default:
@@ -626,7 +606,7 @@ public class menuAdapter extends RecyclerView.Adapter<menuAdapter.ViewHolder> {
 
                     break;
 
-                default :
+                default:
                     break;
 
             }
@@ -678,15 +658,14 @@ public class menuAdapter extends RecyclerView.Adapter<menuAdapter.ViewHolder> {
 
             holder.Name.setText(u.getName());
             holder.email.setText(u.getMail());
+            /* ------------------------------------------------------------------------------ */
 
             if(user.getType().equalsIgnoreCase(User.TYPE_STUDENT))
-                flag = 1;
+                userFlag = USER_STUDENT;
             else if(user.getType().equalsIgnoreCase(User.TYPE_COMPANY))
-                flag = 2;
+                userFlag = USER_COMPANY;
             else if(user.getType().equalsIgnoreCase(User.TYPE_PROFESSOR))
-                flag = 3;
-
-
+                userFlag = USER_PROFESSOR;
         }
     }
 
@@ -701,5 +680,13 @@ public class menuAdapter extends RecyclerView.Adapter<menuAdapter.ViewHolder> {
         return position;
     }
 
+
+    public void openLogoutDialog(){
+
+        LogoutDialogFragment fragment = LogoutDialogFragment.newInstance();
+        fragment.show(activity.getFragmentManager(), "Logout");
+
+        mDrawerLayout.closeDrawers();
+    }
 
 }

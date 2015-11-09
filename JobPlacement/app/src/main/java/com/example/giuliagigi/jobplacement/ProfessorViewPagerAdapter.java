@@ -30,16 +30,6 @@ public class ProfessorViewPagerAdapter extends FragmentPagerAdapter {
             TabHome tab1 = TabHome.newInstance();
             return tab1;
         }
-        if (position == 1){
-
-            TabHome tab1 = TabHome.newInstance();
-            return tab1;
-        }
-        if (position == 2){
-
-            TabHome tab1 = TabHome.newInstance();
-            return tab1;
-        }
         else
             return null;
     }

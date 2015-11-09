@@ -138,7 +138,7 @@ public class Home extends ActionBarActivity
             Log.println(Log.ASSERT,"HOME", "creating tab home company");
 
             TITLES = getResources().getStringArray(R.array.Menu_items_Company);
-            ICONS = getResources().obtainTypedArray(R.array.CompanytMenuicons);
+            ICONS = getResources().obtainTypedArray(R.array.CompanyMenuicons);
 
             if (init == false) {
 
