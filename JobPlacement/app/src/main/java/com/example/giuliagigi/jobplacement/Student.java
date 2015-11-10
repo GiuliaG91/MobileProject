@@ -37,7 +37,7 @@ public class Student extends User {
     protected static final String NATION_FIELD = "nation";
     protected static final String LANGUAGE_FIELD = "languages";
     protected static final String CERTIFICATE_FIELD = "certificates";
-    protected static final String COURSES_FIELD = "certificates";
+    protected static final String COURSES_FIELD = "courses";
     protected static final String FAVOURITES_FIELD = "favourites";
     protected static final String DESCRIPTION_FIELD = "description";
     protected static final String ADDRESS_LOCATION_FIELD = "address_location";
@@ -101,6 +101,7 @@ public class Student extends User {
         isCached.put(LANGUAGE_FIELD,false);
         isCached.put(FAVOURITES_FIELD, false);
         isCached.put(CERTIFICATE_FIELD,false);
+        isCached.put(COURSES_FIELD,false);
         isCached.put(DESCRIPTION_FIELD, false);
         isCached.put(ADDRESS_LOCATION_FIELD,false);
         isCached.put(COMPANIES_FIELD, false);

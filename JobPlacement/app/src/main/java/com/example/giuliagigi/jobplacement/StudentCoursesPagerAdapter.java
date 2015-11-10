@@ -39,7 +39,7 @@ public class StudentCoursesPagerAdapter extends FragmentPagerAdapter{
 
         if(position == 0){
 
-            return LectureSearch.newInstance();
+            return LectureSearch.newInstance(student);
         }
         else if(position == 1){
 

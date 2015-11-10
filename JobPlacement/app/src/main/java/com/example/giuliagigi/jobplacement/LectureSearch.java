@@ -26,16 +26,19 @@ public class LectureSearch extends Fragment {
     private static final String TAG = "LECTURESEARCH";
 
 
-    Button display, addToMyCourses;
+    Button display;
     AutoCompleteTextView etCourse, etProfessor;
     FrameLayout lectureDisplayContainer;
 
     private LecturesFileReader lecturesFileReader;
     private ArrayList<Course> currentCourses;
+    private Student student;
 
-    public static LectureSearch newInstance(){
+    public static LectureSearch newInstance(Student student){
 
-        return new LectureSearch();
+        LectureSearch fragment = new LectureSearch();
+        fragment.student = student;
+        return fragment;
     }
 
     public LectureSearch(){}
@@ -64,7 +67,6 @@ public class LectureSearch extends Fragment {
         View root = inflater.inflate(R.layout.timetable_search, container, false);
 
         display = (Button)root.findViewById(R.id.displayButton);
-        addToMyCourses = (Button)root.findViewById(R.id.addToMyCoursesButton);
         etCourse = (AutoCompleteTextView)root.findViewById(R.id.editTextCourse);
         etProfessor = (AutoCompleteTextView)root.findViewById(R.id.editTextProfessor);
         lectureDisplayContainer = (FrameLayout)root.findViewById(R.id.lecture_display_container);
@@ -95,7 +97,6 @@ public class LectureSearch extends Fragment {
                 ft.replace(R.id.lecture_display_container, ldf);
                 ft.commit();
 
-                addToMyCourses.setEnabled(currentCourses.size()>0);
             }
         });
 
@@ -126,24 +127,6 @@ public class LectureSearch extends Fragment {
             public void onTextChanged(CharSequence s, int start, int before, int count) {
 
                 display.setEnabled(!etCourse.getText().toString().trim().isEmpty() || !etProfessor.getText().toString().trim().isEmpty());
-            }
-        });
-
-
-        addToMyCourses.setEnabled(false);
-        addToMyCourses.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                if(currentCourses.size() == 1){
-
-                    Log.println(Log.ASSERT,"LECTURESEARCH", "asked to add one course");
-
-                }
-                else {
-
-                    Log.println(Log.ASSERT,"LECTURESEARCH", "asked to add oneamong some courses");
-                }
             }
         });
 
