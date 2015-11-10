@@ -7,9 +7,9 @@ package com.example.giuliagigi.jobplacement;
 import android.util.JsonReader;
 import android.util.Log;
 
+import com.parse.FindCallback;
 import com.parse.ParseException;
-import com.parse.SaveCallback;
-import com.parse.SignUpCallback;
+import com.parse.ParseQuery;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -17,6 +17,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 public class LecturesFileReader {
 
@@ -194,6 +195,11 @@ public class LecturesFileReader {
         ArrayList<String> professorNames = new ArrayList<>();
 
         for(int i = 0; i < allCourses.size(); i++){
+            try {
+                allCourses.get(i).getProfessor().fetchIfNeeded();
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
             String name = allCourses.get(i).getProfessor().getName() + " " + allCourses.get(i).getProfessor().getSurname();
             if(!professorNames.contains(name)){
                 professorNames.add(name);
@@ -419,6 +425,21 @@ public class LecturesFileReader {
         reader.endObject();
 
         return p;
+    }
+
+
+    public void readFromDB(){
+        ParseQuery<Course> query=ParseQuery.getQuery("Course");
+        query.findInBackground(new FindCallback<Course>() {
+            @Override
+            public void done(List<Course> courseList, ParseException e) {
+
+                for (Course c : courseList)
+                    courses.put(c.getCode(),c);
+
+            }
+
+        });
     }
 
     public void readFromFile(){

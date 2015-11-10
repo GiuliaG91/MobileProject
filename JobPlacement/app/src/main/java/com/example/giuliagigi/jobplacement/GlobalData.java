@@ -143,6 +143,7 @@ public class GlobalData extends Application {
 
         // reading lectures json file in a secondary thread ---------------------------------------
         lecturesFileReader = new LecturesFileReader();
+        lecturesFileReader.readFromDB();
 //        lecturesFileReader.readFromFile(); // only when updating DB
 
 //        AsyncTask<Void, Boolean, Void> lecturesFileReadingTask = new AsyncTask<Void, Boolean, Void>() {
