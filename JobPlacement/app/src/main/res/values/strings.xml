@@ -211,6 +211,9 @@
     <string name="course_title">Course name:</string>
     <string name="professor_name_title">Professor:</string>
     <string name="course_code_title">Code:</string>
+    <string name="lecture_day_title">Day:</string>
+    <string name="lecture_room_title">Room:</string>
+    <string name="lecture_schedule_title">Schedule:</string>
 
     <!-- ________________ ROOMS SEARCH / DISPLAY _______________________________________________ -->
     <string name="roomSearch_InsertRoom">Insert room name:</string>
