@@ -71,18 +71,6 @@
                 android:textColor="#002E6B"
                 android:background="@drawable/button_background"/>
 
-            <Button
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="add to my courses"
-                android:id="@+id/addToMyCoursesButton"
-                android:textSize="@dimen/button_textSize"
-                android:layout_margin="4dp"
-                android:layout_gravity="center_horizontal"
-                android:layout_weight="0.11"
-                android:textColor="#002E6B"
-                android:background="@drawable/button_background"/>
-
             <FrameLayout
                 android:id="@+id/lecture_display_container"
                 android:layout_width="fill_parent"

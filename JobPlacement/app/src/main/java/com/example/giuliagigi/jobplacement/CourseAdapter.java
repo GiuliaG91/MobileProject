@@ -20,6 +20,7 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder
 
     public static final int MODE_PROFESSOR_VIEW = 0;
     public static final int MODE_STUDENT_VIEW = 1;
+    public static final int MODE_STUDENT_ADD = 2;
 
     FragmentActivity activity;
     ArrayList<Course> courses;
