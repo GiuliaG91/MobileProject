@@ -416,6 +416,13 @@
 
     </string-array>
 
+    <string-array name="Courses_Students_Tab">
+
+        <item>Search</item>
+        <item>My Courses</item>
+
+    </string-array>
+
     <string-array name="Home_Company_Tab">
 
         <item>News</item>
@@ -433,7 +440,7 @@
         <item>Home</item>
         <item>Profile</item>
         <item>MessageBox</item>
-        <item>Lectures</item>
+        <item>Didactics</item>
         <item>Map</item>
         <item>My Job Offers </item>
         <item>My Companies</item>

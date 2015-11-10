@@ -37,6 +37,7 @@ public class Student extends User {
     protected static final String NATION_FIELD = "nation";
     protected static final String LANGUAGE_FIELD = "languages";
     protected static final String CERTIFICATE_FIELD = "certificates";
+    protected static final String COURSES_FIELD = "certificates";
     protected static final String FAVOURITES_FIELD = "favourites";
     protected static final String DESCRIPTION_FIELD = "description";
     protected static final String ADDRESS_LOCATION_FIELD = "address_location";
@@ -61,6 +62,7 @@ public class Student extends User {
     protected ArrayList<Certificate> certificates;
     protected ArrayList<CompanyOffer> favourites;
     protected ArrayList<Company> companies;
+    protected ArrayList<Course> courses;
     protected byte[] tempBytes;
 
     public Student(){
@@ -83,6 +85,7 @@ public class Student extends User {
         languages = new ArrayList<Language>();
         favourites = new ArrayList<CompanyOffer>();
         certificates = new ArrayList<Certificate>();
+        courses = new ArrayList<Course>();
         companies=new ArrayList<>();
 
         isCached.put(NAME_FIELD,false);
@@ -309,6 +312,26 @@ public class Student extends User {
         return null;
     }
 
+    public ArrayList<Course> getCourses() {
+
+        if(isCached.get(COURSES_FIELD))
+            return this.courses;
+
+        ParseRelation<Course> tmp= getRelation(COURSES_FIELD);
+        tmp.getQuery().findInBackground(new FindCallback<Course>() {
+            @Override
+            public void done(List<Course> coursesList, ParseException e) {
+
+                if(coursesList!= null)
+                    for(Course c:coursesList)
+                        courses.add(c);
+            }
+        });
+
+        isCached.put(COURSES_FIELD, true);
+        return courses;
+    }
+
     /* END GETTER METHODS*/
 
     public void setName(String name){
@@ -400,6 +423,14 @@ public class Student extends User {
 
         this.certificates.remove(certificate);
         getRelation(CERTIFICATE_FIELD).remove(certificate);
+    }
+    public void addCourse(Course course){
+        courses.add(course);
+        getRelation(COURSES_FIELD).add(course);
+    }
+    public void removeCourse(Course course){
+        courses.remove(course);
+        getRelation(COURSES_FIELD).remove(course);
     }
     public void addFavourites(CompanyOffer companyOffer){
 

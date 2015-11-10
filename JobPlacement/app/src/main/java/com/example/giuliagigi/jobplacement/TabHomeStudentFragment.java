@@ -21,7 +21,7 @@ public class TabHomeStudentFragment extends Fragment {
     ViewPager pager;
     StudentViewPagerAdapter adapter;
     SlidingTabLayout tabs;
-    CharSequence Titles[] =null;
+    CharSequence Titles[] = null;
     int Numboftabs = 4;
     GlobalData globalData;
     private Integer currentPosition=0;

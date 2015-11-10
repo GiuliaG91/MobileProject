@@ -206,6 +206,9 @@
     <string name="title_activity_week_display">WeekDisplayActivity</string>
     <string name="lecture_dialog_title">Lecture details</string>
 
+    <!-- _________________ PROFESSOR ___________________________________________________________ -->
+    <string name="course_item_details_button">Show details</string>
+
     <!-- ________________ ROOMS SEARCH / DISPLAY _______________________________________________ -->
     <string name="roomSearch_InsertRoom">Insert room name:</string>
     <string name="roomSearch_hintRoom">room here</string>
@@ -413,6 +416,13 @@
 
     </string-array>
 
+    <string-array name="Courses_Students_Tab">
+
+        <item>Search</item>
+        <item>My Courses</item>
+
+    </string-array>
+
     <string-array name="Home_Company_Tab">
 
         <item>News</item>
@@ -429,11 +439,11 @@
 
         <item>Home</item>
         <item>Profile</item>
-        <item>Lectures</item>
+        <item>MessageBox</item>
+        <item>Didactics</item>
         <item>Map</item>
         <item>My Job Offers </item>
         <item>My Companies</item>
-        <item>MessageBox</item>
         <item>Logout</item>
 
     </string-array>
@@ -442,9 +452,9 @@
 
         <item>Home</item>
         <item>Profile</item>
+        <item>MessageBox</item>
         <item>Search</item>
         <item>NewOffer</item>
-        <item>MessageBox</item>
         <item>Logout</item>
 
     </string-array>
@@ -453,8 +463,8 @@
 
         <item>Home</item>
         <item>Profile</item>
-        <item>Search</item>
         <item>MessageBox</item>
+        <item>Courses</item>
         <item>Logout</item>
 
     </string-array>
