@@ -3,6 +3,9 @@ package com.example.giuliagigi.jobplacement;
 /**
  * Created by GiuliaGiGi on 25/10/15.
  */
+import android.os.AsyncTask;
+import android.util.Log;
+
 import com.parse.FindCallback;
 import com.parse.ParseClassName;
 import com.parse.ParseException;
@@ -77,7 +80,8 @@ public class Course extends ParseObject {
 
     public void setProfessor(Professor professor) {
         this.professor = professor;
-        put(PROFESSOR_FIELD,professor);
+        isCached.put(PROFESSOR_FIELD,true);
+        put(PROFESSOR_FIELD, professor);
     }
 
     public String getName() {
@@ -114,31 +118,54 @@ public class Course extends ParseObject {
 
     public int getLectureNumber(){
 
+        if(!isCached.get(LECTURES_FIELD)) cacheData();
         return lectures.size();
     }
 
     public Lecture getLecture(int i){
 
+        if(!isCached.get(LECTURES_FIELD)) cacheData();
         if(i<0|| i>=getLectureNumber()) return null;
-
         return lectures.get(i);
     }
 
-    public ArrayList<Lecture> getLectures(){
+    synchronized public ArrayList<Lecture> getLectures(){
 
         if(isCached.get(LECTURES_FIELD)) return lectures;
 
         ParseRelation<Lecture> tmp = getRelation(LECTURES_FIELD);
-        tmp.getQuery().findInBackground(new FindCallback<Lecture>() {
-            @Override
-            public void done(List<Lecture> lecturesList, ParseException e) {
 
-                if(lecturesList != null)
-                    lectures.addAll(lecturesList);
-            }
-        });
+        try {
+            lectures.addAll(tmp.getQuery().find());
+        }
+        catch (ParseException e) {
+            e.printStackTrace();
+        }
 
         isCached.put(LECTURES_FIELD,true);
         return lectures;
+    }
+
+
+    public void cacheData(){
+
+        if(isCached.containsValue(false)){
+
+            Log.println(Log.ASSERT, "COURSE", "caching");
+
+            AsyncTask<Void,Void,Void> cacheTask = new AsyncTask<Void, Void, Void>() {
+                @Override
+                protected Void doInBackground(Void... params) {
+
+                    getName();
+                    getCode();
+                    getLectures();
+                    getProfessor();
+
+                    return null;
+                }
+            };
+            cacheTask.execute();
+        }
     }
 }

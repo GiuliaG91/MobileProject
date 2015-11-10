@@ -1,18 +1,29 @@
 package com.example.giuliagigi.jobplacement;
 
 import android.app.Activity;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.TextView;
+
+import com.parse.ParseException;
+
+import java.util.ArrayList;
 
 
 public class CourseDetailFragment extends Fragment {
 
     private View root;
+    private TextView code,name,professor;
+    private ListView lecturesListView;
+    private LectureAdapter lectureAdapter;
+
     private Course course;
     private boolean isEdit;
 
@@ -24,6 +35,7 @@ public class CourseDetailFragment extends Fragment {
 
         CourseDetailFragment fragment = new CourseDetailFragment();
         fragment.course = course;
+        fragment.course.cacheData();
         fragment.isEdit = isEdit;
 
         return fragment;
@@ -53,8 +65,30 @@ public class CourseDetailFragment extends Fragment {
 
         root = inflater.inflate(R.layout.fragment_course_detail, container, false);
 
-        TextView tv = (TextView)root.findViewById(R.id.temp_textView);
-        tv.setText(tv.getText().toString() + " of " + course.getName() + " (" + isEdit + ")");
+        lecturesListView = (ListView)root.findViewById(R.id.course_lecture_listView);
+        code = (TextView)root.findViewById(R.id.course_code_textView);
+        name = (TextView)root.findViewById(R.id.course_name_textView);
+        professor = (TextView)root.findViewById(R.id.course_professor_textView);
+
+        if(lecturesListView != null) {
+
+            Log.println(Log.ASSERT,"COURSEDETAIL", "size = " + course.getLectures().size());
+            lectureAdapter = new LectureAdapter(course.getLectures(), isEdit);
+            lecturesListView.setAdapter(lectureAdapter);
+        }
+
+        if(code != null)    code.setText(course.getCode());
+        if(name != null)    name.setText(course.getName());
+
+        if(isEdit){
+
+            LinearLayout l = (LinearLayout)root;
+            l.removeView(professor);
+        }
+        else {
+
+            professor.setText(course.getProfessor().getName());
+        }
 
         return root;
     }

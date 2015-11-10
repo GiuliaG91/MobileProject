@@ -32,7 +32,6 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder
 
     public CourseAdapter(FragmentActivity activity, ArrayList<Course> courses, int mode) {
 
-        Log.println(Log.ASSERT,"COURSEADAPTER","course adapter constructor; size = " + courses.size());
         this.courses = courses;
         this.mode = mode;
         this.activity = activity;
@@ -47,9 +46,7 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
-        Log.println(Log.ASSERT,"COURSEADAPTER","onCreateViewHolder");
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.course_item_row, parent, false);
-        Log.println(Log.ASSERT,"COURSEADAPTER","inflate ok");
         return new ViewHolder(v, MODE_PROFESSOR_VIEW);
     }
 
@@ -57,7 +54,6 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
 
-        Log.println(Log.ASSERT, "COURSEADAPTER", "onBindViewHolder");
         holder.name.setText(courses.get(position).getName());
         holder.code.setText(courses.get(position).getCode());
 
@@ -73,6 +69,7 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder
                 boolean edit = false;
                 if (holder.mode == MODE_PROFESSOR_VIEW) edit = true;
 
+                Log.println(Log.ASSERT,"COURSEADAPTER", "invoking cache on course");
                 CourseDetailFragment cdf = CourseDetailFragment.newInstance(courses.get(position), edit);
                 FragmentTransaction ft = activity.getSupportFragmentManager().beginTransaction();
                 ft.replace(R.id.tab_Home_container, cdf).addToBackStack(null).commit();
@@ -98,8 +95,6 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder
         public ViewHolder(View itemView, int mode) {
 
             super(itemView);
-
-            Log.println(Log.ASSERT,"COURSEADAPTER","view Holder constructor");
 
             this.mode = mode;
             code = (TextView)itemView.findViewById(R.id.course_code_textView);
