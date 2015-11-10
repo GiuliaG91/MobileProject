@@ -28,7 +28,7 @@ public class LectureSearch extends Fragment {
 
     Button display;
     AutoCompleteTextView etCourse, etProfessor;
-    FrameLayout lectureDisplayContainer;
+    FrameLayout lectureDisplayContainer, courseDisplayContainer;
 
     private LecturesFileReader lecturesFileReader;
     private ArrayList<Course> currentCourses;
@@ -70,6 +70,7 @@ public class LectureSearch extends Fragment {
         etCourse = (AutoCompleteTextView)root.findViewById(R.id.editTextCourse);
         etProfessor = (AutoCompleteTextView)root.findViewById(R.id.editTextProfessor);
         lectureDisplayContainer = (FrameLayout)root.findViewById(R.id.lecture_display_container);
+        courseDisplayContainer = (FrameLayout)root.findViewById(R.id.course_display_container);
 
         ArrayAdapter<String> adapterCourses = new ArrayAdapter<String>(GlobalData.getContext(),R.layout.row_spinner, lecturesFileReader.getCourseNames());
         etCourse.setAdapter(adapterCourses);
@@ -83,20 +84,19 @@ public class LectureSearch extends Fragment {
             public void onClick(View v) {
 
                 String requestedCourse = etCourse.getText().toString();
-
                 String requestedProfessor = etProfessor.getText().toString();
 
-                Log.println(Log.ASSERT, TAG, "Recovering information from the model");
-                Log.println(Log.ASSERT, TAG, "Requested course: " + requestedCourse);
-                Log.println(Log.ASSERT, TAG, "Requested professor: " + requestedProfessor);
-
                 currentCourses = lecturesFileReader.getCourses(requestedCourse,requestedProfessor);
+                Log.println(Log.ASSERT, TAG, "size = " + currentCourses.size());
+
                 LectureDisplayFragment ldf = LectureDisplayFragment.newInstance(currentCourses);
+                StudentCoursesManagementFragment scmf = StudentCoursesManagementFragment.newInstance(currentCourses);
 
                 FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
-                ft.replace(R.id.lecture_display_container, ldf);
-                ft.commit();
+                ft.replace(R.id.lecture_display_container, ldf).commit();
 
+                FragmentTransaction ft2 = getActivity().getSupportFragmentManager().beginTransaction();
+                ft2.replace(R.id.course_display_container, scmf).commit();
             }
         });
 

@@ -4,7 +4,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="@dimen/course_item_row_height"
     android:background="@drawable/course_item_background"
     android:layout_marginRight="2dp"
     android:layout_marginLeft="2dp"
@@ -116,13 +116,13 @@
         android:textSize="@dimen/editText_textSize"
         android:layout_height="wrap_content" />
 
-    <!--<Button
-        android:id="@+id/course_details_button"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
+    <Button
+        android:text="add to my courses"
+        android:id="@+id/course_add_button"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
         android:layout_gravity="right"
-        android:layout_margin="5dp"
-        android:background="@drawable/ic_search"/>-->
+        android:layout_margin="5dp"/>
 
 
 
