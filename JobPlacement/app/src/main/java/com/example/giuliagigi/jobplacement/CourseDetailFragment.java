@@ -70,6 +70,13 @@ public class CourseDetailFragment extends Fragment {
         name = (TextView)root.findViewById(R.id.course_name_textView);
         professor = (TextView)root.findViewById(R.id.course_professor_textView);
 
+        LinearLayout layout = (LinearLayout)root;
+        if(isEdit){
+
+            layout.removeView(professor);
+            professor = null;
+        }
+
         if(lecturesListView != null) {
 
             Log.println(Log.ASSERT,"COURSEDETAIL", "size = " + course.getLectures().size());
@@ -77,18 +84,10 @@ public class CourseDetailFragment extends Fragment {
             lecturesListView.setAdapter(lectureAdapter);
         }
 
-        if(code != null)    code.setText(course.getCode());
-        if(name != null)    name.setText(course.getName());
+        if(code != null)        code.setText(course.getCode());
+        if(name != null)        name.setText(course.getName());
+        if(professor != null)   professor.setText(course.getProfessor().getName());
 
-        if(isEdit){
-
-            LinearLayout l = (LinearLayout)root;
-            l.removeView(professor);
-        }
-        else {
-
-            professor.setText(course.getProfessor().getName());
-        }
 
         return root;
     }

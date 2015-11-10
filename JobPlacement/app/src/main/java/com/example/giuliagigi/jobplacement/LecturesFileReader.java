@@ -71,22 +71,16 @@ public class LecturesFileReader {
 
     private boolean containsCourseByName(String name){
 
-        Log.println(Log.ASSERT, TAG, "containsCourseByName started");
-
         ArrayList<Course> retrievedCourses = new ArrayList<Course>(courses.values());
 
         for(int i = 0; i<retrievedCourses.size();i++)
             if(retrievedCourses.get(i).getName().equalsIgnoreCase(name)) return true;
-
-
-        Log.println(Log.ASSERT, TAG, "no course found");
 
         return false;
     }
 
     private ArrayList<Course> getCoursesByName(String name){
 
-        Log.println(Log.ASSERT, TAG, "getCoursesByName started: " + name);
 
         ArrayList<Course> allCourses = new ArrayList<Course>(courses.values());
         ArrayList<Course> retrievedCourses = new ArrayList<Course>();
@@ -94,14 +88,11 @@ public class LecturesFileReader {
         for(int i=0;i<allCourses.size();i++)
             if(allCourses.get(i).getName().equalsIgnoreCase(name)) retrievedCourses.add(allCourses.get(i));
 
-        Log.println(Log.ASSERT, TAG, "getCoursesByName finished");
         return retrievedCourses;
-
     }
 
-    private boolean containsCourseByProfessorName(String professorName){
+    private boolean containsCourseByProfessor(String professorName){
 
-        Log.println(Log.ASSERT, TAG, "containsCourseByProfessorName started");
 
         ArrayList<Course> retrievedCourses = new ArrayList<Course>(courses.values());
 
@@ -117,9 +108,7 @@ public class LecturesFileReader {
         return false;
     }
 
-    private ArrayList<Course> getCoursesByProfessorName(String professorName){
-
-        Log.println(Log.ASSERT, TAG, "getCoursesByProfessorName started");
+    private ArrayList<Course> getCoursesByProfessor(String professorName){
 
         ArrayList<Course> allCourses = new ArrayList<Course>(courses.values());
         ArrayList<Course> retrievedCourses = new ArrayList<Course>();
@@ -131,26 +120,23 @@ public class LecturesFileReader {
 
                 retrievedCourses.add(allCourses.get(i));
             }
-
         }
 
-        Log.println(Log.ASSERT, TAG, "getCoursesByName finished");
         return retrievedCourses;
-
     }
 
-    private ArrayList<Course> getCoursesByNameAndProfessor(String course, String professor){
+    public ArrayList<Course> getCourses(String course, String professor){
 
         ArrayList<Course> retrievedCourses = new ArrayList<Course>();
 
         if(!containsCourseByName(course)){
 
-            if(!containsCourseByProfessorName(professor)) return retrievedCourses;
-            else return getCoursesByProfessorName(professor);
+            if(!containsCourseByProfessor(professor)) return retrievedCourses;
+            else return getCoursesByProfessor(professor);
         }
         else {
 
-            if(!containsCourseByProfessorName(professor)) return getCoursesByName(course);
+            if(!containsCourseByProfessor(professor)) return getCoursesByName(course);
             else {
 
                 ArrayList<Course> coursesByName = getCoursesByName(course);
@@ -230,72 +216,73 @@ public class LecturesFileReader {
     /////// LECTURES DELIVERY METHODS ////////////////////////////////////////////////
     //////////////////////////////////////////////////////////////////////////////////
 
-    private ArrayList<Lecture> getDayLecturesByCourse(String course,int day){
+//    private ArrayList<Lecture> getDayLecturesByCourse(String course,int day){
+//
+//        Log.println(Log.ASSERT,TAG,"getDayLecturesByCourse started");
+//
+//        ArrayList<Lecture> lectures = new ArrayList<Lecture>();
+//
+//        if(!containsCourseByName(course)) return lectures;
+//
+//        ArrayList<Course> retrievedCourses = getCoursesByName(course);
+//
+//        Log.println(Log.ASSERT,TAG,"getDayLecturesByCourse searching.....");
+//        for(int i=0; i<retrievedCourses.size();i++)
+//            for(int j=0; j<retrievedCourses.get(i).getLectures().size();j++)
+//                if(retrievedCourses.get(i).getLecture(j).getDayInWeek() == day)
+//                    lectures.add(retrievedCourses.get(i).getLecture(j));
+//
+//
+//        Log.println(Log.ASSERT,TAG,"getDayLecturesByCourse complete");
+//
+//        return lectures;
+//    }
 
-        Log.println(Log.ASSERT,TAG,"getDayLecturesByCourse started");
+//    private ArrayList<Lecture> getDayLecturesByProfessor(String professor,int day){
+//
+//        ArrayList<Lecture> lectures = new ArrayList<Lecture>();
+//
+//        if(!containsCourseByProfessor(professor)) return lectures;
+//
+//        ArrayList<Course> retrievedCourses = getCoursesByProfessor(professor);
+//
+//        for(int i=0; i<retrievedCourses.size();i++)
+//            for(int j=0; j<retrievedCourses.get(i).getLectures().size();j++)
+//                if(retrievedCourses.get(i).getLecture(j).getDayInWeek() == day)
+//                    lectures.add(retrievedCourses.get(i).getLecture(j));
+//
+//        return lectures;
+//    }
 
-        ArrayList<Lecture> lectures = new ArrayList<Lecture>();
+//    public ArrayList<Lecture> getDayLectures(String course, String professor, int day){
+//
+//        Log.println(Log.ASSERT,TAG,"Get day lectures started");
+//
+//
+//        ArrayList<Lecture> lectures = new ArrayList<Lecture>();
+//
+//        if(course == null){
+//
+//            if(professor == null) return lectures;
+//            else return getDayLecturesByProfessor(professor,day);
+//        }
+//
+//        if(professor == null) return getDayLecturesByCourse(course,day);
+//
+//        ArrayList<Course> retrievedCourses = getCourses(course, professor);
+//
+//        Log.println(Log.ASSERT,TAG,"Searching day lectures........");
+//
+//        for(int i=0;i<retrievedCourses.size();i++)
+//            for(int j=0;j<retrievedCourses.get(i).getLectures().size();j++)
+//                if(retrievedCourses.get(i).getLecture(j).getDayInWeek()==day)
+//                    lectures.add(retrievedCourses.get(i).getLecture(j));
+//
+//        Log.println(Log.ASSERT,TAG,"Get day lectures complete");
+//
+//        return lectures;
+//    }
 
-        if(!containsCourseByName(course)) return lectures;
-
-        ArrayList<Course> retrievedCourses = getCoursesByName(course);
-
-        Log.println(Log.ASSERT,TAG,"getDayLecturesByCourse searching.....");
-        for(int i=0; i<retrievedCourses.size();i++)
-            for(int j=0; j<retrievedCourses.get(i).getLectures().size();j++)
-                if(retrievedCourses.get(i).getLecture(j).getDayInWeek() == day)
-                    lectures.add(retrievedCourses.get(i).getLecture(j));
-
-
-        Log.println(Log.ASSERT,TAG,"getDayLecturesByCourse complete");
-
-        return lectures;
-    }
-
-    private ArrayList<Lecture> getDayLecturesByProfessor(String professor,int day){
-
-        ArrayList<Lecture> lectures = new ArrayList<Lecture>();
-
-        if(!containsCourseByProfessorName(professor)) return lectures;
-
-        ArrayList<Course> retrievedCourses = getCoursesByProfessorName(professor);
-
-        for(int i=0; i<retrievedCourses.size();i++)
-            for(int j=0; j<retrievedCourses.get(i).getLectures().size();j++)
-                if(retrievedCourses.get(i).getLecture(j).getDayInWeek() == day)
-                    lectures.add(retrievedCourses.get(i).getLecture(j));
-
-        return lectures;
-    }
-
-    public ArrayList<Lecture> getDayLectures(String course, String professor, int day){
-
-        Log.println(Log.ASSERT,TAG,"Get day lectures started");
-
-
-        ArrayList<Lecture> lectures = new ArrayList<Lecture>();
-
-        if(course == null){
-
-            if(professor == null) return lectures;
-            else return getDayLecturesByProfessor(professor,day);
-        }
-
-        if(professor == null) return getDayLecturesByCourse(course,day);
-
-        ArrayList<Course> retrievedCourses = getCoursesByNameAndProfessor(course,professor);
-
-        Log.println(Log.ASSERT,TAG,"Searching day lectures........");
-
-        for(int i=0;i<retrievedCourses.size();i++)
-            for(int j=0;j<retrievedCourses.get(i).getLectures().size();j++)
-                if(retrievedCourses.get(i).getLecture(j).getDayInWeek()==day)
-                    lectures.add(retrievedCourses.get(i).getLecture(j));
-
-        Log.println(Log.ASSERT,TAG,"Get day lectures complete");
-
-        return lectures;
-    }
 
     //////////////////////////////////////////////////////////////////////////////////
     /////// LECTURES DELIVERY METHODS - END //////////////////////////////////////////

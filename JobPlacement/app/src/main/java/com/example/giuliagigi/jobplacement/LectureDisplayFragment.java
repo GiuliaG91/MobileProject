@@ -29,30 +29,21 @@ public class LectureDisplayFragment extends Fragment {
     private static final String BUNDLE_KEY_COURSE = "lectureDisplay_bundle_course";
     private static final String BUNDLE_KEY_PROFESSOR = "lectureDisplay_bundle_professor";
     private static int DAY_WIDTH;
-
     private static final String TAG = "Week Display Activity - LOG: ";
+
     private RelativeLayout[] lecturesRelativeLayouts = new RelativeLayout[5];
-    private LecturesFileReader lecturesFileReader;
-    private String professor, course;
+
+    private ArrayList<Course> courses;
     private boolean isViewPopulated = false;
 
-    public static LectureDisplayFragment newInstance(String course, String professor){
+    public static LectureDisplayFragment newInstance(ArrayList<Course> courses){
 
         LectureDisplayFragment fragment = new LectureDisplayFragment();
-        fragment.setCourse(course);
-        fragment.setProfessor(professor);
+        fragment.courses = courses;
         return fragment;
     }
 
     public LectureDisplayFragment(){}
-
-    public void setProfessor(String professor) {
-        this.professor = professor;
-    }
-
-    public void setCourse(String course) {
-        this.course = course;
-    }
 
     //////////////////////////////////////////////////////////////////////////////////////
     // --------------------- STANDARD METHODS ------------------------------------------//
@@ -62,22 +53,13 @@ public class LectureDisplayFragment extends Fragment {
     // ------------- ON CREATE -----------------------------------------------------------
     @Override
     public void onAttach(Activity activity) {
-
         super.onAttach(activity);
-        GlobalData app = (GlobalData)activity.getApplicationContext();
-        lecturesFileReader = app.getLecturesFileReader();
     }
 
     // --------- END ON CREATE -----------------------------------------------------------
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-
-        if(savedInstanceState != null){
-
-            course = savedInstanceState.getString(BUNDLE_KEY_COURSE);
-            professor = savedInstanceState.getString(BUNDLE_KEY_PROFESSOR);
-        }
 
         View root = inflater.inflate(R.layout.calendar_week_view, container, false);
 
@@ -114,8 +96,6 @@ public class LectureDisplayFragment extends Fragment {
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
 
-        outState.putString(BUNDLE_KEY_COURSE,course);
-        outState.putString(BUNDLE_KEY_PROFESSOR,professor);
     }
 
 
@@ -301,26 +281,20 @@ public class LectureDisplayFragment extends Fragment {
 
         for(int i=0;i<5;i++){
 
-            ArrayList<Lecture> dayLectures = lecturesFileReader.getDayLectures(course,professor,i+1);
+
+            ArrayList<Lecture> dayLectures = new ArrayList<Lecture>();
+
+            for(Course c: courses)
+                for (Lecture l: c.getLectures())
+                    if(l.getDayInWeek() == i+1)
+                        dayLectures.add(l);
+
             ArrayList<ArrayList<Lecture>> clusters = getClusters(dayLectures);
 
-//            Log.println(Log.ASSERT, "LECTUREDISPLAY", "day" + i + ": ");
-//            int n = 1;
-            for (ArrayList<Lecture> c : clusters){
-
-//                Log.println(Log.ASSERT, "LECTUREDISPLAY", "cluster" + n++ + ": ");
-
-//                int n2 = 1;
-//                for (Lecture lec: c){
-//
-//                    Log.println(Log.ASSERT, "LECTUREDISPLAY", "lec" + n2++ + ": " + lec.getSchedule().toString());
-//                }
-//
-//                Log.println(Log.ASSERT, "LECTUREDISPLAY", "maxWidth = " + getClusterMaxOverlap(c));
-
+            for (ArrayList<Lecture> c : clusters)
                 for(RelativeLayout r: getLectureViews(c))
                     lecturesRelativeLayouts[i].addView(r);
-            }
+
         }
     }
 

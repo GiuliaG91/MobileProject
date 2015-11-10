@@ -16,6 +16,8 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.FrameLayout;
 
+import java.util.ArrayList;
+
 /**
  * Created by GiuliaGiGi on 25/10/15.
  */
@@ -24,10 +26,12 @@ public class LectureSearch extends Fragment {
     private static final String TAG = "LECTURESEARCH";
 
 
-    Button display;
+    Button display, addToMyCourses;
     AutoCompleteTextView etCourse, etProfessor;
     FrameLayout lectureDisplayContainer;
+
     private LecturesFileReader lecturesFileReader;
+    private ArrayList<Course> currentCourses;
 
     public static LectureSearch newInstance(){
 
@@ -49,6 +53,7 @@ public class LectureSearch extends Fragment {
         Log.println(Log.ASSERT,"LECTURESEARCH", "onAttach");
         GlobalData app = (GlobalData)activity.getApplicationContext();
         lecturesFileReader = app.getLecturesFileReader();
+        currentCourses = new ArrayList<Course>();
     }
 
     @Override
@@ -59,6 +64,7 @@ public class LectureSearch extends Fragment {
         View root = inflater.inflate(R.layout.timetable_search, container, false);
 
         display = (Button)root.findViewById(R.id.displayButton);
+        addToMyCourses = (Button)root.findViewById(R.id.addToMyCoursesButton);
         etCourse = (AutoCompleteTextView)root.findViewById(R.id.editTextCourse);
         etProfessor = (AutoCompleteTextView)root.findViewById(R.id.editTextProfessor);
         lectureDisplayContainer = (FrameLayout)root.findViewById(R.id.lecture_display_container);
@@ -82,10 +88,14 @@ public class LectureSearch extends Fragment {
                 Log.println(Log.ASSERT, TAG, "Requested course: " + requestedCourse);
                 Log.println(Log.ASSERT, TAG, "Requested professor: " + requestedProfessor);
 
-                LectureDisplayFragment ldf = LectureDisplayFragment.newInstance(requestedCourse,requestedProfessor);
+                currentCourses = lecturesFileReader.getCourses(requestedCourse,requestedProfessor);
+                LectureDisplayFragment ldf = LectureDisplayFragment.newInstance(currentCourses);
+
                 FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
                 ft.replace(R.id.lecture_display_container, ldf);
                 ft.commit();
+
+                addToMyCourses.setEnabled(currentCourses.size()>0);
             }
         });
 
@@ -119,6 +129,23 @@ public class LectureSearch extends Fragment {
             }
         });
 
+
+        addToMyCourses.setEnabled(false);
+        addToMyCourses.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if(currentCourses.size() == 1){
+
+                    Log.println(Log.ASSERT,"LECTURESEARCH", "asked to add one course");
+
+                }
+                else {
+
+                    Log.println(Log.ASSERT,"LECTURESEARCH", "asked to add oneamong some courses");
+                }
+            }
+        });
 
         return root;
     }
