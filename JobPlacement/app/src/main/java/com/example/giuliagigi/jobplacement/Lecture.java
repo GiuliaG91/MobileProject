@@ -5,7 +5,6 @@ import android.util.Log;
 import com.parse.ParseClassName;
 import com.parse.ParseObject;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
@@ -79,6 +78,7 @@ public class Lecture extends ParseObject implements Comparable{
 
     public String getTimeTable(){
 
+        if(schedule == null) getSchedule();
         return schedule.toString();
     }
 

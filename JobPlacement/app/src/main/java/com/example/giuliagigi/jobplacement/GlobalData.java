@@ -141,24 +141,22 @@ public class GlobalData extends Application {
 
         Parse.initialize(this, "EICiUy2eT7CZPXw8N6I1p6lE4844svLI73JTc2QY", "8I9HZ7AgMHgeIxQKk8k653jNBvBCz57nRuSH73pA");
 
-        // reading lectures json file in a secondary thread ---------------------------------------
+        // reading lectures DB in a secondary thread ---------------------------------------
         lecturesFileReader = new LecturesFileReader();
-        lecturesFileReader.readFromDB();
-//        lecturesFileReader.readFromFile(); // only when updating DB
 
-//        AsyncTask<Void, Boolean, Void> lecturesFileReadingTask = new AsyncTask<Void, Boolean, Void>() {
-//            @Override
-//            protected Void doInBackground(Void... params) {
-//                lecturesFileReader.readFromFile();
-//                return null;
-//            }
-//
-//            @Override
-//            protected void onPostExecute(Void aVoid) {
-//                super.onPostExecute(aVoid);
-//            }
-//        };
-//        lecturesFileReadingTask.execute();
+       AsyncTask<Void, Boolean, Void> lecturesDBeReadingTask = new AsyncTask<Void, Boolean, Void>() {
+            @Override
+            protected Void doInBackground(Void... params) {
+                lecturesFileReader.readFromDB();
+                return null;
+            }
+
+            @Override
+            protected void onPostExecute(Void aVoid) {
+                super.onPostExecute(aVoid);
+            }
+        };
+        lecturesDBeReadingTask.execute();
         // ----------------------------------------------------------------------------------------
 
 
