@@ -12,19 +12,59 @@
         android:orientation="vertical">
 
         <EditText
-            android:id="@+id/lecture_day_textView"
+            android:id="@+id/lecture_day_editText"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content" />
 
         <EditText
-            android:id="@+id/lecture_room_textView"
+            android:id="@+id/lecture_room_editText"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content" />
 
-        <EditText
-            android:id="@+id/lecture_schedule_textView"
+        <LinearLayout
+            android:orientation="horizontal"
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content">
+
+            <EditText
+                android:id="@+id/lecture_startHour_editText"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:text=":"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content" />
+
+
+            <EditText
+                android:id="@+id/lecture_startMinute_editText"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:text="-"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content" />
+
+            <EditText
+                android:id="@+id/lecture_endHour_editText"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:text=":"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content" />
+
+            <EditText
+                android:id="@+id/lecture_endMinute_editText"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content" />
+
+            </LinearLayout>
+
+
 
         <Button
             android:id="@+id/lecture_modify_button"

@@ -6,15 +6,12 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListAdapter;
-import android.widget.TextView;
 
 import java.util.ArrayList;
-import java.util.List;
 
 
 /**
@@ -25,7 +22,8 @@ public class LectureAdapter implements ListAdapter {
     private ArrayList<Lecture> lectures;
     private boolean isEdit;
 
-    private EditText day, room, schedule;
+    private ArrayList<EditText> edits;
+    private EditText day, room, startHour, startMinute, endHour, endMinute;
     private Button modify, delete;
 
 
@@ -35,6 +33,7 @@ public class LectureAdapter implements ListAdapter {
         Log.println(Log.ASSERT,"LECTUREADAPTER", "size = " + lectures.size());
         this.lectures = lectures;
         this.isEdit = isEdit;
+        edits = new ArrayList<>();
     }
 
 
@@ -55,11 +54,21 @@ public class LectureAdapter implements ListAdapter {
 
         Lecture l = lectures.get(position);
 
-        day = (EditText)convertView.findViewById(R.id.lecture_day_textView);
-        room = (EditText)convertView.findViewById(R.id.lecture_room_textView);
-        schedule = (EditText)convertView.findViewById(R.id.lecture_schedule_textView);
+        day = (EditText)convertView.findViewById(R.id.lecture_day_editText);
+        room = (EditText)convertView.findViewById(R.id.lecture_room_editText);
+        startHour = (EditText)convertView.findViewById(R.id.lecture_startHour_editText);
+        startMinute = (EditText)convertView.findViewById(R.id.lecture_startMinute_editText);
+        endHour = (EditText)convertView.findViewById(R.id.lecture_endHour_editText);
+        endMinute = (EditText)convertView.findViewById(R.id.lecture_endMinute_editText);
         modify = (Button)convertView.findViewById(R.id.lecture_modify_button);
         delete = (Button)convertView.findViewById(R.id.lecture_delete_button);
+
+        edits.add(day);
+        edits.add(room);
+        edits.add(startHour);
+        edits.add(startMinute);
+        edits.add(endHour);
+        edits.add(endMinute);
 
         if(day != null){
             day.setText("" + l.getDayInWeek());
@@ -72,9 +81,16 @@ public class LectureAdapter implements ListAdapter {
         }
 
         Schedule s = l.getSchedule();
-        if(schedule != null){
-            schedule.setText("" + s.getStartHour() + ":" + s.getStartMinute() + " - " + s.getEndHour() + ":" + s.getEndMinute());
-            schedule.setEnabled(false);
+        if(startHour != null && startMinute != null && endHour != null && endMinute != null){
+            startHour.setText("" + s.getStartHour());
+            startMinute.setText("" + s.getStartMinute());
+            endHour.setText("" + s.getEndHour());
+            endMinute.setText("" + s.getEndMinute());
+
+            startHour.setEnabled(false);
+            startMinute.setEnabled(false);
+            endHour.setEnabled(false);
+            endMinute.setEnabled(false);
         }
 
         if(!isEdit){
@@ -89,7 +105,8 @@ public class LectureAdapter implements ListAdapter {
                 @Override
                 public void onClick(View v) {
 
-                    Log.println(Log.ASSERT, "LECTUREADAPTER", "asked to modify lecture");
+                    for(EditText et:edits)
+                        et.setEnabled(true);
                 }
             });
 
