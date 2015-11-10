@@ -11,17 +11,17 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <TextView
+        <EditText
             android:id="@+id/lecture_day_textView"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content" />
 
-        <TextView
+        <EditText
             android:id="@+id/lecture_room_textView"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content" />
 
-        <TextView
+        <EditText
             android:id="@+id/lecture_schedule_textView"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content" />

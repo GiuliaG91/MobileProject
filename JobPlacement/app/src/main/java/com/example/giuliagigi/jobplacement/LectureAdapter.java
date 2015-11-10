@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListAdapter;
 import android.widget.TextView;
@@ -24,7 +25,7 @@ public class LectureAdapter implements ListAdapter {
     private ArrayList<Lecture> lectures;
     private boolean isEdit;
 
-    private TextView day, room, schedule;
+    private EditText day, room, schedule;
     private Button modify, delete;
 
 
@@ -54,21 +55,27 @@ public class LectureAdapter implements ListAdapter {
 
         Lecture l = lectures.get(position);
 
-        day = (TextView)convertView.findViewById(R.id.lecture_day_textView);
-        room = (TextView)convertView.findViewById(R.id.lecture_room_textView);
-        schedule = (TextView)convertView.findViewById(R.id.lecture_schedule_textView);
+        day = (EditText)convertView.findViewById(R.id.lecture_day_textView);
+        room = (EditText)convertView.findViewById(R.id.lecture_room_textView);
+        schedule = (EditText)convertView.findViewById(R.id.lecture_schedule_textView);
         modify = (Button)convertView.findViewById(R.id.lecture_modify_button);
         delete = (Button)convertView.findViewById(R.id.lecture_delete_button);
 
-        if(day != null)
+        if(day != null){
             day.setText("" + l.getDayInWeek());
+            day.setEnabled(false);
+        }
 
-        if(room != null)
+        if(room != null){
             room.setText(l.getRoomName());
+            room.setEnabled(false);
+        }
 
         Schedule s = l.getSchedule();
-        if(schedule != null)
+        if(schedule != null){
             schedule.setText("" + s.getStartHour() + ":" + s.getStartMinute() + " - " + s.getEndHour() + ":" + s.getEndMinute());
+            schedule.setEnabled(false);
+        }
 
         if(!isEdit){
 
