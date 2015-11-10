@@ -75,7 +75,7 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder
 
                 CourseDetailFragment cdf = CourseDetailFragment.newInstance(courses.get(position), edit);
                 FragmentTransaction ft = activity.getSupportFragmentManager().beginTransaction();
-                ft.replace(R.id.tab_Home_container, cdf).commit();
+                ft.replace(R.id.tab_Home_container, cdf).addToBackStack(null).commit();
             }
         });
     }

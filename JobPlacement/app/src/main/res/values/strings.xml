@@ -206,6 +206,9 @@
     <string name="title_activity_week_display">WeekDisplayActivity</string>
     <string name="lecture_dialog_title">Lecture details</string>
 
+    <!-- _________________ PROFESSOR ___________________________________________________________ -->
+    <string name="course_item_details_button">Show details</string>
+
     <!-- ________________ ROOMS SEARCH / DISPLAY _______________________________________________ -->
     <string name="roomSearch_InsertRoom">Insert room name:</string>
     <string name="roomSearch_hintRoom">room here</string>

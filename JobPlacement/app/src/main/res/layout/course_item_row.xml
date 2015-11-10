@@ -4,30 +4,40 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:layout_margin="5dp">
 
     <TextView
         android:id="@+id/course_code_textView"
         android:layout_width="fill_parent"
+        android:textColor="@color/ColorPrimaryDark"
         android:text="code"
+        android:textSize="@dimen/editText_textSize"
         android:layout_height="wrap_content" />
 
     <TextView
         android:id="@+id/course_name_textView"
         android:layout_width="fill_parent"
+        android:textColor="@color/ColorPrimaryDark"
         android:text="name"
+        android:textSize="@dimen/editText_textSize"
         android:layout_height="wrap_content" />
 
     <TextView
         android:id="@+id/course_professor_textView"
         android:layout_width="fill_parent"
+        android:textColor="@color/ColorPrimaryDark"
         android:text="professor"
+        android:textSize="@dimen/editText_textSize"
         android:layout_height="wrap_content" />
 
     <Button
         android:id="@+id/course_details_button"
-        android:text="details"
+        android:text="@string/course_item_details_button"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:textColor="@color/ColorPrimaryDark"
+        android:layout_margin="3dp"
+        android:background="@drawable/button_background"/>
 
 </LinearLayout>
