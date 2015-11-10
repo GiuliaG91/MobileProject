@@ -208,6 +208,9 @@
 
     <!-- _________________ PROFESSOR ___________________________________________________________ -->
     <string name="course_item_details_button">Show details</string>
+    <string name="course_title">Course name:</string>
+    <string name="professor_name_title">Professor:</string>
+    <string name="course_code_title">Code:</string>
 
     <!-- ________________ ROOMS SEARCH / DISPLAY _______________________________________________ -->
     <string name="roomSearch_InsertRoom">Insert room name:</string>

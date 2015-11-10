@@ -19,6 +19,7 @@
     <dimen name = "button_textSize">20dp</dimen>
     <dimen name = "button_textSize_small">15dp</dimen>
     <dimen name = "editText_textSize">15dp</dimen>
+    <dimen name = "editText_textSize_small">12dp</dimen>
 
     <dimen name = "DAY_textSize">35sp</dimen>
     <dimen name = "LECTUREITEM_Title_textSize">10dp</dimen>

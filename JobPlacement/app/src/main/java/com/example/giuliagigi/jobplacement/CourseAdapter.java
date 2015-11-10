@@ -107,6 +107,7 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder
 
                 LinearLayout l = (LinearLayout)itemView;
                 l.removeView(professor);
+                l.removeView(itemView.findViewById(R.id.course_professor_title));
                 professor = null;
             }
         }
