@@ -71,7 +71,7 @@ public class LectureAdapter implements ListAdapter {
         edits.add(endMinute);
 
         if(day != null){
-            day.setText("" + l.getDayInWeek());
+            day.setText(GlobalData.getContext().getResources().getStringArray(R.array.days_complete)[l.getDayInWeek()-1]);
             day.setEnabled(false);
         }
 

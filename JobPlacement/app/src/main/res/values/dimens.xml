@@ -13,7 +13,7 @@
     <dimen name="line_height">1dp</dimen>
     <dimen name="days_header_height">19dp</dimen>
 
-    <dimen name = "course_item_row_height">180dp</dimen>
+    <dimen name = "course_item_row_height">200dp</dimen>
 
     <dimen name = "textView_textSize">20dp</dimen>
     <dimen name = "button_textSize">20dp</dimen>

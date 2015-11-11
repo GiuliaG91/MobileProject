@@ -3,7 +3,6 @@ package com.example.giuliagigi.jobplacement;
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,10 +10,6 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
-
-import com.parse.ParseException;
-
-import java.util.ArrayList;
 
 
 public class CourseDetailFragment extends Fragment {

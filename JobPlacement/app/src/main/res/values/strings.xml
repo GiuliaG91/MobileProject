@@ -214,6 +214,7 @@
     <string name="lecture_day_title">Day:</string>
     <string name="lecture_room_title">Room:</string>
     <string name="lecture_schedule_title">Schedule:</string>
+    <string name="button_add_my_courses">Add to my courses</string>
 
     <!-- ________________ ROOMS SEARCH / DISPLAY _______________________________________________ -->
     <string name="roomSearch_InsertRoom">Insert room name:</string>
@@ -381,6 +382,15 @@
         <item>October</item>
         <item>November</item>
         <item>December</item>
+    </string-array>
+
+    <!-- Days -->
+    <string-array name="days_complete">
+        <item>Monday</item>
+        <item>Tuesday</item>
+        <item>Wednesday</item>
+        <item>Thursday</item>
+        <item>Friday</item>
     </string-array>
 
     <string name="minutes_ago">minutes ago</string>

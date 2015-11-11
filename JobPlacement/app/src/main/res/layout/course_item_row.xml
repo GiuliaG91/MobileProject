@@ -117,12 +117,15 @@
         android:layout_height="wrap_content" />
 
     <Button
-        android:text="add to my courses"
+        android:text="@string/button_add_my_courses"
         android:id="@+id/course_add_button"
-        android:layout_width="fill_parent"
+        android:background="@drawable/button_background"
+        android:textColor="@color/ColorPrimaryDark"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:textSize="@dimen/editText_textSize"
         android:layout_gravity="right"
-        android:layout_margin="5dp"/>
+        android:layout_margin="2dp"/>
 
 
 
