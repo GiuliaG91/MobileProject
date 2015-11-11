@@ -49,7 +49,6 @@ public class LectureAdapter implements ListAdapter {
 
         if(convertView == null){
 
-            Log.println(Log.ASSERT,"LECTUREADAPTER", "inflating");
             LayoutInflater inflater = (LayoutInflater)parent.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = inflater.inflate(R.layout.lecture_item_row, parent, false);
         }

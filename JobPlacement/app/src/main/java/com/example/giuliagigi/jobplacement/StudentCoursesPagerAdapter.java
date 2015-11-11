@@ -45,6 +45,10 @@ public class StudentCoursesPagerAdapter extends FragmentPagerAdapter{
 
             return StudentCoursesManagementFragment.newInstance(student);
         }
+        else if(position == 2){
+
+            return LectureDisplayFragment.newInstance(student.getCourses());
+        }
 
         return null;
     }
