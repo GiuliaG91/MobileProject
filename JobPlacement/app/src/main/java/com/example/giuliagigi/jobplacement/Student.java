@@ -426,12 +426,16 @@ public class Student extends User {
         getRelation(CERTIFICATE_FIELD).remove(certificate);
     }
     public void addCourse(Course course){
+
         courses.add(course);
-        getRelation(COURSES_FIELD).add(course);
+        ParseRelation<Course> r = getRelation(COURSES_FIELD);
+        r.add(course);
     }
     public void removeCourse(Course course){
+
         courses.remove(course);
-        getRelation(COURSES_FIELD).remove(course);
+        ParseRelation<Course> r = getRelation(COURSES_FIELD);
+        r.remove(course);
     }
     public void addFavourites(CompanyOffer companyOffer){
 

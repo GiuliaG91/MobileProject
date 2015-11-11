@@ -11,6 +11,9 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.parse.ParseException;
+import com.parse.SaveCallback;
+
 import java.util.ArrayList;
 
 /**
@@ -24,6 +27,7 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder
 
     FragmentActivity activity;
     ArrayList<Course> courses;
+    User user;
     int mode = MODE_PROFESSOR_VIEW;
 
 
@@ -31,11 +35,12 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder
     /* ---------------------- CONSTRUCTORS GETTERS SETTERS ---------------------------------------*/
     /* -------------------------------------------------------------------------------------------*/
 
-    public CourseAdapter(FragmentActivity activity, ArrayList<Course> courses, int mode) {
+    public CourseAdapter(FragmentActivity activity, ArrayList<Course> courses, User user, int mode) {
 
         Log.println(Log.ASSERT,"COURSEADAPTER", "size = " + courses.size());
         this.courses = courses;
         this.mode = mode;
+        this.user = user;
         this.activity = activity;
     }
 
@@ -82,6 +87,45 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder
             });
         }
 
+        if(holder.addToMyCourses != null){
+
+            holder.addToMyCourses.setOnClickListener(new View.OnClickListener() {
+
+                @Override
+                public void onClick(View v) {
+
+                    if(user.getType().equals(User.TYPE_STUDENT)){
+
+                        Student s = (Student)user;
+
+                        if(courses != null){
+
+                            Log.println(Log.ASSERT,"COURSEADAPTER", "saving course " + courses.get(position).getObjectId() + " for "  + s.getObjectId());
+                            s.addCourse(courses.get(position));
+                            s.saveInBackground(new SaveCallback() {
+                                @Override
+                                public void done(ParseException e) {
+
+                                    if(e == null)
+                                        Log.println(Log.ASSERT,"COURSEADAPTER", "saved successfully");
+                                    else
+                                        Log.println(Log.ASSERT,"COURSEADAPTER", "not saved: " + e.getMessage());
+                                }
+                            });
+                            holder.addToMyCourses.setEnabled(false);
+                        }
+                        else {
+                            Log.println(Log.ASSERT,"COURSEADAPTER", "ERROR: trying to add a null courses");
+                        }
+                    }
+                    else {
+
+                        Log.println(Log.ASSERT,"COURSEADAPTER", "ERROR: trying to add a course to a non-student");
+                    }
+                }
+            });
+        }
+
     }
 
     @Override
@@ -118,6 +162,9 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder
                 l.removeView(professor);
                 l.removeView(itemView.findViewById(R.id.course_professor_title));
                 professor = null;
+
+                l.removeView(addToMyCourses);
+                addToMyCourses = null;
             }
             else if(mode == MODE_STUDENT_ADD){
 

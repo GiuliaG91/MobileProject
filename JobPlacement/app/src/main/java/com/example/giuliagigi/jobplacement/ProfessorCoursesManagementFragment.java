@@ -60,7 +60,7 @@ public class ProfessorCoursesManagementFragment extends Fragment {
         coursesView = (RecyclerView)root.findViewById(R.id.professor_courses_recyclerView);
         coursesView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
-        courseAdapter = new CourseAdapter(getActivity(),professor.getCourses(),CourseAdapter.MODE_PROFESSOR_VIEW);
+        courseAdapter = new CourseAdapter(getActivity(),professor.getCourses(), professor, CourseAdapter.MODE_PROFESSOR_VIEW);
         coursesView.setAdapter(courseAdapter);
 
         return root;

@@ -90,7 +90,7 @@ public class LectureSearch extends Fragment {
                 Log.println(Log.ASSERT, TAG, "size = " + currentCourses.size());
 
                 LectureDisplayFragment ldf = LectureDisplayFragment.newInstance(currentCourses);
-                StudentCoursesManagementFragment scmf = StudentCoursesManagementFragment.newInstance(currentCourses);
+                StudentCoursesManagementFragment scmf = StudentCoursesManagementFragment.newInstance(student,currentCourses);
 
                 FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
                 ft.replace(R.id.lecture_display_container, ldf).commit();

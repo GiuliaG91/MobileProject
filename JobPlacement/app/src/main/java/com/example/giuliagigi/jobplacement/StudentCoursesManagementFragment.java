@@ -36,10 +36,11 @@ public class StudentCoursesManagementFragment extends Fragment {
         return fragment;
     }
 
-    public static StudentCoursesManagementFragment newInstance(ArrayList<Course> courses) {
+
+    public static StudentCoursesManagementFragment newInstance(Student student, ArrayList<Course> courses) {
 
         StudentCoursesManagementFragment fragment = new StudentCoursesManagementFragment();
-        fragment.student = null;
+        fragment.student = student;
         fragment.courses = courses;
 
         return fragment;
@@ -74,12 +75,12 @@ public class StudentCoursesManagementFragment extends Fragment {
         coursesView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
         if(student != null)
-            courseAdapter = new CourseAdapter(getActivity(),student.getCourses(),CourseAdapter.MODE_STUDENT_VIEW);
+            courseAdapter = new CourseAdapter(getActivity(),student.getCourses(), student, CourseAdapter.MODE_STUDENT_VIEW);
 
         if(courses != null){
 
             Log.println(Log.ASSERT,"COURSEMANAG", "adapter for add course");
-            courseAdapter = new CourseAdapter(getActivity(),courses,CourseAdapter.MODE_STUDENT_ADD);
+            courseAdapter = new CourseAdapter(getActivity(),courses, student, CourseAdapter.MODE_STUDENT_ADD);
 
             // necessary when recycler view is nested inside a scrollview
             float height = courses.size()*getActivity().getApplicationContext().getResources().getDimension(R.dimen.course_item_row_height);
