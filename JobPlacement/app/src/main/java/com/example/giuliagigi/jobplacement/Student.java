@@ -506,6 +506,7 @@ public class Student extends User {
         getDescription();
         getLanguages();
         getCertificates();
+        getCourses();
         getFavourites();
         getAddressLocation();
         getCompanies();

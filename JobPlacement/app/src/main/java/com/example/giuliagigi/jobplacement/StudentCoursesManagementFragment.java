@@ -78,7 +78,6 @@ public class StudentCoursesManagementFragment extends Fragment {
 
         if(courses != null){
 
-            Log.println(Log.ASSERT,"COURSEMANAG", "adapter for add course");
             courseAdapter = new CourseAdapter(getActivity(),courses, student, CourseAdapter.MODE_STUDENT_ADD);
 
             // necessary when recycler view is nested inside a scrollview

@@ -107,6 +107,7 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder
 
                         if (courses != null) {
 
+<<<<<<< HEAD
                             Log.println(Log.ASSERT, "COURSEADAPTER", "saving course " + courses.get(position).getObjectId() + " for " + s.getObjectId());
                             s.addCourse(courses.get(position));
                             s.saveInBackground(new SaveCallback() {
@@ -122,6 +123,14 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder
                             holder.buttonAddPublish.setEnabled(false);
                         } else {
                             Log.println(Log.ASSERT, "COURSEADAPTER", "ERROR: trying to add a null courses");
+=======
+                            s.addCourse(courses.get(position));
+                            s.saveEventually();
+                            holder.addToMyCourses.setEnabled(false);
+                        }
+                        else {
+                            Log.println(Log.ASSERT,"COURSEADAPTER", "ERROR: trying to add a null courses");
+>>>>>>> origin/newMaster2
                         }
                     }
                     else if(user.getType().equals(User.TYPE_PROFESSOR)){
@@ -195,7 +204,6 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder
             }
             else if(mode == MODE_STUDENT_ADD){
 
-                Log.println(Log.ASSERT,"COURSEADAPTER", "removing details button");
                 l.removeView(details);
                 details = null;
             }
