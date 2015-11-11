@@ -97,7 +97,7 @@ public class TabHomeAdapter extends RecyclerView.Adapter<TabHomeAdapter.ViewHold
 
                     query = new ParseQuery("News");
                     query.whereEqualTo(News.TYPE_FIELD, News.TYPE_NEW_NOTICE);
-                    query.whereEqualTo(News.PROFESSOR_FIELD, (Professor)globalData.getUserObject());
+                    //query.whereEqualTo(News.COURSE_FIELD, (Professor)globalData.getUserObject());   mettere tipo where contained in
                 }
 
                 return query;
