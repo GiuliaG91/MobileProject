@@ -87,7 +87,6 @@ public class LectureSearch extends Fragment {
                 String requestedProfessor = etProfessor.getText().toString();
 
                 currentCourses = lecturesFileReader.getCourses(requestedCourse,requestedProfessor);
-                Log.println(Log.ASSERT, TAG, "size = " + currentCourses.size());
 
                 LectureDisplayFragment ldf = LectureDisplayFragment.newInstance(currentCourses);
                 StudentCoursesManagementFragment scmf = StudentCoursesManagementFragment.newInstance(student,currentCourses);

@@ -100,18 +100,8 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder
 
                         if(courses != null){
 
-                            Log.println(Log.ASSERT,"COURSEADAPTER", "saving course " + courses.get(position).getObjectId() + " for "  + s.getObjectId());
                             s.addCourse(courses.get(position));
-                            s.saveInBackground(new SaveCallback() {
-                                @Override
-                                public void done(ParseException e) {
-
-                                    if(e == null)
-                                        Log.println(Log.ASSERT,"COURSEADAPTER", "saved successfully");
-                                    else
-                                        Log.println(Log.ASSERT,"COURSEADAPTER", "not saved: " + e.getMessage());
-                                }
-                            });
+                            s.saveEventually();
                             holder.addToMyCourses.setEnabled(false);
                         }
                         else {
@@ -168,7 +158,6 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder
             }
             else if(mode == MODE_STUDENT_ADD){
 
-                Log.println(Log.ASSERT,"COURSEADAPTER", "removing details button");
                 l.removeView(details);
                 details = null;
             }
