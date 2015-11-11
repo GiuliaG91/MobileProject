@@ -21,6 +21,7 @@ public class LectureAdapter implements ListAdapter {
 
     private ArrayList<Lecture> lectures;
     private boolean isEdit;
+    private boolean isEditMode;
 
     private ArrayList<EditText> edits;
     private EditText day, room, startHour, startMinute, endHour, endMinute;
@@ -33,6 +34,7 @@ public class LectureAdapter implements ListAdapter {
         Log.println(Log.ASSERT,"LECTUREADAPTER", "size = " + lectures.size());
         this.lectures = lectures;
         this.isEdit = isEdit;
+        this.isEditMode = false;
         edits = new ArrayList<>();
     }
 
@@ -104,9 +106,18 @@ public class LectureAdapter implements ListAdapter {
             modify.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    isEditMode = !isEditMode;
+                    if(!isEditMode) {
+                        modify.setBackgroundResource(R.drawable.ic_pencil);
+                        Log.println(Log.ASSERT, "LECTUREADAPTER", "isEditMode: " + isEditMode);
+                    }
+                    else {
+                        modify.setBackgroundResource(R.drawable.ic_save);
+                        Log.println(Log.ASSERT, "LECTUREADAPTER", "isEditMode: " + isEditMode);
+                    }
 
                     for(EditText et:edits)
-                        et.setEnabled(true);
+                        et.setEnabled(isEditMode);
                 }
             });
 
