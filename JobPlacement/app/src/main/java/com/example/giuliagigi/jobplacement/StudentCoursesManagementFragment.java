@@ -1,7 +1,6 @@
 package com.example.giuliagigi.jobplacement;
 
 import android.app.Activity;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -83,7 +82,7 @@ public class StudentCoursesManagementFragment extends Fragment {
             courseAdapter = new CourseAdapter(getActivity(),courses, student, CourseAdapter.MODE_STUDENT_ADD);
 
             // necessary when recycler view is nested inside a scrollview
-            float height = courses.size()*getActivity().getApplicationContext().getResources().getDimension(R.dimen.course_item_row_height);
+            float height = courses.size()*getActivity().getApplicationContext().getResources().getDimension(R.dimen.course_item_row_height) + (courses.size())*getActivity().getApplicationContext().getResources().getDimension(R.dimen.course_item_row_margin);
             coursesView.getLayoutParams().height = (int)height;
         }
 
