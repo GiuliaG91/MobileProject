@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -30,6 +31,7 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder
     ArrayList<Course> courses;
     User user;
     int mode = MODE_PROFESSOR_VIEW;
+    String  noticeMessage = " ";
 
 
     /* -------------------------------------------------------------------------------------------*/
@@ -130,22 +132,30 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder
                     else if(user.getType().equals(User.TYPE_PROFESSOR)){
 
                         Professor p = (Professor) user;
-                        
-                        final Dialog messageDialog = new Dialog(activity);
+                        //final String noticeMessage;
 
-                        /*View dialogItem = setFields(lecture, 1);
-                        lectureDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-                        lectureDialog.getWindow().setLayout(WindowManager.LayoutParams.WRAP_CONTENT, WindowManager.LayoutParams.WRAP_CONTENT);
-                        lectureDialog.setContentView(dialogItem);
-                        Button closingButton = (Button) dialogItem.findViewById(R.id.lecture_item_ok_button);
-                        closingButton.setOnClickListener(new View.OnClickListener() {
-                            @Override
+                        final Dialog noticeDialog = new Dialog(activity);
+                        noticeDialog.setContentView(R.layout.professor_notice_dialog);
+
+                        Button confirmButton = (Button) noticeDialog.findViewById(R.id.notice_dialog_confirm_button);
+                        confirmButton.setOnClickListener(new View.OnClickListener() {
                             public void onClick(View v) {
-                                lectureDialog.dismiss();
-                            }
-                        });*/
 
-                        messageDialog.show();
+                                EditText edit = (EditText)noticeDialog.findViewById(R.id.notice_dialog_message);
+                                String text = edit.getText().toString();
+
+                                noticeDialog.dismiss();
+                                noticeMessage = text;
+
+                            }
+                        });
+
+
+                        noticeDialog.show();
+
+                        News courseNotice = new News();
+                        Log.println(Log.ASSERT, "COURSEADAPTER", "ERROR: trying to add/publish a course to a non-allowed user");
+                        courseNotice.createNews(7, courses.get(position), noticeMessage);
 
                     }
                     else {

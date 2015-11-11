@@ -46,6 +46,7 @@
     <string name="save">Save</string>
     <string name="location">Location</string>
     <string name="floor">Floor</string>
+    <string name="confirm">Confirm</string>
 
     <string name="ground_floor">Ground floor</string>
 
@@ -216,6 +217,9 @@
     <string name="lecture_schedule_title">Schedule:</string>
     <string name="button_add_my_courses">Add to my courses</string>
     <string name="button_publish_notice">Publish notice</string>
+    <string name="notice_insert_message">Insert message text:</string>
+    <string name="notice_message_hint">Message</string>
+
 
     <!-- ________________ ROOMS SEARCH / DISPLAY _______________________________________________ -->
     <string name="roomSearch_InsertRoom">Insert room name:</string>
