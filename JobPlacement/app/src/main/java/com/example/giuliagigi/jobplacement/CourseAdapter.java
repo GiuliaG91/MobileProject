@@ -1,5 +1,6 @@
 package com.example.giuliagigi.jobplacement;
 
+import android.app.Dialog;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.RecyclerView;
@@ -87,40 +88,66 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder
             });
         }
 
-        if(holder.addToMyCourses != null){
+        if(holder.buttonAddPublish != null){
 
-            holder.addToMyCourses.setOnClickListener(new View.OnClickListener() {
+            if(user.getType().equals(User.TYPE_STUDENT)){
+                holder.buttonAddPublish.setText(GlobalData.getContext().getResources().getString(R.string.button_add_my_courses));
+            } else if(user.getType().equals(User.TYPE_PROFESSOR)){
+                holder.buttonAddPublish.setText(GlobalData.getContext().getResources().getString(R.string.button_publish_notice));
+            }
+
+            holder.buttonAddPublish.setOnClickListener(new View.OnClickListener() {
 
                 @Override
                 public void onClick(View v) {
 
-                    if(user.getType().equals(User.TYPE_STUDENT)){
+                    if (user.getType().equals(User.TYPE_STUDENT)) {
 
-                        Student s = (Student)user;
+                        Student s = (Student) user;
 
-                        if(courses != null){
+                        if (courses != null) {
 
-                            Log.println(Log.ASSERT,"COURSEADAPTER", "saving course " + courses.get(position).getObjectId() + " for "  + s.getObjectId());
+                            Log.println(Log.ASSERT, "COURSEADAPTER", "saving course " + courses.get(position).getObjectId() + " for " + s.getObjectId());
                             s.addCourse(courses.get(position));
                             s.saveInBackground(new SaveCallback() {
                                 @Override
                                 public void done(ParseException e) {
 
-                                    if(e == null)
-                                        Log.println(Log.ASSERT,"COURSEADAPTER", "saved successfully");
+                                    if (e == null)
+                                        Log.println(Log.ASSERT, "COURSEADAPTER", "saved successfully");
                                     else
-                                        Log.println(Log.ASSERT,"COURSEADAPTER", "not saved: " + e.getMessage());
+                                        Log.println(Log.ASSERT, "COURSEADAPTER", "not saved: " + e.getMessage());
                                 }
                             });
-                            holder.addToMyCourses.setEnabled(false);
+                            holder.buttonAddPublish.setEnabled(false);
+                        } else {
+                            Log.println(Log.ASSERT, "COURSEADAPTER", "ERROR: trying to add a null courses");
                         }
-                        else {
-                            Log.println(Log.ASSERT,"COURSEADAPTER", "ERROR: trying to add a null courses");
-                        }
+                    }
+                    else if(user.getType().equals(User.TYPE_PROFESSOR)){
+
+                        Professor p = (Professor) user;
+                        
+                        final Dialog messageDialog = new Dialog(activity);
+
+                        /*View dialogItem = setFields(lecture, 1);
+                        lectureDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                        lectureDialog.getWindow().setLayout(WindowManager.LayoutParams.WRAP_CONTENT, WindowManager.LayoutParams.WRAP_CONTENT);
+                        lectureDialog.setContentView(dialogItem);
+                        Button closingButton = (Button) dialogItem.findViewById(R.id.lecture_item_ok_button);
+                        closingButton.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                lectureDialog.dismiss();
+                            }
+                        });*/
+
+                        messageDialog.show();
+
                     }
                     else {
 
-                        Log.println(Log.ASSERT,"COURSEADAPTER", "ERROR: trying to add a course to a non-student");
+                        Log.println(Log.ASSERT, "COURSEADAPTER", "ERROR: trying to add/publish a course to a non-allowed user");
                     }
                 }
             });
@@ -140,7 +167,7 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder
     public static class ViewHolder extends RecyclerView.ViewHolder{
 
         TextView name, professor, code;
-        Button details, addToMyCourses;
+        Button details, buttonAddPublish;
         int mode;
 
         public ViewHolder(View itemView, int mode) {
@@ -152,7 +179,7 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder
             name = (TextView)itemView.findViewById(R.id.course_name_textView);
             professor = (TextView)itemView.findViewById(R.id.course_professor_textView);
             details = (Button)itemView.findViewById(R.id.course_details_button);
-            addToMyCourses = (Button)itemView.findViewById(R.id.course_add_button);
+            buttonAddPublish = (Button)itemView.findViewById(R.id.course_add_button);
 
             LinearLayout l = (LinearLayout)itemView;
 
@@ -163,8 +190,8 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder
                 l.removeView(itemView.findViewById(R.id.course_professor_title));
                 professor = null;
 
-                l.removeView(addToMyCourses);
-                addToMyCourses = null;
+                //l.removeView(buttonAddPublish);
+                //buttonAddPublish = null;
             }
             else if(mode == MODE_STUDENT_ADD){
 
@@ -174,8 +201,8 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder
             }
             else if(mode == MODE_STUDENT_VIEW){
 
-                l.removeView(addToMyCourses);
-                addToMyCourses = null;
+                l.removeView(buttonAddPublish);
+                buttonAddPublish = null;
             }
         }
     }

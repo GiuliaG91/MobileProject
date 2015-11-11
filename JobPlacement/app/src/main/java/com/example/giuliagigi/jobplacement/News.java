@@ -18,9 +18,9 @@ public class News extends ParseObject {
     public static final String DATE_FIELD = "date";
     public static final String STUDENT_FIELD = "student";
     public static final String COMPANY_FIELD = "company";
-    public static final String PROFESSOR_FIELD = "professor";
     public static final String COMPANY_OFFER_FIELD = "company_offer";
     public static final String OFFER_STATUS_FIELD = "offer_status";
+    public static final String COURSE_FIELD = "course";
 
     public static final int TYPE_NEW_OFFER = 0;
     public static final int TYPE_OFFER_APPLICATION = 1;
@@ -66,6 +66,10 @@ public class News extends ParseObject {
         return (Company)get(News.COMPANY_FIELD);
     }
 
+    public Course getCourse() {
+        return (Course)get(News.COURSE_FIELD);
+    }
+
     public CompanyOffer getCompanyOffer(){
         return (CompanyOffer)get(News.COMPANY_OFFER_FIELD);
     }
@@ -93,6 +97,10 @@ public class News extends ParseObject {
         this.put(News.STUDENT_FIELD, student);
     }
 
+    public void setCourse(Course course){
+        this.put(News.COURSE_FIELD, course);
+    }
+
     public void setCompany(Company company){
         this.put(News.COMPANY_FIELD, company);
     }
@@ -105,7 +113,7 @@ public class News extends ParseObject {
         this.put(News.OFFER_STATUS_FIELD, offerStatus);
     }
 
-    public void createNews(int type, CompanyOffer co, Student student, OfferStatus os, GlobalData globalData){
+    public void createNews(int type, CompanyOffer offer, Student student, OfferStatus offerStatus, GlobalData globalData){
 
         this.setType(type);
         this.setDate(Calendar.getInstance());
@@ -115,8 +123,8 @@ public class News extends ParseObject {
         switch (type){
 
             case TYPE_NEW_OFFER:  // New job offer published
-                     this.setCompanyOffer(co);
-                     message = globalData.getUserObject().getName() + " " + globalData.getResources().getString(R.string.new_job_offer_message) + " \"" + co.getOfferObject() + "\"";
+                     this.setCompanyOffer(offer);
+                     message = globalData.getUserObject().getName() + " " + globalData.getResources().getString(R.string.new_job_offer_message) + " \"" + offer.getOfferObject() + "\"";
                      this.setMessage(message);
 
                      this.saveInBackground();
@@ -124,40 +132,40 @@ public class News extends ParseObject {
                      break;
 
             case TYPE_OFFER_APPLICATION:  // Student applied for a own Job Offer
-                     this.setCompanyOffer(co);
-                     this.setStudent((Student)globalData.getUserObject());
-                     message = globalData.getUserObject().getName() + " " + ((Student) globalData.getUserObject()).getSurname() + " " + globalData.getResources().getString(R.string.new_application_message) + " \"" + co.getOfferObject() + "\"";
+                     this.setCompanyOffer(offer);
+                     this.setStudent((Student) globalData.getUserObject());
+                     message = globalData.getUserObject().getName() + " " + ((Student) globalData.getUserObject()).getSurname() + " " + globalData.getResources().getString(R.string.new_application_message) + " \"" + offer.getOfferObject() + "\"";
                      this.setMessage(message);
 
-                     this.setCompany(co.getCompany());
+                     this.setCompany(offer.getCompany());
 
                      this.saveInBackground();
 
                      break;
 
             case TYPE_APPLICATION_STATE:  // Student's application state changed
-                     this.setCompanyOffer(co);
+                     this.setCompanyOffer(offer);
                      this.setStudent(student);
-                     this.setOfferStatus(os);
+                     this.setOfferStatus(offerStatus);
 
-                                String status=os.getType();
-                                String eng=OfferStatus.getEnglishType(os.getType());
-                switch (OfferStatus.getEnglishType(os.getType())){
+                                String status=offerStatus.getType();
+                                String eng=OfferStatus.getEnglishType(offerStatus.getType());
+                switch (OfferStatus.getEnglishType(offerStatus.getType())){
 
                          case OfferStatus.TYPE_ACCEPTED:
-                                                        message = globalData.getResources().getString(R.string.the_company) + " " + globalData.getUserObject().getName() + " " + globalData.getResources().getString(R.string.application_accepted_message) + " \"" + co.getOfferObject() + "\"";
+                                                        message = globalData.getResources().getString(R.string.the_company) + " " + globalData.getUserObject().getName() + " " + globalData.getResources().getString(R.string.application_accepted_message) + " \"" + offer.getOfferObject() + "\"";
                                                         break;
 
                          case OfferStatus.TYPE_CONSIDERING:
-                                                             message = globalData.getResources().getString(R.string.the_company) + " " + globalData.getUserObject().getName() + " " + globalData.getResources().getString(R.string.application_considering_message) + " \"" + co.getOfferObject() + "\"";
+                                                             message = globalData.getResources().getString(R.string.the_company) + " " + globalData.getUserObject().getName() + " " + globalData.getResources().getString(R.string.application_considering_message) + " \"" + offer.getOfferObject() + "\"";
                                                              break;
 
                          case OfferStatus.TYPE_REFUSED:
-                                                        message = globalData.getResources().getString(R.string.the_company) + " " + globalData.getUserObject().getName() + " " + globalData.getResources().getString(R.string.application_refused_message) + " \"" + co.getOfferObject() + "\"";
+                                                        message = globalData.getResources().getString(R.string.the_company) + " " + globalData.getUserObject().getName() + " " + globalData.getResources().getString(R.string.application_refused_message) + " \"" + offer.getOfferObject() + "\"";
                                                         break;
 
                          case OfferStatus.TYPE_START:
-                                                        message = globalData.getResources().getString(R.string.the_company) + " " + globalData.getUserObject().getName() + " " + globalData.getResources().getString(R.string.application_processing_message) + " \"" + co.getOfferObject() + "\"";
+                                                        message = globalData.getResources().getString(R.string.the_company) + " " + globalData.getUserObject().getName() + " " + globalData.getResources().getString(R.string.application_processing_message) + " \"" + offer.getOfferObject() + "\"";
                                                         break;
 
                          default:
@@ -188,9 +196,17 @@ public class News extends ParseObject {
 
             case TYPE_OFFER_DELETED: // Deleted Job Offer
 
+
             default:
         }
 
+    }
+
+    public void createNews(int type, Course course, String message){
+        this.setCourse(course);
+        this.setType(type);
+        this.setMessage(message);
+        this.saveEventually();
     }
 
 }

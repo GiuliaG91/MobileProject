@@ -30,10 +30,11 @@ import javax.microedition.khronos.opengles.GL10;
 
 public class RoomMapFragment extends Fragment implements GLSurfaceView.Renderer, View.OnTouchListener, ScaleGestureDetector.OnScaleGestureListener, GestureDetector.OnGestureListener {
 
-    private static final float MOVE_SCALE_FACTOR = 0.05f;
+    private static final float MOVE_SCALE_FACTOR = 0.025f;
     private static final float SCALE_SCALE_FACTOR = 0.01f;
-    private static final int MAX_SCALE = 80;
-    private static final int MIN_SCALE = 40;
+    private static final int MAX_SCALE = 60;
+    private static final int MIN_SCALE = 5;
+    private static final int MAP_START_SCALE = 20;
 
 
     private Room room;
@@ -142,7 +143,7 @@ public class RoomMapFragment extends Fragment implements GLSurfaceView.Renderer,
         /* -------- creating objects ------------------------- */
         mapPlane = Primitives.getPlane(1, 1);
         mapPlane.setTexture("mapTexture");
-        roomMarker = Primitives.getSphere(1);
+        roomMarker = Primitives.getSphere(2);
         roomMarker.setTexture("markerTexture");
 
         roomMarker.setCenter(new SimpleVector(mapPlane.getCenter().x,mapPlane.getCenter().y,mapPlane.getCenter().z));
@@ -152,7 +153,7 @@ public class RoomMapFragment extends Fragment implements GLSurfaceView.Renderer,
         mapPlane.addChild(roomMarker);
 
         mapPlane.translate(2.5f, 0, 10);
-        mapPlane.scale(10);
+        mapPlane.setScale(MAP_START_SCALE);
         roomMarker.scale(0.0033f);
 
         world.setAmbientLight(255,255,255);

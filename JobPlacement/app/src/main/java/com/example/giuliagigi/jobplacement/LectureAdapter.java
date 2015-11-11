@@ -21,11 +21,7 @@ public class LectureAdapter implements ListAdapter {
 
     private ArrayList<Lecture> lectures;
     private boolean isEdit;
-    private boolean isEditMode;
-
-    private ArrayList<EditText> edits;
-    private EditText day, room, startHour, startMinute, endHour, endMinute;
-    private Button modify, delete;
+    private ArrayList<Boolean> isEditMode;
 
 
 
@@ -34,8 +30,7 @@ public class LectureAdapter implements ListAdapter {
         Log.println(Log.ASSERT,"LECTUREADAPTER", "size = " + lectures.size());
         this.lectures = lectures;
         this.isEdit = isEdit;
-        this.isEditMode = false;
-        edits = new ArrayList<>();
+        isEditMode = new ArrayList<>();
     }
 
 
@@ -45,7 +40,7 @@ public class LectureAdapter implements ListAdapter {
     /* -------------------------------------------------------------------------------------------*/
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
 
         if(convertView == null){
 
@@ -55,15 +50,17 @@ public class LectureAdapter implements ListAdapter {
         }
 
         Lecture l = lectures.get(position);
+        isEditMode.add(position, false);
+        final ArrayList<EditText> edits = new ArrayList<>();
 
-        day = (EditText)convertView.findViewById(R.id.lecture_day_editText);
-        room = (EditText)convertView.findViewById(R.id.lecture_room_editText);
-        startHour = (EditText)convertView.findViewById(R.id.lecture_startHour_editText);
-        startMinute = (EditText)convertView.findViewById(R.id.lecture_startMinute_editText);
-        endHour = (EditText)convertView.findViewById(R.id.lecture_endHour_editText);
-        endMinute = (EditText)convertView.findViewById(R.id.lecture_endMinute_editText);
-        modify = (Button)convertView.findViewById(R.id.lecture_modify_button);
-        delete = (Button)convertView.findViewById(R.id.lecture_delete_button);
+        EditText day = (EditText)convertView.findViewById(R.id.lecture_day_editText);
+        EditText room = (EditText)convertView.findViewById(R.id.lecture_room_editText);
+        EditText startHour = (EditText)convertView.findViewById(R.id.lecture_startHour_editText);
+        EditText startMinute = (EditText)convertView.findViewById(R.id.lecture_startMinute_editText);
+        EditText endHour = (EditText)convertView.findViewById(R.id.lecture_endHour_editText);
+        EditText endMinute = (EditText)convertView.findViewById(R.id.lecture_endMinute_editText);
+        final Button modify = (Button)convertView.findViewById(R.id.lecture_modify_button);
+        final Button delete = (Button)convertView.findViewById(R.id.lecture_delete_button);
 
         edits.add(day);
         edits.add(room);
@@ -106,8 +103,9 @@ public class LectureAdapter implements ListAdapter {
             modify.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    isEditMode = !isEditMode;
-                    if(!isEditMode) {
+                    Boolean temp = !isEditMode.get(position);
+                    isEditMode.add(position, temp);
+                    if(!temp) {
                         modify.setBackgroundResource(R.drawable.ic_pencil);
                         Log.println(Log.ASSERT, "LECTUREADAPTER", "isEditMode: " + isEditMode);
                     }
@@ -117,7 +115,7 @@ public class LectureAdapter implements ListAdapter {
                     }
 
                     for(EditText et:edits)
-                        et.setEnabled(isEditMode);
+                        et.setEnabled(temp);
                 }
             });
 

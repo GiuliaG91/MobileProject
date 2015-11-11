@@ -215,6 +215,7 @@
     <string name="lecture_room_title">Room:</string>
     <string name="lecture_schedule_title">Schedule:</string>
     <string name="button_add_my_courses">Add to my courses</string>
+    <string name="button_publish_notice">Publish notice</string>
 
     <!-- ________________ ROOMS SEARCH / DISPLAY _______________________________________________ -->
     <string name="roomSearch_InsertRoom">Insert room name:</string>
