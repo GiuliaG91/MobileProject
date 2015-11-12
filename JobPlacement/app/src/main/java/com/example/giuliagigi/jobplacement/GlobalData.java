@@ -64,13 +64,9 @@ public class GlobalData extends Application {
     /***********************************/
     
     /*******TIMETABLE**********/
-    public static final String BUNDLE_KEY_COURSE_NAME = "TIMETABLE_APPLICATION_CourseName";
-    public static final String BUNDLE_KEY_PROFESSOR_NAME = "TIMETABLE_APPLICATION_ProfessorName";
-    public static final String BUNDLE_KEY_CONTAINS_COURSE_NAME = "TIMETABLE_APPLICATION_isCourseRequested";
-    public static final String BUNDLE_KEY_CONTAINS_PROFESSOR_NAME = "TIMETABLE_APPLICATION_isProfessorRequested";
-    public static final String BUNDLE_KEY_LECTURE_OBJECT = "TIMETABLE_APPLICATION_LectureObject";
     private LecturesFileReader lecturesFileReader;
     private RoomsFileReader roomsFileReader;
+    volatile private boolean isLectureReadComplete;
     private static AssetManager assetManager;
     
     
@@ -143,11 +139,14 @@ public class GlobalData extends Application {
 
         // reading lectures DB in a secondary thread ---------------------------------------
         lecturesFileReader = new LecturesFileReader();
-
+        isLectureReadComplete = false;
        AsyncTask<Void, Boolean, Void> lecturesDBeReadingTask = new AsyncTask<Void, Boolean, Void>() {
             @Override
             protected Void doInBackground(Void... params) {
                 lecturesFileReader.readFromDB();
+                isLectureReadComplete = true;
+//                lecturesFileReader.getCourseNames();
+//                lecturesFileReader.getProfessorNames();
                 return null;
             }
 
@@ -261,6 +260,12 @@ public class GlobalData extends Application {
         return tags;
     }
 
+    /* ----------------------- LECTURES ---------------------------------------------------------*/
+
+    public boolean isLectureReadComplete(){
+
+        return isLectureReadComplete;
+    }
 
     /* ----------------------- MANAGING PREFERENCES ---------------------------------------------*/
 

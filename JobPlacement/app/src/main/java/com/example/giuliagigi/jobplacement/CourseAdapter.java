@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.parse.ParseException;
 import com.parse.SaveCallback;
@@ -68,6 +69,14 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder
 
         if (holder.professor != null) {
 
+            try {
+                courses.get(position).getProfessor().fetchIfNeeded();
+            } catch (ParseException e) {
+
+                Log.println(Log.ASSERT,"COURSEADAPTER", "failed fecth");
+                e.printStackTrace();
+            }
+
             holder.professor.setText(courses.get(position).getProfessor().getName() + " " + courses.get(position).getProfessor().getSurname());
         }
 
@@ -80,7 +89,7 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder
                     boolean edit = false;
                     if (holder.mode == MODE_PROFESSOR_VIEW) edit = true;
 
-                    Log.println(Log.ASSERT,"COURSEADAPTER", "invoking cache on course");
+//                    Log.println(Log.ASSERT,"COURSEADAPTER", "invoking cache on course");
                     CourseDetailFragment cdf = CourseDetailFragment.newInstance(courses.get(position), edit);
                     FragmentTransaction ft = activity.getSupportFragmentManager().beginTransaction();
                     ft.replace(R.id.tab_Home_container, cdf).addToBackStack(null).commit();
@@ -107,20 +116,21 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder
 
                         if (courses != null) {
 
-                            Log.println(Log.ASSERT, "COURSEADAPTER", "saving course " + courses.get(position).getObjectId() + " for " + s.getObjectId());
-                            s.addCourse(courses.get(position));
-                            s.saveInBackground(new SaveCallback() {
-                                @Override
-                                public void done(ParseException e) {
+                            if(s.getCourses().contains(courses.get(position))){
 
-                                    if (e == null)
-                                        Log.println(Log.ASSERT, "COURSEADAPTER", "saved successfully");
-                                    else
-                                        Log.println(Log.ASSERT, "COURSEADAPTER", "not saved: " + e.getMessage());
-                                }
-                            });
+                                Toast.makeText(activity,"This course is already among your courses", Toast.LENGTH_SHORT).show();
+                            }
+                            else {
+
+                                s.addCourse(courses.get(position));
+                                s.saveInBackground();
+                            }
+
                             holder.buttonAddPublish.setEnabled(false);
-                        } else {
+
+                        }
+                        else {
+
                             Log.println(Log.ASSERT, "COURSEADAPTER", "ERROR: trying to add a null courses");
                             s.addCourse(courses.get(position));
                             s.saveEventually();

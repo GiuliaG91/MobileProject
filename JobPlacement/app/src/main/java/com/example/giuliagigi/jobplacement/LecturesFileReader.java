@@ -175,23 +175,33 @@ public class LecturesFileReader {
 
     public ArrayList<String> getProfessorNames(){
 
-        if(this.professorNames != null) return professorNames;
+        if(this.professorNames != null){
+
+            return professorNames;
+        }
 
         ArrayList<Course> allCourses = new ArrayList<Course>(courses.values());
+
         ArrayList<String> professorNames = new ArrayList<>();
 
+
         for(int i = 0; i < allCourses.size(); i++){
+
             try {
+
                 allCourses.get(i).getProfessor().fetchIfNeeded();
             } catch (ParseException e) {
                 e.printStackTrace();
             }
+
             String name = allCourses.get(i).getProfessor().getName() + " " + allCourses.get(i).getProfessor().getSurname();
             if(!professorNames.contains(name)){
+
                 professorNames.add(name);
             }
         }
 
+        Log.println(Log.ASSERT, "LECTURESREADER", "caching completed");
         this.professorNames = professorNames;
         return professorNames;
     }

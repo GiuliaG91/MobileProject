@@ -18,6 +18,8 @@ import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.parse.ParseException;
+
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -26,13 +28,14 @@ import java.util.Collections;
  */
 public class LectureDisplayFragment extends Fragment {
 
+    private static final String BUNDLE_IDENTIFIER = "LECTUREDISPLAY";
     private static final String BUNDLE_KEY_COURSE = "lectureDisplay_bundle_course";
-    private static final String BUNDLE_KEY_PROFESSOR = "lectureDisplay_bundle_professor";
     private static int DAY_WIDTH;
     private static final String TAG = "Week Display Activity - LOG: ";
 
     private RelativeLayout[] lecturesRelativeLayouts = new RelativeLayout[5];
 
+    private GlobalData globalData;
     private ArrayList<Course> courses;
     private boolean isViewPopulated = false;
 
@@ -54,12 +57,25 @@ public class LectureDisplayFragment extends Fragment {
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
+
+        globalData = (GlobalData)activity.getApplicationContext();
     }
 
     // --------- END ON CREATE -----------------------------------------------------------
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+
+        MyBundle bundle = globalData.getBundle(BUNDLE_IDENTIFIER);
+
+        if(bundle != null){
+
+            ArrayList list = bundle.getList(BUNDLE_KEY_COURSE);
+            courses = new ArrayList<Course>();
+
+            for (Object o : list)
+                courses.add((Course)o);
+        }
 
         View root = inflater.inflate(R.layout.calendar_week_view, container, false);
 
@@ -69,7 +85,6 @@ public class LectureDisplayFragment extends Fragment {
         lecturesRelativeLayouts[3] = (RelativeLayout)root.findViewById(R.id.thu_relative_layout);
         lecturesRelativeLayouts[4] = (RelativeLayout)root.findViewById(R.id.fri_relative_layout);
 
-//        DAY_WIDTH = lecturesRelativeLayouts[0].gets;
         final ViewTreeObserver vto = lecturesRelativeLayouts[0].getViewTreeObserver();
         if(vto.isAlive()){
 
@@ -94,6 +109,10 @@ public class LectureDisplayFragment extends Fragment {
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
+
+        MyBundle bundle = globalData.addBundle(BUNDLE_IDENTIFIER);
+        bundle.putList(BUNDLE_KEY_COURSE,courses);
+
         super.onSaveInstanceState(outState);
 
     }
@@ -271,6 +290,13 @@ public class LectureDisplayFragment extends Fragment {
         room.setText(l.getRoomName());
 
         TextView professor = (TextView) item.findViewById(R.id.LECTUREITEM_textView_Professor);
+
+        try {
+            l.getCourse().getProfessor().fetchIfNeeded();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
         professor.setText(l.getCourse().getProfessor().getName() + " " + l.getCourse().getProfessor().getSurname());
 
         return item;

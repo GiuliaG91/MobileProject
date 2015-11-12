@@ -14,7 +14,12 @@ import java.util.ArrayList;
 
 
 public class StudentCoursesManagementFragment extends Fragment {
-    
+
+    private static final String BUNDLE_IDENTIFIER = "STUDENTCOURSESMANAG";
+    private static final String BUNDLE_KEY_STUDENT = "bundle_student";
+    private static final String BUNDLE_KEY_COURSES = "bundle_courses";
+
+    GlobalData globalData;
     private Student student;
     private ArrayList<Course> courses;
 
@@ -56,6 +61,7 @@ public class StudentCoursesManagementFragment extends Fragment {
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
+        globalData = (GlobalData)activity.getApplicationContext();
     }
 
     
@@ -68,15 +74,32 @@ public class StudentCoursesManagementFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
 
+        if(savedInstanceState != null){
+
+            MyBundle bundle = globalData.getBundle(BUNDLE_IDENTIFIER);
+
+            if(bundle != null){
+
+                student = (Student)bundle.get(BUNDLE_KEY_STUDENT);
+
+                courses = new ArrayList<>();
+                ArrayList list = bundle.getList(BUNDLE_KEY_COURSES);
+
+                for(Object o : list)
+                    courses.add((Course)o);
+            }
+        }
+
         root =  inflater.inflate(R.layout.fragment_courses_management, container, false);
 
         coursesView = (RecyclerView)root.findViewById(R.id.professor_courses_recyclerView);
         coursesView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
-        if(student != null)
-            courseAdapter = new CourseAdapter(getActivity(),student.getCourses(), student, CourseAdapter.MODE_STUDENT_VIEW);
+        if(courses == null){
 
-        if(courses != null){
+            courseAdapter = new CourseAdapter(getActivity(),student.getCourses(), student, CourseAdapter.MODE_STUDENT_VIEW);
+        }
+        else {
 
             courseAdapter = new CourseAdapter(getActivity(),courses, student, CourseAdapter.MODE_STUDENT_ADD);
 
@@ -89,7 +112,18 @@ public class StudentCoursesManagementFragment extends Fragment {
         return root;
     }
 
-    
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+
+        MyBundle bundle = globalData.addBundle(BUNDLE_IDENTIFIER);
+
+        bundle.put(BUNDLE_KEY_STUDENT,student);
+        bundle.putList(BUNDLE_KEY_COURSES,courses);
+
+        super.onSaveInstanceState(outState);
+    }
+
     @Override
     public void onDetach() {
         super.onDetach();

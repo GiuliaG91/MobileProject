@@ -23,13 +23,15 @@ import java.util.ArrayList;
  */
 public class LectureSearch extends Fragment {
 
-    private static final String TAG = "LECTURESEARCH";
+    private static final String BUNDLE_IDENTIFIER = "LECTURESEARCH";
+    private static final String BUNDLE_KEY_STUDENT = "bundle_student";
 
 
     Button display;
     AutoCompleteTextView etCourse, etProfessor;
     FrameLayout lectureDisplayContainer, courseDisplayContainer;
 
+    private GlobalData globalData;
     private LecturesFileReader lecturesFileReader;
     private ArrayList<Course> currentCourses;
     private Student student;
@@ -54,8 +56,8 @@ public class LectureSearch extends Fragment {
         super.onAttach(activity);
 
         Log.println(Log.ASSERT,"LECTURESEARCH", "onAttach");
-        GlobalData app = (GlobalData)activity.getApplicationContext();
-        lecturesFileReader = app.getLecturesFileReader();
+        globalData = (GlobalData)activity.getApplicationContext();
+        lecturesFileReader = globalData.getLecturesFileReader();
         currentCourses = new ArrayList<Course>();
     }
 
@@ -64,21 +66,24 @@ public class LectureSearch extends Fragment {
 
         Log.println(Log.ASSERT,"LECTURESEARCH", "onCreateView");
 
-        View root = inflater.inflate(R.layout.timetable_search, container, false);
+        MyBundle bundle = globalData.getBundle(BUNDLE_IDENTIFIER);
 
+        if(bundle != null){
+
+            student = (Student)bundle.get(BUNDLE_KEY_STUDENT);
+        }
+
+        View root = inflater.inflate(R.layout.timetable_search, container, false);
         display = (Button)root.findViewById(R.id.displayButton);
         etCourse = (AutoCompleteTextView)root.findViewById(R.id.editTextCourse);
         etProfessor = (AutoCompleteTextView)root.findViewById(R.id.editTextProfessor);
         lectureDisplayContainer = (FrameLayout)root.findViewById(R.id.lecture_display_container);
         courseDisplayContainer = (FrameLayout)root.findViewById(R.id.course_display_container);
-
         ArrayAdapter<String> adapterCourses = new ArrayAdapter<String>(GlobalData.getContext(),R.layout.row_spinner, lecturesFileReader.getCourseNames());
         etCourse.setAdapter(adapterCourses);
 
-
         ArrayAdapter<String> adapterProfessors = new ArrayAdapter<String>(GlobalData.getContext(),R.layout.row_spinner, lecturesFileReader.getProfessorNames());
         etProfessor.setAdapter(adapterProfessors);
-
         display.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -91,6 +96,7 @@ public class LectureSearch extends Fragment {
                 LectureDisplayFragment ldf = LectureDisplayFragment.newInstance(currentCourses);
                 StudentCoursesManagementFragment scmf = StudentCoursesManagementFragment.newInstance(student,currentCourses);
 
+                Log.println(Log.ASSERT,"LECTURESEARCH", "fragment transaction");
                 FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
                 ft.replace(R.id.lecture_display_container, ldf).commit();
 
@@ -98,7 +104,6 @@ public class LectureSearch extends Fragment {
                 ft2.replace(R.id.course_display_container, scmf).commit();
             }
         });
-
 
         etCourse.addTextChangedListener(new TextWatcher() {
 
@@ -116,7 +121,6 @@ public class LectureSearch extends Fragment {
 
             }
         });
-
         etProfessor.addTextChangedListener(new TextWatcher() {
 
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
@@ -129,7 +133,17 @@ public class LectureSearch extends Fragment {
             }
         });
 
+        Log.println(Log.ASSERT,"LECTURESEARCH", "onCreateView ok");
         return root;
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+
+        MyBundle bundle = globalData.addBundle(BUNDLE_IDENTIFIER);
+
+        bundle.put(BUNDLE_KEY_STUDENT, student);
+        super.onSaveInstanceState(outState);
     }
 
     //////////////////////////////////////////////////////////////////////////////////////
