@@ -1,7 +1,6 @@
 package com.example.giuliagigi.jobplacement;
 
 import android.app.Dialog;
-import android.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.RecyclerView;
@@ -29,6 +28,8 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder
     public static final int MODE_PROFESSOR_VIEW = 0;
     public static final int MODE_STUDENT_VIEW = 1;
     public static final int MODE_STUDENT_ADD = 2;
+    public static final int MODE_DIALOG_ADD = 0;
+    public static final int MODE_DIALOG_REMOVE = 1;
 
     FragmentActivity activity;
     ArrayList<Course> courses;
@@ -127,14 +128,11 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder
                             Toast.makeText(activity, "This course is not among your courses", Toast.LENGTH_SHORT).show();
                         }
                         else {
-
-                            s.removeCourse(courses.get(position));
-                            s.saveInBackground();
-                            listener.onDataSetChanged();
+                            Dialog confirmDialog = createConfirmDialog(MODE_DIALOG_REMOVE, s, position, holder);
+                            confirmDialog.show();
                         }
 
-                        holder.buttonAddRemovePublish.setEnabled(false);
-                        holder.buttonAddRemovePublish.setVisibility(View.INVISIBLE);
+
                     }
                 });
 
@@ -156,13 +154,11 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder
                         }
                         else {
 
-                            s.addCourse(courses.get(position));
-                            s.saveInBackground();
-                            listener.onDataSetChanged();
+                            Dialog confirmDialog = createConfirmDialog(MODE_DIALOG_ADD, s, position, holder);
+                            confirmDialog.show();
+
                         }
 
-                        holder.buttonAddRemovePublish.setEnabled(false);
-                        holder.buttonAddRemovePublish.setVisibility(View.INVISIBLE);
                     }
                 });
             }
@@ -270,6 +266,53 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder
     public interface CourseAdapterListener {
 
         public void onDataSetChanged();
+    }
+
+    /* -------------------------------------------------------------------------------------------*/
+    /* -------------------------------- DIALOG CREATION ------------------------------------------*/
+    /* -------------------------------------------------------------------------------------------*/
+
+    public Dialog createConfirmDialog(final int type, final Student s, final int position, final ViewHolder holder){
+
+        final Dialog confirmDialog = new Dialog(activity);
+        confirmDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        confirmDialog.getWindow().setLayout(WindowManager.LayoutParams.WRAP_CONTENT, WindowManager.LayoutParams.WRAP_CONTENT);
+        confirmDialog.setContentView(R.layout.dialog_confirm_add_remove);
+
+        TextView confirmText = (TextView)confirmDialog.findViewById(R.id.dialog_confirm_text);
+        if(type == MODE_DIALOG_ADD)
+            confirmText.setText(GlobalData.getContext().getResources().getString(R.string.add_course_confirm));
+        else if(type == MODE_DIALOG_REMOVE)
+            confirmText.setText(GlobalData.getContext().getResources().getString(R.string.delete_course_confirm));
+
+        Button confirmButton = (Button) confirmDialog.findViewById(R.id.dialog_confirm_button);
+        confirmButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+
+                if(type == MODE_DIALOG_ADD) {
+                    s.addCourse(courses.get(position));
+                    s.saveInBackground();
+                    listener.onDataSetChanged();
+                } else if(type == MODE_DIALOG_REMOVE){
+                    s.removeCourse(courses.get(position));
+                    s.saveInBackground();
+                    listener.onDataSetChanged();
+                }
+
+                confirmDialog.dismiss();
+
+                holder.buttonAddRemovePublish.setEnabled(false);
+                holder.buttonAddRemovePublish.setVisibility(View.INVISIBLE);
+            }
+        });
+        Button cancelButton = (Button) confirmDialog.findViewById(R.id.dialog_cancel_button);
+        cancelButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+
+                confirmDialog.dismiss();
+            }
+        });
+        return  confirmDialog;
     }
 
 }
