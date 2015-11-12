@@ -17,7 +17,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.parse.ParseException;
-import com.parse.SaveCallback;
 
 import java.util.ArrayList;
 
@@ -161,6 +160,8 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder
 
                                 News courseNotice = new News();
                                 courseNotice.createNews(7, courses.get(position), noticeMessage);
+
+                                //TODO notifica push
 
                                 noticeDialog.dismiss();
                                 Log.println(Log.ASSERT, "COURSEADAPTER", "Message: "+noticeMessage);
