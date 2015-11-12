@@ -5,6 +5,7 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -79,7 +80,10 @@ public class TabHomeAdapter extends RecyclerView.Adapter<TabHomeAdapter.ViewHold
                     query3.whereEqualTo(News.TYPE_FIELD, News.TYPE_NEW_COMPANY);
 
                     ParseQuery<News> query4 = ParseQuery.getQuery("News");
+                    query4.whereEqualTo(News.TYPE_FIELD, News.TYPE_NEW_NOTICE);
                     query4.whereContainedIn(News.COURSE_FIELD, ((Student) globalData.getUserObject()).getCourses());
+
+                    Log.println(Log.ASSERT, "PROFESSOR_NEWS", "Student courses: " + ((Student) globalData.getUserObject()).getCourses().size());
 
                     List<ParseQuery<News>> queries = new ArrayList<ParseQuery<News>>();
                     queries.add(query1);
@@ -109,14 +113,17 @@ public class TabHomeAdapter extends RecyclerView.Adapter<TabHomeAdapter.ViewHold
 
                 else if(globalData.getUserObject() instanceof Professor){
 
-                    ParseQuery<News> query1 = ParseQuery.getQuery("News");
-                    query1.whereEqualTo(News.TYPE_FIELD, News.TYPE_NEW_NOTICE);
+                    //ParseQuery<News> query1 = ParseQuery.getQuery("News");
+                    //query1.whereEqualTo(News.TYPE_FIELD, News.TYPE_NEW_NOTICE);
 
                     ParseQuery<News> query2 = ParseQuery.getQuery("News");
+                    query2.whereEqualTo(News.TYPE_FIELD, News.TYPE_NEW_NOTICE);
                     query2.whereContainedIn(News.COURSE_FIELD, ((Professor) globalData.getUserObject()).getCourses());
 
+                    Log.println(Log.ASSERT, "PROFESSOR_NEWS", "Professor courses: " + ((Professor) globalData.getUserObject()).getCourses().size());
+
                     List<ParseQuery<News>> queries = new ArrayList<ParseQuery<News>>();
-                    queries.add(query1);
+                    //queries.add(query1);
                     queries.add(query2);
                     query = ParseQuery.or(queries);
 
