@@ -208,7 +208,7 @@ public class StudentProfileManagementBasicsFragment extends ProfileManagementBas
     @Override
     public void onDetach() {
         super.onDetach();
-        host = null;
+        listener = null;
 
         MyBundle b = application.addBundle(BUNDLE_IDENTIFIER);
         b.put(BUNDLE_KEY_STUDENT,student);

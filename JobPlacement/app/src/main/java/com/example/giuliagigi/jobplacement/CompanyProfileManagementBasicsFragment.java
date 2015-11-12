@@ -170,7 +170,7 @@ public class CompanyProfileManagementBasicsFragment extends ProfileManagementBas
     @Override
     public void onDetach() {
         super.onDetach();
-        host = null;
+        listener = null;
     }
 
     @Override

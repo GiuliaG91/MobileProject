@@ -80,7 +80,7 @@ public class ProfileManagementBasicsFragment extends ProfileManagementFragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
 
         setBasicsView();
-        setEnable(host.isEditMode());
+        setEnable(listener.isEditMode());
         super.onViewCreated(view, savedInstanceState);
     }
 

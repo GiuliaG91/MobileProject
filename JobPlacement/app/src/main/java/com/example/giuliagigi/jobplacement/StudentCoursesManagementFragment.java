@@ -105,7 +105,7 @@ public class StudentCoursesManagementFragment extends Fragment {
 
         if(courses == null){
 
-            courseAdapter = new CourseAdapter(getActivity(),student.getCourses(), student, CourseAdapter.MODE_STUDENT_VIEW);
+            courseAdapter = new CourseAdapter(getActivity(), student.getCourses(), student, CourseAdapter.MODE_STUDENT_VIEW);
         }
         else {
 

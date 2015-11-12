@@ -2,21 +2,25 @@ package com.example.giuliagigi.jobplacement;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-public class StudentDidacticsManagementFragment extends Fragment {
+public class StudentDidacticsManagementFragment extends Fragment implements OnActivityChangedListener {
 
-
+    private OnFragmentInteractionListener host;
     private Student student;
-
     private View root;
     private ViewPager pager;
     private StudentCoursesPagerAdapter adapter;
     private SlidingTabLayout tabs;
+
+    int tab;
 
     /* -------------------------------------------------------------------------------------------*/
     /* -------------------------------- CONSTRUCTOR ----------------------------------------------*/
@@ -40,6 +44,14 @@ public class StudentDidacticsManagementFragment extends Fragment {
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
+
+        host = (OnFragmentInteractionListener)activity;
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        host.addOnActivityChangedListener(this);
     }
 
     @Override
@@ -93,7 +105,22 @@ public class StudentDidacticsManagementFragment extends Fragment {
 
     @Override
     public void onDetach() {
+
+        host.removeOnActivityChangedListener(this);
         super.onDetach();
     }
 
+    @Override
+    public void onActivityStateChanged(State newState, State pastState) {
+
+        // DO NOTHING
+    }
+
+    @Override
+    public void onDataSetChange() {
+
+        adapter = new StudentCoursesPagerAdapter(getChildFragmentManager(),getActivity(),student);
+        pager.setAdapter(adapter);
+        pager.setCurrentItem(1,true);
+    }
 }

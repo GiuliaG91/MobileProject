@@ -129,7 +129,7 @@ public class ProfileManagementTelephoneFragment extends ProfileManagementFragmen
         else                numberText.setText(telephone.getNumber());
         textFields.add(numberText);
 
-//        setEnable(host.isEditMode());
+//        setEnable(listener.isEditMode());
         return root;
     }
 

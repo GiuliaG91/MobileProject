@@ -26,24 +26,36 @@ import java.util.Collections;
 /**
  * Created by GiuliaGiGi on 25/10/15.
  */
-public class LectureDisplayFragment extends Fragment {
+public class LectureDisplayFragment extends Fragment implements OnActivityChangedListener {
 
     private static final String BUNDLE_IDENTIFIER = "LECTUREDISPLAY";
     private static final String BUNDLE_KEY_TAIL = "bundle_tail";
     private static final String BUNDLE_KEY_COURSE = "lectureDisplay_bundle_course";
+    private static final String BUNDLE_KEY_MODE = "lectureDisplay_bundle_mode";
+
+    public static final int MODE_MY_SCHEDULE = 0;
+    public static final int MODE_SIMPLE_SCHEDULE = 1;
+
     private int dayWidth;
     private static final String TAG = "Week Display Activity - LOG: ";
 
     private RelativeLayout[] lecturesRelativeLayouts = new RelativeLayout[5];
 
+    private OnFragmentInteractionListener host;
     private GlobalData globalData;
     private ArrayList<Course> courses;
     private boolean isWidthSet = false;
+    private int mode;
 
-    public static LectureDisplayFragment newInstance(ArrayList<Course> courses){
+    //////////////////////////////////////////////////////////////////////////////////////
+    // --------------------- CONTRUCTORS -----------------------------------------------//
+    //////////////////////////////////////////////////////////////////////////////////////
+
+    public static LectureDisplayFragment newInstance(ArrayList<Course> courses, int mode){
 
         LectureDisplayFragment fragment = new LectureDisplayFragment();
         fragment.courses = courses;
+        fragment.mode = mode;
         return fragment;
     }
 
@@ -54,16 +66,21 @@ public class LectureDisplayFragment extends Fragment {
     //////////////////////////////////////////////////////////////////////////////////////
 
 
-    // ------------- ON CREATE -----------------------------------------------------------
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
 
         globalData = (GlobalData)activity.getApplicationContext();
+        host = (OnFragmentInteractionListener)activity;
     }
 
-    // --------- END ON CREATE -----------------------------------------------------------
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
 
+        if(mode == MODE_MY_SCHEDULE)
+            host.addOnActivityChangedListener(this);
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -79,6 +96,7 @@ public class LectureDisplayFragment extends Fragment {
             if(bundle != null){
 
                 Log.println(Log.ASSERT, "LECTUREDISPLAY", "found a bundle");
+                mode = bundle.getInt(BUNDLE_KEY_MODE);
                 ArrayList list = bundle.getList(BUNDLE_KEY_COURSE);
                 courses = new ArrayList<Course>();
 
@@ -121,15 +139,6 @@ public class LectureDisplayFragment extends Fragment {
         return root;
     }
 
-//    @Override
-//    public void onPause() {
-//
-//        Log.println(Log.ASSERT, "LECTUREDISPLAY", "onPause");
-//
-//        super.onPause();
-//    }
-
-    // ------------- ON SAVE INSTANCE STATE ----------------------------------------------
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
@@ -141,9 +150,17 @@ public class LectureDisplayFragment extends Fragment {
 
         MyBundle bundle = globalData.addBundle(BUNDLE_IDENTIFIER + tail);
         bundle.putList(BUNDLE_KEY_COURSE,courses);
+        bundle.putInt(BUNDLE_KEY_MODE, mode);
         super.onSaveInstanceState(outState);
     }
 
+    @Override
+    public void onDetach() {
+
+        if(mode == MODE_MY_SCHEDULE)
+            host.removeOnActivityChangedListener(this);
+        super.onDetach();
+    }
 
     // --------- END ON SAVE INSTANCE STATE ----------------------------------------------
 
@@ -163,10 +180,24 @@ public class LectureDisplayFragment extends Fragment {
 
 
     //////////////////////////////////////////////////////////////////////////////////////
-    // ----------------- END STANDARD METHODS ------------------------------------------//
+    // ----------------- ACTIVITY INTERFACE --------------------------------------------//
     //////////////////////////////////////////////////////////////////////////////////////
 
+    @Override
+    public void onActivityStateChanged(State newState, State pastState) {
 
+        // NOTHING TO DO
+    }
+
+    @Override
+    public void onDataSetChange() {
+
+        for(RelativeLayout r: lecturesRelativeLayouts)
+            for(int i = 0; i< r.getChildCount(); i++)
+                r.removeView(r.getChildAt(i));
+
+        populateView();
+    }
 
 
 //----------------------------------------------------------------------------------------------------------------------------------------------
@@ -351,6 +382,8 @@ public class LectureDisplayFragment extends Fragment {
 
         }
     }
+
+
 
 
     //////////////////////////////////////////////////////////////////////////////////////

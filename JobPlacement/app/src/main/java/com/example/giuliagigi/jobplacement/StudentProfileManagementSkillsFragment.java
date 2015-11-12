@@ -224,7 +224,7 @@ public class StudentProfileManagementSkillsFragment extends ProfileManagementFra
         }
 
 
-        setEnable(host.isEditMode());
+        setEnable(listener.isEditMode());
     }
 
     @Override

@@ -178,7 +178,7 @@ public class StudentProfileManagementRegistryFragment extends ProfileManagementF
             ft.commit();
         }
 
-        setEnable(host.isEditMode());
+        setEnable(listener.isEditMode());
     }
 
     @Override

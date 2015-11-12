@@ -93,7 +93,7 @@ public class LectureSearch extends Fragment {
 
                 currentCourses = lecturesFileReader.getCourses(requestedCourse,requestedProfessor);
 
-                LectureDisplayFragment ldf = LectureDisplayFragment.newInstance(currentCourses);
+                LectureDisplayFragment ldf = LectureDisplayFragment.newInstance(currentCourses, LectureDisplayFragment.MODE_SIMPLE_SCHEDULE);
                 StudentCoursesManagementFragment scmf = StudentCoursesManagementFragment.newInstance(student,currentCourses);
 
                 Log.println(Log.ASSERT,"LECTURESEARCH", "fragment transaction");

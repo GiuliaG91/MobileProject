@@ -1,6 +1,7 @@
 package com.example.giuliagigi.jobplacement;
 
 import android.app.Dialog;
+import android.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.RecyclerView;
@@ -32,6 +33,7 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder
     FragmentActivity activity;
     ArrayList<Course> courses;
     User user;
+    CourseAdapterListener listener;
     int mode = MODE_PROFESSOR_VIEW;
     //String  noticeMessage = "";
 
@@ -47,6 +49,14 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder
         this.mode = mode;
         this.user = user;
         this.activity = activity;
+
+        try {
+            this.listener = (CourseAdapterListener)activity;
+        }
+        catch (ClassCastException e){
+
+            e.printStackTrace();
+        }
     }
 
 
@@ -100,47 +110,71 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder
             });
         }
 
-        if(holder.buttonAddPublish != null){
+        if(holder.buttonAddRemovePublish != null){
 
-            if(user.getType().equals(User.TYPE_STUDENT)){
-                holder.buttonAddPublish.setText(GlobalData.getContext().getResources().getString(R.string.button_add_my_courses));
-            } else if(user.getType().equals(User.TYPE_PROFESSOR)){
-                holder.buttonAddPublish.setText(GlobalData.getContext().getResources().getString(R.string.button_publish_notice));
-            }
+            /* ----------------------- remove course ---------------------------------------------*/
+            if(holder.mode == MODE_STUDENT_VIEW){
 
-            holder.buttonAddPublish.setOnClickListener(new View.OnClickListener() {
-
-                @Override
-                public void onClick(View v) {
-
-                    if (user.getType().equals(User.TYPE_STUDENT)) {
+                holder.buttonAddRemovePublish.setText(GlobalData.getContext().getResources().getString(R.string.button_remove_my_courses));
+                holder.buttonAddRemovePublish.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
 
                         Student s = (Student) user;
 
-                        if (courses != null) {
+                        if (!s.getCourses().contains(courses.get(position))) {
 
-                            if(s.getCourses().contains(courses.get(position))){
-
-                                Toast.makeText(activity,"This course is already among your courses", Toast.LENGTH_SHORT).show();
-                            }
-                            else {
-
-                                s.addCourse(courses.get(position));
-                                s.saveInBackground();
-                            }
-
-                            holder.buttonAddPublish.setEnabled(false);
-
+                            Toast.makeText(activity, "This course is not among your courses", Toast.LENGTH_SHORT).show();
                         }
                         else {
 
-                            Log.println(Log.ASSERT, "COURSEADAPTER", "ERROR: trying to add a null courses");
-                            s.addCourse(courses.get(position));
-                            s.saveEventually();
-                            holder.buttonAddPublish.setEnabled(false);
+                            s.removeCourse(courses.get(position));
+                            s.saveInBackground();
+                            listener.onDataSetChanged();
                         }
+
+                        holder.buttonAddRemovePublish.setEnabled(false);
+                        holder.buttonAddRemovePublish.setVisibility(View.INVISIBLE);
                     }
-                    else if(user.getType().equals(User.TYPE_PROFESSOR)){
+                });
+
+            }
+
+            /* ------------------------ add course -----------------------------------------------*/
+
+            else if(holder.mode == MODE_STUDENT_ADD){
+
+                holder.buttonAddRemovePublish.setText(GlobalData.getContext().getResources().getString(R.string.button_add_my_courses));
+                holder.buttonAddRemovePublish.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                        Student s = (Student) user;
+                        if (s.getCourses().contains(courses.get(position))) {
+
+                            Toast.makeText(activity, "This course is already among your courses", Toast.LENGTH_SHORT).show();
+                        }
+                        else {
+
+                            s.addCourse(courses.get(position));
+                            s.saveInBackground();
+                            listener.onDataSetChanged();
+                        }
+
+                        holder.buttonAddRemovePublish.setEnabled(false);
+                        holder.buttonAddRemovePublish.setVisibility(View.INVISIBLE);
+                    }
+                });
+            }
+
+            /* ----------------------- edit course -----------------------------------------------*/
+
+            else if(holder.mode == MODE_PROFESSOR_VIEW){
+
+                holder.buttonAddRemovePublish.setText(GlobalData.getContext().getResources().getString(R.string.button_publish_notice));
+                holder.buttonAddRemovePublish.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
 
                         Professor p = (Professor) user;
                         //final String noticeMessage;
@@ -152,6 +186,7 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder
                         noticeDialog.setTitle(GlobalData.getContext().getResources().getString(R.string.notice_insert_message));
 
                         Button confirmButton = (Button) noticeDialog.findViewById(R.id.notice_dialog_confirm_button);
+
                         confirmButton.setOnClickListener(new View.OnClickListener() {
                             public void onClick(View v) {
 
@@ -164,22 +199,16 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder
                                 //TODO notifica push
 
                                 noticeDialog.dismiss();
-                                Log.println(Log.ASSERT, "COURSEADAPTER", "Message: "+noticeMessage);
+                                Log.println(Log.ASSERT, "COURSEADAPTER", "Message: " + noticeMessage);
                             }
                         });
 
 
                         noticeDialog.show();
-
-
-
                     }
-                    else {
+                });
+            }
 
-                        Log.println(Log.ASSERT, "COURSEADAPTER", "ERROR: trying to add/publish a course to a non-allowed user");
-                    }
-                }
-            });
         }
 
     }
@@ -195,20 +224,22 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder
     /* -------------------------------------------------------------------------------------------*/
     public static class ViewHolder extends RecyclerView.ViewHolder{
 
+        View root;
         TextView name, professor, code;
-        Button details, buttonAddPublish;
+        Button details, buttonAddRemovePublish;
         int mode;
 
         public ViewHolder(View itemView, int mode) {
 
             super(itemView);
 
+            this.root = itemView;
             this.mode = mode;
             code = (TextView)itemView.findViewById(R.id.course_code_textView);
             name = (TextView)itemView.findViewById(R.id.course_name_textView);
             professor = (TextView)itemView.findViewById(R.id.course_professor_textView);
             details = (Button)itemView.findViewById(R.id.course_details_button);
-            buttonAddPublish = (Button)itemView.findViewById(R.id.course_add_button);
+            buttonAddRemovePublish = (Button)itemView.findViewById(R.id.course_add_button);
 
             LinearLayout l = (LinearLayout)itemView;
 
@@ -219,8 +250,6 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder
                 l.removeView(itemView.findViewById(R.id.course_professor_title));
                 professor = null;
 
-                //l.removeView(buttonAddPublish);
-                //buttonAddPublish = null;
             }
             else if(mode == MODE_STUDENT_ADD){
 
@@ -229,9 +258,18 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder
             }
             else if(mode == MODE_STUDENT_VIEW){
 
-                l.removeView(buttonAddPublish);
-                buttonAddPublish = null;
+//                l.removeView(buttonAddRemovePublish);
+//                buttonAddRemovePublish = null;
             }
         }
     }
+
+    /* -------------------------------------------------------------------------------------------*/
+    /* -------------------------------- INTERFACE ------------------------------------------------*/
+    /* -------------------------------------------------------------------------------------------*/
+    public interface CourseAdapterListener {
+
+        public void onDataSetChanged();
+    }
+
 }

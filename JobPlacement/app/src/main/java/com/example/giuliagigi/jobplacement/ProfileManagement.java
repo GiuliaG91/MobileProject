@@ -78,8 +78,6 @@ public class ProfileManagement extends Fragment{
         super.onAttach(activity);
 
         Log.println(Log.ASSERT,"PROFILE MANAG","on Attach");
-
-
         isEditMode = false;
 
         try {

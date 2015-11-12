@@ -125,7 +125,7 @@ public class CompanyProfileManagementRegistryFragment extends ProfileManagementF
 
         }
 
-        setEnable(host.isEditMode());
+        setEnable(listener.isEditMode());
     }
 
     @Override

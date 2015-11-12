@@ -27,7 +27,8 @@ public class ProfileManagementFragment extends Fragment implements OnActivityCha
     public static final int REQUEST_IMAGE_GET = 1;
     public static final int REQUEST_CONTENT_GET = 2;
 
-    protected OnInteractionListener host;
+    protected OnInteractionListener listener;
+    protected OnFragmentInteractionListener host;
     protected ArrayList<EditText> textFields;
     protected GlobalData application;
     protected boolean hasChanged = false;
@@ -73,11 +74,12 @@ public class ProfileManagementFragment extends Fragment implements OnActivityCha
         application = (GlobalData)activity.getApplicationContext();
 
         try {
-            host = (OnInteractionListener)activity;
+            listener = (OnInteractionListener)activity;
+            host = (OnFragmentInteractionListener)activity;
         }
         catch (ClassCastException e){
             throw new ClassCastException(activity.toString()
-                    + " must implement OnInteractionListener");
+                    + " must implement OnInteractionListener/OnFragmentInteractionListener");
         }
 
         isNestedFragment = false;
@@ -109,7 +111,7 @@ public class ProfileManagementFragment extends Fragment implements OnActivityCha
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        setEnable(host.isEditMode());
+        setEnable(listener.isEditMode());
     }
 
     @Override
@@ -128,8 +130,8 @@ public class ProfileManagementFragment extends Fragment implements OnActivityCha
     protected interface OnInteractionListener{
 
         public boolean isEditMode();
-        public void addOnActivityChangedListener(OnActivityChangedListener listener);
-        public void removeOnActivityChangedListener(OnActivityChangedListener listener);
+//        public void addOnActivityChangedListener(OnActivityChangedListener listener);
+//        public void removeOnActivityChangedListener(OnActivityChangedListener listener);
         public void startDeleteAccountActivity();
     }
 
@@ -147,6 +149,12 @@ public class ProfileManagementFragment extends Fragment implements OnActivityCha
             if(hasChanged) saveChanges();
             this.setEnable(false);
         }
+    }
+
+    @Override
+    public void onDataSetChange() {
+
+        // NOTHING TO DO
     }
 
     /* --------------------- AUXILIARY METHODS ------------------------------------------------- */

@@ -271,7 +271,7 @@ public class StudentProfileManagementDegreeFragment extends ProfileManagementFra
         for(EditText et:textFields)
             et.addTextChangedListener(hasChangedListener);
 
-//        setEnable(host.isEditMode());
+//        setEnable(listener.isEditMode());
         return root;
     }
 

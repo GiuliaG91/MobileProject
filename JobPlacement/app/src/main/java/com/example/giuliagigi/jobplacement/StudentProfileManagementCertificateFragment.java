@@ -232,7 +232,7 @@ public class StudentProfileManagementCertificateFragment extends ProfileManageme
             }
         });
 
-//        setEnable(host.isEditMode());
+//        setEnable(listener.isEditMode());
         return root;
     }
 

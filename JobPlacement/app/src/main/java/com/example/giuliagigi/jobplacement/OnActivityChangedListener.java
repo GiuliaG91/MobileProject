@@ -14,4 +14,6 @@ public interface OnActivityChangedListener {
     }
 
     public void onActivityStateChanged(State newState, State pastState);
+
+    public void onDataSetChange();
 }

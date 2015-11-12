@@ -216,6 +216,7 @@
     <string name="lecture_room_title">Room:</string>
     <string name="lecture_schedule_title">Schedule:</string>
     <string name="button_add_my_courses">Add to my courses</string>
+    <string name="button_remove_my_courses">Remove from my courses</string>
     <string name="button_publish_notice">Publish notice</string>
     <string name="notice_insert_message">Insert message text:</string>
     <string name="notice_message_hint">Message</string>

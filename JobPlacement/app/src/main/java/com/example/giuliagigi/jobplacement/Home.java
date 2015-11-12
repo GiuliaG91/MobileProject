@@ -36,7 +36,9 @@ public class Home extends ActionBarActivity
         StudentCompanySearchFragment.OnFragmentInteractionListener,
         CompanyStudentSearchFragment.OnFragmentInteractionListener,
         MailBoxDisplayFragment.OnFragmentInteractionListener,
-        TabHome.OnFragmentInteractionListener
+        TabHome.OnFragmentInteractionListener,
+        CourseAdapter.CourseAdapterListener,
+        OnFragmentInteractionListener
 
 {
     private Toolbar toolbar;   // Declaring the Toolbar Object
@@ -54,19 +56,15 @@ public class Home extends ActionBarActivity
     private String[] TITLES;
     private Boolean init=false;
 /********************************************************/
-/**
- *
- * *************PROFILE MAGEMENT
- */
 
+    /* --------- PROFILE MANAGEMENT ---------------------*/
     private boolean isEditMode;
     private GlobalData application;
     private ArrayList<OnActivityChangedListener> listeners;
 
-
-    /**
-     * ***********************************************************
-     */
+    /* -------------------------------------------------------------------------------------------*/
+    /* -------------------------------- STANDARD CALLBACKS ---------------------------------------*/
+    /* -------------------------------------------------------------------------------------------*/
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -288,7 +286,6 @@ public class Home extends ActionBarActivity
 
     }
 
-    /* -------------------- PROFILE MANAGEMENT INTERFACE -----------------------------------------*/
     @Override
     public void setEditMode(boolean editable) {
 
@@ -302,6 +299,18 @@ public class Home extends ActionBarActivity
                 l.onActivityStateChanged(OnActivityChangedListener.State.DISPLAY_MODE_STATE, OnActivityChangedListener.State.EDIT_MODE_STATE);
     }
 
+
+
+    /* ---------------- DIDACTICS INTERFACE -----------------------------------------*/
+    @Override
+    public void onDataSetChanged() {
+
+        for(OnActivityChangedListener l: listeners)
+            l.onDataSetChange();
+    }
+
+
+    /* ---------------- MAILBOX INTERFACE -----------------------------------------*/
     @Override
     public void openMailBox(User user) {
 
@@ -322,7 +331,6 @@ public class Home extends ActionBarActivity
         this.profileManagement = profileManagement;
     }
 
-/* ---------------- END PROFILE MANAGEMENT INTERFACE -----------------------------------------*/
 
 
     @Override
@@ -341,5 +349,6 @@ public class Home extends ActionBarActivity
 
         }
     }
+
 
 }

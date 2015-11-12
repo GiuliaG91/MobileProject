@@ -22,11 +22,8 @@ public class StudentCoursesPagerAdapter extends FragmentPagerAdapter{
         super(fm);
 
         titles = activity.getApplicationContext().getResources().getStringArray(R.array.Courses_Students_Tab);
-
-        for(String s:titles)
-            Log.println(Log.ASSERT,"COURSEPAGERADAPTER", "titles: " + s);
-
         this.student = student;
+
     }
 
 
@@ -47,7 +44,7 @@ public class StudentCoursesPagerAdapter extends FragmentPagerAdapter{
         }
         else if(position == 2){
 
-            return LectureDisplayFragment.newInstance(student.getCourses());
+            return LectureDisplayFragment.newInstance(student.getCourses(), LectureDisplayFragment.MODE_MY_SCHEDULE);
         }
 
         return null;
