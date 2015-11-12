@@ -29,8 +29,9 @@ import java.util.Collections;
 public class LectureDisplayFragment extends Fragment {
 
     private static final String BUNDLE_IDENTIFIER = "LECTUREDISPLAY";
+    private static final String BUNDLE_KEY_TAIL = "bundle_tail";
     private static final String BUNDLE_KEY_COURSE = "lectureDisplay_bundle_course";
-    private static int DAY_WIDTH;
+    private int dayWidth;
     private static final String TAG = "Week Display Activity - LOG: ";
 
     private RelativeLayout[] lecturesRelativeLayouts = new RelativeLayout[5];
@@ -69,17 +70,23 @@ public class LectureDisplayFragment extends Fragment {
 
         Log.println(Log.ASSERT, "LECTUREDISPLAY", "onCreateView");
 
-        MyBundle bundle = globalData.getBundle(BUNDLE_IDENTIFIER);
+        if(savedInstanceState != null){
 
-        if(bundle != null){
+            Log.println(Log.ASSERT, "LECTUREDISPLAY", "restoring state");
+            String tail = savedInstanceState.getString(BUNDLE_KEY_TAIL);
+            MyBundle bundle = globalData.getBundle(BUNDLE_IDENTIFIER + tail);
 
-            Log.println(Log.ASSERT, "LECTUREDISPLAY", "found a bundle");
-            ArrayList list = bundle.getList(BUNDLE_KEY_COURSE);
-            courses = new ArrayList<Course>();
+            if(bundle != null){
 
-            for (Object o : list)
-                courses.add((Course)o);
+                Log.println(Log.ASSERT, "LECTUREDISPLAY", "found a bundle");
+                ArrayList list = bundle.getList(BUNDLE_KEY_COURSE);
+                courses = new ArrayList<Course>();
+
+                for (Object o : list)
+                    courses.add((Course)o);
+            }
         }
+
 
         View root = inflater.inflate(R.layout.calendar_week_view, container, false);
 
@@ -99,7 +106,7 @@ public class LectureDisplayFragment extends Fragment {
 
                     if(!isWidthSet){
 
-                        DAY_WIDTH = lecturesRelativeLayouts[0].getWidth();
+                        dayWidth = lecturesRelativeLayouts[0].getWidth();
                         populateView();
                         isWidthSet = true;
                     }
@@ -128,7 +135,11 @@ public class LectureDisplayFragment extends Fragment {
     public void onSaveInstanceState(Bundle outState) {
 
         Log.println(Log.ASSERT, "LECTUREDISPLAY", "onSaveInstanceState");
-        MyBundle bundle = globalData.addBundle(BUNDLE_IDENTIFIER);
+        String tail = courses.toString();
+
+        outState.putString(BUNDLE_KEY_TAIL,tail);
+
+        MyBundle bundle = globalData.addBundle(BUNDLE_IDENTIFIER + tail);
         bundle.putList(BUNDLE_KEY_COURSE,courses);
         super.onSaveInstanceState(outState);
     }
@@ -270,11 +281,11 @@ public class LectureDisplayFragment extends Fragment {
             int height = (int)(lecture.getSchedule().getMinuteDuration() * hourHeight / 60);
             int startMinute = ((lecture.getSchedule().getStartHour()-8)*60+lecture.getSchedule().getStartMinute());
             int topMargin = (int)(startMinute*hourHeight/60);
-            int width = (int)(((float)DAY_WIDTH)/maxOverlap);
+            int width = (int)(((float) dayWidth)/maxOverlap);
             int leftMargin = (int)((i%maxOverlap)*width);
 
 //            Log.println(Log.ASSERT, "LECTUREDISPLAY", "hourheight = " + hourHeight + "; startMinute = " + startMinute);
-//            Log.println(Log.ASSERT, "LECTUREDISPLAY", "dayWidth = " + DAY_WIDTH);
+//            Log.println(Log.ASSERT, "LECTUREDISPLAY", "dayWidth = " + dayWidth);
 //            Log.println(Log.ASSERT,"LECTUREDISPLAY", "height = " + height + "; topMargin = " + topMargin + "; width = " + width + "; leftMargin" + leftMargin);
 
             RelativeLayout.LayoutParams param = new RelativeLayout.LayoutParams(width, height);

@@ -16,6 +16,7 @@ import java.util.ArrayList;
 public class StudentCoursesManagementFragment extends Fragment {
 
     private static final String BUNDLE_IDENTIFIER = "STUDENTCOURSESMANAG";
+    private static final String BUNDLE_KEY_TAIL = "bundle_tail";
     private static final String BUNDLE_KEY_STUDENT = "bundle_student";
     private static final String BUNDLE_KEY_COURSES = "bundle_courses";
 
@@ -74,23 +75,28 @@ public class StudentCoursesManagementFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
 
-        MyBundle bundle = globalData.getBundle(BUNDLE_IDENTIFIER);
+        if(savedInstanceState != null){
 
-        if(bundle != null){
+            String tail = savedInstanceState.getString(BUNDLE_KEY_TAIL);
+            MyBundle bundle = globalData.getBundle(BUNDLE_IDENTIFIER + tail);
 
-            Log.println(Log.ASSERT, "STUDENTCOURSEMANAG", "found a bundle");
-            student = (Student)bundle.get(BUNDLE_KEY_STUDENT);
+            if(bundle != null){
 
-            ArrayList list = bundle.getList(BUNDLE_KEY_COURSES);
+                Log.println(Log.ASSERT, "STUDENTCOURSEMANAG", "found a bundle");
+                student = (Student)bundle.get(BUNDLE_KEY_STUDENT);
 
-            if(list != null){
+                ArrayList list = bundle.getList(BUNDLE_KEY_COURSES);
 
-                courses = new ArrayList<>();
-                for(Object o : list)
-                    courses.add((Course)o);
+                if(list != null){
+
+                    courses = new ArrayList<>();
+                    for(Object o : list)
+                        courses.add((Course)o);
+                }
+
             }
-
         }
+
 
         root =  inflater.inflate(R.layout.fragment_courses_management, container, false);
 
@@ -118,10 +124,13 @@ public class StudentCoursesManagementFragment extends Fragment {
     @Override
     public void onSaveInstanceState(Bundle outState) {
 
-
         Log.println(Log.ASSERT, "STUDENTCOURSEMANAG", "onSaveInstanceState");
-        MyBundle bundle = globalData.addBundle(BUNDLE_IDENTIFIER);
 
+        String tail = student.toString();
+        if(courses != null) tail += courses.toString();
+        outState.putString(BUNDLE_KEY_TAIL, tail);
+
+        MyBundle bundle = globalData.addBundle(BUNDLE_IDENTIFIER + tail);
         bundle.put(BUNDLE_KEY_STUDENT,student);
         bundle.putList(BUNDLE_KEY_COURSES,courses);
 
