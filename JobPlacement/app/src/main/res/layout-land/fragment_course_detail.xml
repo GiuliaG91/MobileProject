@@ -9,8 +9,9 @@
 
     <LinearLayout
         android:id="@+id/land_linear_layout_title"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="match_parent"
+        android:layout_weight=".5"
         android:orientation="vertical">
 
         <TextView
@@ -50,8 +51,9 @@
 
     <ListView
         android:id="@+id/course_lecture_listView"
-        android:layout_width="fill_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_weight=".5"
         android:layout_margin="2dp"
         >
 

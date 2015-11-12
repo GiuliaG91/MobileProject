@@ -2,7 +2,6 @@ package com.example.giuliagigi.jobplacement;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.provider.Settings;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -98,7 +97,7 @@ public class CourseDetailFragment extends Fragment {
 
         if(code != null)        code.setText(course.getCode());
         if(name != null)        name.setText(course.getName());
-        if(professor != null)   professor.setText(course.getProfessor().getName());
+        if(professor != null)   professor.setText(course.getProfessor().getName() + " " + course.getProfessor().getSurname());
 
 
         return root;

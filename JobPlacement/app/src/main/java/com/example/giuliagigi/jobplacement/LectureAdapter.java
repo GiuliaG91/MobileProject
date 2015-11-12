@@ -94,6 +94,10 @@ public class LectureAdapter implements ListAdapter {
         if(!isEdit){
 
             LinearLayout layout = (LinearLayout)convertView.findViewById(R.id.lecture_item_container);
+            modify.setVisibility(View.INVISIBLE);
+            modify.setEnabled(false);
+            delete.setVisibility(View.INVISIBLE);
+            delete.setEnabled(false);
             layout.removeView(modify);
             layout.removeView(delete);
         }
