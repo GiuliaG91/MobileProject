@@ -7,7 +7,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/notice_insert_message"
-        android:textSize="@dimen/editText_textSize_small"
+        android:textSize="@dimen/editText_textSize"
         android:layout_margin="2dp"
         android:textColor="@color/ColorPrimary"
         />
@@ -17,18 +17,40 @@
         android:layout_width="@dimen/professor_notice_editText_width"
         android:layout_height="@dimen/professor_notice_editText_height"
         android:hint="@string/notice_message_hint"
+        android:gravity="top"
+        android:scrollbars="vertical"
         android:textSize="@dimen/editText_textSize"
         android:textColor="@color/ColorPrimaryDark"/>
 
-    <Button
-        android:id="@+id/notice_dialog_confirm_button"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
-        android:layout_margin="2dp"
-        android:textColor="@color/ColorPrimaryDark"
-        android:textSize="@dimen/editText_textSize_small"
-        android:background="@drawable/button_background"
-        android:text="@string/confirm"/>
+        android:orientation="horizontal"
+        android:gravity="center_horizontal">
+
+        <Button
+            android:id="@+id/notice_dialog_confirm_button"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight=".5"
+            android:layout_margin="5dp"
+            android:textColor="@color/ColorPrimaryDark"
+            android:textSize="@dimen/editText_textSize"
+            android:background="@drawable/button_background"
+            android:text="@string/confirm"/>
+
+        <Button
+            android:id="@+id/notice_dialog_cancel_button"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight=".5"
+            android:layout_marginRight="5dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:textColor="@color/ColorPrimaryDark"
+            android:textSize="@dimen/editText_textSize"
+            android:background="@drawable/button_background"
+            android:text="@string/cancel_"/>
+    </LinearLayout>
 
 </LinearLayout>

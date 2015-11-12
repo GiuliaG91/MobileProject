@@ -115,12 +115,13 @@ public class TabHomeAdapter extends RecyclerView.Adapter<TabHomeAdapter.ViewHold
 
                     //ParseQuery<News> query1 = ParseQuery.getQuery("News");
                     //query1.whereEqualTo(News.TYPE_FIELD, News.TYPE_NEW_NOTICE);
+                    Professor p = (Professor) globalData.getUserObject();
 
                     ParseQuery<News> query2 = ParseQuery.getQuery("News");
                     query2.whereEqualTo(News.TYPE_FIELD, News.TYPE_NEW_NOTICE);
-                    query2.whereContainedIn(News.COURSE_FIELD, ((Professor) globalData.getUserObject()).getCourses());
+                    query2.whereContainedIn(News.COURSE_FIELD, (p.getCourses()));
 
-                    Log.println(Log.ASSERT, "PROFESSOR_NEWS", "Professor courses: " + ((Professor) globalData.getUserObject()).getCourses().size());
+                    Log.println(Log.ASSERT, "PROFESSOR_NEWS", "Professor courses: " + p.getCourses().size());
 
                     List<ParseQuery<News>> queries = new ArrayList<ParseQuery<News>>();
                     //queries.add(query1);

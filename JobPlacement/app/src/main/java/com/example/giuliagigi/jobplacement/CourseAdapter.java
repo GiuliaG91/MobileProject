@@ -133,7 +133,6 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder
                             confirmDialog.show();
                         }
 
-
                     }
                 });
 
@@ -173,9 +172,6 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder
                     @Override
                     public void onClick(View v) {
 
-                        Professor p = (Professor) user;
-                        //final String noticeMessage;
-
                         final Dialog noticeDialog = new Dialog(activity);
                         noticeDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
                         noticeDialog.getWindow().setLayout(WindowManager.LayoutParams.WRAP_CONTENT, WindowManager.LayoutParams.WRAP_CONTENT);
@@ -183,7 +179,6 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder
                         noticeDialog.setTitle(GlobalData.getContext().getResources().getString(R.string.notice_insert_message));
 
                         Button confirmButton = (Button) noticeDialog.findViewById(R.id.notice_dialog_confirm_button);
-
                         confirmButton.setOnClickListener(new View.OnClickListener() {
                             public void onClick(View v) {
 
@@ -200,6 +195,12 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder
                             }
                         });
 
+                        Button cancelButton = (Button) noticeDialog.findViewById(R.id.notice_dialog_cancel_button);
+                        cancelButton.setOnClickListener(new View.OnClickListener() {
+                            public void onClick(View v) {
+                                noticeDialog.dismiss();
+                            }
+                        });
 
                         noticeDialog.show();
                     }
