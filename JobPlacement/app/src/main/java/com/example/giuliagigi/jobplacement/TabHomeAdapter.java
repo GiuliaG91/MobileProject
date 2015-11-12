@@ -88,6 +88,7 @@ public class TabHomeAdapter extends RecyclerView.Adapter<TabHomeAdapter.ViewHold
                     queries.add(query4);
 
                     query = ParseQuery.or(queries);
+                    query.orderByDescending("date");
                 }
 
                 else if(globalData.getUserObject() instanceof Company){
@@ -102,6 +103,8 @@ public class TabHomeAdapter extends RecyclerView.Adapter<TabHomeAdapter.ViewHold
                     queries.add(query1);
                     queries.add(query2);
                     query = ParseQuery.or(queries);
+
+                    query.orderByDescending("date");
                 }
 
                 else if(globalData.getUserObject() instanceof Professor){
@@ -116,6 +119,8 @@ public class TabHomeAdapter extends RecyclerView.Adapter<TabHomeAdapter.ViewHold
                     queries.add(query1);
                     queries.add(query2);
                     query = ParseQuery.or(queries);
+
+                    query.orderByDescending("date");
 
                 }
 
