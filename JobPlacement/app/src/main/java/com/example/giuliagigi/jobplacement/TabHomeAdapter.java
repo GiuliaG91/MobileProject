@@ -78,26 +78,45 @@ public class TabHomeAdapter extends RecyclerView.Adapter<TabHomeAdapter.ViewHold
                     ParseQuery<News> query3 = ParseQuery.getQuery("News");
                     query3.whereEqualTo(News.TYPE_FIELD, News.TYPE_NEW_COMPANY);
 
+                    ParseQuery<News> query4 = ParseQuery.getQuery("News");
+                    query4.whereContainedIn(News.COURSE_FIELD, ((Student) globalData.getUserObject()).getCourses());
+
                     List<ParseQuery<News>> queries = new ArrayList<ParseQuery<News>>();
                     queries.add(query1);
                     queries.add(query2);
                     queries.add(query3);
+                    queries.add(query4);
 
                     query = ParseQuery.or(queries);
                 }
 
                 else if(globalData.getUserObject() instanceof Company){
 
-                    query = new ParseQuery("News");
-                    query.whereEqualTo(News.TYPE_FIELD, News.TYPE_OFFER_APPLICATION);
-                    query.whereEqualTo(News.COMPANY_FIELD, (Company)globalData.getUserObject());
+                    ParseQuery<News> query1 = ParseQuery.getQuery("News");
+                    query1.whereEqualTo(News.TYPE_FIELD, News.TYPE_OFFER_APPLICATION);
+
+                    ParseQuery<News> query2 = ParseQuery.getQuery("News");
+                    query2.whereEqualTo(News.COMPANY_FIELD, (Company)globalData.getUserObject());
+
+                    List<ParseQuery<News>> queries = new ArrayList<ParseQuery<News>>();
+                    queries.add(query1);
+                    queries.add(query2);
+                    query = ParseQuery.or(queries);
                 }
 
                 else if(globalData.getUserObject() instanceof Professor){
 
-                    query = new ParseQuery("News");
-                    query.whereEqualTo(News.TYPE_FIELD, News.TYPE_NEW_NOTICE);
-                    //query.whereEqualTo(News.COURSE_FIELD, (Professor)globalData.getUserObject());   mettere tipo where contained in
+                    ParseQuery<News> query1 = ParseQuery.getQuery("News");
+                    query1.whereEqualTo(News.TYPE_FIELD, News.TYPE_NEW_NOTICE);
+
+                    ParseQuery<News> query2 = ParseQuery.getQuery("News");
+                    query2.whereContainedIn(News.COURSE_FIELD, ((Professor) globalData.getUserObject()).getCourses());
+
+                    List<ParseQuery<News>> queries = new ArrayList<ParseQuery<News>>();
+                    queries.add(query1);
+                    queries.add(query2);
+                    query = ParseQuery.or(queries);
+
                 }
 
                 return query;
@@ -208,6 +227,23 @@ public class TabHomeAdapter extends RecyclerView.Adapter<TabHomeAdapter.ViewHold
 
                     case News.TYPE_ADVERTISEMENT:
                             break;
+
+                    case News.TYPE_NEW_NOTICE:
+                        try {
+                            Professor professor=object.getCourse().getProfessor().fetchIfNeeded();
+
+                            if(professor.getProfilePhoto() != null)
+                                icon.setImageBitmap(object.getCourse().getProfessor().getProfilePhoto());
+                            else
+                                icon.setImageResource(R.drawable.ic_schedule);
+                            title.setText(context.getResources().getString(R.string.notice_news_title) + " " + object.getCourse().getName());
+
+                        }
+                        catch (ParseException e) {
+                            e.printStackTrace();
+                        }
+
+                           break;
 
                     default:
 

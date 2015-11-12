@@ -8,6 +8,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -15,7 +17,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.parse.ParseException;
-import com.parse.SaveCallback;
 
 import java.util.ArrayList;
 
@@ -32,7 +33,7 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder
     ArrayList<Course> courses;
     User user;
     int mode = MODE_PROFESSOR_VIEW;
-    String  noticeMessage = " ";
+    //String  noticeMessage = "";
 
 
     /* -------------------------------------------------------------------------------------------*/
@@ -145,27 +146,32 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder
                         //final String noticeMessage;
 
                         final Dialog noticeDialog = new Dialog(activity);
+                        noticeDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                        noticeDialog.getWindow().setLayout(WindowManager.LayoutParams.WRAP_CONTENT, WindowManager.LayoutParams.WRAP_CONTENT);
                         noticeDialog.setContentView(R.layout.professor_notice_dialog);
+                        noticeDialog.setTitle(GlobalData.getContext().getResources().getString(R.string.notice_insert_message));
 
                         Button confirmButton = (Button) noticeDialog.findViewById(R.id.notice_dialog_confirm_button);
                         confirmButton.setOnClickListener(new View.OnClickListener() {
                             public void onClick(View v) {
 
-                                EditText edit = (EditText)noticeDialog.findViewById(R.id.notice_dialog_message);
-                                String text = edit.getText().toString();
+                                EditText edit = (EditText) noticeDialog.findViewById(R.id.notice_dialog_message);
+                                String noticeMessage = edit.getText().toString();
+
+                                News courseNotice = new News();
+                                courseNotice.createNews(7, courses.get(position), noticeMessage);
+
+                                //TODO notifica push
 
                                 noticeDialog.dismiss();
-                                noticeMessage = text;
-
+                                Log.println(Log.ASSERT, "COURSEADAPTER", "Message: "+noticeMessage);
                             }
                         });
 
 
                         noticeDialog.show();
 
-                        News courseNotice = new News();
-                        Log.println(Log.ASSERT, "COURSEADAPTER", "ERROR: trying to add/publish a course to a non-allowed user");
-                        courseNotice.createNews(7, courses.get(position), noticeMessage);
+
 
                     }
                     else {

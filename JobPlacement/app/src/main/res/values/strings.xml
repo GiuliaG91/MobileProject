@@ -219,6 +219,7 @@
     <string name="button_publish_notice">Publish notice</string>
     <string name="notice_insert_message">Insert message text:</string>
     <string name="notice_message_hint">Message</string>
+    <string name="notice_news_title">New notice for course: </string>
 
 
     <!-- ________________ ROOMS SEARCH / DISPLAY _______________________________________________ -->

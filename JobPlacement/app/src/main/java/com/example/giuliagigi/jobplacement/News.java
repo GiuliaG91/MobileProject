@@ -204,6 +204,7 @@ public class News extends ParseObject {
 
     public void createNews(int type, Course course, String message){
         this.setCourse(course);
+        this.setDate(Calendar.getInstance());
         this.setType(type);
         this.setMessage(message);
         this.saveEventually();
