@@ -37,7 +37,7 @@ public class LectureDisplayFragment extends Fragment {
 
     private GlobalData globalData;
     private ArrayList<Course> courses;
-    private boolean isViewPopulated = false;
+    private boolean isWidthSet = false;
 
     public static LectureDisplayFragment newInstance(ArrayList<Course> courses){
 
@@ -63,13 +63,17 @@ public class LectureDisplayFragment extends Fragment {
 
     // --------- END ON CREATE -----------------------------------------------------------
 
+
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+
+        Log.println(Log.ASSERT, "LECTUREDISPLAY", "onCreateView");
 
         MyBundle bundle = globalData.getBundle(BUNDLE_IDENTIFIER);
 
         if(bundle != null){
 
+            Log.println(Log.ASSERT, "LECTUREDISPLAY", "found a bundle");
             ArrayList list = bundle.getList(BUNDLE_KEY_COURSE);
             courses = new ArrayList<Course>();
 
@@ -88,33 +92,45 @@ public class LectureDisplayFragment extends Fragment {
         final ViewTreeObserver vto = lecturesRelativeLayouts[0].getViewTreeObserver();
         if(vto.isAlive()){
 
+            Log.println(Log.ASSERT, "LECTUREDISPLAY", "vto alive");
             vto.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
                 @Override
                 public void onGlobalLayout() {
 
-                    DAY_WIDTH = lecturesRelativeLayouts[0].getWidth();
-                    if(!isViewPopulated){
+                    if(!isWidthSet){
 
-                        isViewPopulated = true;
+                        DAY_WIDTH = lecturesRelativeLayouts[0].getWidth();
                         populateView();
+                        isWidthSet = true;
                     }
+
                 }
             });
         }
 
+        if(isWidthSet)
+            populateView();
+
         return root;
     }
+
+//    @Override
+//    public void onPause() {
+//
+//        Log.println(Log.ASSERT, "LECTUREDISPLAY", "onPause");
+//
+//        super.onPause();
+//    }
 
     // ------------- ON SAVE INSTANCE STATE ----------------------------------------------
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
 
+        Log.println(Log.ASSERT, "LECTUREDISPLAY", "onSaveInstanceState");
         MyBundle bundle = globalData.addBundle(BUNDLE_IDENTIFIER);
         bundle.putList(BUNDLE_KEY_COURSE,courses);
-
         super.onSaveInstanceState(outState);
-
     }
 
 
@@ -257,9 +273,9 @@ public class LectureDisplayFragment extends Fragment {
             int width = (int)(((float)DAY_WIDTH)/maxOverlap);
             int leftMargin = (int)((i%maxOverlap)*width);
 
-            Log.println(Log.ASSERT, "LECTUREDISPLAY", "hourheight = " + hourHeight + "; startMinute = " + startMinute);
-            Log.println(Log.ASSERT, "LECTUREDISPLAY", "dayWidth = " + DAY_WIDTH);
-            Log.println(Log.ASSERT,"LECTUREDISPLAY", "height = " + height + "; topMargin = " + topMargin + "; width = " + width + "; leftMargin" + leftMargin);
+//            Log.println(Log.ASSERT, "LECTUREDISPLAY", "hourheight = " + hourHeight + "; startMinute = " + startMinute);
+//            Log.println(Log.ASSERT, "LECTUREDISPLAY", "dayWidth = " + DAY_WIDTH);
+//            Log.println(Log.ASSERT,"LECTUREDISPLAY", "height = " + height + "; topMargin = " + topMargin + "; width = " + width + "; leftMargin" + leftMargin);
 
             RelativeLayout.LayoutParams param = new RelativeLayout.LayoutParams(width, height);
             param.setMargins(leftMargin, topMargin, 0, 0);
@@ -271,8 +287,8 @@ public class LectureDisplayFragment extends Fragment {
     }
 
 
-
-    private View setFields(Lecture l, int type){ //metodo utilizzato per riempire i campi delle viste di ogni lezione. Type == 0 --> lecture_ite, Type == 1 --> lecture_dialog_item
+    //metodo utilizzato per riempire i campi delle viste di ogni lezione. Type == 0 --> lecture_ite, Type == 1 --> lecture_dialog_item
+    private View setFields(Lecture l, int type){
         View item;
         if(type == 0) {
             item = getActivity().getLayoutInflater().inflate(R.layout.lecture_item, null);
@@ -305,8 +321,9 @@ public class LectureDisplayFragment extends Fragment {
 
     private void populateView(){
 
-        for(int i=0;i<5;i++){
+        Log.println(Log.ASSERT, "LECTUREDISPLAY", "populating view");
 
+        for(int i=0;i<5;i++){
 
             ArrayList<Lecture> dayLectures = new ArrayList<Lecture>();
 
@@ -327,85 +344,5 @@ public class LectureDisplayFragment extends Fragment {
 
     //////////////////////////////////////////////////////////////////////////////////////
     // ----------------- END AUXILIARY METHODS -----------------------------------------//
-    //////////////////////////////////////////////////////////////////////////////////////
-
-
-
-
-//----------------------------------------------------------------------------------------------------------------------------------------------
-
-
-
-
-    //////////////////////////////////////////////////////////////////////////////////////
-    // --------------------- AUXILIARY CLASSES -----------------------------------------//
-    //////////////////////////////////////////////////////////////////////////////////////
-
-    //------------- LECTURE LIST ADAPTER -------------------------------------------------
-//    private class LectureListAdapter extends ArrayAdapter<Lecture> {
-//
-//
-//        private ArrayList<Lecture> lectures;
-//
-//        public LectureListAdapter(ArrayList<Lecture> lectures) {
-//
-//            super(getActivity().getApplicationContext(),R.layout.lecture_item,lectures);
-//            this.lectures = lectures;
-//
-//
-//        }
-//
-//        @Override
-//        public View getView(int position, View convertView, ViewGroup parent){
-//
-//            Lecture l = lectures.get(position);
-//
-//            if(convertView == null)
-//                convertView = getActivity().getLayoutInflater().inflate(R.layout.lecture_item,parent,false);
-//
-//            TextView title = (TextView)convertView.findViewById(R.id.LECTUREITEM_textView_courseName);
-//            title.setText(l.getCourseName());
-//
-//            TextView dayAndSchedule = (TextView)convertView.findViewById(R.id.LECTUREITEM_textView_schedule);
-//            dayAndSchedule.setText(l.getTimeTable());
-//
-//            TextView room = (TextView)convertView.findViewById(R.id.LECTUREITEM_textView_Room);
-//            room.setText(l.getRoomName());
-//
-//            TextView professor = (TextView)convertView.findViewById(R.id.LECTUREITEM_textView_Professor);
-//            professor.setText(l.getProfessor());
-//
-//            return convertView;
-//        }
-//
-//
-//
-//    }
-    //--------- END LECTURE LIST ADAPTER -------------------------------------------------
-
-
-    //------------- HOUR COMPARATOR ------------------------------------------------------
-//    class hourComparator implements Comparator<Lecture> {
-//        @Override
-//        public int compare(Lecture l1, Lecture l2) {
-//
-//            if(l1.getSchedule().getStartHour() == l2.getSchedule().getStartHour())
-//                return l1.getSchedule().getStartMinute() - l2.getSchedule().getStartMinute();
-//
-//            return l1.getSchedule().getStartHour() - l2.getSchedule().getStartHour();
-//        }
-//    }
-//
-//    class durationComparator implements Comparator<Lecture> {
-//        @Override
-//        public int compare(Lecture l1, Lecture l2) {
-//
-//            return l1.getSchedule().getMinuteDuration() - l2.getSchedule().getMinuteDuration();
-//        }
-//    }
-    //--------- END HOUR COMPARATOR ------------------------------------------------------
-
-    //////////////////////////////////////////////////////////////////////////////////////
-    // ----------------- END AUXILIARY CLASSES -----------------------------------------//
     //////////////////////////////////////////////////////////////////////////////////////
 }

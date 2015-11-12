@@ -74,20 +74,22 @@ public class StudentCoursesManagementFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
 
-        if(savedInstanceState != null){
+        MyBundle bundle = globalData.getBundle(BUNDLE_IDENTIFIER);
 
-            MyBundle bundle = globalData.getBundle(BUNDLE_IDENTIFIER);
+        if(bundle != null){
 
-            if(bundle != null){
+            Log.println(Log.ASSERT, "STUDENTCOURSEMANAG", "found a bundle");
+            student = (Student)bundle.get(BUNDLE_KEY_STUDENT);
 
-                student = (Student)bundle.get(BUNDLE_KEY_STUDENT);
+            ArrayList list = bundle.getList(BUNDLE_KEY_COURSES);
+
+            if(list != null){
 
                 courses = new ArrayList<>();
-                ArrayList list = bundle.getList(BUNDLE_KEY_COURSES);
-
                 for(Object o : list)
                     courses.add((Course)o);
             }
+
         }
 
         root =  inflater.inflate(R.layout.fragment_courses_management, container, false);
@@ -116,6 +118,8 @@ public class StudentCoursesManagementFragment extends Fragment {
     @Override
     public void onSaveInstanceState(Bundle outState) {
 
+
+        Log.println(Log.ASSERT, "STUDENTCOURSEMANAG", "onSaveInstanceState");
         MyBundle bundle = globalData.addBundle(BUNDLE_IDENTIFIER);
 
         bundle.put(BUNDLE_KEY_STUDENT,student);
