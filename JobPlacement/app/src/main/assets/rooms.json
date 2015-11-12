@@ -1,23 +1,50 @@
 [
   {
-    "name" : "3I",
+    "name" : "3T",
     "floor" : "0",
-    "building" : "Ingegneria del Cinema / Aule T"
+    "building" : "Ingegneria del Cinema / Aule T",
+    "startHour" : "8",
+    "startMinute" : "30",
+    "endHour" : "19",
+    "endMinute" : "0",
+    "xCoordinate" : "0.7304",
+    "yCoordinate" : "0.3262"
   },
   {
     "name" : "2M",
     "floor" : "0",
-    "building" : "Sede Architettura"
+    "building" : "Sede Architettura",
+    "startHour" : "8",
+    "startMinute" : "30",
+    "endHour" : "19",
+    "endMinute" : "0",
+    "xCoordinate" : "0.5019",
+    "yCoordinate" : "0.0918"
+
   },
   {
     "name" : "4",
     "floor" : "0",
-    "building" : "Sede Centrale"
+    "building" : "Sede Centrale",
+    "startHour" : "8",
+    "startMinute" : "30",
+    "endHour" : "19",
+    "endMinute" : "0",
+    "xCoordinate" : "0.5762",
+    "yCoordinate" : "0.8125"
+
   },
   {
     "name" : "10D",
     "floor" : "3",
-    "building" : "Fabbricato A"
+    "building" : "Sede Centrale",
+    "startHour" : "8",
+    "startMinute" : "30",
+    "endHour" : "19",
+    "endMinute" : "0",
+    "xCoordinate" : "0.6387",
+    "yCoordinate" : "0.8242"
+
   },
   {
     "name" : "Biblioteca Ingegneria Informatica",
@@ -26,7 +53,9 @@
     "startHour" : "8",
     "startMinute" : "30",
     "endHour" : "18",
-    "endMinute" : "0"
+    "endMinute" : "0",
+    "xCoordinate" : "0.4844",
+    "yCoordinate" : "0.3672"
   },
   {
      "name" : "Mensa",
@@ -40,8 +69,164 @@
      "yCoordinate" : "0.3926"
   },
   {
-     "name" : "4T",
+     "name" : "4D",
+    "floor" : "3",
+    "building" : "Sede Centrale",
+    "startHour" : "8",
+    "startMinute" : "30",
+    "endHour" : "19",
+    "endMinute" : "0",
+    "xCoordinate" : "0.6387",
+    "yCoordinate" : "0.8868"
+
+  },
+  {
+     "name" : "LABINF",
+     "floor" : "1",
+     "building" : "Cittadella Politecnica",
+     "startHour" : "8",
+     "startMinute" : "30",
+     "endHour" : "19",
+     "endMinute" : "0",
+     "xCoordinate" : "0.6406",
+     "yCoordinate" : "0.4258"
+  },
+  {
+     "name" : "5I",
+     "floor" : "-1",
+     "building" : "Cittadella Politecnica",
+     "startHour" : "8",
+     "startMinute" : "30",
+     "endHour" : "19",
+     "endMinute" : "0",
+     "xCoordinate" : "0.7598",
+     "yCoordinate" : "0.2207"
+  },
+  {
+     "name" : "2T",
      "floor" : "0",
-     "building" : "Aule T"
+     "building" : "Ingegneria del Cinema / Aule T",
+     "startHour" : "8",
+     "startMinute" : "30",
+     "endHour" : "19",
+     "endMinute" : "0",
+     "xCoordinate" : "0.6894",
+     "yCoordinate" : "0.3574"
+  },
+  {
+     "name" : "3I",
+     "floor" : "-1",
+     "building" : "Cittadella Politecnica",
+     "startHour" : "8",
+     "startMinute" : "30",
+     "endHour" : "19",
+     "endMinute" : "0",
+     "xCoordinate" : "0.7187",
+     "yCoordinate" : "0.2207"
+  },
+  {
+     "name" : "LAIB4D",
+     "floor" : "2",
+     "building" : "Sede Centrale",
+     "startHour" : "8",
+     "startMinute" : "30",
+     "endHour" : "19",
+     "endMinute" : "0",
+     "xCoordinate" : "0.3965",
+     "yCoordinate" : "0.9082"
+  },
+  {
+     "name" : "5P",
+     "floor" : "0",
+     "building" : "Sede Architettura",
+     "startHour" : "8",
+     "startMinute" : "30",
+     "endHour" : "19",
+     "endMinute" : "0",
+     "xCoordinate" : "0.6953",
+     "yCoordinate" : "0.0898"
+  },
+  {
+     "name" : "5N",
+     "floor" : "0",
+     "building" : "Sede Architettura",
+     "startHour" : "8",
+     "startMinute" : "30",
+     "endHour" : "19",
+     "endMinute" : "0",
+     "xCoordinate" : "0.5605",
+     "yCoordinate" : "0.1094"
+  },
+  {
+     "name" : "Aula Magna",
+     "floor" : "2",
+     "building" : "Sede Centrale",
+     "startHour" : "8",
+     "startMinute" : "30",
+     "endHour" : "19",
+     "endMinute" : "0",
+     "xCoordinate" : "0.5098",
+     "yCoordinate" : "0.7500"
+  },
+  {
+    "name" : "2",
+    "floor" : "0",
+    "building" : "Sede Centrale",
+    "startHour" : "8",
+    "startMinute" : "30",
+    "endHour" : "19",
+    "endMinute" : "0",
+    "xCoordinate" : "0.5762",
+    "yCoordinate" : "0.8223"
+
+  },
+  {
+    "name" : "6",
+    "floor" : "0",
+    "building" : "Sede Centrale",
+    "startHour" : "8",
+    "startMinute" : "30",
+    "endHour" : "19",
+    "endMinute" : "0",
+    "xCoordinate" : "0.5762",
+    "yCoordinate" : "0.7509"
+
+  }
+  ,
+  {
+    "name" : "1",
+    "floor" : "0",
+    "building" : "Sede Centrale",
+    "startHour" : "8",
+    "startMinute" : "30",
+    "endHour" : "19",
+    "endMinute" : "0",
+    "xCoordinate" : "0.4492",
+    "yCoordinate" : "0.8223"
+
+  },
+  {
+    "name" : "3",
+    "floor" : "0",
+    "building" : "Sede Centrale",
+    "startHour" : "8",
+    "startMinute" : "30",
+    "endHour" : "19",
+    "endMinute" : "0",
+    "xCoordinate" : "0.4492",
+    "yCoordinate" : "0.8125"
+
+  },
+  {
+    "name" : "5",
+    "floor" : "0",
+    "building" : "Sede Centrale",
+    "startHour" : "8",
+    "startMinute" : "30",
+    "endHour" : "19",
+    "endMinute" : "0",
+    "xCoordinate" : "0.4492",
+    "yCoordinate" : "0.7812"
+
   }
 ]
