@@ -1,6 +1,7 @@
 package com.example.giuliagigi.jobplacement;
 
 import android.app.Activity;
+import android.content.pm.ActivityInfo;
 import android.opengl.GLSurfaceView;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -32,9 +33,14 @@ public class RoomMapFragment extends Fragment implements GLSurfaceView.Renderer,
 
     private static final float MOVE_SCALE_FACTOR = 0.025f;
     private static final float SCALE_SCALE_FACTOR = 0.01f;
-    private static final int MAX_SCALE = 60;
-    private static final int MIN_SCALE = 5;
-    private static final int MAP_START_SCALE = 20;
+    private static final int MAX_SCALE = 40;
+    private static final int MIN_SCALE = 10;
+    private static final int MAP_START_SCALE = 30;
+    private static final float COEFFICIENT_X = 0.45f;
+    private static final float OFFSET_X = 4.5f;
+    private static final float COEFFICIENT_Y = 0.5f;
+    private static final float OFFSET_Y = 5f;
+    private static final float MARKER_SCALE = 0.005f;
 
 
     private Room room;
@@ -43,6 +49,7 @@ public class RoomMapFragment extends Fragment implements GLSurfaceView.Renderer,
     private GestureDetector gestureDetector;
 
     /* these two object must be manipulated only in the background thread */
+    private Activity activity;
     private World world;
     private FrameBuffer frameBuffer;
     private Object3D mapPlane, roomMarker;
@@ -71,6 +78,7 @@ public class RoomMapFragment extends Fragment implements GLSurfaceView.Renderer,
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
+        this.activity = activity;
     }
 
     @Override
@@ -81,6 +89,7 @@ public class RoomMapFragment extends Fragment implements GLSurfaceView.Renderer,
 
         // we must set the version og the GL engine we are using
         surfaceView.setEGLContextClientVersion(2);
+        surfaceView.setEGLConfigChooser(8,8,8,8,16,0);
         surfaceView.setRenderer(this);
         surfaceView.setOnTouchListener(this);
         scaleGestureDetector = new ScaleGestureDetector(getActivity().getApplicationContext(),this);
@@ -91,12 +100,15 @@ public class RoomMapFragment extends Fragment implements GLSurfaceView.Renderer,
     @Override
     public void onResume() {
         super.onResume();
+        activity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         surfaceView.onResume();
     }
 
     @Override
     public void onPause() {
+
         surfaceView.onPause();
+        activity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);
         super.onPause();
     }
 
@@ -152,9 +164,10 @@ public class RoomMapFragment extends Fragment implements GLSurfaceView.Renderer,
         roomMarker.translate(dx,dy,0);
         mapPlane.addChild(roomMarker);
 
-        mapPlane.translate(2.5f, 0, 10);
+        mapPlane.translate(-dx*MAP_START_SCALE, -dy*MAP_START_SCALE, 10);
+        Log.println(Log.ASSERT,"ROOMMAP", " x = " + mapPlane.getTranslation().x + "; y = " + mapPlane.getTranslation().y + "; scale = " + mapPlane.getScale());
         mapPlane.setScale(MAP_START_SCALE);
-        roomMarker.scale(0.0033f);
+        roomMarker.scale(MARKER_SCALE);
 
         world.setAmbientLight(255,255,255);
         world.addObject(mapPlane);
@@ -171,7 +184,6 @@ public class RoomMapFragment extends Fragment implements GLSurfaceView.Renderer,
     public void onDrawFrame(GL10 gl) {
 
         frameBuffer.clear();            // erases the current content of the frame buffer
-
         world.renderScene(frameBuffer); // applies geometric transforms responsible to create the 2D representation of the world
         world.draw(frameBuffer);        // draws a 2D image of the world on the frame buffer
 
@@ -216,7 +228,25 @@ public class RoomMapFragment extends Fragment implements GLSurfaceView.Renderer,
                 newScale = Math.max(MIN_SCALE, newScale);
                 mapPlane.setScale(newScale);
 
-                mapPlane.translate(dx * MOVE_SCALE_FACTOR, dy * MOVE_SCALE_FACTOR, 0);
+                float maxX = mapPlane.getScale()*COEFFICIENT_X - OFFSET_X;
+                float minX = maxX;
+                float maxY = mapPlane.getScale()*COEFFICIENT_Y - OFFSET_Y;
+                float minY = -maxY;
+                float xTranslate = dx * MOVE_SCALE_FACTOR;
+                float yTranslate = dy * MOVE_SCALE_FACTOR;
+
+                if( (mapPlane.getTranslation().x + xTranslate) > maxX)
+                    xTranslate = maxX - mapPlane.getTranslation().x;
+                else if( (mapPlane.getTranslation().x + xTranslate) < minX)
+                    xTranslate = minX - mapPlane.getTranslation().x;
+
+                if( (mapPlane.getTranslation().y + yTranslate) > maxY)
+                    yTranslate = maxY - mapPlane.getTranslation().y;
+                else if( (mapPlane.getTranslation().y + yTranslate) < minY)
+                    yTranslate = minY - mapPlane.getTranslation().y;
+
+
+                mapPlane.translate(xTranslate, yTranslate, 0);
             }
         });
 
@@ -278,7 +308,24 @@ public class RoomMapFragment extends Fragment implements GLSurfaceView.Renderer,
             @Override
             public void run() {
 
-                mapPlane.translate(dx * MOVE_SCALE_FACTOR, dy * MOVE_SCALE_FACTOR, 0);
+                float maxX = mapPlane.getScale()*COEFFICIENT_X - OFFSET_X;
+                float minX = -maxX;
+                float maxY = mapPlane.getScale()*COEFFICIENT_Y - OFFSET_Y;
+                float minY = -maxY;
+                float xTranslate = dx * MOVE_SCALE_FACTOR;
+                float yTranslate = dy * MOVE_SCALE_FACTOR;
+
+                if( (mapPlane.getTranslation().x + xTranslate) > maxX)
+                    xTranslate = maxX - mapPlane.getTranslation().x;
+                else if( (mapPlane.getTranslation().x + xTranslate) < minX)
+                    xTranslate = minX - mapPlane.getTranslation().x;
+
+                if( (mapPlane.getTranslation().y + yTranslate) > maxY)
+                    yTranslate = maxY - mapPlane.getTranslation().y;
+                else if( (mapPlane.getTranslation().y + yTranslate) < minY)
+                    yTranslate = minY - mapPlane.getTranslation().y;
+
+                mapPlane.translate(xTranslate, yTranslate, 0);
             }
         });
 

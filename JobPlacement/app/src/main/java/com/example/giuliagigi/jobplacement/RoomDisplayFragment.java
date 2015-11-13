@@ -12,6 +12,10 @@ import android.widget.TextView;
 
 public class RoomDisplayFragment extends Fragment {
 
+    private static final String BUNDLE_IDENTIFIER = "ROOMDISPLAY";
+    private static final String BUNDLE_KEY_TAIL = "bundle_tail";
+    private static final String BUNDLE__KEY_ROOM = "bundle_room";
+
     private Room room;
     private TextView etName, etFloor, etBuilding, etSchedule;
     private Button showMapButton;
@@ -41,8 +45,16 @@ public class RoomDisplayFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
+
+        if(savedInstanceState != null){
+
+            String tail = savedInstanceState.getString(BUNDLE_KEY_TAIL);
+            MyBundle bundle = globalData.getBundle(BUNDLE_IDENTIFIER + tail);
+
+            if(bundle != null)
+                room = (Room)bundle.get(BUNDLE__KEY_ROOM);
+        }
 
         View root = inflater.inflate(R.layout.fragment_room_display, container, false);
 
@@ -85,6 +97,18 @@ public class RoomDisplayFragment extends Fragment {
         });
 
         return root;
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+
+        String tail = room.toString();
+        outState.putString(BUNDLE_KEY_TAIL,tail);
+
+        MyBundle bundle = globalData.addBundle(BUNDLE_IDENTIFIER + tail);
+        bundle.put(BUNDLE__KEY_ROOM,room);
+
+        super.onSaveInstanceState(outState);
     }
 
     @Override
