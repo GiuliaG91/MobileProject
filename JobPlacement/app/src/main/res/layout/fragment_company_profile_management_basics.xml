@@ -25,8 +25,8 @@
                 android:id="@+id/basics_profile_photo_container">
 
                 <ImageView
-                    android:layout_width="fill_parent"
-                    android:layout_height="fill_parent"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/profile_photo_height_port"
                     android:background="@drawable/user_icon"
                     android:scaleType="centerInside"
                     android:id="@+id/basics_profilePhoto"/>

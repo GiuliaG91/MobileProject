@@ -1,58 +1,59 @@
 <resources>
 
     <!-- ________________ COMMONS ______________________________________________________________ -->
-    <string name="nofavourites">No Favourites</string>
-    <string name="search">search</string>
-    <string name="modify">modify</string>
-    <string name="new_message">Create new message</string>
-    <string name="new_message_toolbar_title">New Message</string>
-    <string name="sent_mail">Sent mails</string>
-    <string name="received_mail">Received mails</string>
-    <string name="cancel_mails">Cancel mails</string>
-    <string name="sender">From</string>
-    <string name="recipient">To</string>
-    <string name="recipients">Recipients</string>
-    <string name="date">Date</string>
-    <string name="object_">Object:</string>
-    <string name="object">Object</string>
-    <string name="body_new">Reply:</string>
-    <string name="body">Body:</string>
-    <string name="filter">Filter</string>
+    <string name="nofavourites">Nessun Preferito</string>
+    <string name="search">cerca</string>
+    <string name="modify">modifica</string>
+    <string name="new_message">Crea un nuovo messaggio</string>
+    <string name="new_message_toolbar_title">Nuovo Messaggio</string>
+    <string name="sent_mail">Posta inviata</string>
+    <string name="received_mail">Posta ricevuta</string>
+    <string name="cancel_mails">Email cancellate</string>
+    <string name="sender">Da</string>
+    <string name="recipient">A</string>
+    <string name="recipients">Destinatari</string>
+    <string name="date">Data</string>
+    <string name="object_">Oggetto:</string>
+    <string name="object">Oggetto</string>
+    <string name="body_new">Risposta:</string>
+    <string name="body">Corpo:</string>
+    <string name="filter">Filtro</string>
     <string name="menu">Menu</string>
-    <string name="edit">Edit</string>
-    <string name="send">Send</string>
-    <string name="see">See</string>
-    <string name="open">Open</string>
-    <string name="close">Close</string>
+    <string name="edit">Modifica</string>
+    <string name="send">Invia</string>
+    <string name="see">Vedi</string>
+    <string name="open">Apri</string>
+    <string name="close">Chiudi</string>
     <string name="ok">Ok</string>
-    <string name="yes">Yes</string>
+    <string name="yes">Sì</string>
     <string name="no">No</string>
-    <string name="from">From:</string>
-    <string name="to">To: </string>
+    <string name="from">Da:</string>
+    <string name="to">A: </string>
     <string name="password:">Password:</string>
-    <string name="insert">Insert</string>
-    <string name="set">Set:</string>
-    <string name="cancel">Cancel:</string>
-    <string name="cancel_">Cancel</string>
-    <string name="Map">Map</string>
-    <string name="on">On</string>
-    <string name="wrote">wrote</string>
-    <string name="me">Myself</string>
-    <string name="error">Error</string>
-    <string name="warning">Warning!</string>
-    <string name = "SEARCH">SEARCH</string>
+    <string name="insert">Inserisci</string>
+    <string name="set">Imposta:</string>
+    <string name="cancel">Annulla:</string>
+    <string name="cancel_">Annulla</string>
+    <string name="Map">Mappa</string>
+    <string name="on">Il</string>
+    <string name="wrote">ha scritto</string>
+    <string name="me">Me</string>
+    <string name="error">Errore</string>
+    <string name="warning">Attenzione!</string>
+    <string name = "SEARCH">CERCA</string>
     <string name="home">Home</string>
-    <string name="Done">Done</string>
-    <string name="publish">Publish</string>
-    <string name="save">Save</string>
-    <string name="location">Location</string>
-    <string name="floor">Floor</string>
-    <string name="confirm">Confirm</string>
+    <string name="Done">Fattp</string>
+    <string name="publish">Pubblica</string>
+    <string name="save">Salva</string>
+    <string name="location">Posizione</string>
+    <string name="floor">Piano</string>
+    <string name="confirm">Conferma</string>
 
-    <string name="ground_floor">Ground floor</string>
-    <string name="basement_floor">Basement</string>
+    <string name="ground_floor">Piano terra</string>
+    <string name="basement_floor">Piano seminterrato</string>
 
     <string-array name="cardinal_numbers">
+<<<<<<< HEAD
         <item>1st</item>
         <item>2nd</item>
         <item>3rd</item>
@@ -63,12 +64,20 @@
         <item>8th</item>
         <item>9th</item>
         <item>10th</item>
+=======
+        <item>Primo</item>
+        <item>Secondo</item>
+        <item>Terzo</item>
+        <item>Quarto</item>
+        <item>Quinto</item>
+        <item>Sesto</item>
+>>>>>>> origin/newMaster2
     </string-array>
 
 
     <!-- ________________ GENERAL ______________________________________________________________ -->
     <string name="app_name">JobPlacement</string>
-    <string name="action_settings">Settings</string>
+    <string name="action_settings">Impostazioni</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="user_icon_description">UserIcon</string>
 
@@ -79,405 +88,411 @@
     <string name="title_activity_home">Home</string>
 
     <!-- ________________ LOGIN/LOGOUT _________________________________________________________ -->
-    <string name="login_hint_email">Email address</string>
+    <string name="login_hint_email">Indirizzo email</string>
     <string name="login_hint_password">Password</string>
-    <string name="login_remember">Remember</string>
-    <string name="login_forgot">Forgot your password?</string>
-    <string name="login_register">Register now!</string>
-    <string name="login_password_reset">Reset password?</string>
-    <string name="login_insert_mail">Insert your email</string>
-    <string name="login_reset_cancel">Cancel</string>
-    <string name="login_reset_send">Send</string>
-    <string name="login_reset_message">We will send you an eMail for password reset</string>
-    <string name="login_loggin_in">Logging in ...</string>
-    <string name="login_successful">login successful</string>
-    <string name="login_failed">invalid username or password</string>
-    <string name="logout_want_logout">Do you want to logout?</string>
-    <string name="logout_logging_out">Logging out...</string>
-    <string name="logout_complete">Logout completed</string>
+    <string name="login_remember">Ricordami</string>
+    <string name="login_forgot">Password dimenticata?</string>
+    <string name="login_register">Registrati ora!</string>
+    <string name="login_password_reset">Reimpostare la password?</string>
+    <string name="login_insert_mail">Inserisci la tua mail</string>
+    <string name="login_reset_cancel">Annulla</string>
+    <string name="login_reset_send">Invia</string>
+    <string name="login_reset_message">Ti manderemo una mail per reimpostare la password</string>
+    <string name="login_loggin_in">Login in corso...</string>
+    <string name="login_successful">login avvenuto con successo</string>
+    <string name="login_failed">username o password errati</string>
+    <string name="logout_want_logout">Vuoi disconnetterti?</string>
+    <string name="logout_logging_out">Logout in corso...</string>
+    <string name="logout_complete">Logout copletato</string>
 
     <!-- ________________ REGISTRATION _________________________________________________________ -->
     <string name="registration_title">RegistrationActivity</string>
-    <string name="registration_select_type">Select a type</string>
-    <string name="registration_type_student">Student</string>
-    <string name="registration_type_company">Company</string>
-    <string name="registration_register">Register!</string>
-    <string name="registration_mail_already_used">The mail you are trying to use is already taken by another account</string>
-    <string name="registration_mail_not_valid">The mail you are trying to use is not valid</string>
-    <string name="registration_connection_not_available">Connection to sever is unavailable, try later</string>
-    <string name="registration_mismatching_password">mismatching passwords</string>
-    <string name="registration_missing_info">missing information</string>
-    <string name="registration_must_select_type">You must select a type of user to register</string>
+    <string name="registration_select_type">Seleziona un tipo</string>
+    <string name="registration_type_student">Studente</string>
+    <string name="registration_type_company">Azienda</string>
+    <string name="registration_register">Registrati!</string>
+    <string name="registration_mail_already_used">L\'indirizzo email inserito appartiene già ad un altro account</string>
+    <string name="registration_mail_not_valid">L\'indirizzo email inserito non è valido</string>
+    <string name="registration_connection_not_available">Connessione al server non disponibile, riprova più tardir</string>
+    <string name="registration_mismatching_password">Le passwords non coincidono</string>
+    <string name="registration_missing_info">informazioni mancanti</string>
+    <string name="registration_must_select_type">Devi selezionare un tipo di utente per registrarti</string>
 
     <!-- ________________ PROFILE ______________________________________________________________ -->
     <string name="profile_title">ProfileManagement</string>
     <string name="profile_account_tab">Account</string>
-    <string name="profile_basics_tab">Overview</string>
-    <string name="profile_skills_tab">Skills</string>
-    <string name="profile_registry_tab">Registry</string>
-    <string name="profile_office_tab">Offices</string>
+    <string name="profile_basics_tab">Generali</string>
+    <string name="profile_skills_tab">Competenze</string>
+    <string name="profile_registry_tab">Recapiti</string>
+    <string name="profile_office_tab">Le sedi</string>
 
-    <string name="profile_confirm_password">Confirm password:</string>
-    <string name="profile_date_hint">Click to insert date</string>
-    <string name="profile_person_fragment_name_title">Name:</string>
-    <string name="profile_person_fragment_surname_title">Surname:</string>
-    <string name="profile_person_fragment_sex_title">Sex:</string>
-    <string name="profile_person_fragment_birth_title">Date of birth:</string>
-    <string name="profile_person_fragment_birth_city_title">Birth city:</string>
-    <string name="profile_person_fragment_email_title">Email address:</string>
-    <string name="profile_student_fragment_description">Short description:</string>
-    <string name="profile_student_fragment_address">Address:</string>
-    <string name="profile_student_fragment_cap">Postal code:</string>
-    <string name="profile_student_fragment_city">City:</string>
-    <string name="profile_student_fragment_nation">Nation:</string>
-    <string name="profile_student_fragment_phones">Phones:</string>
-    <string name="profile_student_fragment_degrees">Degrees:</string>
-    <string name="profile_student_fragment_languages">Languages:</string>
-    <string name="profile_student_fragment_languages_title">Language:</string>
-    <string name="profile_student_fragment_language_level">Level:</string>
+    <string name="profile_confirm_password">Conferma la password:</string>
+    <string name="profile_date_hint">Clicca per inserire una data</string>
+    <string name="profile_person_fragment_name_title">Nome:</string>
+    <string name="profile_person_fragment_surname_title">Cognome:</string>
+    <string name="profile_person_fragment_sex_title">Sesso:</string>
+    <string name="profile_person_fragment_birth_title">Data di nascita:</string>
+    <string name="profile_person_fragment_birth_city_title">Città di nascita:</string>
+    <string name="profile_person_fragment_email_title">Indirizzo email:</string>
+    <string name="profile_student_fragment_description">Breve descrizione:</string>
+    <string name="profile_student_fragment_address">Indirizzo:</string>
+    <string name="profile_student_fragment_cap">CAP:</string>
+    <string name="profile_student_fragment_city">Città:</string>
+    <string name="profile_student_fragment_nation">Nazione:</string>
+    <string name="profile_student_fragment_phones">Recapiti telefonici:</string>
+    <string name="profile_student_fragment_degrees">Lauree:</string>
+    <string name="profile_student_fragment_languages">Lingue:</string>
+    <string name="profile_student_fragment_languages_title">Lingua:</string>
+    <string name="profile_student_fragment_language_level">Livello:</string>
     <string name="profile_student_cv">Curriculum vitae</string>
-    <string name="profile_student_upload_cv">CV not uploaded</string>
-    <string name="profile_student_cv_only_pdf">Only PDF files accepted</string>
-    <string name="delete_course_confirm">Do you really want to delete this course?</string>
-    <string name="add_course_confirm">Do you want to add this course?</string>
-    <string name="dialog_confirm_title">Confirm your request</string>
+    <string name="profile_student_upload_cv">CV non caricato</string>
+    <string name="profile_student_cv_only_pdf">Si accettano solo file PDF</string>
+    <string name="delete_course_confirm">Vuoi veramente eliminare questo corso?</string>
+    <string name="add_course_confirm">Vuoi aggiungere questo corso?</string>
+    <string name="dialog_confirm_title">Conferma la tua richiesta</string>
 
-    <string name="string_company_fragment_name_title">Company name:</string>
-    <string name="string_company_fragment_vat">VAT Number:</string>
-    <string name="string_company_fragment_foundation_date">Foundation date:</string>
-    <string name="string_company_fragment_email">Email address:</string>
-    <string name="string_company_fragment_description">Short description:</string>
-    <string name="string_company_fragment_office_title">Offices:</string>
-    <string name="string_company_fragment_address">Address:</string>
-    <string name="string_company_fragment_cap">Postal code:</string>
-    <string name="string_company_fragment_nation">Nation:</string>
-    <string name="string_company_fragment_city">City:</string>
-    <string name="string_company_fragment_office_type">Office type:</string>
+    <string name="string_company_fragment_name_title">Nome dell\'azienda:</string>
+    <string name="string_company_fragment_vat">Partita IVA:</string>
+    <string name="string_company_fragment_foundation_date">Data di fondazione:</string>
+    <string name="string_company_fragment_email">Indirizzo email:</string>
+    <string name="string_company_fragment_description">Breve descrizione:</string>
+    <string name="string_company_fragment_office_title">Sedi:</string>
+    <string name="string_company_fragment_address">Indirizzo:</string>
+    <string name="string_company_fragment_cap">CAP:</string>
+    <string name="string_company_fragment_nation">Nazione:</string>
+    <string name="string_company_fragment_city">Città:</string>
+    <string name="string_company_fragment_office_type">Tipo di ufficio:</string>
 
-    <string name="string_send_email">Do you want to send a message to </string>
-    <string name="string_cannot_edit">ERROR: you are not supposed to modify this account</string>
-    <string name="string_email_not_verified">Your email was not verified yet. Please click on the link we sent you</string>
+    <string name="string_send_email">Vuoi mandare un messaggio a </string>
+    <string name="string_cannot_edit">ERRORE: non puoi modificare questo account</string>
+    <string name="string_email_not_verified">Il tuo indirizzo email non è ancora stato verificato. Per favore, clicca su link che ti abbiamo inviato.</string>
 
 
     <!-- ________________ DEGREE _______________________________________________________________ -->
-    <string name="string_degree_fragment_degree_type_title">Degree type:</string>
-    <string name="string_degree_fragment_degree_field_title">Field of study:</string>
-    <string name="string_degree_fragment_degree_mark_title">Mark:</string>
-    <string name="string_degree_fragment_degree_loud_title">Loud:</string>
-    <string name="string_degree_fragment_degree_date_title">Degree date:</string>
-    <string name="string_degree_type_bachelor">Bachelor</string>
-    <string name="string_degree_type_master">Master</string>
-    <string name="string_degree_type_doctorate">Doctorate</string>
-    <string name="string_degree_type_graduating">Graduating</string>
-    <string name="string_degree_type_none">None</string>
-    <string name="string_field_informatics">Informatics</string>
-    <string name="string_field_mechanics">Mechanics</string>
-    <string name="string_field_chemistry">Chemistry</string>
-    <string name="string_field_energy">Energy</string>
-    <string name="string_field_materials">Materials</string>
+    <string name="string_degree_fragment_degree_type_title">Tipo di laurea:</string>
+    <string name="string_degree_fragment_degree_field_title">Campo di studi:</string>
+    <string name="string_degree_fragment_degree_mark_title">Voto:</string>
+    <string name="string_degree_fragment_degree_loud_title">Lode:</string>
+    <string name="string_degree_fragment_degree_date_title">Data di laurea:</string>
+    <string name="string_degree_type_bachelor">Triennale</string>
+    <string name="string_degree_type_master">Magistrale</string>
+    <string name="string_degree_type_doctorate">Dottorato</string>
+    <string name="string_degree_type_graduating">Laureando</string>
+    <string name="string_degree_type_none">N.D.</string>
+    <string name="string_field_informatics">Informatica</string>
+    <string name="string_field_mechanics">Meccanica</string>
+    <string name="string_field_chemistry">Chimica</string>
+    <string name="string_field_energy">Energia</string>
+    <string name="string_field_materials">Materiali</string>
 
     <!-- ________________ CERTIFICATE __________________________________________________________ -->
-    <string name="string_certificate_fragment_area">Certificates:</string>
-    <string name="string_certificate_fragment_name">Title:</string>
-    <string name="string_certificate_fragment_mark">Mark:</string>
-    <string name="string_certificate_fragment_date">Date:</string>
-    <string name="string_certificate_fragment_description">Certificate description:</string>
+    <string name="string_certificate_fragment_area">Certificati:</string>
+    <string name="string_certificate_fragment_name">Titolo:</string>
+    <string name="string_certificate_fragment_mark">Voto:</string>
+    <string name="string_certificate_fragment_date">Data:</string>
+    <string name="string_certificate_fragment_description">Descrizione del certificato:</string>
 
     <!-- ________________ ACCOUNT ______________________________________________________________ -->
-    <string name="string_account_change_username">Change username</string>
-    <string name="string_account_change_password">Change password</string>
-    <string name="string_account_resend_mail">Re-send verification mail</string>
-    <string name="string_account_delete">Delete this account</string>
+    <string name="string_account_change_username">Modifica lo username</string>
+    <string name="string_account_change_password">Modifica la password</string>
+    <string name="string_account_resend_mail">Re-invia la mail di verifica</string>
+    <string name="string_account_delete">Elimina questo account</string>
 
     <!-- ________________ OFFICE/TELEPHONE/LANGUAGE ____________________________________________ -->
-    <string name="string_office_headquarter">Headquarter</string>
-    <string name="string_office_branch">Branch</string>
-    <string name="string_language_level_low">Low</string>
-    <string name="string_language_level_none">None</string>
-    <string name="string_language_level_medium">Medium</string>
-    <string name="string_language_level_high">High</string>
-    <string name="string_telephone_type_cellular">Cellular</string>
-    <string name="string_telephone_type_home">Home</string>
+    <string name="string_office_headquarter">Sede principale</string>
+    <string name="string_office_branch">Filiale</string>
+    <string name="string_language_level_low">Basso</string>
+    <string name="string_language_level_none">N.D.</string>
+    <string name="string_language_level_medium">Medio</string>
+    <string name="string_language_level_high">Alto</string>
+    <string name="string_telephone_type_cellular">Cellulare</string>
+    <string name="string_telephone_type_home">Casa</string>
     <string name="string_telephone_type_fax">Fax</string>
-    <string name="string_telephone_type_office">Office</string>
-    <string name="string_telephone_type_other">Other</string>
+    <string name="string_telephone_type_office">Ufficio</string>
+    <string name="string_telephone_type_other">Altro</string>
 
     <!-- ________________ LECTURE SEARCH / DISPLAY _____________________________________________ -->
-    <string name = "lectureSearch_InsertProfessor">Insert professor name:</string>
-    <string name = "lectureSearch_InsertCourse">Insert course name:</string>
-    <string name = "lectureSearch_hintProfessor">Professor name</string>
-    <string name = "lectureSearch_hintCourse">Course</string>
-    <string name = "LECTURE_standard_title">Course name</string>
+    <string name = "lectureSearch_InsertProfessor">Inserisci il nome del proffessore:</string>
+    <string name = "lectureSearch_InsertCourse">Inserisci il nome del corso:</string>
+    <string name = "lectureSearch_hintProfessor">Nome del professore</string>
+    <string name = "lectureSearch_hintCourse">Corso</string>
+    <string name = "LECTURE_standard_title">Nome del corso</string>
     <string name = "LECTURE_standard_day_schedule">aa:bb - cc:dd</string>
-    <string name = "LECTURE_standard_schedule">Schedule</string>
-    <string name = "LECTURE_standard_room">Room</string>
-    <string name = "LECTURE_standard_Professor">Professor</string>
+    <string name = "LECTURE_standard_schedule">Orario</string>
+    <string name = "LECTURE_standard_room">Aula</string>
+    <string name = "LECTURE_standard_Professor">Professore</string>
     <string name="title_activity_lecture_display">LectureDisplayActivity</string>
     <string name="title_activity_week_display">WeekDisplayActivity</string>
+<<<<<<< HEAD
     <string name="lecture_dialog_title">Lecture details</string>
     <string name="notice_message_course_changes">: course schedule has changed.</string>
+=======
+    <string name="lecture_dialog_title">Dettagli della lezione</string>
+    <string name="notice_message_course_changes">: l\'orario del corso è stato modificato.</string>
+    <string name="schedule_not_valid">L\'orario inserito non è valido. Non sono state apportate modifiche.</string>
+>>>>>>> origin/newMaster2
 
     <!-- _________________ PROFESSOR ___________________________________________________________ -->
-    <string name="course_item_details_button">Show details</string>
-    <string name="course_title">Course name:</string>
-    <string name="professor_name_title">Professor:</string>
-    <string name="course_code_title">Code:</string>
-    <string name="lecture_day_title">Day:</string>
-    <string name="lecture_room_title">Room:</string>
-    <string name="lecture_schedule_title">Schedule:</string>
-    <string name="button_add_my_courses">Add to my courses</string>
-    <string name="button_remove_my_courses">Remove from my courses</string>
-    <string name="button_publish_notice">Publish notice</string>
-    <string name="notice_insert_message">Insert message text:</string>
-    <string name="notice_message_hint">Message</string>
-    <string name="notice_news_title">New notice for course: </string>
+    <string name="course_item_details_button">Mostra dettagli</string>
+    <string name="course_title">Nome del corso:</string>
+    <string name="professor_name_title">Professore:</string>
+    <string name="course_code_title">Codice:</string>
+    <string name="lecture_day_title">Giorno:</string>
+    <string name="lecture_room_title">Aula:</string>
+    <string name="lecture_schedule_title">Orario:</string>
+    <string name="button_add_my_courses">Aggiungi ai miei corsi</string>
+    <string name="button_remove_my_courses">Rimuovi dai miei corsi</string>
+    <string name="button_publish_notice">Pubblica avviso</string>
+    <string name="notice_insert_message">Inserire il testo del messaggio:</string>
+    <string name="notice_message_hint">Messaggio</string>
+    <string name="notice_news_title">Nuovo avviso per il corso: </string>
 
 
     <!-- ________________ ROOMS SEARCH / DISPLAY _______________________________________________ -->
-    <string name="roomSearch_InsertRoom">Insert room name:</string>
-    <string name="roomSearch_hintRoom">room here</string>
-    <string name="roomSearch_show_map">Show on map</string>
-    <string name="room_type">Room type:</string>
-    <string name="room_building">Building:</string>
-    <string name="room_floor">Floor:</string>
-    <string name="room_timetable">Opening hours:</string>
+    <string name="roomSearch_InsertRoom">Inserire il nome dell\'aula:</string>
+    <string name="roomSearch_hintRoom">aula</string>
+    <string name="roomSearch_show_map">Mostra sulla mappa</string>
+    <string name="room_type">Tipo di aula:</string>
+    <string name="room_building">Edificio:</string>
+    <string name="room_floor">Piano:</string>
+    <string name="room_timetable">Orario di apertura:</string>
 
     <!-- ________________ MAILBOX ______________________________________________________________ -->
-    <string name="message_sent">The message was sent!</string>
-    <string name="message_emails_wrong">Delivery to the following recipient failed permanently:</string>
-    <string name="delete_messages">Delete Messages</string>
-    <string name="reply_to_sender">Reply to the sender</string>
-    <string name="reply_to_all">Reply to all</string>
-    <string name="no_recipients_message_error">Specify at least one valid recipient</string>
-    <string name="no_text_message_error">The message you are trying to send is empty</string>
-    <string name="no_object_message_warning">The message does not contain an object</string>
-    <string name="unknown_recipient_message_warning">Some of the recipients you specified do not exist (the message will be sent only to the existing recipients)</string>
-    <string name="send_myself_message_warning">You are trying to send the message to yourself!</string>
-    <string name="send_anyway_warning">Do you want to send the message anyway?</string>
-    <string name="messageEmailsWrong">The "recipients" field doesn\'t contain emails registered in this application.</string>
-    <string name="Mark">Mark:</string>
-    <string name="noDegree">No graduation recorded.</string>
-    <string name="noMark">No mark recorded.</string>
-    <string name="NoFavourites">No favourites found</string>
-    <string name="job_offer">Job Offer</string>
-    <string name="new_job_offer_message">published a new job offer on</string>
-    <string name="new_job_offer">New Job Offer</string>
-    <string name="new_student_applied">New Applied Student</string>
-    <string name="student_accepted">Application Accepted</string>
-    <string name="new_company_signed_up">New Company!!!</string>
-    <string name="profile">profile</string>
-    <string name="new_application_message">applied to the Job Offer</string>
-    <string name="the_company">The company</string>
-    <string name="application_accepted_message">accepted your application for the job offer</string>
-    <string name="new_company_signed_up_message">signed up in</string>
-    <string name="ErrorStatus">Can\'t set this status</string>
-    <string name="application_considering_message">is considering your candidature for the job offer</string>
-    <string name="application_refused_message">refused your candidature for the job offer</string>
-    <string name="application_processing_message">is processing your candidature for the job offer</string>
-    <string name="offer">Offer</string>
-    <string name="string_account_verified">User not verified</string>
-    <string name="string_account_verified_yes">Verified user</string>
-    <string name="Message_theCompany">Company </string>
-    <string name="Message_newOffer">has created a new offer that may interest you.</string>
-    <string name="Message_newMessage">New message from: </string>
-    <string name="Message_Apply">applied for your offer :</string>
-    <string name="Message_Update">Status of you application for the offer: </string>
-    <string name="Message_UpdateEnd">has been changed in</string>
+    <string name="message_sent">Messaggio inviato correttamente!</string>
+    <string name="message_emails_wrong">Invio ai seguenti destinatari fallito:</string>
+    <string name="delete_messages">Cancella messaggi</string>
+    <string name="reply_to_sender">Rispondi al mittente</string>
+    <string name="reply_to_all">Rispondi a tutti</string>
+    <string name="no_recipients_message_error">Specifica almeno un destinatario valido</string>
+    <string name="no_text_message_error">Il messaggio che stai cercando di inviare è vuoto</string>
+    <string name="no_object_message_warning">Il messaggio non contiene nessun oggetto</string>
+    <string name="unknown_recipient_message_warning">Alcuni dei destinatari inseriti non esistono (il messaggio verrà inviato solo ai destinatari esistenti)</string>
+    <string name="send_myself_message_warning">Stai cercando di mandare il messaggio a te stesso!</string>
+    <string name="send_anyway_warning">Vuoi inviare comunque il messaggio?</string>
+    <string name="messageEmailsWrong">Il campo "destinatari" non contiene email registrate a questa applicazione.</string>
+    <string name="Mark">Voto:</string>
+    <string name="noDegree">Nessuna laurea registrata.</string>
+    <string name="noMark">Nessun voto registrato.</string>
+    <string name="NoFavourites">Nessun favorito trovato</string>
+    <string name="job_offer">Offerte di lavoro</string>
+    <string name="new_job_offer_message">ha pubblicato una nuova offerta di lavoro su</string>
+    <string name="new_job_offer">Nuova offerta di lavoro</string>
+    <string name="new_student_applied">Nuovo studente candidato</string>
+    <string name="student_accepted">Candidatura accettata</string>
+    <string name="new_company_signed_up">Nuova azienda!!!</string>
+    <string name="profile">profilo</string>
+    <string name="new_application_message">si è candidato per l\'offerta di lavoro</string>
+    <string name="the_company">L\'azienda</string>
+    <string name="application_accepted_message">ha accettato la tua candidatura per l\'offerta di lavoro</string>
+    <string name="new_company_signed_up_message">si è registrata in</string>
+    <string name="ErrorStatus">Non puoi impostare questo stato</string>
+    <string name="application_considering_message">sta considerando la tua candidatura per l\'offerta di lavoro</string>
+    <string name="application_refused_message">ha rifiutato la tua candidatura per l\'offerta di lavoro</string>
+    <string name="application_processing_message">sta processando la tua candidatura per l\'offerta di lavoro</string>
+    <string name="offer">Offerta</string>
+    <string name="string_account_verified">Utente non verificato</string>
+    <string name="string_account_verified_yes">Utente verificato</string>
+    <string name="Message_theCompany">Azienda </string>
+    <string name="Message_newOffer">ha pubblicato una nuova offerta che potrebbe interessarti.</string>
+    <string name="Message_newMessage">Nuovo messaggio da: </string>
+    <string name="Message_Apply"> si è candidato per l\'offerta:</string>
+    <string name="Message_Update">Lo stato della tua candidatura per l\'offerta: </string>
+    <string name="Message_UpdateEnd">è stato modificato in</string>
 
     <!-- ________________ TAGS _________________________________________________________________ -->
-    <string name="string_tags_what_is">What is a tag?</string>
-    <string name="string_tags_info">Click for info!</string>
-    <string name="string_tags_insert">Insert tag</string>
-    <string name="string_tags_added">Added</string>
-    <string name="string_tags_removed">Removed</string>
-    <string name="string_tags_existent">Existent tag</string>
-    <string name="string_tags_wrong">Wrong tag</string>
-    <string name="string_tags_description_student">Tags are keywords describing your skills and are used as search keys to find the most suitable offers for you.</string>
-    <string name="string_tags_description_company">Tags are keywords describing your job offers and are used as search keys to find the most suitable student for your offers.</string>
+    <string name="string_tags_what_is">Cos\'è un tag?</string>
+    <string name="string_tags_info">Clicca per informazioni!</string>
+    <string name="string_tags_insert">Inserisci un tag</string>
+    <string name="string_tags_added">Aggiunto</string>
+    <string name="string_tags_removed">Rimosso</string>
+    <string name="string_tags_existent">Tag esistente</string>
+    <string name="string_tags_wrong">Tag errato</string>
+    <string name="string_tags_description_student">I tag sono delle parole chiave che descrivono le tue competenze e vengono utilizzati come chiavi di ricerca per trovare le offerte più adatte a te.</string>
+    <string name="string_tags_description_company">I tag sono delle parole chiave che descrivono le vostre offerte di lavoro e vengono utilizzati come chiavi di ricerca per trovare gli studenti più adatti alle vostre offerte.</string>
 
     <!-- ________________ TOOLBARS _____________________________________________________________ -->
     <string name="ToolbarTilteHome">Home</string>
-    <string name="ToolbarTilteProfile">Profile</string>
-    <string name="ToolbarTilteOffer">Job Offer</string>
-    <string name="ToolbarTilteNewOffer">New Offer</string>
-    <string name="ToolbarTilteMyJobOffers">My Job Offers</string>
-    <string name="ToolbarTitleMyCompanies">My Companies</string>
-    <string name="ToolbarTitleMyStudents">Students</string>
-    <string name="ToolbarTilteStudentSearch">Student Search</string>
-    <string name="ToolbarTilteCompanySearch">Company Search</string>
-    <string name="ToolbarTilteMailBox">MailBox</string>
-    <string name="ToolbarTilteMyCompanies">MyCompanies</string>
+    <string name="ToolbarTilteProfile">Profilo</string>
+    <string name="ToolbarTilteOffer">Offerta di lavoro</string>
+    <string name="ToolbarTilteNewOffer">Nuova offerta</string>
+    <string name="ToolbarTilteMyJobOffers">Le mie offerte di lavoro</string>
+    <string name="ToolbarTitleMyCompanies">Le mie aziende</string>
+    <string name="ToolbarTitleMyStudents">Studenti</string>
+    <string name="ToolbarTilteStudentSearch">Ricerca degli studenti</string>
+    <string name="ToolbarTilteCompanySearch">Ricerca delle aziende</string>
+    <string name="ToolbarTilteMailBox">Casella Email</string>
+    <string name="ToolbarTilteMyCompanies">Le mie aziende</string>
 
     <!-- ________________ OFFER STATUS _________________________________________________________ -->
-    <string name="OfferStatus_Start">Processing</string>
-    <string name="OfferStatus_Considering">Considering</string>
-    <string name="OfferStatus_Refused">Filled</string>
-    <string name="OfferStatus_Accepted">Accepted</string>
-    <string name="OfferStatus_applyStatus">Apply Status:</string>
-    <string name="OfferStatus_ChooseItem">Select next status:</string>
-    <string name="OfferStatus_NoModify">Can\'t modify this offer</string>
+    <string name="OfferStatus_Start">Lavorazione</string>
+    <string name="OfferStatus_Considering">Persa in considerazione</string>
+    <string name="OfferStatus_Refused">Rifiutata</string>
+    <string name="OfferStatus_Accepted">Accettata</string>
+    <string name="OfferStatus_applyStatus">Stato della candidatura:</string>
+    <string name="OfferStatus_ChooseItem">Seleziona il prossimo stato:</string>
+    <string name="OfferStatus_NoModify">Non posso modificare questa offerta</string>
 
     <!-- ________________ NEW OFFER ____________________________________________________________ -->
-    <string name="new_offer_fragment_removed">Removed</string>
-    <string name="new_offer_fragment_added">Added</string>
-    <string name="new_offer_fragment_existenTtag">Tag already exist</string>
-    <string name="new_offer_fragment_WrongTag">Wrong tag</string>
-    <string name="new_offer_fragment_MissingField">Missing field</string>
-    <string name="new_offer_fragment_WrongDate">Can\'t set this date</string>
-    <string name="new_offer_fragment_Error">Errors: can\'t perform operation.</string>
-    <string name="new_offer_fragment_NoDelete">Errors: can\'t delete this object.</string>
-    <string name="new_offer_fragment_NoStudents">No students applied</string>
-    <string name="new_offer_fragment_publish">Publish offer</string>
-    <string name="new_offer_fragment_spinner_title">Field of offer</string>
-    <string name="new_offer_fragment_intro">Basic informations:</string>
-    <string name="new_offer_fragment_Description">Description:</string>
-    <string name="new_offer_fragment_hint_object">Object of offer</string>
-    <string name="new_offer_fragment_hint_duration">Term of contract</string>
-    <string name="new_offer_fragment_hint_salary">Salary</string>
-    <string name="new_offer_fragment_hint_nation">Nation</string>
-    <string name="new_offer_fragment_hint_city">City</string>
-    <string name="new_offer_fragment_hint_description">Description up to 500 chracters</string>
-    <string name="new_offer_fragment_hint_spinnerField">Please choose a field</string>
-    <string name="new_offer_fragment_hint_spinnercontract">Please choose a type of contract</string>
-    <string name="new_offer_fragment_hint_number_of_place">Available places</string>
-    <string name="new_offer_fragment_hint_validity">Validity</string>
-    <string name="new_offer_fragment_hint_tags">Set Required Skills...</string>
+    <string name="new_offer_fragment_removed">Rimosso</string>
+    <string name="new_offer_fragment_added">Aggiunto</string>
+    <string name="new_offer_fragment_existenTtag">Tag già esistente</string>
+    <string name="new_offer_fragment_WrongTag">Tag errato</string>
+    <string name="new_offer_fragment_MissingField">Campo mancante</string>
+    <string name="new_offer_fragment_WrongDate">Non posso impostare questa data</string>
+    <string name="new_offer_fragment_Error">Errore: non posso completare l\'operazione.</string>
+    <string name="new_offer_fragment_NoDelete">Errore: non posso eliminare questo oggetto.</string>
+    <string name="new_offer_fragment_NoStudents">Nessuno studente candidato</string>
+    <string name="new_offer_fragment_publish">Pubblica un\'offerta</string>
+    <string name="new_offer_fragment_spinner_title">Campo dell\'offerta</string>
+    <string name="new_offer_fragment_intro">Informazioni di base:</string>
+    <string name="new_offer_fragment_Description">Descrizione:</string>
+    <string name="new_offer_fragment_hint_object">Oggetto dell\'offerta</string>
+    <string name="new_offer_fragment_hint_duration">Scadenza contratto</string>
+    <string name="new_offer_fragment_hint_salary">Stipendio</string>
+    <string name="new_offer_fragment_hint_nation">Nazione</string>
+    <string name="new_offer_fragment_hint_city">Città</string>
+    <string name="new_offer_fragment_hint_description">Descrizione fino a 500 caratteri</string>
+    <string name="new_offer_fragment_hint_spinnerField">Per favore seleziona un campo</string>
+    <string name="new_offer_fragment_hint_spinnercontract">Per favore seleziona un tipo di contratto</string>
+    <string name="new_offer_fragment_hint_number_of_place">Posti disponibili</string>
+    <string name="new_offer_fragment_hint_validity">Validità</string>
+    <string name="new_offer_fragment_hint_tags">Seleziona le skills richieste...</string>
 
-    <string name="new_offer_validity_date_dialog">Set validity date:</string>
+    <string name="new_offer_validity_date_dialog">Imposta la data di validità:</string>
 
     <!-- ________________ SHOW OFFER ___________________________________________________________ -->
     <string name="show_offer_fragment_tags">Skills:</string>
 
     <!-- ________________ OFFER DETAIL _________________________________________________________ -->
-    <string name="offer_detail_apply_button">Apply</string>
-    <string name="offer_detail_contact_button">Contact company</string>
-    <string name="offer_detail_NoApply">Can\'t perform apply</string>
-    <string name="offer_detail_AlreadyApplied">Already Applied</string>
-    <string name="offer_detail_hint_object">Object</string>
-    <string name="offer_detail_hint_mission">Mission</string>
-    <string name="offer_detail_hint_field">Field</string>
-    <string name="offer_detail_hint_places">Places</string>
-    <string name="offer_detail_hint_validity">Validity</string>
-    <string name="offer_detail_hint_contract">Contract</string>
-    <string name="offer_detail_hint_term">Term</string>
-    <string name="offer_detail_hint_location">Location</string>
-    <string name="offer_detail_hint_Nodefined">To be defined</string>
-    <string name="offer_detail_hint_salary">Salary</string>
+    <string name="offer_detail_apply_button">Candidati</string>
+    <string name="offer_detail_contact_button">Contatta l\'azienda</string>
+    <string name="offer_detail_NoApply">Non posso conclidere la candidatura</string>
+    <string name="offer_detail_AlreadyApplied">Già candidato</string>
+    <string name="offer_detail_hint_object">Oggetto</string>
+    <string name="offer_detail_hint_mission">Scopo</string>
+    <string name="offer_detail_hint_field">Campo</string>
+    <string name="offer_detail_hint_places">Posti</string>
+    <string name="offer_detail_hint_validity">Validità</string>
+    <string name="offer_detail_hint_contract">Contratto</string>
+    <string name="offer_detail_hint_term">Scadenza</string>
+    <string name="offer_detail_hint_location">Luogo</string>
+    <string name="offer_detail_hint_Nodefined">Da definire</string>
+    <string name="offer_detail_hint_salary">Stipendio</string>
 
     <!-- ________________ FILTERS ______________________________________________________________ -->
-    <string name="filter_Skills">Required Skills</string>
-    <string name="filter_Contract">Type of contract</string>
-    <string name="filter_Term">Term of contract</string>
-    <string name="filter_Field">Work Field</string>
-    <string name="filter_Location">Location</string>
-    <string name="filter_Salary">Salary</string>
-    <string name="filter_Remove">Remove All Filters</string>
-    <string name="filter_AlreadyAdded">Filter Already Added</string>
-    <string name="filter_WrongGrade">Wrong grade</string>
-    <string name="filter_hint_field">Please choose a field if you want</string>
-    <string name="filter_hint_contract">Please choose a contract if you want</string>
-    <string name="filter_hint_term">Please choose a term if you want</string>
-    <string name="filter_hint_location">Please complete location fields</string>
-    <string name="filter_hint_grade">Write here:</string>
-    <string name="filter_Degree">Degree</string>
-    <string name="filter_Grade">Minimum mark:</string>
+    <string name="filter_Skills">Abilità richieste</string>
+    <string name="filter_Contract">Tipo di contratto</string>
+    <string name="filter_Term">Validità del contratto</string>
+    <string name="filter_Field">Campo di lavoro</string>
+    <string name="filter_Location">Luogo</string>
+    <string name="filter_Salary">Stipendo</string>
+    <string name="filter_Remove">Rimuovi tutti i filtri</string>
+    <string name="filter_AlreadyAdded">Filtro già inserito</string>
+    <string name="filter_WrongGrade">Voto non valido</string>
+    <string name="filter_hint_field">Per favore seleziona un settore se vuoi</string>
+    <string name="filter_hint_contract">Per favore seleziona un contratto se vuoi</string>
+    <string name="filter_hint_term">Per favore seleziona una scadenza di contratto se vuoi</string>
+    <string name="filter_hint_location">Per favore completa i campi di indirizzo</string>
+    <string name="filter_hint_grade">Scrivi qui:</string>
+    <string name="filter_Degree">Laurea</string>
+    <string name="filter_Grade">Voto minimo:</string>
 
 
     <!-- ________________ TIME _________________________________________________________________ -->
 
     <!-- Months -->
     <string-array name="months">
-        <item>January</item>
-        <item>February</item>
-        <item>March</item>
-        <item>April</item>
-        <item>May</item>
-        <item>June</item>
-        <item>July</item>
-        <item>August</item>
-        <item>September</item>
-        <item>October</item>
-        <item>November</item>
-        <item>December</item>
+        <item>Gennaio</item>
+        <item>Febbraio</item>
+        <item>Marzo</item>
+        <item>Aprile</item>
+        <item>Maggio</item>
+        <item>Giugno</item>
+        <item>Luglio</item>
+        <item>Agosto</item>
+        <item>Settembre</item>
+        <item>Ottobre</item>
+        <item>Novembre</item>
+        <item>Dicembre</item>
     </string-array>
 
     <!-- Days -->
     <string-array name="days_complete">
-        <item>Monday</item>
-        <item>Tuesday</item>
-        <item>Wednesday</item>
-        <item>Thursday</item>
-        <item>Friday</item>
+        <item>Lunedì</item>
+        <item>Martedì</item>
+        <item>Mercoledì</item>
+        <item>Giovedì</item>
+        <item>Venerdi</item>
     </string-array>
 
-    <string name="minutes_ago">minutes ago</string>
-    <string name="minute_ago">minute ago</string>
-    <string name="hours_ago">hours ago</string>
-    <string name="hour_ago">hour ago</string>
-    <string name="days_ago">days ago</string>
-    <string name="day_ago">day ago</string>
+    <string name="minutes_ago">minuti fa</string>
+    <string name="minute_ago">minuto fa</string>
+    <string name="hours_ago">ore fa</string>
+    <string name="hour_ago">ora fa</string>
+    <string name="days_ago">giorni fa</string>
+    <string name="day_ago">giorno fa</string>
 
-    <string name = "WEEK_Monday">Mon</string>
-    <string name = "WEEK_Tuesday">Tue</string>
-    <string name = "WEEK_Wednesday">Wed</string>
-    <string name = "WEEK_Thursday">Thu</string>
-    <string name = "WEEK_Friday">Fri</string>
-    <string name = "WEEK_Saturday">Sat</string>
-    <string name = "WEEK_Sunday">Sun</string>
+    <string name = "WEEK_Monday">Lun</string>
+    <string name = "WEEK_Tuesday">Mar</string>
+    <string name = "WEEK_Wednesday">Mer</string>
+    <string name = "WEEK_Thursday">Gio</string>
+    <string name = "WEEK_Friday">Ven</string>
+    <string name = "WEEK_Saturday">Sab</string>
+    <string name = "WEEK_Sunday">Dom</string>
 
-    <string name="ora8">8 am</string>
-    <string name="ora9">9 am</string>
-    <string name="ora10">10 am</string>
-    <string name="ora11">11 am</string>
-    <string name="ora12">12 am</string>
-    <string name="ora13">1 pm</string>
-    <string name="ora14">2 pm</string>
-    <string name="ora15">3 pm</string>
-    <string name="ora16">4 pm</string>
-    <string name="ora17">5 pm</string>
-    <string name="ora18">6 pm</string>
-    <string name="ora19">7 pm</string>
+    <string name="ora8">8</string>
+    <string name="ora9">9</string>
+    <string name="ora10">10</string>
+    <string name="ora11">11</string>
+    <string name="ora12">12</string>
+    <string name="ora13">13</string>
+    <string name="ora14">14</string>
+    <string name="ora15">15</string>
+    <string name="ora16">16</string>
+    <string name="ora17">17</string>
+    <string name="ora18">18</string>
+    <string name="ora19">19</string>
 
 
     <!-- ________________ MENU ITEMS ___________________________________________________________ -->
     <string-array name="Home_Students_Tab">
 
-        <item>News</item>
-        <item>Job Offers</item>
-        <item>Companies</item>
-        <item>Applies</item>
+        <item>Novità</item>
+        <item>Offerte di lavoro</item>
+        <item>Aziende</item>
+        <item>Candidature</item>
 
     </string-array>
 
     <string-array name="Courses_Students_Tab">
 
-        <item>Search</item>
-        <item>My Courses</item>
-        <item>My Schedule</item>
+        <item>Cerca</item>
+        <item>I miei corsi</item>
+        <item>Il mio orario</item>
 
     </string-array>
 
     <string-array name="Home_Company_Tab">
 
-        <item>News</item>
-        <item>Job Offers</item>
-        <item>Students</item>
+        <item>Novità</item>
+        <item>Offerete di lavoro</item>
+        <item>Studenti</item>
 
     </string-array>
 
     <string-array name="Home_Professor_Tab">
-        <item>News</item>
+        <item>Novità</item>
     </string-array>
 
     <string-array name="Menu_items_student">
 
         <item>Home</item>
-        <item>Profile</item>
-        <item>MessageBox</item>
-        <item>Didactics</item>
-        <item>Map</item>
-        <item>My Job Offers </item>
-        <item>My Companies</item>
+        <item>Profilo</item>
+        <item>Casella Email</item>
+        <item>Didattica</item>
+        <item>Mappa</item>
+        <item>Le mie offerte di lavoro </item>
+        <item>Le mie aziende</item>
         <item>Logout</item>
 
     </string-array>
@@ -485,10 +500,10 @@
     <string-array name="Menu_items_Company">
 
         <item>Home</item>
-        <item>Profile</item>
-        <item>MessageBox</item>
-        <item>Search</item>
-        <item>NewOffer</item>
+        <item>Profilo</item>
+        <item>Casella Email</item>
+        <item>Cerca</item>
+        <item>Nuova Offerta</item>
         <item>Logout</item>
 
     </string-array>
@@ -496,69 +511,69 @@
     <string-array name="Menu_items_Professor">
 
         <item>Home</item>
-        <item>Profile</item>
-        <item>MessageBox</item>
-        <item>Courses</item>
+        <item>Profilo</item>
+        <item>Casella Email</item>
+        <item>Corsi</item>
         <item>Logout</item>
 
     </string-array>
 
     <string-array name="new_offer_fragment_typeOfContracts">
-        <item>Select a type of contract...</item>
+        <item>Seleziona un tipo di contratto...</item>
         <item>Stage</item>
         <item>Part-Time</item>
-        <item>Full-Time</item>
-        <item>Thesis</item>
+        <item>Tempo pieno</item>
+        <item>Tesi</item>
         <item>Master</item>
 
     </string-array>
 
     <string-array name="new_offer_fragment_salary_spinner_content">
-        <item>To be decided</item>
+        <item>Da decidere</item>
         <item>Euro</item>
 
     </string-array>
 
     <string-array name="new_offer_fragment_termContracts">
-        <item>Select term of contract...</item>
-        <item>Up to 6 months</item>
-        <item>One year</item>
-        <item>Two year</item>
-        <item>Five year</item>
-        <item>Indefinitely</item>
+        <item>Seleziona una validità del contratto...</item>
+        <item>Fino a 6 mesi</item>
+        <item>Un anno</item>
+        <item>Due anni</item>
+        <item>Cinque anni</item>
+        <item>Indeterminato</item>
 
     </string-array>
 
     <string-array name="new_offer_fragment_fields">
 
-        <item>Choose a field:</item>
-        <item>Mechanics</item>
-        <item>Informatics</item>
-        <item>Chemistry</item>
-        <item>Energy</item>
-        <item>Materials</item>
+        <item>Scegli un campo:</item>
+        <item>Meccanica</item>
+        <item>Informatica</item>
+        <item>Chimica</item>
+        <item>Energia</item>
+        <item>Materiali</item>
     </string-array>
 
     <string-array name="typeOfDegrees">
-        <item>Minimum Degree level:</item>
-        <item>Bachelor</item>
-        <item>Master</item>
-        <item>Doctorate</item>
+        <item>Laurea minima:</item>
+        <item>Triennale</item>
+        <item>Magistrale</item>
+        <item>Dottorato</item>
 
     </string-array>
 
     <string-array name="filter_salary">
-        <item>All types</item>
-        <item>Less then</item>
-        <item>More then</item>
-        <item>Equal to</item>
+        <item>Tutti i tipi</item>
+        <item>Meno di</item>
+        <item>Più di</item>
+        <item>Pari a</item>
 
     </string-array>
 
     <string-array name="filter_location">
-        <item>Choose a distance in Km</item>
-        <item>Near The city</item>
-        <item>Less then</item>
+        <item>Scegli una distanza in Km</item>
+        <item>Vicino alla città</item>
+        <item>Meno di</item>
 
     </string-array>
 

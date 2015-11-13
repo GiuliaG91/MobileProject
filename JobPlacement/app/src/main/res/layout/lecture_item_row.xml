@@ -142,14 +142,14 @@
                 android:background="@drawable/ic_pencil"
                 android:layout_margin="3dp"/>
 
-            <Button
+            <!--<Button
                 android:id="@+id/lecture_delete_button"
                 android:background="@drawable/ic_waste"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:layout_marginRight="3dp"
                 android:layout_marginLeft="3dp"
-                android:layout_marginTop="10dp"/>
+                android:layout_marginTop="10dp"/>-->
 
         </LinearLayout>
     </LinearLayout>
