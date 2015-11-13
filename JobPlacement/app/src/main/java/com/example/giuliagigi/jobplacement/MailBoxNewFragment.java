@@ -23,6 +23,7 @@ import com.parse.ParsePush;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
+import com.parse.SendCallback;
 
 import org.json.JSONException;
 
@@ -395,9 +396,20 @@ public class MailBoxNewFragment extends Fragment {
                         ParseQuery pushQuery = ParseInstallation.getQuery();
                         pushQuery.whereEqualTo("_User", recipient);
                         ParsePush push = new ParsePush();
+
                         push.setQuery(pushQuery);
                         push.setMessage("" + getString(R.string.Message_newMessage) + globalData.getUserObject().getMail());
-                        push.sendInBackground();
+                        push.sendInBackground(new SendCallback() {
+                            @Override
+                            public void done(ParseException e) {
+
+                                if(e == null)
+                                    Log.println(Log.ASSERT,"MAILBOXNEW", "notification ok");
+                                else
+                                    Log.println(Log.ASSERT,"MAILBOXNEW", "notification fail");
+
+                            }
+                        });
                     }
 
                     Toast.makeText(globalData, "Message sent", Toast.LENGTH_SHORT).show();

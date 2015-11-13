@@ -29,6 +29,7 @@ import com.parse.ParseException;
 import com.parse.ParseInstallation;
 import com.parse.ParseUser;
 import com.parse.RequestPasswordResetCallback;
+import com.parse.SaveCallback;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -61,10 +62,12 @@ public class Login extends ActionBarActivity {
 
             Log.println(Log.ASSERT, "LOGIN", "User session already open. Entering home activity");
 
-            ParseInstallation installation = ParseInstallation.getCurrentInstallation();
-            installation.put("User", application.getCurrentUser());
-            installation.saveInBackground();
+//            ParseInstallation installation = ParseInstallation.getCurrentInstallation();
+//            Log.println(Log.ASSERT, "LOGIN", "installation: " + installation.getInstallationId());
+//            installation.put("User", application.getCurrentUser());
+//            Log.println(Log.ASSERT, "LOGIN", "user: " + application.getCurrentUser().getObjectId());
 
+            registerApplication();
             startActivity(new Intent(getApplicationContext(), Home.class));
         }
 
@@ -188,23 +191,6 @@ public class Login extends ActionBarActivity {
             }
         });
 
-
-        /* --- automatic login (deprecated) --- */
-//        rememberAccount.setChecked(sp.getBoolean(SHAREDPREF_LATEST_LOGIN_PREFERENCE,false));
-//
-//        if(rememberAccount.isChecked()){
-//
-//            String latestMail = sp.getString(SHAREDPREF_LATEST_MAIL,"");
-//            String latestPassword = sp.getString(SHAREDPREF_LATEST_PASSWORD,"");
-//            Log.println(Log.ASSERT,"LOGIN","login with credentials: " + latestMail + " - " + latestPassword);
-//
-//            mailText.setText(latestMail);
-//            passwordText.setText(latestPassword);
-//
-//            Toast.makeText(getApplicationContext(),GlobalData.getContext().getString(R.string.string_loggin_in),Toast.LENGTH_SHORT).show();
-//            performLogin(latestMail,latestPassword); //COMMENTA PER DISABILITARE LOGIN AUTOMATICO
-//        }
-
     }
 
     @Override
@@ -237,6 +223,13 @@ public class Login extends ActionBarActivity {
         forgotPassword.setEnabled(enable);
     }
 
+
+    private void registerApplication(){
+
+        Installation.initialize();
+        Installation.setUser(application.getCurrentUser());
+        Installation.commit();
+    }
 
     private void performLogin(final String mail, final String password) {
 
@@ -271,14 +264,15 @@ public class Login extends ActionBarActivity {
                     editor.apply();
 
                     /* caching profile infos */
-                    GlobalData gd = (GlobalData)getApplicationContext();
+//                    GlobalData gd = (GlobalData)getApplicationContext();
 
                     /* register an object Installation for receiving Push Notifications */
 
-                    ParseInstallation installation = ParseInstallation.getCurrentInstallation();
-                    installation.put("User",application.getCurrentUser());
-                    installation.saveInBackground();
+//                    ParseInstallation installation = ParseInstallation.getCurrentInstallation();
+//                    installation.put("User",application.getCurrentUser());
+//                    installation.saveInBackground();
 
+                    registerApplication();
                     /* launch home activity */
                     Intent i = new Intent(getApplicationContext(),Home.class);
                     startActivity(i);
