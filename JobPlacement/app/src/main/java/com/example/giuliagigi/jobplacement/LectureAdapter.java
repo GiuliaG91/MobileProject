@@ -16,6 +16,7 @@ import android.widget.LinearLayout;
 import android.widget.ListAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -30,12 +31,13 @@ public class LectureAdapter implements ListAdapter {
     private boolean isEdit;
     private ArrayList<Boolean> isEditMode;
     private GlobalData globalData;
-
+    private Activity activity;
 
     public LectureAdapter(ArrayList<Lecture> lectures, boolean isEdit, Activity activity){
 
         Log.println(Log.ASSERT,"LECTUREADAPTER", "size = " + lectures.size());
         globalData = (GlobalData)activity.getApplicationContext();
+        this.activity = activity;
         this.lectures = lectures;
         this.isEdit = isEdit;
         isEditMode = new ArrayList<>();
@@ -77,7 +79,7 @@ public class LectureAdapter implements ListAdapter {
         final EditText endHour = (EditText)convertView.findViewById(R.id.lecture_endHour_editText);
         final EditText endMinute = (EditText)convertView.findViewById(R.id.lecture_endMinute_editText);
         final Button modify = (Button)convertView.findViewById(R.id.lecture_modify_button);
-        final Button delete = (Button)convertView.findViewById(R.id.lecture_delete_button);
+        //final Button delete = (Button)convertView.findViewById(R.id.lecture_delete_button);
 
         //edits.add(day);
         //edits.add(room);
@@ -89,7 +91,7 @@ public class LectureAdapter implements ListAdapter {
         curRoom = l.getRoomName();
         curDay = l.getDayInWeek();
         if(day != null){
-            day.setSelection(curDay - 1);
+            day.setSelection(curDay);
             day.setEnabled(false);
         }
 
@@ -122,10 +124,10 @@ public class LectureAdapter implements ListAdapter {
             LinearLayout layout = (LinearLayout)convertView.findViewById(R.id.lecture_item_container);
             modify.setVisibility(View.INVISIBLE);
             modify.setEnabled(false);
-            delete.setVisibility(View.INVISIBLE);
-            delete.setEnabled(false);
+            //delete.setVisibility(View.INVISIBLE);
+            //delete.setEnabled(false);
             layout.removeView(modify);
-            layout.removeView(delete);
+            //layout.removeView(delete);
         }
         else {
 
@@ -140,25 +142,36 @@ public class LectureAdapter implements ListAdapter {
                         Boolean scheduleChanged = false;
                         if(!(curStartHour.equals(startHour.getText().toString())) || !(curStartMinute.equals(startMinute.getText().toString())) ||
                                 !(curEndHour.equals(endHour.getText().toString())) || !(curEndMinute.equals(endMinute.getText().toString())) ||
-                                    curDay != (day.getSelectedItemPosition()+1) || !(curRoom.equals(room.getText().toString())))
+                                    curDay != (day.getSelectedItemPosition()) || !(curRoom.equals(room.getText().toString())))
                             scheduleChanged = true;
 
                         Log.println(Log.ASSERT, "LECTUREADAPTER", "scheduleChanged: " + scheduleChanged);
 
                         if(scheduleChanged){
-                            l.setDayInWeek(day.getSelectedItemPosition()+1);
-                            l.setRoom(room.getText().toString());
-                            l.setSchedule(Integer.parseInt(startHour.getText().toString()), Integer.parseInt(startMinute.getText().toString()), Integer.parseInt(endHour.getText().toString()), Integer.parseInt(endMinute.getText().toString()));
-                            l.saveEventually();
-                            News courseNotice = new News();
-                            courseNotice.createNews(7, l.getCourse(), l.getCourse().getName() + GlobalData.getContext().getResources().getString(R.string.notice_message_course_changes));
-                        }
-
-                        Log.println(Log.ASSERT, "LECTUREADAPTER", "isEditMode: " + isEditMode);
+                            int newStartHour = Integer.parseInt(startHour.getText().toString());
+                            int newStartMinute = Integer.parseInt(startMinute.getText().toString());
+                            int newEndHour = Integer.parseInt(endHour.getText().toString());
+                            int newEndMinute = Integer.parseInt(endMinute.getText().toString());
+                            if(newStartHour>=8 && newStartHour<=19 && newEndHour>=8 && newEndHour<=19
+                                    && newStartMinute>=0 && newStartMinute<=59 && newEndMinute>=0 && newEndMinute<=59) {
+                                l.setDayInWeek(day.getSelectedItemPosition());
+                                l.setRoom(room.getText().toString());
+                                l.setSchedule(Integer.parseInt(startHour.getText().toString()), Integer.parseInt(startMinute.getText().toString()), Integer.parseInt(endHour.getText().toString()), Integer.parseInt(endMinute.getText().toString()));
+                                l.saveEventually();
+                                News courseNotice = new News();
+                                courseNotice.createNews(7, l.getCourse(),GlobalData.getContext().getResources().getString(R.string.notice_message_course_changes));
+                            }
+                            else {
+                                Toast.makeText(activity, GlobalData.getContext().getResources().getString(R.string.schedule_not_valid), Toast.LENGTH_SHORT).show();
+                                startHour.setText(curStartHour);
+                                startMinute.setText(curStartMinute);
+                                endHour.setText(curEndHour);
+                                endMinute.setText(curEndMinute);
+                            }
+                        }Log.println(Log.ASSERT, "LECTUREADAPTER", "isEditMode: " + isEditMode);
                     }
                     else {
                         modify.setBackgroundResource(R.drawable.ic_save);
-                        Log.println(Log.ASSERT, "LECTUREADAPTER", "isEditMode: " + isEditMode);
                     }
 
                     for(EditText et:edits)
@@ -170,13 +183,15 @@ public class LectureAdapter implements ListAdapter {
 
             });
 
-            delete.setOnClickListener(new View.OnClickListener() {
+            /*delete.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
 
+                    Course c = l.getCourse();
+
                     Log.println(Log.ASSERT, "LECTUREADAPTER", "asked to delete lecture");
                 }
-            });
+            });*/
         }
 
         return convertView;

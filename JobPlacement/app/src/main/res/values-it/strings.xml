@@ -211,6 +211,8 @@
     <string name="title_activity_lecture_display">LectureDisplayActivity</string>
     <string name="title_activity_week_display">WeekDisplayActivity</string>
     <string name="lecture_dialog_title">Lecture details</string>
+    <string name="notice_message_course_changes">: course schedule has changed.</string>
+    <string name="schedule_not_valid">The schedule inserted is not valid. No changes made.</string>
 
     <!-- _________________ PROFESSOR ___________________________________________________________ -->
     <string name="course_item_details_button">Show details</string>
