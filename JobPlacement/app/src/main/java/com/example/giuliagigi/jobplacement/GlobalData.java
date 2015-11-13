@@ -403,5 +403,9 @@ public class GlobalData extends Application {
     public RoomsFileReader getRoomsFileReader() {
         return roomsFileReader;
     }
+
+    public ArrayList<String> getRoomNames(){
+        return roomsFileReader.getRoomNames();
+    }
 }
 

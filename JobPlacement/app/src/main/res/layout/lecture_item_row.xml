@@ -32,14 +32,12 @@
                 android:layout_marginTop="5dp"
                 android:layout_height="wrap_content" />
 
-            <EditText
+            <Spinner
                 android:id="@+id/lecture_day_editText"
-                android:layout_width="fill_parent"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:textColor="@color/ColorPrimaryDark"
-                android:textSize="@dimen/editText_textSize"/>
+                android:layout_marginRight="10dp"/>
 
             <TextView
                 android:layout_width="fill_parent"
@@ -50,7 +48,7 @@
                 android:layout_marginTop="5dp"
                 android:layout_height="wrap_content" />
 
-            <EditText
+            <AutoCompleteTextView
                 android:id="@+id/lecture_room_editText"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
@@ -78,6 +76,7 @@
                     android:id="@+id/lecture_startHour_editText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:inputType="number"
                     android:textColor="@color/ColorPrimaryDark"
                     android:textSize="@dimen/editText_textSize" />
 
@@ -93,6 +92,7 @@
                     android:id="@+id/lecture_startMinute_editText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:inputType="number"
                     android:textColor="@color/ColorPrimaryDark"
                     android:textSize="@dimen/editText_textSize"  />
 
@@ -107,6 +107,7 @@
                     android:id="@+id/lecture_endHour_editText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:inputType="number"
                     android:textColor="@color/ColorPrimaryDark"
                     android:textSize="@dimen/editText_textSize"  />
 
@@ -121,6 +122,7 @@
                     android:id="@+id/lecture_endMinute_editText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:inputType="number"
                     android:textColor="@color/ColorPrimaryDark"
                     android:textSize="@dimen/editText_textSize"  />
 

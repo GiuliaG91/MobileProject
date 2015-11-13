@@ -23,7 +23,7 @@ public class CourseDetailFragment extends Fragment {
     private TextView code,name,professor;
     private ListView lecturesListView;
     private LectureAdapter lectureAdapter;
-
+    private Activity activity;
     private GlobalData globalData;
     private Course course;
     private boolean isEdit;
@@ -52,6 +52,7 @@ public class CourseDetailFragment extends Fragment {
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
+        this.activity = activity;
         globalData = (GlobalData)activity.getApplicationContext();
     }
 
@@ -91,7 +92,7 @@ public class CourseDetailFragment extends Fragment {
         if(lecturesListView != null) {
 
             Log.println(Log.ASSERT,"COURSEDETAIL", "size = " + course.getLectures().size());
-            lectureAdapter = new LectureAdapter(course.getLectures(), isEdit);
+            lectureAdapter = new LectureAdapter(course.getLectures(), isEdit, activity);
             lecturesListView.setAdapter(lectureAdapter);
         }
 

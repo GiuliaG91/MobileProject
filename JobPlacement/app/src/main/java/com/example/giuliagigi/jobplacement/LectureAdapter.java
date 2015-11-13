@@ -1,15 +1,21 @@
 package com.example.giuliagigi.jobplacement;
 
+import android.app.Activity;
 import android.content.Context;
 import android.database.DataSetObserver;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
+import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListAdapter;
+import android.widget.Spinner;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 
@@ -20,14 +26,16 @@ import java.util.ArrayList;
 public class LectureAdapter implements ListAdapter {
 
     private ArrayList<Lecture> lectures;
+    private ArrayList<String>  rooms;
     private boolean isEdit;
     private ArrayList<Boolean> isEditMode;
+    private GlobalData globalData;
 
 
-
-    public LectureAdapter(ArrayList<Lecture> lectures, boolean isEdit){
+    public LectureAdapter(ArrayList<Lecture> lectures, boolean isEdit, Activity activity){
 
         Log.println(Log.ASSERT,"LECTUREADAPTER", "size = " + lectures.size());
+        globalData = (GlobalData)activity.getApplicationContext();
         this.lectures = lectures;
         this.isEdit = isEdit;
         isEditMode = new ArrayList<>();
@@ -48,28 +56,40 @@ public class LectureAdapter implements ListAdapter {
             convertView = inflater.inflate(R.layout.lecture_item_row, parent, false);
         }
 
-        Lecture l = lectures.get(position);
+        final Lecture l = lectures.get(position);
         isEditMode.add(position, false);
         final ArrayList<EditText> edits = new ArrayList<>();
 
-        EditText day = (EditText)convertView.findViewById(R.id.lecture_day_editText);
-        EditText room = (EditText)convertView.findViewById(R.id.lecture_room_editText);
-        EditText startHour = (EditText)convertView.findViewById(R.id.lecture_startHour_editText);
-        EditText startMinute = (EditText)convertView.findViewById(R.id.lecture_startMinute_editText);
-        EditText endHour = (EditText)convertView.findViewById(R.id.lecture_endHour_editText);
-        EditText endMinute = (EditText)convertView.findViewById(R.id.lecture_endMinute_editText);
+        final int curDay;
+        final String curStartMinute, curStartHour, curEndMinute, curEndHour, curRoom;
+
+        //EditText day = (EditText)convertView.findViewById(R.id.lecture_day_editText);
+        final Spinner day = (Spinner)convertView.findViewById(R.id.lecture_day_editText);
+        day.setAdapter(new StringAdapter(GlobalData.getContext().getResources().getStringArray(R.array.days_complete)));
+
+        //EditText room = (EditText)convertView.findViewById(R.id.lecture_room_editText);
+        final AutoCompleteTextView room = (AutoCompleteTextView)convertView.findViewById(R.id.lecture_room_editText);
+        ArrayAdapter<String> roomAdapter = new ArrayAdapter<String>(globalData.getContext(),R.layout.row_spinner, globalData.getRoomNames());
+        room.setAdapter(roomAdapter);
+
+        final EditText startHour = (EditText)convertView.findViewById(R.id.lecture_startHour_editText);
+        final EditText startMinute = (EditText)convertView.findViewById(R.id.lecture_startMinute_editText);
+        final EditText endHour = (EditText)convertView.findViewById(R.id.lecture_endHour_editText);
+        final EditText endMinute = (EditText)convertView.findViewById(R.id.lecture_endMinute_editText);
         final Button modify = (Button)convertView.findViewById(R.id.lecture_modify_button);
         final Button delete = (Button)convertView.findViewById(R.id.lecture_delete_button);
 
-        edits.add(day);
-        edits.add(room);
+        //edits.add(day);
+        //edits.add(room);
         edits.add(startHour);
         edits.add(startMinute);
         edits.add(endHour);
         edits.add(endMinute);
 
+        curRoom = l.getRoomName();
+        curDay = l.getDayInWeek();
         if(day != null){
-            day.setText(GlobalData.getContext().getResources().getStringArray(R.array.days_complete)[l.getDayInWeek()-1]);
+            day.setSelection(curDay - 1);
             day.setEnabled(false);
         }
 
@@ -79,11 +99,17 @@ public class LectureAdapter implements ListAdapter {
         }
 
         Schedule s = l.getSchedule();
+        curStartHour ="" + s.getStartHour();
+        curStartMinute = "" + s.getStartMinute();
+        curEndHour = "" + s.getEndHour();
+        curEndMinute = "" + s.getEndMinute();
+
         if(startHour != null && startMinute != null && endHour != null && endMinute != null){
-            startHour.setText("" + s.getStartHour());
-            startMinute.setText("" + s.getStartMinute());
-            endHour.setText("" + s.getEndHour());
-            endMinute.setText("" + s.getEndMinute());
+
+            startHour.setText(curStartHour);
+            startMinute.setText(curStartMinute);
+            endHour.setText(curEndHour);
+            endMinute.setText(curEndMinute);
 
             startHour.setEnabled(false);
             startMinute.setEnabled(false);
@@ -110,6 +136,24 @@ public class LectureAdapter implements ListAdapter {
                     isEditMode.add(position, temp);
                     if(!temp) {
                         modify.setBackgroundResource(R.drawable.ic_pencil);
+
+                        Boolean scheduleChanged = false;
+                        if(!(curStartHour.equals(startHour.getText().toString())) || !(curStartMinute.equals(startMinute.getText().toString())) ||
+                                !(curEndHour.equals(endHour.getText().toString())) || !(curEndMinute.equals(endMinute.getText().toString())) ||
+                                    curDay != (day.getSelectedItemPosition()+1) || !(curRoom.equals(room.getText().toString())))
+                            scheduleChanged = true;
+
+                        Log.println(Log.ASSERT, "LECTUREADAPTER", "scheduleChanged: " + scheduleChanged);
+
+                        if(scheduleChanged){
+                            l.setDayInWeek(day.getSelectedItemPosition()+1);
+                            l.setRoom(room.getText().toString());
+                            l.setSchedule(Integer.parseInt(startHour.getText().toString()), Integer.parseInt(startMinute.getText().toString()), Integer.parseInt(endHour.getText().toString()), Integer.parseInt(endMinute.getText().toString()));
+                            l.saveEventually();
+                            News courseNotice = new News();
+                            courseNotice.createNews(7, l.getCourse(), l.getCourse().getName() + GlobalData.getContext().getResources().getString(R.string.notice_message_course_changes));
+                        }
+
                         Log.println(Log.ASSERT, "LECTUREADAPTER", "isEditMode: " + isEditMode);
                     }
                     else {
@@ -119,7 +163,11 @@ public class LectureAdapter implements ListAdapter {
 
                     for(EditText et:edits)
                         et.setEnabled(temp);
+                        day.setEnabled(temp);
+                        room.setEnabled(temp);
                 }
+
+
             });
 
             delete.setOnClickListener(new View.OnClickListener() {
@@ -192,5 +240,45 @@ public class LectureAdapter implements ListAdapter {
 
     @Override
     public void unregisterDataSetObserver(DataSetObserver observer) {}
+
+    protected class StringAdapter extends BaseAdapter {
+
+        public String[] stringArray;
+
+        public StringAdapter(String[] stringArray){
+            super();
+            this.stringArray = stringArray;
+        }
+
+        @Override
+        public int getCount() {
+            return stringArray.length;
+        }
+
+        @Override
+        public String getItem(int position) {
+            return stringArray[position];
+        }
+
+        @Override
+        public long getItemId(int position) {
+            return position;
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+
+            if(convertView == null)
+                convertView = new TextView(GlobalData.getContext());
+            TextView tv = (TextView)convertView;
+            tv.setText(stringArray[position]);
+            //tv.setTextSize(GlobalData.getContext().getResources().getDimension(R.dimen.editText_textSize_small));
+            tv.setTextColor(GlobalData.getContext().getResources().getColor(R.color.ColorPrimaryDark));
+
+            return convertView;
+        }
+
+
+    }
 
 }
