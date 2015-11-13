@@ -19,9 +19,9 @@ public class ParseUserWrapper extends ParseUser {
     public static final String TYPE_STUDENT = "Student";
     public static final String TYPE_COMPANY = "Company";
     public static final String USER_FIELD = "user";
-    private static final String STUDENT_FIELD = "student";
-    private static final String COMPANY_FIELD = "company";
-    private static final String PROFESSOR_FIELD = "professor";
+    public static final String STUDENT_FIELD = "student";
+    public static final String COMPANY_FIELD = "company";
+    public static final String PROFESSOR_FIELD = "professor";
     protected static final String EMAIL_VERIFIED_FIELD = "emailVerified";
 
     public static final String[] TYPES = new String[]{TYPE_STUDENT,TYPE_COMPANY};

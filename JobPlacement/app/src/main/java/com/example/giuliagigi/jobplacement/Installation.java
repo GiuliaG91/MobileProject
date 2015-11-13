@@ -11,7 +11,7 @@ import com.parse.SaveCallback;
  */
 public class Installation extends ParseInstallation {
 
-    private static final String USER_FIELD = "User";
+    public static final String USER_FIELD = "User";
     private static ParseInstallation currentInstallation = null;
 
 

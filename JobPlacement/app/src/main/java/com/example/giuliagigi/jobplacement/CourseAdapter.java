@@ -16,9 +16,15 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.parse.FindCallback;
 import com.parse.ParseException;
+import com.parse.ParseInstallation;
+import com.parse.ParsePush;
+import com.parse.ParseQuery;
+import com.parse.SendCallback;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by MarcoEsposito90 on 09/11/2015.
@@ -188,7 +194,50 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder
                                 News courseNotice = new News();
                                 courseNotice.createNews(7, courses.get(position), noticeMessage);
 
-                                //TODO notifica push
+                                /* ----------------------------------------------- push ------------------------------------------------------------------------*/
+                                ArrayList<Course> c = new ArrayList<Course>();
+                                c.add(courses.get(position));
+
+                                ParseQuery<Student> studentsQuery = ParseQuery.getQuery(Student.class);
+                                studentsQuery.whereContainsAll(Student.COURSES_FIELD, c);
+
+                                studentsQuery.findInBackground(new FindCallback<Student>() {
+                                    @Override
+                                    public void done(List<Student> students, ParseException e) {
+
+                                        if(e == null){
+
+                                            Log.println(Log.ASSERT, "COURSE ADAPTER", "students found");
+                                            ArrayList<ParseUserWrapper> users = new ArrayList<ParseUserWrapper>();
+
+                                            for(Student s: students){
+
+                                                users.add(s.getParseUser());
+                                            }
+
+                                            ParseQuery pushQuery = ParseInstallation.getQuery();
+                                            pushQuery.whereContainedIn(Installation.USER_FIELD, users);
+                                            ParsePush push = new ParsePush();
+
+                                            push.setQuery(pushQuery);
+                                            push.setMessage("new notice for course: " + courses.get(position).getName());
+                                            push.sendInBackground(new SendCallback() {
+                                                @Override
+                                                public void done(ParseException e) {
+
+                                                    if(e == null)
+                                                        Log.println(Log.ASSERT,"MAILBOXNEW", "notification ok");
+                                                    else
+                                                        Log.println(Log.ASSERT,"MAILBOXNEW", "notification fail");
+
+                                                }
+                                            });
+                                        }
+                                    }
+                                });
+
+                                /* ----------------------------------------------- push ------------------------------------------------------------------------*/
+
 
                                 noticeDialog.dismiss();
                                 Log.println(Log.ASSERT, "COURSEADAPTER", "Message: " + noticeMessage);
