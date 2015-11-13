@@ -53,25 +53,16 @@
     <string name="basement_floor">Piano seminterrato</string>
 
     <string-array name="cardinal_numbers">
-<<<<<<< HEAD
-        <item>1st</item>
-        <item>2nd</item>
-        <item>3rd</item>
-        <item>4th</item>
-        <item>5th</item>
-        <item>6th</item>
-        <item>7th</item>
-        <item>8th</item>
-        <item>9th</item>
-        <item>10th</item>
-=======
         <item>Primo</item>
         <item>Secondo</item>
         <item>Terzo</item>
         <item>Quarto</item>
         <item>Quinto</item>
         <item>Sesto</item>
->>>>>>> origin/newMaster2
+        <item>Settimo</item>
+        <item>Ottavo</item>
+        <item>Nono</item>
+        <item>Decimo</item>
     </string-array>
 
 
@@ -223,14 +214,9 @@
     <string name = "LECTURE_standard_Professor">Professore</string>
     <string name="title_activity_lecture_display">LectureDisplayActivity</string>
     <string name="title_activity_week_display">WeekDisplayActivity</string>
-<<<<<<< HEAD
-    <string name="lecture_dialog_title">Lecture details</string>
-    <string name="notice_message_course_changes">: course schedule has changed.</string>
-=======
     <string name="lecture_dialog_title">Dettagli della lezione</string>
     <string name="notice_message_course_changes">: l\'orario del corso è stato modificato.</string>
     <string name="schedule_not_valid">L\'orario inserito non è valido. Non sono state apportate modifiche.</string>
->>>>>>> origin/newMaster2
 
     <!-- _________________ PROFESSOR ___________________________________________________________ -->
     <string name="course_item_details_button">Mostra dettagli</string>
