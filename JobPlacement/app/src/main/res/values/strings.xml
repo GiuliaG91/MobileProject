@@ -50,6 +50,7 @@
     <string name="confirm">Confirm</string>
 
     <string name="ground_floor">Ground floor</string>
+    <string name="basement_floor">Basement</string>
 
     <string-array name="cardinal_numbers">
         <item>1st</item>

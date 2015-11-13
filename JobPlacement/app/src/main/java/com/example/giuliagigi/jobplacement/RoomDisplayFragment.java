@@ -71,8 +71,9 @@ public class RoomDisplayFragment extends Fragment {
 
             int floor  = room.getFloor();
 
-            if(floor == 0)  etFloor.setText("" + globalData.getResources().getString(R.string.ground_floor));
-            else            etFloor.setText("" + globalData.getResources().getStringArray(R.array.cardinal_numbers)[floor-1] + " " + globalData.getResources().getString(R.string.floor));
+            if(floor < 0 )      etFloor.setText("" + globalData.getResources().getString(R.string.basement_floor));
+            else if(floor == 0) etFloor.setText("" + globalData.getResources().getString(R.string.ground_floor));
+            else                etFloor.setText("" + globalData.getResources().getStringArray(R.array.cardinal_numbers)[floor-1] + " " + globalData.getResources().getString(R.string.floor));
 
             Schedule t = room.getTime();
             if(t!= null){
@@ -102,11 +103,14 @@ public class RoomDisplayFragment extends Fragment {
     @Override
     public void onSaveInstanceState(Bundle outState) {
 
-        String tail = room.toString();
-        outState.putString(BUNDLE_KEY_TAIL,tail);
+        if(room != null){
 
-        MyBundle bundle = globalData.addBundle(BUNDLE_IDENTIFIER + tail);
-        bundle.put(BUNDLE__KEY_ROOM,room);
+            String tail = room.toString();
+            outState.putString(BUNDLE_KEY_TAIL,tail);
+
+            MyBundle bundle = globalData.addBundle(BUNDLE_IDENTIFIER + tail);
+            bundle.put(BUNDLE__KEY_ROOM,room);
+        }
 
         super.onSaveInstanceState(outState);
     }

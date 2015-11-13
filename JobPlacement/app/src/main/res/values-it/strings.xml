@@ -33,6 +33,7 @@
     <string name="insert">Insert</string>
     <string name="set">Set:</string>
     <string name="cancel">Cancel:</string>
+    <string name="cancel_">Cancel</string>
     <string name="Map">Map</string>
     <string name="on">On</string>
     <string name="wrote">wrote</string>
@@ -49,6 +50,7 @@
     <string name="confirm">Confirm</string>
 
     <string name="ground_floor">Ground floor</string>
+    <string name="basement_floor">Basement</string>
 
     <string-array name="cardinal_numbers">
         <item>1st</item>
@@ -132,6 +134,9 @@
     <string name="profile_student_cv">Curriculum vitae</string>
     <string name="profile_student_upload_cv">CV not uploaded</string>
     <string name="profile_student_cv_only_pdf">Only PDF files accepted</string>
+    <string name="delete_course_confirm">Do you really want to delete this course?</string>
+    <string name="add_course_confirm">Do you want to add this course?</string>
+    <string name="dialog_confirm_title">Confirm your request</string>
 
     <string name="string_company_fragment_name_title">Company name:</string>
     <string name="string_company_fragment_vat">VAT Number:</string>

@@ -31,6 +31,10 @@ import javax.microedition.khronos.opengles.GL10;
 
 public class RoomMapFragment extends Fragment implements GLSurfaceView.Renderer, View.OnTouchListener, ScaleGestureDetector.OnScaleGestureListener, GestureDetector.OnGestureListener {
 
+    private static final String BUNDLE_IDENTIFIER = "ROOMMAP";
+    private static final String BUNDLE_KEY_TAIL = "bundle_tail";
+    private static final String BUNDLE__KEY_ROOM = "bundle_room";
+
     private static final float MOVE_SCALE_FACTOR = 0.025f;
     private static final float SCALE_SCALE_FACTOR = 0.01f;
     private static final int MAX_SCALE = 40;
@@ -42,7 +46,7 @@ public class RoomMapFragment extends Fragment implements GLSurfaceView.Renderer,
     private static final float OFFSET_Y = 5f;
     private static final float MARKER_SCALE = 0.005f;
 
-
+    private GlobalData globalData;
     private Room room;
     private GLSurfaceView surfaceView;
     private ScaleGestureDetector scaleGestureDetector;
@@ -79,11 +83,20 @@ public class RoomMapFragment extends Fragment implements GLSurfaceView.Renderer,
     public void onAttach(Activity activity) {
         super.onAttach(activity);
         this.activity = activity;
+        this.globalData = (GlobalData)activity.getApplicationContext();
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
+        if(savedInstanceState != null){
+
+            String tail = savedInstanceState.getString(BUNDLE_KEY_TAIL);
+            MyBundle bundle = globalData.getBundle(BUNDLE_IDENTIFIER + tail);
+
+            if(bundle != null)
+                room = (Room)bundle.get(BUNDLE__KEY_ROOM);
+        }
 
         surfaceView = new GLSurfaceView(getActivity());
 
@@ -110,6 +123,17 @@ public class RoomMapFragment extends Fragment implements GLSurfaceView.Renderer,
         surfaceView.onPause();
         activity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);
         super.onPause();
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+
+        String tail = room.toString();
+        outState.putString(BUNDLE_KEY_TAIL,tail);
+
+        MyBundle bundle = globalData.addBundle(BUNDLE_IDENTIFIER + tail);
+        bundle.put(BUNDLE__KEY_ROOM,room);
+        super.onSaveInstanceState(outState);
     }
 
     @Override
