@@ -46,6 +46,9 @@
             android:layout_height="wrap_content"
             android:padding="15dp"
             android:hint="@string/login_hint_email"
+            android:backgroundTint="@color/blue_semi_transparent"
+            android:textCursorDrawable="@drawable/edittext_cursor"
+            android:textColor="@color/ColorPrimaryDark"
             android:id="@+id/email_editText"
             android:inputType="textEmailAddress"/>
 
@@ -55,6 +58,9 @@
             android:padding="15dp"
             android:hint="@string/login_hint_password"
             android:id="@+id/password_editText"
+            android:backgroundTint="@color/blue_semi_transparent"
+            android:textCursorDrawable="@drawable/edittext_cursor"
+            android:textColor="@color/ColorPrimaryDark"
             android:inputType="textPassword"/>
 
         <LinearLayout
@@ -66,6 +72,7 @@
             <CheckBox
                 android:layout_width="wrap_content"
                 android:layout_height="fill_parent"
+                android:buttonTint="@color/ColorPrimary"
                 android:id="@+id/login_stayConnected_checkBox"/>
 
             <TextView

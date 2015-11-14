@@ -106,7 +106,7 @@
                             android:layout_height="0dp"
                             android:textAppearance="?android:attr/textAppearanceSmall"
                             android:text="@string/profile_person_fragment_email_title"
-                            android:textColor="@color/ColorPrimaryDark"
+                            android:textColor="@color/ColorPrimary"
                             android:id="@+id/email_hint"
                             android:layout_weight="1"
                             android:paddingLeft="10dp"
@@ -118,7 +118,7 @@
                             android:layout_height="0dp"
                             android:id="@+id/basics_email_area"
                             android:layout_weight="1"
-                            android:textColor="#ff000000"
+                            android:textColor="@color/ColorPrimaryDark"
                             android:background="#00000000"
                             android:textSize="20dp"
                             android:paddingLeft="10dp"
@@ -162,7 +162,7 @@
                             android:textAppearance="?android:attr/textAppearanceSmall"
                             android:text="@string/profile_person_fragment_sex_title"
                             android:paddingLeft="10dp"
-                            android:textColor="@color/ColorPrimaryDark"
+                            android:textColor="@color/ColorPrimary"
                             android:id="@+id/container_sex_hint"
                             android:layout_weight="1"
                             android:gravity="center_vertical"
@@ -180,14 +180,16 @@
                                 android:text="F"
                                 android:layout_weight="1"
                                 android:id="@+id/female_checkBox"
-                                android:textColor="#000000"
+                                android:buttonTint="@color/ColorPrimary"
+                                android:textColor="@color/ColorPrimaryDark"
                                 android:layout_gravity="center_horizontal" />
                             <CheckBox
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="M"
                                 android:layout_weight="1"
-                                android:textColor="#000000"
+                                android:buttonTint="@color/ColorPrimary"
+                                android:textColor="@color/ColorPrimaryDark"
                                 android:id="@+id/male_checkBox"
                                 android:layout_gravity="center_horizontal" />
 
@@ -232,7 +234,7 @@
                             android:id="@+id/birth_hint"
                             android:layout_weight="1"
                             android:paddingLeft="10dp"
-                            android:textColor="@color/ColorPrimaryDark"
+                            android:textColor="@color/ColorPrimary"
                             android:gravity="bottom"
                             android:textSize="10sp" />
 
@@ -241,7 +243,7 @@
                             android:layout_height="0dp"
                             android:id="@+id/student_birth_et"
                             android:layout_weight="1"
-                            android:textColor="#ff000000"
+                            android:textColor="@color/ColorPrimaryDark"
                             android:background="#00000000"
                             android:textSize="20dp"
                             android:paddingLeft="10dp"
@@ -286,7 +288,7 @@
                             android:id="@+id/student_birthCity_hint"
                             android:layout_weight="1"
                             android:paddingLeft="10dp"
-                            android:textColor="@color/ColorPrimaryDark"
+                            android:textColor="@color/ColorPrimary"
                             android:gravity="bottom"
                             android:textSize="10sp" />
 
@@ -295,7 +297,7 @@
                             android:layout_height="0dp"
                             android:id="@+id/student_birthCity_et"
                             android:layout_weight="1"
-                            android:textColor="#ff000000"
+                            android:textColor="@color/ColorPrimaryDark"
                             android:background="#00000000"
                             android:textSize="20dp"
                             android:paddingLeft="10dp"
@@ -340,7 +342,7 @@
                             android:id="@+id/student_description_hint"
                             android:paddingLeft="10dp"
                             android:layout_marginTop="20dp"
-                            android:textColor="@color/ColorPrimaryDark"
+                            android:textColor="@color/ColorPrimary"
                             android:gravity="bottom"
                             android:textSize="10sp"  />
 
@@ -361,7 +363,7 @@
                                 android:layout_height="fill_parent"
                                 android:id="@+id/student_description_et"
                                 android:scrollbars="vertical"
-                                android:textColor="#000000"
+                                android:textColor="@color/ColorPrimaryDark"
                                 android:textSize="15dp"
                                 android:background="#00000000"
                                 android:gravity="top"
@@ -402,7 +404,7 @@
                             android:layout_height="fill_parent"
                             android:textAppearance="?android:attr/textAppearanceSmall"
                             android:text="@string/string_account_verified"
-                            android:textColor="@color/ColorPrimaryDark"
+                            android:textColor="@color/ColorPrimary"
                             android:id="@+id/account_verified_tv"
                             android:layout_weight="1"
                             android:gravity="center_vertical"
