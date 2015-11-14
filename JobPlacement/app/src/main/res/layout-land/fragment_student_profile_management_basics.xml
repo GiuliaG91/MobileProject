@@ -31,7 +31,7 @@
 
 
                 <LinearLayout
-                    android:orientation="vertical"
+                    android:orientation="horizontal"
                     android:layout_width="fill_parent"
                     android:layout_height="200dp"
                     android:gravity="bottom"
@@ -39,6 +39,12 @@
                     android:weightSum="1"
                     android:paddingBottom="20dp"
                     android:id="@+id/basics_name_surname_container">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_weight=".8">
 
                     <EditText
                         android:layout_width="fill_parent"
@@ -69,6 +75,14 @@
                         android:paddingLeft="10dp"
                         android:textColor="#ffffff"
                         android:paddingTop="5dp" />
+                </LinearLayout>
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:layout_width="70dp"
+                        android:layout_height="70dp"
+                        android:background="@drawable/pencil_button"
+                        android:id="@+id/profile_edit_button"
+
+                        />
                 </LinearLayout>
 
             </RelativeLayout>
