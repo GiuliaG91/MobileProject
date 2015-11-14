@@ -83,7 +83,6 @@ public class Student extends User {
         description = null;
         addressLocation = null;
         curriculum = null;
-        phones = new ArrayList<Telephone>();
         languages = new ArrayList<Language>();
         favourites = new ArrayList<CompanyOffer>();
         certificates = new ArrayList<Certificate>();

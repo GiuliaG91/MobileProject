@@ -10,6 +10,7 @@ import com.parse.SaveCallback;
 import com.parse.SendCallback;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -116,40 +117,47 @@ public class Installation extends ParseInstallation {
 
         String c = channel.replaceAll(" ", "");
 
-        ParsePush push = new ParsePush();
-        push.setChannel(c);
-        push.setMessage(message);
-        push.sendInBackground(new SendCallback() {
+        ParseQuery<ParseInstallation> query = ParseInstallation.getQuery();
+        query.whereContainsAll(CHANNELS_FIELD, Arrays.asList(c));
+
+        ParsePush channelPush = new ParsePush();
+        channelPush.setQuery(query);
+        channelPush.setMessage(message);
+        channelPush.sendInBackground(new SendCallback() {
             @Override
             public void done(ParseException e) {
 
-                if(e == null)
-                    Log.println(Log.ASSERT,"COURSEADAPTER", "push ok (" + channel + ")");
+                if (e == null)
+                    Log.println(Log.ASSERT, "INSTALLATION", "push ok (" + channel + ")");
                 else
-                    Log.println(Log.ASSERT,"COURSEADAPTER", "push error: " + e.getMessage());
+                    Log.println(Log.ASSERT, "INSTALLATION", "push error: " + e.getMessage());
             }
         });
+
+        channelPush = null;
     }
 
     public static void sendPush(ParseUserWrapper user, String message){
 
         ParseQuery pushQuery = ParseInstallation.getQuery();
-        pushQuery.whereEqualTo(Installation.USER_FIELD, user);
-        ParsePush push = new ParsePush();
+        pushQuery.whereEqualTo(USER_FIELD, user);
 
-        push.setQuery(pushQuery);
-        push.setMessage(message);
-        push.sendInBackground(new SendCallback() {
+        ParsePush userPush = new ParsePush();
+        userPush.setQuery(pushQuery);
+        userPush.setMessage(message);
+        userPush.sendInBackground(new SendCallback() {
             @Override
             public void done(ParseException e) {
 
-                if(e == null)
-                    Log.println(Log.ASSERT,"MAILBOXNEW", "notification ok");
+                if (e == null)
+                    Log.println(Log.ASSERT, "INSTALLATION", "notification ok");
                 else
-                    Log.println(Log.ASSERT,"MAILBOXNEW", "notification fail");
+                    Log.println(Log.ASSERT, "INSTALLATION", "notification fail");
 
             }
         });
+
+        userPush = null;
     }
 
     public static void sendPush(ArrayList<ParseUserWrapper> users, String message){

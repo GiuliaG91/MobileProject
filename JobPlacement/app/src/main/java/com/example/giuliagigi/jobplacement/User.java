@@ -69,6 +69,8 @@ public class User extends ParseObject{
         type = null;
         profilePhoto = null;
         tags = new HashMap<String,Tag>();
+        phones = new ArrayList<Telephone>();
+
         isCached = new HashMap<String,Boolean>();
 
         isCached.put(MAIL_FIELD, false);
@@ -118,8 +120,13 @@ public class User extends ParseObject{
         ParseRelation<Telephone> tmp = getRelation(PHONE_FIELD);
 
         try {
-            phones.addAll(tmp.getQuery().find());
-            isCached.put(PHONE_FIELD,true);
+            List<Telephone> list = tmp.getQuery().find();
+
+            if(list != null){
+
+                phones.addAll(list);
+                isCached.put(PHONE_FIELD,true);
+            }
 
         } catch (ParseException e) {
             e.printStackTrace();

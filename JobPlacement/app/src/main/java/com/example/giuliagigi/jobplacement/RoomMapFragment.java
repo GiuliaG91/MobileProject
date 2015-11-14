@@ -235,12 +235,8 @@ public class RoomMapFragment extends Fragment implements GLSurfaceView.Renderer,
     public boolean onScale(ScaleGestureDetector detector) {
 
         final float ds = detector.getCurrentSpan() - lastSpan;
-        final float dx = detector.getFocusX() - lastX;
-        final float dy = detector.getFocusY() - lastY;
 
         lastSpan = detector.getCurrentSpan();
-        lastX = detector.getFocusX();
-        lastY = detector.getFocusY();
 
         surfaceView.queueEvent(new Runnable() {
             @Override
@@ -253,22 +249,20 @@ public class RoomMapFragment extends Fragment implements GLSurfaceView.Renderer,
                 mapPlane.setScale(newScale);
 
                 float maxX = mapPlane.getScale()*COEFFICIENT_X - OFFSET_X;
-                float minX = maxX;
+                float minX = -maxX;
                 float maxY = mapPlane.getScale()*COEFFICIENT_Y - OFFSET_Y;
                 float minY = -maxY;
-                float xTranslate = dx * MOVE_SCALE_FACTOR;
-                float yTranslate = dy * MOVE_SCALE_FACTOR;
+                float xTranslate = 0, yTranslate = 0;
 
-                if( (mapPlane.getTranslation().x + xTranslate) > maxX)
+                if( (mapPlane.getTranslation().x) > maxX)
                     xTranslate = maxX - mapPlane.getTranslation().x;
-                else if( (mapPlane.getTranslation().x + xTranslate) < minX)
+                else if( (mapPlane.getTranslation().x) < minX)
                     xTranslate = minX - mapPlane.getTranslation().x;
 
-                if( (mapPlane.getTranslation().y + yTranslate) > maxY)
+                if( (mapPlane.getTranslation().y) > maxY)
                     yTranslate = maxY - mapPlane.getTranslation().y;
-                else if( (mapPlane.getTranslation().y + yTranslate) < minY)
+                else if( (mapPlane.getTranslation().y) < minY)
                     yTranslate = minY - mapPlane.getTranslation().y;
-
 
                 mapPlane.translate(xTranslate, yTranslate, 0);
             }
@@ -281,8 +275,6 @@ public class RoomMapFragment extends Fragment implements GLSurfaceView.Renderer,
     public boolean onScaleBegin(ScaleGestureDetector detector) {
 
         lastSpan = detector.getCurrentSpan();
-        lastX = detector.getFocusX();
-        lastY = detector.getFocusY();
         isScaling = true;
 
         return true;

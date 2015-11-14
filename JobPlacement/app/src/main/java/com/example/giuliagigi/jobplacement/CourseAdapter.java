@@ -188,6 +188,7 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder
                                 News courseNotice = new News();
                                 courseNotice.createNews(7, courses.get(position), noticeMessage);
 
+                                Log.println(Log.ASSERT, "COURSEADAPTER", "sending push");
                                 Installation.sendPush(courses.get(position).getName(),
                                         courses.get(position).getName() + ": " + noticeMessage);
 
