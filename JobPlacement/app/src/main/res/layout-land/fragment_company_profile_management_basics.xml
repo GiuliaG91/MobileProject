@@ -46,6 +46,8 @@
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:text="@string/string_company_fragment_name_title"
                     android:gravity="bottom"
+                    android:backgroundTint="@color/blue_semi_transparent"
+                    android:textCursorDrawable="@drawable/edittext_cursor"
                     android:id="@+id/company_name_area"
                     android:paddingLeft="10dp"
                     android:background="#00000000"
@@ -111,6 +113,8 @@
                             android:layout_weight="1"
                             android:textColor="#ff000000"
                             android:textSize="20dp"
+                            android:backgroundTint="@color/blue_semi_transparent"
+                            android:textCursorDrawable="@drawable/edittext_cursor"
                             android:background="#00000000"
                             android:paddingLeft="10dp"
                             android:paddingTop="5dp"/>
@@ -163,6 +167,8 @@
                             android:id="@+id/company_birth_et"
                             android:layout_weight="1"
                             android:textColor="#ff000000"
+                            android:backgroundTint="@color/blue_semi_transparent"
+                            android:textCursorDrawable="@drawable/edittext_cursor"
                             android:background="#00000000"
                             android:textSize="20dp"
                             android:paddingLeft="10dp"
@@ -219,6 +225,8 @@
                             android:background="#00000000"
                             android:textSize="20dp"
                             android:paddingLeft="10dp"
+                            android:backgroundTint="@color/blue_semi_transparent"
+                            android:textCursorDrawable="@drawable/edittext_cursor"
                             android:paddingTop="5dp"
                             android:enabled="false"/>
 
@@ -286,6 +294,8 @@
                                 android:background="#00000000"
                                 android:textSize="15dp"
                                 android:paddingLeft="10dp"
+                                android:backgroundTint="@color/blue_semi_transparent"
+                                android:textCursorDrawable="@drawable/edittext_cursor"
                                 android:paddingTop="5dp" />
 
                         </android.support.v7.widget.CardView>

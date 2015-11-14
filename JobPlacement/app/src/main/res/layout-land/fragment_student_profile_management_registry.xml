@@ -84,6 +84,8 @@
                                 android:layout_weight=".7"
                                 android:textColor="#ff000000"
                                 android:background="#00000000"
+                                android:backgroundTint="@color/blue_semi_transparent"
+                                android:textCursorDrawable="@drawable/edittext_cursor"
                                 android:textSize="15dp"
                                 android:paddingLeft="10dp"
                                 android:paddingTop="5dp" />
@@ -118,6 +120,8 @@
                                 android:layout_weight=".7"
                                 android:textColor="#ff000000"
                                 android:background="#00000000"
+                                android:backgroundTint="@color/blue_semi_transparent"
+                                android:textCursorDrawable="@drawable/edittext_cursor"
                                 android:textSize="15dp"
                                 android:paddingLeft="10dp"
                                 android:paddingTop="5dp" />
@@ -174,6 +178,8 @@
                                 android:layout_weight=".7"
                                 android:textColor="#ff000000"
                                 android:background="#00000000"
+                                android:backgroundTint="@color/blue_semi_transparent"
+                                android:textCursorDrawable="@drawable/edittext_cursor"
                                 android:textSize="15dp"
                                 android:paddingLeft="10dp"
                                 android:paddingTop="5dp" />
@@ -208,6 +214,8 @@
                                 android:layout_weight=".7"
                                 android:textColor="#ff000000"
                                 android:background="#00000000"
+                                android:backgroundTint="@color/blue_semi_transparent"
+                                android:textCursorDrawable="@drawable/edittext_cursor"
                                 android:textSize="15dp"
                                 android:paddingLeft="10dp"
                                 android:paddingTop="5dp" />

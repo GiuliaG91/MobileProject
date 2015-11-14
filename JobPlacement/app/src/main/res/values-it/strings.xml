@@ -48,6 +48,7 @@
     <string name="location">Posizione</string>
     <string name="floor">Piano</string>
     <string name="confirm">Conferma</string>
+    <string name="insert_description">Inserisci una descrizione</string>
 
     <string name="ground_floor">Piano terra</string>
     <string name="basement_floor">Piano seminterrato</string>

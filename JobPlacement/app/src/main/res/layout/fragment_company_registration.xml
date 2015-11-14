@@ -59,6 +59,8 @@
                             android:id="@+id/company_name"
                             android:layout_weight=".3"
                             android:hint="Insert name"
+                            android:backgroundTint="@color/blue_semi_transparent"
+                            android:textCursorDrawable="@drawable/edittext_cursor"
                             android:textColor="#ff000000"
                             android:textSize="15dp"
                             android:paddingLeft="10dp"

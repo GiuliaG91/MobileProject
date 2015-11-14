@@ -43,14 +43,16 @@
                 android:text="F"
                 android:layout_weight="1"
                 android:id="@+id/female_checkBox"
-                android:textColor="#000000"
+                android:textColor="@color/ColorPrimaryDark"
+                android:buttonTint="@color/ColorPrimary"
                 android:layout_gravity="center_horizontal" />
             <CheckBox
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="M"
                 android:layout_weight="1"
-                android:textColor="#000000"
+                android:textColor="@color/ColorPrimaryDark"
+                android:buttonTint="@color/ColorPrimary"
                 android:id="@+id/male_checkBox"
                 android:layout_gravity="center_horizontal" />
 
