@@ -71,7 +71,8 @@
                 android:layout_weight="1"
                 android:background="@null"
                 android:paddingLeft="10dp"
-                android:backgroundTint="@android:color/white"
+                android:backgroundTint="@color/blue_semi_transparent"
+                android:textCursorDrawable="@drawable/edittext_cursor"
                 android:lines="1"
                 android:singleLine="true"/>
 

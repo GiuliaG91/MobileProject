@@ -26,6 +26,8 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:id="@+id/telephone_number_text"
+        android:backgroundTint="@color/blue_semi_transparent"
+        android:textCursorDrawable="@drawable/edittext_cursor"
         android:background="#00000000"
         android:textColor="#000000"
         android:textAppearance="?android:textAppearanceSmall"

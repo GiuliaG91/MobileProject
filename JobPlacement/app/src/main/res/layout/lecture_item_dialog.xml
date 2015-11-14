@@ -149,7 +149,7 @@
         android:layout_height="30dp"
         android:layout_gravity="center_horizontal"
         android:layout_margin="5dp"
-        android:text="OK"
+        android:text="@string/ok"
         android:background="@drawable/lecture_dialog_background"
         android:textSize="12dp"
         android:textColor="@color/ColorPrimaryDark"

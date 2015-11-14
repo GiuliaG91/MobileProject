@@ -29,7 +29,7 @@
     <string name="no">No</string>
     <string name="from">From:</string>
     <string name="to">To: </string>
-    <string name="password:">Password:</string>
+    <string name="password_">Password:</string>
     <string name="insert">Insert</string>
     <string name="set">Set:</string>
     <string name="cancel">Cancel:</string>
@@ -146,6 +146,7 @@
     <string name="string_company_fragment_name_title">Company name:</string>
     <string name="string_company_fragment_vat">VAT Number:</string>
     <string name="string_company_fragment_foundation_date">Foundation date:</string>
+    <string name="string_company_fragment_field">Field:</string>
     <string name="string_company_fragment_email">Email address:</string>
     <string name="string_company_fragment_description">Short description:</string>
     <string name="string_company_fragment_office_title">Offices:</string>
@@ -189,6 +190,18 @@
     <string name="string_account_change_password">Change password</string>
     <string name="string_account_resend_mail">Re-send verification mail</string>
     <string name="string_account_delete">Delete this account</string>
+
+    <!-- ___________________ DELETE ACCOUNT_____________________________________________________ -->
+    <string name="account_delete_title">Delete your profile</string>
+    <string name="account_delete_help_improve">We are sorry you decided to delete your profile. Would you help us understand how to improve our app?</string>
+    <string name="account_delete_why">Why are you deleting your account?</string>
+    <string name="account_delete_hard_understand">I found hard to understand the app</string>
+    <string name="account_delete_found_job">I just found a job</string>
+    <string name="account_delete_not_enough_users">There are not enough users</string>
+    <string name="account_delete_none_previous">None of the previous</string>
+    <string name="account_delete_write_reason">write the reason</string>
+    <string name="account_delete_hints">Do you have some hints?</string>
+    <string name="account_delete_shy">Don\'t be shy!</string>
 
     <!-- ________________ OFFICE/TELEPHONE/LANGUAGE ____________________________________________ -->
     <string name="string_office_headquarter">Headquarter</string>
@@ -331,13 +344,20 @@
     <string name="new_offer_fragment_NoStudents">No students applied</string>
     <string name="new_offer_fragment_publish">Publish offer</string>
     <string name="new_offer_fragment_spinner_title">Field of offer</string>
+    <string name="new_offer_fragment_field_title">Field of offer:</string>
+    <string name="new_offer_fragment_places_title">Available places:</string>
     <string name="new_offer_fragment_intro">Basic informations:</string>
     <string name="new_offer_fragment_Description">Description:</string>
     <string name="new_offer_fragment_hint_object">Object of offer</string>
+    <string name="new_offer_fragment_object">Object of offer:</string>
     <string name="new_offer_fragment_hint_duration">Term of contract</string>
     <string name="new_offer_fragment_hint_salary">Salary</string>
     <string name="new_offer_fragment_hint_nation">Nation</string>
     <string name="new_offer_fragment_hint_city">City</string>
+    <string name="new_offer_fragment_duration">Term of contract:</string>
+    <string name="new_offer_fragment_salary">Salary:</string>
+    <string name="new_offer_fragment_nation">Nation:</string>
+    <string name="new_offer_fragment_city">City:</string>
     <string name="new_offer_fragment_hint_description">Description up to 500 chracters</string>
     <string name="new_offer_fragment_hint_spinnerField">Please choose a field</string>
     <string name="new_offer_fragment_hint_spinnercontract">Please choose a type of contract</string>

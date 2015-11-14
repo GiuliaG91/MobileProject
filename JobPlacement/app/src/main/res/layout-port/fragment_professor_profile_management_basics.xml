@@ -51,6 +51,8 @@
                         android:id="@+id/professor_name_area"
                         android:gravity="bottom"
                         android:paddingLeft="10dp"
+                        android:backgroundTint="@color/blue_semi_transparent"
+                        android:textCursorDrawable="@drawable/edittext_cursor"
                         android:background="#00000000"
                         android:paddingBottom="5dp"
                         android:textColor="#ffffff" />
@@ -63,6 +65,8 @@
                         android:text="@string/profile_person_fragment_surname_title"
                         android:gravity="bottom"
                         android:background="#00000000"
+                        android:backgroundTint="@color/blue_semi_transparent"
+                        android:textCursorDrawable="@drawable/edittext_cursor"
                         android:id="@+id/professor_surname_area"
                         android:paddingLeft="10dp"
                         android:textColor="#ffffff"
@@ -120,6 +124,8 @@
                             android:layout_weight="1"
                             android:textColor="#ff000000"
                             android:background="#00000000"
+                            android:backgroundTint="@color/blue_semi_transparent"
+                            android:textCursorDrawable="@drawable/edittext_cursor"
                             android:textSize="20dp"
                             android:paddingLeft="10dp"
                             android:paddingTop="5dp"
@@ -180,14 +186,16 @@
                                 android:text="F"
                                 android:layout_weight="1"
                                 android:id="@+id/female_checkBox"
-                                android:textColor="#000000"
+                                android:textColor="@color/ColorPrimaryDark"
+                                android:buttonTint="@color/ColorPrimary"
                                 android:layout_gravity="center_horizontal" />
                             <CheckBox
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="M"
                                 android:layout_weight="1"
-                                android:textColor="#000000"
+                                android:textColor="@color/ColorPrimaryDark"
+                                android:buttonTint="@color/ColorPrimary"
                                 android:id="@+id/male_checkBox"
                                 android:layout_gravity="center_horizontal" />
 
@@ -243,6 +251,8 @@
                             android:layout_weight="1"
                             android:textColor="#ff000000"
                             android:background="#00000000"
+                            android:backgroundTint="@color/blue_semi_transparent"
+                            android:textCursorDrawable="@drawable/edittext_cursor"
                             android:textSize="20dp"
                             android:paddingLeft="10dp"
                             android:paddingTop="5dp" />
@@ -297,6 +307,8 @@
                             android:layout_weight="1"
                             android:textColor="#ff000000"
                             android:background="#00000000"
+                            android:backgroundTint="@color/blue_semi_transparent"
+                            android:textCursorDrawable="@drawable/edittext_cursor"
                             android:textSize="20dp"
                             android:paddingLeft="10dp"
                             android:paddingTop="5dp" />

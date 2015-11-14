@@ -78,6 +78,8 @@
                     android:layout_height="wrap_content"
                     android:inputType="number"
                     android:textColor="@color/ColorPrimaryDark"
+                    android:backgroundTint="@color/blue_semi_transparent"
+                    android:textCursorDrawable="@drawable/edittext_cursor"
                     android:textSize="@dimen/editText_textSize" />
 
                 <TextView
@@ -94,6 +96,8 @@
                     android:layout_height="wrap_content"
                     android:inputType="number"
                     android:textColor="@color/ColorPrimaryDark"
+                    android:backgroundTint="@color/blue_semi_transparent"
+                    android:textCursorDrawable="@drawable/edittext_cursor"
                     android:textSize="@dimen/editText_textSize"  />
 
                 <TextView
@@ -109,6 +113,8 @@
                     android:layout_height="wrap_content"
                     android:inputType="number"
                     android:textColor="@color/ColorPrimaryDark"
+                    android:backgroundTint="@color/blue_semi_transparent"
+                    android:textCursorDrawable="@drawable/edittext_cursor"
                     android:textSize="@dimen/editText_textSize"  />
 
                 <TextView
@@ -124,6 +130,8 @@
                     android:layout_height="wrap_content"
                     android:inputType="number"
                     android:textColor="@color/ColorPrimaryDark"
+                    android:backgroundTint="@color/blue_semi_transparent"
+                    android:textCursorDrawable="@drawable/edittext_cursor"
                     android:textSize="@dimen/editText_textSize"  />
 
                 </LinearLayout>

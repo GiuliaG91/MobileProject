@@ -21,7 +21,7 @@
                 android:layout_height="wrap_content"
                 android:textSize="40sp"
                 android:textColor="@color/ColorPrimary"
-                android:text="Delete your profile"
+                android:text="@string/account_delete_title"
                 android:id="@+id/textView2"
                 android:padding="10dp"
                 android:layout_gravity="center_horizontal|top" />
@@ -32,7 +32,7 @@
                 android:textColor="@color/ColorPrimaryDark"
                 android:gravity="center"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="We are sorry you decidede to delte your profile. Would you help us understand how to improve our app?"
+                android:text="@string/account_delete_help_improve"
                 android:id="@+id/textView3"
                 android:padding="6dp"
                 android:layout_gravity="center_horizontal|top" />
@@ -41,7 +41,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="27sp"
-                android:text="Why are you deleting your account?"
+                android:text="@string/account_delete_why"
                 android:id="@+id/textView4"
                 android:textColor="@color/ColorPrimary"
                 android:padding="10dp"
@@ -56,6 +56,7 @@
                 <CheckBox
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:buttonTint="@color/ColorPrimary"
                     android:id="@+id/profileDelete_foundJob_checkBox"/>
 
                 <TextView
@@ -64,7 +65,7 @@
                     android:layout_marginLeft="5dp"
                     android:textColor="@color/ColorPrimaryDark"
                     android:textSize="17sp"
-                    android:text="I just found a job"/>
+                    android:text="@string/account_delete_found_job"/>
 
             </LinearLayout>
 
@@ -77,6 +78,7 @@
                 <CheckBox
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:buttonTint="@color/ColorPrimary"
                     android:id="@+id/profileDelete_badApp_checkBox"/>
 
                 <TextView
@@ -85,7 +87,7 @@
                     android:layout_marginLeft="5dp"
                     android:textColor="@color/ColorPrimaryDark"
                     android:textSize="17sp"
-                    android:text="I found hard to understand the app"/>
+                    android:text="@string/account_delete_hard_understand"/>
 
             </LinearLayout>
 
@@ -98,6 +100,7 @@
                 <CheckBox
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:buttonTint="@color/ColorPrimary"
                     android:id="@+id/profileDelete_fewUsers_checkBox"/>
 
                 <TextView
@@ -106,7 +109,7 @@
                     android:layout_marginLeft="5dp"
                     android:textColor="@color/ColorPrimaryDark"
                     android:textSize="17sp"
-                    android:text="There are not enough users"/>
+                    android:text="@string/account_delete_not_enough_users"/>
 
             </LinearLayout>
 
@@ -119,6 +122,7 @@
                 <CheckBox
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:buttonTint="@color/ColorPrimary"
                     android:id="@+id/profileDelete_other_checkBox"/>
 
                 <TextView
@@ -127,7 +131,7 @@
                     android:layout_marginLeft="5dp"
                     android:textColor="@color/ColorPrimaryDark"
                     android:textSize="17sp"
-                    android:text="None of the preavious"/>
+                    android:text="@string/account_delete_none_previous"/>
 
             </LinearLayout>
 
@@ -135,8 +139,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/profileDelete_otherReason_text"
-                android:hint="write the reason"
+                android:hint="@string/account_delete_write_reason"
                 android:layout_marginLeft="28dp"
+                android:backgroundTint="@color/blue_semi_transparent"
+                android:textCursorDrawable="@drawable/edittext_cursor"
                 android:textColor="@color/ColorPrimaryDark"
                 android:layout_gravity="center_horizontal" />
 
@@ -145,7 +151,7 @@
                 android:layout_height="wrap_content"
                 android:textSize="27sp"
                 android:textColor="@color/ColorPrimary"
-                android:text="Do you have some hints?"
+                android:text="@string/account_delete_hints"
                 android:id="@+id/textView5"
                 android:padding="10dp"
                 android:layout_gravity="left" />
@@ -154,15 +160,17 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
+                android:backgroundTint="@color/blue_semi_transparent"
+                android:textCursorDrawable="@drawable/edittext_cursor"
                 android:id="@+id/profileDelete_hints_text"
-                android:hint="Don't be shy!"
+                android:hint="@string/account_delete_shy"
                 android:layout_gravity="center_horizontal" />
 
             <Button
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_margin="12dp"
-                android:text="Confirm"
+                android:text="@string/confirm"
                 android:background="@drawable/button_background"
                 android:textColor="@color/ColorPrimaryDark"
                 android:id="@+id/profileDelete_confirmButton"

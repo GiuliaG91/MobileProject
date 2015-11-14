@@ -27,7 +27,7 @@
                 android:text="@string/lectureSearch_InsertCourse"
                 android:textSize="@dimen/textView_textSize"
                 android:layout_margin="5dp"
-                android:textColor="#002E6B"
+                android:textColor="@color/ColorPrimary"
                 android:id="@+id/textViewCourse" />
 
             <AutoCompleteTextView
@@ -35,7 +35,9 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/lectureSearch_hintCourse"
                 android:textSize="@dimen/editText_textSize"
-                android:textColor="#0050B8"
+                android:textColor="@color/ColorPrimaryDark"
+                android:backgroundTint="@color/blue_semi_transparent"
+                android:textCursorDrawable="@drawable/edittext_cursor"
                 android:layout_margin="5dp"
                 android:id="@+id/editTextCourse" />
 
@@ -44,7 +46,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/lectureSearch_InsertProfessor"
                 android:textSize="@dimen/textView_textSize"
-                android:textColor="#002E6B"
+                android:textColor="@color/ColorPrimary"
                 android:layout_margin="5dp"
                 android:id="@+id/textViewProfessor" />
 
@@ -53,7 +55,9 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/lectureSearch_hintProfessor"
                 android:textSize="@dimen/editText_textSize"
-                android:textColor="#0050B8"
+                android:backgroundTint="@color/blue_semi_transparent"
+                android:textCursorDrawable="@drawable/edittext_cursor"
+                android:textColor="@color/ColorPrimaryDark"
                 android:layout_margin="5dp"
                 android:id="@+id/editTextProfessor"
                 />
@@ -67,7 +71,7 @@
                 android:layout_margin="4dp"
                 android:layout_gravity="center_horizontal"
                 android:layout_weight="0.11"
-                android:textColor="#002E6B"
+                android:textColor="@color/ColorPrimaryDark"
                 android:background="@drawable/button_background"/>
 
             <FrameLayout

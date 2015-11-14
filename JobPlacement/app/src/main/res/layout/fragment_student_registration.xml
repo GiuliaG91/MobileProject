@@ -387,7 +387,7 @@
                         android:layout_width="fill_parent"
                         android:layout_height="0dp"
                         android:textAppearance="?android:attr/textAppearanceSmall"
-                        android:text="@string/password:"
+                        android:text="@string/password_"
                         android:textColor="@color/ColorPrimaryDark"
                         android:id="@+id/password_hint"
                         android:layout_weight=".3"

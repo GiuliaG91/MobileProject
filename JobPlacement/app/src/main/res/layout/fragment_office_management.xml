@@ -59,7 +59,7 @@
                     <EditText
                         android:layout_width="fill_parent"
                         android:layout_height="0dp"
-                        android:text="New Text"
+                        android:hint="@string/insert"
                         android:id="@+id/office_address_area"
                         android:scrollHorizontally="true"
                         android:layout_weight=".7"
@@ -67,6 +67,8 @@
                         android:textSize="15dp"
                         android:paddingLeft="10dp"
                         android:background="#00000000"
+                        android:backgroundTint="@color/blue_semi_transparent"
+                        android:textCursorDrawable="@drawable/edittext_cursor"
                         android:paddingTop="5dp" />
 
                 </LinearLayout>
@@ -93,11 +95,13 @@
                     <EditText
                         android:layout_width="fill_parent"
                         android:layout_height="0dp"
-                        android:text="New Text"
+                        android:hint="@string/insert"
                         android:id="@+id/office_CAP_area"
                         android:scrollHorizontally="true"
                         android:layout_weight=".7"
                         android:textColor="#ff000000"
+                        android:backgroundTint="@color/blue_semi_transparent"
+                        android:textCursorDrawable="@drawable/edittext_cursor"
                         android:textSize="15dp"
                         android:background="#00000000"
                         android:paddingLeft="10dp"
@@ -149,12 +153,14 @@
                     <EditText
                         android:layout_width="fill_parent"
                         android:layout_height="0dp"
-                        android:text="New Text"
+                        android:hint="@string/insert"
                         android:id="@+id/office_city_area"
                         android:scrollHorizontally="true"
                         android:layout_weight=".7"
                         android:textColor="#ff000000"
                         android:background="#00000000"
+                        android:backgroundTint="@color/blue_semi_transparent"
+                        android:textCursorDrawable="@drawable/edittext_cursor"
                         android:textSize="15dp"
                         android:paddingLeft="10dp"
                         android:paddingTop="5dp" />
@@ -183,12 +189,14 @@
                     <EditText
                         android:layout_width="fill_parent"
                         android:layout_height="0dp"
-                        android:text="New Text"
+                        android:hint="@string/insert"
                         android:id="@+id/office_nation_area"
                         android:scrollHorizontally="true"
                         android:layout_weight=".7"
                         android:textColor="#ff000000"
                         android:background="#00000000"
+                        android:backgroundTint="@color/blue_semi_transparent"
+                        android:textCursorDrawable="@drawable/edittext_cursor"
                         android:textSize="15dp"
                         android:paddingLeft="10dp"
                         android:paddingTop="5dp" />
