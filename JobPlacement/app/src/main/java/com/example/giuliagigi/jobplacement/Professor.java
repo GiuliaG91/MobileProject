@@ -1,6 +1,8 @@
 package com.example.giuliagigi.jobplacement;
 
 
+import android.os.AsyncTask;
+
 import com.parse.FindCallback;
 import com.parse.ParseClassName;
 import com.parse.ParseException;
@@ -54,12 +56,11 @@ public class Professor extends User {
         isCached.put(SEX_FIELD,false);
         isCached.put(BIRTH_CITY_FIELD,false);
         isCached.put(BIRTH_DATE_FIELD,false);
-//        isCached.put(CITY_FIELD,false);
         isCached.put(NATION_FIELD,false);
     }
 
     // --------- GETTERS -----------
-    public String getName() {
+    synchronized public String getName() {
         if(isCached.get(NAME_FIELD))
             return name;
 
@@ -68,7 +69,7 @@ public class Professor extends User {
         return name;
     }
 
-    public String getSurname() {
+    synchronized public String getSurname() {
         if(isCached.get(SURNAME_FIELD))
             return surname;
 
@@ -77,27 +78,25 @@ public class Professor extends User {
         return surname;
     }
 
-    public ArrayList<Course> getCourses() {
+    synchronized public ArrayList<Course> getCourses() {
 
         if(isCached.get(COURSES_FIELD))
             return this.courses;
 
         ParseRelation<Course> tmp= getRelation(COURSES_FIELD);
-        tmp.getQuery().findInBackground(new FindCallback<Course>() {
-            @Override
-            public void done(List<Course> coursesList, ParseException e) {
 
-                if(coursesList!= null)
-                    for(Course c:coursesList)
-                        courses.add(c);
-            }
-        });
+        try {
+            courses.addAll(tmp.getQuery().find());
+            isCached.put(COURSES_FIELD, true);
+        }
+        catch (ParseException e) {
+            e.printStackTrace();
+        }
 
-        isCached.put(COURSES_FIELD, true);
         return courses;
     }
 
-    public String getSex() {
+    synchronized public String getSex() {
         if(isCached.get(SEX_FIELD))
             return sex;
 
@@ -106,7 +105,7 @@ public class Professor extends User {
         return sex;
     }
 
-    public Date getBirth(){
+    synchronized public Date getBirth(){
         if(isCached.get(BIRTH_DATE_FIELD))
             return birthDate;
 
@@ -115,7 +114,7 @@ public class Professor extends User {
         return birthDate;
     }
 
-    public String getBirthCity(){
+    synchronized public String getBirthCity(){
         if(isCached.get(BIRTH_CITY_FIELD))
             return birthCity;
 
@@ -133,7 +132,7 @@ public class Professor extends User {
 //        return city;
 //    }
 
-    public String getNation(){
+    synchronized public String getNation(){
         if(isCached.get(NATION_FIELD))
             return nation;
 
@@ -201,16 +200,24 @@ public class Professor extends User {
 
     @Override
     public void cacheData() {
+
         super.cacheData();
 
-        getName();
-        getSurname();
-        getSex();
-        getCourses();
-        getBirth();
-        getBirthCity();
-//        getCity();
-        getNation();
+        AsyncTask<Void,Void,Void> cacheTask = new AsyncTask<Void, Void, Void>() {
+            @Override
+            protected Void doInBackground(Void... params) {
+
+                getName();
+                getSurname();
+                getSex();
+                getCourses();
+                getBirth();
+                getBirthCity();
+                getNation();
+                return null;
+            }
+        };
+        cacheTask.execute();
     }
 
 }

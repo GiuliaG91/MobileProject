@@ -2,6 +2,7 @@ package com.example.giuliagigi.jobplacement;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.os.AsyncTask;
 import android.util.Log;
 
 import com.parse.FindCallback;
@@ -54,7 +55,6 @@ public class User extends ParseObject{
     protected HashMap<String,Tag> tags;
     protected Bitmap profilePhoto;
     protected HashMap<String,Boolean> isCached;
-    protected HashMap<String,Boolean> isDownloading;
 
 
     /* default zero-argument constructor:
@@ -70,7 +70,6 @@ public class User extends ParseObject{
         profilePhoto = null;
         tags = new HashMap<String,Tag>();
         isCached = new HashMap<String,Boolean>();
-        isDownloading = new HashMap<String,Boolean>();
 
         isCached.put(MAIL_FIELD, false);
         isCached.put(TYPE_FIELD, false);
@@ -78,7 +77,6 @@ public class User extends ParseObject{
         isCached.put(PROFILE_PHOTO_FIELD,false);
         isCached.put(TAG_FIELD,false);
 
-        isDownloading.put(PROFILE_PHOTO_FIELD,false);
     }
 
 
@@ -111,24 +109,22 @@ public class User extends ParseObject{
         phones.remove(phone);
         getRelation(PHONE_FIELD).remove(phone);
     }
-    public ArrayList<Telephone> getPhones(){
+
+    synchronized public ArrayList<Telephone> getPhones(){
 
         if(isCached.get(PHONE_FIELD))
             return phones;
 
-
         ParseRelation<Telephone> tmp = getRelation(PHONE_FIELD);
-        tmp.getQuery().findInBackground(new FindCallback<Telephone>() {
-            @Override
-            public void done(List<Telephone> results, ParseException e) {
 
-                if(results!= null)
-                    for(Telephone t:results)
-                        phones.add(t);
-            }
-        });
+        try {
+            phones.addAll(tmp.getQuery().find());
+            isCached.put(PHONE_FIELD,true);
 
-        isCached.put(PHONE_FIELD,true);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
         return phones;
     }
 
@@ -142,24 +138,29 @@ public class User extends ParseObject{
         tags.remove(tag.getTag());
         getRelation(TAG_FIELD).remove(tag);
     }
-    public HashMap<String,Tag> getTags(){
+
+    synchronized public HashMap<String,Tag> getTags(){
 
         if(isCached.get(TAG_FIELD))
             return tags;
 
 
         ParseRelation<Tag> tmp = getRelation(TAG_FIELD);
-        tmp.getQuery().findInBackground(new FindCallback<Tag>() {
-            @Override
-            public void done(List<Tag> results, ParseException e) {
 
-                if(results!= null)
-                    for(Tag t:results)
-                        tags.put(t.getTag(),t);
-            }
-        });
+        try {
 
-        isCached.put(TAG_FIELD,true);
+            ArrayList<Tag> tagList = null;
+            tagList = new ArrayList<>(tmp.getQuery().find());
+
+            for (Tag t : tagList)
+                tags.put(t.getTag(), t);
+
+            isCached.put(TAG_FIELD,true);
+
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
         return tags;
     }
 
@@ -211,35 +212,28 @@ public class User extends ParseObject{
             }
         });
     }
-    public Bitmap getProfilePhoto(){
 
-        if(!isCached.get(PROFILE_PHOTO_FIELD) && !isDownloading.get(PROFILE_PHOTO_FIELD)){
+    synchronized public Bitmap getProfilePhoto() {
 
-            ParseFile file = (ParseFile)get(PROFILE_PHOTO_FIELD);
+        if (isCached.get(PROFILE_PHOTO_FIELD)) return profilePhoto;
 
-            if(file == null)
-                return null;
+        ParseFile file = (ParseFile) get(PROFILE_PHOTO_FIELD);
 
-            file.getDataInBackground(new GetDataCallback() {
-                @Override
-                public void done(byte[] bytes, ParseException e) {
+        if (file == null)
+            return null;
 
-                    profilePhoto = BitmapFactory.decodeByteArray(bytes,0,bytes.length);
-                    isCached.put(PROFILE_PHOTO_FIELD,true);
-                    isDownloading.put(PROFILE_PHOTO_FIELD,true);
-                }
-            },
-                new ProgressCallback() {
-                    @Override
-                    public void done(Integer integer) {
+        try {
 
-                        if(!isDownloading.get(PROFILE_PHOTO_FIELD))
-                            isDownloading.put(PROFILE_PHOTO_FIELD,true);
-                    }
-                });
+            byte[] bytes = file.getData();
+            profilePhoto = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+            isCached.put(PROFILE_PHOTO_FIELD, true);
+            return profilePhoto;
+
+        } catch (ParseException e) {
+            e.printStackTrace();
         }
 
-        return profilePhoto;
+        return null;
     }
 
 
@@ -269,17 +263,23 @@ public class User extends ParseObject{
 
     public void cacheData(){
 
-        Log.println(Log.ASSERT,"USER", "caching!");
-        getMail();
-        getType();
-        getProfilePhoto();
-        getTags();
-        getPhones();
-    }
-    public boolean isCachingNeeded(){
+        if(!isCached.containsValue(false)) return;
 
-        return isCached.containsValue(false);
+        AsyncTask<Void,Void,Void> cacheTask= new AsyncTask<Void, Void, Void>() {
+            @Override
+            protected Void doInBackground(Void... params) {
+
+                getMail();
+                getType();
+                getProfilePhoto();
+                getTags();
+                getPhones();
+                return null;
+            }
+        };
+        cacheTask.execute();
     }
+
     public void printCacheStatus(){
 
         for(String key:isCached.keySet()){

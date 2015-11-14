@@ -62,11 +62,6 @@ public class Login extends ActionBarActivity {
 
             Log.println(Log.ASSERT, "LOGIN", "User session already open. Entering home activity");
 
-//            ParseInstallation installation = ParseInstallation.getCurrentInstallation();
-//            Log.println(Log.ASSERT, "LOGIN", "installation: " + installation.getInstallationId());
-//            installation.put("User", application.getCurrentUser());
-//            Log.println(Log.ASSERT, "LOGIN", "user: " + application.getCurrentUser().getObjectId());
-
             registerApplication();
             startActivity(new Intent(getApplicationContext(), Home.class));
         }
@@ -226,8 +221,19 @@ public class Login extends ActionBarActivity {
 
     private void registerApplication(){
 
+        Log.println(Log.ASSERT,"LOGIN", "register application");
         Installation.initialize();
         Installation.setUser(application.getCurrentUser());
+
+        Log.println(Log.ASSERT,"LOGIN", "type = " + application.getUserObject().getType());
+        if(application.getUserObject().getType().equals(User.TYPE_STUDENT)){
+
+            Student s = (Student)application.getUserObject();
+            Log.println(Log.ASSERT,"LOGIN", "courses number = " + s.getCourses().size());
+            for(Course c: s.getCourses())
+                Installation.addChannel(c.getName());
+        }
+
         Installation.commit();
     }
 

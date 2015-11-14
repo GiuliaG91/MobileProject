@@ -178,7 +178,7 @@ public class GlobalData extends Application {
         if(currentUser != null){
 
             currentUserObject = currentUser.getUser();
-            if(currentUserObject.isCachingNeeded()) currentUserObject.cacheData();
+            currentUserObject.cacheData();
         }
         else
             Log.println(Log.ASSERT,"GLOBAL DATA", "currentUser is null");

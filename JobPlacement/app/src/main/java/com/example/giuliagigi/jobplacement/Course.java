@@ -53,7 +53,7 @@ public class Course extends ParseObject {
     // --------------------------------------------------------------------
 
 
-    public String getCode() {
+    synchronized public String getCode() {
 
         if(isCached.get(CODE_FIELD))
             return code;
@@ -68,7 +68,7 @@ public class Course extends ParseObject {
         put(CODE_FIELD,code);
     }
 
-    public Professor getProfessor() {
+    synchronized public Professor getProfessor() {
 
         if(isCached.get(PROFESSOR_FIELD))
             return professor;
@@ -84,7 +84,7 @@ public class Course extends ParseObject {
         put(PROFESSOR_FIELD, professor);
     }
 
-    public String getName() {
+    synchronized public String getName() {
 
         if(isCached.get(NAME_FIELD))
             return name;
@@ -116,13 +116,13 @@ public class Course extends ParseObject {
         getRelation(LECTURES_FIELD).remove(l);
     }
 
-    public int getLectureNumber(){
+    synchronized public int getLectureNumber(){
 
         if(!isCached.get(LECTURES_FIELD)) cacheData();
         return lectures.size();
     }
 
-    public Lecture getLecture(int i){
+    synchronized public Lecture getLecture(int i){
 
         if(!isCached.get(LECTURES_FIELD)) cacheData();
         if(i<0|| i>=getLectureNumber()) return null;
@@ -136,13 +136,14 @@ public class Course extends ParseObject {
         ParseRelation<Lecture> tmp = getRelation(LECTURES_FIELD);
 
         try {
+
             lectures.addAll(tmp.getQuery().find());
+            isCached.put(LECTURES_FIELD,true);
         }
         catch (ParseException e) {
             e.printStackTrace();
         }
 
-        isCached.put(LECTURES_FIELD,true);
         return lectures;
     }
 

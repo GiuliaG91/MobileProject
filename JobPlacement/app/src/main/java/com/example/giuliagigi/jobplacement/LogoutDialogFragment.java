@@ -60,7 +60,7 @@ public class LogoutDialogFragment extends DialogFragment {
                 installation.remove("User");
                 installation.saveInBackground();
 
-                ParseUser.logOutInBackground();
+                ParseUser.logOut();
                 completeLogoutProcedure();
             }
         });
@@ -99,6 +99,10 @@ public class LogoutDialogFragment extends DialogFragment {
             editor.putString(Login.SHAREDPREF_LATEST_MAIL,"");
             editor.putString(Login.SHAREDPREF_LATEST_PASSWORD,"");
             editor.commit();
+
+            Installation.initialize();
+            Installation.resetChannels();
+            Installation.commit();
         }
 
 

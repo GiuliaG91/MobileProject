@@ -1057,7 +1057,7 @@ public class NewOffer extends Fragment implements DatePickerFragment.OnDataSetLi
                 }
 
                 ParseQuery pushQuery = ParseInstallation.getQuery();
-                pushQuery.whereContainedIn("User", list);
+                pushQuery.whereContainedIn(Installation.USER_FIELD, list);
 
 
 // Send push notification to query

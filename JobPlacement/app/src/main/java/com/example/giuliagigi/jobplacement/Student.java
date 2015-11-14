@@ -1,5 +1,6 @@
 package com.example.giuliagigi.jobplacement;
 
+import android.os.AsyncTask;
 import android.util.Log;
 
 import com.parse.FindCallback;
@@ -63,7 +64,7 @@ public class Student extends User {
     protected ArrayList<CompanyOffer> favourites;
     protected ArrayList<Company> companies;
     protected ArrayList<Course> courses;
-    protected byte[] tempBytes;
+    protected byte[] curriculum;
 
     public Student(){
 
@@ -81,6 +82,7 @@ public class Student extends User {
         nation = null;
         description = null;
         addressLocation = null;
+        curriculum = null;
         phones = new ArrayList<Telephone>();
         languages = new ArrayList<Language>();
         favourites = new ArrayList<CompanyOffer>();
@@ -105,11 +107,12 @@ public class Student extends User {
         isCached.put(DESCRIPTION_FIELD, false);
         isCached.put(ADDRESS_LOCATION_FIELD,false);
         isCached.put(COMPANIES_FIELD, false);
+        isCached.put(CURRICULUM_FIELD,false);
     }
 
 
     /*GETTER METHODS*/
-    public String getName() {
+    synchronized public String getName() {
 
         if(isCached.get(NAME_FIELD))
             return name;
@@ -118,7 +121,7 @@ public class Student extends User {
         isCached.put(NAME_FIELD,true);
         return name;
     }
-    public String getSurname() {
+    synchronized public String getSurname() {
         if(isCached.get(SURNAME_FIELD))
             return surname;
 
@@ -126,26 +129,23 @@ public class Student extends User {
         isCached.put(SURNAME_FIELD,true);
         return surname;
     }
-    public ArrayList<Degree> getDegrees() {
+
+    synchronized public ArrayList<Degree> getDegrees() {
 
         if(isCached.get(DEGREES_FIELD))
             return this.degrees;
 
         ParseRelation<Degree> tmp= getRelation(DEGREES_FIELD);
-        tmp.getQuery().findInBackground(new FindCallback<Degree>() {
-            @Override
-            public void done(List<Degree> degreesList, ParseException e) {
-
-                if(degreesList!= null)
-                    for(Degree d:degreesList)
-                        degrees.add(d);
-            }
-        });
+        try {
+            degrees.addAll(tmp.getQuery().find());
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
 
         isCached.put(DEGREES_FIELD, true);
         return degrees;
     }
-    public String getSex() {
+    synchronized public String getSex() {
         if(isCached.get(SEX_FIELD))
             return sex;
 
@@ -153,7 +153,7 @@ public class Student extends User {
         isCached.put(SEX_FIELD,true);
         return sex;
     }
-    public Date getBirth(){
+    synchronized public Date getBirth(){
 
         if(isCached.get(BIRTH_DATE_FIELD))
             return birthDate;
@@ -162,7 +162,7 @@ public class Student extends User {
         isCached.put(BIRTH_DATE_FIELD,true);
         return birthDate;
     }
-    public String getBirthCity(){
+    synchronized public String getBirthCity(){
 
         if(isCached.get(BIRTH_CITY_FIELD))
             return birthCity;
@@ -171,7 +171,7 @@ public class Student extends User {
         isCached.put(BIRTH_CITY_FIELD,true);
         return birthCity;
     }
-    public String getAddress(){
+    synchronized public String getAddress(){
 
         if(isCached.get(ADDRESS_FIELD))
             return address;
@@ -180,7 +180,7 @@ public class Student extends User {
         isCached.put(ADDRESS_FIELD,true);
         return address;
     }
-    public String getCity(){
+    synchronized public String getCity(){
 
         if(isCached.get(CITY_FIELD))
             return city;
@@ -189,7 +189,7 @@ public class Student extends User {
         isCached.put(CITY_FIELD,true);
         return city;
     }
-    public String getPostalCode(){
+    synchronized public String getPostalCode(){
 
         if(isCached.get(POSTAL_CODE_FIELD))
             return postalCode;
@@ -198,7 +198,7 @@ public class Student extends User {
         isCached.put(POSTAL_CODE_FIELD,true);
         return postalCode;
     }
-    public String getNation(){
+    synchronized public String getNation(){
 
         if(isCached.get(NATION_FIELD))
             return nation;
@@ -207,7 +207,8 @@ public class Student extends User {
         isCached.put(NATION_FIELD,true);
         return nation;
     }
-    public String getDescription() {
+
+    synchronized public String getDescription() {
         if(isCached.get(DESCRIPTION_FIELD))
             return description;
 
@@ -215,66 +216,62 @@ public class Student extends User {
         isCached.put(DESCRIPTION_FIELD,true);
         return description;
     }
-    public ArrayList<Language> getLanguages(){
+
+    synchronized public ArrayList<Language> getLanguages(){
 
         if(isCached.get(LANGUAGE_FIELD))
             return languages;
 
         ParseRelation<Language> tmp= getRelation(LANGUAGE_FIELD);
+        try {
 
-        tmp.getQuery().findInBackground(new FindCallback<Language>() {
-            @Override
-            public void done(List<Language> languagesList, ParseException e) {
+            languages.addAll(tmp.getQuery().find());
+            isCached.put(LANGUAGE_FIELD,true);
+        }
+        catch (ParseException e) {
+            e.printStackTrace();
+        }
 
-                if(languagesList!= null)
-                    for(Language l:languagesList)
-                        languages.add(l);
-            }
-        });
-
-        isCached.put(LANGUAGE_FIELD,true);
         return languages;
     }
-    public ArrayList<Certificate> getCertificates(){
+
+    synchronized public ArrayList<Certificate> getCertificates(){
 
         if(isCached.get(CERTIFICATE_FIELD))
             return certificates;
 
         ParseRelation<Certificate> tmp = getRelation(CERTIFICATE_FIELD);
-        tmp.getQuery().findInBackground(new FindCallback<Certificate>() {
-            @Override
-            public void done(List<Certificate> results, ParseException e) {
 
-                if(results!=null)
-                    for(Certificate c:results)
-                        certificates.add(c);
-            }
-        });
+        try {
+            certificates.addAll(tmp.getQuery().find());
+            isCached.put(CERTIFICATE_FIELD,true);
+        }
+        catch (ParseException e) {
+            e.printStackTrace();
+        }
 
-        isCached.put(CERTIFICATE_FIELD,true);
         return certificates;
     }
-    public ArrayList<CompanyOffer> getFavourites( ){
+
+    synchronized public ArrayList<CompanyOffer> getFavourites( ){
 
         if(isCached.get(FAVOURITES_FIELD))
             return favourites;
 
         ParseRelation<CompanyOffer> tmp = getRelation(FAVOURITES_FIELD);
-        tmp.getQuery().findInBackground(new FindCallback<CompanyOffer>() {
-            @Override
-            public void done(List<CompanyOffer> results, ParseException e) {
+        try {
 
-                if(results!= null)
-                    for(CompanyOffer co: results)
-                        favourites.add(co);
-            }
-        });
+            favourites.addAll(tmp.getQuery().find());
+            isCached.put(FAVOURITES_FIELD,true);
 
-        isCached.put(FAVOURITES_FIELD,true);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
         return favourites;
     }
 
-    public ParseGeoPoint getAddressLocation(){
+    synchronized public ParseGeoPoint getAddressLocation(){
 
         if(isCached.get(ADDRESS_LOCATION_FIELD))
             return addressLocation;
@@ -284,52 +281,61 @@ public class Student extends User {
         return addressLocation;
     }
 
-    public List<Company> getCompanies( ){
+    synchronized public List<Company> getCompanies( ){
 
         if(isCached.get(COMPANIES_FIELD))
             return companies;
 
-        ParseRelation<Company> tmp= getRelation(COMPANIES_FIELD);
-        List<Company> result= null;
+        ParseRelation<Company> tmp = getRelation(COMPANIES_FIELD);
         try {
-            result = tmp.getQuery().find();
+
+            companies.addAll(tmp.getQuery().find());
+            isCached.put(COMPANIES_FIELD,true);
+
         } catch (com.parse.ParseException e) {
             e.printStackTrace();
         }
-        isCached.put(COMPANIES_FIELD,true);
-        return result;
+        return companies;
     }
 
-    public byte[] getCurriculum() throws ParseException{
+    synchronized public byte[] getCurriculum(){
+
+        if(isCached.get(CURRICULUM_FIELD)) return curriculum;
 
         ParseFile curriculumFile = (ParseFile)get(CURRICULUM_FIELD);
 
-
         if(curriculumFile!= null){
 
-            return curriculumFile.getData();
+            try {
+
+                curriculum = curriculumFile.getData();
+                isCached.put(CURRICULUM_FIELD,true);
+            }
+            catch (ParseException e) {
+                e.printStackTrace();
+            }
         }
 
+        curriculum = null;
+        isCached.put(CURRICULUM_FIELD,true);
         return null;
     }
 
-    public ArrayList<Course> getCourses() {
+    synchronized public ArrayList<Course> getCourses() {
 
         if(isCached.get(COURSES_FIELD))
             return this.courses;
 
         ParseRelation<Course> tmp= getRelation(COURSES_FIELD);
-        tmp.getQuery().findInBackground(new FindCallback<Course>() {
-            @Override
-            public void done(List<Course> coursesList, ParseException e) {
 
-                if(coursesList!= null)
-                    for(Course c:coursesList)
-                        courses.add(c);
-            }
-        });
+        try {
+            courses.addAll(tmp.getQuery().find());
+            isCached.put(COURSES_FIELD, true);
+        }
+        catch (ParseException e) {
+            e.printStackTrace();
+        }
 
-        isCached.put(COURSES_FIELD, true);
         return courses;
     }
 
@@ -472,6 +478,9 @@ public class Student extends User {
 
     public void setCurriculum(byte[] file){
 
+        curriculum = file;
+        isCached.put(CURRICULUM_FIELD,true);
+
         final ParseFile curriculum = new ParseFile("curriculum" + getName() + getSurname() + ".pdf",file);
         curriculum.saveInBackground(new SaveCallback() {
             @Override
@@ -491,25 +500,36 @@ public class Student extends User {
 
     @Override
     public void cacheData() {
+
         super.cacheData();
 
-        getName();
-        getSurname();
-        getSex();
-        getDegrees();
-        getBirth();
-        getBirthCity();
-        getAddress();
-        getCity();
-        getPostalCode();
-        getNation();
-        getDescription();
-        getLanguages();
-        getCertificates();
-        getCourses();
-        getFavourites();
-        getAddressLocation();
-        getCompanies();
+        AsyncTask<Void,Void,Void> cacheTask = new AsyncTask<Void, Void, Void>() {
+            @Override
+            protected Void doInBackground(Void... params) {
+
+                getName();
+                getSurname();
+                getSex();
+                getDegrees();
+                getBirth();
+                getBirthCity();
+                getAddress();
+                getCity();
+                getPostalCode();
+                getNation();
+                getDescription();
+                getLanguages();
+                getCertificates();
+                getCourses();
+                getFavourites();
+                getAddressLocation();
+                getCompanies();
+                getCurriculum();
+                return null;
+            }
+        };
+        cacheTask.execute();
+
     }
 
     public void printCacheContent(){

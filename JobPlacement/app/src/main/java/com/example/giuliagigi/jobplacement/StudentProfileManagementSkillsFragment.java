@@ -143,12 +143,8 @@ public class StudentProfileManagementSkillsFragment extends ProfileManagementFra
         curriculum = (Button)root.findViewById(R.id.skills_down_upload_cv);
         curriculumName = (TextView)root.findViewById(R.id.student_cv_name);
 
-        try {
-            if(student.getCurriculum()!= null)
-                curriculumName.setText("Curriculum uploaded!");
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
+        if(student.getCurriculum()!= null)
+            curriculumName.setText("Curriculum uploaded!");
 
         if(editable){
 
@@ -353,10 +349,6 @@ public class StudentProfileManagementSkillsFragment extends ProfileManagementFra
                     else
                         Toast.makeText(getActivity(),"No curriculum available",Toast.LENGTH_SHORT).show();
 
-
-                } catch (ParseException e) {
-                    e.printStackTrace();
-                    Toast.makeText(getActivity(),"Error downloading file",Toast.LENGTH_SHORT).show();
                 } catch (FileNotFoundException e) {
                     e.printStackTrace();
                     Log.println(Log.ASSERT,"SKILLS FRAG", "output file not found");

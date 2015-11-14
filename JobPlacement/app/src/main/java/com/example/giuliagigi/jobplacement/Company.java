@@ -2,6 +2,7 @@ package com.example.giuliagigi.jobplacement;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.os.AsyncTask;
 
 import com.parse.FindCallback;
 import com.parse.GetDataCallback;
@@ -77,7 +78,7 @@ public class Company extends User {
         isCached.put(NAME_FIELD,true);
         this.put(NAME_FIELD,name);
     }
-    public String getName(){
+    synchronized public String getName(){
 
         if(isCached.get(NAME_FIELD))
             return name;
@@ -92,7 +93,7 @@ public class Company extends User {
         isCached.put(FISCAL_CODE_FIELD,true);
         this.put(FISCAL_CODE_FIELD, fc);
     }
-    public String getFiscalCode(){
+    synchronized public String getFiscalCode(){
 
         if(isCached.get(FISCAL_CODE_FIELD))
             return fiscalCode;
@@ -108,7 +109,7 @@ public class Company extends User {
         isCached.put(FIELD_FIELD,true);
         this.put(FIELD_FIELD, field);
     }
-    public String getField(){
+    synchronized public String getField(){
 
         if(isCached.get(FIELD_FIELD))
             return field;
@@ -128,7 +129,7 @@ public class Company extends User {
         return foundationDate;
     }
 
-    public String getDescription() {
+    synchronized public String getDescription() {
         if (isCached.get(DESCRIPTION_FIELD))
             return description;
 
@@ -144,41 +145,20 @@ public class Company extends User {
         this.put(FOUNDATION_DATE_FIELD, foundation);
     }
 
-    public ArrayList<Office> getOffices() {
+    synchronized public ArrayList<Office> getOffices() {
 
         if(isCached.get(OFFICES_FIELD))
             return this.offices;
 
-
         ParseRelation<Office> tmp = getRelation(OFFICES_FIELD);
-        tmp.getQuery().findInBackground(new FindCallback<Office>() {
-            @Override
-            public void done(List<Office> results, ParseException e) {
+        try {
 
-                if(results!= null)
-                    for(Office o:results)
-                        offices.add(o);
-            }
-        });
-//        List<Object> list = this.getList(OFFICES_FIELD);
-//
-//        if(list!=null)
-//            for (Object o : list) {
-//
-//                if(o instanceof Office){
-//                    Office d =(Office)o;
-//
-//                    try {
-//                        d.fetchIfNeeded();
-//                    } catch (ParseException e) {
-//                        e.printStackTrace();
-//                    }
-//
-//                    offices.add(d);
-//                }
-//            }
-
-        isCached.put(OFFICES_FIELD, true);
+            offices.addAll(tmp.getQuery().find());
+            isCached.put(OFFICES_FIELD, true);
+        }
+        catch (ParseException e) {
+            e.printStackTrace();
+        }
         return offices;
     }
 
@@ -203,20 +183,21 @@ public class Company extends User {
     }
 
 
-    public List<Student> getStudents( ){
+    synchronized public List<Student> getStudents( ){
 
         if(isCached.get(STUDENTS_FIELD))
             return students;
 
         ParseRelation<Student> tmp= getRelation(STUDENTS_FIELD);
-        List<Student> result= null;
         try {
-            result = tmp.getQuery().find();
-        } catch (com.parse.ParseException e) {
+
+            students.addAll(tmp.getQuery().find());
+            isCached.put(STUDENTS_FIELD, true);
+        }
+        catch (com.parse.ParseException e) {
             e.printStackTrace();
         }
-        isCached.put(STUDENTS_FIELD, true);
-        return result;
+        return students;
     }
 
     public void addStudent(Student student)
@@ -231,20 +212,21 @@ public class Company extends User {
         getRelation(STUDENTS_FIELD).remove(student);
     }
 
-    public List<CompanyOffer> getOffers()
+    synchronized public List<CompanyOffer> getOffers()
     {
         if(isCached.get(OFFERS_FIELD))
             return offers;
 
         ParseRelation<CompanyOffer> tmp= getRelation(OFFERS_FIELD);
-        List<CompanyOffer> result= null;
         try {
-            result = tmp.getQuery().find();
-        } catch (com.parse.ParseException e) {
+
+            offers.addAll(tmp.getQuery().find());
+            isCached.put(OFFERS_FIELD, true);
+        }
+        catch (com.parse.ParseException e) {
             e.printStackTrace();
         }
-        isCached.put(STUDENTS_FIELD, true);
-        return result;
+        return offers;
     }
 
     public void addOffer(CompanyOffer companyOffer)
@@ -265,14 +247,22 @@ public class Company extends User {
     public void cacheData() {
         super.cacheData();
 
-        getName();
-        getFiscalCode();
-        getField();
-        getOffices();
-        getDescription();
-        getFoundation();
-        getStudents();
-        getOffers();
+        AsyncTask<Void,Void,Void> cacheTask = new AsyncTask<Void, Void, Void>() {
+            @Override
+            protected Void doInBackground(Void... params) {
+
+                getName();
+                getFiscalCode();
+                getField();
+                getOffices();
+                getDescription();
+                getFoundation();
+                getStudents();
+                getOffers();
+                return null;
+            }
+        };
+
     }
 
 
