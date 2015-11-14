@@ -5,7 +5,9 @@ import android.util.Log;
 import com.parse.ParseException;
 import com.parse.ParseInstallation;
 import com.parse.ParsePush;
+import com.parse.ParseQuery;
 import com.parse.SaveCallback;
+import com.parse.SendCallback;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,7 +26,9 @@ public class Installation extends ParseInstallation {
         super();
     }
 
-
+    /* ------------------------------------------------------------------------------------------ */
+    /* ----------------------- PARSEINSTALLATION WRAPPER ---------------------------------------- */
+    /* ------------------------------------------------------------------------------------------ */
     public static void initialize(){
 
         if(currentInstallation == null){
@@ -50,6 +54,10 @@ public class Installation extends ParseInstallation {
         currentInstallation.put(USER_FIELD, user);
     }
 
+    public static void removeUser(){
+        currentInstallation.remove(USER_FIELD);
+    }
+
     public static void addChannel(String channel){
 
         String c = channel.replaceAll(" ", "");
@@ -57,9 +65,9 @@ public class Installation extends ParseInstallation {
 
             ParsePush.subscribeInBackground(c);
             channels.add(c);
+            Log.println(Log.ASSERT ,"INSTALLATION", "added channel: " + c);
         }
 
-        Log.println(Log.ASSERT ,"INSTALLATION", "added channel: " + channel);
     }
 
     public static void removeChannel(String channel){
@@ -69,9 +77,9 @@ public class Installation extends ParseInstallation {
 
             ParsePush.unsubscribeInBackground(c);
             channels.remove(c);
+            Log.println(Log.ASSERT ,"INSTALLATION", "removed channel: " + c);
         }
 
-        Log.println(Log.ASSERT ,"INSTALLATION", "removed channel: " + channel);
     }
 
     public static void resetChannels(){
@@ -81,6 +89,8 @@ public class Installation extends ParseInstallation {
             ParsePush.unsubscribeInBackground(c);
             Log.println(Log.ASSERT, "INSTALLATION", "removing " + c);
         }
+
+        channels.clear();
     }
 
     public static void commit(){
@@ -95,5 +105,55 @@ public class Installation extends ParseInstallation {
                     Log.println(Log.ASSERT, "INSTALLATION", "eror while saving: " + e.getMessage());
             }
         });
+    }
+
+
+    /* ------------------------------------------------------------------------------------------ */
+    /* ------------------------------- PARSEPUSH WRAPPER ---------------------------------------- */
+    /* ------------------------------------------------------------------------------------------ */
+
+    public static void sendPush(final String channel, String message){
+
+        String c = channel.replaceAll(" ", "");
+
+        ParsePush push = new ParsePush();
+        push.setChannel(c);
+        push.setMessage(message);
+        push.sendInBackground(new SendCallback() {
+            @Override
+            public void done(ParseException e) {
+
+                if(e == null)
+                    Log.println(Log.ASSERT,"COURSEADAPTER", "push ok (" + channel + ")");
+                else
+                    Log.println(Log.ASSERT,"COURSEADAPTER", "push error: " + e.getMessage());
+            }
+        });
+    }
+
+    public static void sendPush(ParseUserWrapper user, String message){
+
+        ParseQuery pushQuery = ParseInstallation.getQuery();
+        pushQuery.whereEqualTo(Installation.USER_FIELD, user);
+        ParsePush push = new ParsePush();
+
+        push.setQuery(pushQuery);
+        push.setMessage(message);
+        push.sendInBackground(new SendCallback() {
+            @Override
+            public void done(ParseException e) {
+
+                if(e == null)
+                    Log.println(Log.ASSERT,"MAILBOXNEW", "notification ok");
+                else
+                    Log.println(Log.ASSERT,"MAILBOXNEW", "notification fail");
+
+            }
+        });
+    }
+
+    public static void sendPush(ArrayList<ParseUserWrapper> users, String message){
+
+
     }
 }

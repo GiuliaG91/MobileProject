@@ -16,15 +16,9 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.parse.FindCallback;
 import com.parse.ParseException;
-import com.parse.ParseInstallation;
-import com.parse.ParsePush;
-import com.parse.ParseQuery;
-import com.parse.SendCallback;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by MarcoEsposito90 on 09/11/2015.
@@ -194,67 +188,8 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder
                                 News courseNotice = new News();
                                 courseNotice.createNews(7, courses.get(position), noticeMessage);
 
-                                /* ----------------------------------------------- push ------------------------------------------------------------------------*/
-
-                                ParsePush push = new ParsePush();
-                                push.setChannel(courses.get(position).getName());
-                                push.setMessage(courses.get(position).getName() + ": " + noticeMessage);
-                                push.sendInBackground(new SendCallback() {
-                                    @Override
-                                    public void done(ParseException e) {
-
-                                        if(e == null)
-                                            Log.println(Log.ASSERT,"COURSEADAPTER", "push ok");
-                                        else
-                                            Log.println(Log.ASSERT,"COURSEADAPTER", "push error: " + e.getMessage());
-                                    }
-                                });
-//                                ParseQuery<Student> allStudents = ParseQuery.getQuery(Student.class);
-//
-//                                Log.println(Log.ASSERT, "COURSEADAPTER", "students query start");
-//                                allStudents.findInBackground(new FindCallback<Student>() {
-//                                    @Override
-//                                    public void done(List<Student> students, ParseException e) {
-//
-//                                        if (e == null) {
-//
-//                                            try{
-//
-//                                                Log.println(Log.ASSERT, "COURSEADAPTER", "students found");
-//                                                ArrayList<ParseUserWrapper> users = new ArrayList<ParseUserWrapper>();
-//
-//                                                for (Student s : students) {
-//                                                    s.fetchIfNeeded();
-//                                                    if(s.getCourses().contains(courses.get(position))){
-//
-//                                                        users.add(s.getParseUser());
-//                                                        Log.println(Log.ASSERT, "COURSEADAPTER", "added :" + s.getSurname());
-//                                                    }
-//                                                }
-//
-//                                                ParseQuery pushQuery = ParseInstallation.getQuery();
-//                                                pushQuery.whereContainedIn(Installation.USER_FIELD, users);
-//                                                ParsePush push = new ParsePush();
-//
-//                                                push.setQuery(pushQuery);
-//                                                push.setMessage("new notice for course: " + courses.get(position).getName());
-//
-//                                                push.send();
-//                                                Log.println(Log.ASSERT, "COURSEADAPTER", "notification ok");
-//                                            }
-//                                            catch (ParseException e1){
-//
-//                                                Log.println(Log.ASSERT, "COURSEADAPTER", "failure during push: " + e1.getMessage());
-//                                                e1.printStackTrace();
-//                                            }
-//                                        }
-//                                        else
-//                                            Log.println(Log.ASSERT, "COURSEADAPTER", "student query failed: " + e.getMessage());
-//                                    }
-//                                });
-
-                                /* ----------------------------------------------- push ------------------------------------------------------------------------*/
-
+                                Installation.sendPush(courses.get(position).getName(),
+                                        courses.get(position).getName() + ": " + noticeMessage);
 
                                 noticeDialog.dismiss();
                                 Log.println(Log.ASSERT, "COURSEADAPTER", "Message: " + noticeMessage);

@@ -56,9 +56,10 @@ public class LogoutDialogFragment extends DialogFragment {
 
                 Toast.makeText(getActivity(), GlobalData.getContext().getString(R.string.logout_logging_out), Toast.LENGTH_SHORT).show();
 
-                ParseInstallation installation = ParseInstallation.getCurrentInstallation();
-                installation.remove("User");
-                installation.saveInBackground();
+                Installation.initialize();
+                Installation.resetChannels();
+                Installation.removeUser();
+                Installation.commit();
 
                 ParseUser.logOut();
                 completeLogoutProcedure();
@@ -99,10 +100,6 @@ public class LogoutDialogFragment extends DialogFragment {
             editor.putString(Login.SHAREDPREF_LATEST_MAIL,"");
             editor.putString(Login.SHAREDPREF_LATEST_PASSWORD,"");
             editor.commit();
-
-            Installation.initialize();
-            Installation.resetChannels();
-            Installation.commit();
         }
 
 

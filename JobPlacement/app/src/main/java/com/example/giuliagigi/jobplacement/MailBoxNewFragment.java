@@ -393,23 +393,25 @@ public class MailBoxNewFragment extends Fragment {
                         mr.saveInBackground();
 
                         /* ------------------ push notifications -------------------------------------*/
-                        ParseQuery pushQuery = ParseInstallation.getQuery();
-                        pushQuery.whereEqualTo(Installation.USER_FIELD, recipient);
-                        ParsePush push = new ParsePush();
-
-                        push.setQuery(pushQuery);
-                        push.setMessage("" + getString(R.string.Message_newMessage) + globalData.getUserObject().getMail());
-                        push.sendInBackground(new SendCallback() {
-                            @Override
-                            public void done(ParseException e) {
-
-                                if(e == null)
-                                    Log.println(Log.ASSERT,"MAILBOXNEW", "notification ok");
-                                else
-                                    Log.println(Log.ASSERT,"MAILBOXNEW", "notification fail");
-
-                            }
-                        });
+                        Installation.sendPush(recipient,
+                                "" + getString(R.string.Message_newMessage) + globalData.getUserObject().getMail());
+//                        ParseQuery pushQuery = ParseInstallation.getQuery();
+//                        pushQuery.whereEqualTo(Installation.USER_FIELD, recipient);
+//                        ParsePush push = new ParsePush();
+//
+//                        push.setQuery(pushQuery);
+//                        push.setMessage("" + getString(R.string.Message_newMessage) + globalData.getUserObject().getMail());
+//                        push.sendInBackground(new SendCallback() {
+//                            @Override
+//                            public void done(ParseException e) {
+//
+//                                if(e == null)
+//                                    Log.println(Log.ASSERT,"MAILBOXNEW", "notification ok");
+//                                else
+//                                    Log.println(Log.ASSERT,"MAILBOXNEW", "notification fail");
+//
+//                            }
+//                        });
                     }
 
                     Toast.makeText(globalData, "Message sent", Toast.LENGTH_SHORT).show();
