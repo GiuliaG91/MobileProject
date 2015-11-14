@@ -394,7 +394,7 @@ public class MailBoxNewFragment extends Fragment {
 
                         /* ------------------ push notifications -------------------------------------*/
                         ParseQuery pushQuery = ParseInstallation.getQuery();
-                        pushQuery.whereEqualTo("_User", recipient);
+                        pushQuery.whereEqualTo(Installation.USER_FIELD, recipient);
                         ParsePush push = new ParsePush();
 
                         push.setQuery(pushQuery);

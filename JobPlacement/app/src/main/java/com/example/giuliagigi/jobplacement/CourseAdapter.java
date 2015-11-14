@@ -195,44 +195,47 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder
                                 courseNotice.createNews(7, courses.get(position), noticeMessage);
 
                                 /* ----------------------------------------------- push ------------------------------------------------------------------------*/
-                                ArrayList<Course> c = new ArrayList<Course>();
-                                c.add(courses.get(position));
+                                ParseQuery<Student> allStudents = ParseQuery.getQuery(Student.class);
 
-                                ParseQuery<Student> studentsQuery = ParseQuery.getQuery(Student.class);
-                                studentsQuery.whereContainsAll(Student.COURSES_FIELD, c);
-
-                                studentsQuery.findInBackground(new FindCallback<Student>() {
+                                Log.println(Log.ASSERT, "COURSEADAPTER", "students query start");
+                                allStudents.findInBackground(new FindCallback<Student>() {
                                     @Override
                                     public void done(List<Student> students, ParseException e) {
 
-                                        if(e == null){
+                                        if (e == null) {
 
-                                            Log.println(Log.ASSERT, "COURSE ADAPTER", "students found");
-                                            ArrayList<ParseUserWrapper> users = new ArrayList<ParseUserWrapper>();
+                                            try{
 
-                                            for(Student s: students){
+                                                Log.println(Log.ASSERT, "COURSEADAPTER", "students found");
+                                                ArrayList<ParseUserWrapper> users = new ArrayList<ParseUserWrapper>();
 
-                                                users.add(s.getParseUser());
-                                            }
+                                                for (Student s : students) {
+                                                    s.fetchIfNeeded();
+                                                    if(s.getCourses().contains(courses.get(position))){
 
-                                            ParseQuery pushQuery = ParseInstallation.getQuery();
-                                            pushQuery.whereContainedIn(Installation.USER_FIELD, users);
-                                            ParsePush push = new ParsePush();
-
-                                            push.setQuery(pushQuery);
-                                            push.setMessage("new notice for course: " + courses.get(position).getName());
-                                            push.sendInBackground(new SendCallback() {
-                                                @Override
-                                                public void done(ParseException e) {
-
-                                                    if(e == null)
-                                                        Log.println(Log.ASSERT,"MAILBOXNEW", "notification ok");
-                                                    else
-                                                        Log.println(Log.ASSERT,"MAILBOXNEW", "notification fail");
-
+                                                        users.add(s.getParseUser());
+                                                        Log.println(Log.ASSERT, "COURSEADAPTER", "added :" + s.getSurname());
+                                                    }
                                                 }
-                                            });
+
+                                                ParseQuery pushQuery = ParseInstallation.getQuery();
+                                                pushQuery.whereContainedIn(Installation.USER_FIELD, users);
+                                                ParsePush push = new ParsePush();
+
+                                                push.setQuery(pushQuery);
+                                                push.setMessage("new notice for course: " + courses.get(position).getName());
+
+                                                push.send();
+                                                Log.println(Log.ASSERT, "COURSEADAPTER", "notification ok");
+                                            }
+                                            catch (ParseException e1){
+
+                                                Log.println(Log.ASSERT, "COURSEADAPTER", "failure during push: " + e1.getMessage());
+                                                e1.printStackTrace();
+                                            }
                                         }
+                                        else
+                                            Log.println(Log.ASSERT, "COURSEADAPTER", "student query failed: " + e.getMessage());
                                     }
                                 });
 
