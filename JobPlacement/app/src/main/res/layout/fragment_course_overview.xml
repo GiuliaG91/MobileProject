@@ -39,28 +39,38 @@
         android:textSize="@dimen/textView_textSize_small"
         android:layout_height="wrap_content" />
 
+
+    <Button
+        android:id="@+id/course_modify_button"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:background="@drawable/ic_pencil"
+        android:layout_margin="3dp"/>
+
+
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:text="Presentation" />
 
     <EditText
         android:id="@+id/course_presentation_editText"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:text="bla bla bla" />
 
 
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:text="Exam modalities" />
 
     <EditText
         android:id="@+id/course_examModalities_editText"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:text="bla bla bla" />
+
 
 
 </LinearLayout>

@@ -36,7 +36,7 @@ public class CourseDetailPagerAdapter extends FragmentPagerAdapter {
 
         if(position == 0){
 
-            return CourseOverviewFragment.newInstance(course);
+            return CourseOverviewFragment.newInstance(course, isEdit);
         }
         else if(position == 1){
 
