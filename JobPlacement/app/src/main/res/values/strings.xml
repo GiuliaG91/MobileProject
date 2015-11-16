@@ -473,9 +473,9 @@
 
     <string-array name="Courses_Students_Tab">
 
-        <item>Search</item>
-        <item>My Courses</item>
         <item>My Schedule</item>
+        <item>My Courses</item>
+        <item>Search</item>
 
     </string-array>
 

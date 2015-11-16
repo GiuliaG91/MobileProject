@@ -44,6 +44,9 @@ public class TabHomeAdapter extends RecyclerView.Adapter<TabHomeAdapter.ViewHold
     private ViewGroup parseParent;
     TabHomeAdapter newsAdapter = this;
 
+    /* -------------------------------------------------------------------------------------------*/
+    /* --------------------------------- CONSTRUCTOR ---------------------------------------------*/
+    /* -------------------------------------------------------------------------------------------*/
 
     public TabHomeAdapter(FragmentActivity c, ViewGroup parentIn, TabHome fragment, Integer pos, LinearLayoutManager layoutManager) {
 
@@ -59,6 +62,11 @@ public class TabHomeAdapter extends RecyclerView.Adapter<TabHomeAdapter.ViewHold
         setAdapter();
     }
 
+
+    /* -------------------------------------------------------------------------------------------*/
+    /* --------------------------------- PARSE ---------------------------------------------------*/
+    /* -------------------------------------------------------------------------------------------*/
+
     public void setFactory(){
 
         factory = new ParseQueryAdapter.QueryFactory<News>() {
@@ -69,17 +77,17 @@ public class TabHomeAdapter extends RecyclerView.Adapter<TabHomeAdapter.ViewHold
 
                 if(globalData.getUserObject() instanceof Student) {
 
-                    ParseQuery<News> query1 = ParseQuery.getQuery("News");
+                    ParseQuery<News> query1 = ParseQuery.getQuery(News.class);
                     query1.whereEqualTo(News.TYPE_FIELD, News.TYPE_NEW_OFFER);
 
-                    ParseQuery<News> query2 = ParseQuery.getQuery("News");
+                    ParseQuery<News> query2 = ParseQuery.getQuery(News.class);
                     query2.whereEqualTo(News.TYPE_FIELD, News.TYPE_APPLICATION_STATE);
                     query2.whereEqualTo(News.STUDENT_FIELD, (Student)globalData.getUserObject());
 
-                    ParseQuery<News> query3 = ParseQuery.getQuery("News");
+                    ParseQuery<News> query3 = ParseQuery.getQuery(News.class);
                     query3.whereEqualTo(News.TYPE_FIELD, News.TYPE_NEW_COMPANY);
 
-                    ParseQuery<News> query4 = ParseQuery.getQuery("News");
+                    ParseQuery<News> query4 = ParseQuery.getQuery(News.class);
                     query4.whereEqualTo(News.TYPE_FIELD, News.TYPE_NEW_NOTICE);
                     query4.whereContainedIn(News.COURSE_FIELD, ((Student) globalData.getUserObject()).getCourses());
 
@@ -138,6 +146,21 @@ public class TabHomeAdapter extends RecyclerView.Adapter<TabHomeAdapter.ViewHold
 
     }
 
+    public class OnQueryLoadListener implements ParseQueryAdapter.OnQueryLoadListener<News> {
+
+        public void onLoading() {
+            Log.println(Log.ASSERT, "TABHOMEADAPTER", "query loading");
+        }
+
+        public void onLoaded(List<News> objects, Exception e) {
+
+            Log.println(Log.ASSERT, "TABHOMEADAPTER", "query loaded");
+            orderMyDataset();
+            newsAdapter.notifyDataSetChanged();
+        }
+    }
+
+
     public void setAdapter(){
 
         mDataset.clear();
@@ -153,7 +176,7 @@ public class TabHomeAdapter extends RecyclerView.Adapter<TabHomeAdapter.ViewHold
 
                 super.getItemView(object, v, parent);
 
-
+                Log.println(Log.ASSERT ,"TABHOMEADAPTER", "adding to dataset");
                 mDataset.add(object);
                 CircleImageView icon = (CircleImageView) v.findViewById(R.id.logo_img);
                 TextView title = (TextView) v.findViewById(R.id.title_news);
@@ -274,6 +297,9 @@ public class TabHomeAdapter extends RecyclerView.Adapter<TabHomeAdapter.ViewHold
                 else
                     date.setText(dateNews.get(Calendar.DAY_OF_MONTH) + "/" + dateNews.get(Calendar.MONTH) + "/" + dateNews.get(Calendar.YEAR));
 
+                v.setOnClickListener(TabHomeAdapter.this);
+                ViewHolder vh = (ViewHolder) v.getTag();
+                vh.type = object.getType();
 
                 return v;
             }
@@ -298,128 +324,10 @@ public class TabHomeAdapter extends RecyclerView.Adapter<TabHomeAdapter.ViewHold
 
     }
 
-    @Override
-    public TabHomeAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.news_row, parent, false);
-        v.setClickable(true);
-        v.setOnClickListener(TabHomeAdapter.this);
+    /* -------------------------------------------------------------------------------------------*/
+    /* --------------------------------- VIEW HOLDER ---------------------------------------------*/
+    /* -------------------------------------------------------------------------------------------*/
 
-        ViewHolder vh = new ViewHolder(v);
-        return vh;
-    }
-
-    @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
-        parseAdapter.getView(position, holder.myView, parseParent);
-
-     //   holder.type = mDataset.get(position).getType();
-
-    }
-
-    @Override
-    public int getItemCount() {
-        return parseAdapter.getCount();
-    }
-
-
-    @Override
-    public void onClick(View v) {
-
-        ViewHolder vh = (ViewHolder)v.getTag();
-
-        Fragment fragment;
-
-        switch (vh.type){
-
-            case 0: globalData.setCurrentOffer(mDataset.get(vh.getPosition()).getCompanyOffer());
-
-                    FragmentManager fragmentManager = context.getSupportFragmentManager();
-
-                    fragment = OfferDetail.newInstance();
-
-                    fragmentManager.beginTransaction()
-                        .replace(R.id.tab_Home_container, fragment)
-                        .addToBackStack(globalData.getResources().getString(R.string.job_offer))
-                        .commit();
-
-                    globalData.getToolbar().setTitle(globalData.getResources().getString(R.string.job_offer));
-
-                    break;
-
-            case 1: fragmentManager = context.getSupportFragmentManager();
-
-                    fragment = ProfileManagement.newInstance(false, mDataset.get(vh.getPosition()).getStudent());
-
-                    fragmentManager.beginTransaction()
-                        .replace(R.id.tab_Home_container, fragment)
-                        .addToBackStack(mDataset.get(vh.getPosition()).getStudent().getName() + " " + mDataset.get(vh.getPosition()).getStudent().getSurname() + globalData.getResources().getString(R.string.profile))
-                        .commit();
-
-                    globalData.getToolbar().setTitle(mDataset.get(vh.getPosition()).getStudent().getName() + " " + mDataset.get(vh.getPosition()).getStudent().getSurname() + globalData.getResources().getString(R.string.profile));
-
-                    break;
-
-            case 2: globalData.setCurrentOffer(mDataset.get(vh.getPosition()).getCompanyOffer());
-
-                    fragmentManager = context.getSupportFragmentManager();
-
-                    fragment = OfferDetail.newInstance();
-
-                    fragmentManager.beginTransaction()
-                        .replace(R.id.tab_Home_container, fragment)
-                        .addToBackStack(globalData.getResources().getString(R.string.job_offer))
-                        .commit();
-
-                    globalData.getToolbar().setTitle(globalData.getResources().getString(R.string.job_offer));
-
-                    break;
-
-            case 3: fragmentManager = context.getSupportFragmentManager();
-
-                    fragment = ProfileManagement.newInstance(false, mDataset.get(vh.getPosition()).getCompany());
-
-                    fragmentManager.beginTransaction()
-                        .replace(R.id.tab_Home_container, fragment)
-                        .addToBackStack(globalData.getResources().getStringArray(R.array.Menu_items_Company)[0])
-                        .commit();
-
-                    //mDataset.get(vh.getPosition()).getCompany().getName() + " " + globalData.getResources().getString(R.string.profile)
-
-                    //globalData.getToolbar().setTitle(mDataset.get(vh.getPosition()).getCompany().getName() + " " + globalData.getResources().getString(R.string.profile));
-
-                    break;
-
-        }
-
-    }
-
-    public class OnQueryLoadListener implements ParseQueryAdapter.OnQueryLoadListener<News> {
-
-        public void onLoading() {
-
-        }
-
-        public void onLoaded(List<News> objects, Exception e) {
-             orderMyDataset();
-            newsAdapter.notifyDataSetChanged();
-
-       /*
-            if(currentPosition!=0) {
-                count += pageSize;
-                if (count < currentPosition) {
-                    parseAdapter.loadNextPage();
-                } else {
-                    mLayoutManager.scrollToPosition(currentPosition);
-                }
-            }*/
-
-        }
-    }
-
-    // Provide a reference to the views for each data item
-    // Complex data items may need more than one view per item, and
-    // you provide access to all the views for a data item in a view holder
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
         View myView;
@@ -429,10 +337,136 @@ public class TabHomeAdapter extends RecyclerView.Adapter<TabHomeAdapter.ViewHold
             super(v);
             v.setTag(this);
             myView = v;
+        }
+
+    }
+
+
+    @Override
+    public TabHomeAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+
+        Log.println(Log.ASSERT, "TABHOMEADAPTER", "onCreateViewHolder: " + viewType);
+
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.news_row, parent, false);
+        v.setClickable(true);
+//        v.setOnClickListener(TabHomeAdapter.this);
+
+        ViewHolder vh = new ViewHolder(v);
+        return vh;
+    }
+
+
+    @Override
+    public void onBindViewHolder(ViewHolder holder, int position) {
+
+        Log.println(Log.ASSERT, "TABHOMEADAPTER", "onBindViewHolder: " + position);
+
+//        holder.type = mDataset.get(position).getType();
+        parseAdapter.getView(position, holder.myView, parseParent);
+    }
+
+
+    @Override
+    public int getItemCount() {
+        return parseAdapter.getCount();
+    }
+
+
+    /* -------------------------------------------------------------------------------------------*/
+    /* --------------------------------- VIEW CLICK ----------------------------------------------*/
+    /* -------------------------------------------------------------------------------------------*/
+    @Override
+    public void onClick(View v) {
+
+        ViewHolder vh = (ViewHolder) v.getTag();
+        Fragment fragment = null;
+
+        Log.println(Log.ASSERT ,"TABHOMEADAPTER", "clicked: " + vh.type);
+
+        switch (vh.type) {
+
+            case News.TYPE_NEW_OFFER:
+            case News.TYPE_APPLICATION_STATE:
+
+                Log.println(Log.ASSERT ,"TABHOMEADAPTER", "new offer / application state");
+                globalData.setCurrentOffer(mDataset.get(vh.getPosition()).getCompanyOffer());
+
+                FragmentManager fragmentManager = context.getSupportFragmentManager();
+
+                fragment = OfferDetail.newInstance();
+
+                fragmentManager.beginTransaction()
+                        .replace(R.id.tab_Home_container, fragment)
+                        .addToBackStack(globalData.getResources().getString(R.string.job_offer))
+                        .commit();
+
+                globalData.getToolbar().setTitle(globalData.getResources().getString(R.string.job_offer));
+
+                break;
+
+            case News.TYPE_OFFER_APPLICATION:
+
+                Log.println(Log.ASSERT ,"TABHOMEADAPTER", "offer application");
+
+                fragmentManager = context.getSupportFragmentManager();
+                fragment = ProfileManagement.newInstance(false, mDataset.get(vh.getPosition()).getStudent());
+                fragmentManager.beginTransaction()
+                        .replace(R.id.tab_Home_container, fragment)
+                        .addToBackStack(mDataset.get(vh.getPosition()).getStudent().getName() + " " + mDataset.get(vh.getPosition()).getStudent().getSurname() + globalData.getResources().getString(R.string.profile))
+                        .commit();
+
+                globalData.getToolbar().setTitle(mDataset.get(vh.getPosition()).getStudent().getName() + " " + mDataset.get(vh.getPosition()).getStudent().getSurname() + globalData.getResources().getString(R.string.profile));
+
+                break;
+
+            case News.TYPE_NEW_COMPANY:
+
+                Log.println(Log.ASSERT ,"TABHOMEADAPTER", "new company");
+
+                fragmentManager = context.getSupportFragmentManager();
+                fragment = ProfileManagement.newInstance(false, mDataset.get(vh.getPosition()).getCompany());
+                fragmentManager.beginTransaction()
+                        .replace(R.id.tab_Home_container, fragment)
+                        .addToBackStack(globalData.getResources().getStringArray(R.array.Menu_items_Company)[0])
+                        .commit();
+
+                break;
+
+            case News.TYPE_NEW_NOTICE:
+
+                Log.println(Log.ASSERT ,"TABHOMEADAPTER", "new notice");
+
+                fragmentManager = context.getSupportFragmentManager();
+
+                if(globalData.getUserObject().getType().equals(User.TYPE_STUDENT))
+                    fragment = StudentDidacticsManagementFragment.newInstance((Student)globalData.getUserObject());
+
+                else if (globalData.getUserObject().getType().equals(User.TYPE_PROFESSOR))
+                    fragment = ProfessorCoursesManagementFragment.newInstance((Professor)globalData.getUserObject());
+
+                fragmentManager.beginTransaction()
+                        .replace(R.id.tab_Home_container, fragment)
+                        .addToBackStack(globalData.getResources().getStringArray(R.array.Menu_items_Company)[0])
+                        .commit();
+
+                break;
+
+            default: break;
 
         }
 
     }
+
+
+    /* -------------------------------------------------------------------------------------------*/
+    /* --------------------------------- AUXILIARY -----------------------------------------------*/
+    /* -------------------------------------------------------------------------------------------*/
+
+
+    // Provide a reference to the views for each data item
+    // Complex data items may need more than one view per item, and
+    // you provide access to all the views for a data item in a view holder
+
 
     public void orderMyDataset(){
 

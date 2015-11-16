@@ -36,7 +36,7 @@ public class StudentCoursesPagerAdapter extends FragmentPagerAdapter{
 
         if(position == 0){
 
-            return LectureSearch.newInstance(student);
+            return LectureDisplayFragment.newInstance(student.getCourses(), LectureDisplayFragment.MODE_MY_SCHEDULE);
         }
         else if(position == 1){
 
@@ -44,7 +44,7 @@ public class StudentCoursesPagerAdapter extends FragmentPagerAdapter{
         }
         else if(position == 2){
 
-            return LectureDisplayFragment.newInstance(student.getCourses(), LectureDisplayFragment.MODE_MY_SCHEDULE);
+            return LectureSearch.newInstance(student);
         }
 
         return null;

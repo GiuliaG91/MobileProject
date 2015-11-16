@@ -42,11 +42,6 @@ import java.util.Calendar;
 import java.util.List;
 
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link OfferDetail#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class OfferDetail extends  Fragment {
 
     View root;
@@ -56,7 +51,6 @@ public class OfferDetail extends  Fragment {
     FragmentActivity activity;
 
 
-    // TODO: Rename and change types and number of parameters
     public static OfferDetail newInstance() {
         OfferDetail fragment = new OfferDetail();
         return fragment;
@@ -75,18 +69,22 @@ public class OfferDetail extends  Fragment {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
+
         globalData=(GlobalData)getActivity().getApplication();
         offer=globalData.getCurrentViewOffer();
         globalData.getToolbar().setTitle(getResources().getString(R.string.ToolbarTilteOffer));
-        if(offer==null)
-        {
+
+        if(offer==null){
+
             getFragmentManager().popBackStackImmediate();
         }
 
         try {
             company=offer.getCompany().fetchIfNeeded();
-        } catch (ParseException e) {
+        }
+        catch (ParseException e) {
             e.printStackTrace();
         }
 
@@ -99,10 +97,12 @@ public class OfferDetail extends  Fragment {
 
         Toolbar toolbar=globalData.getToolbar();
         toolbar.setTitle(R.string.ToolbarTilteOffer);
-        globalData.setToolbarTitle(getString(R.string.ToolbarTilteOffer));
 
-       root=inflater.inflate(R.layout.offer_layout,container,false);
-            activity=getActivity();
+        globalData.setToolbarTitle(getString(R.string.ToolbarTilteOffer));
+        activity=getActivity();
+
+        root=inflater.inflate(R.layout.offer_layout,container,false);
+
         //set object
         //todo mettere hint come stringhe
         LinearLayout linearLayout=(LinearLayout)root.findViewById(R.id.object_row);
