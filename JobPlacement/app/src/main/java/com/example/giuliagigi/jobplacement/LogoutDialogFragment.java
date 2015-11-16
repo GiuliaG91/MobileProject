@@ -20,6 +20,10 @@ public class LogoutDialogFragment extends DialogFragment {
 
     GlobalData application;
 
+    /* -------------------------------------------------------------------------------------------*/
+    /* -------------------------------- CONSTRUCTOR ----------------------------------------------*/
+    /* -------------------------------------------------------------------------------------------*/
+
     public LogoutDialogFragment() {}
     public static LogoutDialogFragment newInstance() {
         LogoutDialogFragment fragment = new LogoutDialogFragment();
@@ -28,6 +32,9 @@ public class LogoutDialogFragment extends DialogFragment {
         return fragment;
     }
 
+    /* -------------------------------------------------------------------------------------------*/
+    /* -------------------------------- CALLBACKS ------------------------------------------------*/
+    /* -------------------------------------------------------------------------------------------*/
 
     @Override
     public void onAttach(Activity activity) {
@@ -42,6 +49,15 @@ public class LogoutDialogFragment extends DialogFragment {
         if (getArguments() != null) {
         }
     }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+    }
+
+    /* -------------------------------------------------------------------------------------------*/
+    /* -------------------------------- IMPLEMENTATION -------------------------------------------*/
+    /* -------------------------------------------------------------------------------------------*/
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -75,13 +91,11 @@ public class LogoutDialogFragment extends DialogFragment {
     }
 
 
-    @Override
-    public void onDetach() {
-        super.onDetach();
-    }
 
+    /* -------------------------------------------------------------------------------------------*/
+    /* -------------------------------- AUXILIARY ------------------------------------------------*/
+    /* -------------------------------------------------------------------------------------------*/
 
-    /* ---------------------------- AUXILIARY METHODS --------------------------------------------*/
 
     private void completeLogoutProcedure(){
 

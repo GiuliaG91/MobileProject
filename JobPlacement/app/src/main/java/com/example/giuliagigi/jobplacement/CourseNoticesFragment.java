@@ -8,6 +8,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.parse.FindCallback;
@@ -28,6 +30,7 @@ public class CourseNoticesFragment extends Fragment {
     private View root;
     private RecyclerView noticesView;
     private NoticeAdapter noticeAdapter;
+    private Button publishNotice;
 
 
     /* -------------------------------------------------------------------------------------------*/
@@ -67,6 +70,28 @@ public class CourseNoticesFragment extends Fragment {
         noticesView.setLayoutManager(new LinearLayoutManager(getActivity()));
         noticeAdapter = new NoticeAdapter(course);
         noticesView.setAdapter(noticeAdapter);
+
+        publishNotice = (Button)root.findViewById(R.id.course_publish_notice);
+
+        LinearLayout l = (LinearLayout)root;
+
+        if(!isEdit){
+
+            l.removeView(publishNotice);
+            publishNotice = null;
+        }
+
+        if(publishNotice != null){
+
+            publishNotice.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    PublishNoticeDialogFragment fragment = PublishNoticeDialogFragment.newInstance(course);
+                    fragment.show(getChildFragmentManager(),PublishNoticeDialogFragment.TAG);
+                }
+            });
+        }
 
         return root;
     }

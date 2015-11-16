@@ -6,6 +6,15 @@
     android:orientation="vertical"
     tools:context="com.example.giuliagigi.jobplacement.CourseNoticesFragment">
 
+    <Button
+        android:id="@+id/course_publish_notice"
+        android:gravity="center"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_margin="5dp"
+        android:padding="10dp"
+        android:background="@drawable/ic_plus"/>
+
     <android.support.v7.widget.RecyclerView
         android:scrollbars="vertical"
         android:layout_width="fill_parent"
