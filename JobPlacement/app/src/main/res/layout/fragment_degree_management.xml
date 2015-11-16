@@ -107,6 +107,7 @@
                         android:id="@+id/degree_text_view_mark"
                         android:layout_weight=".3"
                         android:paddingLeft="10dp"
+                        android:textColor="@color/ColorPrimaryDark"
                         android:gravity="bottom"
                         android:textSize="10sp" />
 
@@ -136,6 +137,7 @@
                         android:layout_height="0dp"
                         android:textAppearance="?android:attr/textAppearanceSmall"
                         android:text="@string/string_degree_fragment_degree_loud_title"
+                        android:textColor="@color/ColorPrimaryDark"
                         android:id="@+id/degree_loud_area"
                         android:layout_weight=".3"
                         android:paddingLeft="10dp"
@@ -190,6 +192,7 @@
                         android:layout_height="0dp"
                         android:textAppearance="?android:attr/textAppearanceSmall"
                         android:text="@string/string_degree_fragment_degree_date_title"
+                        android:textColor="@color/ColorPrimaryDark"
                         android:id="@+id/degree_date_area"
                         android:layout_weight="1"
                         android:paddingLeft="10dp"
@@ -201,7 +204,7 @@
                         android:layout_height="wrap_content"
                         android:textColor="#000000"
                         android:layout_weight="1"
-                        android:textSize="20dp"
+                        android:textSize="@dimen/textView_textSize"
                         android:paddingLeft="10dp"
                         android:paddingTop="5dp"
                         android:id="@+id/degree_management_datePicker" />

@@ -6,8 +6,8 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.text.Editable;
 import android.text.InputType;
 import android.text.TextWatcher;
@@ -26,10 +26,8 @@ import android.widget.Toast;
 
 import com.parse.LogInCallback;
 import com.parse.ParseException;
-import com.parse.ParseInstallation;
 import com.parse.ParseUser;
 import com.parse.RequestPasswordResetCallback;
-import com.parse.SaveCallback;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -101,7 +99,7 @@ public class Login extends ActionBarActivity {
             knownMailsList[i++] = mail;
 
         final ArrayAdapter<String> adapter = new ArrayAdapter<String>(getApplicationContext(),
-                android.R.layout.simple_dropdown_item_1line, knownMailsList);
+                R.layout.row_spinner, knownMailsList);
 
         mailText.setAdapter(adapter);
         mailText.setTokenizer(new SpaceTokenizer());
