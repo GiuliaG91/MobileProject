@@ -1,38 +1,35 @@
 package com.example.giuliagigi.jobplacement;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.app.Dialog;
-import android.content.DialogInterface;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
+import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
-
-import com.parse.ParseUser;
 
 
 public class PublishNoticeDialogFragment extends DialogFragment {
 
     public static final String TAG = "PublishNotice";
 
+    private Activity activity;
     private Course course;
-
-    private View root;
-    private EditText message;
+    private NoticeDialogInterface parent;
 
     /* -------------------------------------------------------------------------------------------*/
     /* -------------------------------- CONTRUCTOR -----------------------------------------------*/
     /* -------------------------------------------------------------------------------------------*/
 
-    public static PublishNoticeDialogFragment newInstance(Course course) {
+    public static PublishNoticeDialogFragment newInstance(NoticeDialogInterface parent, Course course) {
         PublishNoticeDialogFragment fragment = new PublishNoticeDialogFragment();
+        fragment.course = course;
+        fragment.parent = parent;
         return fragment;
     }
 
@@ -45,17 +42,7 @@ public class PublishNoticeDialogFragment extends DialogFragment {
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-    }
-
-    @Nullable
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
-        root = inflater.inflate(R.layout.professor_notice_dialog,container,false);
-
-        message = (EditText)root.findViewById(R.id.notice_dialog_message);
-
-        return root;
+        this.activity = activity;
     }
 
     @Override
@@ -67,38 +54,56 @@ public class PublishNoticeDialogFragment extends DialogFragment {
     /* -------------------------------- IMPLEMENTATION -------------------------------------------*/
     /* -------------------------------------------------------------------------------------------*/
 
+    @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        builder.setTitle("New Notice for " + course.getName());
+        final Dialog noticeDialog = new Dialog(activity);
+        noticeDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        noticeDialog.getWindow().setLayout(WindowManager.LayoutParams.WRAP_CONTENT, WindowManager.LayoutParams.WRAP_CONTENT);
+        noticeDialog.setContentView(R.layout.professor_notice_dialog);
+        noticeDialog.setTitle(GlobalData.getContext().getResources().getString(R.string.notice_insert_message));
 
+        Button confirmButton = (Button) noticeDialog.findViewById(R.id.notice_dialog_confirm_button);
+        confirmButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
 
-        builder.setPositiveButton(GlobalData.getContext().getString(R.string.confirm), new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-
-                String noticeMessage = message.getText().toString();
+                EditText edit = (EditText) noticeDialog.findViewById(R.id.notice_dialog_message);
+                String noticeMessage = edit.getText().toString();
 
                 News courseNotice = new News();
                 courseNotice.createNews(7, course, noticeMessage);
 
-                Log.println(Log.ASSERT, "COURSEADAPTER", "sending push");
-                Installation.sendPush(course.getName(),
-                        course.getName() + ": " + noticeMessage);
+                Log.println(Log.ASSERT, "PUBLISHNOTICE", "sending push");
+                Installation.sendPush(course.getName(),course.getName() + ": " + noticeMessage);
 
+                if(parent != null)
+                    parent.onNoticeCreated(courseNotice);
+
+                noticeDialog.dismiss();
+                Log.println(Log.ASSERT, "PUBLISHNOTICE", "Message: " + noticeMessage);
             }
         });
 
-        builder.setNegativeButton(GlobalData.getContext().getString(R.string.cancel), new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
+        Button cancelButton = (Button) noticeDialog.findViewById(R.id.notice_dialog_cancel_button);
+        cancelButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
 
-                Toast.makeText(getActivity().getApplicationContext(), "The notice won't be published", Toast.LENGTH_SHORT).show();
+                Toast.makeText(activity, "The notice won't be published",Toast.LENGTH_LONG).show();
+                noticeDialog.dismiss();
             }
         });
 
-        return builder.create();
+        return noticeDialog;
+    }
 
+
+    /* -------------------------------------------------------------------------------------------*/
+    /* -------------------------------- INTERFACE ------------------------------------------------*/
+    /* -------------------------------------------------------------------------------------------*/
+
+    public interface NoticeDialogInterface{
+
+        public void onNoticeCreated(News notice);
     }
 }

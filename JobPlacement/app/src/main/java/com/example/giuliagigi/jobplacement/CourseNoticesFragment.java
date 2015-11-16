@@ -21,7 +21,7 @@ import java.util.Calendar;
 import java.util.List;
 
 
-public class CourseNoticesFragment extends Fragment {
+public class CourseNoticesFragment extends Fragment implements PublishNoticeDialogFragment.NoticeDialogInterface{
 
     private Course course;
     ArrayList<News> notices;
@@ -87,8 +87,8 @@ public class CourseNoticesFragment extends Fragment {
                 @Override
                 public void onClick(View v) {
 
-                    PublishNoticeDialogFragment fragment = PublishNoticeDialogFragment.newInstance(course);
-                    fragment.show(getChildFragmentManager(),PublishNoticeDialogFragment.TAG);
+                    PublishNoticeDialogFragment fragment = PublishNoticeDialogFragment.newInstance(CourseNoticesFragment.this, course);
+                    fragment.show(getChildFragmentManager(), PublishNoticeDialogFragment.TAG);
                 }
             });
         }
@@ -102,6 +102,17 @@ public class CourseNoticesFragment extends Fragment {
         super.onDetach();
     }
 
+
+    /* -------------------------------------------------------------------------------------------*/
+    /* -------------------------------- DIALOG INTERFACE -----------------------------------------*/
+    /* -------------------------------------------------------------------------------------------*/
+
+    @Override
+    public void onNoticeCreated(News notice) {
+
+        noticeAdapter.notices.add(0,notice);
+        noticeAdapter.notifyDataSetChanged();
+    }
 
     /* -------------------------------------------------------------------------------------------*/
     /* -------------------------------- ADAPTER --------------------------------------------------*/
@@ -118,20 +129,7 @@ public class CourseNoticesFragment extends Fragment {
             this.course = course;
             this.notices = new ArrayList<>();
 
-            ParseQuery<News> newsQuery = new ParseQuery<News>(News.class);
-            newsQuery.whereEqualTo(News.COURSE_FIELD, course);
-
-            newsQuery.findInBackground(new FindCallback<News>() {
-                @Override
-                public void done(List<News> notices, ParseException e) {
-
-                    if(e == null && notices != null){
-
-                        NoticeAdapter.this.notices.addAll(notices);
-                        NoticeAdapter.this.notifyDataSetChanged();
-                    }
-                }
-            });
+            refresh();
         }
 
         /* ------- callbacks ------------------------------------------------*/
@@ -182,6 +180,29 @@ public class CourseNoticesFragment extends Fragment {
                 date = (TextView)root.findViewById(R.id.notice_date);
             }
         }
+
+        /* ------- auxiliary ------------------------------------------------*/
+
+        public void refresh(){
+
+            ParseQuery<News> newsQuery = new ParseQuery<News>(News.class);
+            newsQuery.whereEqualTo(News.COURSE_FIELD, course);
+
+            newsQuery.findInBackground(new FindCallback<News>() {
+                @Override
+                public void done(List<News> notices, ParseException e) {
+
+                    if(e == null && notices != null){
+
+                        NoticeAdapter.this.notices.clear();
+                        NoticeAdapter.this.notices.addAll(notices);
+                        NoticeAdapter.this.notifyDataSetChanged();
+                    }
+                }
+            });
+        }
     }
+
+
 
 }

@@ -172,39 +172,8 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder
                     @Override
                     public void onClick(View v) {
 
-                        final Dialog noticeDialog = new Dialog(activity);
-                        noticeDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-                        noticeDialog.getWindow().setLayout(WindowManager.LayoutParams.WRAP_CONTENT, WindowManager.LayoutParams.WRAP_CONTENT);
-                        noticeDialog.setContentView(R.layout.professor_notice_dialog);
-                        noticeDialog.setTitle(GlobalData.getContext().getResources().getString(R.string.notice_insert_message));
-
-                        Button confirmButton = (Button) noticeDialog.findViewById(R.id.notice_dialog_confirm_button);
-                        confirmButton.setOnClickListener(new View.OnClickListener() {
-                            public void onClick(View v) {
-
-                                EditText edit = (EditText) noticeDialog.findViewById(R.id.notice_dialog_message);
-                                String noticeMessage = edit.getText().toString();
-
-                                News courseNotice = new News();
-                                courseNotice.createNews(7, courses.get(position), noticeMessage);
-
-                                Log.println(Log.ASSERT, "COURSEADAPTER", "sending push");
-                                Installation.sendPush(courses.get(position).getName(),
-                                        courses.get(position).getName() + ": " + noticeMessage);
-
-                                noticeDialog.dismiss();
-                                Log.println(Log.ASSERT, "COURSEADAPTER", "Message: " + noticeMessage);
-                            }
-                        });
-
-                        Button cancelButton = (Button) noticeDialog.findViewById(R.id.notice_dialog_cancel_button);
-                        cancelButton.setOnClickListener(new View.OnClickListener() {
-                            public void onClick(View v) {
-                                noticeDialog.dismiss();
-                            }
-                        });
-
-                        noticeDialog.show();
+                        PublishNoticeDialogFragment fragment = PublishNoticeDialogFragment.newInstance(null, courses.get(position));
+                        fragment.show(activity.getSupportFragmentManager(), PublishNoticeDialogFragment.TAG);
                     }
                 });
             }
