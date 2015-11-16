@@ -72,6 +72,10 @@ public class ProfileManagement extends Fragment{
         this.user = user;
     }
 
+    public boolean isEditable(){
+        return editable;
+    }
+
     /*------------- STANDARD CALLBACKS ------------------------------------------------------------*/
 
     @Override

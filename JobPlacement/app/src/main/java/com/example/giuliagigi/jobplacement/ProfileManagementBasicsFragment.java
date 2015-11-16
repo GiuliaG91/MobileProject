@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.io.IOException;
@@ -138,14 +139,14 @@ public class ProfileManagementBasicsFragment extends ProfileManagementFragment {
 
         profilePhoto.setEnabled(enable);
 
-        if(enable){
+        if(editButton != null){
 
-            editButton.setBackgroundResource(R.drawable.ic_confirm_white);
+            if(enable)
+                editButton.setBackgroundResource(R.drawable.ic_confirm_white);
+            else
+                editButton.setBackgroundResource(R.drawable.ic_edit_white);
         }
-        else {
 
-            editButton.setBackgroundResource(R.drawable.ic_edit_white);
-        }
     }
 
     @Override
@@ -192,13 +193,22 @@ public class ProfileManagementBasicsFragment extends ProfileManagementFragment {
             }
         }
 
+        if(profileManagement.isEditable()){
 
-        editButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+            editButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
 
-                profileManagement.switchMode();
-            }
-        });
+                    profileManagement.switchMode();
+                }
+            });
+        }
+        else {
+
+            LinearLayout l = (LinearLayout)root;
+            l.removeView(editButton);
+            editButton = null;
+        }
+
     }
 }
