@@ -109,13 +109,13 @@ public class CourseOverviewFragment extends Fragment {
 
         presentation.setEnabled(enable);
         examModalities.setEnabled(enable);
-
+        modify.setBackgroundResource(enable ? R.drawable.ic_save : R.drawable.ic_pencil);
     }
 
     private void saveChanges(){
 
         course.setPresentation(presentation.getText().toString());
-        course.setExam(presentation.getText().toString());
+        course.setExam(examModalities.getText().toString());
         course.saveEventually();
     }
 }
