@@ -96,9 +96,7 @@ public class StudentProfileManagementBasicsFragment extends ProfileManagementBas
         editProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                setEnable(!listener.isEditMode());
-                //setEnable(true);
+                //TODO
             }
         });
 
