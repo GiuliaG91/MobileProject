@@ -37,7 +37,7 @@
             android:layout_weight=".5"
             android:layout_margin="5dp"
             android:textColor="@color/ColorPrimaryDark"
-            android:textSize="@dimen/editText_textSize"
+            android:textSize="@dimen/editText_textSize_small"
             android:background="@drawable/button_background"
             android:text="@string/confirm"/>
 
@@ -50,7 +50,7 @@
             android:layout_marginTop="5dp"
             android:layout_marginBottom="5dp"
             android:textColor="@color/ColorPrimaryDark"
-            android:textSize="@dimen/editText_textSize"
+            android:textSize="@dimen/editText_textSize_small"
             android:background="@drawable/button_background"
             android:text="@string/cancel_"/>
     </LinearLayout>

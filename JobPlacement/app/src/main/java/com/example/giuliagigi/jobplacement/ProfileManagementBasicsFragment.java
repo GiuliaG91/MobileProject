@@ -12,7 +12,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -142,9 +141,9 @@ public class ProfileManagementBasicsFragment extends ProfileManagementFragment {
         if(editButton != null){
 
             if(enable)
-                editButton.setBackgroundResource(R.drawable.ic_confirm_white);
+                editButton.setBackgroundResource(R.drawable.save_button);
             else
-                editButton.setBackgroundResource(R.drawable.ic_edit_white);
+                editButton.setBackgroundResource(R.drawable.pencil_button);
         }
 
     }

@@ -61,7 +61,6 @@
                     <de.hdodenhof.circleimageview.CircleImageView
                         android:layout_width="70dp"
                         android:layout_height="70dp"
-                        android:background="@drawable/pencil_button"
                         android:id="@+id/profile_edit_button"
 
                         />

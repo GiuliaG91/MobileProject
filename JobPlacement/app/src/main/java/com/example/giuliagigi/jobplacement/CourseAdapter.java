@@ -117,7 +117,7 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder
             /* ----------------------- remove course ---------------------------------------------*/
             if(holder.mode == MODE_STUDENT_VIEW){
 
-                holder.buttonAddRemovePublish.setText(GlobalData.getContext().getResources().getString(R.string.button_remove_my_courses));
+                holder.buttonAddRemovePublish.setBackgroundResource(R.drawable.ic_waste);
                 holder.buttonAddRemovePublish.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -142,7 +142,7 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder
 
             else if(holder.mode == MODE_STUDENT_ADD){
 
-                holder.buttonAddRemovePublish.setText(GlobalData.getContext().getResources().getString(R.string.button_add_my_courses));
+                holder.buttonAddRemovePublish.setBackgroundResource(R.drawable.ic_add_button);
                 holder.buttonAddRemovePublish.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -167,7 +167,7 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder
 
             else if(holder.mode == MODE_PROFESSOR_VIEW){
 
-                holder.buttonAddRemovePublish.setText(GlobalData.getContext().getResources().getString(R.string.button_publish_notice));
+                holder.buttonAddRemovePublish.setBackgroundResource(R.drawable.ic_bell);
                 holder.buttonAddRemovePublish.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
