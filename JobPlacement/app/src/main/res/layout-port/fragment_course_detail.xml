@@ -15,7 +15,7 @@
         android:layout_marginRight="5dp"
         android:layout_marginLeft="5dp"
         android:text="code"
-        android:textSize="@dimen/textView_textSize"
+        android:textSize="@dimen/textView_textSize_small"
         android:layout_height="wrap_content" />
 
    <TextView
@@ -26,7 +26,7 @@
        android:layout_marginRight="5dp"
        android:layout_marginLeft="5dp"
         android:text="name"
-        android:textSize="@dimen/textView_textSize"
+        android:textSize="@dimen/textView_textSize_small"
         android:layout_height="wrap_content" />
 
     <TextView
@@ -37,7 +37,7 @@
         android:layout_marginRight="5dp"
         android:layout_marginLeft="5dp"
         android:text="professor"
-        android:textSize="@dimen/textView_textSize"
+        android:textSize="@dimen/textView_textSize_small"
         android:layout_height="wrap_content" />
 
     <ListView

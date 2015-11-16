@@ -11,7 +11,7 @@
         android:id="@+id/land_linear_layout_title"
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:layout_weight=".5"
+        android:layout_weight=".3"
         android:orientation="vertical">
 
         <TextView
@@ -22,7 +22,7 @@
             android:layout_marginRight="5dp"
             android:layout_marginLeft="5dp"
             android:text="code"
-            android:textSize="@dimen/textView_textSize"
+            android:textSize="@dimen/textView_textSize_small"
             android:layout_height="wrap_content" />
 
        <TextView
@@ -33,7 +33,7 @@
            android:layout_marginRight="5dp"
            android:layout_marginLeft="5dp"
             android:text="name"
-            android:textSize="@dimen/textView_textSize"
+            android:textSize="@dimen/textView_textSize_small"
             android:layout_height="wrap_content" />
 
         <TextView
@@ -44,7 +44,7 @@
             android:layout_marginRight="5dp"
             android:layout_marginLeft="5dp"
             android:text=" "
-            android:textSize="@dimen/textView_textSize"
+            android:textSize="@dimen/textView_textSize_small"
             android:layout_height="wrap_content" />
 
     </LinearLayout>
@@ -53,7 +53,7 @@
         android:id="@+id/course_lecture_listView"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_weight=".5"
+        android:layout_weight=".7"
         android:layout_margin="2dp"
         >
 

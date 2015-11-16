@@ -17,6 +17,7 @@
     <dimen name = "course_item_row_margin">2dp</dimen>
 
     <dimen name = "textView_textSize">20dp</dimen>
+    <dimen name = "textView_textSize_small">17dp</dimen>
     <dimen name = "button_textSize">20dp</dimen>
     <dimen name = "button_textSize_small">15dp</dimen>
     <dimen name = "editText_textSize">15dp</dimen>
