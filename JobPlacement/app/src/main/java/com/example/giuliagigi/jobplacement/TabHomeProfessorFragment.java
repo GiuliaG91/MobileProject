@@ -5,11 +5,9 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewParent;
 
 
 public class TabHomeProfessorFragment extends Fragment {
@@ -64,7 +62,7 @@ public class TabHomeProfessorFragment extends Fragment {
         if(savedInstanceState != null)
             currentPosition = savedInstanceState.getInt("position");
 
-        root = inflater.inflate(R.layout.fragment_tab_home, container, false);
+        root = inflater.inflate(R.layout.fragment_standard_pager, container, false);
 
         globalData.setToolbarTitle(getString(R.string.ToolbarTilteHome));
 

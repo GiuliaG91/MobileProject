@@ -2,8 +2,6 @@ package com.example.giuliagigi.jobplacement;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Looper;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
@@ -62,7 +60,7 @@ public class StudentDidacticsManagementFragment extends Fragment implements OnAc
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        root = inflater.inflate(R.layout.fragment_tab_home, container, false);
+        root = inflater.inflate(R.layout.fragment_standard_pager, container, false);
 
         pager = (ViewPager)root.findViewById(R.id.pager);
 
@@ -109,6 +107,11 @@ public class StudentDidacticsManagementFragment extends Fragment implements OnAc
         host.removeOnActivityChangedListener(this);
         super.onDetach();
     }
+
+
+    /* -------------------------------------------------------------------------------------------*/
+    /* -------------------------------- ACTIVITY LISTENER ----------------------------------------*/
+    /* -------------------------------------------------------------------------------------------*/
 
     @Override
     public void onActivityStateChanged(State newState, State pastState) {

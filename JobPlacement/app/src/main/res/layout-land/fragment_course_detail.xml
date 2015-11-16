@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:orientation="horizontal"
     android:background="@color/tabsColor"
-    tools:context="com.example.giuliagigi.jobplacement.CourseDetailFragment">
+    tools:context="com.example.giuliagigi.jobplacement.CourseLecturesFragment">
 
     <LinearLayout
         android:id="@+id/land_linear_layout_title"

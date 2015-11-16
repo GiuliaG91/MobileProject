@@ -129,7 +129,7 @@ public class ProfileManagement extends Fragment{
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         Toolbar toolbar=application.getToolbar();
         toolbar.setTitle(R.string.ToolbarTilteProfile);
-        return inflater.inflate(R.layout.fragment_tab_home, container, false);
+        return inflater.inflate(R.layout.fragment_standard_pager, container, false);
 
     }
 

@@ -65,7 +65,7 @@ public class TabHomeStudentFragment extends Fragment {
         globalData.setToolbarTitle(getString(R.string.ToolbarTilteHome));
 
         // Inflate the layout for this fragment
-        root = inflater.inflate(R.layout.fragment_tab_home, container, false);
+        root = inflater.inflate(R.layout.fragment_standard_pager, container, false);
 
         /*************ViewPager***************************/
 
