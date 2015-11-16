@@ -4,6 +4,7 @@
             <color name="ColorPrimaryDark">#283593</color>
             <color name="tabsScrollColor">#3F51B5</color>
              <color name="tabsColor">#E0E0E0</color>
+    <color name="buttonColor">#abcaff</color>
     <color name="ColorPrimaryTransparent">#d5ddec</color>
     <color name="LectureItemColor">#ecf3f6</color>
 

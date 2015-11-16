@@ -217,7 +217,7 @@
     <string name="string_telephone_type_other">Altro</string>
 
     <!-- ________________ LECTURE SEARCH / DISPLAY _____________________________________________ -->
-    <string name = "lectureSearch_InsertProfessor">Inserisci il nome del proffessore:</string>
+    <string name = "lectureSearch_InsertProfessor">Inserisci il nome del professore:</string>
     <string name = "lectureSearch_InsertCourse">Inserisci il nome del corso:</string>
     <string name = "lectureSearch_hintProfessor">Nome del professore</string>
     <string name = "lectureSearch_hintCourse">Corso</string>
