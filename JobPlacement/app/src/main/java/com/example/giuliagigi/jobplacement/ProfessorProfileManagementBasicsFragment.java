@@ -42,11 +42,12 @@ public class ProfessorProfileManagementBasicsFragment extends ProfileManagementB
     /* ---------------------- CONSTRUCTORS GETTERS SETTERS ---------------------------------------*/
     /* -------------------------------------------------------------------------------------------*/
 
-    public static ProfessorProfileManagementBasicsFragment newInstance(Professor professor) {
+    public static ProfessorProfileManagementBasicsFragment newInstance(ProfileManagement profileManagement, Professor professor) {
 
         ProfessorProfileManagementBasicsFragment fragment = new ProfessorProfileManagementBasicsFragment();
         fragment.professor = professor;
         fragment.setUser(professor);
+        fragment.setProfileManagement(profileManagement);
         return fragment;
     }
 

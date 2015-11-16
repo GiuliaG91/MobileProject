@@ -38,12 +38,13 @@ public class CompanyProfileManagementBasicsFragment extends ProfileManagementBas
 
 
     public CompanyProfileManagementBasicsFragment() {super();}
-    public static CompanyProfileManagementBasicsFragment newInstance(Company company) {
+    public static CompanyProfileManagementBasicsFragment newInstance(ProfileManagement profileManagement, Company company) {
         CompanyProfileManagementBasicsFragment fragment = new CompanyProfileManagementBasicsFragment();
         Bundle args = new Bundle();
         fragment.setArguments(args);
         fragment.setCompany(company);
         fragment.setUser(company);
+        fragment.setProfileManagement(profileManagement);
         return fragment;
 
     }

@@ -46,12 +46,11 @@ public class StudentProfileManagementBasicsFragment extends ProfileManagementBas
     /* -------------------------------------------------------------------------------------------*/
 
     public StudentProfileManagementBasicsFragment() {super();}
-    public static StudentProfileManagementBasicsFragment newInstance(Student student) {
+    public static StudentProfileManagementBasicsFragment newInstance(ProfileManagement profileManagement, Student student) {
         StudentProfileManagementBasicsFragment fragment = new StudentProfileManagementBasicsFragment();
-        Bundle args = new Bundle();
-        fragment.setArguments(args);
         fragment.setStudent(student);
         fragment.setUser(student);
+        fragment.setProfileManagement(profileManagement);
         return fragment;
     }
 

@@ -12,11 +12,14 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.io.IOException;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class ProfileManagementBasicsFragment extends ProfileManagementFragment {
 
@@ -24,6 +27,7 @@ public class ProfileManagementBasicsFragment extends ProfileManagementFragment {
     protected ImageView profilePhoto;
     protected TextView emailVerified;
     protected ImageView emailVerifiedIcon;
+    protected CircleImageView editButton;
     public static final String BUNDLE_IDENTIFIER = "PROFILEMANAGEMENTBASICS";
     private static final String BUNDLE_KEY_USER = "bundle_key_user";
 
@@ -31,11 +35,12 @@ public class ProfileManagementBasicsFragment extends ProfileManagementFragment {
     /* ---------------------- CONSTRUCTORS GETTERS SETTERS ---------------------------------------*/
 
     public ProfileManagementBasicsFragment() {}
-    public static ProfileManagementBasicsFragment newInstance(User user) {
+    public static ProfileManagementBasicsFragment newInstance(ProfileManagement profileManagement, User user) {
         ProfileManagementBasicsFragment fragment = new ProfileManagementBasicsFragment();
         Bundle args = new Bundle();
         fragment.setArguments(args);
         fragment.setUser(user);
+        fragment.setProfileManagement(profileManagement);
         return fragment;
     }
 
@@ -132,6 +137,15 @@ public class ProfileManagementBasicsFragment extends ProfileManagementFragment {
         super.setEnable(enable);
 
         profilePhoto.setEnabled(enable);
+
+        if(enable){
+
+            editButton.setBackgroundResource(R.drawable.ic_confirm_white);
+        }
+        else {
+
+            editButton.setBackgroundResource(R.drawable.ic_edit_white);
+        }
     }
 
     @Override
@@ -145,6 +159,7 @@ public class ProfileManagementBasicsFragment extends ProfileManagementFragment {
         profilePhoto = (ImageView)root.findViewById(R.id.basics_profilePhoto);
         emailVerified = (TextView)root.findViewById(R.id.account_verified_tv);
         emailVerifiedIcon = (ImageView)root.findViewById(R.id.account_verified_icon);
+        editButton = (CircleImageView)root.findViewById(R.id.profile_edit_button);
 
         if(user.getProfilePhoto() != null) {
             Bitmap bmImg = user.getProfilePhoto();
@@ -177,5 +192,13 @@ public class ProfileManagementBasicsFragment extends ProfileManagementFragment {
             }
         }
 
+
+        editButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                profileManagement.switchMode();
+            }
+        });
     }
 }

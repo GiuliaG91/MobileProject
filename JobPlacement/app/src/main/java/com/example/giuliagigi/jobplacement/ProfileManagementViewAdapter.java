@@ -14,31 +14,33 @@ import java.util.ArrayList;
 public class ProfileManagementViewAdapter extends FragmentPagerAdapter{
 
         ArrayList<ProfileManagementFragment> fragments;
+        ProfileManagement profileManagement;
 
         // Build a Constructor and assign the passed Values to appropriate values in the class
-        public ProfileManagementViewAdapter(FragmentManager fm, User user, boolean editable) {
+        public ProfileManagementViewAdapter(FragmentManager fm, ProfileManagement profileManagement, User user, boolean editable) {
             super(fm);
 
             fragments = new ArrayList<ProfileManagementFragment>();
             GlobalData application = (GlobalData)GlobalData.getContext();
+            this.profileManagement = profileManagement;
 
             if(user.getType().equals(User.TYPE_STUDENT)){
 
                 Student student = (Student)user;
-                fragments.add(StudentProfileManagementBasicsFragment.newInstance(student));
+                fragments.add(StudentProfileManagementBasicsFragment.newInstance(profileManagement,student));
                 fragments.add(StudentProfileManagementSkillsFragment.newInstance(student,editable));
                 fragments.add(StudentProfileManagementRegistryFragment.newInstance(student));
             }
             else if(user.getType().equals(User.TYPE_COMPANY)) {
 
                 Company company = (Company)user;
-                fragments.add(CompanyProfileManagementBasicsFragment.newInstance(company));
+                fragments.add(CompanyProfileManagementBasicsFragment.newInstance(profileManagement,company));
                 fragments.add(CompanyProfileManagementRegistryFragment.newInstance(company));
             }
             else if(user.getType().equals(User.TYPE_PROFESSOR)){
 
                 Professor professor = (Professor)user;
-                fragments.add(ProfessorProfileManagementBasicsFragment.newInstance(professor));
+                fragments.add(ProfessorProfileManagementBasicsFragment.newInstance(profileManagement,professor));
             }
 
             if(editable){

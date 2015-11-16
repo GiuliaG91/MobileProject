@@ -27,6 +27,7 @@ public class ProfileManagementFragment extends Fragment implements OnActivityCha
     public static final int REQUEST_IMAGE_GET = 1;
     public static final int REQUEST_CONTENT_GET = 2;
 
+    protected ProfileManagement profileManagement;
     protected OnInteractionListener listener;
     protected OnFragmentInteractionListener host;
     protected ArrayList<EditText> textFields;
@@ -62,6 +63,10 @@ public class ProfileManagementFragment extends Fragment implements OnActivityCha
     public String getBundleID(){
 
         return BUNDLE_IDENTIFIER + ";" + getTag();
+    }
+
+    public void setProfileManagement(ProfileManagement profileManagement) {
+        this.profileManagement = profileManagement;
     }
 
     /* --------------------- STANDARD CALLBACKS ------------------------------------------------- */

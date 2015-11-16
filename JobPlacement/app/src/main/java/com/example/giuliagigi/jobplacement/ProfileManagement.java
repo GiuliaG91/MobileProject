@@ -33,6 +33,7 @@ public class ProfileManagement extends Fragment{
     private GlobalData application;
     private OnInteractionListener host;
     private ArrayList<ProfileManagementFragment> fragments;
+    private MenuItem editIcon;
     private boolean isEditMode,editable;
     private User user;
 
@@ -136,7 +137,7 @@ public class ProfileManagement extends Fragment{
         /*************ViewPager***************************/
 
         // Creating The StudentViewPagerAdapter and Passing Fragment Manager, Titles fot the Tabs and Number Of Tabs.
-        adapter = new ProfileManagementViewAdapter(getChildFragmentManager(),user,editable);
+        adapter = new ProfileManagementViewAdapter(getChildFragmentManager(),this,user,editable);
         // Assigning ViewPager View and setting the adapter
         pager = (ViewPager) view.findViewById(R.id.pager);
         pager.setAdapter(adapter);
@@ -194,8 +195,10 @@ public class ProfileManagement extends Fragment{
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         menu.clear();
-        if(editable)
+        if(editable){
             inflater.inflate(R.menu.menu_profile_management, menu);
+            editIcon = menu.findItem(R.id.action_edit);
+        }
         else if(user.getType().equals(User.TYPE_STUDENT))
             inflater.inflate(R.menu.menu_visit_profile_student, menu);
         else
@@ -206,15 +209,8 @@ public class ProfileManagement extends Fragment{
     public boolean onOptionsItemSelected(MenuItem item) {
 
         if (item.getItemId() == R.id.action_edit && editable) {
+
             switchMode();
-
-            if(isEditMode && editable)
-                item.setIcon(R.drawable.ic_confirm_white);
-            else if(!isEditMode && editable)
-                item.setIcon(R.drawable.ic_edit_white);
-            else if(!editable)
-                item.setIcon(R.drawable.ic_mail);
-
         }
 
         else if(item.getItemId() == R.id.action_send && !editable){
@@ -251,7 +247,7 @@ public class ProfileManagement extends Fragment{
 
     /* ----------------------------------- AUXILIARY METHODS ------------------------------------ */
 
-    private void switchMode(){
+    public void switchMode(){
 
         if(editable){
 
@@ -260,6 +256,13 @@ public class ProfileManagement extends Fragment{
         }
         else
             Toast.makeText(getActivity(), GlobalData.getContext().getString(R.string.string_cannot_edit),Toast.LENGTH_SHORT).show();
+
+        if(isEditMode && editable)
+            editIcon.setIcon(R.drawable.ic_confirm_white);
+        else if(!isEditMode && editable)
+            editIcon.setIcon(R.drawable.ic_edit_white);
+        else if(!editable)
+            editIcon.setIcon(R.drawable.ic_mail);
 
     }
 
