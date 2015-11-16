@@ -1,7 +1,6 @@
 package com.example.giuliagigi.jobplacement;
 
 import android.app.Activity;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -16,6 +15,7 @@ import com.parse.ParseException;
 import com.parse.ParseQuery;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 
@@ -122,6 +122,17 @@ public class CourseNoticesFragment extends Fragment {
         public void onBindViewHolder(ViewHolder holder, int position) {
 
             holder.message.setText(notices.get(position).getMessage());
+
+            Calendar dateNews = notices.get(position).getDate();
+            Calendar now = Calendar.getInstance();
+
+            if(dateNews.get(Calendar.DAY_OF_MONTH) == now.get(Calendar.DAY_OF_MONTH) && dateNews.get(Calendar.MONTH) == now.get(Calendar.MONTH) && dateNews.get(Calendar.YEAR) == now.get(Calendar.YEAR))
+                holder.date.setText(dateNews.get(Calendar.HOUR_OF_DAY) + ":" + dateNews.get(Calendar.MINUTE));
+            else if(dateNews.get(Calendar.YEAR) == now.get(Calendar.YEAR))
+                holder.date.setText(dateNews.get(Calendar.DAY_OF_MONTH) + " " + GlobalData.getContext().getResources().getStringArray(R.array.months)[dateNews.get(Calendar.MONTH)]);
+            else
+                holder.date.setText(dateNews.get(Calendar.DAY_OF_MONTH) + "/" + dateNews.get(Calendar.MONTH) + "/" + dateNews.get(Calendar.YEAR));
+
         }
 
 
@@ -136,12 +147,14 @@ public class CourseNoticesFragment extends Fragment {
 
             View root;
             TextView message;
+            TextView date;
 
             public ViewHolder(View itemView) {
                 super(itemView);
 
                 root = itemView;
                 message = (TextView)root.findViewById(R.id.notice_message);
+                date = (TextView)root.findViewById(R.id.notice_date);
             }
         }
     }

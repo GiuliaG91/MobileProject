@@ -246,6 +246,8 @@
     <string name="notice_insert_message">Inserire il testo del messaggio:</string>
     <string name="notice_message_hint">Messaggio</string>
     <string name="notice_news_title">Nuovo avviso per il corso: </string>
+    <string name="course_presentation_title">Presentazione del corso:</string>
+    <string name="course_exam_title">Modalità d\' esame:</string>
 
 
     <!-- ________________ ROOMS SEARCH / DISPLAY _______________________________________________ -->
