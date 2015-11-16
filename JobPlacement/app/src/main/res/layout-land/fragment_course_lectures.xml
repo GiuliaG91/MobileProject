@@ -1,0 +1,20 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal"
+    android:background="@color/tabsColor"
+    tools:context="com.example.giuliagigi.jobplacement.CourseLecturesFragment">
+
+    <ListView
+        android:id="@+id/course_lecture_listView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight=".7"
+        android:layout_margin="2dp"
+        >
+
+        </ListView>
+
+</LinearLayout>

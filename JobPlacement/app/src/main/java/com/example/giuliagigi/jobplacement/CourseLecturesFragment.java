@@ -20,7 +20,6 @@ public class CourseLecturesFragment extends Fragment {
 
 
     private View root;
-    private TextView code,name,professor;
     private ListView lecturesListView;
     private LectureAdapter lectureAdapter;
     private Activity activity;
@@ -75,19 +74,10 @@ public class CourseLecturesFragment extends Fragment {
                 course = (Course)bundle.get(BUNDLE_KEY_COURSE);
         }
 
-        root = inflater.inflate(R.layout.fragment_course_detail, container, false);
+        root = inflater.inflate(R.layout.fragment_course_lectures, container, false);
+
 
         lecturesListView = (ListView)root.findViewById(R.id.course_lecture_listView);
-        code = (TextView)root.findViewById(R.id.course_code_textView);
-        name = (TextView)root.findViewById(R.id.course_name_textView);
-        professor = (TextView)root.findViewById(R.id.course_professor_textView);
-
-        LinearLayout layout = (LinearLayout)root;
-        if(isEdit){
-
-            layout.removeView(professor);
-            professor = null;
-        }
 
         if(lecturesListView != null) {
 
@@ -95,11 +85,6 @@ public class CourseLecturesFragment extends Fragment {
             lectureAdapter = new LectureAdapter(course.getLectures(), isEdit, activity);
             lecturesListView.setAdapter(lectureAdapter);
         }
-
-        if(code != null)        code.setText(course.getCode());
-        if(name != null)        name.setText(course.getName());
-        if(professor != null)   professor.setText(course.getProfessor().getName() + " " + course.getProfessor().getSurname());
-
 
         return root;
     }
