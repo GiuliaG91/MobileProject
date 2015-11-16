@@ -4,7 +4,6 @@ package com.example.giuliagigi.jobplacement;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
-import android.support.v4.app.FragmentActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,7 +14,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.GridLayout;
 import android.widget.ImageButton;
-import android.widget.LinearLayout;
 import android.widget.MultiAutoCompleteTextView;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -185,7 +183,7 @@ public class FilterFragment extends DialogFragment {
 
 
         distances=  getResources().getStringArray(R.array.filter_location);
-       distanceSpinner.setAdapter(new StringAdapter(distances));
+        distanceSpinner.setAdapter(new StringAdapter(distances));
 
         distanceSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
