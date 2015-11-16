@@ -48,7 +48,7 @@ public class TabFavourites extends Fragment{
         Toolbar toolbar=globalData.getToolbar();
         toolbar.setTitle(R.string.ToolbarTilteMyJobOffers);
         globalData.setToolbarTitle(getString(R.string.ToolbarTilteMyJobOffers));
-        student=globalData.getStudentFromUser();
+        student = (Student)globalData.getUserObject();
         mRecyclerView = (RecyclerView) root.findViewById(R.id.recycler_view_offer_search);
 
         // use this setting to improve performance if you know that changes

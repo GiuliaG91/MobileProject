@@ -160,8 +160,11 @@ public class Installation extends ParseInstallation {
         userPush = null;
     }
 
-    public static void sendPush(ArrayList<ParseUserWrapper> users, String message){
+    public static void sendPush(String message){
 
+        ParsePush push = new ParsePush();
+        push.setMessage(message);
 
+        push.sendInBackground();
     }
 }

@@ -238,7 +238,7 @@ public class StudentRegistrationFragment extends Fragment {
     }
 
 
-    public Student retrieveRegistrationInfo() throws RegistrationException{
+    public Student retrieveRegistrationInfo() throws RegistrationException, ParseException{
 
         String degreeType = (String)degreeTypeList.getSelectedItem();
         String degreeStudies = (String)degreeStudiesList.getSelectedItem();
@@ -287,7 +287,11 @@ public class StudentRegistrationFragment extends Fragment {
         newStudent.setName(name.getText().toString());
         newStudent.setSurname(surname.getText().toString());
         newStudent.setBirth(date);
+
+        degree.save();
         newStudent.addDegree(degree);
+        newStudent.save();
+
         return newStudent;
     }
 

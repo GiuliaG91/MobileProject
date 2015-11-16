@@ -67,7 +67,7 @@ public class FavStudentsAdapter extends RecyclerView.Adapter<FavStudentsAdapter.
         context=c;
         mDataset=new ArrayList<>(students);
         globalData=(GlobalData)context.getApplication();
-        company=globalData.getCompanyFromUser();
+        company = (Company)globalData.getUserObject();
         mRecyclerView=r;
         parent=fragment;
         currentPosition=pos;

@@ -54,7 +54,7 @@ public class FavCompaniesFragment extends Fragment {
 
         root  = inflater.inflate(R.layout.recycler_view_template,container,false);
 
-        student=globalData.getStudentFromUser();
+        student = (Student)globalData.getUserObject();
         mRecyclerView = (RecyclerView) root.findViewById(R.id.recycler_view_template);
 
         // use this setting to improve performance if you know that changes

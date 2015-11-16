@@ -480,6 +480,13 @@
 
     </string-array>
 
+    <string-array name="Courses_Details_Tab">
+
+        <item>Lezioni</item>
+        <item>Avvisi</item>
+
+    </string-array>
+
     <string-array name="Home_Company_Tab">
 
         <item>Novità</item>

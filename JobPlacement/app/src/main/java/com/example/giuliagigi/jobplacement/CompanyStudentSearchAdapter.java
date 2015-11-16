@@ -58,7 +58,7 @@ public class CompanyStudentSearchAdapter extends RecyclerView.Adapter<CompanyStu
         currentFragment = fragment;
         mDataset = new ArrayList<>();
         globalData = (GlobalData) context.getApplication();
-        company = globalData.getCompanyFromUser();
+        company = (Company)globalData.getUserObject();
         exists = new ArrayList<>(company.getStudents());
         count = 0;
         mLayoutManager = layoutManager;

@@ -64,7 +64,7 @@ public class OfferSearchAdapter extends RecyclerView.Adapter<OfferSearchAdapter.
         context = c;
         mDataset = new ArrayList<>();
         globalData = (GlobalData) context.getApplication();
-        student = globalData.getStudentFromUser();
+        student = (Student)globalData.getUserObject();
         parent=fragment;
         currentPosition=pos;
         mLayoutManager=layoutManager;

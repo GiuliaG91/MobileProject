@@ -72,7 +72,7 @@ public class ShowOffersAdapter extends RecyclerView.Adapter<ShowOffersAdapter.Vi
         currentPosition = pos;
         mLayoutManager = l;
         globalData = (GlobalData) c.getApplication();
-        Company company = globalData.getCompanyFromUser();
+        Company company = (Company)globalData.getUserObject();
         ParseQuery query = new ParseQuery("CompanyOffer").whereEqualTo("company", company);
 
         try {

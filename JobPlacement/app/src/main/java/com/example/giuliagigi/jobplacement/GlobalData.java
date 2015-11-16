@@ -177,65 +177,37 @@ public class GlobalData extends Application {
 
         if(currentUser != null){
 
-            currentUserObject = currentUser.getUser();
-            currentUserObject.cacheData();
+            try {
+                currentUser.fetchIfNeeded();
+            }
+            catch (ParseException e) {
+                e.printStackTrace();
+            }
         }
-        else
-            Log.println(Log.ASSERT,"GLOBAL DATA", "currentUser is null");
 
         return  currentUser;
-    }
-    public Student getStudentFromUser(){
-
-        getCurrentUser();
-
-        if(currentUser==null)
-            return null;
-
-        if(currentUserObject == null){
-
-            currentUserObject = getCurrentUser().getUser();
-        }
-
-        return (Student)currentUserObject;
-    }
-
-    public Company getCompanyFromUser(){
-
-        getCurrentUser();
-        if (currentUser == null)
-            return null;
-
-        if(currentUserObject == null){
-
-            currentUserObject = getCurrentUser().getUser();
-        }
-
-        return (Company)currentUserObject;
-    }
-
-    public Professor getProfessorFromUser(){
-
-        getCurrentUser();
-
-        if(currentUser == null)
-            return null;
-
-        if(currentUserObject == null){
-            currentUserObject = getCurrentUser().getUser();
-        }
-
-        return (Professor)currentUserObject;
     }
 
     public User getUserObject(){
 
-        if(getCurrentUser().getType().equals(User.TYPE_STUDENT))
-            return getStudentFromUser();
-        else if(getCurrentUser().getType().equals(User.TYPE_COMPANY))
-            return getCompanyFromUser();
-        else
-            return getProfessorFromUser();
+        getCurrentUser();
+
+        if(currentUser != null){
+
+            currentUserObject = currentUser.getUser();
+
+            try {
+                currentUserObject.fetchIfNeeded();
+            }
+            catch (ParseException e) {
+                e.printStackTrace();
+            }
+
+            currentUserObject.cacheData();
+            return currentUserObject;
+        }
+
+        return null;
     }
 
 

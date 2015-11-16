@@ -247,6 +247,8 @@ public class Company extends User {
     public void cacheData() {
         super.cacheData();
 
+        if(!isCached.containsValue(false)) return;
+
         AsyncTask<Void,Void,Void> cacheTask = new AsyncTask<Void, Void, Void>() {
             @Override
             protected Void doInBackground(Void... params) {
@@ -262,7 +264,7 @@ public class Company extends User {
                 return null;
             }
         };
-
+        cacheTask.execute();
     }
 
 

@@ -256,7 +256,7 @@ public class menuAdapter extends RecyclerView.Adapter<menuAdapter.ViewHolder> {
 
                                     if (!(current instanceof StudentDidacticsManagementFragment)) {
 
-                                        StudentDidacticsManagementFragment fragment = StudentDidacticsManagementFragment.newInstance(gd.getStudentFromUser());
+                                        StudentDidacticsManagementFragment fragment = StudentDidacticsManagementFragment.newInstance((Student)gd.getUserObject());
 
                                         //clear backstack
                                         int count = fragmentManager.getBackStackEntryCount();

@@ -108,6 +108,7 @@
     <string name="registration_connection_not_available">Connection to sever is unavailable, try later</string>
     <string name="registration_mismatching_password">mismatching passwords</string>
     <string name="registration_missing_info">missing information</string>
+    <string name="registration_registration_error">An error occurred during the registration procedure. Please, try later</string>
     <string name="registration_must_select_type">You must select a type of user to register</string>
 
     <!-- ________________ PROFILE ______________________________________________________________ -->
@@ -283,6 +284,7 @@
     <string name="profile">profile</string>
     <string name="new_application_message">applied to the Job Offer</string>
     <string name="the_company">The company</string>
+    <string name="the_student">The student</string>
     <string name="application_accepted_message">accepted your application for the job offer</string>
     <string name="new_company_signed_up_message">signed up in</string>
     <string name="ErrorStatus">Can\'t set this status</string>
@@ -476,6 +478,13 @@
         <item>My Schedule</item>
         <item>My Courses</item>
         <item>Search</item>
+
+    </string-array>
+
+    <string-array name="Courses_Details_Tab">
+
+        <item>Lectures</item>
+        <item>Notices</item>
 
     </string-array>
 

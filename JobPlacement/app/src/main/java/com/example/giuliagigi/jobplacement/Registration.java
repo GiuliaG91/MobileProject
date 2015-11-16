@@ -91,6 +91,7 @@ public class Registration extends ActionBarActivity implements StudentRegistrati
 
                 User user = null;
                 RegistrationException re = null;
+                ParseException pe = null;
 
                 if(findViewById(R.id.fragment_student_register_layout) != null){
                     Log.println(Log.ASSERT,"REGISTRATION","Trying to register a student");
@@ -99,6 +100,8 @@ public class Registration extends ActionBarActivity implements StudentRegistrati
                         user = srf.retrieveRegistrationInfo();
                     } catch (RegistrationException e) {
                        re = e;
+                    } catch (ParseException e) {
+                        pe = e;
                     }
                 }
                 else if(findViewById(R.id.fragment_company_register_layout)!= null){
@@ -108,10 +111,12 @@ public class Registration extends ActionBarActivity implements StudentRegistrati
                         user = crf.retrieveRegistrationInfo();
                     } catch (RegistrationException e) {
                         re = e;
+                    } catch (ParseException e) {
+                        pe = e;
                     }
                 }
 
-                if(re == null){
+                if(re == null && pe == null){
 
                     if(user == null)
                         Toast.makeText(getApplicationContext(),GlobalData.getContext().getString(R.string.registration_must_select_type),Toast.LENGTH_SHORT).show();
@@ -125,19 +130,23 @@ public class Registration extends ActionBarActivity implements StudentRegistrati
                 }
                 else {
 
-                    switch (re.getCode()){
+                    if (re != null)
+                        switch (re.getCode()) {
 
-                        case RegistrationException.MISSING_INFORMATIONS:
+                            case RegistrationException.MISSING_INFORMATIONS:
 
-                            Toast.makeText(getApplicationContext(),GlobalData.getContext().getString(R.string.registration_missing_info),Toast.LENGTH_SHORT).show();
-                            break;
-                        case RegistrationException.MISMATCHING_PASSWORDS:
+                                Toast.makeText(getApplicationContext(), GlobalData.getContext().getString(R.string.registration_missing_info), Toast.LENGTH_SHORT).show();
+                                break;
+                            case RegistrationException.MISMATCHING_PASSWORDS:
 
-                            Toast.makeText(getApplicationContext(),GlobalData.getContext().getString(R.string.registration_mismatching_password),Toast.LENGTH_SHORT).show();
-                            break;
-                        default:
-                            break;
+                                Toast.makeText(getApplicationContext(), GlobalData.getContext().getString(R.string.registration_mismatching_password), Toast.LENGTH_SHORT).show();
+                                break;
+                            default:
+                                break;
                     }
+
+                    if(pe != null)
+                        Toast.makeText(getApplicationContext(), GlobalData.getContext().getString(R.string.registration_registration_error), Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -233,101 +242,48 @@ public class Registration extends ActionBarActivity implements StudentRegistrati
                 if(e == null){
 
                     Log.println(Log.ASSERT,"REGISTRATION", "signup ok");
-                    Log.println(Log.ASSERT,"REGISTRATION","registration successful. Redirect to login activity");
-                    newUser.setParseUser(newParseUser);
+                    Log.println(Log.ASSERT,"REGISTRATION","registration successful");
 
-                    if(newUser.getType().equals(User.TYPE_STUDENT)){
+                    try{
 
+                        newUser.setParseUser(newParseUser);
+                        newUser.save();
+                        newParseUser.setUser(newUser);
+                        newParseUser.save();
 
-                        /*necessary saving degree before saving student*/
-                        Student newStudent = (Student)newUser;
-                        final Degree newStudentDegree = newStudent.getDegrees().get(0);
-                        newStudentDegree.saveInBackground(new SaveCallback() {
-                            @Override
-                            public void done(ParseException e) {
+                        String pushMessage = null;
 
-                                if (e == null) {
+                        if(newUser.getType().equals(User.TYPE_STUDENT)){
 
-                                    Log.println(Log.ASSERT, "SIGNUP", "Degree saved. proceeding to save user");
-                                    newUser.saveInBackground(new SaveCallback() {
-                                        @Override
-                                        public void done(ParseException e) {
+                            pushMessage = application.getResources().getString(R.string.the_student)
+                                    + " " + application.getUserObject().getName()
+                                    + " " + application.getResources().getString(R.string.new_company_signed_up_message)
+                                    + " \"" + application.getResources().getString(R.string.app_name) + "\"";
+                        }
+                        else if(newUser.getType().equals(User.TYPE_COMPANY)){
 
-                                            if (e == null) {
+                            News news = new News();
+                            news.createNews(3, null, null, null, (GlobalData) getApplication());
 
-                                                newStudentDegree.setStudent((Student) newUser);
-                                                newStudentDegree.saveEventually();
-                                                newParseUser.setUser(newUser);
-                                                newParseUser.saveEventually();
+                            pushMessage = application.getResources().getString(R.string.the_company)
+                                    + " " + application.getUserObject().getName()
+                                    + " " + application.getResources().getString(R.string.new_company_signed_up_message)
+                                    + " \"" + application.getResources().getString(R.string.app_name) + "\"";
 
-                                                 ParseInstallation installation=ParseInstallation.getCurrentInstallation();
-                                                 installation.saveInBackground();
+                        }
 
-                                                ParsePush push = new ParsePush();
-                                                //  push.setMessage(application.getResources().getString(R.string.the_company) + " " + application.getUserObject().getName() + " " + application.getResources().getString(R.string.new_company_signed_up_message) + " \"" + application.getResources().getString(R.string.app_name) + "\"");
-                                                push.setMessage("Sucate tutti funziona");
-                                                push.sendInBackground();
-
-
-                                                saveLoginPreferences(newUser);
-
-                                                startActivity(new Intent(getApplicationContext(), Login.class));
-                                            } else
-                                                Log.println(Log.ASSERT, "SIGNUP", "error while saving user object: " + e.getMessage());
-                                        }
-                                    });
-
-                                } else
-                                    Log.println(Log.ASSERT, "SIGNUP", "error saving degree");
-                            }
-                        });
-
-
+                        saveLoginPreferences(newUser);
+                        ParseInstallation installation=ParseInstallation.getCurrentInstallation();
+                        installation.saveInBackground();
+                        Installation.sendPush(pushMessage);
+                        startActivity(new Intent(getApplicationContext(), Login.class));
 
                     }
-                    else if(newUser.getType().equals(User.TYPE_COMPANY)){
+                    catch (ParseException pe){
 
-
-                        Log.println(Log.ASSERT,"SIGNUP","registrating company");
-                        newUser.saveInBackground(new SaveCallback() {
-                            @Override
-                            public void done(ParseException e) {
-
-                                if(e == null){
-
-                                    newParseUser.setUser(newUser);
-                                    newParseUser.saveEventually();
-
-                                    saveLoginPreferences(newUser);
-
-                                    News news = new News();
-                                    news.createNews(3, null, null, null, (GlobalData) getApplication());
-
-
-
-                                    ParseInstallation installation=ParseInstallation.getCurrentInstallation();
-                                    installation.saveInBackground();
-
-
-                                    ParsePush push = new ParsePush();
-                                    push.setMessage(application.getResources().getString(R.string.the_company) +
-                                            " " + application.getUserObject().getName() +
-                                            " " + application.getResources().getString(R.string.new_company_signed_up_message)
-                                            + " \"" + application.getResources().getString(R.string.app_name) + "\"");
-
-                                    push.sendInBackground();
-
-
-                                    startActivity(new Intent(getApplicationContext(),Login.class));
-                                }
-                                else
-                                    Log.println(Log.ASSERT, "SIGNUP", "error while saving user object: " + e.getMessage());
-
-                            }
-                        });
-
-
+                        Toast.makeText(getApplicationContext(), GlobalData.getContext().getString(R.string.registration_registration_error), Toast.LENGTH_SHORT).show();
                     }
+
 
                 }
                 else {

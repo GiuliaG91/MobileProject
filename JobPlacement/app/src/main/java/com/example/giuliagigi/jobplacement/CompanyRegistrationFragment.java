@@ -12,6 +12,8 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.parse.ParseException;
+
 
 public class CompanyRegistrationFragment extends Fragment {
 
@@ -121,7 +123,7 @@ public class CompanyRegistrationFragment extends Fragment {
     }
 
 
-    public Company retrieveRegistrationInfo() throws RegistrationException{
+    public Company retrieveRegistrationInfo() throws RegistrationException, ParseException{
 
 
         String field = (String)fieldsList.getSelectedItem();
@@ -140,6 +142,8 @@ public class CompanyRegistrationFragment extends Fragment {
         newCompany.setPassword(password.getText().toString());
         newCompany.setType(type);
         newCompany.setField(field);
+        newCompany.save();
+
         return newCompany;
     }
 

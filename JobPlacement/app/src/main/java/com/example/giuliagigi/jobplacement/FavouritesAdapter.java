@@ -63,7 +63,7 @@ public class FavouritesAdapter extends RecyclerView.Adapter<FavouritesAdapter.Vi
         context=c;
         mDataset=new ArrayList<>(companyOffers);
         globalData=(GlobalData)context.getApplication();
-        student=globalData.getStudentFromUser();
+        student = (Student)globalData.getUserObject();
         mRecyclerView=r;
         parent=fragment;
         currentPosition=pos;

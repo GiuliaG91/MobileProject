@@ -224,7 +224,7 @@ public class OfferDetail extends  Fragment {
         applyButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Student s = globalData.getStudentFromUser();
+                Student s = (Student)globalData.getUserObject();
                 // if is possible perform apply
                 if (!offer.getStudents().contains(s)) {
                     if (offer.getnPositions() > 0 && offer.getValidity().after(Calendar.getInstance().getTime())) {

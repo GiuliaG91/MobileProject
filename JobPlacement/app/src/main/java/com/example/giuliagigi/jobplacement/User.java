@@ -151,16 +151,18 @@ public class User extends ParseObject{
         if(isCached.get(TAG_FIELD))
             return tags;
 
-
         ParseRelation<Tag> tmp = getRelation(TAG_FIELD);
 
         try {
 
-            ArrayList<Tag> tagList = null;
-            tagList = new ArrayList<>(tmp.getQuery().find());
+            List<Tag> tagList = tmp.getQuery().find();
 
-            for (Tag t : tagList)
-                tags.put(t.getTag(), t);
+            if(tagList != null){
+
+                for (Tag t : tagList)
+                    tags.put(t.getTag(), t);
+
+            }
 
             isCached.put(TAG_FIELD,true);
 

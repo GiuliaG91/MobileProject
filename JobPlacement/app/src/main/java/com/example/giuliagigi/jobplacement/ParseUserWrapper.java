@@ -16,15 +16,12 @@ import bolts.Task;
 public class ParseUserWrapper extends ParseUser {
 
     protected static final String TYPE_FIELD = "type";
-    public static final String TYPE_STUDENT = "Student";
-    public static final String TYPE_COMPANY = "Company";
-    public static final String USER_FIELD = "user";
     public static final String STUDENT_FIELD = "student";
     public static final String COMPANY_FIELD = "company";
     public static final String PROFESSOR_FIELD = "professor";
     protected static final String EMAIL_VERIFIED_FIELD = "emailVerified";
 
-    public static final String[] TYPES = new String[]{TYPE_STUDENT,TYPE_COMPANY};
+    public static final String[] TYPES = new String[]{User.TYPE_STUDENT,User.TYPE_COMPANY};
 
     public ParseUserWrapper() {
         super();

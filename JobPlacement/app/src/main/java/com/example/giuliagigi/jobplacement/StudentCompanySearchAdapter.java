@@ -60,7 +60,7 @@ public class StudentCompanySearchAdapter extends RecyclerView.Adapter<StudentCom
         currentFragment=fragment;
         mDataset = new ArrayList<>();
         globalData = (GlobalData) context.getApplication();
-        student=globalData.getStudentFromUser();
+        student = (Student)globalData.getUserObject();
         supportSet = new ArrayList<>(student.getCompanies());
         currentPosition=pos;
         mLayoutManager=manager;

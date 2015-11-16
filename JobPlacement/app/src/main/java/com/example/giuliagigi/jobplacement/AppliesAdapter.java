@@ -60,12 +60,12 @@ public class AppliesAdapter extends RecyclerView.Adapter<AppliesAdapter.ViewHold
 
         }
     }
-    public AppliesAdapter (FragmentActivity c, RecyclerView r ,Integer pos , LinearLayoutManager linearLayoutManager)
-    {
+    public AppliesAdapter (FragmentActivity c, RecyclerView r ,Integer pos , LinearLayoutManager linearLayoutManager){
+
         context=c;
         mDataset=new ArrayList<>();
         globalData=(GlobalData)context.getApplication();
-        student=globalData.getStudentFromUser();
+        student = (Student)globalData.getUserObject();
         mRecyclerView=r;
         currentPosition=pos;
         mLayoutManager=linearLayoutManager;

@@ -134,14 +134,19 @@ public class Student extends User {
         if(isCached.get(DEGREES_FIELD))
             return this.degrees;
 
-        ParseRelation<Degree> tmp= getRelation(DEGREES_FIELD);
+        ParseRelation<Degree> tmp = getRelation(DEGREES_FIELD);
         try {
-            degrees.addAll(tmp.getQuery().find());
+
+            List<Degree> list = tmp.getQuery().find();
+            if(list != null)
+                degrees.addAll(list);
+
+            isCached.put(DEGREES_FIELD, true);
+
         } catch (ParseException e) {
             e.printStackTrace();
         }
 
-        isCached.put(DEGREES_FIELD, true);
         return degrees;
     }
     synchronized public String getSex() {
@@ -221,7 +226,7 @@ public class Student extends User {
         if(isCached.get(LANGUAGE_FIELD))
             return languages;
 
-        ParseRelation<Language> tmp= getRelation(LANGUAGE_FIELD);
+        ParseRelation<Language> tmp = getRelation(LANGUAGE_FIELD);
         try {
 
             languages.addAll(tmp.getQuery().find());
