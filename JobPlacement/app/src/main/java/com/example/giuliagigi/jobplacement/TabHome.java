@@ -45,7 +45,7 @@ public class TabHome extends Fragment {
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         menu.clear();
-        inflater.inflate(R.menu.menu_search, menu);
+        inflater.inflate(R.menu.menu_home, menu);
     }
 
     @Override

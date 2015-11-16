@@ -8,6 +8,7 @@
         android:layout_width="fill_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
+        android:layout_margin="3dp"
         android:id="@+id/scrollView" >
         <LinearLayout
             android:layout_width="fill_parent"
@@ -29,7 +30,7 @@
                     android:textColor="@color/ColorPrimaryDark"
                     android:layout_marginLeft="3dp"
                     android:layout_marginTop="20dp"
-                    android:textSize="20sp"
+                    android:textSize="@dimen/textView_textSize"
                     />
                 <ImageButton
                     android:id="@+id/filter_remove"
@@ -60,6 +61,7 @@
                     android:id="@+id/tag_filter_tv"
                     android:textColor="@color/ColorPrimary"
                     android:layout_weight="0.3"
+                    android:textSize="@dimen/editText_textSize_small"
                     android:layout_marginLeft="3dp"
                     android:layout_marginTop="20dp" />
 
@@ -74,6 +76,7 @@
                         android:hint="@string/new_offer_fragment_hint_tags"
                         android:id="@+id/filter_tag_complete_tv"
                         android:layout_weight="1"
+                        android:textSize="@dimen/editText_textSize"
                         android:textColor="@color/ColorPrimaryDark"
                         android:completionThreshold="1"
                         android:backgroundTint="#00000000" />
@@ -123,6 +126,7 @@
                     android:text="@string/filter_Field"
                     android:id="@+id/field_filter_tv"
                     android:layout_weight="0.3"
+                    android:textSize="@dimen/editText_textSize_small"
                     android:textColor="@color/ColorPrimary"
                     android:layout_marginLeft="3dp"
                     android:layout_marginTop="20dp" />
@@ -185,6 +189,7 @@
                     android:text="@string/filter_Contract"
                     android:id="@+id/contract_filter_tv"
                     android:layout_weight="0.3"
+                    android:textSize="@dimen/editText_textSize_small"
                     android:textColor="@color/ColorPrimary"
                     android:layout_marginLeft="3dp"
                     android:layout_marginTop="20dp" />
@@ -247,6 +252,7 @@
                     android:text="@string/filter_Term"
                     android:id="@+id/term_filter_tv"
                     android:layout_weight="0.3"
+                    android:textSize="@dimen/editText_textSize_small"
                     android:layout_marginLeft="3dp"
                     android:textColor="@color/ColorPrimary"
                     android:layout_marginTop="20dp" />
@@ -309,6 +315,7 @@
                     android:text="@string/filter_Salary"
                     android:id="@+id/salary_filter_tv"
                     android:layout_weight="0.3"
+                    android:textSize="@dimen/editText_textSize_small"
                     android:textColor="@color/ColorPrimary"
                     android:layout_marginLeft="3dp"
                     android:layout_marginTop="20dp" />
@@ -328,6 +335,7 @@
                         android:layout_width="0dp"
                         android:id="@+id/filter_edit_salary"
                         android:layout_height="fill_parent"
+                        android:textSize="@dimen/editText_textSize"
                         android:textColor="@color/ColorPrimaryDark"
                         android:layout_weight="1"/>
 
@@ -349,6 +357,7 @@
                     android:text="@string/filter_Location"
                     android:id="@+id/location_filter_tv"
                     android:layout_weight="0.3"
+                    android:textSize="@dimen/editText_textSize_small"
                     android:textColor="@color/ColorPrimary"
                     android:layout_marginLeft="3dp"
                     android:layout_marginTop="20dp" />
@@ -363,6 +372,7 @@
                         android:hint="@string/location"
                         android:id="@+id/filter_location_complete_tv"
                         android:layout_weight="1"
+                        android:textSize="@dimen/editText_textSize"
                         android:textColor="@color/ColorPrimaryDark"
                         android:completionThreshold="1"
                         android:backgroundTint="#00000000" />

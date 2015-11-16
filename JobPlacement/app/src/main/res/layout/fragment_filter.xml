@@ -8,6 +8,7 @@
         android:layout_width="fill_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
+        android:layout_margin="3dp"
         android:id="@+id/scrollView" >
         <LinearLayout
             android:layout_width="fill_parent"
@@ -30,7 +31,7 @@
                     android:textColor="@color/ColorPrimaryDark"
                     android:layout_marginLeft="3dp"
                     android:layout_marginTop="20dp"
-                    android:textSize="20sp"
+                    android:textSize="@dimen/textView_textSize"
                     />
                 <ImageButton
                     android:id="@+id/filter_remove"
@@ -60,6 +61,7 @@
                     android:text="@string/filter_Skills"
                     android:id="@+id/tag_filter_tv"
                     android:layout_weight="0.3"
+                    android:textSize="@dimen/editText_textSize_small"
                     android:textColor="@color/ColorPrimary"
                     android:layout_marginLeft="3dp"
                     android:layout_marginTop="20dp" />
@@ -72,6 +74,7 @@
                         android:layout_width="0dp"
                         android:layout_height="fill_parent"
                         android:hint="@string/new_offer_fragment_hint_tags"
+                        android:textSize="@dimen/editText_textSize"
                         android:id="@+id/filter_tag_complete_tv"
                         android:layout_weight="1"
                         android:textColor="@color/ColorPrimaryDark"
@@ -124,6 +127,7 @@
                     android:id="@+id/field_filter_tv"
                     android:layout_weight="0.3"
                     android:textColor="@color/ColorPrimary"
+                    android:textSize="@dimen/editText_textSize_small"
                     android:layout_marginLeft="3dp"
                     android:layout_marginTop="20dp" />
                 <LinearLayout
@@ -181,6 +185,7 @@
                     android:text="@string/filter_Contract"
                     android:id="@+id/contract_filter_tv"
                     android:layout_weight="0.3"
+                    android:textSize="@dimen/editText_textSize_small"
                     android:textColor="@color/ColorPrimary"
                     android:layout_marginLeft="3dp"
                     android:layout_marginTop="20dp" />
@@ -240,6 +245,7 @@
                     android:layout_height="0dp"
                     android:text="@string/filter_Term"
                     android:id="@+id/term_filter_tv"
+                    android:textSize="@dimen/editText_textSize_small"
                     android:layout_weight="0.3"
                     android:layout_marginLeft="3dp"
                     android:textColor="@color/ColorPrimary"
@@ -300,6 +306,7 @@
                     android:layout_width="fill_parent"
                     android:layout_height="0dp"
                     android:text="@string/filter_Salary"
+                    android:textSize="@dimen/editText_textSize_small"
                     android:id="@+id/salary_filter_tv"
                     android:layout_weight="0.3"
                     android:textColor="@color/ColorPrimary"
@@ -321,6 +328,7 @@
                         android:layout_width="0dp"
                         android:id="@+id/filter_edit_salary"
                         android:layout_height="fill_parent"
+                        android:textSize="@dimen/editText_textSize"
                         android:textColor="@color/ColorPrimaryDark"
                         android:layout_weight="1"/>
 
@@ -385,6 +393,7 @@
                     android:textColor="@color/ColorPrimaryDark"
                     android:backgroundTint="@color/blue_semi_transparent"
                     android:layout_margin="3dp"
+                    android:textSize="@dimen/editText_textSize"
                     android:layout_weight="1"
                     android:layout_marginTop="20dp"/>
                 <EditText
@@ -392,6 +401,7 @@
                     android:height="50dp"
                     android:hint="@string/new_offer_fragment_hint_city"
                     android:id="@+id/filter_edit_city"
+                    android:textSize="@dimen/editText_textSize"
                     android:layout_height="fill_parent"
                     android:textColor="@color/ColorPrimaryDark"
                     android:backgroundTint="@color/blue_semi_transparent"
