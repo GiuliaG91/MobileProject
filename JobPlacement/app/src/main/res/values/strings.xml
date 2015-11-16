@@ -483,6 +483,7 @@
 
     <string-array name="Courses_Details_Tab">
 
+        <item>Overview</item>
         <item>Lectures</item>
         <item>Notices</item>
 

@@ -4,15 +4,31 @@ import android.app.Activity;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
+
+import com.parse.FindCallback;
+import com.parse.ParseException;
+import com.parse.ParseQuery;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class CourseNoticesFragment extends Fragment {
 
     private Course course;
+    ArrayList<News> notices;
     private boolean isEdit;
+
+    private View root;
+    private RecyclerView noticesView;
+    private NoticeAdapter noticeAdapter;
+
 
     /* -------------------------------------------------------------------------------------------*/
     /* -------------------------------- CONSTRUCTOR ----------------------------------------------*/
@@ -24,6 +40,7 @@ public class CourseNoticesFragment extends Fragment {
 
         fragment.course = course;
         fragment.isEdit = isEdit;
+        fragment.notices = new ArrayList<>();
 
         return fragment;
     }
@@ -44,7 +61,14 @@ public class CourseNoticesFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        return inflater.inflate(R.layout.fragment_course_notices, container, false);
+        root = inflater.inflate(R.layout.fragment_course_notices, container, false);
+
+        noticesView = (RecyclerView)root.findViewById(R.id.course_notices_recyclerView);
+        noticesView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        noticeAdapter = new NoticeAdapter(course);
+        noticesView.setAdapter(noticeAdapter);
+
+        return root;
     }
 
 
@@ -53,5 +77,73 @@ public class CourseNoticesFragment extends Fragment {
         super.onDetach();
     }
 
+
+    /* -------------------------------------------------------------------------------------------*/
+    /* -------------------------------- ADAPTER --------------------------------------------------*/
+    /* -------------------------------------------------------------------------------------------*/
+
+    public static class NoticeAdapter extends RecyclerView.Adapter<NoticeAdapter.ViewHolder>{
+
+        Course course;
+        ArrayList<News> notices;
+
+        /* ------- constructor ------------------------------------------------*/
+        public NoticeAdapter(Course course){
+
+            this.course = course;
+            this.notices = new ArrayList<>();
+
+            ParseQuery<News> newsQuery = new ParseQuery<News>(News.class);
+            newsQuery.whereEqualTo(News.COURSE_FIELD, course);
+
+            newsQuery.findInBackground(new FindCallback<News>() {
+                @Override
+                public void done(List<News> notices, ParseException e) {
+
+                    if(e == null && notices != null){
+
+                        NoticeAdapter.this.notices.addAll(notices);
+                        NoticeAdapter.this.notifyDataSetChanged();
+                    }
+                }
+            });
+        }
+
+        /* ------- callbacks ------------------------------------------------*/
+
+        @Override
+        public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+
+            View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.notice_item_row, parent, false);
+            return new ViewHolder(v);
+        }
+
+        @Override
+        public void onBindViewHolder(ViewHolder holder, int position) {
+
+            holder.message.setText(notices.get(position).getMessage());
+        }
+
+
+        @Override
+        public int getItemCount() {
+            return notices.size();
+        }
+
+        /* ------- view holder ------------------------------------------------*/
+
+        public static class ViewHolder extends RecyclerView.ViewHolder{
+
+            View root;
+            TextView message;
+
+            public ViewHolder(View itemView) {
+                super(itemView);
+
+                root = itemView;
+                message = (TextView)root.findViewById(R.id.notice_message);
+            }
+        }
+    }
 
 }

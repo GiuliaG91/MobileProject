@@ -482,6 +482,7 @@
 
     <string-array name="Courses_Details_Tab">
 
+        <item>Guida</item>
         <item>Lezioni</item>
         <item>Avvisi</item>
 

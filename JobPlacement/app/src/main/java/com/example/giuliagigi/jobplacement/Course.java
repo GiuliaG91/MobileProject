@@ -6,7 +6,6 @@ package com.example.giuliagigi.jobplacement;
 import android.os.AsyncTask;
 import android.util.Log;
 
-import com.parse.FindCallback;
 import com.parse.ParseClassName;
 import com.parse.ParseException;
 import com.parse.ParseObject;
@@ -14,7 +13,6 @@ import com.parse.ParseRelation;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 @ParseClassName("Course")
 public class Course extends ParseObject {
@@ -23,6 +21,9 @@ public class Course extends ParseObject {
     public static String PROFESSOR_FIELD = "Professor";
     public static String NAME_FIELD = "Name";
     public static String LECTURES_FIELD = "Lectures";
+    public static String PRESENTATION_FIELD = "Presentation";
+    public static String EXAM_FIELD = "Exam";
+
 
     private String code;
     private Professor professor;
@@ -148,6 +149,28 @@ public class Course extends ParseObject {
     }
 
 
+    public void setPresentation(String presentation){
+
+        put(PRESENTATION_FIELD, presentation);
+    }
+
+    public String getPresentation(){
+
+        return getString(PRESENTATION_FIELD);
+    }
+
+
+    public void setExam(String exam){
+
+        put(EXAM_FIELD,exam);
+    }
+
+    public String getExam(){
+
+        return getString(EXAM_FIELD);
+    }
+
+
     public void cacheData(){
 
         if(isCached.containsValue(false)){
@@ -162,6 +185,8 @@ public class Course extends ParseObject {
                     getCode();
                     getLectures();
                     getProfessor();
+                    getPresentation();
+                    getExam();
 
                     return null;
                 }
