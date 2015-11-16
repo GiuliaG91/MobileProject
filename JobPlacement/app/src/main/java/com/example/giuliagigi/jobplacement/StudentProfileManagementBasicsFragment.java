@@ -20,9 +20,11 @@ import com.parse.SaveCallback;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Locale;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class StudentProfileManagementBasicsFragment extends ProfileManagementBasicsFragment {
 
@@ -36,6 +38,7 @@ public class StudentProfileManagementBasicsFragment extends ProfileManagementBas
     EditText nameText,surnameText, birthCityText, descriptionText;
     TextView birthPicker;
     CheckBox male,female;
+    CircleImageView editProfile;
 
 
     /* -------------------------------------------------------------------------------------------*/
@@ -88,6 +91,16 @@ public class StudentProfileManagementBasicsFragment extends ProfileManagementBas
 
         if(root == null)
             Log.println(Log.ASSERT,"STUD BASICS", "layout not found");
+
+        editProfile = (CircleImageView)root.findViewById(R.id.profile_edit_button);
+        editProfile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                setEnable(!listener.isEditMode());
+                //setEnable(true);
+            }
+        });
 
         nameText = (EditText)root.findViewById(R.id.student_name_area);
         if(student.getName() == null)

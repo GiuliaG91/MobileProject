@@ -33,7 +33,7 @@
 
 
                 <LinearLayout
-                    android:orientation="vertical"
+                    android:orientation="horizontal"
                     android:layout_width="fill_parent"
                     android:layout_height="fill_parent"
                     android:layout_alignParentBottom="true"
@@ -44,9 +44,9 @@
 
 
                     <EditText
-                        android:layout_width="fill_parent"
-                        android:layout_height="0dp"
-                        android:layout_weight="0.3"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.9"
                         android:textAppearance="?android:attr/textAppearanceMedium"
                         android:text="@string/string_company_fragment_name_title"
                         android:gravity="bottom"
@@ -57,6 +57,14 @@
                         android:textCursorDrawable="@drawable/edittext_cursor"
                         android:textColor="#ffffff"
                         android:paddingTop="5dp" />
+
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:layout_width="70dp"
+                        android:layout_height="70dp"
+                        android:background="@drawable/pencil_button"
+                        android:id="@+id/profile_edit_button"
+
+                        />
                 </LinearLayout>
 
 
