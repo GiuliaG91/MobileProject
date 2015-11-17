@@ -76,7 +76,7 @@
                         android:layout_weight="1"
                         android:completionThreshold="1"
                         android:backgroundTint="@color/blue_semi_transparent"
-                        android:textCursorDrawable="@drawable/edittext_cursor" />
+                        android:textCursorDrawable="@drawable/edit_cursor" />
 
                     <ImageButton
                         android:layout_width="0dp"
@@ -225,7 +225,7 @@
                         android:layout_height="fill_parent"
                         android:layout_weight="1"
                         android:backgroundTint="@color/blue_semi_transparent"
-                        android:textCursorDrawable="@drawable/edittext_cursor"
+                        android:textCursorDrawable="@drawable/edit_cursor"
                         android:inputType="number"
                         android:hint="@string/filter_hint_grade"
                         android:id="@+id/filter_grade_editbox"></EditText>

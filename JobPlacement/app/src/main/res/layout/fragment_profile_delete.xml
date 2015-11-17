@@ -142,7 +142,7 @@
                 android:hint="@string/account_delete_write_reason"
                 android:layout_marginLeft="28dp"
                 android:backgroundTint="@color/blue_semi_transparent"
-                android:textCursorDrawable="@drawable/edittext_cursor"
+                android:textCursorDrawable="@drawable/edit_cursor"
                 android:textColor="@color/ColorPrimaryDark"
                 android:layout_gravity="center_horizontal" />
 
@@ -161,7 +161,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
                 android:backgroundTint="@color/blue_semi_transparent"
-                android:textCursorDrawable="@drawable/edittext_cursor"
+                android:textCursorDrawable="@drawable/edit_cursor"
                 android:id="@+id/profileDelete_hints_text"
                 android:hint="@string/account_delete_shy"
                 android:layout_gravity="center_horizontal" />

@@ -55,7 +55,7 @@
                             android:text="@string/profile_person_fragment_name_title"
                             android:background="#00000000"
                             android:backgroundTint="@color/blue_semi_transparent"
-                            android:textCursorDrawable="@drawable/edittext_cursor"
+                            android:textCursorDrawable="@drawable/edit_cursor"
                             android:id="@+id/professor_name_area"
                             android:gravity="bottom"
                             android:paddingLeft="10dp"
@@ -71,7 +71,7 @@
                             android:gravity="bottom"
                             android:background="#00000000"
                             android:backgroundTint="@color/blue_semi_transparent"
-                            android:textCursorDrawable="@drawable/edittext_cursor"
+                            android:textCursorDrawable="@drawable/edit_cursor"
                             android:id="@+id/professor_surname_area"
                             android:paddingLeft="10dp"
                             android:textColor="#ffffff"
@@ -143,7 +143,7 @@
                             android:background="#00000000"
                             android:textSize="20dp"
                             android:backgroundTint="@color/blue_semi_transparent"
-                            android:textCursorDrawable="@drawable/edittext_cursor"
+                            android:textCursorDrawable="@drawable/edit_cursor"
                             android:paddingLeft="10dp"
                             android:paddingTop="5dp"
                             android:enabled="false"/>
@@ -154,7 +154,125 @@
                 </LinearLayout>
 
                 <!-- end email area -->
+                <!-- consulenza -->
 
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/consIcon"
+                        android:paddingLeft="10dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginBottom="10dp"
+                        android:src="@drawable/ic_schedule"
+                        android:layout_gravity="bottom"/>
+
+                    <LinearLayout
+                        android:orientation="vertical"
+                        android:layout_width="0dp"
+                        android:layout_height="fill_parent"
+                        android:layout_weight="1"
+                        android:paddingLeft="30dp">
+
+                        <TextView
+                            android:layout_width="fill_parent"
+                            android:layout_height="0dp"
+                            android:textAppearance="?android:attr/textAppearanceSmall"
+                            android:text="@string/professor_consulting_title"
+                            android:textColor="@color/ColorPrimaryDark"
+                            android:layout_weight="1"
+                            android:paddingLeft="10dp"
+                            android:gravity="bottom"
+                            android:textSize="10sp" />
+
+                        <Spinner
+                            android:id="@+id/lecture_day_editText"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="10dp"
+                            android:paddingTop="5dp"/>
+
+                        <LinearLayout
+                            android:orientation="horizontal"
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="10dp"
+                            android:paddingTop="2dp">
+
+                            <EditText
+                                android:id="@+id/consulting_startHour_editText"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:inputType="number"
+                                android:textColor="#000000"
+                                android:backgroundTint="@color/blue_semi_transparent"
+                                android:textCursorDrawable="@drawable/edit_cursor"
+                                android:textSize="@dimen/editText_textSize" />
+
+                            <TextView
+                                android:text=":"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textColor="#000000"
+                                android:textSize="@dimen/editText_textSize" />
+
+
+                            <EditText
+                                android:id="@+id/consulting_startMinute_editText"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:inputType="number"
+                                android:textColor="#000000"
+                                android:backgroundTint="@color/blue_semi_transparent"
+                                android:textCursorDrawable="@drawable/edit_cursor"
+                                android:textSize="@dimen/editText_textSize"  />
+
+                            <TextView
+                                android:text="-"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textColor="#000000"
+                                android:textSize="@dimen/editText_textSize"  />
+
+                            <EditText
+                                android:id="@+id/consulting_endHour_editText"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:inputType="number"
+                                android:textColor="#000000"
+                                android:backgroundTint="@color/blue_semi_transparent"
+                                android:textCursorDrawable="@drawable/edit_cursor"
+                                android:textSize="@dimen/editText_textSize"  />
+
+                            <TextView
+                                android:text=":"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textColor="#000000"
+                                android:textSize="@dimen/editText_textSize"  />
+
+                            <EditText
+                                android:id="@+id/consulting_endMinute_editText"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:inputType="number"
+                                android:textColor="#000000"
+                                android:backgroundTint="@color/blue_semi_transparent"
+                                android:textCursorDrawable="@drawable/edit_cursor"
+                                android:textSize="@dimen/editText_textSize"  />
+                        </LinearLayout>
+
+
+                    </LinearLayout>
+
+
+                </LinearLayout>
+
+                <!-- fine consulenza -->
                 <!-- gender area -->
                 <LinearLayout
                     android:orientation="horizontal" android:layout_width="match_parent"
@@ -269,7 +387,7 @@
                             android:textColor="#ff000000"
                             android:background="#00000000"
                             android:backgroundTint="@color/blue_semi_transparent"
-                            android:textCursorDrawable="@drawable/edittext_cursor"
+                            android:textCursorDrawable="@drawable/edit_cursor"
                             android:textSize="20dp"
                             android:paddingLeft="10dp"
                             android:paddingTop="5dp" />
@@ -325,7 +443,7 @@
                             android:textColor="#ff000000"
                             android:background="#00000000"
                             android:backgroundTint="@color/blue_semi_transparent"
-                            android:textCursorDrawable="@drawable/edittext_cursor"
+                            android:textCursorDrawable="@drawable/edit_cursor"
                             android:textSize="20dp"
                             android:paddingLeft="10dp"
                             android:paddingTop="5dp" />

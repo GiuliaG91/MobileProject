@@ -35,8 +35,8 @@
                 android:hint="@string/roomSearch_hintRoom"
                 android:textSize="@dimen/editText_textSize"
                 android:backgroundTint="@color/blue_semi_transparent"
-                android:textCursorDrawable="@drawable/edittext_cursor"
-                android:textColor="@color/ColorPrimary"
+                android:textCursorDrawable="@drawable/edit_cursor"
+                android:textColor="#000000"
                 android:layout_margin="5dp"
                 android:id="@+id/editTextRoom" />
 

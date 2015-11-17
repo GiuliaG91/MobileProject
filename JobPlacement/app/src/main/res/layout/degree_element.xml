@@ -40,7 +40,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:backgroundTint="@color/blue_semi_transparent"
-        android:textCursorDrawable="@drawable/edittext_cursor" />
+        android:textCursorDrawable="@drawable/edit_cursor" />
 
     <TextView
         android:layout_width="match_parent"

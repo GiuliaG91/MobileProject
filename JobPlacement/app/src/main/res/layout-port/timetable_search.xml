@@ -36,9 +36,9 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/lectureSearch_hintCourse"
                 android:textSize="@dimen/editText_textSize"
-                android:textColor="@color/ColorPrimaryDark"
+                android:textColor="#000000"
                 android:backgroundTint="@color/blue_semi_transparent"
-                android:textCursorDrawable="@drawable/edittext_cursor"
+                android:textCursorDrawable="@drawable/edit_cursor"
                 android:layout_margin="5dp"
                 android:id="@+id/editTextCourse" />
 
@@ -56,7 +56,9 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/lectureSearch_hintProfessor"
                 android:textSize="@dimen/editText_textSize"
-                android:textColor="@color/ColorPrimaryDark"
+                android:textColor="#000000"
+                android:backgroundTint="@color/blue_semi_transparent"
+                android:textCursorDrawable="@drawable/edit_cursor"
                 android:layout_margin="5dp"
                 android:id="@+id/editTextProfessor"
                 />

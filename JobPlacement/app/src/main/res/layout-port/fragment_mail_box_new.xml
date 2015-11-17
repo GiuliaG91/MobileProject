@@ -14,7 +14,7 @@
         android:layout_marginRight="12dp"
         android:layout_marginLeft="12dp"
         android:layout_marginTop="10dp"
-        android:textCursorDrawable="@drawable/edittext_cursor"
+        android:textCursorDrawable="@drawable/edit_cursor"
         android:backgroundTint="@color/blue_semi_transparent"
         android:hint="@string/recipients"/>
 
@@ -27,7 +27,7 @@
         android:textColor="@color/ColorPrimaryDark"
         android:layout_marginLeft="12dp"
         android:layout_marginTop="10dp"
-        android:textCursorDrawable="@drawable/edittext_cursor"
+        android:textCursorDrawable="@drawable/edit_cursor"
         android:backgroundTint="@color/blue_semi_transparent"
         android:hint="@string/object_"/>
 
@@ -51,7 +51,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="fill_parent"
                 android:textColor="@color/ColorPrimaryDark"
-                android:textCursorDrawable="@drawable/edittext_cursor"
+                android:textCursorDrawable="@drawable/edit_cursor"
                 android:backgroundTint="@color/blue_semi_transparent"
                 android:textSize="15sp"
                 android:gravity="top"

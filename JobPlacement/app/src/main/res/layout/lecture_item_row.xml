@@ -67,7 +67,7 @@
                         android:layout_marginRight="10dp"
                         android:textColor="#000000"
                         android:backgroundTint="@color/blue_semi_transparent"
-                        android:textCursorDrawable="@drawable/edittext_cursor"
+                        android:textCursorDrawable="@drawable/edit_cursor"
                         android:textSize="@dimen/editText_textSize" />
                 </LinearLayout>
 
@@ -98,7 +98,7 @@
                             android:inputType="number"
                             android:textColor="#000000"
                             android:backgroundTint="@color/blue_semi_transparent"
-                            android:textCursorDrawable="@drawable/edittext_cursor"
+                            android:textCursorDrawable="@drawable/edit_cursor"
                             android:textSize="@dimen/editText_textSize" />
 
                         <TextView
@@ -116,14 +116,14 @@
                             android:inputType="number"
                             android:textColor="#000000"
                             android:backgroundTint="@color/blue_semi_transparent"
-                            android:textCursorDrawable="@drawable/edittext_cursor"
+                            android:textCursorDrawable="@drawable/edit_cursor"
                             android:textSize="@dimen/editText_textSize"  />
 
                         <TextView
                             android:text="-"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textColor="@color/ColorPrimaryDark"
+                            android:textColor="#000000"
                             android:textSize="@dimen/editText_textSize"  />
 
                         <EditText
@@ -133,7 +133,7 @@
                             android:inputType="number"
                             android:textColor="#000000"
                             android:backgroundTint="@color/blue_semi_transparent"
-                            android:textCursorDrawable="@drawable/edittext_cursor"
+                            android:textCursorDrawable="@drawable/edit_cursor"
                             android:textSize="@dimen/editText_textSize"  />
 
                         <TextView
@@ -150,7 +150,7 @@
                             android:inputType="number"
                             android:textColor="#000000"
                             android:backgroundTint="@color/blue_semi_transparent"
-                            android:textCursorDrawable="@drawable/edittext_cursor"
+                            android:textCursorDrawable="@drawable/edit_cursor"
                             android:textSize="@dimen/editText_textSize"  />
                     </LinearLayout>
                 </LinearLayout>

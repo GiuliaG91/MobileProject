@@ -200,7 +200,7 @@
                         android:id="@+id/filter_edit_distance"
                         android:layout_height="fill_parent"
                         android:backgroundTint="@color/blue_semi_transparent"
-                        android:textCursorDrawable="@drawable/edittext_cursor"
+                        android:textCursorDrawable="@drawable/edit_cursor"
                         android:textColor="@color/ColorPrimaryDark"
                         android:layout_weight="1"/>
 
@@ -226,7 +226,7 @@
                     android:textColor="@color/ColorPrimaryDark"
                     android:layout_height="fill_parent"
                     android:backgroundTint="@color/blue_semi_transparent"
-                    android:textCursorDrawable="@drawable/edittext_cursor"
+                    android:textCursorDrawable="@drawable/edit_cursor"
                     android:layout_weight="1"/>
                 <EditText
                     android:layout_width="fill_parent"
@@ -236,7 +236,7 @@
                     android:textColor="@color/ColorPrimaryDark"
                     android:layout_height="fill_parent"
                     android:backgroundTint="@color/blue_semi_transparent"
-                    android:textCursorDrawable="@drawable/edittext_cursor"
+                    android:textCursorDrawable="@drawable/edit_cursor"
                     android:layout_weight="1" />
 
 

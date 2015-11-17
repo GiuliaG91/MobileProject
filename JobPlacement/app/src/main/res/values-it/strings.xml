@@ -247,6 +247,7 @@
     <string name="notice_message_hint">Messaggio</string>
     <string name="notice_news_title">Nuovo avviso per il corso: </string>
     <string name="course_presentation_title">Presentazione del corso:</string>
+    <string name="professor_consulting_title">Orario di consulenza:</string>
     <string name="course_exam_title">Modalità d\' esame:</string>
 
 

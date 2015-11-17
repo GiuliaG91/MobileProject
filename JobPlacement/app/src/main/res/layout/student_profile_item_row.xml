@@ -37,7 +37,7 @@
             android:layout_weight="1"
             android:textColor="#ff000000"
             android:backgroundTint="@color/blue_semi_transparent"
-            android:textCursorDrawable="@drawable/edittext_cursor"
+            android:textCursorDrawable="@drawable/edit_cursor"
             android:textSize="20dp"
             android:paddingLeft="30dp"
             android:paddingTop="5dp" />

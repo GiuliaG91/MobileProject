@@ -76,7 +76,7 @@
                         android:layout_weight="1"
                         android:completionThreshold="1"
                         android:backgroundTint="@color/blue_semi_transparent"
-                        android:textCursorDrawable="@drawable/edittext_cursor" />
+                        android:textCursorDrawable="@drawable/edit_cursor" />
 
                     <ImageButton
                         android:layout_width="0dp"
@@ -202,7 +202,7 @@
                         android:layout_height="fill_parent"
                         android:textColor="@color/ColorPrimaryDark"
                         android:backgroundTint="@color/blue_semi_transparent"
-                        android:textCursorDrawable="@drawable/edittext_cursor"
+                        android:textCursorDrawable="@drawable/edit_cursor"
                         android:layout_weight="1"/>
 
                 </LinearLayout>
@@ -227,7 +227,7 @@
                     android:hint="@string/new_offer_fragment_hint_nation"
                     android:layout_height="fill_parent"
                     android:backgroundTint="@color/blue_semi_transparent"
-                    android:textCursorDrawable="@drawable/edittext_cursor"
+                    android:textCursorDrawable="@drawable/edit_cursor"
                     android:layout_weight="1"/>
                 <EditText
                     android:layout_width="fill_parent"
@@ -237,7 +237,7 @@
                     android:id="@+id/filter_edit_city"
                     android:layout_height="fill_parent"
                     android:backgroundTint="@color/blue_semi_transparent"
-                    android:textCursorDrawable="@drawable/edittext_cursor"
+                    android:textCursorDrawable="@drawable/edit_cursor"
                     android:layout_weight="1" />
 
 

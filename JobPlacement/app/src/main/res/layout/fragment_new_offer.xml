@@ -61,7 +61,7 @@
                         android:layout_weight="1"
                         android:background="@null"
                         android:backgroundTint="@color/blue_semi_transparent"
-                        android:textCursorDrawable="@drawable/edittext_cursor"
+                        android:textCursorDrawable="@drawable/edit_cursor"
                         android:maxLines="1"
                         android:singleLine="true"
                         android:hint="@string/new_offer_fragment_hint_object"
@@ -162,7 +162,7 @@
                             android:id="@+id/offerAvailability"
                             android:layout_weight="1"
                             android:backgroundTint="@color/blue_semi_transparent"
-                            android:textCursorDrawable="@drawable/edittext_cursor"
+                            android:textCursorDrawable="@drawable/edit_cursor"
                             android:hint="@string/new_offer_fragment_hint_number_of_place"
                             android:singleLine="true"
                             android:maxLines="1"
@@ -377,7 +377,7 @@
                             android:id="@+id/new_offer_edit_nation"
                             android:layout_weight="1"
                             android:backgroundTint="@color/blue_semi_transparent"
-                            android:textCursorDrawable="@drawable/edittext_cursor"/>
+                            android:textCursorDrawable="@drawable/edit_cursor"/>
 
                         <EditText
                             android:layout_width="fill_parent"
@@ -386,7 +386,7 @@
                             android:id="@+id/new_offer_edit_city"
                             android:layout_weight="1"
                             android:backgroundTint="@color/blue_semi_transparent"
-                            android:textCursorDrawable="@drawable/edittext_cursor"/>
+                            android:textCursorDrawable="@drawable/edit_cursor"/>
 
 
                     </LinearLayout>
@@ -453,7 +453,7 @@
                                 android:ems="10"
                                 android:hint="@string/new_offer_fragment_hint_salary"
                                 android:backgroundTint="@color/blue_semi_transparent"
-                                android:textCursorDrawable="@drawable/edittext_cursor"
+                                android:textCursorDrawable="@drawable/edit_cursor"
                                 android:maxLines="1"
                                 android:singleLine="true"
                                 android:background="@null"
@@ -512,7 +512,7 @@
                             android:maxLength="500"
                             android:background="@null"
                             android:backgroundTint="@color/blue_semi_transparent"
-                            android:textCursorDrawable="@drawable/edittext_cursor"/>
+                            android:textCursorDrawable="@drawable/edit_cursor"/>
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -554,7 +554,7 @@
                             android:layout_weight="1"
                             android:background="@null"
                             android:backgroundTint="@color/blue_semi_transparent"
-                            android:textCursorDrawable="@drawable/edittext_cursor"
+                            android:textCursorDrawable="@drawable/edit_cursor"
                             android:lines="1"
                             android:singleLine="true"/>
 

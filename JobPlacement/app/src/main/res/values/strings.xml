@@ -249,6 +249,7 @@
     <string name="notice_message_hint">Message</string>
     <string name="notice_news_title">New notice for course: </string>
     <string name="course_presentation_title">Course presentation:</string>
+    <string name="professor_consulting_title">Time consulting:</string>
     <string name="course_exam_title">Exam modalities:</string>
 
 

@@ -20,7 +20,7 @@
         android:gravity="top"
         android:scrollbars="vertical"
         android:backgroundTint="@color/blue_semi_transparent"
-        android:textCursorDrawable="@drawable/edittext_cursor"
+        android:textCursorDrawable="@drawable/edit_cursor"
         android:textSize="@dimen/editText_textSize"
         android:textColor="@color/ColorPrimaryDark"/>
 
