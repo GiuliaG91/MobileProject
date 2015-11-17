@@ -15,16 +15,12 @@ public class TabHomeCompanyFragment extends Fragment {
     View root;
     GlobalData globalData;
 
-    /* -------- For page viewer --------------- */
     ViewPager pager;
    CompanyViewPagerAdapter adapter;
     SlidingTabLayout tabs;
     CharSequence Titles[] =null;
     int Numboftabs = 3;
     private Integer currentPosition=0;
-
-    /***************************************************************/
-    private OnFragmentInteractionListener mListener;
 
 
     /* -------------------------------------------------------------------------------------------- */
@@ -126,19 +122,6 @@ public class TabHomeCompanyFragment extends Fragment {
     @Override
     public void onDetach() {
         super.onDetach();
-        mListener = null;
     }
-
-
-
-
-
-
-    public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        public void onFragmentInteraction(Uri uri);
-    }
-
-
 
 }

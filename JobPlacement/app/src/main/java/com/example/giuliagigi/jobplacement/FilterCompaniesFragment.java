@@ -413,7 +413,7 @@ public class FilterCompaniesFragment extends DialogFragment {
             globalData.getCompanyFilterStatus().setValid(true);
 
             StudentCompanySearchFragment fragment = (StudentCompanySearchFragment) this.getParentFragment();
-            fragment.addFiters(tag_list, field_list, location_list);
+            fragment.addFilters(tag_list, field_list, location_list);
             getDialog().dismiss();
         }
         else Toast.makeText(getActivity(),getString(R.string.filter_hint_location),Toast.LENGTH_SHORT).show();

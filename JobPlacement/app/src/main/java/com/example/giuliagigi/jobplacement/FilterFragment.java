@@ -614,7 +614,7 @@ if(flag==0) {
     globalData.getOfferFilterStatus().setValid(true);
 
     OfferSearchFragment fragment = (OfferSearchFragment) this.getParentFragment();
-    fragment.addFiters(tag_list, contract_list, term_list, field_list, location_list, salary_list);
+    fragment.addFilters(tag_list, contract_list, term_list, field_list, location_list, salary_list);
     getDialog().dismiss();
        }else Toast.makeText(getActivity(), getString(R.string.filter_hint_location),Toast.LENGTH_SHORT).show();
     }

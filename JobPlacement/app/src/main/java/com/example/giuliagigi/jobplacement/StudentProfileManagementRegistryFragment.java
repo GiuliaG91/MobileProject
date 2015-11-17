@@ -23,7 +23,7 @@ import com.parse.ParseGeoPoint;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class StudentProfileManagementRegistryFragment extends ProfileManagementFragment implements OnMapReadyCallback{
+public class StudentProfileManagementRegistryFragment extends ProfileManagementFragment implements OnMapReadyCallback, ProfileManagementTelephoneFragment.TelephoneFragmentInterface {
 
 
     private static final String TITLE = GlobalData.getContext().getString(R.string.profile_registry_tab);
@@ -142,7 +142,8 @@ public class StudentProfileManagementRegistryFragment extends ProfileManagementF
             @Override
             public void onClick(View v) {
 
-                ProfileManagementTelephoneFragment tf = ProfileManagementTelephoneFragment.newInstance(new Telephone(), student);
+                ProfileManagementTelephoneFragment tf;
+                tf = ProfileManagementTelephoneFragment.newInstance(StudentProfileManagementRegistryFragment.this, new Telephone(), student);
                 FragmentTransaction ft = getFragmentManager().beginTransaction();
                 ft.add(R.id.student_phones_container,tf);
                 ft.commit();
@@ -169,7 +170,8 @@ public class StudentProfileManagementRegistryFragment extends ProfileManagementF
 
             if(i>=telephoneFragments.size()){
 
-                ProfileManagementTelephoneFragment tf  = ProfileManagementTelephoneFragment.newInstance(student.getPhones().get(i), student);
+                ProfileManagementTelephoneFragment tf;
+                tf = ProfileManagementTelephoneFragment.newInstance(this, student.getPhones().get(i), student);
                 telephoneFragments.add(tf);
             }
 
@@ -277,7 +279,24 @@ public class StudentProfileManagementRegistryFragment extends ProfileManagementF
     }
 
 
-    /* ------------------------------ MAPS METHODS ------------------------------------------------*/
+    /* -------------------------------------------------------------------------------------------*/
+    /* --------------------------- NESTED FRAGMENTS INTERFACE ------------------------------------*/
+    /* -------------------------------------------------------------------------------------------*/
+
+    @Override
+    public void onTelephoneDelete(ProfileManagementTelephoneFragment toRemove) {
+
+        host.removeOnActivityChangedListener(toRemove);
+        telephoneFragments.remove(toRemove);
+
+        FragmentTransaction ft = getFragmentManager().beginTransaction();
+        ft.remove(toRemove);
+        ft.commit();
+    }
+
+    /* -------------------------------------------------------------------------------------------*/
+    /* ------------------------------ MAPS METHODS -----------------------------------------------*/
+    /* -------------------------------------------------------------------------------------------*/
 
 
     @Override
@@ -287,6 +306,8 @@ public class StudentProfileManagementRegistryFragment extends ProfileManagementF
         if(student.getAddressLocation()!=null)
             geoloc.setMarkerPosition(new LatLng(student.getAddressLocation().getLatitude(), student.getAddressLocation().getLongitude()));
     }
+
+
 
 
     private class OnAddressChangedListener implements TextWatcher {

@@ -14,9 +14,6 @@ import android.view.ViewGroup;
 
 public class TabHomeStudentFragment extends Fragment {
 
-    /**
-     * *************For page viewer***************************
-     */
     View root;
     ViewPager pager;
     StudentViewPagerAdapter adapter;
@@ -25,10 +22,11 @@ public class TabHomeStudentFragment extends Fragment {
     int Numboftabs = 4;
     GlobalData globalData;
     private Integer currentPosition=0;
-    /***************************************************************/
 
 
-    private OnFragmentInteractionListener mListener;
+    /* -------------------------------------------------------------------------------------------*/
+    /* ---------------------- CONSTRUCTORS GETTERS SETTERS ---------------------------------------*/
+    /* -------------------------------------------------------------------------------------------*/
 
     public TabHomeStudentFragment() {    }
 
@@ -39,12 +37,9 @@ public class TabHomeStudentFragment extends Fragment {
     }
 
 
-
-
-    @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-    }
+    /* -------------------------------------------------------------------------------------------*/
+    /* -------------------------------- STANDARD CALLBACKS ---------------------------------------*/
+    /* -------------------------------------------------------------------------------------------*/
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -113,17 +108,17 @@ public class TabHomeStudentFragment extends Fragment {
         return root;
     }
 
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        mListener = null;
-    }
-
-    public interface OnFragmentInteractionListener {
-    }
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
         outState.putInt("position",currentPosition);
     }
+
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+    }
+
+
 }

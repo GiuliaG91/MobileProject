@@ -13,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.parse.DeleteCallback;
 import com.parse.ParseException;
 import com.parse.SaveCallback;
 
@@ -24,21 +25,31 @@ public class ProfileManagementTelephoneFragment extends ProfileManagementFragmen
     private static String BUNDLE_TYPE = "bundle_type";
     private static String BUNDLE_HASCHANGED = "bundle_hasChanged";
 
+    private TelephoneFragmentInterface parent;
     private Telephone telephone;
+
     private Spinner typeSelector;
     private Button removeButton;
     private boolean isRemoved;
     private EditText numberText;
 
 
-    /* ------------------- CONSTRUCTOR GETTERS SETTERS ------------------------------------------*/
+    /* -------------------------------------------------------------------------------------------*/
+    /* ------------------- CONSTRUCTOR GETTERS SETTERS -------------------------------------------*/
+    /* -------------------------------------------------------------------------------------------*/
+
     public ProfileManagementTelephoneFragment() { super(); }
-    public static ProfileManagementTelephoneFragment newInstance(Telephone telephone, User user) {
+
+    public static ProfileManagementTelephoneFragment newInstance(TelephoneFragmentInterface parent, Telephone telephone, User user) {
+
         ProfileManagementTelephoneFragment fragment = new ProfileManagementTelephoneFragment();
+
         Bundle args = new Bundle();
         fragment.setArguments(args);
         fragment.setTelephone(telephone);
         fragment.setUser(user);
+        fragment.parent = parent;
+
         return fragment;
     }
 
@@ -57,7 +68,10 @@ public class ProfileManagementTelephoneFragment extends ProfileManagementFragmen
         this.user = user;
     }
 
+
+    /* -------------------------------------------------------------------------------------------*/
     /* ------------------- STANDARD CALLBACKS ---------------------------------------------------*/
+    /* -------------------------------------------------------------------------------------------*/
 
     @Override
     public void onAttach(Activity activity) {
@@ -107,16 +121,32 @@ public class ProfileManagementTelephoneFragment extends ProfileManagementFragmen
             @Override
             public void onClick(View v) {
 
-                try {
-                    telephone.delete();
-                    isRemoved = true;
-                    user.removePhone(telephone);
-                    user.saveEventually();
-                    root.setVisibility(View.INVISIBLE);
+                if(telephone.getObjectId() != null){
 
-                } catch (ParseException e) {
-                    e.printStackTrace();
-                    Toast.makeText(getActivity(), "unable to delete", Toast.LENGTH_SHORT).show();
+                    telephone.deleteEventually(new DeleteCallback() {
+                        @Override
+                        public void done(ParseException e) {
+
+                            if(e == null){
+
+                                user.removePhone(telephone);
+                                user.saveEventually();
+                                root.setVisibility(View.INVISIBLE);
+                                parent.onTelephoneDelete(ProfileManagementTelephoneFragment.this);
+                                isRemoved = true;
+                            }
+                            else {
+
+                                Toast.makeText(getActivity().getApplicationContext(), getActivity().getResources().getString(R.string.profile_object_delete_failure), Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    });
+                }
+                else {
+
+                    isRemoved = true;
+                    parent.onTelephoneDelete(ProfileManagementTelephoneFragment.this);
+                    root.setVisibility(View.INVISIBLE);
                 }
             }
         });
@@ -146,7 +176,9 @@ public class ProfileManagementTelephoneFragment extends ProfileManagementFragmen
     }
 
 
+    /* -------------------------------------------------------------------------------------------*/
     /* ------------------- AUXILIARY METHODS ---------------------------------------------------*/
+    /* -------------------------------------------------------------------------------------------*/
 
     @Override
     public void saveChanges() {
@@ -191,5 +223,15 @@ public class ProfileManagementTelephoneFragment extends ProfileManagementFragmen
 
         typeSelector.setEnabled(enable);
         removeButton.setEnabled(enable);
+    }
+
+
+    /* -------------------------------------------------------------------------------------------*/
+    /* ------------------------- PARENT FRAGMENT INTERFACE ---------------------------------------*/
+    /* -------------------------------------------------------------------------------------------*/
+
+    public interface TelephoneFragmentInterface{
+
+        public void onTelephoneDelete(ProfileManagementTelephoneFragment toRemove);
     }
 }

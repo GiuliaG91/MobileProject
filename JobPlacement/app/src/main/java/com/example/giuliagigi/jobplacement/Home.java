@@ -27,25 +27,17 @@ import java.util.ArrayList;
 
 
 public class Home extends ActionBarActivity
-        implements TabHomeStudentFragment.OnFragmentInteractionListener ,
-        TabHomeCompanyFragment.OnFragmentInteractionListener,
-        NewOffer.OnFragmentInteractionListener,
-        ProfileManagementFragment.OnInteractionListener,
+        implements ProfileManagementFragment.OnInteractionListener,
         ProfileManagement.OnInteractionListener ,
-        OfferSearchFragment.OnFragmentInteractionListener ,
-        StudentCompanySearchFragment.OnFragmentInteractionListener,
-        CompanyStudentSearchFragment.OnFragmentInteractionListener,
         MailBoxDisplayFragment.OnFragmentInteractionListener,
-        TabHome.OnFragmentInteractionListener,
         CourseAdapter.CourseAdapterListener,
-        OnFragmentInteractionListener
+        OnFragmentInteractionListener{
 
-{
+
     private Toolbar toolbar;   // Declaring the Toolbar Object
 
-    /**
-     * ********For drawer*****************
-     */
+
+    /* ----------- DRAWER -------------------------- */
     private DrawerLayout mDrawerLayout;
     private RecyclerView mDrawerList;
     private menuAdapter mAdapter;
@@ -55,12 +47,12 @@ public class Home extends ActionBarActivity
     private TypedArray ICONS;
     private String[] TITLES;
     private Boolean init=false;
-/********************************************************/
 
     /* --------- PROFILE MANAGEMENT ---------------------*/
     private boolean isEditMode;
     private GlobalData application;
     private ArrayList<OnActivityChangedListener> listeners;
+
 
     /* -------------------------------------------------------------------------------------------*/
     /* -------------------------------- STANDARD CALLBACKS ---------------------------------------*/

@@ -22,8 +22,6 @@ public class TabHomeProfessorFragment extends Fragment {
 
     private int currentPosition = 0;
 
-    private OnFragmentInteractionListener mListener;
-
 
     /* -------------------------------------------------------------------------------------------- */
     /* ----------------------- CONSTRUCTORS, SETTERS ---------------------------------------------- */
@@ -115,15 +113,8 @@ public class TabHomeProfessorFragment extends Fragment {
     @Override
     public void onDetach() {
         super.onDetach();
-        mListener = null;
     }
 
 
-
-
-    public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        public void onFragmentInteraction(Uri uri);
-    }
 
 }

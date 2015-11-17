@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.parse.DeleteCallback;
 import com.parse.ParseException;
@@ -37,20 +38,26 @@ public class StudentProfileManagementCertificateFragment extends ProfileManageme
     private EditText titleText, markText;
     private TextView descriptionText, datePicker;
     private Button deleteButton;
+
     private int day,month,year;
     private String completeDescription;
     private boolean isRemoved, dateChanged;
-    private Student student;
 
+    private Student student;
+    private CertificateFragmentInterface parent;
+
+    /* -------------------------------------------------------------------------------------------*/
     /* ----------------- CONTRUCTORS GETTERS SETTERS ---------------------------------------------*/
+    /* -------------------------------------------------------------------------------------------*/
 
     public StudentProfileManagementCertificateFragment() {}
-    public static StudentProfileManagementCertificateFragment newInstance(Certificate certificate,Student student) {
+    public static StudentProfileManagementCertificateFragment newInstance(CertificateFragmentInterface parent, Certificate certificate,Student student) {
         StudentProfileManagementCertificateFragment fragment = new StudentProfileManagementCertificateFragment();
         Bundle args = new Bundle();
         fragment.setArguments(args);
         fragment.setCertificate(certificate);
         fragment.setStudent(student);
+        fragment.parent = parent;
         return fragment;
     }
 
@@ -63,7 +70,10 @@ public class StudentProfileManagementCertificateFragment extends ProfileManageme
         this.student = student;
     }
 
+
+    /* -------------------------------------------------------------------------------------------*/
     /* ----------------- STANDARD CALLBACKS ------------------------------------------------------*/
+    /* -------------------------------------------------------------------------------------------*/
 
     @Override
     public void onAttach(Activity activity) {
@@ -215,20 +225,32 @@ public class StudentProfileManagementCertificateFragment extends ProfileManageme
             public void onClick(View v) {
 
                 isRemoved = true;
-                certificate.deleteEventually(new DeleteCallback() {
-                    @Override
-                    public void done(ParseException e) {
 
-                        if (e == null) {
+                if(certificate.getObjectId() != null){
 
-                            student.removeCertificate(certificate);
-                            student.saveEventually();
+                    certificate.deleteEventually(new DeleteCallback() {
+                        @Override
+                        public void done(ParseException e) {
+
+                            if (e == null) {
+
+                                student.removeCertificate(certificate);
+                                student.saveEventually();
+                                root.setVisibility(View.INVISIBLE);
+                                parent.onCertificateDelete(StudentProfileManagementCertificateFragment.this);
+                            }
+                            else {
+
+                                Toast.makeText(getActivity().getApplicationContext(), getActivity().getResources().getString(R.string.profile_object_delete_failure), Toast.LENGTH_SHORT).show();
+                            }
                         }
-                    }
-                });
+                    });
+                }
+                else {
 
-                root.setVisibility(View.INVISIBLE);
-                //TODO: COMPLETELY REMOVE FRAGMENT
+                    root.setVisibility(View.INVISIBLE);
+                    parent.onCertificateDelete(StudentProfileManagementCertificateFragment.this);
+                }
             }
         });
 
@@ -254,7 +276,9 @@ public class StudentProfileManagementCertificateFragment extends ProfileManageme
     }
 
 
+    /* -------------------------------------------------------------------------------------------*/
     /* ---------------------------- AUXILIARY METHODS --------------------------------------------*/
+    /* -------------------------------------------------------------------------------------------*/
 
     @Override
     protected void setEnable(boolean enable) {
@@ -310,4 +334,14 @@ public class StudentProfileManagementCertificateFragment extends ProfileManageme
             });
         }
     }
+
+    /* -------------------------------------------------------------------------------------------*/
+    /* ---------------------------- PARENT INTERFACE ---------------------------------------------*/
+    /* -------------------------------------------------------------------------------------------*/
+
+    public interface CertificateFragmentInterface{
+
+        public void onCertificateDelete(StudentProfileManagementCertificateFragment toRemove);
+    }
 }
+

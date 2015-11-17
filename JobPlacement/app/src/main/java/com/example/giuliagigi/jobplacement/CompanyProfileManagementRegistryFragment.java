@@ -12,7 +12,7 @@ import android.widget.Button;
 import java.util.ArrayList;
 
 
-public class CompanyProfileManagementRegistryFragment extends ProfileManagementFragment {
+public class CompanyProfileManagementRegistryFragment extends ProfileManagementFragment implements CompanyProfileManagementOfficeFragment.OfficeFragmentInterface {
 
     private static final String TITLE = GlobalData.getContext().getString(R.string.profile_registry_tab);
     public static final String BUNDLE_IDENTIFIER = "COMPANYPROFILEREGISTRY";
@@ -81,7 +81,8 @@ public class CompanyProfileManagementRegistryFragment extends ProfileManagementF
             @Override
             public void onClick(View v) {
 
-                CompanyProfileManagementOfficeFragment dmf = CompanyProfileManagementOfficeFragment.newInstance(new Office(), company);
+                CompanyProfileManagementOfficeFragment dmf;
+                dmf = CompanyProfileManagementOfficeFragment.newInstance(CompanyProfileManagementRegistryFragment.this, new Office(), company);
                 FragmentTransaction ft = getFragmentManager().beginTransaction();
                 ft.add(R.id.company_offices_container,dmf);
                 ft.commit();
@@ -115,7 +116,8 @@ public class CompanyProfileManagementRegistryFragment extends ProfileManagementF
 
             if(i>=officeFragments.size()){
 
-                CompanyProfileManagementOfficeFragment dmf = CompanyProfileManagementOfficeFragment.newInstance(company.getOffices().get(i), company);
+                CompanyProfileManagementOfficeFragment dmf;
+                dmf = CompanyProfileManagementOfficeFragment.newInstance(this, company.getOffices().get(i), company);
                 officeFragments.add(dmf);
             }
 
@@ -137,7 +139,9 @@ public class CompanyProfileManagementRegistryFragment extends ProfileManagementF
     }
 
 
+    /* ------------------------------------------------------------------------------------------ */
     /* ---------------- AUXILIARY METHODS ------------------------------------------------------- */
+    /* ------------------------------------------------------------------------------------------ */
 
     @Override
     protected void restoreStateFromBundle() {
@@ -172,4 +176,35 @@ public class CompanyProfileManagementRegistryFragment extends ProfileManagementF
         super.saveChanges();
     }
 
+
+    /* ------------------------------------------------------------------------------------------ */
+    /* ---------------- NESTED FRAGMENTS INTERFACE ---------------------------------------------- */
+    /* ------------------------------------------------------------------------------------------ */
+
+    @Override
+    public void onOfficeDelete(CompanyProfileManagementOfficeFragment toRemove) {
+
+        host.removeOnActivityChangedListener(toRemove);
+        officeFragments.remove(toRemove);
+
+        FragmentTransaction ft = getFragmentManager().beginTransaction();
+        ft.remove(toRemove);
+        ft.commit();
+    }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

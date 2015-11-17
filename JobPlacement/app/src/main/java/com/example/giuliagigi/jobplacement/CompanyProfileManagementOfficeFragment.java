@@ -18,6 +18,7 @@ import android.widget.Toast;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
+import com.parse.DeleteCallback;
 import com.parse.ParseException;
 import com.parse.ParseGeoPoint;
 import com.parse.SaveCallback;
@@ -41,21 +42,32 @@ public class CompanyProfileManagementOfficeFragment extends ProfileManagementFra
     private EditText officeCity, officeAddress, officeCAP, officeNation;
     Button delete;
 
+    private OfficeFragmentInterface parent;
     private Office office;
     private Company company;
 
     private boolean addressChanged;
     private boolean isRemoved;
 
+
+    /* -------------------------------------------------------------------------------------------*/
+    /* ------------------- CONTRUCTORS -----------------------------------------------------------*/
+    /* -------------------------------------------------------------------------------------------*/
+
     public CompanyProfileManagementOfficeFragment() {
         super();
     }
-    public static CompanyProfileManagementOfficeFragment newInstance(Office office, Company company) {
+
+    public static CompanyProfileManagementOfficeFragment newInstance(OfficeFragmentInterface parent, Office office, Company company) {
+
         CompanyProfileManagementOfficeFragment fragment = new CompanyProfileManagementOfficeFragment();
+
         Bundle args = new Bundle();
         fragment.setArguments(args);
         fragment.setOffice(office);
         fragment.setCompany(company);
+        fragment.parent = parent;
+
         return fragment;
     }
 
@@ -64,14 +76,17 @@ public class CompanyProfileManagementOfficeFragment extends ProfileManagementFra
     }
 
     public void setCompany(Company company){
-
         this.company = company;
     }
-
 
     public String getTitle() {
         return TITLE;
     }
+
+
+    /* -------------------------------------------------------------------------------------------*/
+    /* ------------------- STANDARD CALLBACKS ----------------------------------------------------*/
+    /* -------------------------------------------------------------------------------------------*/
 
     @Override
     public void onAttach(Activity activity) {
@@ -144,18 +159,34 @@ public class CompanyProfileManagementOfficeFragment extends ProfileManagementFra
             @Override
             public void onClick(View v) {
 
-                try {
+                if(office.getObjectId() != null){
 
-                    office.delete();
-                    isRemoved = true;
-                    company.removeOffice(office);
-                    company.saveEventually();
-                    root.setVisibility(View.INVISIBLE);
+                    office.deleteEventually(new DeleteCallback() {
+                        @Override
+                        public void done(ParseException e) {
 
-                } catch (ParseException e) {
-                    e.printStackTrace();
-                    Toast.makeText(getActivity(), "unable to delete", Toast.LENGTH_SHORT).show();
+                            if(e == null){
+
+                                company.removeOffice(office);
+                                company.saveEventually();
+                                root.setVisibility(View.INVISIBLE);
+                                parent.onOfficeDelete(CompanyProfileManagementOfficeFragment.this);
+                                isRemoved = true;
+                            }
+                            else {
+
+                                Toast.makeText(getActivity().getApplicationContext(), getActivity().getResources().getString(R.string.profile_object_delete_failure), Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    });
                 }
+                else {
+
+                    root.setVisibility(View.INVISIBLE);
+                    parent.onOfficeDelete(CompanyProfileManagementOfficeFragment.this);
+                    isRemoved = true;
+                }
+
             }
         });
 
@@ -231,7 +262,9 @@ public class CompanyProfileManagementOfficeFragment extends ProfileManagementFra
 
 
 
+    /* -------------------------------------------------------------------------------------------*/
     /* ------------------- AUXILIARY METHODS -----------------------------------------------------*/
+    /* -------------------------------------------------------------------------------------------*/
 
     @Override
     public void saveChanges(){
@@ -319,9 +352,18 @@ public class CompanyProfileManagementOfficeFragment extends ProfileManagementFra
     }
 
 
+    /* -------------------------------------------------------------------------------------------*/
+    /* ------------------- PARENT FRAGMENT INTERFACE ---------------------------------------------*/
+    /* -------------------------------------------------------------------------------------------*/
 
+    public interface OfficeFragmentInterface{
+
+        public void onOfficeDelete(CompanyProfileManagementOfficeFragment toRemove);
+    }
+
+    /* -------------------------------------------------------------------------------------------*/
     /* ------------------------------ MAPS METHODS ------------------------------------------------*/
-
+    /* -------------------------------------------------------------------------------------------*/
 
     @Override
     public void onMapReady(GoogleMap googleMap) {

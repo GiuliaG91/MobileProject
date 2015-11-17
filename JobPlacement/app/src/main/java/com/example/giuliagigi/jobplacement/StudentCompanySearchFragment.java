@@ -29,32 +29,38 @@ public class StudentCompanySearchFragment extends Fragment {
     private LinearLayoutManager mLayoutManager;
     private Integer position=0;
 
-    private OnFragmentInteractionListener mListener;
 
-    public static StudentCompanySearchFragment newInstance()
-    {
+    /* -------------------------------------------------------------------------------------------*/
+    /* ---------------------- CONSTRUCTORS GETTERS SETTERS ---------------------------------------*/
+    /* -------------------------------------------------------------------------------------------*/
+
+    public static StudentCompanySearchFragment newInstance(){
 
         StudentCompanySearchFragment fragment=new StudentCompanySearchFragment();
         return fragment;
     }
 
+
+    /* -------------------------------------------------------------------------------------------*/
+    /* -------------------------------- STANDARD CALLBACKS ---------------------------------------*/
+    /* -------------------------------------------------------------------------------------------*/
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         Toolbar toolbar=((GlobalData)getActivity().getApplication()).getToolbar();
         toolbar.setTitle(R.string.ToolbarTilteCompanySearch);
         setHasOptionsMenu(true);
-        if(savedInstanceState!=null)
-        {
+
+        if(savedInstanceState!=null){
             position=savedInstanceState.getInt("position");
         }
     }
 
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
 
         activity = getActivity();
@@ -66,28 +72,14 @@ public class StudentCompanySearchFragment extends Fragment {
         // use this setting to improve performance if you know that changes
         // in content do not change the layout size of the RecyclerView
         mRecyclerView.setHasFixedSize(true);
-
-        // use a linear layout manager
         mLayoutManager = new LinearLayoutManager(this.getActivity());
         mRecyclerView.setLayoutManager(mLayoutManager);
-
         adapter = new StudentCompanySearchAdapter(this.getActivity(), mRecyclerView,this,position,mLayoutManager);
-
-        /*********************/
-
-        // specify an adapter
         mRecyclerView.setAdapter(adapter);
 
         ((Toolbar)activity.findViewById(R.id.toolbar)).setTitle(activity.getResources().getString(R.string.home));
 
         return root;
-    }
-
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
     }
 
     @Override
@@ -107,40 +99,8 @@ public class StudentCompanySearchFragment extends Fragment {
         return true;
     }
 
-    @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-        try {
-            mListener = (OnFragmentInteractionListener) activity;
-        } catch (ClassCastException e) {
-            throw new ClassCastException(activity.toString()
-                    + " must implement OnFragmentInteractionListener");
-        }
-    }
 
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        mListener = null;
-    }
-
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p/>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
-    public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        public void onFragmentInteraction(Uri uri);
-    }
-
-
-    public void addFiters(List<Tag> tag_list,  List<String> field_list, List<String> location_list) {
+    public void addFilters(List<Tag> tag_list, List<String> field_list, List<String> location_list) {
         adapter.setFactory(tag_list,field_list, location_list);
         adapter.setAdapter();
         adapter.notifyDataSetChanged();

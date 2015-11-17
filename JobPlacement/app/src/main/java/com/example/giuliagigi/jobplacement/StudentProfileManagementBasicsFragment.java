@@ -91,14 +91,6 @@ public class StudentProfileManagementBasicsFragment extends ProfileManagementBas
         if(root == null)
             Log.println(Log.ASSERT,"STUD BASICS", "layout not found");
 
-        editProfile = (CircleImageView)root.findViewById(R.id.profile_edit_button);
-        editProfile.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //TODO
-            }
-        });
-
         nameText = (EditText)root.findViewById(R.id.student_name_area);
         if(student.getName() == null)
             nameText.setText(INSERT_FIELD);

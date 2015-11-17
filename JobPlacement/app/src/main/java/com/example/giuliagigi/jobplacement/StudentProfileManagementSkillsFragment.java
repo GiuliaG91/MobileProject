@@ -14,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -28,7 +29,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 
-public class StudentProfileManagementSkillsFragment extends ProfileManagementFragment {
+public class StudentProfileManagementSkillsFragment extends ProfileManagementFragment
+        implements StudentProfileManagementCertificateFragment.CertificateFragmentInterface, StudentProfileManagementDegreeFragment.DegreeFragmentInterface, StudentProfileManagementLanguageFragment.LanguageFragmentInterface {
 
     private static final String TITLE = GlobalData.getContext().getString(R.string.profile_skills_tab);
     public static final String BUNDLE_IDENTIFIER = "STUDENTPROFILESKILLS";
@@ -106,7 +108,8 @@ public class StudentProfileManagementSkillsFragment extends ProfileManagementFra
             @Override
             public void onClick(View v) {
 
-                StudentProfileManagementDegreeFragment dmf = StudentProfileManagementDegreeFragment.newInstance(new Degree(), student);
+                StudentProfileManagementDegreeFragment dmf;
+                dmf = StudentProfileManagementDegreeFragment.newInstance(StudentProfileManagementSkillsFragment.this, new Degree(), student);
                 FragmentTransaction ft = getFragmentManager().beginTransaction();
                 ft.add(R.id.student_degreeList_container,dmf);
                 ft.commit();
@@ -119,7 +122,8 @@ public class StudentProfileManagementSkillsFragment extends ProfileManagementFra
             @Override
             public void onClick(View v) {
 
-                StudentProfileManagementLanguageFragment lmf = StudentProfileManagementLanguageFragment.newInstance(new Language(), student);
+                StudentProfileManagementLanguageFragment lmf;
+                lmf = StudentProfileManagementLanguageFragment.newInstance(StudentProfileManagementSkillsFragment.this,new Language(), student);
                 FragmentTransaction ft = getFragmentManager().beginTransaction();
                 ft.add(R.id.student_languageList_container,lmf);
                 ft.commit();
@@ -132,7 +136,9 @@ public class StudentProfileManagementSkillsFragment extends ProfileManagementFra
             @Override
             public void onClick(View v) {
 
-                StudentProfileManagementCertificateFragment cmf = StudentProfileManagementCertificateFragment.newInstance(new Certificate(), student);
+                StudentProfileManagementCertificateFragment cmf;
+                cmf = StudentProfileManagementCertificateFragment.newInstance(StudentProfileManagementSkillsFragment.this, new Certificate(), student);
+
                 FragmentTransaction ft = getFragmentManager().beginTransaction();
                 ft.add(R.id.student_certificateList_container,cmf);
                 ft.commit();
@@ -179,7 +185,7 @@ public class StudentProfileManagementSkillsFragment extends ProfileManagementFra
 
             if(i>=degreeFragments.size()){
 
-                StudentProfileManagementDegreeFragment dmf = StudentProfileManagementDegreeFragment.newInstance(student.getDegrees().get(i), student);
+                StudentProfileManagementDegreeFragment dmf = StudentProfileManagementDegreeFragment.newInstance(this, student.getDegrees().get(i), student);
                 degreeFragments.add(dmf);
             }
 
@@ -194,7 +200,8 @@ public class StudentProfileManagementSkillsFragment extends ProfileManagementFra
 
             if(j>=languageFragments.size()){
 
-                StudentProfileManagementLanguageFragment lmf = StudentProfileManagementLanguageFragment.newInstance(student.getLanguages().get(j), student);
+                StudentProfileManagementLanguageFragment lmf;
+                lmf = StudentProfileManagementLanguageFragment.newInstance(this, student.getLanguages().get(j), student);
                 languageFragments.add(lmf);
             }
 
@@ -209,7 +216,8 @@ public class StudentProfileManagementSkillsFragment extends ProfileManagementFra
 
             if(j>=certificateFragments.size()){
 
-                StudentProfileManagementCertificateFragment cmf = StudentProfileManagementCertificateFragment.newInstance(student.getCertificates().get(j), student);
+                StudentProfileManagementCertificateFragment cmf;
+                cmf = StudentProfileManagementCertificateFragment.newInstance(StudentProfileManagementSkillsFragment.this,student.getCertificates().get(j), student);
                 certificateFragments.add(cmf);
             }
 
@@ -415,5 +423,45 @@ public class StudentProfileManagementSkillsFragment extends ProfileManagementFra
     @Override
     public void saveChanges() {
         super.saveChanges();
+    }
+
+
+
+    /*--------------------------------------------------------------------------------------------*/
+    /*----------------------- NESTED FRAGMENTS INTERFACE -----------------------------------------*/
+    /*--------------------------------------------------------------------------------------------*/
+
+    @Override
+    public void onCertificateDelete(StudentProfileManagementCertificateFragment toRemove) {
+
+        host.removeOnActivityChangedListener(toRemove);
+        certificateFragments.remove(toRemove);
+
+
+        FragmentTransaction ft = getFragmentManager().beginTransaction();
+        ft.remove(toRemove);
+        ft.commit();
+    }
+
+    @Override
+    public void onDegreeDelete(StudentProfileManagementDegreeFragment toRemove) {
+
+        host.removeOnActivityChangedListener(toRemove);
+        degreeFragments.remove(toRemove);
+
+        FragmentTransaction ft = getFragmentManager().beginTransaction();
+        ft.remove(toRemove);
+        ft.commit();
+    }
+
+    @Override
+    public void onLanguageDelete(StudentProfileManagementLanguageFragment toRemove) {
+
+        host.removeOnActivityChangedListener(toRemove);
+        languageFragments.remove(toRemove);
+
+        FragmentTransaction ft = getFragmentManager().beginTransaction();
+        ft.remove(toRemove);
+        ft.commit();
     }
 }

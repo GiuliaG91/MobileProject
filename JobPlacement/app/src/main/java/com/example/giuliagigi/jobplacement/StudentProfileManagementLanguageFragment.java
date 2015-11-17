@@ -10,6 +10,7 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.parse.DeleteCallback;
 import com.parse.ParseException;
 import com.parse.SaveCallback;
 
@@ -21,23 +22,28 @@ public class StudentProfileManagementLanguageFragment extends ProfileManagementF
     private static String BUNDLE_LEVEL = "bundle_level";
     private static String BUNDLE_HASCHANGED = "bundle_recycled";
 
+    private LanguageFragmentInterface parent;
     private Student student;
+    private Language language;
+
     private Spinner languageLevel;
     private EditText languageDesc;
     Button  delete;
-    private Language language;
+
     private boolean isRemoved;
 
 
     /* ----------------- CONSTRUCTORS GETTERS SETTERS ------------------------------------------- */
 
     public StudentProfileManagementLanguageFragment() { super(); }
-    public static StudentProfileManagementLanguageFragment newInstance(Language language,Student student) {
+
+    public static StudentProfileManagementLanguageFragment newInstance(LanguageFragmentInterface parent, Language language,Student student) {
         StudentProfileManagementLanguageFragment fragment = new StudentProfileManagementLanguageFragment();
         Bundle args = new Bundle();
         fragment.setArguments(args);
         fragment.setLanguage(language);
         fragment.setStudent(student);
+        fragment.parent = parent;
         return fragment;
     }
 
@@ -106,17 +112,36 @@ public class StudentProfileManagementLanguageFragment extends ProfileManagementF
             @Override
             public void onClick(View v) {
 
-                try {
-                    language.delete();
-                    isRemoved = true;
-                    student.removeLanguage(language);
-                    student.saveEventually();
-                    root.setVisibility(View.INVISIBLE);
+                if(language.getObjectId() != null){
 
-                } catch (ParseException e) {
-                    e.printStackTrace();
-                    Toast.makeText(getActivity(), "unable to delete", Toast.LENGTH_SHORT).show();
+                    language.deleteEventually(new DeleteCallback() {
+                        @Override
+                        public void done(ParseException e) {
+
+                            if(e == null){
+
+                                student.removeLanguage(language);
+                                student.saveEventually();
+                                root.setVisibility(View.INVISIBLE);
+                                parent.onLanguageDelete(StudentProfileManagementLanguageFragment.this);
+                                isRemoved = true;
+
+                            }
+                            else {
+
+                                Toast.makeText(getActivity().getApplicationContext(), getActivity().getResources().getString(R.string.profile_object_delete_failure), Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    });
                 }
+                else {
+
+                    root.setVisibility(View.INVISIBLE);
+                    parent.onLanguageDelete(StudentProfileManagementLanguageFragment.this);
+                    isRemoved = true;
+                }
+
+
             }
         });
 
@@ -193,4 +218,12 @@ public class StudentProfileManagementLanguageFragment extends ProfileManagementF
         delete.setVisibility(visibility);
     }
 
+    /* ------------------------------------------------------------------------------------------ */
+    /* ----------------- PARENT FRAGMENT INTERFACE ---------------------------------------------- */
+    /* ------------------------------------------------------------------------------------------ */
+
+    public interface LanguageFragmentInterface{
+
+        public void onLanguageDelete(StudentProfileManagementLanguageFragment toRemove);
+    }
 }

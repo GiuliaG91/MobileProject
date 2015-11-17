@@ -41,27 +41,36 @@ public class StudentProfileManagementDegreeFragment extends ProfileManagementFra
     private static String BUNDLE_DATE_YEAR = "bundle_date_year";
     private static String BUNDLE_HASCHANGED = "bundle_recycled";
 
+    private DegreeFragmentInterface parent;
     private Student student;
+    private Degree degree;
+
     private Spinner degreeType, degreeStudies;
     private EditText degreeMark;
     private TextView degreeDate;
     private Switch hasLoud;
     Button delete;
-    private Degree degree;
+
+
     private boolean isRemoved, degreeDateChanged;
     private Date dateDegree;
     private int day,month,year;
 
-    /* ---------- CONSTRUCTORS, GETTERS, SETTERS ----------------------------------------------*/
+
+
+    /* -------------------------------------------------------------------------------------------*/
+    /* ------------- CONSTRUCTORS, GETTERS, SETTERS ----------------------------------------------*/
+    /* -------------------------------------------------------------------------------------------*/
 
     public StudentProfileManagementDegreeFragment() {
         super();
     }
-    public static StudentProfileManagementDegreeFragment newInstance(Degree degree,Student student) {
+    public static StudentProfileManagementDegreeFragment newInstance(DegreeFragmentInterface parent, Degree degree,Student student) {
         StudentProfileManagementDegreeFragment fragment = new StudentProfileManagementDegreeFragment();
         Bundle args = new Bundle();
         fragment.setArguments(args);
         fragment.setDegree(degree);
+        fragment.parent = parent;
         fragment.setStudent(student);
         return fragment;
 
@@ -80,7 +89,11 @@ public class StudentProfileManagementDegreeFragment extends ProfileManagementFra
         this.student = student;
     }
 
-    /* ---------- STANDARD CALLBACKS -------------------------------------------------------*/
+
+
+    /* -------------------------------------------------------------------------------------------*/
+    /* ---------------- STANDARD CALLBACKS -------------------------------------------------------*/
+    /* -------------------------------------------------------------------------------------------*/
 
     @Override
     public void onAttach(Activity activity) {
@@ -165,21 +178,34 @@ public class StudentProfileManagementDegreeFragment extends ProfileManagementFra
             @Override
             public void onClick(View v) {
 
-                degree.deleteEventually(new DeleteCallback() {
-                    @Override
-                    public void done(ParseException e) {
+                // the object was not created now
+                if(degree.getObjectId() != null){
 
-                        if(e==null){
+                    degree.deleteEventually(new DeleteCallback() {
+                        @Override
+                        public void done(ParseException e) {
 
-                            student.removeDegree(degree);
-                            student.saveEventually();
+                            if(e==null){
+
+                                student.removeDegree(degree);
+                                student.saveEventually();
+                                root.setVisibility(View.INVISIBLE);
+                                parent.onDegreeDelete(StudentProfileManagementDegreeFragment.this);
+                                isRemoved = true;
+                            }
+                            else {
+
+                                Toast.makeText(getActivity().getApplicationContext(),getActivity().getResources().getString(R.string.profile_object_delete_failure),Toast.LENGTH_SHORT).show();
+                            }
                         }
-                    }
-                });
-                isRemoved = true;
+                    });
+                }
+                else { // the object was created now: no need to delete it
 
-                root.setVisibility(View.INVISIBLE);
-                //TODO completely delete the fragment
+                    root.setVisibility(View.INVISIBLE);
+                    parent.onDegreeDelete(StudentProfileManagementDegreeFragment.this);
+                    isRemoved = true;
+                }
 
             }
         });
@@ -297,8 +323,10 @@ public class StudentProfileManagementDegreeFragment extends ProfileManagementFra
     }
 
 
+    /* -------------------------------------------------------------------------------------------*/
+    /* -------------------- AUXILIARY METHODS ----------------------------------------------------*/
+    /* -------------------------------------------------------------------------------------------*/
 
-    /* ------------- AUXILIARY METHODS ----------------------------------------------------*/
     @Override
     public void saveChanges(){
 
@@ -369,5 +397,12 @@ public class StudentProfileManagementDegreeFragment extends ProfileManagementFra
         delete.setVisibility(visibility);
     }
 
+    /* -------------------------------------------------------------------------------------------*/
+    /* -------------------------- PARENT INTERFACE -----------------------------------------------*/
+    /* -------------------------------------------------------------------------------------------*/
 
+    public interface DegreeFragmentInterface{
+
+        public void onDegreeDelete(StudentProfileManagementDegreeFragment toRemove);
+    }
 }
