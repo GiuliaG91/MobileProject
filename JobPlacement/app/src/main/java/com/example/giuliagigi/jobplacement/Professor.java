@@ -3,14 +3,12 @@ package com.example.giuliagigi.jobplacement;
 
 import android.os.AsyncTask;
 
-import com.parse.FindCallback;
 import com.parse.ParseClassName;
 import com.parse.ParseException;
 import com.parse.ParseRelation;
 
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 /**
  * Created by GiuliaGiGi on 07/11/15.
@@ -27,6 +25,11 @@ public class Professor extends User {
     protected static final String BIRTH_CITY_FIELD = "birthCity";
 //    protected static final String CITY_FIELD = "city";
     protected static final String NATION_FIELD = "nation";
+
+    protected static final String CONSULTING_SH_FIELD = "consultation_starthour";
+    protected static final String CONSULTING_SM_FIELD = "consultation_startminute";
+    protected static final String CONSULTING_EH_FIELD = "consultation_endhour";
+    protected static final String CONSULTING_EM_FIELD = "consultation_endminute";
 
     protected String name;
     protected String surname;
@@ -141,6 +144,19 @@ public class Professor extends User {
         return nation;
     }
 
+    synchronized public Schedule getConsulting(){
+
+        int startHour = getInt(CONSULTING_SH_FIELD);
+
+        if(startHour == 0) return null;
+
+        int startMinute = getInt(CONSULTING_SM_FIELD);
+        int endHour = getInt(CONSULTING_EH_FIELD);
+        int endMinute = getInt(CONSULTING_EM_FIELD);
+
+        return new Schedule(startHour,startMinute,endHour,endMinute);
+    }
+
     // ----- END GETTERS -------
 
     // ----- SETTERS --------
@@ -196,6 +212,15 @@ public class Professor extends User {
         this.put(NATION_FIELD,nation);
     }
 
+
+    public void setConsulting(Schedule schedule){
+
+        put(CONSULTING_SH_FIELD, schedule.getStartHour());
+        put(CONSULTING_SM_FIELD, schedule.getStartMinute());
+        put(CONSULTING_EH_FIELD, schedule.getEndHour());
+        put(CONSULTING_EM_FIELD, schedule.getEndMinute());
+    }
+
     // ---- END SETTERS -------
 
     @Override
@@ -214,6 +239,7 @@ public class Professor extends User {
                 getBirth();
                 getBirthCity();
                 getNation();
+                getConsulting();
                 return null;
             }
         };

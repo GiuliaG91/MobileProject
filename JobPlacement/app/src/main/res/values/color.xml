@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-        <resources>
-            <color name="ColorPrimary">#3F51B5</color>
-            <color name="ColorPrimaryDark">#283593</color>
-            <color name="tabsScrollColor">#3F51B5</color>
-             <color name="tabsColor">#E0E0E0</color>
-    <color name="buttonColor">#abcaff</color>
+<resources>
+    <color name="ColorPrimary">#3F51B5</color>
+    <color name="ColorPrimaryDark">#283593</color>
+    <color name="tabsScrollColor">#3F51B5</color>
+    <color name="tabsColor">#8aededed</color>
+    <color name="buttonColor">#240070fc</color>
     <color name="ColorPrimaryTransparent">#d5ddec</color>
     <color name="LectureItemColor">#ecf3f6</color>
 
@@ -22,4 +22,4 @@
     <color name="blue_semi_transparent_pressed">#80738ffe</color>
     <color name="header_detail_mail_box">#C5CAE9</color>
 
-        </resources>
+</resources>

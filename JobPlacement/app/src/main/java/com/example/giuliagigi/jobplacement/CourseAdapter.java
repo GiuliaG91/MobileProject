@@ -245,7 +245,7 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder
     /* -------------------------------- DIALOG CREATION ------------------------------------------*/
     /* -------------------------------------------------------------------------------------------*/
 
-    public Dialog createConfirmDialog(final int type, final Student s, final int position, final ViewHolder holder){
+    public Dialog createConfirmDialog(final int type, final Student student, final int position, final ViewHolder holder){
 
         final Dialog confirmDialog = new Dialog(activity);
         confirmDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -265,16 +265,17 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder
                 Installation.initialize();
 
                 if(type == MODE_DIALOG_ADD) {
-                    s.addCourse(courses.get(position));
-                    s.saveInBackground();
+
                     Installation.addChannel(courses.get(position).getName());
+                    student.addCourse(courses.get(position));
+                    student.saveInBackground();
                     listener.onDataSetChanged();
                 }
                 else if(type == MODE_DIALOG_REMOVE){
 
-                    s.removeCourse(courses.get(position));
-                    s.saveInBackground();
                     Installation.removeChannel(courses.get(position).getName());
+                    student.removeCourse(courses.get(position));
+                    student.saveInBackground();
                     listener.onDataSetChanged();
                 }
 

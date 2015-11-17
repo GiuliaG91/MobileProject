@@ -86,8 +86,7 @@ public class StudentProfileManagementRegistryFragment extends ProfileManagementF
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         if(root == null)
             root = inflater.inflate(R.layout.fragment_student_profile_management_registry, container, false);
