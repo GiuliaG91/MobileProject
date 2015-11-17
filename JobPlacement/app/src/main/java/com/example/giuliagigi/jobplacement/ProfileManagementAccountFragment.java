@@ -15,6 +15,7 @@ import android.widget.Toast;
 public class ProfileManagementAccountFragment extends ProfileManagementFragment {
 
     private static String TITLE = GlobalData.getContext().getString(R.string.profile_account_tab);
+    public static final String BUNDLE_IDENTIFIER = "PROFILEACCOUNT";
 
     private Button deleteAccount, sendVerification, changeUsername, changePassword;
 
@@ -37,6 +38,11 @@ public class ProfileManagementAccountFragment extends ProfileManagementFragment 
 
         Log.println(Log.ASSERT,"PM FRAG","setting user" + user);
         this.user = user;
+    }
+
+    public String bundleIdentifier(){
+
+        return BUNDLE_IDENTIFIER;
     }
 
     /* -------------- STANDARD CALLBACKS ------------------------------------------------------- */

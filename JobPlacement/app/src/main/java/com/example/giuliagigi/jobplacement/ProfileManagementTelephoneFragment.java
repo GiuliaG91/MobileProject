@@ -21,6 +21,7 @@ import com.parse.SaveCallback;
 public class ProfileManagementTelephoneFragment extends ProfileManagementFragment {
 
     private static final String TITLE = "Telephone";
+    public static final String BUNDLE_IDENTIFIER = "PROFILETELEPHONE";
     private static String BUNDLE_NUMBER = "bundle_number";
     private static String BUNDLE_TYPE = "bundle_type";
     private static String BUNDLE_HASCHANGED = "bundle_hasChanged";
@@ -68,7 +69,10 @@ public class ProfileManagementTelephoneFragment extends ProfileManagementFragmen
         this.user = user;
     }
 
+    public String bundleIdentifier(){
 
+        return BUNDLE_IDENTIFIER;
+    }
     /* -------------------------------------------------------------------------------------------*/
     /* ------------------- STANDARD CALLBACKS ---------------------------------------------------*/
     /* -------------------------------------------------------------------------------------------*/

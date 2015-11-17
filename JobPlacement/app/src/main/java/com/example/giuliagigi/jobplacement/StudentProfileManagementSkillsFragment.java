@@ -71,10 +71,9 @@ public class StudentProfileManagementSkillsFragment extends ProfileManagementFra
         this.editable = editable;
     }
 
-    @Override
-    public String getBundleID() {
+    public String bundleIdentifier(){
 
-        return BUNDLE_IDENTIFIER + ";" + getTag();
+        return BUNDLE_IDENTIFIER;
     }
 
     /*----------------------- STANDARD CALLBACKS -------------------------------------------------*/
@@ -387,16 +386,16 @@ public class StudentProfileManagementSkillsFragment extends ProfileManagementFra
     }
 
     @Override
-    protected void restoreStateFromBundle() {
-        super.restoreStateFromBundle();
+    protected void restoreStateFromBundle(Bundle savedInstanceState) {
+        super.restoreStateFromBundle(savedInstanceState);
 
         if(bundle!=null)
             student = (Student)bundle.get(BUNDLE_KEY_STUDENT);
     }
 
     @Override
-    protected void saveStateInBundle() {
-        super.saveStateInBundle();
+    protected void saveStateInBundle(Bundle outState) {
+        super.saveStateInBundle(outState);
 
         if(bundle!=null)
             bundle.put(BUNDLE_KEY_STUDENT,student);

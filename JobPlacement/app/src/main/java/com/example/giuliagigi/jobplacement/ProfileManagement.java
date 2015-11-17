@@ -28,7 +28,9 @@ public class ProfileManagement extends Fragment{
     private static final String BUNDLE_KEY_IS_EDIT = "bundle_key_is_edit";
     private static final String BUNDLE_KEY_EDITABLE = "bundle_key_editable";
     private static final String BUNDLE_KEY_USER = "bundle_key_user";
-    public final String BUNDLE_IDENTIFIER = "PROFILE_MANAGEMENT;"+getTag();
+    public final String BUNDLE_IDENTIFIER = "PROFILE_MANAGEMENT;";
+    public final String BUNDLE_KEY_TAIL = "bundle_tail;";
+
 
     private GlobalData application;
     private OnInteractionListener host;
@@ -76,7 +78,9 @@ public class ProfileManagement extends Fragment{
         return editable;
     }
 
-    /*------------- STANDARD CALLBACKS ------------------------------------------------------------*/
+    /*--------------------------------------------------------------------------------------------*/
+    /*------------- STANDARD CALLBACKS -----------------------------------------------------------*/
+    /*--------------------------------------------------------------------------------------------*/
 
     @Override
     public void onAttach(Activity activity) {
@@ -94,17 +98,7 @@ public class ProfileManagement extends Fragment{
         }
         application = (GlobalData)getActivity().getApplication();
 
-        if(user!=null)
-            application.setLatestDisplayedUser(user);
 
-        if(application.getBundle(BUNDLE_IDENTIFIER)!= null){
-
-            Log.println(Log.ASSERT,"PROFILE MANAG","found a bundle!");
-            MyBundle b = application.getBundle(BUNDLE_IDENTIFIER);
-            isEditMode = b.getBoolean(BUNDLE_KEY_IS_EDIT);
-            editable = b.getBoolean(BUNDLE_KEY_EDITABLE);
-            user = (User)b.get(BUNDLE_KEY_USER);
-        }
     }
 
     @Override
@@ -123,6 +117,25 @@ public class ProfileManagement extends Fragment{
 
         Toolbar toolbar=application.getToolbar();
         toolbar.setTitle(R.string.ToolbarTilteProfile);
+
+        if(user!=null)
+            application.setLatestDisplayedUser(user);
+
+        if(savedInstanceState != null){
+
+            String tail = savedInstanceState.getString(BUNDLE_KEY_TAIL);
+            MyBundle bundle = application.getBundle(BUNDLE_IDENTIFIER + tail);
+
+            if(bundle != null){
+
+                Log.println(Log.ASSERT,"PROFILE MANAG","found a bundle!");
+
+                isEditMode = bundle.getBoolean(BUNDLE_KEY_IS_EDIT);
+                editable = bundle.getBoolean(BUNDLE_KEY_EDITABLE);
+                user = (User)bundle.get(BUNDLE_KEY_USER);
+            }
+        }
+
     }
 
     @Override
@@ -138,6 +151,7 @@ public class ProfileManagement extends Fragment{
         super.onViewCreated(view, savedInstanceState);
 
         application.setToolbarTitle(getString(R.string.ToolbarTilteHome));
+
         /*************ViewPager***************************/
 
         // Creating The StudentViewPagerAdapter and Passing Fragment Manager, Titles fot the Tabs and Number Of Tabs.
@@ -160,27 +174,32 @@ public class ProfileManagement extends Fragment{
             }
         });
 
-        // Setting the ViewPager For the SlidingTabsLayout
         tabs.setViewPager(pager);
-
-        /****************************************************/
-
-
     }
 
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+
+        Log.println(Log.ASSERT, "PROFILE MANAG", "saving in bundle");
+
+        String tail = user.toString();
+        outState.putString(BUNDLE_KEY_TAIL, tail);
+
+        MyBundle b = application.addBundle(BUNDLE_IDENTIFIER + tail);
+        b.putBoolean(BUNDLE_KEY_IS_EDIT,isEditMode);
+        b.putBoolean(BUNDLE_KEY_EDITABLE, editable);
+        b.put(BUNDLE_KEY_USER, user);
+
+        super.onSaveInstanceState(outState);
+    }
 
 
     @Override
     public void onDetach() {
         super.onDetach();
-
-            Log.println(Log.ASSERT, "PROFILE MANAG", "saving in bundle");
-            MyBundle b = application.addBundle(BUNDLE_IDENTIFIER);
-            b.putBoolean(BUNDLE_KEY_IS_EDIT,isEditMode);
-            b.putBoolean(BUNDLE_KEY_EDITABLE, editable);
-            b.put(BUNDLE_KEY_USER, user);
-
     }
+
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -195,6 +214,9 @@ public class ProfileManagement extends Fragment{
         }
     }
 
+    /*--------------------------------------------------------------------------------------------*/
+    /*------------------- MENU -------------------------------------------------------------------*/
+    /*--------------------------------------------------------------------------------------------*/
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
@@ -249,7 +271,9 @@ public class ProfileManagement extends Fragment{
     }
 
 
+    /*--------------------------------------------------------------------------------------------*/
     /* ----------------------------------- AUXILIARY METHODS ------------------------------------ */
+    /*--------------------------------------------------------------------------------------------*/
 
     public void switchMode(){
 
@@ -273,7 +297,10 @@ public class ProfileManagement extends Fragment{
 
 
 
-    /* ----------- interface with upper activity --------------*/
+    /*--------------------------------------------------------------------------------------------*/
+    /* ----------------------------------- ACTIVITY INTERFACE ----------------------------------- */
+    /*--------------------------------------------------------------------------------------------*/
+
     public interface OnInteractionListener {
 
         public void setEditMode(boolean editable);

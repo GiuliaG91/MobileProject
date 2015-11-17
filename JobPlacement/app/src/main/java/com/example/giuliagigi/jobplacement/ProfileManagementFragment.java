@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,6 +23,7 @@ public class ProfileManagementFragment extends Fragment implements OnActivityCha
     protected static final String BUNDLE_IDENTIFIER = "PROFILEMANAGEMENTFRAG";
     protected static final String BUNDLE_KEY_USER = "BUNDLE_KEY_USER";
     protected static final String BUNDLE_KEY_HASCHANGED = "BUNDLE_KEY_HASCHANGED";
+    protected static final String BUNDLE_KEY_TAIL = "bundle_tail";
     protected static final String TITLE = "None";
     public static final int REQUEST_IMAGE_GET = 1;
     public static final int REQUEST_CONTENT_GET = 2;
@@ -39,7 +41,9 @@ public class ProfileManagementFragment extends Fragment implements OnActivityCha
     protected User user;
 
 
-    /* --------------------- CONSTRUCTORS -------------------------------------------------------- */
+    /* ------------------------------------------------------------------------------------------ */
+    /* --------------------- CONSTRUCTORS ------------------------------------------------------- */
+    /* ------------------------------------------------------------------------------------------ */
 
     public ProfileManagementFragment() {}
     public static ProfileManagementFragment newInstance(User user) {
@@ -59,16 +63,19 @@ public class ProfileManagementFragment extends Fragment implements OnActivityCha
         this.user = user;
     }
 
-    public String getBundleID(){
+    public String bundleIdentifier(){
 
-        return BUNDLE_IDENTIFIER + ";" + getTag();
+        return BUNDLE_IDENTIFIER;
     }
 
     public void setProfileManagement(ProfileManagement profileManagement) {
         this.profileManagement = profileManagement;
     }
 
+
+    /* ------------------------------------------------------------------------------------------ */
     /* --------------------- STANDARD CALLBACKS ------------------------------------------------- */
+    /* ------------------------------------------------------------------------------------------ */
 
     @Override
     public void onAttach(Activity activity) {
@@ -101,8 +108,8 @@ public class ProfileManagementFragment extends Fragment implements OnActivityCha
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        if(application.getBundle(getBundleID())!=null)
-            restoreStateFromBundle();
+        if(savedInstanceState!=null)
+            restoreStateFromBundle(savedInstanceState);
     }
 
     @Override
@@ -112,10 +119,24 @@ public class ProfileManagementFragment extends Fragment implements OnActivityCha
         return inflater.inflate(R.layout.fragment_profile_management, container, false);
     }
 
+
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         setEnable(listener.isEditMode());
+    }
+
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+
+        saveStateInBundle(outState);
+        super.onSaveInstanceState(outState);
     }
 
     @Override
@@ -125,22 +146,22 @@ public class ProfileManagementFragment extends Fragment implements OnActivityCha
         if(!isNestedFragment)
             host.removeOnActivityChangedListener(this);
 
-            saveStateInBundle();
     }
 
 
-
+    /* ------------------------------------------------------------------------------------------ */
+    /* --------------------- ACTIVITY INTERFACE ------------------------------------------------- */
+    /* ------------------------------------------------------------------------------------------ */
 
     protected interface OnInteractionListener{
 
         public boolean isEditMode();
-//        public void addOnActivityChangedListener(OnActivityChangedListener listener);
-//        public void removeOnActivityChangedListener(OnActivityChangedListener listener);
         public void startDeleteAccountActivity();
     }
 
-
+    /* ------------------------------------------------------------------------------------------ */
     /* --------------------- ACTIVITY LISTENER METHODS ------------------------------------------ */
+    /* ------------------------------------------------------------------------------------------ */
 
     @Override
     public void onActivityStateChanged(State newState, State pastState) {
@@ -161,21 +182,35 @@ public class ProfileManagementFragment extends Fragment implements OnActivityCha
         // NOTHING TO DO
     }
 
+
+    /* ------------------------------------------------------------------------------------------ */
     /* --------------------- AUXILIARY METHODS ------------------------------------------------- */
+    /* ------------------------------------------------------------------------------------------ */
 
-    protected void restoreStateFromBundle(){
+    protected void restoreStateFromBundle(Bundle savedInstanceState){
 
-        if(application.getBundle(getBundleID())!= null){
+        Log.println(Log.ASSERT, "PROFILEMANAG", "restore from bundle");
+        String tail = savedInstanceState.getString(BUNDLE_KEY_TAIL);
+        Log.println(Log.ASSERT, "PROFILEMANAG", "key = " + bundleIdentifier() + tail);
+        bundle = application.getBundle(bundleIdentifier() + tail);
+        if(bundle != null){
 
-            bundle = application.getBundle((getBundleID()));
+            Log.println(Log.ASSERT, "PROFILEMANAG", "found a bundle");
             user = (User)bundle.get(BUNDLE_KEY_USER);
             hasChanged = bundle.getBoolean(BUNDLE_KEY_HASCHANGED);
         }
     }
 
-    protected void saveStateInBundle(){
+    protected void saveStateInBundle(Bundle outstate){
 
-        bundle = application.addBundle(getBundleID());
+        Log.println(Log.ASSERT, "PROFILEMANAG", "saving to bundle");
+
+        String tail = user.toString();
+        outstate.putString(BUNDLE_KEY_TAIL, tail);
+
+        Log.println(Log.ASSERT, "PROFILEMANAG", "key = " + bundleIdentifier() + tail);
+
+        bundle = application.addBundle(bundleIdentifier() + tail);
         bundle.put(BUNDLE_KEY_USER,user);
         bundle.putBoolean(BUNDLE_KEY_HASCHANGED,hasChanged);
     }
@@ -208,12 +243,9 @@ public class ProfileManagementFragment extends Fragment implements OnActivityCha
     }
 
 
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-    }
-
+    /* ------------------------------------------------------------------------------------------ */
     /* --------------------- AUXILIARY CLASSES -------------------------------------------------- */
+    /* ------------------------------------------------------------------------------------------ */
 
     protected class OnFieldChangedListener implements TextWatcher{
 

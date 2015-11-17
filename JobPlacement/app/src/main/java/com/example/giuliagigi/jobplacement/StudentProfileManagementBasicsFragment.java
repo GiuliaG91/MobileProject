@@ -59,13 +59,10 @@ public class StudentProfileManagementBasicsFragment extends ProfileManagementBas
         this.student = student;
     }
 
-    @Override
-    public String getBundleID() {
+    public String bundleIdentifier(){
 
-        return BUNDLE_IDENTIFIER + ";" + getTag();
+        return BUNDLE_IDENTIFIER;
     }
-
-
     /* -------------------------------------------------------------------------------------------*/
     /* ---------------------------- STANDARD CALLBACKS -------------------------------------------*/
     /* -------------------------------------------------------------------------------------------*/
@@ -225,16 +222,16 @@ public class StudentProfileManagementBasicsFragment extends ProfileManagementBas
     /* ----------------------- AUXILIARY METHODS ----------------------------------------------- */
 
     @Override
-    protected void restoreStateFromBundle() {
-        super.restoreStateFromBundle();
+    protected void restoreStateFromBundle(Bundle savedInstanceState) {
+        super.restoreStateFromBundle(savedInstanceState);
 
         if(bundle!=null)
             student = (Student)bundle.get(BUNDLE_KEY_STUDENT);
     }
 
     @Override
-    protected void saveStateInBundle() {
-        super.saveStateInBundle();
+    protected void saveStateInBundle(Bundle outState) {
+        super.saveStateInBundle(outState);
 
         if(bundle!=null){
 

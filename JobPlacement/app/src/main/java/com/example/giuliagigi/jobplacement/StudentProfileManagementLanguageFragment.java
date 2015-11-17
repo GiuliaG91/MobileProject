@@ -18,6 +18,8 @@ import com.parse.SaveCallback;
 public class StudentProfileManagementLanguageFragment extends ProfileManagementFragment {
 
     private static final String TITLE = "Language";
+    public static final String BUNDLE_IDENTIFIER = "STUDENTPROFILELANGUAGE";
+
     private static String BUNDLE_DESCRIPTION = "bundle_description";
     private static String BUNDLE_LEVEL = "bundle_level";
     private static String BUNDLE_HASCHANGED = "bundle_recycled";
@@ -59,6 +61,11 @@ public class StudentProfileManagementLanguageFragment extends ProfileManagementF
     public void setStudent(Student student){
 
         this.student = student;
+    }
+
+    public String bundleIdentifier(){
+
+        return BUNDLE_IDENTIFIER;
     }
 
     /* ----------------- STANDARD CALLBACKS ---------------------------------------------------- */

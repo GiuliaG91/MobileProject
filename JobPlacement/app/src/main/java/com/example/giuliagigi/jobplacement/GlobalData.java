@@ -232,13 +232,6 @@ public class GlobalData extends Application {
         return tags;
     }
 
-    /* ----------------------- LECTURES ---------------------------------------------------------*/
-
-    public boolean isLectureReadComplete(){
-
-        return isLectureReadComplete;
-    }
-
     /* ----------------------- MANAGING PREFERENCES ---------------------------------------------*/
 
     public SharedPreferences getLoginPreferences(){
@@ -250,9 +243,6 @@ public class GlobalData extends Application {
 
         this.loginPreferences = loginPreferences;
     }
-
-
-
 
     public void setToolbar(Toolbar t)
     {
@@ -299,11 +289,11 @@ public class GlobalData extends Application {
 
     public MyBundle addBundle(String key){
 
-        if(latestDisplayedUser!=null)
-            key = key + ";" + latestDisplayedUser.getObjectId();
+//        if(latestDisplayedUser!=null)
+//            key = key + ";" + latestDisplayedUser.getObjectId();
 
         if(bundles.containsKey(key))
-            return bundles.get(key);
+            bundles.remove(key);
 
         MyBundle b = new MyBundle();
         bundles.put(key, b);
@@ -312,8 +302,8 @@ public class GlobalData extends Application {
 
     public MyBundle getBundle(String key){
 
-        if(latestDisplayedUser!=null)
-            key = key + ";" + latestDisplayedUser.getObjectId();
+//        if(latestDisplayedUser!=null)
+//            key = key + ";" + latestDisplayedUser.getObjectId();
 
         return bundles.get(key);
     }

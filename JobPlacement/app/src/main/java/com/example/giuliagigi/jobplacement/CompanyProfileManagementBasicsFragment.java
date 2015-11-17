@@ -59,12 +59,10 @@ public class CompanyProfileManagementBasicsFragment extends ProfileManagementBas
         return TITLE;
     }
 
-    @Override
-    public String getBundleID() {
+    public String bundleIdentifier(){
 
-        return BUNDLE_IDENTIFIER + ";" + getTag();
+        return BUNDLE_IDENTIFIER;
     }
-
     /* ---------------------------- STANDARD CALLBACKS -------------------------------------------*/
 
     @Override
@@ -185,16 +183,16 @@ public class CompanyProfileManagementBasicsFragment extends ProfileManagementBas
     /* ---------------------------- AUXILIARY METHODS --------------------------------------------*/
 
     @Override
-    protected void restoreStateFromBundle() {
-        super.restoreStateFromBundle();
+    protected void restoreStateFromBundle(Bundle savedInstanceState) {
+        super.restoreStateFromBundle(savedInstanceState);
 
         if(bundle!=null)
             company = (Company)bundle.get(BUNDLE_KEY_COMPANY);
     }
 
     @Override
-    protected void saveStateInBundle() {
-        super.saveStateInBundle();
+    protected void saveStateInBundle(Bundle outState) {
+        super.saveStateInBundle(outState);
 
         if(bundle!=null)
             bundle.put(BUNDLE_KEY_COMPANY,company);

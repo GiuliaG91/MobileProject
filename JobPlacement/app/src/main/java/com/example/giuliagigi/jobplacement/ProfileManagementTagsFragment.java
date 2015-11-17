@@ -52,12 +52,10 @@ public class ProfileManagementTagsFragment extends ProfileManagementFragment {
         this.user = user;
     }
 
-    @Override
-    public String getBundleID() {
+    public String bundleIdentifier(){
 
-        return BUNDLE_IDENTIFIER + ";" + getTag();
+        return BUNDLE_IDENTIFIER;
     }
-
     /* ---------------------------- STANDARD CALLBACKS -------------------------------------------*/
 
     @Override
@@ -198,15 +196,6 @@ public class ProfileManagementTagsFragment extends ProfileManagementFragment {
 
     /* ----------------------- AUXILIARY METHODS -------------------------------------------------*/
 
-    @Override
-    protected void restoreStateFromBundle() {
-        super.restoreStateFromBundle();
-    }
-
-    @Override
-    protected void saveStateInBundle() {
-        super.saveStateInBundle();
-    }
 
     @Override
     protected void setEnable(boolean enable) {

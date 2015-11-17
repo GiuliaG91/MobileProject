@@ -61,10 +61,10 @@ public class ProfessorProfileManagementBasicsFragment extends ProfileManagementB
 
     public ProfessorProfileManagementBasicsFragment() {super();}
 
-    @Override
-    public String getBundleID() {
 
-        return BUNDLE_IDENTIFIER + ";" + getTag();
+    public String bundleIdentifier(){
+
+        return BUNDLE_IDENTIFIER;
     }
 
     /* -------------------------------------------------------------------------------------------*/
@@ -74,13 +74,16 @@ public class ProfessorProfileManagementBasicsFragment extends ProfileManagementB
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-        consultingSchedule = new Schedule(0,0,0,0);
+
     }
 
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        consultingSchedule = new Schedule(0,0,0,0);
+        day = 0;
     }
 
     @Override
@@ -117,10 +120,10 @@ public class ProfessorProfileManagementBasicsFragment extends ProfileManagementB
 
         if(consultingSchedule != null && consultingSchedule.getStartHour() != 0){
 
-            consultingStartHour.setText(consultingSchedule.getStartHour());
-            consultingStartMinute.setText(consultingSchedule.getStartMinute());
-            consultingEndHour.setText(consultingSchedule.getEndHour());
-            consultingEndMinute.setText(consultingSchedule.getEndMinute());
+            consultingStartHour.setText("" + consultingSchedule.getStartHour());
+            consultingStartMinute.setText("" + consultingSchedule.getStartMinute());
+            consultingEndHour.setText("" + consultingSchedule.getEndHour());
+            consultingEndMinute.setText("" + consultingSchedule.getEndMinute());
         }
 
         consultingDaySpinner.setAdapter(new StringAdapter(GlobalData.getContext().getResources().getStringArray(R.array.days_complete)));
@@ -242,8 +245,8 @@ public class ProfessorProfileManagementBasicsFragment extends ProfileManagementB
     /* ------------------------------------------------------------------------------------------ */
 
     @Override
-    protected void restoreStateFromBundle() {
-        super.restoreStateFromBundle();
+    protected void restoreStateFromBundle(Bundle savedInstanceState) {
+        super.restoreStateFromBundle(savedInstanceState);
 
         if(bundle!=null){
 
@@ -259,8 +262,8 @@ public class ProfessorProfileManagementBasicsFragment extends ProfileManagementB
     }
 
     @Override
-    protected void saveStateInBundle() {
-        super.saveStateInBundle();
+    protected void saveStateInBundle(Bundle outState) {
+        super.saveStateInBundle(outState);
 
         if(bundle!=null){
 

@@ -30,6 +30,10 @@ public class CompanyProfileManagementOfficeFragment extends ProfileManagementFra
 
     private static final String TITLE = GlobalData.getContext().getString(R.string.profile_office_tab);
 
+
+    public static final String BUNDLE_IDENTIFIER = "COMPANYPROFILEOFFICE" +
+            "";
+
     private static String BUNDLE_TYPE = "bundle_type";
     private static String BUNDLE_CITY = "bundle_city";
     private static String BUNDLE_ADDRESS = "bundle_address";
@@ -83,7 +87,10 @@ public class CompanyProfileManagementOfficeFragment extends ProfileManagementFra
         return TITLE;
     }
 
+    public String bundleIdentifier(){
 
+        return BUNDLE_IDENTIFIER;
+    }
     /* -------------------------------------------------------------------------------------------*/
     /* ------------------- STANDARD CALLBACKS ----------------------------------------------------*/
     /* -------------------------------------------------------------------------------------------*/

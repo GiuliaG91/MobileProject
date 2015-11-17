@@ -24,6 +24,7 @@ import java.util.GregorianCalendar;
 
 public class StudentProfileManagementCertificateFragment extends ProfileManagementFragment {
 
+    public static final String BUNDLE_IDENTIFIER = "STUDENTPROFILECERTIFICATE";
     private static final String BUNDLE_HASCHANGED = "Bundle_hasChanged";
     private static final String BUNDLE_TITLE = "Bundle_title";
     private static final String BUNDLE_DESCRIPTION = "Bundle_description";
@@ -70,7 +71,10 @@ public class StudentProfileManagementCertificateFragment extends ProfileManageme
         this.student = student;
     }
 
+    public String bundleIdentifier(){
 
+        return BUNDLE_IDENTIFIER;
+    }
     /* -------------------------------------------------------------------------------------------*/
     /* ----------------- STANDARD CALLBACKS ------------------------------------------------------*/
     /* -------------------------------------------------------------------------------------------*/

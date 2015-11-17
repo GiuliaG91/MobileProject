@@ -29,7 +29,7 @@ public class ProfileManagementBasicsFragment extends ProfileManagementFragment {
     protected ImageView emailVerifiedIcon;
     protected CircleImageView editButton;
     public static final String BUNDLE_IDENTIFIER = "PROFILEMANAGEMENTBASICS";
-    private static final String BUNDLE_KEY_USER = "bundle_key_user";
+    private static final String BUNDLE_KEY_PROFILE = "bundle_key_profile";
 
 
     /* ---------------------- CONSTRUCTORS GETTERS SETTERS ---------------------------------------*/
@@ -54,12 +54,10 @@ public class ProfileManagementBasicsFragment extends ProfileManagementFragment {
         this.user = user;
     }
 
-    @Override
-    public String getBundleID() {
+    public String bundleIdentifier(){
 
-        return BUNDLE_IDENTIFIER + ";" + getTag();
+        return BUNDLE_IDENTIFIER;
     }
-
     /* ---------------------------- STANDARD CALLBACKS -------------------------------------------*/
 
     @Override
@@ -130,7 +128,10 @@ public class ProfileManagementBasicsFragment extends ProfileManagementFragment {
     }
 
 
+
+    /* -------------------------------------------------------------------------------------------*/
     /* ---------------------------- AUXILIARY METHODS --------------------------------------------*/
+    /* -------------------------------------------------------------------------------------------*/
 
     @Override
     protected void setEnable(boolean enable) {
@@ -153,6 +154,23 @@ public class ProfileManagementBasicsFragment extends ProfileManagementFragment {
         super.saveChanges();
     }
 
+
+    @Override
+    protected void saveStateInBundle(Bundle outstate) {
+        super.saveStateInBundle(outstate);
+
+        bundle.put(BUNDLE_KEY_PROFILE, profileManagement);
+    }
+
+    @Override
+    protected void restoreStateFromBundle(Bundle savedInstanceState) {
+        super.restoreStateFromBundle(savedInstanceState);
+
+        if(bundle != null){
+
+            profileManagement = (ProfileManagement)bundle.get(BUNDLE_KEY_PROFILE);
+        }
+    }
 
     protected void setBasicsView(){
 

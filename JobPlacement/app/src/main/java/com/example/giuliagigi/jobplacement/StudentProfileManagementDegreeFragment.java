@@ -32,6 +32,8 @@ import java.util.Locale;
 public class StudentProfileManagementDegreeFragment extends ProfileManagementFragment {
 
     private static final String TITLE = "Degree";
+    public static final String BUNDLE_IDENTIFIER = "STUDENTPROFILEDEGREE";
+
     private static String BUNDLE_TYPE = "bundle_type";
     private static String BUNDLE_STUDY = "bundle_study";
     private static String BUNDLE_MARK = "bundle_mark";
@@ -89,7 +91,10 @@ public class StudentProfileManagementDegreeFragment extends ProfileManagementFra
         this.student = student;
     }
 
+    public String bundleIdentifier(){
 
+        return BUNDLE_IDENTIFIER;
+    }
 
     /* -------------------------------------------------------------------------------------------*/
     /* ---------------- STANDARD CALLBACKS -------------------------------------------------------*/
