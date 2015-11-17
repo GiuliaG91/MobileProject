@@ -74,7 +74,7 @@
                         android:layout_marginRight="5dp"
                         android:text="@string/from"
                         android:gravity="bottom"
-                        android:textColor="@color/ColorPrimaryDark"
+                        android:textColor="@color/ColorPrimary"
                         android:textSize="15sp"
                         android:paddingBottom="5dp" />
 
@@ -86,7 +86,7 @@
                         android:id="@+id/sender"
                         android:layout_weight="1"
                         android:gravity="bottom"
-                        android:textColor="@color/ColorPrimaryDark"
+                        android:textColor="@color/black_light_transparent"
                         android:textSize="15sp"
                         android:paddingBottom="5dp" />
 
@@ -105,7 +105,7 @@
                         android:text="@string/to"
                         android:layout_weight="1"
                         android:gravity="bottom"
-                        android:textColor="@color/ColorPrimaryDark"
+                        android:textColor="@color/ColorPrimary"
                         android:textSize="15sp"
                         android:paddingBottom="5dp" />
 
@@ -117,7 +117,7 @@
                         android:id="@+id/recipients_list"
                         android:layout_weight="1"
                         android:gravity="bottom"
-                        android:textColor="@color/ColorPrimaryDark"
+                        android:textColor="@color/black_light_transparent"
                         android:textSize="15sp"
                         android:paddingBottom="5dp" />
 
@@ -130,7 +130,7 @@
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceSmall"
                 android:text="@string/object_"
-                android:textColor="@color/ColorPrimaryDark"
+                android:textColor="@color/ColorPrimary"
                 android:textSize="15sp"
                 android:id="@+id/object_message"
                 android:layout_weight="1"
@@ -140,7 +140,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="fill_parent"
-                android:textColor="@color/ColorPrimaryDark"
+                android:textColor="@color/black_light_transparent"
                 android:textAppearance="?android:attr/textAppearanceSmall"
                 android:text="00:00"
                 android:id="@+id/date_message"

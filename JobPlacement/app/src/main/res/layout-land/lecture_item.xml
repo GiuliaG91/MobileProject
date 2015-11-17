@@ -23,7 +23,7 @@
         android:layout_height="wrap_content"
         android:text="@string/LECTURE_standard_day_schedule"
         android:textSize="@dimen/LECTUREITEM_Title_textSize_land"
-        android:textColor="@color/ColorPrimaryDark"
+        android:textColor="@color/black_light_transparent"
         android:layout_marginRight="4dp"
         android:layout_marginLeft="4dp"
         android:id="@+id/LECTUREITEM_textView_schedule" />
@@ -33,7 +33,7 @@
         android:layout_height="wrap_content"
         android:text="@string/LECTURE_standard_room"
         android:textSize="@dimen/LECTUREITEM_Title_textSize_land"
-        android:textColor="@color/ColorPrimaryDark"
+        android:textColor="@color/black_light_transparent"
         android:layout_marginRight="4dp"
         android:layout_marginLeft="4dp"
         android:id="@+id/LECTUREITEM_textView_Room" />
@@ -43,7 +43,7 @@
         android:layout_height="wrap_content"
         android:text="@string/LECTURE_standard_Professor"
         android:textSize="@dimen/LECTUREITEM_Title_textSize_land"
-        android:textColor="@color/ColorPrimaryDark"
+        android:textColor="@color/black_light_transparent"
         android:layout_marginRight="4dp"
         android:layout_marginLeft="4dp"
         android:id="@+id/LECTUREITEM_textView_Professor" />

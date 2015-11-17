@@ -73,7 +73,7 @@
                         android:hint="@string/new_offer_fragment_hint_tags"
                         android:id="@+id/filter_tag_complete_tv"
                         android:layout_weight="1"
-                        android:textColor="@color/ColorPrimaryDark"
+                        android:textColor="@color/black_light_transparent"
                         android:completionThreshold="1"
                         android:backgroundTint="@color/blue_semi_transparent"
                         android:textCursorDrawable="@drawable/edit_cursor"/>
@@ -228,6 +228,7 @@
                         android:textCursorDrawable="@drawable/edit_cursor"
                         android:inputType="number"
                         android:hint="@string/filter_hint_grade"
+                        android:textColor="@color/black_light_transparent"
                         android:id="@+id/filter_grade_editbox"></EditText>
 
                 </LinearLayout>

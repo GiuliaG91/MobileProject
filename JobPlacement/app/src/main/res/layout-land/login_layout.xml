@@ -48,7 +48,7 @@
             android:hint="@string/login_hint_email"
             android:backgroundTint="@color/blue_semi_transparent"
             android:textCursorDrawable="@drawable/edit_cursor"
-            android:textColor="@color/ColorPrimaryDark"
+            android:textColor="@color/black_light_transparent"
             android:id="@+id/email_editText"
             android:inputType="textEmailAddress"/>
 
@@ -60,7 +60,7 @@
             android:id="@+id/password_editText"
             android:backgroundTint="@color/blue_semi_transparent"
             android:textCursorDrawable="@drawable/edit_cursor"
-            android:textColor="@color/ColorPrimaryDark"
+            android:textColor="@color/black_light_transparent"
             android:inputType="textPassword"/>
 
         <LinearLayout

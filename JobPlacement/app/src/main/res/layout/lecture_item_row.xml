@@ -65,7 +65,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
                         android:layout_marginRight="10dp"
-                        android:textColor="#000000"
+                        android:textColor="@color/black_light_transparent"
                         android:backgroundTint="@color/blue_semi_transparent"
                         android:textCursorDrawable="@drawable/edit_cursor"
                         android:textSize="@dimen/editText_textSize" />
@@ -96,7 +96,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:inputType="number"
-                            android:textColor="#000000"
+                            android:textColor="@color/black_light_transparent"
                             android:backgroundTint="@color/blue_semi_transparent"
                             android:textCursorDrawable="@drawable/edit_cursor"
                             android:textSize="@dimen/editText_textSize" />
@@ -105,7 +105,7 @@
                             android:text=":"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textColor="#000000"
+                            android:textColor="@color/black_light_transparent"
                             android:textSize="@dimen/editText_textSize" />
 
 
@@ -114,7 +114,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:inputType="number"
-                            android:textColor="#000000"
+                            android:textColor="@color/black_light_transparent"
                             android:backgroundTint="@color/blue_semi_transparent"
                             android:textCursorDrawable="@drawable/edit_cursor"
                             android:textSize="@dimen/editText_textSize"  />
@@ -123,7 +123,7 @@
                             android:text="-"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textColor="#000000"
+                            android:textColor="@color/black_light_transparent"
                             android:textSize="@dimen/editText_textSize"  />
 
                         <EditText
@@ -131,7 +131,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:inputType="number"
-                            android:textColor="#000000"
+                            android:textColor="@color/black_light_transparent"
                             android:backgroundTint="@color/blue_semi_transparent"
                             android:textCursorDrawable="@drawable/edit_cursor"
                             android:textSize="@dimen/editText_textSize"  />
@@ -140,7 +140,7 @@
                             android:text=":"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textColor="#000000"
+                            android:textColor="@color/black_light_transparent"
                             android:textSize="@dimen/editText_textSize"  />
 
                         <EditText
@@ -148,7 +148,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:inputType="number"
-                            android:textColor="#000000"
+                            android:textColor="@color/black_light_transparent"
                             android:backgroundTint="@color/blue_semi_transparent"
                             android:textCursorDrawable="@drawable/edit_cursor"
                             android:textSize="@dimen/editText_textSize"  />

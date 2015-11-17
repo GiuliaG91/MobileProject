@@ -20,7 +20,7 @@
         android:id="@+id/tags_description_text"
         android:text="description"
         android:textSize="20dp"
-        android:textColor="@color/ColorPrimaryDark"
+        android:textColor="@color/black_light_transparent"
         android:padding="15dp"/>
 
 </LinearLayout>

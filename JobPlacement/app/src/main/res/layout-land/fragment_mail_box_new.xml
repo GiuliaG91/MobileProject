@@ -28,7 +28,7 @@
                 android:layout_marginTop="10dp"
                 android:textCursorDrawable="@drawable/edit_cursor"
                 android:backgroundTint="@color/blue_semi_transparent"
-                android:textColor="@color/ColorPrimaryDark"
+                android:textColor="@color/black_light_transparent"
                 android:hint="@string/recipients"/>
 
             <EditText
@@ -41,7 +41,7 @@
                 android:layout_marginTop="10dp"
                 android:textCursorDrawable="@drawable/edit_cursor"
                 android:backgroundTint="@color/blue_semi_transparent"
-                android:textColor="@color/ColorPrimaryDark"
+                android:textColor="@color/black_light_transparent"
                 android:hint="@string/object_"/>
 
         </LinearLayout>
@@ -80,7 +80,7 @@
                 android:layout_height="fill_parent"
                 android:textCursorDrawable="@drawable/edit_cursor"
                 android:backgroundTint="@color/blue_semi_transparent"
-                android:textColor="@color/ColorPrimaryDark"
+                android:textColor="@color/black_light_transparent"
                 android:textSize="15sp"
                 android:gravity="top"
                 android:background="#00000000"

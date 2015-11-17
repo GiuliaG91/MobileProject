@@ -53,7 +53,6 @@
                             android:layout_weight="0.2"
                             android:textAppearance="?android:attr/textAppearanceMedium"
                             android:text="@string/profile_person_fragment_name_title"
-                            android:background="#00000000"
                             android:backgroundTint="@color/blue_semi_transparent"
                             android:textCursorDrawable="@drawable/edit_cursor"
                             android:id="@+id/professor_name_area"
@@ -69,7 +68,6 @@
                             android:textAppearance="?android:attr/textAppearanceMedium"
                             android:text="@string/profile_person_fragment_surname_title"
                             android:gravity="bottom"
-                            android:background="#00000000"
                             android:backgroundTint="@color/blue_semi_transparent"
                             android:textCursorDrawable="@drawable/edit_cursor"
                             android:id="@+id/professor_surname_area"
@@ -139,7 +137,7 @@
                             android:layout_height="0dp"
                             android:id="@+id/basics_email_area"
                             android:layout_weight="1"
-                            android:textColor="#ff000000"
+                            android:textColor="@color/black_light_transparent"
                             android:background="#00000000"
                             android:textSize="20dp"
                             android:backgroundTint="@color/blue_semi_transparent"
@@ -208,7 +206,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:inputType="number"
-                                android:textColor="#000000"
+                                android:textColor="@color/black_light_transparent"
                                 android:backgroundTint="@color/blue_semi_transparent"
                                 android:textCursorDrawable="@drawable/edit_cursor"
                                 android:textSize="@dimen/editText_textSize" />
@@ -217,7 +215,7 @@
                                 android:text=":"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:textColor="#000000"
+                                android:textColor="@color/black_light_transparent"
                                 android:textSize="@dimen/editText_textSize" />
 
 
@@ -226,7 +224,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:inputType="number"
-                                android:textColor="#000000"
+                                android:textColor="@color/black_light_transparent"
                                 android:backgroundTint="@color/blue_semi_transparent"
                                 android:textCursorDrawable="@drawable/edit_cursor"
                                 android:textSize="@dimen/editText_textSize"  />
@@ -235,7 +233,7 @@
                                 android:text="-"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:textColor="#000000"
+                                android:textColor="@color/black_light_transparent"
                                 android:textSize="@dimen/editText_textSize"  />
 
                             <EditText
@@ -243,7 +241,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:inputType="number"
-                                android:textColor="#000000"
+                                android:textColor="@color/black_light_transparent"
                                 android:backgroundTint="@color/blue_semi_transparent"
                                 android:textCursorDrawable="@drawable/edit_cursor"
                                 android:textSize="@dimen/editText_textSize"  />
@@ -252,7 +250,7 @@
                                 android:text=":"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:textColor="#000000"
+                                android:textColor="@color/black_light_transparent"
                                 android:textSize="@dimen/editText_textSize"  />
 
                             <EditText
@@ -260,7 +258,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:inputType="number"
-                                android:textColor="#000000"
+                                android:textColor="@color/black_light_transparent"
                                 android:backgroundTint="@color/blue_semi_transparent"
                                 android:textCursorDrawable="@drawable/edit_cursor"
                                 android:textSize="@dimen/editText_textSize"  />
@@ -384,7 +382,7 @@
                             android:layout_height="0dp"
                             android:id="@+id/professor_birth_et"
                             android:layout_weight="1"
-                            android:textColor="#ff000000"
+                            android:textColor="@color/black_light_transparent"
                             android:background="#00000000"
                             android:backgroundTint="@color/blue_semi_transparent"
                             android:textCursorDrawable="@drawable/edit_cursor"
@@ -440,7 +438,7 @@
                             android:layout_height="0dp"
                             android:id="@+id/professor_birthCity_et"
                             android:layout_weight="1"
-                            android:textColor="#ff000000"
+                            android:textColor="@color/black_light_transparent"
                             android:background="#00000000"
                             android:backgroundTint="@color/blue_semi_transparent"
                             android:textCursorDrawable="@drawable/edit_cursor"

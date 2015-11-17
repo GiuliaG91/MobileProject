@@ -51,6 +51,7 @@
                             android:text="@string/new_offer_fragment_object"
                             android:layout_weight="1"
                             android:paddingLeft="30dp"
+                            android:textColor="@color/ColorPrimary"
                             android:gravity="bottom"
                             android:textSize="10sp" />
 
@@ -58,6 +59,7 @@
                         android:layout_width="fill_parent"
                         android:layout_height="0dp"
                         android:id="@+id/offerObject"
+                        android:textColor="@color/black_light_transparent"
                         android:layout_weight="1"
                         android:background="@null"
                         android:backgroundTint="@color/blue_semi_transparent"
@@ -99,6 +101,7 @@
                             android:layout_height="0dp"
                             android:textAppearance="?android:attr/textAppearanceSmall"
                             android:text="@string/new_offer_fragment_field_title"
+                            android:textColor="@color/ColorPrimary"
                             android:layout_weight="1"
                             android:paddingLeft="30dp"
                             android:gravity="bottom"
@@ -150,6 +153,7 @@
                             android:layout_weight="1"
                             android:paddingLeft="30dp"
                             android:paddingBottom="5dp"
+                            android:textColor="@color/ColorPrimary"
                             android:gravity="bottom"
                             android:textSize="10sp" />
 
@@ -164,6 +168,7 @@
                             android:backgroundTint="@color/blue_semi_transparent"
                             android:textCursorDrawable="@drawable/edit_cursor"
                             android:hint="@string/new_offer_fragment_hint_number_of_place"
+                            android:textColor="@color/black_light_transparent"
                             android:singleLine="true"
                             android:maxLines="1"
                             android:background="@null"
@@ -207,6 +212,7 @@
                             android:layout_weight="1"
                             android:paddingLeft="30dp"
                             android:gravity="bottom"
+                            android:textColor="@color/ColorPrimary"
                             android:textSize="10sp" />
 
 
@@ -224,6 +230,7 @@
                                 android:layout_weight="1"
                                 android:hint="@string/new_offer_fragment_hint_validity"
                                 android:phoneNumber="false"
+                                android:textColor="@color/black_light_transparent"
                                 android:layout_marginTop="5dp"
                                 android:paddingLeft="30dp"
                                 android:gravity="center_vertical" />
@@ -232,6 +239,8 @@
                                 android:layout_width="0dp"
                                 android:layout_height="fill_parent"
                                 android:text="@string/set"
+                                android:textColor="@color/ColorPrimaryDark"
+                                android:background="@drawable/button_background"
                                 android:id="@+id/dateButton"
                                 android:layout_weight="0.5" />
                         </LinearLayout>
@@ -276,6 +285,7 @@
                             android:layout_height="0dp"
                             android:textAppearance="?android:attr/textAppearanceSmall"
                             android:text="@string/new_offer_fragment_hint_spinnercontract"
+                            android:textColor="@color/ColorPrimary"
                             android:layout_weight="1"
                             android:paddingLeft="30dp"
                             android:gravity="bottom"
@@ -326,6 +336,7 @@
                             android:text="@string/offer_detail_hint_term"
                             android:layout_weight="1"
                             android:paddingLeft="30dp"
+                            android:textColor="@color/ColorPrimary"
                             android:gravity="bottom"
                             android:textSize="10sp" />
 
@@ -376,6 +387,7 @@
                             android:hint="@string/new_offer_fragment_hint_nation"
                             android:id="@+id/new_offer_edit_nation"
                             android:layout_weight="1"
+                            android:textColor="@color/black_light_transparent"
                             android:backgroundTint="@color/blue_semi_transparent"
                             android:textCursorDrawable="@drawable/edit_cursor"/>
 
@@ -385,6 +397,7 @@
                             android:hint="@string/new_offer_fragment_hint_city"
                             android:id="@+id/new_offer_edit_city"
                             android:layout_weight="1"
+                            android:textColor="@color/black_light_transparent"
                             android:backgroundTint="@color/blue_semi_transparent"
                             android:textCursorDrawable="@drawable/edit_cursor"/>
 
@@ -421,6 +434,7 @@
                             android:layout_height="0dp"
                             android:textAppearance="?android:attr/textAppearanceSmall"
                             android:text="@string/new_offer_fragment_salary"
+                            android:textColor="@color/ColorPrimary"
                             android:layout_weight="1"
                             android:paddingLeft="30dp"
                             android:gravity="bottom"
@@ -449,6 +463,7 @@
                                 android:layout_height="fill_parent"
                                 android:inputType="number"
                                 android:id="@+id/offerSalary"
+                                android:textColor="@color/black_light_transparent"
                                 android:layout_weight="1"
                                 android:ems="10"
                                 android:hint="@string/new_offer_fragment_hint_salary"
@@ -481,6 +496,7 @@
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceLarge"
                     android:text="@string/new_offer_fragment_Description"
+                    android:textColor="@color/ColorPrimary"
                     android:id="@+id/newOffer_tv3"
                     android:layout_marginLeft="10dp"
                     android:layout_marginTop="20dp" />
@@ -511,6 +527,7 @@
                             android:gravity="top"
                             android:maxLength="500"
                             android:background="@null"
+                            android:textColor="@color/black_light_transparent"
                             android:backgroundTint="@color/blue_semi_transparent"
                             android:textCursorDrawable="@drawable/edit_cursor"/>
 
@@ -520,6 +537,7 @@
                             android:text="0"
                             android:id="@+id/countCharacter"
                             android:layout_gravity="bottom|right"
+                            android:textColor="@color/black_light_transparent"
                             android:layout_marginBottom="10dp"
                             android:layout_marginRight="5dp" />
 
@@ -551,6 +569,7 @@
                             android:layout_height="fill_parent"
                             android:hint="@string/new_offer_fragment_hint_tags"
                             android:id="@+id/tagAutoComplete_tv"
+                            android:textColor="@color/black_light_transparent"
                             android:layout_weight="1"
                             android:background="@null"
                             android:backgroundTint="@color/blue_semi_transparent"

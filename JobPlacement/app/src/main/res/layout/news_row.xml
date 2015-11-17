@@ -71,6 +71,7 @@
                     android:textAppearance="?android:attr/textAppearanceLarge"
                     android:text="L&apos;azienda x ha pubblicato una nuova offerta che potrebbe interessarti"
                     android:id="@+id/news_message"
+                    android:textColor="@color/black_light_transparent"
                     android:gravity="center"
                     android:textSize="18sp"
                     android:layout_margin="10dp"/>

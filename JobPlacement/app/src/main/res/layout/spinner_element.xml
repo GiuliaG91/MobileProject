@@ -4,6 +4,6 @@
     android:singleLine="true"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:textColor="@color/ColorPrimaryDark"
+    android:textColor="@color/black_light_transparent"
     android:ellipsize="marquee"
     android:textAlignment="inherit"/>

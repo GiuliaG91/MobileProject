@@ -39,7 +39,7 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:textSize="@dimen/textView_textSize_small"
-                android:textColor="@color/ColorPrimaryDark"
+                android:textColor="@color/black_light_transparent"
                 android:layout_marginRight="10dp"
                 android:layout_marginLeft="10dp"
                 android:layout_marginBottom="10dp"

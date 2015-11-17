@@ -29,7 +29,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/ColorPrimaryDark"
+                android:textColor="@color/black_light_transparent"
                 android:gravity="center"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:text="@string/account_delete_help_improve"
@@ -63,7 +63,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="5dp"
-                    android:textColor="@color/ColorPrimaryDark"
+                    android:textColor="@color/black_light_transparent"
                     android:textSize="17sp"
                     android:text="@string/account_delete_found_job"/>
 
@@ -85,7 +85,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="5dp"
-                    android:textColor="@color/ColorPrimaryDark"
+                    android:textColor="@color/black_light_transparent"
                     android:textSize="17sp"
                     android:text="@string/account_delete_hard_understand"/>
 
@@ -107,7 +107,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="5dp"
-                    android:textColor="@color/ColorPrimaryDark"
+                    android:textColor="@color/black_light_transparent"
                     android:textSize="17sp"
                     android:text="@string/account_delete_not_enough_users"/>
 
@@ -129,7 +129,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="5dp"
-                    android:textColor="@color/ColorPrimaryDark"
+                    android:textColor="@color/black_light_transparent"
                     android:textSize="17sp"
                     android:text="@string/account_delete_none_previous"/>
 
@@ -143,7 +143,7 @@
                 android:layout_marginLeft="28dp"
                 android:backgroundTint="@color/blue_semi_transparent"
                 android:textCursorDrawable="@drawable/edit_cursor"
-                android:textColor="@color/ColorPrimaryDark"
+                android:textColor="@color/black_light_transparent"
                 android:layout_gravity="center_horizontal" />
 
             <TextView
@@ -163,6 +163,7 @@
                 android:backgroundTint="@color/blue_semi_transparent"
                 android:textCursorDrawable="@drawable/edit_cursor"
                 android:id="@+id/profileDelete_hints_text"
+                android:textColor="@color/black_light_transparent"
                 android:hint="@string/account_delete_shy"
                 android:layout_gravity="center_horizontal" />
 
