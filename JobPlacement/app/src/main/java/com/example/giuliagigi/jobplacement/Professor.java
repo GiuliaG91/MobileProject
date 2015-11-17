@@ -26,10 +26,11 @@ public class Professor extends User {
 //    protected static final String CITY_FIELD = "city";
     protected static final String NATION_FIELD = "nation";
 
-    protected static final String CONSULTING_SH_FIELD = "consultation_starthour";
-    protected static final String CONSULTING_SM_FIELD = "consultation_startminute";
-    protected static final String CONSULTING_EH_FIELD = "consultation_endhour";
-    protected static final String CONSULTING_EM_FIELD = "consultation_endminute";
+    private static final String CONSULTING_DAY_FIELD = "consulting_day";
+    protected static final String CONSULTING_SH_FIELD = "consulting_startHour";
+    protected static final String CONSULTING_SM_FIELD = "consulting_startMinute";
+    protected static final String CONSULTING_EH_FIELD = "consulting_endHour";
+    protected static final String CONSULTING_EM_FIELD = "consulting_endMinute";
 
     protected String name;
     protected String surname;
@@ -144,7 +145,7 @@ public class Professor extends User {
         return nation;
     }
 
-    synchronized public Schedule getConsulting(){
+    synchronized public Schedule getConsultingSchedule(){
 
         int startHour = getInt(CONSULTING_SH_FIELD);
 
@@ -155,6 +156,11 @@ public class Professor extends User {
         int endMinute = getInt(CONSULTING_EM_FIELD);
 
         return new Schedule(startHour,startMinute,endHour,endMinute);
+    }
+
+    synchronized public int getConsultingDay(){
+
+        return getInt(CONSULTING_DAY_FIELD);
     }
 
     // ----- END GETTERS -------
@@ -213,12 +219,17 @@ public class Professor extends User {
     }
 
 
-    public void setConsulting(Schedule schedule){
+    public void setConsulting(Schedule schedule, int day){
 
-        put(CONSULTING_SH_FIELD, schedule.getStartHour());
-        put(CONSULTING_SM_FIELD, schedule.getStartMinute());
-        put(CONSULTING_EH_FIELD, schedule.getEndHour());
-        put(CONSULTING_EM_FIELD, schedule.getEndMinute());
+        if(schedule != null){
+
+            put(CONSULTING_SH_FIELD, schedule.getStartHour());
+            put(CONSULTING_SM_FIELD, schedule.getStartMinute());
+            put(CONSULTING_EH_FIELD, schedule.getEndHour());
+            put(CONSULTING_EM_FIELD, schedule.getEndMinute());
+        }
+
+        put(CONSULTING_DAY_FIELD, day);
     }
 
     // ---- END SETTERS -------
@@ -239,7 +250,8 @@ public class Professor extends User {
                 getBirth();
                 getBirthCity();
                 getNation();
-                getConsulting();
+                getConsultingDay();
+                getConsultingSchedule();
                 return null;
             }
         };

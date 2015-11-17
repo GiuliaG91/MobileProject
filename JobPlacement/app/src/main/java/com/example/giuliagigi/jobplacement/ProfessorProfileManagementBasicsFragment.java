@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.parse.ParseException;
@@ -28,13 +29,19 @@ import java.util.Locale;
 public class ProfessorProfileManagementBasicsFragment extends ProfileManagementBasicsFragment {
 
     private static final String BUNDLE_KEY_PROFESSOR = "bundle_key_professor";
+    private static final String BUNDLE_KEY_DAY = "bundle_key_day";
+    private static final String BUNDLE_KEY_SCHEDULE = "bundle_key_schdule";
     public static final String BUNDLE_IDENTIFIER = "PROFESSORPROFILEMANAGEMENTBASICS";
 
     private Professor professor;
 
     private Date date;
+    private Schedule consultingSchedule;
+    private int day;
     private boolean birthDateChanged;
-    EditText nameText,surnameText, birthCityText;
+
+    EditText nameText,surnameText, birthCityText, consultingStartHour, consultingStartMinute, consultingEndHour, consultingEndMinute;
+    Spinner consultingDaySpinner;
     TextView birthPicker;
     CheckBox male,female;
 
@@ -66,6 +73,7 @@ public class ProfessorProfileManagementBasicsFragment extends ProfileManagementB
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
+        consultingSchedule = new Schedule(0,0,0,0);
     }
 
 
@@ -100,6 +108,23 @@ public class ProfessorProfileManagementBasicsFragment extends ProfileManagementB
         else
             birthCityText.setText(professor.getBirthCity());
 
+        consultingDaySpinner = (Spinner)root.findViewById(R.id.consulting_day_spinner);
+        consultingStartHour = (EditText)root.findViewById(R.id.consulting_startHour_editText);
+        consultingStartMinute = (EditText)root.findViewById(R.id.consulting_startMinute_editText);
+        consultingEndHour = (EditText)root.findViewById(R.id.consulting_endHour_editText);
+        consultingEndMinute = (EditText)root.findViewById(R.id.consulting_endMinute_editText);
+
+        if(consultingSchedule != null && consultingSchedule.getStartHour() != 0){
+
+            consultingStartHour.setText(consultingSchedule.getStartHour());
+            consultingStartMinute.setText(consultingSchedule.getStartMinute());
+            consultingEndHour.setText(consultingSchedule.getEndHour());
+            consultingEndMinute.setText(consultingSchedule.getEndMinute());
+        }
+
+        day = professor.getConsultingDay();
+        if(day != 0)
+            consultingDaySpinner.setSelection(day -1);
 
         birthPicker = (TextView)root.findViewById(R.id.professor_birth_et);
         if(professor.getBirth() == null){
@@ -157,6 +182,10 @@ public class ProfessorProfileManagementBasicsFragment extends ProfileManagementB
         textFields.add(nameText);
         textFields.add(surnameText);
         textFields.add(birthCityText);
+        textFields.add(consultingStartHour);
+        textFields.add(consultingStartMinute);
+        textFields.add(consultingEndHour);
+        textFields.add(consultingEndMinute);
 
         OnFieldChangedListener hasChangedListener = new OnFieldChangedListener();
         for(EditText et:textFields)
@@ -213,8 +242,17 @@ public class ProfessorProfileManagementBasicsFragment extends ProfileManagementB
     protected void restoreStateFromBundle() {
         super.restoreStateFromBundle();
 
-        if(bundle!=null)
+        if(bundle!=null){
+
             professor = (Professor)bundle.get(BUNDLE_KEY_PROFESSOR);
+            day = bundle.getInt(BUNDLE_KEY_DAY);
+            consultingSchedule = (Schedule)bundle.get(BUNDLE_KEY_SCHEDULE);
+        }
+        else {
+
+            day = professor.getConsultingDay();
+            consultingSchedule = professor.getConsultingSchedule();
+        }
     }
 
     @Override
@@ -224,6 +262,8 @@ public class ProfessorProfileManagementBasicsFragment extends ProfileManagementB
         if(bundle!=null){
 
             bundle.put(BUNDLE_KEY_PROFESSOR,professor);
+            bundle.putInt(BUNDLE_KEY_DAY, day);
+            bundle.put(BUNDLE_KEY_SCHEDULE, consultingSchedule);
         }
     }
 
@@ -238,6 +278,7 @@ public class ProfessorProfileManagementBasicsFragment extends ProfileManagementB
         male.setEnabled(enable);
         female.setEnabled(enable);
         birthPicker.setEnabled(enable);
+        consultingDaySpinner.setEnabled(enable);
     }
 
 
@@ -245,6 +286,7 @@ public class ProfessorProfileManagementBasicsFragment extends ProfileManagementB
     public void saveChanges(){
 
         super.saveChanges();
+
         String sex;
         if(male.isChecked())
             sex = Student.SEX_MALE;
@@ -256,6 +298,22 @@ public class ProfessorProfileManagementBasicsFragment extends ProfileManagementB
         if(!birthCityText.getText().toString().equals(INSERT_FIELD)) professor.setBirthCity(birthCityText.getText().toString());
         professor.setSex(sex);
 
+        if(!consultingStartHour.getText().toString().trim().isEmpty()){
+
+            int sh = Integer.parseInt(consultingStartHour.getText().toString().trim());
+            int sm = Integer.parseInt(consultingStartMinute.getText().toString().trim());
+            int eh = Integer.parseInt(consultingEndHour.getText().toString().trim());
+            int em = Integer.parseInt(consultingEndMinute.getText().toString().trim());
+
+            consultingSchedule.setStartHour(sh);
+            consultingSchedule.setStartMinute(sm);
+            consultingSchedule.setEndHour(eh);
+            consultingSchedule.setEndMinute(em);
+        }
+
+        day = consultingDaySpinner.getSelectedItemPosition()+1;
+        professor.setConsulting(consultingSchedule, day);
+
         if(birthDateChanged){
 
 
@@ -263,6 +321,7 @@ public class ProfessorProfileManagementBasicsFragment extends ProfileManagementB
             professor.setBirth(date);
             birthDateChanged = false;
         }
+
 
         Log.println(Log.ASSERT, "BASICS", "now saving..." + professor.getObjectId());
         professor.saveInBackground(new SaveCallback() {
