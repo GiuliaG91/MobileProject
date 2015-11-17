@@ -111,11 +111,8 @@ public class Home extends ActionBarActivity
 
         /*********************Different menu for Student and companies******/
         ParseUserWrapper user = application.getCurrentUser();
-        Log.println(Log.ASSERT,"HOME", "type: " + user.getType());
 
         if (user.getType().equalsIgnoreCase(User.TYPE_STUDENT)) {
-
-            Log.println(Log.ASSERT,"HOME", "creating tab home student");
 
             TITLES = getResources().getStringArray(R.array.Menu_items_student);
             ICONS = getResources().obtainTypedArray(R.array.StudentMenuicons);
@@ -133,8 +130,6 @@ public class Home extends ActionBarActivity
         }
         else if (user.getType().equalsIgnoreCase(User.TYPE_COMPANY)) {
 
-            Log.println(Log.ASSERT,"HOME", "creating tab home company");
-
             TITLES = getResources().getStringArray(R.array.Menu_items_Company);
             ICONS = getResources().obtainTypedArray(R.array.CompanyMenuicons);
 
@@ -150,8 +145,6 @@ public class Home extends ActionBarActivity
             }
         }
         else if (user.getType().equalsIgnoreCase(User.TYPE_PROFESSOR)) {
-
-            Log.println(Log.ASSERT,"HOME", "creating tab home professor");
 
             TITLES = getResources().getStringArray(R.array.Menu_items_Professor);
             ICONS = getResources().obtainTypedArray(R.array.ProfessorMenuicons);

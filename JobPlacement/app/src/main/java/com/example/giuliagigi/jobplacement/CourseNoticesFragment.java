@@ -2,9 +2,11 @@ package com.example.giuliagigi.jobplacement;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,6 +25,13 @@ import java.util.List;
 
 public class CourseNoticesFragment extends Fragment implements PublishNoticeDialogFragment.NoticeDialogInterface{
 
+    private static final String BUNDLE_IDENTIFIER ="COURSENOTICES";
+    private static final String BUNDLE_KEY_TAIL = "bundle_tail";
+    private static final String BUNDLE_KEY_COURSE = "bundle_course";
+    private static final String BUNDLE_KEY_NOTICES = "bundle_notices";
+    private static final String BUNDLE_KEY_EDIT = "bundle_is_edit";
+
+    private GlobalData globalData;
     private Course course;
     ArrayList<News> notices;
     private boolean isEdit;
@@ -58,8 +67,34 @@ public class CourseNoticesFragment extends Fragment implements PublishNoticeDial
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
+        globalData = (GlobalData)activity.getApplicationContext();
     }
 
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        if(savedInstanceState != null){
+
+            Log.println(Log.ASSERT, "COURSENOTICES", "onRestoreInstanceState");
+
+            String tail = savedInstanceState.getString(BUNDLE_KEY_TAIL);
+            MyBundle bundle = globalData.getBundle(BUNDLE_IDENTIFIER + tail);
+
+            if(bundle != null){
+
+                course = (Course)bundle.get(BUNDLE_KEY_COURSE);
+
+                notices = new ArrayList<News>();
+                ArrayList<Object> list = bundle.getList(BUNDLE_KEY_NOTICES);
+                for(Object o:list)
+                    notices.add((News)o);
+
+                isEdit = bundle.getBoolean(BUNDLE_KEY_EDIT);
+            }
+        }
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -96,6 +131,23 @@ public class CourseNoticesFragment extends Fragment implements PublishNoticeDial
         return root;
     }
 
+
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+
+        Log.println(Log.ASSERT, "COURSENOTICES", "onsaveinstancestate");
+
+        String tail = course.toString();
+        outState.putString(BUNDLE_KEY_TAIL,tail);
+
+        MyBundle bundle = globalData.addBundle(BUNDLE_IDENTIFIER + tail);
+        bundle.put(BUNDLE_KEY_COURSE,course);
+        bundle.putList(BUNDLE_KEY_NOTICES,notices);
+        bundle.putBoolean(BUNDLE_KEY_EDIT, isEdit);
+
+        super.onSaveInstanceState(outState);
+    }
 
     @Override
     public void onDetach() {

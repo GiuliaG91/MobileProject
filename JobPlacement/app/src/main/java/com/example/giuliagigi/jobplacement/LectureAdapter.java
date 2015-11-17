@@ -35,7 +35,6 @@ public class LectureAdapter implements ListAdapter {
 
     public LectureAdapter(ArrayList<Lecture> lectures, boolean isEdit, Activity activity){
 
-        Log.println(Log.ASSERT,"LECTUREADAPTER", "size = " + lectures.size());
         globalData = (GlobalData)activity.getApplicationContext();
         this.activity = activity;
         this.lectures = lectures;

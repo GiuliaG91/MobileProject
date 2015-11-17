@@ -83,9 +83,8 @@ public class LectureDisplayFragment extends Fragment implements OnActivityChange
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-
-        Log.println(Log.ASSERT, "LECTUREDISPLAY", "onCreateView");
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
 
         if(savedInstanceState != null){
 
@@ -95,16 +94,18 @@ public class LectureDisplayFragment extends Fragment implements OnActivityChange
 
             if(bundle != null){
 
-                Log.println(Log.ASSERT, "LECTUREDISPLAY", "found a bundle");
                 mode = bundle.getInt(BUNDLE_KEY_MODE);
+
                 ArrayList list = bundle.getList(BUNDLE_KEY_COURSE);
                 courses = new ArrayList<Course>();
-
                 for (Object o : list)
                     courses.add((Course)o);
             }
         }
+    }
 
+    @Override
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         View root = inflater.inflate(R.layout.calendar_week_view, container, false);
 
@@ -117,7 +118,6 @@ public class LectureDisplayFragment extends Fragment implements OnActivityChange
         final ViewTreeObserver vto = lecturesRelativeLayouts[0].getViewTreeObserver();
         if(vto.isAlive()){
 
-            Log.println(Log.ASSERT, "LECTUREDISPLAY", "vto alive");
             vto.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
                 @Override
                 public void onGlobalLayout() {

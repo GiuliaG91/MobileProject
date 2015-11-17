@@ -59,11 +59,6 @@ public class CourseLecturesFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-    }
-
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         if(savedInstanceState != null){
 
@@ -73,6 +68,11 @@ public class CourseLecturesFragment extends Fragment {
             if(bundle != null)
                 course = (Course)bundle.get(BUNDLE_KEY_COURSE);
         }
+    }
+
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         root = inflater.inflate(R.layout.fragment_course_lectures, container, false);
 
@@ -81,7 +81,6 @@ public class CourseLecturesFragment extends Fragment {
 
         if(lecturesListView != null) {
 
-            Log.println(Log.ASSERT,"COURSEDETAIL", "size = " + course.getLectures().size());
             lectureAdapter = new LectureAdapter(course.getLectures(), isEdit, activity);
             lecturesListView.setAdapter(lectureAdapter);
         }

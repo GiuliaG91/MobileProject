@@ -2,6 +2,7 @@ package com.example.giuliagigi.jobplacement;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -13,6 +14,11 @@ import android.view.ViewGroup;
 
 public class ProfessorCoursesManagementFragment extends Fragment {
 
+    private static final String BUNDLE_IDENTIFIER = "PROFESSORCOURSESMANAGEMENT";
+    private static final String BUNDLE_KEY_TAIL = "bundle_tail";
+    private static final String BUNDLE_KEY_PROFESSOR = "bundle_professor";
+
+    private GlobalData globalData;
     private Professor professor;
 
     private View root;
@@ -41,19 +47,29 @@ public class ProfessorCoursesManagementFragment extends Fragment {
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
+        globalData = (GlobalData)activity.getApplicationContext();
     }
-
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-    }
 
+        if(savedInstanceState != null){
+
+            Log.println(Log.ASSERT,"PROFCOURSESMANAG", "onRestoreInstanceState");
+
+            String tail = savedInstanceState.getString(BUNDLE_KEY_TAIL);
+            MyBundle bundle = globalData.getBundle(BUNDLE_IDENTIFIER + tail);
+
+            if(bundle != null){
+
+                professor = (Professor)bundle.get(BUNDLE_KEY_PROFESSOR);
+            }
+        }
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
-
-        Log.println(Log.ASSERT,"COURSESMANAG", "onCreateView");
 
         root = inflater.inflate(R.layout.fragment_courses_management, container, false);
 
@@ -66,6 +82,20 @@ public class ProfessorCoursesManagementFragment extends Fragment {
         return root;
     }
 
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+
+        Log.println(Log.ASSERT,"PROFCOURSESMANAG", "onSaveInstanceState");
+
+        String tail = professor.toString();
+        outState.putString(BUNDLE_KEY_TAIL, tail);
+
+        MyBundle bundle = globalData.addBundle(BUNDLE_IDENTIFIER + tail);
+        bundle.put(BUNDLE_KEY_PROFESSOR, professor);
+
+        super.onSaveInstanceState(outState);
+    }
 
     @Override
     public void onDetach() {

@@ -24,6 +24,7 @@ import java.util.ArrayList;
 public class LectureSearch extends Fragment {
 
     private static final String BUNDLE_IDENTIFIER = "LECTURESEARCH";
+    private static final String BUNDLE_KEY_TAIL = "bundle_tail";
     private static final String BUNDLE_KEY_STUDENT = "bundle_student";
 
 
@@ -62,18 +63,25 @@ public class LectureSearch extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
 
-        Log.println(Log.ASSERT,"LECTURESEARCH", "onCreateView");
+        if(savedInstanceState != null){
 
-        MyBundle bundle = globalData.getBundle(BUNDLE_IDENTIFIER);
+            String tail = savedInstanceState.getString(BUNDLE_KEY_TAIL);
+            MyBundle bundle = globalData.getBundle(BUNDLE_IDENTIFIER + tail);
 
-        if(bundle != null){
-
-            student = (Student)bundle.get(BUNDLE_KEY_STUDENT);
+            if(bundle != null)
+                student = (Student)bundle.get(BUNDLE_KEY_STUDENT);
         }
 
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+
         View root = inflater.inflate(R.layout.timetable_search, container, false);
+
         display = (Button)root.findViewById(R.id.displayButton);
         etCourse = (AutoCompleteTextView)root.findViewById(R.id.editTextCourse);
         etProfessor = (AutoCompleteTextView)root.findViewById(R.id.editTextProfessor);
@@ -140,9 +148,12 @@ public class LectureSearch extends Fragment {
     @Override
     public void onSaveInstanceState(Bundle outState) {
 
-        MyBundle bundle = globalData.addBundle(BUNDLE_IDENTIFIER);
+        String tail = student.toString();
+        outState.putString(BUNDLE_KEY_TAIL, tail);
 
+        MyBundle bundle = globalData.addBundle(BUNDLE_IDENTIFIER + tail);
         bundle.put(BUNDLE_KEY_STUDENT, student);
+
         super.onSaveInstanceState(outState);
     }
 

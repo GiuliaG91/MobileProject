@@ -69,11 +69,6 @@ public class StudentCoursesManagementFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-    }
-
-    
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
 
         if(savedInstanceState != null){
 
@@ -96,7 +91,11 @@ public class StudentCoursesManagementFragment extends Fragment {
 
             }
         }
+    }
 
+    
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
 
         root =  inflater.inflate(R.layout.fragment_courses_management, container, false);
 
