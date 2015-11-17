@@ -6,71 +6,117 @@
     android:orientation="vertical"
     tools:context="com.example.giuliagigi.jobplacement.CourseOverviewFragment">
 
-    <TextView
-        android:id="@+id/course_code_textView"
-        android:layout_width="wrap_content"
-        android:textColor="@color/ColorPrimaryDark"
-        android:layout_marginTop="5dp"
-        android:layout_marginRight="5dp"
-        android:layout_marginLeft="5dp"
-        android:text="code"
-        android:textSize="@dimen/textView_textSize_small"
-        android:layout_height="wrap_content" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
 
-    <TextView
-        android:id="@+id/course_name_textView"
-        android:layout_width="wrap_content"
-        android:textColor="@color/ColorPrimaryDark"
-        android:layout_marginTop="5dp"
-        android:layout_marginRight="5dp"
-        android:layout_marginLeft="5dp"
-        android:text="name"
-        android:textSize="@dimen/textView_textSize_small"
-        android:layout_height="wrap_content" />
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight=".8"
+            android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/course_professor_textView"
+            <TextView
+                android:id="@+id/course_code_textView"
+                android:layout_width="wrap_content"
+                android:textColor="@color/ColorPrimaryDark"
+                android:layout_marginTop="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_marginLeft="5dp"
+                android:text="code"
+                android:textSize="@dimen/editText_textSize_small"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/course_name_textView"
+                android:layout_width="wrap_content"
+                android:textColor="@color/ColorPrimaryDark"
+                android:layout_marginTop="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_marginLeft="5dp"
+                android:layout_gravity="center_horizontal"
+                android:text="name"
+                android:textSize="@dimen/textView_textSize"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/course_professor_textView"
+                android:layout_width="wrap_content"
+                android:textColor="@color/ColorPrimaryDark"
+                android:layout_marginTop="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_marginLeft="5dp"
+                android:layout_gravity="center_horizontal"
+                android:text="professor"
+                android:textSize="@dimen/textView_textSize_small"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/course_modify_button"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:background="@drawable/ic_pencil"
+            android:layout_margin="3dp"/>
+
+    </LinearLayout>
+
+    <android.support.v7.widget.CardView
+        xmlns:card_view="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/card_news"
+        android:layout_gravity="center"
         android:layout_width="fill_parent"
-        android:textColor="@color/ColorPrimaryDark"
-        android:layout_marginTop="5dp"
-        android:layout_marginRight="5dp"
-        android:layout_marginLeft="5dp"
-        android:text="professor"
-        android:textSize="@dimen/textView_textSize_small"
-        android:layout_height="wrap_content" />
-
-
-    <Button
-        android:id="@+id/course_modify_button"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:background="@drawable/ic_pencil"
-        android:layout_margin="3dp"/>
-
-
-    <TextView
-        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Presentation" />
+        card_view:cardCornerRadius="4dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="10dp">
 
-    <EditText
-        android:id="@+id/course_presentation_editText"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="bla bla bla" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="3dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/editText_textSize"
+                android:textColor="@color/ColorPrimaryDark"
+                android:text="@string/course_presentation_title" />
+
+            <EditText
+                android:id="@+id/course_presentation_editText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/textView_textSize_small"
+                android:textColor="#000000"
+                android:backgroundTint="@color/blue_semi_transparent"
+                android:textCursorDrawable="@drawable/edittext_cursor"
+                android:layout_marginLeft="10dp"
+                android:text="bla bla bla" />
 
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Exam modalities" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/editText_textSize"
+                android:textColor="@color/ColorPrimaryDark"
+                android:text="@string/course_exam_title" />
 
-    <EditText
-        android:id="@+id/course_examModalities_editText"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="bla bla bla" />
+            <EditText
+                android:id="@+id/course_examModalities_editText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/textView_textSize_small"
+                android:textColor="#000000"
+                android:backgroundTint="@color/blue_semi_transparent"
+                android:textCursorDrawable="@drawable/edittext_cursor"
+                android:layout_marginLeft="10dp"
+                android:text="bla bla bla" />
+        </LinearLayout>
 
-
+    </android.support.v7.widget.CardView>
 
 </LinearLayout>

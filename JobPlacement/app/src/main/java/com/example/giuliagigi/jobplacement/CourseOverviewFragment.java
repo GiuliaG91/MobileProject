@@ -109,6 +109,8 @@ public class CourseOverviewFragment extends Fragment {
         if(!editable){
 
             l.removeView(modify);
+            modify.setVisibility(View.INVISIBLE);
+            modify.setEnabled(false);
             modify = null;
         }
 
