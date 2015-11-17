@@ -6,6 +6,8 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.text.Editable;
@@ -60,8 +62,16 @@ public class Login extends ActionBarActivity {
 
             Log.println(Log.ASSERT, "LOGIN", "User session already open. Entering home activity");
 
-            registerApplication();
-            startActivity(new Intent(getApplicationContext(), Home.class));
+            if(checkConnectionStatus()){
+
+                registerApplication();
+                startActivity(new Intent(getApplicationContext(), Home.class));
+            }
+            else {
+
+                Toast.makeText(getApplicationContext(), "Your network connection is missing. Unable to login", Toast.LENGTH_LONG).show();
+            }
+
         }
 
         final SharedPreferences sp = getPreferences(Context.MODE_PRIVATE);
@@ -134,7 +144,10 @@ public class Login extends ActionBarActivity {
             @Override
             public void onClick(View v) {
 
-                performLogin(mailText.getText().toString().trim(), passwordText.getText().toString());
+                if(checkConnectionStatus())
+                    performLogin(mailText.getText().toString().trim(), passwordText.getText().toString());
+                else
+                    Toast.makeText(getApplicationContext(), "Your network connection is missing. Unable to login", Toast.LENGTH_LONG).show();
             }
         });
 
@@ -233,6 +246,14 @@ public class Login extends ActionBarActivity {
         }
 
         Installation.commit();
+    }
+
+    private boolean checkConnectionStatus(){
+
+        ConnectivityManager cm = (ConnectivityManager)getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo network = cm.getActiveNetworkInfo();
+
+        return network != null && network.isConnectedOrConnecting();
     }
 
     private void performLogin(final String mail, final String password) {
