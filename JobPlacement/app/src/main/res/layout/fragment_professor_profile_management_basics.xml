@@ -136,7 +136,7 @@
                             android:layout_height="0dp"
                             android:id="@+id/basics_email_area"
                             android:layout_weight="1"
-                            android:textColor="#ff000000"
+                            android:textColor="@color/black_light_transparent"
                             android:background="#00000000"
                             android:backgroundTint="@color/blue_semi_transparent"
                             android:textCursorDrawable="@drawable/edit_cursor"
@@ -187,13 +187,6 @@
                             android:gravity="bottom"
                             android:textSize="10sp" />
 
-                        <Spinner
-                            android:id="@+id/consulting_day_spinner"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:paddingLeft="10dp"
-                            android:paddingTop="5dp"/>
-
                         <LinearLayout
                             android:orientation="horizontal"
                             android:layout_width="fill_parent"
@@ -201,22 +194,29 @@
                             android:paddingLeft="10dp"
                             android:paddingTop="2dp">
 
+                            <Spinner
+                                android:id="@+id/consulting_day_spinner"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:paddingLeft="10dp"
+                                android:paddingTop="5dp"/>
+
                             <EditText
                                 android:id="@+id/consulting_startHour_editText"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:inputType="number"
-                                android:textColor="#000000"
+                                android:textColor="@color/black_light_transparent"
                                 android:backgroundTint="@color/blue_semi_transparent"
                                 android:textCursorDrawable="@drawable/edit_cursor"
-                                android:textSize="@dimen/editText_textSize" />
+                                android:textSize="@dimen/textView_textSize" />
 
                             <TextView
                                 android:text=":"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:textColor="#000000"
-                                android:textSize="@dimen/editText_textSize" />
+                                android:textColor="@color/black_light_transparent"
+                                android:textSize="@dimen/textView_textSize" />
 
 
                             <EditText
@@ -224,44 +224,44 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:inputType="number"
-                                android:textColor="#000000"
+                                android:textColor="@color/black_light_transparent"
                                 android:backgroundTint="@color/blue_semi_transparent"
                                 android:textCursorDrawable="@drawable/edit_cursor"
-                                android:textSize="@dimen/editText_textSize"  />
+                                android:textSize="@dimen/textView_textSize"  />
 
                             <TextView
                                 android:text="-"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:textColor="#000000"
-                                android:textSize="@dimen/editText_textSize"  />
+                                android:textColor="@color/black_light_transparent"
+                                android:textSize="@dimen/textView_textSize"  />
 
                             <EditText
                                 android:id="@+id/consulting_endHour_editText"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:inputType="number"
-                                android:textColor="#000000"
+                                android:textColor="@color/black_light_transparent"
                                 android:backgroundTint="@color/blue_semi_transparent"
                                 android:textCursorDrawable="@drawable/edit_cursor"
-                                android:textSize="@dimen/editText_textSize"  />
+                                android:textSize="@dimen/textView_textSize"  />
 
                             <TextView
                                 android:text=":"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:textColor="#000000"
-                                android:textSize="@dimen/editText_textSize"  />
+                                android:textColor="@color/black_light_transparent"
+                                android:textSize="@dimen/textView_textSize"  />
 
                             <EditText
                                 android:id="@+id/consulting_endMinute_editText"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:inputType="number"
-                                android:textColor="#000000"
+                                android:textColor="@color/black_light_transparent"
                                 android:backgroundTint="@color/blue_semi_transparent"
                                 android:textCursorDrawable="@drawable/edit_cursor"
-                                android:textSize="@dimen/editText_textSize"  />
+                                android:textSize="@dimen/textView_textSize"  />
                         </LinearLayout>
 
 
@@ -320,7 +320,7 @@
                                 android:text="F"
                                 android:layout_weight="1"
                                 android:id="@+id/female_checkBox"
-                                android:textColor="@color/ColorPrimaryDark"
+                                android:textColor="@color/black_light_transparent"
                                 android:buttonTint="@color/ColorPrimary"
                                 android:layout_gravity="center_horizontal" />
                             <CheckBox
@@ -328,8 +328,7 @@
                                 android:layout_height="wrap_content"
                                 android:text="M"
                                 android:layout_weight="1"
-                                android:textColor="@color/ColorPrimaryDark"
-                                android:buttonTint="@color/ColorPrimary"
+                                android:textColor="@color/black_light_transparent"
                                 android:id="@+id/male_checkBox"
                                 android:layout_gravity="center_horizontal" />
 
@@ -385,8 +384,6 @@
                             android:layout_weight="1"
                             android:textColor="@color/black_light_transparent"
                             android:background="#00000000"
-                            android:backgroundTint="@color/blue_semi_transparent"
-                            android:textCursorDrawable="@drawable/edit_cursor"
                             android:textSize="20dp"
                             android:paddingLeft="10dp"
                             android:paddingTop="5dp" />
@@ -441,8 +438,6 @@
                             android:layout_weight="1"
                             android:textColor="@color/black_light_transparent"
                             android:background="#00000000"
-                            android:backgroundTint="@color/blue_semi_transparent"
-                            android:textCursorDrawable="@drawable/edit_cursor"
                             android:textSize="20dp"
                             android:paddingLeft="10dp"
                             android:paddingTop="5dp" />

@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.BaseAdapter;
 import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -121,6 +122,8 @@ public class ProfessorProfileManagementBasicsFragment extends ProfileManagementB
             consultingEndHour.setText(consultingSchedule.getEndHour());
             consultingEndMinute.setText(consultingSchedule.getEndMinute());
         }
+
+        consultingDaySpinner.setAdapter(new StringAdapter(GlobalData.getContext().getResources().getStringArray(R.array.days_complete)));
 
         day = professor.getConsultingDay();
         if(day != 0)
@@ -298,17 +301,18 @@ public class ProfessorProfileManagementBasicsFragment extends ProfileManagementB
         if(!birthCityText.getText().toString().equals(INSERT_FIELD)) professor.setBirthCity(birthCityText.getText().toString());
         professor.setSex(sex);
 
-        if(!consultingStartHour.getText().toString().trim().isEmpty()){
+        int newStartHour = Integer.parseInt(consultingStartHour.getText().toString());
+        int newStartMinute = Integer.parseInt(consultingStartMinute.getText().toString());
+        int newEndHour = Integer.parseInt(consultingEndHour.getText().toString());
+        int newEndMinute = Integer.parseInt(consultingEndMinute.getText().toString());
 
-            int sh = Integer.parseInt(consultingStartHour.getText().toString().trim());
-            int sm = Integer.parseInt(consultingStartMinute.getText().toString().trim());
-            int eh = Integer.parseInt(consultingEndHour.getText().toString().trim());
-            int em = Integer.parseInt(consultingEndMinute.getText().toString().trim());
+        if(!consultingStartHour.getText().toString().trim().isEmpty() && newStartHour>=8 && newStartHour<=19 && newEndHour>=8 && newEndHour<=19
+                && newStartMinute>=0 && newStartMinute<=59 && newEndMinute>=0 && newEndMinute<=59){
 
-            consultingSchedule.setStartHour(sh);
-            consultingSchedule.setStartMinute(sm);
-            consultingSchedule.setEndHour(eh);
-            consultingSchedule.setEndMinute(em);
+            consultingSchedule.setStartHour(newStartHour);
+            consultingSchedule.setStartMinute(newStartMinute);
+            consultingSchedule.setEndHour(newEndHour);
+            consultingSchedule.setEndMinute(newEndMinute);
         }
 
         day = consultingDaySpinner.getSelectedItemPosition()+1;
@@ -332,5 +336,45 @@ public class ProfessorProfileManagementBasicsFragment extends ProfileManagementB
                     Log.println(Log.ASSERT, "BASICS", "saved!");
             }
         });
+    }
+
+    protected class StringAdapter extends BaseAdapter {
+
+        public String[] stringArray;
+
+        public StringAdapter(String[] stringArray){
+            super();
+            this.stringArray = stringArray;
+        }
+
+        @Override
+        public int getCount() {
+            return stringArray.length;
+        }
+
+        @Override
+        public String getItem(int position) {
+            return stringArray[position];
+        }
+
+        @Override
+        public long getItemId(int position) {
+            return position;
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+
+            if(convertView == null)
+                convertView = new TextView(GlobalData.getContext());
+            TextView tv = (TextView)convertView;
+            tv.setText(stringArray[position]);
+            tv.setTextSize(GlobalData.getContext().getResources().getDimension(R.dimen.editText_textSize_small));
+            tv.setTextColor(GlobalData.getContext().getResources().getColor(R.color.black_light_transparent));
+
+            return convertView;
+        }
+
+
     }
 }

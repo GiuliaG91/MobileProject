@@ -2,7 +2,6 @@ package com.example.giuliagigi.jobplacement;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -275,7 +274,7 @@ public class ProfileManagementFragment extends Fragment implements OnActivityCha
                 convertView = new TextView(getActivity().getApplicationContext());
             TextView tv = (TextView)convertView;
             tv.setText(stringArray[position]);
-            tv.setTextColor(Color.BLACK);
+            tv.setTextColor(GlobalData.getContext().getResources().getColor(R.color.black_light_transparent));
 
             return convertView;
         }

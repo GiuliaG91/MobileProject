@@ -200,7 +200,7 @@
                                 android:text="F"
                                 android:layout_weight="1"
                                 android:id="@+id/female_checkBox"
-                                android:textColor="@color/ColorPrimaryDark"
+                                android:textColor="@color/black_light_transparent"
                                 android:buttonTint="@color/ColorPrimary"
                                 android:layout_gravity="center_horizontal" />
                             <CheckBox
@@ -208,7 +208,7 @@
                                 android:layout_height="wrap_content"
                                 android:text="M"
                                 android:layout_weight="1"
-                                android:textColor="@color/ColorPrimaryDark"
+                                android:textColor="@color/black_light_transparent"
                                 android:buttonTint="@color/ColorPrimary"
                                 android:id="@+id/male_checkBox"
                                 android:layout_gravity="center_horizontal" />

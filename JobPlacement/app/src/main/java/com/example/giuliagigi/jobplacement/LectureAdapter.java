@@ -3,7 +3,6 @@ package com.example.giuliagigi.jobplacement;
 import android.app.Activity;
 import android.content.Context;
 import android.database.DataSetObserver;
-import android.graphics.Color;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -288,7 +287,7 @@ public class LectureAdapter implements ListAdapter {
             TextView tv = (TextView)convertView;
             tv.setText(stringArray[position]);
             //tv.setTextSize(GlobalData.getContext().getResources().getDimension(R.dimen.editText_textSize_small));
-            tv.setTextColor(Color.BLACK);
+            tv.setTextColor(GlobalData.getContext().getResources().getColor(R.color.black_light_transparent));
 
             return convertView;
         }
