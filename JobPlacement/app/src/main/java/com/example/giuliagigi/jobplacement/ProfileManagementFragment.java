@@ -35,7 +35,6 @@ public class ProfileManagementFragment extends Fragment implements OnActivityCha
     protected GlobalData application;
     protected boolean hasChanged = false;
     protected View root;
-    protected boolean isNestedFragment;
     protected String title;
     protected MyBundle bundle;
     protected User user;
@@ -93,7 +92,6 @@ public class ProfileManagementFragment extends Fragment implements OnActivityCha
                     + " must implement OnInteractionListener/OnFragmentInteractionListener");
         }
 
-        isNestedFragment = false;
         hasChanged = false;
         application.registerFragment(bundleIdentifier(), this);
     }

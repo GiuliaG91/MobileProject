@@ -179,16 +179,11 @@ public class StudentProfileManagementSkillsFragment extends ProfileManagementFra
     public void onResume() {
         super.onResume();
 
-        if(init){
+        if (init) {
 
-//            int max = Math.max(degreeFragments.size(), student.getDegrees().size());
-            for(Degree d: student.getDegrees()){
+            for (Degree d : student.getDegrees()) {
 
-//                if(i>=degreeFragments.size()){
-
-                    StudentProfileManagementDegreeFragment dmf = StudentProfileManagementDegreeFragment.newInstance(this, d, student);
-//                    degreeFragments.add(dmf);
-//                }
+                StudentProfileManagementDegreeFragment dmf = StudentProfileManagementDegreeFragment.newInstance(this, d, student);
 
                 FragmentTransaction ft = getFragmentManager().beginTransaction();
                 ft.add(R.id.student_degreeList_container, dmf);
@@ -196,15 +191,11 @@ public class StudentProfileManagementSkillsFragment extends ProfileManagementFra
 
             }
 
-//            max = Math.max(languageFragments.size(), student.getLanguages().size());
-            for(Language l: student.getLanguages()){
+            for (Language l : student.getLanguages()) {
 
-//                if(j>=languageFragments.size()){
 
-                    StudentProfileManagementLanguageFragment lmf;
-                    lmf = StudentProfileManagementLanguageFragment.newInstance(this, l, student);
-//                    languageFragments.add(lmf);
-//                }
+                StudentProfileManagementLanguageFragment lmf;
+                lmf = StudentProfileManagementLanguageFragment.newInstance(this, l, student);
 
                 FragmentTransaction ft = getFragmentManager().beginTransaction();
                 ft.add(R.id.student_languageList_container, lmf);
@@ -212,15 +203,11 @@ public class StudentProfileManagementSkillsFragment extends ProfileManagementFra
 
             }
 
-//            max = Math.max(certificateFragments.size(), student.getCertificates().size());
-            for(Certificate c: student.getCertificates()){
+            for (Certificate c : student.getCertificates()) {
 
-//                if(j>=certificateFragments.size()){
 
-                    StudentProfileManagementCertificateFragment cmf;
-                    cmf = StudentProfileManagementCertificateFragment.newInstance(StudentProfileManagementSkillsFragment.this,c, student);
-//                    certificateFragments.add(cmf);
-//                }
+                StudentProfileManagementCertificateFragment cmf;
+                cmf = StudentProfileManagementCertificateFragment.newInstance(StudentProfileManagementSkillsFragment.this, c, student);
 
                 FragmentTransaction ft = getFragmentManager().beginTransaction();
                 ft.add(R.id.student_certificateList_container, cmf);
@@ -239,39 +226,12 @@ public class StudentProfileManagementSkillsFragment extends ProfileManagementFra
     public void onPause() {
         super.onPause();
 
-//        for(Fragment f: degreeFragments){
-//
-//            FragmentTransaction ft = getFragmentManager().beginTransaction();
-//            ft.remove(f);
-//            ft.commit();
-//        }
-//
-//        for(Fragment f: languageFragments){
-//
-//            FragmentTransaction ft = getFragmentManager().beginTransaction();
-//            ft.remove(f);
-//            ft.commit();
-//        }
-//
-//        for(Fragment f: certificateFragments){
-//
-//            FragmentTransaction ft = getFragmentManager().beginTransaction();
-//            ft.remove(f);
-//            ft.commit();
-//        }
-
     }
 
     @Override
     public void onDetach() {
         super.onDetach();
 
-//        for(ProfileManagementFragment f: degreeFragments)
-//            host.removeOnActivityChangedListener(f);
-//        for (ProfileManagementFragment f: languageFragments)
-//            host.removeOnActivityChangedListener(f);
-//        for (ProfileManagementFragment f: certificateFragments)
-//            host.removeOnActivityChangedListener(f);
     }
 
     @Override

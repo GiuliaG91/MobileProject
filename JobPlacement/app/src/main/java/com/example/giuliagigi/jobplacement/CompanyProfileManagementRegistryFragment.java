@@ -17,10 +17,11 @@ public class CompanyProfileManagementRegistryFragment extends ProfileManagementF
     private static final String TITLE = GlobalData.getContext().getString(R.string.profile_registry_tab);
     public static final String BUNDLE_IDENTIFIER = "COMPANYPROFILEREGISTRY";
     private static final String BUNDLE_KEY_COMPANY = "BUNDLE_KEY_COMPANY";
+    private static final String BUNDLE_KEY_INIT = "bundle_init";
 
     private Company company;
     Button addOffice;
-    ArrayList<CompanyProfileManagementOfficeFragment> officeFragments;
+    private boolean init;
 
 
     /* ---------------------- CONSTRUCTORS GETTERS SETTERS ---------------------------------------*/
@@ -33,6 +34,7 @@ public class CompanyProfileManagementRegistryFragment extends ProfileManagementF
         Bundle args = new Bundle();
         fragment.setArguments(args);
         fragment.setCompany(company);
+        fragment.setUser(company);
         return fragment;
     }
 
@@ -56,8 +58,7 @@ public class CompanyProfileManagementRegistryFragment extends ProfileManagementF
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-
-        officeFragments = new ArrayList<CompanyProfileManagementOfficeFragment>();
+        init = true;
     }
 
 
@@ -85,7 +86,6 @@ public class CompanyProfileManagementRegistryFragment extends ProfileManagementF
                 FragmentTransaction ft = getFragmentManager().beginTransaction();
                 ft.add(R.id.company_offices_container,dmf);
                 ft.commit();
-                officeFragments.add(dmf);
             }
         });
 
@@ -97,34 +97,25 @@ public class CompanyProfileManagementRegistryFragment extends ProfileManagementF
     public void onPause() {
         super.onPause();
 
-        for(Fragment f: officeFragments){
-
-            FragmentTransaction ft = getFragmentManager().beginTransaction();
-            ft.remove(f);
-            ft.commit();
-        }
-
     }
 
     @Override
     public void onResume() {
         super.onResume();
 
-        int max = Math.max(officeFragments.size(), company.getOffices().size());
-        for(int i=0;i<max;i++){
+        if(init){
 
-            if(i>=officeFragments.size()){
+            for (Office o : company.getOffices()) {
 
                 CompanyProfileManagementOfficeFragment dmf;
-                dmf = CompanyProfileManagementOfficeFragment.newInstance(this, company.getOffices().get(i), company);
-                officeFragments.add(dmf);
+                dmf = CompanyProfileManagementOfficeFragment.newInstance(this, o, company);
+
+                FragmentTransaction ft = getFragmentManager().beginTransaction();
+                ft.add(R.id.company_offices_container, dmf);
+                ft.commit();
             }
-
-            FragmentTransaction ft = getFragmentManager().beginTransaction();
-            ft.add(R.id.company_offices_container, officeFragments.get(i));
-            ft.commit();
-
         }
+
 
         setEnable(listener.isEditMode());
     }
@@ -133,8 +124,6 @@ public class CompanyProfileManagementRegistryFragment extends ProfileManagementF
     public void onDetach() {
         super.onDetach();
 
-        for(ProfileManagementFragment f: officeFragments)
-            host.removeOnActivityChangedListener(f);
     }
 
 
@@ -146,8 +135,11 @@ public class CompanyProfileManagementRegistryFragment extends ProfileManagementF
     protected void restoreStateFromBundle(Bundle savedInstanceState) {
         super.restoreStateFromBundle(savedInstanceState);
 
-        if(bundle!=null)
+        if(bundle!=null){
+
             company = (Company)bundle.get(BUNDLE_KEY_COMPANY);
+            init = bundle.getBoolean(BUNDLE_KEY_INIT);
+        }
     }
 
 
@@ -155,8 +147,9 @@ public class CompanyProfileManagementRegistryFragment extends ProfileManagementF
     protected void saveStateInBundle(Bundle outState) {
         super.saveStateInBundle(outState);
 
-        if(bundle!= null)
-            bundle.put(BUNDLE_KEY_COMPANY,company);
+        init = false;
+        bundle.put(BUNDLE_KEY_COMPANY,company);
+        bundle.putBoolean(BUNDLE_KEY_INIT,init);
     }
 
     @Override
@@ -184,7 +177,6 @@ public class CompanyProfileManagementRegistryFragment extends ProfileManagementF
     public void onOfficeDelete(CompanyProfileManagementOfficeFragment toRemove) {
 
         host.removeOnActivityChangedListener(toRemove);
-        officeFragments.remove(toRemove);
 
         FragmentTransaction ft = getFragmentManager().beginTransaction();
         ft.remove(toRemove);
