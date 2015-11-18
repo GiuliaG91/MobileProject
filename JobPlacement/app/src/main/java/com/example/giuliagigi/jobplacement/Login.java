@@ -75,7 +75,7 @@ public class Login extends ActionBarActivity {
         }
 
         final SharedPreferences sp = getPreferences(Context.MODE_PRIVATE);
-        application.setLoginPreferences(sp);
+        application.setSharedPreferences(sp);
 
 //        sp.edit().clear().apply(); // pulisce le Shared Preferences
 
@@ -284,17 +284,8 @@ public class Login extends ActionBarActivity {
                     editor.putBoolean(SHAREDPREF_LATEST_LOGIN_PREFERENCE,rememberAccount.isChecked());
                     editor.apply();
 
-                    /* caching profile infos */
-//                    GlobalData gd = (GlobalData)getApplicationContext();
-
-                    /* register an object Installation for receiving Push Notifications */
-
-//                    ParseInstallation installation = ParseInstallation.getCurrentInstallation();
-//                    installation.put("User",application.getCurrentUser());
-//                    installation.saveInBackground();
-
                     registerApplication();
-                    /* launch home activity */
+
                     Intent i = new Intent(getApplicationContext(),Home.class);
                     startActivity(i);
 

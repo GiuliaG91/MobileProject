@@ -8,7 +8,6 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 
 
 import com.parse.FindCallback;
@@ -40,7 +39,7 @@ public class GlobalData extends Application {
     CompanyOffer currentViewOffer;
     private HashMap<String,Tag> tags;
     private HashMap<String,Boolean> isCached;
-    private SharedPreferences loginPreferences;
+    private SharedPreferences sharedPreferences;
     private InboxMessage currentViewMessage;
     private static Context applicationContext;
     private String toolbarTitle;
@@ -238,14 +237,14 @@ public class GlobalData extends Application {
 
     /* ----------------------- MANAGING PREFERENCES ---------------------------------------------*/
 
-    public SharedPreferences getLoginPreferences(){
+    public SharedPreferences getSharedPreferences(){
 
-        return loginPreferences;
+        return sharedPreferences;
     }
 
-    public void setLoginPreferences(SharedPreferences loginPreferences){
+    public void setSharedPreferences(SharedPreferences sharedPreferences){
 
-        this.loginPreferences = loginPreferences;
+        this.sharedPreferences = sharedPreferences;
     }
 
     public void setToolbar(Toolbar t)

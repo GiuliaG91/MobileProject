@@ -5,7 +5,7 @@
     android:orientation="vertical"
     tools:context="com.example.giuliagigi.jobplacement.MailBoxNewFragment">
 
-    <EditText
+    <MultiAutoCompleteTextView
         android:id="@+id/recipients_list_new_message"
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -17,6 +17,25 @@
         android:textCursorDrawable="@drawable/edit_cursor"
         android:backgroundTint="@color/blue_semi_transparent"
         android:hint="@string/recipients"/>
+
+
+    <HorizontalScrollView
+        android:scrollbarFadeDuration="1"
+        android:scrollbarSize="3dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:id="@+id/recipients_tag_container"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"/>
+
+    </HorizontalScrollView>
+
+
 
     <EditText
         android:id="@+id/object_new_message"

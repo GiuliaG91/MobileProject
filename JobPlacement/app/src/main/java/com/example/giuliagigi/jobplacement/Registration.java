@@ -20,8 +20,6 @@ import android.widget.Toast;
 
 import com.parse.ParseException;
 import com.parse.ParseInstallation;
-import com.parse.ParsePush;
-import com.parse.SaveCallback;
 import com.parse.SignUpCallback;
 
 import java.util.HashSet;
@@ -325,7 +323,7 @@ public class Registration extends ActionBarActivity implements StudentRegistrati
     private void saveLoginPreferences(User newUser){
 
         /* saving credentials for next automatic login */
-        SharedPreferences sp = application.getLoginPreferences();
+        SharedPreferences sp = application.getSharedPreferences();
         if (sp != null) {
 
             SharedPreferences.Editor editor = sp.edit();

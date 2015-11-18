@@ -67,11 +67,8 @@ public class LectureSearch extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        Log.println(Log.ASSERT, "LECTURESEARCH", "onCreate. student: " + (student == null ? "null" : student.toString()));
-
         if(savedInstanceState != null){
 
-            Log.println(Log.ASSERT, "LECTURESEARCH", "restoring state");
             String tail = savedInstanceState.getString(BUNDLE_KEY_TAIL);
             MyBundle bundle = globalData.getBundle(BUNDLE_IDENTIFIER + tail);
 
@@ -149,8 +146,6 @@ public class LectureSearch extends Fragment {
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
-
-        Log.println(Log.ASSERT, "LECTURESEARCH", "saving state");
 
         String tail = student.toString();
         outState.putString(BUNDLE_KEY_TAIL, tail);

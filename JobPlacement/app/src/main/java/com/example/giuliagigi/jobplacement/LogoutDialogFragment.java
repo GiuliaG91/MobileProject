@@ -10,7 +10,6 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.widget.Toast;
 
-import com.parse.ParseInstallation;
 import com.parse.ParseUser;
 
 /**
@@ -104,7 +103,7 @@ public class LogoutDialogFragment extends DialogFragment {
 
          //updates currentUser in GlobalData
 
-        SharedPreferences sp = application.getLoginPreferences();
+        SharedPreferences sp = application.getSharedPreferences();
 
         if(sp != null){
 

@@ -1,37 +1,38 @@
 package com.example.giuliagigi.jobplacement;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.Toolbar;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.MultiAutoCompleteTextView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.parse.ParseException;
-import com.parse.ParseInstallation;
-import com.parse.ParsePush;
-import com.parse.ParseQuery;
-import com.parse.ParseUser;
 import com.parse.SaveCallback;
-import com.parse.SendCallback;
 
 import org.json.JSONException;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Calendar;
-import java.util.List;
-import java.util.StringTokenizer;
+import java.util.HashSet;
+import java.util.Set;
 
 
 public class MailBoxNewFragment extends Fragment {
@@ -47,17 +48,26 @@ public class MailBoxNewFragment extends Fragment {
     private static final String RECIPIENTS_KEY = "mailboxNew_bundle_recipients";
     private static final String OBJECT_KEY = "mailboxNew_bundle_object";
     private static final String MESSAGE_TEXT_KEY = "mailboxNew_bundle_messageText";
+    private static final String RECIPIENT_TEXT_KEY = "mailboxNew_bundle_recipientText";
+    private static final String MESSAGE_KEY = "mailboxNew_bundle_message";
     private static final String BUNDLE_IDENTIFIER_TAIL_KEY = "mailboxNew_bundle_id_tail";
 
+    public static final String SHARED_PREFERENCES_RECIPIENTS = "shared_pref_recipients";
+
     View root;
+    EditText objectEdit, messageTextEdit;
+    MultiAutoCompleteTextView recipientsEdit;
+    LinearLayout recipientTagsContainer;
+    ArrayList<View> recipientViews;
+
     InboxMessage message;
     GlobalData globalData;
     FragmentActivity activity;
+
     Boolean sendFlag;
     String bundleIdentifierTail;
+    private ArrayList<String> currentMails;
 
-
-    EditText recipientsEdit, objectEdit, messageTextEdit;
 
     ArrayList<ParseUserWrapper> recipients;
     String object, messageText;
@@ -101,53 +111,61 @@ public class MailBoxNewFragment extends Fragment {
     /* --------------------------------------------------------------------------------------------------------------------- */
 
     @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+
+        globalData = (GlobalData)getActivity().getApplication();
+        this.activity = getActivity();
+        currentMails = new ArrayList<>();
+        recipientViews = new ArrayList<>();
+    }
+
+    @Override
     public void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
         Log.println(Log.ASSERT, "MAILBOXNEW", "onCreate");
 
         setHasOptionsMenu(true);
-        globalData = (GlobalData)getActivity().getApplication();
-        activity = this.getActivity();
-
     }
 
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(final LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
         // 1) finding UI elements ----------------------------------------------------------------------------------------
         globalData.setToolbarTitle(getString(R.string.new_message_toolbar_title));
         root = inflater.inflate(R.layout.fragment_mail_box_new,container,false);
-        recipientsEdit = (EditText)root.findViewById(R.id.recipients_list_new_message);
+        recipientsEdit = (MultiAutoCompleteTextView)root.findViewById(R.id.recipients_list_new_message);
         objectEdit = (EditText) root.findViewById(R.id.object_new_message);
         messageTextEdit = (EditText) root.findViewById(R.id.body_new_message);
+        recipientTagsContainer = (LinearLayout)root.findViewById(R.id.recipients_tag_container);
 
         // 2) setting view -----------------------------------------------------------------------------------------------
         if(savedInstanceState != null){ // restoring state after rotation //////////////////////////////////////
 
             bundleIdentifierTail = savedInstanceState.getString(BUNDLE_IDENTIFIER_TAIL_KEY);
-            Log.println(Log.ASSERT, "MAILBOXNEW", "looking for a bundle with key: " + BUNDLE_IDENTIFIER_HEADER +bundleIdentifierTail);
             MyBundle b = globalData.getBundle(BUNDLE_IDENTIFIER_HEADER + bundleIdentifierTail);
 
             if(b!= null){
 
-                Log.println(Log.ASSERT, "MAILBOXNEW", "bundle found");
-                recipientsEdit.setText(b.getString(RECIPIENTS_KEY));
                 objectEdit.setText(b.getString(OBJECT_KEY));
                 messageTextEdit.setText(b.getString(MESSAGE_TEXT_KEY));
+                recipientsEdit.setText(b.getString(RECIPIENT_TEXT_KEY));
+                message = (InboxMessage)b.get(MESSAGE_KEY);
+
+                ArrayList<Object> list = b.getList(RECIPIENTS_KEY);
+                for(Object o:list)
+                    currentMails.add((String)o);
             }
         }
         else { // view is initialized for the first time (using constructor parameters) //////
 
             if(recipients != null && recipients.size() > 0){
 
-                String recipientsMails = "";
-                for(ParseUserWrapper p: recipients)
-                    recipientsMails = recipientsMails + p.getEmail() + "   ";
-
-                recipientsEdit.setText(recipientsMails);
+                for(ParseUserWrapper u:recipients)
+                    currentMails.add(u.getEmail());
             }
 
             if(object != null && object.length() > 0)
@@ -158,7 +176,61 @@ public class MailBoxNewFragment extends Fragment {
         }
 
 
-        // 3) send button ---------------------------------------------------------------------------------------------
+        // 3) recipients ---------------------------------------------------------------------------------------------
+        for(String r: currentMails)
+            addTag(inflater,r);
+
+
+        SharedPreferences sp = globalData.getSharedPreferences();
+        Set<String> knownMails = sp.getStringSet(SHARED_PREFERENCES_RECIPIENTS, new HashSet<String>());
+        String [] list = new String[knownMails.size()];
+        knownMails.toArray(list);
+
+        recipientsEdit.setAdapter(new ArrayAdapter<String>(globalData, R.layout.row_spinner, list));
+        recipientsEdit.setThreshold(2);
+        recipientsEdit.setTokenizer(new SpaceTokenizer());
+
+        recipientsEdit.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                final String newRecipient = ((String)recipientsEdit.getAdapter().getItem(position)).trim();
+                if(!currentMails.contains(newRecipient)){
+
+                    currentMails.add(newRecipient);
+                    addTag(inflater, newRecipient);
+                }
+
+            }
+        });
+
+        recipientsEdit.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                if(s.length() == 0) return;
+
+                char last = s.charAt(s.length() - 1);
+                if(last == ' ' || last == ',' || last == ';'){
+
+                    String newRecipient = s.toString().substring(0, s.length() - 1).trim();
+                    if(!currentMails.contains(newRecipient)){
+
+                        currentMails.add(newRecipient);
+                        addTag(inflater, newRecipient);
+                    }
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {}
+        });
+
+        // 4) send button ---------------------------------------------------------------------------------------------
         final Button send = (Button) root.findViewById(R.id.send_new_message_btn);
         send.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -167,17 +239,11 @@ public class MailBoxNewFragment extends Fragment {
                 ArrayList<Integer> errors = new ArrayList<Integer>();
 
                 object = ((EditText) root.findViewById(R.id.object_new_message)).getText().toString();
-                String recipientsList = ((EditText) root.findViewById(R.id.recipients_list_new_message)).getText().toString();
                 messageText = ((EditText)root.findViewById(R.id.body_new_message)).getText().toString();
 
-                StringTokenizer st = new StringTokenizer(recipientsList, ", ;");
-                ArrayList<String> recipientsMails = new ArrayList<String>();
                 int validRecipients = 0;
 
-                while (st.hasMoreTokens())
-                    recipientsMails.add(st.nextToken());
-
-                for(String r: recipientsMails){
+                for(String r: currentMails){
 
                     try {
 
@@ -228,14 +294,43 @@ public class MailBoxNewFragment extends Fragment {
 
     public void onSaveInstanceState(Bundle savedInstanceState){
 
-        Log.println(Log.ASSERT,"MAILBOXNEW", "saving to bundle with key: " + BUNDLE_IDENTIFIER_HEADER + bundleIdentifierTail);
         MyBundle b = globalData.addBundle(BUNDLE_IDENTIFIER_HEADER + bundleIdentifierTail);
         b.putString(OBJECT_KEY, objectEdit.getText().toString());
         b.putString(MESSAGE_TEXT_KEY, messageTextEdit.getText().toString());
-        b.putString(RECIPIENTS_KEY, recipientsEdit.getText().toString());
+        b.putList(RECIPIENTS_KEY, currentMails);
+        b.putString(RECIPIENT_TEXT_KEY, recipientsEdit.getText().toString());
+        b.put(MESSAGE_KEY,message);
 
         savedInstanceState.putString(BUNDLE_IDENTIFIER_TAIL_KEY, bundleIdentifierTail);
     }
+
+
+
+    /* -------------------------------------------------------------------------------------------------------------------- */
+    /* ----------------------- ADDING TAG VIEW ---------------------------------------------------------------------------- */
+    /* -------------------------------------------------------------------------------------------------------------------- */
+
+    private void addTag(final LayoutInflater inflater, final String newRecipient){
+
+        final View mytagView = inflater.inflate(R.layout.taglayout, null);
+        final TextView tagTextView = (TextView) mytagView.findViewById(R.id.tag_tv);
+        tagTextView.setText(newRecipient);
+
+        mytagView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                recipientTagsContainer.removeView(v);
+                recipientViews.remove(mytagView);
+                currentMails.remove(newRecipient);
+            }
+        });
+
+        recipientTagsContainer.addView(mytagView);
+        recipientViews.add(mytagView);
+        recipientsEdit.setText("");
+    }
+
 
 
 
@@ -278,6 +373,7 @@ public class MailBoxNewFragment extends Fragment {
                 default: break;
             }
 
+            et.setTextColor(getResources().getColor(R.color.black_light_transparent));
             container.addView(et);
         }
 
@@ -330,6 +426,7 @@ public class MailBoxNewFragment extends Fragment {
                 default: break;
             }
 
+            et.setTextColor(getResources().getColor(R.color.black_light_transparent));
             container.addView(et);
         }
 
@@ -395,23 +492,18 @@ public class MailBoxNewFragment extends Fragment {
                         /* ------------------ push notifications -------------------------------------*/
                         Installation.sendPush(recipient,
                                 "" + getString(R.string.Message_newMessage) + globalData.getUserObject().getMail());
-//                        ParseQuery pushQuery = ParseInstallation.getQuery();
-//                        pushQuery.whereEqualTo(Installation.USER_FIELD, recipient);
-//                        ParsePush push = new ParsePush();
-//
-//                        push.setQuery(pushQuery);
-//                        push.setMessage("" + getString(R.string.Message_newMessage) + globalData.getUserObject().getMail());
-//                        push.sendInBackground(new SendCallback() {
-//                            @Override
-//                            public void done(ParseException e) {
-//
-//                                if(e == null)
-//                                    Log.println(Log.ASSERT,"MAILBOXNEW", "notification ok");
-//                                else
-//                                    Log.println(Log.ASSERT,"MAILBOXNEW", "notification fail");
-//
-//                            }
-//                        });
+
+                        /* ------------------ shared preferences -------------------------------------*/
+                        SharedPreferences sp = globalData.getSharedPreferences();
+                        Set<String> knownMails = sp.getStringSet(SHARED_PREFERENCES_RECIPIENTS, new HashSet<String>());
+
+                        knownMails.add(recipient.getEmail());
+
+
+                        SharedPreferences.Editor ed = sp.edit();
+                        ed.putStringSet(SHARED_PREFERENCES_RECIPIENTS, knownMails);
+                        ed.apply();
+
                     }
 
                     Toast.makeText(globalData, "Message sent", Toast.LENGTH_SHORT).show();

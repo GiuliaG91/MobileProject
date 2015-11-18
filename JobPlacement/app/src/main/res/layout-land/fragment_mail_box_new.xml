@@ -8,7 +8,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="2"
+        android:layout_weight="3"
         android:layout_marginTop="10dp"
         android:orientation="horizontal">
 
@@ -18,7 +18,7 @@
             android:layout_weight="3"
             android:orientation="vertical">
 
-            <EditText
+            <MultiAutoCompleteTextView
                 android:id="@+id/recipients_list_new_message"
                 android:layout_width="fill_parent"
                 android:layout_height="0dp"
@@ -30,6 +30,23 @@
                 android:backgroundTint="@color/blue_semi_transparent"
                 android:textColor="@color/black_light_transparent"
                 android:hint="@string/recipients"/>
+
+            <HorizontalScrollView
+                android:scrollbarFadeDuration="1"
+                android:scrollbarSize="3dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:id="@+id/recipients_tag_container"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"/>
+
+            </HorizontalScrollView>
+
 
             <EditText
                 android:id="@+id/object_new_message"
