@@ -7,6 +7,7 @@ import android.content.res.Configuration;
 import android.content.res.TypedArray;
 import android.net.Uri;
 import android.os.PersistableBundle;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
@@ -24,6 +25,7 @@ import android.widget.Toast;
 
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 
 public class Home extends ActionBarActivity
@@ -46,7 +48,7 @@ public class Home extends ActionBarActivity
     private ActionBarDrawerToggle mDrawerToggle;
     private TypedArray ICONS;
     private String[] TITLES;
-    private Boolean init=false;
+    private Boolean init = false;
 
     /* --------- PROFILE MANAGEMENT ---------------------*/
     private boolean isEditMode;
@@ -77,12 +79,13 @@ public class Home extends ActionBarActivity
         listeners = new ArrayList<OnActivityChangedListener>();
         isEditMode = false;
 
-        // Attaching the layout to the toolbar object
         toolbar = (Toolbar) findViewById(R.id.toolbar);
-        if (toolbar != null) setSupportActionBar(toolbar);
+        if (toolbar != null){
 
-        // Setting toolbar as the ActionBar with setSupportActionBar() call
-        toolbar.setNavigationIcon(R.drawable.ic_menu_white);
+            setSupportActionBar(toolbar);
+            toolbar.setNavigationIcon(R.drawable.ic_menu_white);
+        }
+
 
       application.setToolbar(toolbar);
       //Setup Drawer
@@ -109,7 +112,7 @@ public class Home extends ActionBarActivity
             TITLES = getResources().getStringArray(R.array.Menu_items_student);
             ICONS = getResources().obtainTypedArray(R.array.StudentMenuicons);
 
-            if (init == false){
+            if (!init){
 
                 FragmentManager fragmentManager = getSupportFragmentManager();
                 TabHomeStudentFragment homeFragment = TabHomeStudentFragment.newInstance();
@@ -125,7 +128,7 @@ public class Home extends ActionBarActivity
             TITLES = getResources().getStringArray(R.array.Menu_items_Company);
             ICONS = getResources().obtainTypedArray(R.array.CompanyMenuicons);
 
-            if (init == false) {
+            if (!init) {
 
                 FragmentManager fragmentManager = getSupportFragmentManager();
                 TabHomeCompanyFragment homeFragment = TabHomeCompanyFragment.newInstance();
@@ -141,7 +144,7 @@ public class Home extends ActionBarActivity
             TITLES = getResources().getStringArray(R.array.Menu_items_Professor);
             ICONS = getResources().obtainTypedArray(R.array.ProfessorMenuicons);
 
-            if (init == false) {
+            if (!init) {
 
                 FragmentManager fragmentManager = getSupportFragmentManager();
                 TabHomeProfessorFragment homeFragment = TabHomeProfessorFragment.newInstance();
@@ -163,16 +166,11 @@ public class Home extends ActionBarActivity
             @Override
             public void onDrawerOpened(View drawerView) {
                 super.onDrawerOpened(drawerView);
-                // code here will execute once the drawer is opened( As I dont want anything happened whe drawer is
-                // open I am not going to put anything here)
             }
 
             @Override
             public void onDrawerClosed(View drawerView) {
                 super.onDrawerClosed(drawerView);
-                // Code here will execute once drawer is closed
-
-
             }
 
             @Override
@@ -188,7 +186,7 @@ public class Home extends ActionBarActivity
 
 
         /* email verification alert */
-        if (!application.getCurrentUser().isEmailVerified())
+        if (!application.getCurrentUser().isEmailVerified() && !init)
             Toast.makeText(getApplicationContext(),GlobalData.getContext().getString(R.string.string_email_not_verified),Toast.LENGTH_SHORT).show();
 
     }
@@ -259,6 +257,8 @@ public class Home extends ActionBarActivity
 
         listeners.remove(listener);
     }
+
+
 
     @Override
     public void startDeleteAccountActivity() {

@@ -22,9 +22,10 @@ public class ProfileManagementTelephoneFragment extends ProfileManagementFragmen
 
     private static final String TITLE = "Telephone";
     public static final String BUNDLE_IDENTIFIER = "PROFILETELEPHONE";
-    private static String BUNDLE_NUMBER = "bundle_number";
-    private static String BUNDLE_TYPE = "bundle_type";
-    private static String BUNDLE_HASCHANGED = "bundle_hasChanged";
+    private static final String BUNDLE_TELEPHONE = "bundle_telephone";
+    private static final String BUNDLE_NUMBER = "bundle_number";
+    private static final String BUNDLE_TYPE = "bundle_type";
+    private static final String BUNDLE_PARENT = "bundle_parent";
 
     private TelephoneFragmentInterface parent;
     private Telephone telephone;
@@ -34,6 +35,8 @@ public class ProfileManagementTelephoneFragment extends ProfileManagementFragmen
     private boolean isRemoved;
     private EditText numberText;
 
+    int type = 0;
+    String number = null, parentName;
 
     /* -------------------------------------------------------------------------------------------*/
     /* ------------------- CONSTRUCTOR GETTERS SETTERS -------------------------------------------*/
@@ -45,11 +48,12 @@ public class ProfileManagementTelephoneFragment extends ProfileManagementFragmen
 
         ProfileManagementTelephoneFragment fragment = new ProfileManagementTelephoneFragment();
 
-        Bundle args = new Bundle();
-        fragment.setArguments(args);
         fragment.setTelephone(telephone);
         fragment.setUser(user);
         fragment.parent = parent;
+
+        ProfileManagementFragment f = (ProfileManagementFragment)parent;
+        fragment.parentName = f.bundleIdentifier();
 
         return fragment;
     }
@@ -80,15 +84,20 @@ public class ProfileManagementTelephoneFragment extends ProfileManagementFragmen
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-        isNestedFragment = true;
+//        isNestedFragment = true;
         isRemoved = false;
+
+        if (telephone != null) {
+
+            if(telephone.getType() != null)
+                type = Telephone.getTypeID(telephone.getType());
+            number = telephone.getNumber();
+        }
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-        }
     }
 
     @Override
@@ -97,29 +106,12 @@ public class ProfileManagementTelephoneFragment extends ProfileManagementFragmen
 
         root = inflater.inflate(R.layout.fragment_profile_management_telephone, container, false);
 
-        int type = 0;
-        String number = null;
-        if(getArguments().getBoolean(BUNDLE_HASCHANGED)){
-
-            type = getArguments().getInt(BUNDLE_TYPE);
-            number = getArguments().getString(BUNDLE_NUMBER);
-        }
-        else{
-
-            if(telephone.getType()!=null)
-                type = Telephone.getTypeID(telephone.getType());
-            if(telephone.getNumber()!=null)
-                number = telephone.getNumber();
-        }
-
         removeButton = (Button)root.findViewById(R.id.telephone_remove_button);
         typeSelector = (Spinner)root.findViewById(R.id.telefone_type_selector);
         numberText = (EditText)root.findViewById(R.id.telephone_number_text);
         ImageView phoneIcon = (ImageView)root.findViewById(R.id.telephoneIcon);
         Drawable new_image = getResources().getDrawable(R.drawable.ic_phone);
         phoneIcon.setBackgroundDrawable(new_image);
-
-
 
         removeButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -170,19 +162,37 @@ public class ProfileManagementTelephoneFragment extends ProfileManagementFragmen
     @Override
     public void onDetach(){
         super.onDetach();
-
-        getArguments().putBoolean(BUNDLE_HASCHANGED,hasChanged);
-
-        if(hasChanged){
-            getArguments().putInt(BUNDLE_TYPE,typeSelector.getSelectedItemPosition());
-            getArguments().putString(BUNDLE_NUMBER,numberText.getText().toString());
-        }
     }
 
 
     /* -------------------------------------------------------------------------------------------*/
     /* ------------------- AUXILIARY METHODS ---------------------------------------------------*/
     /* -------------------------------------------------------------------------------------------*/
+
+    @Override
+    protected void saveStateInBundle(Bundle outstate) {
+        super.saveStateInBundle(outstate);
+
+        bundle.put(BUNDLE_TELEPHONE, telephone);
+        bundle.putInt(BUNDLE_TYPE, type);
+        bundle.putString(BUNDLE_NUMBER,number);
+        bundle.putString(BUNDLE_PARENT,parentName);
+    }
+
+    @Override
+    protected void restoreStateFromBundle(Bundle savedInstanceState) {
+        super.restoreStateFromBundle(savedInstanceState);
+
+        if(bundle != null){
+
+            telephone = (Telephone)bundle.get(BUNDLE_TELEPHONE);
+            type = bundle.getInt(BUNDLE_TYPE);
+            number = bundle.getString(BUNDLE_NUMBER);
+
+            parentName = bundle.getString(BUNDLE_PARENT);
+            parent = (TelephoneFragmentInterface)application.getFragment(parentName);
+        }
+    }
 
     @Override
     public void saveChanges() {

@@ -161,6 +161,7 @@
     <string name="string_cannot_edit">ERROR: you are not supposed to modify this account</string>
     <string name="string_email_not_verified">Your email was not verified yet. Please click on the link we sent you</string>
     <string name="profile_object_delete_failure">Some error occurred while deleting the object. Try later</string>
+    <string name="profile_number_format_exception">An invalid value was found: the related field will not be updated</string>
 
 
     <!-- ________________ DEGREE _______________________________________________________________ -->

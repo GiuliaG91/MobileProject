@@ -28,8 +28,8 @@ public class ProfileManagement extends Fragment{
     private static final String BUNDLE_KEY_IS_EDIT = "bundle_key_is_edit";
     private static final String BUNDLE_KEY_EDITABLE = "bundle_key_editable";
     private static final String BUNDLE_KEY_USER = "bundle_key_user";
-    public final String BUNDLE_IDENTIFIER = "PROFILE_MANAGEMENT;";
-    public final String BUNDLE_KEY_TAIL = "bundle_tail;";
+    public final static String BUNDLE_IDENTIFIER = "PROFILE_MANAGEMENT;";
+    public final static String BUNDLE_KEY_TAIL = "bundle_tail;";
 
 
     private GlobalData application;
@@ -96,8 +96,9 @@ public class ProfileManagement extends Fragment{
             throw new ClassCastException(activity.toString()
                     + " must implement OnInteractionListener");
         }
-        application = (GlobalData)getActivity().getApplication();
 
+        application = (GlobalData)getActivity().getApplication();
+        application.registerFragment(BUNDLE_IDENTIFIER, this);
 
     }
 
@@ -105,6 +106,7 @@ public class ProfileManagement extends Fragment{
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         host.setEditMode(isEditMode);
+
         Toolbar toolbar=application.getToolbar();
         toolbar.setTitle(R.string.ToolbarTilteProfile);
     }

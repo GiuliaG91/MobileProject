@@ -31,15 +31,17 @@ public class CompanyProfileManagementOfficeFragment extends ProfileManagementFra
     private static final String TITLE = GlobalData.getContext().getString(R.string.profile_office_tab);
 
 
-    public static final String BUNDLE_IDENTIFIER = "COMPANYPROFILEOFFICE" +
-            "";
+    public static final String BUNDLE_IDENTIFIER = "COMPANYPROFILEOFFICE";
 
-    private static String BUNDLE_TYPE = "bundle_type";
-    private static String BUNDLE_CITY = "bundle_city";
-    private static String BUNDLE_ADDRESS = "bundle_address";
-    private static String BUNDLE_CAP = "bundle_cap";
-    private static String BUNDLE_NATION = "bundle_nation";
-    private static String BUNDLE_HASCHANGED = "bundle_recycled";
+
+    private static final String BUNDLE_COMPANY = "bundle_company";
+    private static final String BUNDLE_OFFICE = "bundle_office";
+    private static final String BUNDLE_TYPE = "bundle_type";
+    private static final String BUNDLE_CITY = "bundle_city";
+    private static final String BUNDLE_ADDRESS = "bundle_address";
+    private static final String BUNDLE_CAP = "bundle_cap";
+    private static final String BUNDLE_NATION = "bundle_nation";
+    private static final String BUNDLE_PARENT = "bundle_parent";
 
     private Spinner officeType;
     private GeoLocalization geoloc;
@@ -53,7 +55,8 @@ public class CompanyProfileManagementOfficeFragment extends ProfileManagementFra
     private boolean addressChanged;
     private boolean isRemoved;
 
-
+    int type;
+    String city, address, cap, nation, parentName;
     /* -------------------------------------------------------------------------------------------*/
     /* ------------------- CONTRUCTORS -----------------------------------------------------------*/
     /* -------------------------------------------------------------------------------------------*/
@@ -66,11 +69,13 @@ public class CompanyProfileManagementOfficeFragment extends ProfileManagementFra
 
         CompanyProfileManagementOfficeFragment fragment = new CompanyProfileManagementOfficeFragment();
 
-        Bundle args = new Bundle();
-        fragment.setArguments(args);
         fragment.setOffice(office);
         fragment.setCompany(company);
+        fragment.setUser(company);
         fragment.parent = parent;
+
+        ProfileManagementFragment f = (ProfileManagementFragment)parent;
+        fragment.parentName = f.bundleIdentifier();
 
         return fragment;
     }
@@ -98,62 +103,28 @@ public class CompanyProfileManagementOfficeFragment extends ProfileManagementFra
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-        isNestedFragment = true;
         isRemoved = false;
         addressChanged = false;
+
+        if(office != null){
+
+            if(office.getOfficeType() != null)
+                type = Office.getTypeID(office.getOfficeType());
+            city = office.getOfficeCity();
+            address = office.getOfficeAddress();
+            cap = office.getOfficeCAP();
+            nation = office.getOfficeNation();
+        }
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        if (getArguments() != null) {
-        }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        int type;
-        String city, address, cap, nation;
-        if(getArguments().getBoolean(BUNDLE_HASCHANGED)){
-
-            hasChanged = true;
-            type = getArguments().getInt(BUNDLE_TYPE);
-            city = getArguments().getString(BUNDLE_CITY);
-            address = getArguments().getString(BUNDLE_ADDRESS);
-            cap = getArguments().getString(BUNDLE_CAP);
-            nation = getArguments().getString(BUNDLE_NATION);
-        }
-        else {
-
-            if(office.getOfficeType()!= null)
-                type = Office.getTypeID(office.getOfficeType());
-            else
-                type = 0;
-
-            if(office.getOfficeCity()!= null)
-                city = office.getOfficeCity();
-            else
-                city = null;
-
-            if(office.getOfficeAddress()!= null)
-                address = office.getOfficeAddress();
-            else
-                address = null;
-
-            if(office.getOfficeCAP()!=null)
-                cap = office.getOfficeCAP();
-            else
-                cap = null;
-
-            if(office.getOfficeNation()!= null)
-                nation = office.getOfficeNation();
-            else
-                nation = null;
-
-
-        }
 
         root = inflater.inflate(R.layout.fragment_office_management, container, false);
 
@@ -253,18 +224,6 @@ public class CompanyProfileManagementOfficeFragment extends ProfileManagementFra
     public void onDetach() {
 
         super.onDetach();
-
-        getArguments().putBoolean(BUNDLE_HASCHANGED,hasChanged);
-
-        if(hasChanged){
-
-            getArguments().putInt(BUNDLE_TYPE,officeType.getSelectedItemPosition());
-            getArguments().putString(BUNDLE_CITY, officeCity.getText().toString());
-            getArguments().putString(BUNDLE_ADDRESS,officeAddress.getText().toString());
-            getArguments().putString(BUNDLE_CAP,officeCAP.getText().toString());
-            getArguments().putString(BUNDLE_NATION,officeNation.getText().toString());
-        }
-
     }
 
 
@@ -272,6 +231,41 @@ public class CompanyProfileManagementOfficeFragment extends ProfileManagementFra
     /* -------------------------------------------------------------------------------------------*/
     /* ------------------- AUXILIARY METHODS -----------------------------------------------------*/
     /* -------------------------------------------------------------------------------------------*/
+
+    @Override
+    protected void saveStateInBundle(Bundle outstate) {
+        super.saveStateInBundle(outstate);
+
+        bundle.put(BUNDLE_COMPANY, company);
+        bundle.put(BUNDLE_OFFICE, office);
+        bundle.putString(BUNDLE_CITY,city);
+        bundle.putString(BUNDLE_CAP,cap);
+        bundle.putString(BUNDLE_ADDRESS,address);
+        bundle.putString(BUNDLE_NATION,nation);
+        bundle.putInt(BUNDLE_TYPE,type);
+        bundle.putString(BUNDLE_PARENT,parentName);
+    }
+
+
+    @Override
+    protected void restoreStateFromBundle(Bundle savedInstanceState) {
+        super.restoreStateFromBundle(savedInstanceState);
+
+
+        if(bundle != null){
+
+            company = (Company)bundle.get(BUNDLE_COMPANY);
+            office = (Office)bundle.get(BUNDLE_OFFICE);
+            city = bundle.getString(BUNDLE_CITY);
+            address = bundle.getString(BUNDLE_ADDRESS);
+            cap = bundle.getString(BUNDLE_CAP);
+            nation = bundle.getString(BUNDLE_NATION);
+            type = bundle.getInt(BUNDLE_TYPE);
+
+            parentName = bundle.getString(BUNDLE_PARENT);
+            parent = (OfficeFragmentInterface)application.getFragment(parentName);
+        }
+    }
 
     @Override
     public void saveChanges(){

@@ -95,6 +95,7 @@ public class ProfileManagementFragment extends Fragment implements OnActivityCha
 
         isNestedFragment = false;
         hasChanged = false;
+        application.registerFragment(bundleIdentifier(), this);
     }
 
 
@@ -143,7 +144,7 @@ public class ProfileManagementFragment extends Fragment implements OnActivityCha
     public void onDetach() {
         super.onDetach();
 
-        if(!isNestedFragment)
+//        if(!isNestedFragment)
             host.removeOnActivityChangedListener(this);
 
     }
@@ -189,13 +190,12 @@ public class ProfileManagementFragment extends Fragment implements OnActivityCha
 
     protected void restoreStateFromBundle(Bundle savedInstanceState){
 
-        Log.println(Log.ASSERT, "PROFILEMANAG", "restore from bundle");
+        profileManagement = (ProfileManagement)application.getFragment(ProfileManagement.BUNDLE_IDENTIFIER);
+
         String tail = savedInstanceState.getString(BUNDLE_KEY_TAIL);
-        Log.println(Log.ASSERT, "PROFILEMANAG", "key = " + bundleIdentifier() + tail);
         bundle = application.getBundle(bundleIdentifier() + tail);
         if(bundle != null){
 
-            Log.println(Log.ASSERT, "PROFILEMANAG", "found a bundle");
             user = (User)bundle.get(BUNDLE_KEY_USER);
             hasChanged = bundle.getBoolean(BUNDLE_KEY_HASCHANGED);
         }
@@ -203,12 +203,9 @@ public class ProfileManagementFragment extends Fragment implements OnActivityCha
 
     protected void saveStateInBundle(Bundle outstate){
 
-        Log.println(Log.ASSERT, "PROFILEMANAG", "saving to bundle");
 
         String tail = user.toString();
         outstate.putString(BUNDLE_KEY_TAIL, tail);
-
-        Log.println(Log.ASSERT, "PROFILEMANAG", "key = " + bundleIdentifier() + tail);
 
         bundle = application.addBundle(bundleIdentifier() + tail);
         bundle.put(BUNDLE_KEY_USER,user);

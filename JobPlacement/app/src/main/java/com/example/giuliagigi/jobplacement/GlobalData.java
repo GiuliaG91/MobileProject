@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.content.res.AssetManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 
@@ -51,6 +52,8 @@ public class GlobalData extends Application {
 
     /* managing profile management display rotation*/
     private HashMap<String,MyBundle> bundles;
+    private HashMap<String,Fragment> fragments;
+
 
     /**************NEW OFFER BUNDLE**********/
     private Bundle offerBundle;
@@ -165,6 +168,7 @@ public class GlobalData extends Application {
         getTags();
 
         bundles = new HashMap<String,MyBundle>();
+        fragments = new HashMap<>();
     }
 
 
@@ -289,9 +293,6 @@ public class GlobalData extends Application {
 
     public MyBundle addBundle(String key){
 
-//        if(latestDisplayedUser!=null)
-//            key = key + ";" + latestDisplayedUser.getObjectId();
-
         if(bundles.containsKey(key))
             bundles.remove(key);
 
@@ -302,22 +303,28 @@ public class GlobalData extends Application {
 
     public MyBundle getBundle(String key){
 
-//        if(latestDisplayedUser!=null)
-//            key = key + ";" + latestDisplayedUser.getObjectId();
-
         return bundles.get(key);
     }
 
     public void removeBundle(String key){
-
-        if(latestDisplayedUser!=null)
-            key = key + ";" + latestDisplayedUser.getObjectId();
 
         if(!bundles.containsKey(key))
             return;
 
         MyBundle toBeRemoved = bundles.get(key);
         bundles.remove(toBeRemoved);
+    }
+
+    public void registerFragment(String name, Fragment fragment) {
+
+        if(fragments.containsKey(name))
+            fragments.remove(name);
+
+        fragments.put(name, fragment);
+    }
+
+    public Fragment getFragment(String name) {
+        return fragments.get(name);
     }
 
     public void setLatestDisplayedUser(User latestDisplayedUser) {

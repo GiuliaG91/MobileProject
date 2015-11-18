@@ -25,13 +25,16 @@ import java.util.GregorianCalendar;
 public class StudentProfileManagementCertificateFragment extends ProfileManagementFragment {
 
     public static final String BUNDLE_IDENTIFIER = "STUDENTPROFILECERTIFICATE";
-    private static final String BUNDLE_HASCHANGED = "Bundle_hasChanged";
+    private static final String BUNDLE_STUDENT = "Bundle_student";
+    private static final String BUNDLE_CERTIFICATE = "Bundle_certificate";
     private static final String BUNDLE_TITLE = "Bundle_title";
     private static final String BUNDLE_DESCRIPTION = "Bundle_description";
     private static final String BUNDLE_DATE_DAY = "Bundle_date_day";
     private static final String BUNDLE_DATE_MONTH = "Bundle_date_month";
     private static final String BUNDLE_DATE_YEAR = "Bundle_date_year";
     private static final String BUNDLE_MARK = "Bundle_mark";
+    private static final String BUNDLE_KEY_PARENT = "bundle_parent";
+
 
     private static final int DESCRIPTION_PREVIEW_LENGTH = 10;
 
@@ -44,6 +47,8 @@ public class StudentProfileManagementCertificateFragment extends ProfileManageme
     private String completeDescription;
     private boolean isRemoved, dateChanged;
 
+    String title = null, description = null, date = null, mark = null, parentName = null;
+
     private Student student;
     private CertificateFragmentInterface parent;
 
@@ -53,12 +58,16 @@ public class StudentProfileManagementCertificateFragment extends ProfileManageme
 
     public StudentProfileManagementCertificateFragment() {}
     public static StudentProfileManagementCertificateFragment newInstance(CertificateFragmentInterface parent, Certificate certificate,Student student) {
+
         StudentProfileManagementCertificateFragment fragment = new StudentProfileManagementCertificateFragment();
-        Bundle args = new Bundle();
-        fragment.setArguments(args);
         fragment.setCertificate(certificate);
         fragment.setStudent(student);
+        fragment.setUser(student);
         fragment.parent = parent;
+
+        ProfileManagementFragment f = (ProfileManagementFragment)parent;
+        fragment.parentName = f.bundleIdentifier();
+
         return fragment;
     }
 
@@ -82,33 +91,14 @@ public class StudentProfileManagementCertificateFragment extends ProfileManageme
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-        isNestedFragment = true;
+//        isNestedFragment = true;
         isRemoved = false;
-    }
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-        }
-    }
-
-    @Override
-    public View onCreateView(final LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-
-        root = inflater.inflate(R.layout.fragment_student_profile_management_certificate, container, false);
-
-        String title = null, description = null, date = null, mark = null;
-
-        if(getArguments().getBoolean(BUNDLE_HASCHANGED)){
-
-
-        }
-        else {
+        if(certificate != null){
 
             title = certificate.getTitle();
             mark = certificate.getMark();
+
             completeDescription = certificate.getDescription();
             if(completeDescription != null && completeDescription.length()>DESCRIPTION_PREVIEW_LENGTH)
                 description = completeDescription.substring(0,DESCRIPTION_PREVIEW_LENGTH) + "...";
@@ -123,6 +113,18 @@ public class StudentProfileManagementCertificateFragment extends ProfileManageme
                 date = day + "/" + month + "/" + year;
             }
         }
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+    }
+
+    @Override
+    public View onCreateView(final LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+
+        root = inflater.inflate(R.layout.fragment_student_profile_management_certificate, container, false);
 
         titleText = (EditText)root.findViewById(R.id.certificate_title_text);
         markText = (EditText)root.findViewById(R.id.certificate_mark_text);
@@ -258,7 +260,6 @@ public class StudentProfileManagementCertificateFragment extends ProfileManageme
             }
         });
 
-//        setEnable(listener.isEditMode());
         return root;
     }
 
@@ -266,23 +267,54 @@ public class StudentProfileManagementCertificateFragment extends ProfileManageme
     public void onDetach() {
         super.onDetach();
 
-        getArguments().putBoolean(BUNDLE_HASCHANGED,hasChanged);
-
-        if(hasChanged){
-
-            getArguments().putInt(BUNDLE_DATE_DAY,day);
-            getArguments().putInt(BUNDLE_DATE_MONTH,month);
-            getArguments().putInt(BUNDLE_DATE_YEAR,year);
-            getArguments().putString(BUNDLE_DESCRIPTION,completeDescription);
-            getArguments().putString(BUNDLE_TITLE,titleText.getText().toString());
-            getArguments().putString(BUNDLE_MARK,markText.getText().toString());
-        }
     }
 
 
     /* -------------------------------------------------------------------------------------------*/
     /* ---------------------------- AUXILIARY METHODS --------------------------------------------*/
     /* -------------------------------------------------------------------------------------------*/
+
+    @Override
+    protected void saveStateInBundle(Bundle outstate) {
+        super.saveStateInBundle(outstate);
+
+        bundle.put(BUNDLE_STUDENT, student);
+        bundle.put(BUNDLE_CERTIFICATE, certificate);
+        bundle.putString(BUNDLE_DESCRIPTION, completeDescription);
+        bundle.putString(BUNDLE_TITLE, title);
+        bundle.putString(BUNDLE_MARK, mark);
+        bundle.putInt(BUNDLE_DATE_DAY, day);
+        bundle.putInt(BUNDLE_DATE_MONTH, month);
+        bundle.putInt(BUNDLE_DATE_YEAR, year);
+        bundle.putString(BUNDLE_KEY_PARENT,parentName);
+    }
+
+
+    @Override
+    protected void restoreStateFromBundle(Bundle savedInstanceState) {
+        super.restoreStateFromBundle(savedInstanceState);
+
+        if(bundle != null){
+
+            student = (Student)bundle.get(BUNDLE_STUDENT);
+            certificate = (Certificate)bundle.get(BUNDLE_CERTIFICATE);
+
+            completeDescription = bundle.getString(BUNDLE_DESCRIPTION);
+            if(completeDescription != null && completeDescription.length()>DESCRIPTION_PREVIEW_LENGTH)
+                description = completeDescription.substring(0,DESCRIPTION_PREVIEW_LENGTH) + "...";
+            else
+                description = completeDescription;
+
+            title = bundle.getString(BUNDLE_TITLE);
+            mark = bundle.getString(BUNDLE_MARK);
+            day = bundle.getInt(BUNDLE_DATE_DAY);
+            month = bundle.getInt(BUNDLE_DATE_MONTH);
+            year = bundle.getInt(BUNDLE_DATE_YEAR);
+
+            parentName = bundle.getString(BUNDLE_KEY_PARENT);
+            parent = (CertificateFragmentInterface)application.getFragment(parentName);
+        }
+    }
 
     @Override
     protected void setEnable(boolean enable) {

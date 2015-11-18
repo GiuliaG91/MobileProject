@@ -29,14 +29,15 @@ public class StudentProfileManagementRegistryFragment extends ProfileManagementF
     private static final String TITLE = GlobalData.getContext().getString(R.string.profile_registry_tab);
     public static final String BUNDLE_IDENTIFIER = "STUDENTPROFILEREGISTRY";
     private static final String BUNDLE_KEY_STUDENT = "BUNDLE_KEY_STUDENT";
+    private static final String BUNDLE_KEY_INIT = "bundle_init";
 
     private Student student;
-    private boolean addressChanged;
+    private boolean addressChanged, init;
     private EditText addressText,cityText,postalText,nationText;
     private Button phonePlus;
     private GeoLocalization geoloc;
 
-    private ArrayList<ProfileManagementTelephoneFragment> telephoneFragments;
+//    private ArrayList<ProfileManagementTelephoneFragment> telephoneFragments;
 
 
     /* ----------------- CONTRUCTORS GETTERS SETTERS ---------------------------------------------*/
@@ -72,7 +73,8 @@ public class StudentProfileManagementRegistryFragment extends ProfileManagementF
     public void onAttach(Activity activity) {
         super.onAttach(activity);
 
-        telephoneFragments = new ArrayList<ProfileManagementTelephoneFragment>();
+        init = true;
+//        telephoneFragments = new ArrayList<ProfileManagementTelephoneFragment>();
         addressChanged = false;
     }
 
@@ -144,7 +146,7 @@ public class StudentProfileManagementRegistryFragment extends ProfileManagementF
                 FragmentTransaction ft = getFragmentManager().beginTransaction();
                 ft.add(R.id.student_phones_container,tf);
                 ft.commit();
-                telephoneFragments.add(tf);
+//                telephoneFragments.add(tf);
             }
         });
 
@@ -162,20 +164,24 @@ public class StudentProfileManagementRegistryFragment extends ProfileManagementF
     public void onResume() {
         super.onResume();
 
-        int max = Math.max(telephoneFragments.size(), student.getPhones().size());
-        for(int i=0;i<max;i++){
+        if(init){
 
-            if(i>=telephoneFragments.size()){
+//            int max = Math.max(telephoneFragments.size(), student.getPhones().size());
+            for(Telephone t:student.getPhones()){
 
-                ProfileManagementTelephoneFragment tf;
-                tf = ProfileManagementTelephoneFragment.newInstance(this, student.getPhones().get(i), student);
-                telephoneFragments.add(tf);
+//                if(i>=telephoneFragments.size()){
+
+                    ProfileManagementTelephoneFragment tf;
+                    tf = ProfileManagementTelephoneFragment.newInstance(this, t, student);
+//                    telephoneFragments.add(tf);
+//                }
+
+                FragmentTransaction ft = getFragmentManager().beginTransaction();
+                ft.add(R.id.student_phones_container,tf);
+                ft.commit();
             }
-
-            FragmentTransaction ft = getFragmentManager().beginTransaction();
-            ft.add(R.id.student_phones_container,telephoneFragments.get(i));
-            ft.commit();
         }
+
 
         setEnable(listener.isEditMode());
     }
@@ -184,20 +190,20 @@ public class StudentProfileManagementRegistryFragment extends ProfileManagementF
     public void onPause() {
         super.onPause();
 
-        for (ProfileManagementTelephoneFragment tf: telephoneFragments){
-
-            FragmentTransaction ft = getFragmentManager().beginTransaction();
-            ft.remove(tf);
-            ft.commit();
-        }
+//        for (ProfileManagementTelephoneFragment tf: telephoneFragments){
+//
+//            FragmentTransaction ft = getFragmentManager().beginTransaction();
+//            ft.remove(tf);
+//            ft.commit();
+//        }
     }
 
     @Override
     public void onDetach() {
         super.onDetach();
 
-        for(ProfileManagementTelephoneFragment tf:telephoneFragments)
-            host.removeOnActivityChangedListener(tf);
+//        for(ProfileManagementTelephoneFragment tf:telephoneFragments)
+//            host.removeOnActivityChangedListener(tf);
     }
 
 
@@ -208,16 +214,22 @@ public class StudentProfileManagementRegistryFragment extends ProfileManagementF
     protected void restoreStateFromBundle(Bundle savedInstanceState) {
         super.restoreStateFromBundle(savedInstanceState);
 
-        if(bundle!=null)
+        if(bundle!=null){
+
             student = (Student)bundle.get(BUNDLE_KEY_STUDENT);
+            init = bundle.getBoolean(BUNDLE_KEY_INIT);
+        }
     }
 
     @Override
     protected void saveStateInBundle(Bundle outState) {
         super.saveStateInBundle(outState);
 
-        if(bundle!=null)
+        init = false;
+        if(bundle!=null){
             bundle.put(BUNDLE_KEY_STUDENT,student);
+            bundle.putBoolean(BUNDLE_KEY_INIT,init);
+        }
     }
 
 
@@ -284,7 +296,7 @@ public class StudentProfileManagementRegistryFragment extends ProfileManagementF
     public void onTelephoneDelete(ProfileManagementTelephoneFragment toRemove) {
 
         host.removeOnActivityChangedListener(toRemove);
-        telephoneFragments.remove(toRemove);
+//        telephoneFragments.remove(toRemove);
 
         FragmentTransaction ft = getFragmentManager().beginTransaction();
         ft.remove(toRemove);

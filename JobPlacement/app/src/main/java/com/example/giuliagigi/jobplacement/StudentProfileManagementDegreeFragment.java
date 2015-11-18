@@ -34,14 +34,17 @@ public class StudentProfileManagementDegreeFragment extends ProfileManagementFra
     private static final String TITLE = "Degree";
     public static final String BUNDLE_IDENTIFIER = "STUDENTPROFILEDEGREE";
 
-    private static String BUNDLE_TYPE = "bundle_type";
-    private static String BUNDLE_STUDY = "bundle_study";
-    private static String BUNDLE_MARK = "bundle_mark";
-    private static String BUNDLE_LOUD = "bundle_loud";
-    private static String BUNDLE_DATE_DAY = "bundle_date_day";
-    private static String BUNDLE_DATE_MONTH = "bundle_date_month";
-    private static String BUNDLE_DATE_YEAR = "bundle_date_year";
-    private static String BUNDLE_HASCHANGED = "bundle_recycled";
+    private static final String BUNDLE_DEGREE = "bundle_degree";
+    private static final String BUNDLE_STUDENT = "bundle_student";
+    private static final String BUNDLE_TYPE = "bundle_type";
+    private static final String BUNDLE_STUDY = "bundle_study";
+    private static final String BUNDLE_MARK = "bundle_mark";
+    private static final String BUNDLE_LOUD = "bundle_loud";
+    private static final String BUNDLE_DATE_DAY = "bundle_date_day";
+    private static final String BUNDLE_DATE_MONTH = "bundle_date_month";
+    private static final String BUNDLE_DATE_YEAR = "bundle_date_year";
+    private static final String BUNDLE_PARENT = "bundle_parent";
+
 
     private DegreeFragmentInterface parent;
     private Student student;
@@ -56,8 +59,11 @@ public class StudentProfileManagementDegreeFragment extends ProfileManagementFra
 
     private boolean isRemoved, degreeDateChanged;
     private Date dateDegree;
-    private int day,month,year;
-
+    private Integer day = null, month = null,year = null;
+    private int type = 0,study = 0;
+    private Integer mark = null;
+    private boolean loud = false;
+    private String parentName;
 
 
     /* -------------------------------------------------------------------------------------------*/
@@ -68,12 +74,17 @@ public class StudentProfileManagementDegreeFragment extends ProfileManagementFra
         super();
     }
     public static StudentProfileManagementDegreeFragment newInstance(DegreeFragmentInterface parent, Degree degree,Student student) {
+
         StudentProfileManagementDegreeFragment fragment = new StudentProfileManagementDegreeFragment();
-        Bundle args = new Bundle();
-        fragment.setArguments(args);
+
         fragment.setDegree(degree);
         fragment.parent = parent;
         fragment.setStudent(student);
+        fragment.setUser(student);
+
+        ProfileManagementFragment f = (ProfileManagementFragment)parent;
+        fragment.parentName = f.bundleIdentifier();
+
         return fragment;
 
     }
@@ -91,6 +102,11 @@ public class StudentProfileManagementDegreeFragment extends ProfileManagementFra
         this.student = student;
     }
 
+    public void setParent(DegreeFragmentInterface parent){
+
+        this.parent = parent;
+    }
+
     public String bundleIdentifier(){
 
         return BUNDLE_IDENTIFIER;
@@ -103,68 +119,39 @@ public class StudentProfileManagementDegreeFragment extends ProfileManagementFra
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-        isNestedFragment = true;
+
         isRemoved = false;
         degreeDateChanged = false;
+
+        if(degree != null){
+
+            if(degree.getDegreeDate() != null){
+
+                day = degree.getDegreeDate().getDay();
+                month = degree.getDegreeDate().getMonth();
+                year = degree.getDegreeDate().getYear() + 1900;
+            }
+
+            mark = degree.getMark();
+            loud = degree.getLoud();
+
+            if(degree.getStudies() != null)
+                study = Degree.getStudyID(degree.getStudies());
+
+            if(degree.getType() != null)
+                type = Degree.getTypeID(degree.getType());
+        }
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-        }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        int type,study;
-        Integer mark = null;
-        String date = null;
-        boolean loud;
-        if(getArguments().getBoolean(BUNDLE_HASCHANGED)){
-
-            type = getArguments().getInt(BUNDLE_TYPE);
-            study = getArguments().getInt(BUNDLE_STUDY);
-            mark = getArguments().getInt(BUNDLE_MARK);
-            day = getArguments().getInt(BUNDLE_DATE_DAY);
-            month = getArguments().getInt(BUNDLE_DATE_MONTH);
-            year = getArguments().getInt(BUNDLE_DATE_YEAR);
-            date = day+"/"+month+"/"+year;
-            loud = getArguments().getBoolean(BUNDLE_LOUD);
-        }
-        else {
-
-            if(degree.getType()!= null)
-                type = Degree.getTypeID(degree.getType());
-            else
-                type = 0;
-
-            if(degree.getStudies()!= null)
-                study = Degree.getStudyID(degree.getStudies());
-            else
-                study = 0;
-
-            if(degree.getMark()!= null)
-                mark = degree.getMark();
-
-            if(degree.getDegreeDate()!= null){
-
-                day = degree.getDegreeDate().getDay();
-                month = degree.getDegreeDate().getMonth();
-                year = degree.getDegreeDate().getYear() + 1900;
-                date = day+"/"+month+"/"+year;
-
-            } else {
-                date = INSERT_FIELD;
-            }
-
-            if(degree.getLoud()!=null){
-                loud = degree.getLoud();
-            }
-
-        }
 
         root = inflater.inflate(R.layout.fragment_degree_management, container, false);
 
@@ -309,28 +296,50 @@ public class StudentProfileManagementDegreeFragment extends ProfileManagementFra
 
         super.onDetach();
 
-        getArguments().putBoolean(BUNDLE_HASCHANGED,hasChanged);
-
-        if(hasChanged){
-
-            getArguments().putInt(BUNDLE_TYPE,degreeType.getSelectedItemPosition());
-            getArguments().putInt(BUNDLE_STUDY,degreeStudies.getSelectedItemPosition());
-
-            try{ if(!degreeMark.getText().toString().equals(INSERT_FIELD)) getArguments().putInt(BUNDLE_MARK, Integer.parseInt(degreeMark.getText().toString())); }
-            catch (NumberFormatException e){ getArguments().putInt(BUNDLE_MARK, degree.getMark()); }
-
-            getArguments().putBoolean(BUNDLE_LOUD, hasLoud.isChecked());
-            getArguments().putInt(BUNDLE_DATE_DAY, day);
-            getArguments().putInt(BUNDLE_DATE_MONTH, month);
-            getArguments().putInt(BUNDLE_DATE_YEAR,year);
-        }
-
     }
 
 
     /* -------------------------------------------------------------------------------------------*/
     /* -------------------- AUXILIARY METHODS ----------------------------------------------------*/
     /* -------------------------------------------------------------------------------------------*/
+
+    @Override
+    protected void saveStateInBundle(Bundle outstate) {
+        super.saveStateInBundle(outstate);
+
+
+        bundle.put(BUNDLE_DEGREE,degree);
+        bundle.put(BUNDLE_STUDENT, student);
+        bundle.putBoolean(BUNDLE_LOUD, loud);
+        bundle.putInt(BUNDLE_TYPE, type);
+        bundle.putInt(BUNDLE_STUDY, study);
+        bundle.putInt(BUNDLE_MARK, mark);
+        bundle.putInt(BUNDLE_DATE_DAY, day);
+        bundle.putInt(BUNDLE_DATE_MONTH, month);
+        bundle.putInt(BUNDLE_DATE_YEAR, year);
+        bundle.putString(BUNDLE_PARENT,parentName);
+    }
+
+    @Override
+    protected void restoreStateFromBundle(Bundle savedInstanceState) {
+        super.restoreStateFromBundle(savedInstanceState);
+
+        if(bundle != null){
+
+            degree = (Degree)bundle.get(BUNDLE_DEGREE);
+            student = (Student)bundle.get(BUNDLE_STUDENT);
+            loud = bundle.getBoolean(BUNDLE_LOUD);
+            type = bundle.getInt(BUNDLE_TYPE);
+            study = bundle.getInt(BUNDLE_STUDY);
+            mark = bundle.getInt(BUNDLE_MARK);
+            day = bundle.getInt(BUNDLE_DATE_DAY);
+            month = bundle.getInt(BUNDLE_DATE_MONTH);
+            year = bundle.getInt(BUNDLE_DATE_YEAR);
+
+            parentName = bundle.getString(BUNDLE_PARENT);
+            parent = (DegreeFragmentInterface)application.getFragment(parentName);
+        }
+    }
 
     @Override
     public void saveChanges(){

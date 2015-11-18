@@ -24,12 +24,13 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class ProfileManagementBasicsFragment extends ProfileManagementFragment {
 
     private static final String TITLE = GlobalData.getContext().getString(R.string.profile_basics_tab);
+    public static final String BUNDLE_IDENTIFIER = "PROFILEMANAGEMENTBASICS";
+
     protected ImageView profilePhoto;
     protected TextView emailVerified;
     protected ImageView emailVerifiedIcon;
     protected CircleImageView editButton;
-    public static final String BUNDLE_IDENTIFIER = "PROFILEMANAGEMENTBASICS";
-    private static final String BUNDLE_KEY_PROFILE = "bundle_key_profile";
+
 
 
     /* ---------------------- CONSTRUCTORS GETTERS SETTERS ---------------------------------------*/
@@ -141,6 +142,8 @@ public class ProfileManagementBasicsFragment extends ProfileManagementFragment {
 
         if(editButton != null){
 
+            Log.println(Log.ASSERT, "PROFILEBASICS", "setting background");
+
             if(enable)
                 editButton.setBackgroundResource(R.drawable.save_button);
             else
@@ -154,23 +157,6 @@ public class ProfileManagementBasicsFragment extends ProfileManagementFragment {
         super.saveChanges();
     }
 
-
-    @Override
-    protected void saveStateInBundle(Bundle outstate) {
-        super.saveStateInBundle(outstate);
-
-        bundle.put(BUNDLE_KEY_PROFILE, profileManagement);
-    }
-
-    @Override
-    protected void restoreStateFromBundle(Bundle savedInstanceState) {
-        super.restoreStateFromBundle(savedInstanceState);
-
-        if(bundle != null){
-
-            profileManagement = (ProfileManagement)bundle.get(BUNDLE_KEY_PROFILE);
-        }
-    }
 
     protected void setBasicsView(){
 
@@ -210,8 +196,11 @@ public class ProfileManagementBasicsFragment extends ProfileManagementFragment {
             }
         }
 
+        Log.println(Log.ASSERT, "PROFILEBASICS", "profileManagement editable: " + profileManagement.isEditable());
+
         if(profileManagement.isEditable()){
 
+            Log.println(Log.ASSERT, "PROFILEBASICS", "setting click listener");
             editButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

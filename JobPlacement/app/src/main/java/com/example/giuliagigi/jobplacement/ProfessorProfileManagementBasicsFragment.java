@@ -16,6 +16,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.parse.ParseException;
 import com.parse.SaveCallback;
@@ -75,15 +76,17 @@ public class ProfessorProfileManagementBasicsFragment extends ProfileManagementB
     public void onAttach(Activity activity) {
         super.onAttach(activity);
 
+        if(professor != null){
+
+            day = professor.getConsultingDay();
+            consultingSchedule = professor.getConsultingSchedule();
+        }
     }
 
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        consultingSchedule = new Schedule(0,0,0,0);
-        day = 0;
     }
 
     @Override
@@ -118,7 +121,7 @@ public class ProfessorProfileManagementBasicsFragment extends ProfileManagementB
         consultingEndHour = (EditText)root.findViewById(R.id.consulting_endHour_editText);
         consultingEndMinute = (EditText)root.findViewById(R.id.consulting_endMinute_editText);
 
-        if(consultingSchedule != null && consultingSchedule.getStartHour() != 0){
+        if(consultingSchedule != null){
 
             consultingStartHour.setText("" + consultingSchedule.getStartHour());
             consultingStartMinute.setText("" + consultingSchedule.getStartMinute());
@@ -130,7 +133,7 @@ public class ProfessorProfileManagementBasicsFragment extends ProfileManagementB
 
         day = professor.getConsultingDay();
         if(day != 0)
-            consultingDaySpinner.setSelection(day -1);
+            consultingDaySpinner.setSelection(day-1);
 
         birthPicker = (TextView)root.findViewById(R.id.professor_birth_et);
         if(professor.getBirth() == null){
@@ -254,11 +257,6 @@ public class ProfessorProfileManagementBasicsFragment extends ProfileManagementB
             day = bundle.getInt(BUNDLE_KEY_DAY);
             consultingSchedule = (Schedule)bundle.get(BUNDLE_KEY_SCHEDULE);
         }
-        else {
-
-            day = professor.getConsultingDay();
-            consultingSchedule = professor.getConsultingSchedule();
-        }
     }
 
     @Override
@@ -304,18 +302,24 @@ public class ProfessorProfileManagementBasicsFragment extends ProfileManagementB
         if(!birthCityText.getText().toString().equals(INSERT_FIELD)) professor.setBirthCity(birthCityText.getText().toString());
         professor.setSex(sex);
 
-        int newStartHour = Integer.parseInt(consultingStartHour.getText().toString());
-        int newStartMinute = Integer.parseInt(consultingStartMinute.getText().toString());
-        int newEndHour = Integer.parseInt(consultingEndHour.getText().toString());
-        int newEndMinute = Integer.parseInt(consultingEndMinute.getText().toString());
+        try{
+            int newStartHour = Integer.parseInt(consultingStartHour.getText().toString());
+            int newStartMinute = Integer.parseInt(consultingStartMinute.getText().toString());
+            int newEndHour = Integer.parseInt(consultingEndHour.getText().toString());
+            int newEndMinute = Integer.parseInt(consultingEndMinute.getText().toString());
 
-        if(!consultingStartHour.getText().toString().trim().isEmpty() && newStartHour>=8 && newStartHour<=19 && newEndHour>=8 && newEndHour<=19
-                && newStartMinute>=0 && newStartMinute<=59 && newEndMinute>=0 && newEndMinute<=59){
+            if(!consultingStartHour.getText().toString().trim().isEmpty() && newStartHour>=8 && newStartHour<=19 && newEndHour>=8 && newEndHour<=19
+                    && newStartMinute>=0 && newStartMinute<=59 && newEndMinute>=0 && newEndMinute<=59){
 
-            consultingSchedule.setStartHour(newStartHour);
-            consultingSchedule.setStartMinute(newStartMinute);
-            consultingSchedule.setEndHour(newEndHour);
-            consultingSchedule.setEndMinute(newEndMinute);
+                consultingSchedule.setStartHour(newStartHour);
+                consultingSchedule.setStartMinute(newStartMinute);
+                consultingSchedule.setEndHour(newEndHour);
+                consultingSchedule.setEndMinute(newEndMinute);
+            }
+        }
+        catch (NumberFormatException e){
+
+            Toast.makeText(getActivity().getApplicationContext(), getActivity().getResources().getString(R.string.profile_number_format_exception), Toast.LENGTH_SHORT).show();
         }
 
         day = consultingDaySpinner.getSelectedItemPosition()+1;

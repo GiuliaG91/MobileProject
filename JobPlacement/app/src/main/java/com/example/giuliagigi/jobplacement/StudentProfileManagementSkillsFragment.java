@@ -35,14 +35,15 @@ public class StudentProfileManagementSkillsFragment extends ProfileManagementFra
     private static final String TITLE = GlobalData.getContext().getString(R.string.profile_skills_tab);
     public static final String BUNDLE_IDENTIFIER = "STUDENTPROFILESKILLS";
     private static final String BUNDLE_KEY_STUDENT = "BUNDLE_KEY_STUDENT";
+    private static final String BUNDLE_KEY_INIT = "bundle_init";
 
     private Student student;
-    private boolean editable;
+    private boolean editable, init;
     Button addDegree, addLanguage,addCertificate, curriculum;
     TextView curriculumName;
-    ArrayList<StudentProfileManagementDegreeFragment> degreeFragments;
-    ArrayList<StudentProfileManagementLanguageFragment> languageFragments;
-    ArrayList<StudentProfileManagementCertificateFragment> certificateFragments;
+//    ArrayList<StudentProfileManagementDegreeFragment> degreeFragments;
+//    ArrayList<StudentProfileManagementLanguageFragment> languageFragments;
+//    ArrayList<StudentProfileManagementCertificateFragment> certificateFragments;
 
     /*----------------------- CONSTRUCTORS ------------------------------------------------------*/
 
@@ -82,16 +83,15 @@ public class StudentProfileManagementSkillsFragment extends ProfileManagementFra
     public void onAttach(Activity activity) {
         super.onAttach(activity);
 
-        degreeFragments = new ArrayList<StudentProfileManagementDegreeFragment>();
-        languageFragments = new ArrayList<StudentProfileManagementLanguageFragment>();
-        certificateFragments = new ArrayList<StudentProfileManagementCertificateFragment>();
+        init = true;
+//        degreeFragments = new ArrayList<StudentProfileManagementDegreeFragment>();
+//        languageFragments = new ArrayList<StudentProfileManagementLanguageFragment>();
+//        certificateFragments = new ArrayList<StudentProfileManagementCertificateFragment>();
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-        }
     }
 
     @Override
@@ -112,7 +112,7 @@ public class StudentProfileManagementSkillsFragment extends ProfileManagementFra
                 FragmentTransaction ft = getFragmentManager().beginTransaction();
                 ft.add(R.id.student_degreeList_container,dmf);
                 ft.commit();
-                degreeFragments.add(dmf);
+//                degreeFragments.add(dmf);
             }
         });
 
@@ -126,7 +126,7 @@ public class StudentProfileManagementSkillsFragment extends ProfileManagementFra
                 FragmentTransaction ft = getFragmentManager().beginTransaction();
                 ft.add(R.id.student_languageList_container,lmf);
                 ft.commit();
-                languageFragments.add(lmf);
+//                languageFragments.add(lmf);
             }
         });
 
@@ -141,7 +141,7 @@ public class StudentProfileManagementSkillsFragment extends ProfileManagementFra
                 FragmentTransaction ft = getFragmentManager().beginTransaction();
                 ft.add(R.id.student_certificateList_container,cmf);
                 ft.commit();
-                certificateFragments.add(cmf);
+//                certificateFragments.add(cmf);
             }
         });
 
@@ -179,52 +179,57 @@ public class StudentProfileManagementSkillsFragment extends ProfileManagementFra
     public void onResume() {
         super.onResume();
 
-        int max = Math.max(degreeFragments.size(), student.getDegrees().size());
-        for(int i=0;i<max;i++){
+        if(init){
 
-            if(i>=degreeFragments.size()){
+//            int max = Math.max(degreeFragments.size(), student.getDegrees().size());
+            for(Degree d: student.getDegrees()){
 
-                StudentProfileManagementDegreeFragment dmf = StudentProfileManagementDegreeFragment.newInstance(this, student.getDegrees().get(i), student);
-                degreeFragments.add(dmf);
+//                if(i>=degreeFragments.size()){
+
+                    StudentProfileManagementDegreeFragment dmf = StudentProfileManagementDegreeFragment.newInstance(this, d, student);
+//                    degreeFragments.add(dmf);
+//                }
+
+                FragmentTransaction ft = getFragmentManager().beginTransaction();
+                ft.add(R.id.student_degreeList_container, dmf);
+                ft.commit();
+
             }
 
-            FragmentTransaction ft = getFragmentManager().beginTransaction();
-            ft.add(R.id.student_degreeList_container, degreeFragments.get(i));
-            ft.commit();
+//            max = Math.max(languageFragments.size(), student.getLanguages().size());
+            for(Language l: student.getLanguages()){
 
-        }
+//                if(j>=languageFragments.size()){
 
-        max = Math.max(languageFragments.size(), student.getLanguages().size());
-        for(int j=0;j<max;j++){
+                    StudentProfileManagementLanguageFragment lmf;
+                    lmf = StudentProfileManagementLanguageFragment.newInstance(this, l, student);
+//                    languageFragments.add(lmf);
+//                }
 
-            if(j>=languageFragments.size()){
+                FragmentTransaction ft = getFragmentManager().beginTransaction();
+                ft.add(R.id.student_languageList_container, lmf);
+                ft.commit();
 
-                StudentProfileManagementLanguageFragment lmf;
-                lmf = StudentProfileManagementLanguageFragment.newInstance(this, student.getLanguages().get(j), student);
-                languageFragments.add(lmf);
             }
 
-            FragmentTransaction ft = getFragmentManager().beginTransaction();
-            ft.add(R.id.student_languageList_container, languageFragments.get(j));
-            ft.commit();
+//            max = Math.max(certificateFragments.size(), student.getCertificates().size());
+            for(Certificate c: student.getCertificates()){
 
-        }
+//                if(j>=certificateFragments.size()){
 
-        max = Math.max(certificateFragments.size(), student.getCertificates().size());
-        for(int j=0;j<max;j++){
+                    StudentProfileManagementCertificateFragment cmf;
+                    cmf = StudentProfileManagementCertificateFragment.newInstance(StudentProfileManagementSkillsFragment.this,c, student);
+//                    certificateFragments.add(cmf);
+//                }
 
-            if(j>=certificateFragments.size()){
+                FragmentTransaction ft = getFragmentManager().beginTransaction();
+                ft.add(R.id.student_certificateList_container, cmf);
+                ft.commit();
 
-                StudentProfileManagementCertificateFragment cmf;
-                cmf = StudentProfileManagementCertificateFragment.newInstance(StudentProfileManagementSkillsFragment.this,student.getCertificates().get(j), student);
-                certificateFragments.add(cmf);
             }
-
-            FragmentTransaction ft = getFragmentManager().beginTransaction();
-            ft.add(R.id.student_certificateList_container, certificateFragments.get(j));
-            ft.commit();
-
         }
+
+
 
 
         setEnable(listener.isEditMode());
@@ -234,26 +239,26 @@ public class StudentProfileManagementSkillsFragment extends ProfileManagementFra
     public void onPause() {
         super.onPause();
 
-        for(Fragment f: degreeFragments){
-
-            FragmentTransaction ft = getFragmentManager().beginTransaction();
-            ft.remove(f);
-            ft.commit();
-        }
-
-        for(Fragment f: languageFragments){
-
-            FragmentTransaction ft = getFragmentManager().beginTransaction();
-            ft.remove(f);
-            ft.commit();
-        }
-
-        for(Fragment f: certificateFragments){
-
-            FragmentTransaction ft = getFragmentManager().beginTransaction();
-            ft.remove(f);
-            ft.commit();
-        }
+//        for(Fragment f: degreeFragments){
+//
+//            FragmentTransaction ft = getFragmentManager().beginTransaction();
+//            ft.remove(f);
+//            ft.commit();
+//        }
+//
+//        for(Fragment f: languageFragments){
+//
+//            FragmentTransaction ft = getFragmentManager().beginTransaction();
+//            ft.remove(f);
+//            ft.commit();
+//        }
+//
+//        for(Fragment f: certificateFragments){
+//
+//            FragmentTransaction ft = getFragmentManager().beginTransaction();
+//            ft.remove(f);
+//            ft.commit();
+//        }
 
     }
 
@@ -261,12 +266,12 @@ public class StudentProfileManagementSkillsFragment extends ProfileManagementFra
     public void onDetach() {
         super.onDetach();
 
-        for(ProfileManagementFragment f: degreeFragments)
-            host.removeOnActivityChangedListener(f);
-        for (ProfileManagementFragment f: languageFragments)
-            host.removeOnActivityChangedListener(f);
-        for (ProfileManagementFragment f: certificateFragments)
-            host.removeOnActivityChangedListener(f);
+//        for(ProfileManagementFragment f: degreeFragments)
+//            host.removeOnActivityChangedListener(f);
+//        for (ProfileManagementFragment f: languageFragments)
+//            host.removeOnActivityChangedListener(f);
+//        for (ProfileManagementFragment f: certificateFragments)
+//            host.removeOnActivityChangedListener(f);
     }
 
     @Override
@@ -389,16 +394,23 @@ public class StudentProfileManagementSkillsFragment extends ProfileManagementFra
     protected void restoreStateFromBundle(Bundle savedInstanceState) {
         super.restoreStateFromBundle(savedInstanceState);
 
-        if(bundle!=null)
+        if(bundle!=null){
+
             student = (Student)bundle.get(BUNDLE_KEY_STUDENT);
+            init = bundle.getBoolean(BUNDLE_KEY_INIT);
+        }
     }
 
     @Override
     protected void saveStateInBundle(Bundle outState) {
         super.saveStateInBundle(outState);
 
-        if(bundle!=null)
+        init = false;
+        if(bundle!=null){
+
             bundle.put(BUNDLE_KEY_STUDENT,student);
+            bundle.putBoolean(BUNDLE_KEY_INIT , init);
+        }
     }
 
     @Override
@@ -434,7 +446,7 @@ public class StudentProfileManagementSkillsFragment extends ProfileManagementFra
     public void onCertificateDelete(StudentProfileManagementCertificateFragment toRemove) {
 
         host.removeOnActivityChangedListener(toRemove);
-        certificateFragments.remove(toRemove);
+//        certificateFragments.remove(toRemove);
 
 
         FragmentTransaction ft = getFragmentManager().beginTransaction();
@@ -446,7 +458,7 @@ public class StudentProfileManagementSkillsFragment extends ProfileManagementFra
     public void onDegreeDelete(StudentProfileManagementDegreeFragment toRemove) {
 
         host.removeOnActivityChangedListener(toRemove);
-        degreeFragments.remove(toRemove);
+//        degreeFragments.remove(toRemove);
 
         FragmentTransaction ft = getFragmentManager().beginTransaction();
         ft.remove(toRemove);
@@ -457,7 +469,7 @@ public class StudentProfileManagementSkillsFragment extends ProfileManagementFra
     public void onLanguageDelete(StudentProfileManagementLanguageFragment toRemove) {
 
         host.removeOnActivityChangedListener(toRemove);
-        languageFragments.remove(toRemove);
+//        languageFragments.remove(toRemove);
 
         FragmentTransaction ft = getFragmentManager().beginTransaction();
         ft.remove(toRemove);

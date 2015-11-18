@@ -2,6 +2,7 @@ package com.example.giuliagigi.jobplacement;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,10 +20,11 @@ public class StudentProfileManagementLanguageFragment extends ProfileManagementF
 
     private static final String TITLE = "Language";
     public static final String BUNDLE_IDENTIFIER = "STUDENTPROFILELANGUAGE";
-
-    private static String BUNDLE_DESCRIPTION = "bundle_description";
-    private static String BUNDLE_LEVEL = "bundle_level";
-    private static String BUNDLE_HASCHANGED = "bundle_recycled";
+    public static final String BUNDLE_KEY_LANGUAGE = "bundle_language";
+    public static final String BUNDLE_KEY_STUDENT = "bundle_student";
+    public static final String BUNDLE_KEY_LEVEL = "bundle_level";
+    public static final String BUNDLE_KEY_DESCRIPTION = "bundle_description";
+    public static final String BUNDLE_KEY_PARENT = "bundle_parent";
 
     private LanguageFragmentInterface parent;
     private Student student;
@@ -32,6 +34,9 @@ public class StudentProfileManagementLanguageFragment extends ProfileManagementF
     private EditText languageDesc;
     Button  delete;
 
+    private int currentLevel = 0;
+    private String currentDescription = null, parentName = null;
+
     private boolean isRemoved;
 
 
@@ -40,12 +45,17 @@ public class StudentProfileManagementLanguageFragment extends ProfileManagementF
     public StudentProfileManagementLanguageFragment() { super(); }
 
     public static StudentProfileManagementLanguageFragment newInstance(LanguageFragmentInterface parent, Language language,Student student) {
+
         StudentProfileManagementLanguageFragment fragment = new StudentProfileManagementLanguageFragment();
-        Bundle args = new Bundle();
-        fragment.setArguments(args);
+
         fragment.setLanguage(language);
         fragment.setStudent(student);
+        fragment.setUser(student);
         fragment.parent = parent;
+
+        ProfileManagementFragment f = (ProfileManagementFragment)parent;
+        fragment.parentName = f.bundleIdentifier();
+
         return fragment;
     }
 
@@ -73,46 +83,30 @@ public class StudentProfileManagementLanguageFragment extends ProfileManagementF
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-        isNestedFragment = true;
         isRemoved = false;
+
+        if(language != null){
+
+            if(language.getLevel() != null)
+                currentLevel = Language.getLevelID(language.getLevel());
+            currentDescription = language.getDescription();
+        }
+
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-        }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        int level;
-        String description;
-        if (getArguments().getBoolean(BUNDLE_HASCHANGED)) {
-
-            level = getArguments().getInt(BUNDLE_LEVEL);
-            description = getArguments().getString(BUNDLE_DESCRIPTION);
-
-        } else {
-
-            if (language.getLevel() != null)
-                level = Language.getLevelID(language.getLevel());
-            else
-                level = 0;
-
-            if (language.getDescription() != null)
-                description = language.getDescription();
-            else
-                description = null;
-        }
-
         root = inflater.inflate(R.layout.fragment_student_profile_management_language, container, false);
 
         languageLevel = (Spinner) root.findViewById(R.id.language_management_spinnerLevel);
         languageLevel.setAdapter(new StringAdapter(Language.LEVELS));
-        languageLevel.setSelection(level);
-
+        languageLevel.setSelection(currentLevel);
 
         delete = (Button) root.findViewById(R.id.language_management_delete_button);
         delete.setOnClickListener(new View.OnClickListener() {
@@ -153,8 +147,8 @@ public class StudentProfileManagementLanguageFragment extends ProfileManagementF
         });
 
         languageDesc = (EditText) root.findViewById(R.id.language_management_description_area);
-        if (description != null)
-            languageDesc.setText(String.valueOf(description));
+        if (currentDescription != null)
+            languageDesc.setText(String.valueOf(currentDescription));
         else
             languageDesc.setText(INSERT_FIELD);
 
@@ -164,24 +158,46 @@ public class StudentProfileManagementLanguageFragment extends ProfileManagementF
         for (EditText et : textFields)
             et.addTextChangedListener(hasChangedListener);
 
-//        setEnable(listener.isEditMode());
         return root;
     }
 
     @Override
     public void onDetach() {
         super.onDetach();
-
-        getArguments().putBoolean(BUNDLE_HASCHANGED,hasChanged);
-
-        if(hasChanged){
-
-            getArguments().putInt(BUNDLE_LEVEL,languageLevel.getSelectedItemPosition());
-            getArguments().putString(BUNDLE_DESCRIPTION, languageDesc.getText().toString());
-        }
     }
 
     /* ----------------- AUXILIARY METHODS ----------------------------------------------------- */
+
+    @Override
+    protected void saveStateInBundle(Bundle outstate) {
+        super.saveStateInBundle(outstate);
+
+        bundle.put(BUNDLE_KEY_LANGUAGE, language);
+        bundle.put(BUNDLE_KEY_STUDENT, student);
+
+        currentLevel = languageLevel.getSelectedItemPosition();
+        currentDescription = languageDesc.getText().toString();
+        bundle.putString(BUNDLE_KEY_DESCRIPTION, currentDescription);
+        bundle.putInt(BUNDLE_KEY_LEVEL,currentLevel);
+        bundle.putString(BUNDLE_KEY_PARENT,parentName);
+
+    }
+
+    @Override
+    protected void restoreStateFromBundle(Bundle savedInstanceState) {
+        super.restoreStateFromBundle(savedInstanceState);
+
+        if(bundle != null){
+
+            student = (Student)bundle.get(BUNDLE_KEY_STUDENT);
+            language = (Language)bundle.get(BUNDLE_KEY_LANGUAGE);
+            currentLevel = bundle.getInt(BUNDLE_KEY_LEVEL);
+            currentDescription = bundle.getString(BUNDLE_KEY_DESCRIPTION);
+
+            parentName = bundle.getString(BUNDLE_KEY_PARENT);
+            parent = (LanguageFragmentInterface)application.getFragment(parentName);
+        }
+    }
 
     @Override
     public void saveChanges(){
