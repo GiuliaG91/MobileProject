@@ -44,4 +44,5 @@
 
     <dimen name="profile_photo_height_port">300dp</dimen>
 
+    <dimen name="line_profile_height">1dp</dimen>
 </resources>

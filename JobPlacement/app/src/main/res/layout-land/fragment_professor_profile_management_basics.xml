@@ -7,25 +7,26 @@
     android:id="@+id/frag_professor_profile_management_basics"
     tools:context="com.example.giuliagigi.jobplacement.ProfessorProfileManagementBasicsFragment">
 
-
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="horizontal">
+            android:orientation="vertical">
 
             <RelativeLayout
                 android:orientation="vertical"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="0.4"
+                android:layout_width="fill_parent"
+                android:layout_height="0dp"
+                android:layout_weight="0.3"
                 android:id="@+id/basics_profile_photo_container">
-                <!-- android:background="@drawable/user_icon"-->
 
                 <ImageView
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_alignParentBottom="true"
+                    android:layout_height="@dimen/profile_photo_height_port"
                     android:background="@drawable/user_icon"
                     android:scaleType="centerCrop"
                     android:id="@+id/basics_profilePhoto"/>
@@ -34,7 +35,7 @@
                 <LinearLayout
                     android:orientation="horizontal"
                     android:layout_width="fill_parent"
-                    android:layout_height="200dp"
+                    android:layout_height="fill_parent"
                     android:gravity="bottom"
                     android:layout_alignParentBottom="true"
                     android:weightSum="1"
@@ -43,7 +44,7 @@
 
                     <LinearLayout
                         android:layout_width="0dp"
-                        android:layout_height="wrap_content"
+                        android:layout_height="fill_parent"
                         android:orientation="vertical"
                         android:background="#ffffff"
                         android:alpha=".5"
@@ -55,11 +56,12 @@
                             android:layout_weight="0.2"
                             android:textAppearance="?android:attr/textAppearanceMedium"
                             android:text="@string/profile_person_fragment_name_title"
+                            android:id="@+id/professor_name_area"
                             android:backgroundTint="@color/blue_semi_transparent"
                             android:textCursorDrawable="@drawable/edit_cursor"
-                            android:id="@+id/professor_name_area"
                             android:gravity="bottom"
                             android:paddingLeft="10dp"
+                            android:background="#00000000"
                             android:paddingBottom="5dp"
                             android:textColor="@color/black" />
 
@@ -70,18 +72,20 @@
                             android:textAppearance="?android:attr/textAppearanceMedium"
                             android:text="@string/profile_person_fragment_surname_title"
                             android:gravity="bottom"
+                            android:background="#00000000"
+                            android:id="@+id/professor_surname_area"
                             android:backgroundTint="@color/blue_semi_transparent"
                             android:textCursorDrawable="@drawable/edit_cursor"
-                            android:id="@+id/professor_surname_area"
                             android:paddingLeft="10dp"
                             android:paddingBottom="5dp"
                             android:textColor="@color/black"
                             android:paddingTop="5dp" />
                     </LinearLayout>
+
                     <de.hdodenhof.circleimageview.CircleImageView
                         android:layout_width="70dp"
                         android:layout_height="70dp"
-                        android:layout_marginLeft="20dp"
+                        android:layout_marginLeft="30dp"
                         android:id="@+id/profile_edit_button"
 
                         />
@@ -89,11 +93,6 @@
 
             </RelativeLayout>
 
-
-            <ScrollView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1">
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
@@ -143,12 +142,19 @@
                             android:layout_weight="1"
                             android:textColor="@color/black_light_transparent"
                             android:background="#00000000"
-                            android:textSize="20dp"
                             android:backgroundTint="@color/blue_semi_transparent"
                             android:textCursorDrawable="@drawable/edit_cursor"
+                            android:textSize="20dp"
                             android:paddingLeft="10dp"
                             android:paddingTop="5dp"
                             android:enabled="false"/>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/line_profile_height"
+                            android:background="@drawable/line_background"
+                            android:layout_marginRight="20dp">
+                        </View>
 
                     </LinearLayout>
 
@@ -156,6 +162,7 @@
                 </LinearLayout>
 
                 <!-- end email area -->
+
                 <!-- consulenza -->
 
                 <LinearLayout
@@ -195,14 +202,15 @@
                             android:orientation="horizontal"
                             android:layout_width="fill_parent"
                             android:layout_height="wrap_content"
+                            android:paddingLeft="10dp"
                             android:paddingTop="2dp">
 
                             <Spinner
                                 android:id="@+id/consulting_day_spinner"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:paddingLeft="10dp"
-                                android:paddingTop="5dp"/>
+                                android:paddingTop="5dp"
+                                android:layout_marginRight="10dp"/>
 
                             <EditText
                                 android:id="@+id/consulting_startHour_editText"
@@ -267,6 +275,13 @@
                                 android:textSize="@dimen/textView_textSize"  />
                         </LinearLayout>
 
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/line_profile_height"
+                            android:background="@drawable/line_background"
+                            android:layout_marginRight="20dp">
+                        </View>
+
 
                     </LinearLayout>
 
@@ -274,6 +289,7 @@
                 </LinearLayout>
 
                 <!-- fine consulenza -->
+
                 <!-- gender area -->
                 <LinearLayout
                     android:orientation="horizontal" android:layout_width="match_parent"
@@ -331,13 +347,20 @@
                                 android:text="M"
                                 android:layout_weight="1"
                                 android:textColor="@color/black_light_transparent"
-                                android:buttonTint="@color/ColorPrimary"
                                 android:id="@+id/male_checkBox"
                                 android:layout_gravity="center_horizontal" />
 
 
-
                         </LinearLayout>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/line_profile_height"
+                            android:background="@drawable/line_background"
+                            android:layout_marginTop="3dp"
+                            android:layout_marginRight="20dp">
+                        </View>
+
                     </LinearLayout>
 
 
@@ -387,11 +410,16 @@
                             android:layout_weight="1"
                             android:textColor="@color/black_light_transparent"
                             android:background="#00000000"
-                            android:backgroundTint="@color/blue_semi_transparent"
-                            android:textCursorDrawable="@drawable/edit_cursor"
                             android:textSize="20dp"
                             android:paddingLeft="10dp"
                             android:paddingTop="5dp" />
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/line_profile_height"
+                            android:background="@drawable/line_background"
+                            android:layout_marginRight="20dp">
+                        </View>
 
                     </LinearLayout>
 
@@ -443,11 +471,16 @@
                             android:layout_weight="1"
                             android:textColor="@color/black_light_transparent"
                             android:background="#00000000"
-                            android:backgroundTint="@color/blue_semi_transparent"
-                            android:textCursorDrawable="@drawable/edit_cursor"
                             android:textSize="20dp"
                             android:paddingLeft="10dp"
                             android:paddingTop="5dp" />
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/line_profile_height"
+                            android:background="@drawable/line_background"
+                            android:layout_marginRight="20dp">
+                        </View>
 
                     </LinearLayout>
 
@@ -510,11 +543,10 @@
                 <!-- end verified -->
 
             </LinearLayout>
-            </ScrollView>
 
         </LinearLayout>
 
-
+    </ScrollView>
 
 
 
