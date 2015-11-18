@@ -3,6 +3,7 @@
     <color name="ColorPrimary">#3F51B5</color>
     <color name="ColorPrimaryDark">#283593</color>
     <color name="tabsScrollColor">#3F51B5</color>
+    <color name="linkColor">#0017ff</color>
     <color name="tabsColor">#8aededed</color>
     <color name="buttonColor">#240070fc</color>
     <color name="ColorPrimaryTransparent">#d5ddec</color>
@@ -16,6 +17,7 @@
     <color name="background">#e5e5e5</color>
     <color name="half_black">#808080</color>
     <color name="white">#fafafa</color>
+    <color name="black">#000000</color>
     <color name="white_pressed">#f1f1f1</color>
     <color name="pink">#e91e63</color>
     <color name="pink_pressed">#ec407a</color>

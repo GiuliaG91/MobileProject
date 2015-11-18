@@ -10,7 +10,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
+import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -124,12 +124,25 @@ public class ProfessorProfileManagementBasicsFragment extends ProfileManagementB
         if(consultingSchedule != null){
 
             consultingStartHour.setText("" + consultingSchedule.getStartHour());
-            consultingStartMinute.setText("" + consultingSchedule.getStartMinute());
+
+            if(consultingSchedule.getStartMinute()<10){
+                consultingStartMinute.setText("0" + consultingSchedule.getStartMinute());
+            } else {
+                consultingStartMinute.setText("" + consultingSchedule.getStartMinute());
+            }
+
             consultingEndHour.setText("" + consultingSchedule.getEndHour());
-            consultingEndMinute.setText("" + consultingSchedule.getEndMinute());
+
+            if(consultingSchedule.getEndMinute()<10){
+                consultingEndMinute.setText("0" + consultingSchedule.getEndMinute());
+            } else {
+                consultingEndMinute.setText("" + consultingSchedule.getEndMinute());
+            }
         }
 
-        consultingDaySpinner.setAdapter(new StringAdapter(GlobalData.getContext().getResources().getStringArray(R.array.days_complete)));
+        ArrayAdapter<String> roomAdapter = new ArrayAdapter<String>(GlobalData.getContext(),R.layout.days_spinner_row,GlobalData.getContext().getResources().getStringArray(R.array.days_complete));
+        consultingDaySpinner.setAdapter(roomAdapter);
+
 
         day = professor.getConsultingDay();
         if(day != 0)
@@ -345,43 +358,5 @@ public class ProfessorProfileManagementBasicsFragment extends ProfileManagementB
         });
     }
 
-    protected class StringAdapter extends BaseAdapter {
 
-        public String[] stringArray;
-
-        public StringAdapter(String[] stringArray){
-            super();
-            this.stringArray = stringArray;
-        }
-
-        @Override
-        public int getCount() {
-            return stringArray.length;
-        }
-
-        @Override
-        public String getItem(int position) {
-            return stringArray[position];
-        }
-
-        @Override
-        public long getItemId(int position) {
-            return position;
-        }
-
-        @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
-
-            if(convertView == null)
-                convertView = new TextView(GlobalData.getContext());
-            TextView tv = (TextView)convertView;
-            tv.setText(stringArray[position]);
-            tv.setTextSize(GlobalData.getContext().getResources().getDimension(R.dimen.editText_textSize_small));
-            tv.setTextColor(GlobalData.getContext().getResources().getColor(R.color.black_light_transparent));
-
-            return convertView;
-        }
-
-
-    }
 }

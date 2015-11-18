@@ -7,103 +7,116 @@
     android:padding="20dp"
     tools:context="com.example.giuliagigi.jobplacement.ProfileManagementAccountFragment">
 
-
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:padding="5dp">
+        android:layout_height="match_parent"
+        android:layout_weight="1">
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_changeuser"
-            android:layout_gravity="center"
-            android:paddingRight="10dp"/>
-
-        <Button
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/string_account_change_username"
-            android:layout_marginLeft="10dp"
-            android:background="@drawable/button_background"
-            android:textColor="@color/ColorPrimaryDark"
-            android:id="@+id/account_changeUsername_button"
-            />
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-    </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:padding="5dp">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="5dp">
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_changepass"
-            android:layout_gravity="center"
-            android:paddingRight="10dp"/>
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_changeuser"
+                    android:layout_gravity="center"
+                    android:paddingRight="10dp"/>
 
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/string_account_change_password"
-            android:layout_marginLeft="10dp"
-            android:background="@drawable/button_background"
-            android:textColor="@color/ColorPrimaryDark"
-            android:id="@+id/account_changePassword_button" />
+                <Button
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/string_account_change_username"
+                    android:layout_marginLeft="10dp"
+                    android:background="@drawable/button_background"
+                    android:textColor="@color/ColorPrimaryDark"
+                    android:id="@+id/account_changeUsername_button"
+                    />
 
-    </LinearLayout>
+            </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:padding="5dp">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="5dp">
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_sendemail"
-            android:layout_gravity="center"
-            android:paddingRight="10dp"/>
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_changepass"
+                    android:layout_gravity="center"
+                    android:paddingRight="10dp"/>
 
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:background="@drawable/button_background"
-            android:textColor="@color/ColorPrimaryDark"
-            android:text="@string/string_account_resend_mail"
-            android:id="@+id/account_sendVerification_button" />
+                <Button
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/string_account_change_password"
+                    android:layout_marginLeft="10dp"
+                    android:background="@drawable/button_background"
+                    android:textColor="@color/ColorPrimaryDark"
+                    android:id="@+id/account_changePassword_button" />
 
-    </LinearLayout>
+            </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:padding="5dp">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="5dp">
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_waste"
-            android:layout_gravity="center"
-            android:paddingRight="10dp"/>
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_sendemail"
+                    android:layout_gravity="center"
+                    android:paddingRight="10dp"/>
 
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:text="@string/string_account_delete"
-            android:background="@drawable/button_background"
-            android:textColor="@color/ColorPrimaryDark"
-            android:id="@+id/account_deleteAccount_button" />
+                <Button
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:background="@drawable/button_background"
+                    android:textColor="@color/ColorPrimaryDark"
+                    android:text="@string/string_account_resend_mail"
+                    android:id="@+id/account_sendVerification_button" />
 
-    </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="5dp">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_waste"
+                    android:layout_gravity="center"
+                    android:paddingRight="10dp"/>
+
+                <Button
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:text="@string/string_account_delete"
+                    android:background="@drawable/button_background"
+                    android:textColor="@color/ColorPrimaryDark"
+                    android:id="@+id/account_deleteAccount_button" />
+
+            </LinearLayout>
+        </LinearLayout>
+
+    </ScrollView>
 
 
 </LinearLayout>

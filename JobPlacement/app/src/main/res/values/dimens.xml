@@ -40,6 +40,8 @@
     <dimen name="hours_size_land">13dp</dimen>
     <dimen name = "LECTUREITEM_Title_textSize_land">13dp</dimen>
 
+    <dimen name="consulting_edit_width">35dp</dimen>
+
     <dimen name="profile_photo_height_port">300dp</dimen>
 
 </resources>

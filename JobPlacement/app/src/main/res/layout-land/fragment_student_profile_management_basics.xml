@@ -44,7 +44,9 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:layout_weight=".8">
+                    android:background="#ffffff"
+                    android:alpha=".5"
+                    android:layout_weight=".9">
 
                     <EditText
                         android:layout_width="fill_parent"
@@ -59,7 +61,7 @@
                         android:gravity="bottom"
                         android:paddingLeft="10dp"
                         android:paddingBottom="5dp"
-                        android:textColor="#ffffff" />
+                        android:textColor="@color/black" />
 
                     <EditText
                         android:layout_width="fill_parent"
@@ -73,12 +75,14 @@
                         android:textCursorDrawable="@drawable/edit_cursor"
                         android:id="@+id/student_surname_area"
                         android:paddingLeft="10dp"
-                        android:textColor="#ffffff"
+                        android:paddingBottom="5dp"
+                        android:textColor="@color/black"
                         android:paddingTop="5dp" />
                 </LinearLayout>
                     <de.hdodenhof.circleimageview.CircleImageView
                         android:layout_width="70dp"
                         android:layout_height="70dp"
+                        android:layout_marginLeft="20dp"
                         android:id="@+id/profile_edit_button"
 
                         />
