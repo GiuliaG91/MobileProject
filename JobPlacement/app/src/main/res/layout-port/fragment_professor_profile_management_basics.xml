@@ -202,17 +202,18 @@
                                 android:id="@+id/consulting_day_spinner"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:paddingLeft="10dp"
-                                android:paddingTop="5dp"/>
+                                android:paddingTop="5dp"
+                                android:layout_marginRight="10dp"/>
 
                             <EditText
                                 android:id="@+id/consulting_startHour_editText"
-                                android:layout_width="wrap_content"
+                                android:layout_width="@dimen/consulting_edit_width"
                                 android:layout_height="wrap_content"
                                 android:inputType="number"
                                 android:textColor="@color/black_light_transparent"
                                 android:backgroundTint="@color/blue_semi_transparent"
                                 android:textCursorDrawable="@drawable/edit_cursor"
+                                android:gravity="right"
                                 android:textSize="@dimen/textView_textSize" />
 
                             <TextView
@@ -225,12 +226,13 @@
 
                             <EditText
                                 android:id="@+id/consulting_startMinute_editText"
-                                android:layout_width="wrap_content"
+                                android:layout_width="@dimen/consulting_edit_width"
                                 android:layout_height="wrap_content"
                                 android:inputType="number"
                                 android:textColor="@color/black_light_transparent"
                                 android:backgroundTint="@color/blue_semi_transparent"
                                 android:textCursorDrawable="@drawable/edit_cursor"
+                                android:gravity="right"
                                 android:textSize="@dimen/textView_textSize"  />
 
                             <TextView
@@ -242,13 +244,14 @@
 
                             <EditText
                                 android:id="@+id/consulting_endHour_editText"
-                                android:layout_width="wrap_content"
+                                android:layout_width="@dimen/consulting_edit_width"
                                 android:layout_height="wrap_content"
                                 android:inputType="number"
                                 android:textColor="@color/black_light_transparent"
                                 android:backgroundTint="@color/blue_semi_transparent"
                                 android:textCursorDrawable="@drawable/edit_cursor"
-                                android:textSize="@dimen/textView_textSize"  />
+                                android:textSize="@dimen/textView_textSize"
+                                android:gravity="right" />
 
                             <TextView
                                 android:text=":"
@@ -259,12 +262,13 @@
 
                             <EditText
                                 android:id="@+id/consulting_endMinute_editText"
-                                android:layout_width="wrap_content"
+                                android:layout_width="@dimen/consulting_edit_width"
                                 android:layout_height="wrap_content"
                                 android:inputType="number"
                                 android:textColor="@color/black_light_transparent"
                                 android:backgroundTint="@color/blue_semi_transparent"
                                 android:textCursorDrawable="@drawable/edit_cursor"
+                                android:gravity="right"
                                 android:textSize="@dimen/textView_textSize"  />
                         </LinearLayout>
 

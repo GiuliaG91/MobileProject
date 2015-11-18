@@ -132,7 +132,7 @@ public class ProfessorProfileManagementBasicsFragment extends ProfileManagementB
 
         //consultingDaySpinner.setAdapter(new StringAdapter(GlobalData.getContext().getResources().getStringArray(R.array.days_complete)));
 
-        ArrayAdapter<String> roomAdapter = new ArrayAdapter<String>(GlobalData.getContext(),R.layout.row_spinner,GlobalData.getContext().getResources().getStringArray(R.array.days_complete));
+        ArrayAdapter<String> roomAdapter = new ArrayAdapter<String>(GlobalData.getContext(),R.layout.days_spinner_row,GlobalData.getContext().getResources().getStringArray(R.array.days_complete));
         consultingDaySpinner.setAdapter(roomAdapter);
 
 
