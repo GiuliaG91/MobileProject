@@ -147,58 +147,6 @@ public class Lecture extends ParseObject implements Comparable{
     }
 
 
-
-//    public void setStartHour(int startHour){
-//
-//        this.schedule.setStartHour(startHour);
-//    }
-//
-//    public void setEndHour(int endHour){
-//
-//        this.schedule.setEndHour(endHour);
-//    }
-//
-//    public void setStartMinute(int startMinute){
-//
-//        this.schedule.setStartMinute(startMinute);
-//    }
-//
-//    public void setEndMinute(int endMinute){
-//
-//        this.schedule.setEndMinute(endMinute);
-//    }
-
-//    public void setNumOverlapse(int num){
-//        this.numOverlapse = num;
-//    }
-//
-//    public int getNumOverlapse(){
-//        return this.numOverlapse;
-//    }
-//
-//    public void addLectureOverlapse(Lecture l){
-//        this.lectureOverlapse.add(l);
-//    }
-//
-//    public ArrayList<Lecture> getLectureOverlapse(){
-//        return this.lectureOverlapse;
-//    }
-//
-//    public boolean containsOverlapse(Lecture other){
-//        if(lectureOverlapse.contains(other)) return true;
-//        else return false;
-//    }
-//
-//    public boolean isShown(){
-//        return this.isShown;
-//    }
-//
-//    public void setShown(boolean b){
-//        this.isShown = b;
-//    }
-
-
-
     // --------------------------------------------------------------------
     // ------------ END GETTERS AND SETTERS -------------------------------
     // --------------------------------------------------------------------

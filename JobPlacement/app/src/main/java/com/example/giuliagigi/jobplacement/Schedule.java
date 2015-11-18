@@ -124,8 +124,17 @@ public class Schedule {
 
 
     public String toString(){
-
-        return getStartHour() + ":" + getStartMinute() + " - " + getEndHour() + ":" + getEndMinute();
+        if(getStartMinute()<10){
+            if(getEndMinute()<10){
+                return getStartHour() + ":0" + getStartMinute() + " - " + getEndHour() + ":0" + getEndMinute();
+            }else{
+                return getStartHour() + ":0" + getStartMinute() + " - " + getEndHour() + ":" + getEndMinute();
+            }
+        }else if(getEndMinute()<10){
+            return getStartHour() + ":" + getStartMinute() + " - " + getEndHour() + ":0" + getEndMinute();
+        } else {
+            return getStartHour() + ":" + getStartMinute() + " - " + getEndHour() + ":" + getEndMinute();
+        }
     }
 
     public int getStartPxl(){
