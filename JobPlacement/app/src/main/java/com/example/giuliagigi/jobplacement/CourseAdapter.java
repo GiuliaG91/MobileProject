@@ -1,6 +1,7 @@
 package com.example.giuliagigi.jobplacement;
 
 import android.app.Dialog;
+import android.graphics.Paint;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.RecyclerView;
@@ -11,7 +12,6 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -90,6 +90,7 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder
             }
 
             holder.professor.setText(courses.get(position).getProfessor().getName() + " " + courses.get(position).getProfessor().getSurname());
+            holder.professor.setPaintFlags(holder.professor.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
 
             // open professor profile view
             holder.professor.setOnClickListener(new View.OnClickListener() {

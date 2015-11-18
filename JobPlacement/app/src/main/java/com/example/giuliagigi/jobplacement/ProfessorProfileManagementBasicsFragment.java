@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.CheckBox;
 import android.widget.DatePicker;
@@ -129,7 +130,11 @@ public class ProfessorProfileManagementBasicsFragment extends ProfileManagementB
             consultingEndMinute.setText("" + consultingSchedule.getEndMinute());
         }
 
-        consultingDaySpinner.setAdapter(new StringAdapter(GlobalData.getContext().getResources().getStringArray(R.array.days_complete)));
+        //consultingDaySpinner.setAdapter(new StringAdapter(GlobalData.getContext().getResources().getStringArray(R.array.days_complete)));
+
+        ArrayAdapter<String> roomAdapter = new ArrayAdapter<String>(GlobalData.getContext(),R.layout.row_spinner,GlobalData.getContext().getResources().getStringArray(R.array.days_complete));
+        consultingDaySpinner.setAdapter(roomAdapter);
+
 
         day = professor.getConsultingDay();
         if(day != 0)
@@ -373,11 +378,11 @@ public class ProfessorProfileManagementBasicsFragment extends ProfileManagementB
         public View getView(int position, View convertView, ViewGroup parent) {
 
             if(convertView == null)
-                convertView = new TextView(GlobalData.getContext());
-            TextView tv = (TextView)convertView;
+                convertView = (View) GlobalData.getContext().getResources().getLayout(R.layout.row_spinner);
+            /*TextView tv = (TextView)convertView;
             tv.setText(stringArray[position]);
             tv.setTextSize(GlobalData.getContext().getResources().getDimension(R.dimen.editText_textSize_small));
-            tv.setTextColor(GlobalData.getContext().getResources().getColor(R.color.black_light_transparent));
+            tv.setTextColor(GlobalData.getContext().getResources().getColor(R.color.black_light_transparent));*/
 
             return convertView;
         }
