@@ -37,7 +37,6 @@ public class LectureDisplayFragment extends Fragment implements OnActivityChange
     public static final int MODE_SIMPLE_SCHEDULE = 1;
 
     private int dayWidth;
-    private static final String TAG = "Week Display Activity - LOG: ";
 
     private RelativeLayout[] lecturesRelativeLayouts = new RelativeLayout[5];
 
@@ -88,7 +87,6 @@ public class LectureDisplayFragment extends Fragment implements OnActivityChange
 
         if(savedInstanceState != null){
 
-            Log.println(Log.ASSERT, "LECTUREDISPLAY", "restoring state");
             String tail = savedInstanceState.getString(BUNDLE_KEY_TAIL);
             MyBundle bundle = globalData.getBundle(BUNDLE_IDENTIFIER + tail);
 
@@ -143,7 +141,6 @@ public class LectureDisplayFragment extends Fragment implements OnActivityChange
     @Override
     public void onSaveInstanceState(Bundle outState) {
 
-        Log.println(Log.ASSERT, "LECTUREDISPLAY", "onSaveInstanceState");
         String tail = courses.toString();
 
         outState.putString(BUNDLE_KEY_TAIL,tail);
@@ -362,8 +359,6 @@ public class LectureDisplayFragment extends Fragment implements OnActivityChange
 
 
     private void populateView(){
-
-        Log.println(Log.ASSERT, "LECTUREDISPLAY", "populating view");
 
         for(int i=0;i<5;i++){
 

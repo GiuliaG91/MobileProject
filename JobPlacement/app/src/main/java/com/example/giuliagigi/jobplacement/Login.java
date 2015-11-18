@@ -69,7 +69,7 @@ public class Login extends ActionBarActivity {
             }
             else {
 
-                Toast.makeText(getApplicationContext(), "Your network connection is missing. Unable to login", Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), getResources().getString(R.string.login_missing_connection), Toast.LENGTH_LONG).show();
             }
 
         }
@@ -147,7 +147,7 @@ public class Login extends ActionBarActivity {
                 if(checkConnectionStatus())
                     performLogin(mailText.getText().toString().trim(), passwordText.getText().toString());
                 else
-                    Toast.makeText(getApplicationContext(), "Your network connection is missing. Unable to login", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), getResources().getString(R.string.login_missing_connection), Toast.LENGTH_LONG).show();
             }
         });
 
@@ -232,15 +232,12 @@ public class Login extends ActionBarActivity {
 
     private void registerApplication(){
 
-        Log.println(Log.ASSERT,"LOGIN", "register application");
         Installation.initialize();
         Installation.setUser(application.getCurrentUser());
 
-        Log.println(Log.ASSERT,"LOGIN", "type = " + application.getUserObject().getType());
         if(application.getUserObject().getType().equals(User.TYPE_STUDENT)){
 
             Student s = (Student)application.getUserObject();
-            Log.println(Log.ASSERT,"LOGIN", "courses number = " + s.getCourses().size());
             for(Course c: s.getCourses())
                 Installation.addChannel(c.getName());
         }
@@ -258,7 +255,6 @@ public class Login extends ActionBarActivity {
 
     private void performLogin(final String mail, final String password) {
 
-        Log.println(Log.ASSERT,"LOGIN", "logging in");
         setEnable(false);
 
         ParseUser.logInInBackground(mail, password, new LogInCallback() {

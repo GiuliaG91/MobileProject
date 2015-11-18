@@ -77,11 +77,8 @@ public class StudentCoursesManagementFragment extends Fragment {
 
             if(bundle != null){
 
-                Log.println(Log.ASSERT, "STUDENTCOURSEMANAG", "found a bundle");
                 student = (Student)bundle.get(BUNDLE_KEY_STUDENT);
-
                 ArrayList list = bundle.getList(BUNDLE_KEY_COURSES);
-
                 if(list != null){
 
                     courses = new ArrayList<>();
@@ -122,8 +119,6 @@ public class StudentCoursesManagementFragment extends Fragment {
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
-
-        Log.println(Log.ASSERT, "STUDENTCOURSEMANAG", "onSaveInstanceState");
 
         String tail = student.toString();
         if(courses != null) tail += courses.toString();

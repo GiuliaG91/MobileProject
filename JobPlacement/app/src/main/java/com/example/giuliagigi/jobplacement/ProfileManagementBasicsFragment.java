@@ -96,7 +96,6 @@ public class ProfileManagementBasicsFragment extends ProfileManagementFragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        Log.println(Log.ASSERT,"BASICS", "onActivityResult");
 
         if(requestCode!=REQUEST_IMAGE_GET) Log.println(Log.ASSERT,"BASICS","requestcode not matching");
         if(resultCode!=Activity.RESULT_OK) Log.println(Log.ASSERT,"BASICS","resultcode not matching");
@@ -141,8 +140,6 @@ public class ProfileManagementBasicsFragment extends ProfileManagementFragment {
         profilePhoto.setEnabled(enable);
 
         if(editButton != null){
-
-            Log.println(Log.ASSERT, "PROFILEBASICS", "setting background");
 
             if(enable)
                 editButton.setBackgroundResource(R.drawable.save_button);
@@ -196,11 +193,8 @@ public class ProfileManagementBasicsFragment extends ProfileManagementFragment {
             }
         }
 
-        Log.println(Log.ASSERT, "PROFILEBASICS", "profileManagement editable: " + profileManagement.isEditable());
-
         if(profileManagement.isEditable()){
 
-            Log.println(Log.ASSERT, "PROFILEBASICS", "setting click listener");
             editButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

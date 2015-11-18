@@ -96,6 +96,8 @@
     <string name="logout_want_logout">Vuoi disconnetterti?</string>
     <string name="logout_logging_out">Logout in corso...</string>
     <string name="logout_complete">Logout copletato</string>
+    <string name="login_missing_connection">Nessuna connessione internet disponibile. Prova più tardi</string>
+
 
     <!-- ________________ REGISTRATION _________________________________________________________ -->
     <string name="registration_title">RegistrationActivity</string>

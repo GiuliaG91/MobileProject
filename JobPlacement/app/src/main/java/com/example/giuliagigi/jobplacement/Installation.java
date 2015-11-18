@@ -42,7 +42,6 @@ public class Installation extends ParseInstallation {
                 for (Object o : list){
 
                     String c = (String)o;
-                    Log.println(Log.ASSERT,"INSTALLATION", "retrieved course: " + c);
                     channels.add(c);
                 }
             else
@@ -66,7 +65,6 @@ public class Installation extends ParseInstallation {
 
             ParsePush.subscribeInBackground(c);
             channels.add(c);
-            Log.println(Log.ASSERT ,"INSTALLATION", "added channel: " + c);
         }
 
     }
@@ -78,7 +76,6 @@ public class Installation extends ParseInstallation {
 
             ParsePush.unsubscribeInBackground(c);
             channels.remove(c);
-            Log.println(Log.ASSERT ,"INSTALLATION", "removed channel: " + c);
         }
 
     }
@@ -88,7 +85,6 @@ public class Installation extends ParseInstallation {
         for(String c: channels){
 
             ParsePush.unsubscribeInBackground(c);
-            Log.println(Log.ASSERT, "INSTALLATION", "removing " + c);
         }
 
         channels.clear();

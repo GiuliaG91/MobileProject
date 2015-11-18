@@ -44,7 +44,9 @@ public class LectureSearch extends Fragment {
         return fragment;
     }
 
-    public LectureSearch(){}
+    public LectureSearch(){
+        super();
+    }
 
 
     //////////////////////////////////////////////////////////////////////////////////////
@@ -56,7 +58,6 @@ public class LectureSearch extends Fragment {
     public void onAttach(Activity activity) {
         super.onAttach(activity);
 
-        Log.println(Log.ASSERT,"LECTURESEARCH", "onAttach");
         globalData = (GlobalData)activity.getApplicationContext();
         lecturesFileReader = globalData.getLecturesFileReader();
         currentCourses = new ArrayList<Course>();
@@ -66,8 +67,11 @@ public class LectureSearch extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        Log.println(Log.ASSERT, "LECTURESEARCH", "onCreate. student: " + (student == null ? "null" : student.toString()));
+
         if(savedInstanceState != null){
 
+            Log.println(Log.ASSERT, "LECTURESEARCH", "restoring state");
             String tail = savedInstanceState.getString(BUNDLE_KEY_TAIL);
             MyBundle bundle = globalData.getBundle(BUNDLE_IDENTIFIER + tail);
 
@@ -104,7 +108,6 @@ public class LectureSearch extends Fragment {
                 LectureDisplayFragment ldf = LectureDisplayFragment.newInstance(currentCourses, LectureDisplayFragment.MODE_SIMPLE_SCHEDULE);
                 StudentCoursesManagementFragment scmf = StudentCoursesManagementFragment.newInstance(student,currentCourses);
 
-                Log.println(Log.ASSERT,"LECTURESEARCH", "fragment transaction");
                 FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
                 ft.replace(R.id.lecture_display_container, ldf).commit();
 
@@ -141,12 +144,13 @@ public class LectureSearch extends Fragment {
             }
         });
 
-        Log.println(Log.ASSERT,"LECTURESEARCH", "onCreateView ok");
         return root;
     }
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
+
+        Log.println(Log.ASSERT, "LECTURESEARCH", "saving state");
 
         String tail = student.toString();
         outState.putString(BUNDLE_KEY_TAIL, tail);

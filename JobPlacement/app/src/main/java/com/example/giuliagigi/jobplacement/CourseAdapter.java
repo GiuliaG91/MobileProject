@@ -45,7 +45,6 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder
 
     public CourseAdapter(FragmentActivity activity, ArrayList<Course> courses, User user, int mode) {
 
-        Log.println(Log.ASSERT,"COURSEADAPTER", "size = " + courses.size());
         this.courses = courses;
         this.mode = mode;
         this.user = user;
@@ -69,7 +68,6 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
-        Log.println(Log.ASSERT,"COURSEADAPTER", "onCreateViewHolder");
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.course_item_row, parent, false);
         return new ViewHolder(v, mode);
     }

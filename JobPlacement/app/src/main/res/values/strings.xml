@@ -96,6 +96,7 @@
     <string name="logout_want_logout">Do you want to logout?</string>
     <string name="logout_logging_out">Logging out...</string>
     <string name="logout_complete">Logout completed</string>
+    <string name="login_missing_connection">Your network connection is missing. Unable to login</string>
 
     <!-- ________________ REGISTRATION _________________________________________________________ -->
     <string name="registration_title">RegistrationActivity</string>

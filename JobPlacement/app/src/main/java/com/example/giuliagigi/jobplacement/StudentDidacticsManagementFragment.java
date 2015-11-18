@@ -11,8 +11,15 @@ import android.view.ViewGroup;
 
 public class StudentDidacticsManagementFragment extends Fragment implements OnActivityChangedListener {
 
+    private static final String BUNDLE_IDENTIFIER = "STUDENTDIDACTICS";
+    private static final String BUNDLE_KEY_TAIL = "bundle_tail";
+    private static final String BUNDLE_KEY_STUDENT = "bundle_student";
+
+
     private OnFragmentInteractionListener host;
     private Student student;
+    private GlobalData globalData;
+
     private View root;
     private ViewPager pager;
     private StudentCoursesPagerAdapter adapter;
@@ -44,6 +51,7 @@ public class StudentDidacticsManagementFragment extends Fragment implements OnAc
         super.onAttach(activity);
 
         host = (OnFragmentInteractionListener)activity;
+        globalData = (GlobalData)activity.getApplicationContext();
     }
 
     @Override
@@ -55,6 +63,17 @@ public class StudentDidacticsManagementFragment extends Fragment implements OnAc
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        if(savedInstanceState != null){
+
+            String tail = savedInstanceState.getString(BUNDLE_KEY_TAIL);
+            MyBundle bundle = globalData.getBundle(BUNDLE_IDENTIFIER + tail);
+
+            if(bundle != null){
+
+                student = (Student)bundle.get(BUNDLE_KEY_STUDENT);
+            }
+        }
     }
 
     @Override
@@ -99,6 +118,18 @@ public class StudentDidacticsManagementFragment extends Fragment implements OnAc
         }
 
         return root;
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+
+        String tail = student.toString();
+        outState.putString(BUNDLE_KEY_TAIL,tail);
+
+        MyBundle bundle = globalData.addBundle(BUNDLE_IDENTIFIER + tail);
+        bundle.put(BUNDLE_KEY_STUDENT, student);
+
+        super.onSaveInstanceState(outState);
     }
 
     @Override

@@ -86,7 +86,6 @@ public class ProfileManagement extends Fragment{
     public void onAttach(Activity activity) {
         super.onAttach(activity);
 
-        Log.println(Log.ASSERT,"PROFILE MANAG","on Attach");
         isEditMode = false;
 
         try {
@@ -129,8 +128,6 @@ public class ProfileManagement extends Fragment{
             MyBundle bundle = application.getBundle(BUNDLE_IDENTIFIER + tail);
 
             if(bundle != null){
-
-                Log.println(Log.ASSERT,"PROFILE MANAG","found a bundle!");
 
                 isEditMode = bundle.getBoolean(BUNDLE_KEY_IS_EDIT);
                 editable = bundle.getBoolean(BUNDLE_KEY_EDITABLE);
@@ -182,8 +179,6 @@ public class ProfileManagement extends Fragment{
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
-
-        Log.println(Log.ASSERT, "PROFILE MANAG", "saving in bundle");
 
         String tail = user.toString();
         outState.putString(BUNDLE_KEY_TAIL, tail);
@@ -249,7 +244,6 @@ public class ProfileManagement extends Fragment{
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
 
-                    Log.println(Log.ASSERT,"PROFILE MANAG", "Asking Home activity to open mailbox");
                     host.openMailBox(user);
                 }
             });

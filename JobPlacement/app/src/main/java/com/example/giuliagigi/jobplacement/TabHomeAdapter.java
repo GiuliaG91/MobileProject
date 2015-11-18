@@ -91,8 +91,6 @@ public class TabHomeAdapter extends RecyclerView.Adapter<TabHomeAdapter.ViewHold
                     query4.whereEqualTo(News.TYPE_FIELD, News.TYPE_NEW_NOTICE);
                     query4.whereContainedIn(News.COURSE_FIELD, ((Student) globalData.getUserObject()).getCourses());
 
-                    Log.println(Log.ASSERT, "PROFESSOR_NEWS", "Student courses: " + ((Student) globalData.getUserObject()).getCourses().size());
-
                     List<ParseQuery<News>> queries = new ArrayList<ParseQuery<News>>();
                     queries.add(query1);
                     queries.add(query2);
@@ -129,8 +127,6 @@ public class TabHomeAdapter extends RecyclerView.Adapter<TabHomeAdapter.ViewHold
                     query2.whereEqualTo(News.TYPE_FIELD, News.TYPE_NEW_NOTICE);
                     query2.whereContainedIn(News.COURSE_FIELD, (p.getCourses()));
 
-                    Log.println(Log.ASSERT, "PROFESSOR_NEWS", "Professor courses: " + p.getCourses().size());
-
                     List<ParseQuery<News>> queries = new ArrayList<ParseQuery<News>>();
                     //queries.add(query1);
                     queries.add(query2);
@@ -149,12 +145,10 @@ public class TabHomeAdapter extends RecyclerView.Adapter<TabHomeAdapter.ViewHold
     public class OnQueryLoadListener implements ParseQueryAdapter.OnQueryLoadListener<News> {
 
         public void onLoading() {
-            Log.println(Log.ASSERT, "TABHOMEADAPTER", "query loading");
         }
 
         public void onLoaded(List<News> objects, Exception e) {
 
-            Log.println(Log.ASSERT, "TABHOMEADAPTER", "query loaded");
             orderMyDataset();
             newsAdapter.notifyDataSetChanged();
         }
@@ -176,7 +170,6 @@ public class TabHomeAdapter extends RecyclerView.Adapter<TabHomeAdapter.ViewHold
 
                 super.getItemView(object, v, parent);
 
-                Log.println(Log.ASSERT ,"TABHOMEADAPTER", "adding to dataset");
                 mDataset.add(object);
                 CircleImageView icon = (CircleImageView) v.findViewById(R.id.logo_img);
                 TextView title = (TextView) v.findViewById(R.id.title_news);
@@ -345,8 +338,6 @@ public class TabHomeAdapter extends RecyclerView.Adapter<TabHomeAdapter.ViewHold
     @Override
     public TabHomeAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
-        Log.println(Log.ASSERT, "TABHOMEADAPTER", "onCreateViewHolder: " + viewType);
-
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.news_row, parent, false);
         v.setClickable(true);
 //        v.setOnClickListener(TabHomeAdapter.this);
@@ -358,8 +349,6 @@ public class TabHomeAdapter extends RecyclerView.Adapter<TabHomeAdapter.ViewHold
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-
-        Log.println(Log.ASSERT, "TABHOMEADAPTER", "onBindViewHolder: " + position);
 
 //        holder.type = mDataset.get(position).getType();
         parseAdapter.getView(position, holder.myView, parseParent);
@@ -381,14 +370,11 @@ public class TabHomeAdapter extends RecyclerView.Adapter<TabHomeAdapter.ViewHold
         ViewHolder vh = (ViewHolder) v.getTag();
         Fragment fragment = null;
 
-        Log.println(Log.ASSERT ,"TABHOMEADAPTER", "clicked: " + vh.type);
-
         switch (vh.type) {
 
             case News.TYPE_NEW_OFFER:
             case News.TYPE_APPLICATION_STATE:
 
-                Log.println(Log.ASSERT ,"TABHOMEADAPTER", "new offer / application state");
                 globalData.setCurrentOffer(mDataset.get(vh.getPosition()).getCompanyOffer());
 
                 FragmentManager fragmentManager = context.getSupportFragmentManager();
@@ -406,8 +392,6 @@ public class TabHomeAdapter extends RecyclerView.Adapter<TabHomeAdapter.ViewHold
 
             case News.TYPE_OFFER_APPLICATION:
 
-                Log.println(Log.ASSERT ,"TABHOMEADAPTER", "offer application");
-
                 fragmentManager = context.getSupportFragmentManager();
                 fragment = ProfileManagement.newInstance(false, mDataset.get(vh.getPosition()).getStudent());
                 fragmentManager.beginTransaction()
@@ -421,8 +405,6 @@ public class TabHomeAdapter extends RecyclerView.Adapter<TabHomeAdapter.ViewHold
 
             case News.TYPE_NEW_COMPANY:
 
-                Log.println(Log.ASSERT ,"TABHOMEADAPTER", "new company");
-
                 fragmentManager = context.getSupportFragmentManager();
                 fragment = ProfileManagement.newInstance(false, mDataset.get(vh.getPosition()).getCompany());
                 fragmentManager.beginTransaction()
@@ -433,8 +415,6 @@ public class TabHomeAdapter extends RecyclerView.Adapter<TabHomeAdapter.ViewHold
                 break;
 
             case News.TYPE_NEW_NOTICE:
-
-                Log.println(Log.ASSERT ,"TABHOMEADAPTER", "new notice");
 
                 fragmentManager = context.getSupportFragmentManager();
 
