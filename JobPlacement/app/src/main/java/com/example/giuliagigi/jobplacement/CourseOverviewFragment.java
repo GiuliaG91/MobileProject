@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -31,6 +33,7 @@ public class CourseOverviewFragment extends Fragment {
 
     private String savedPresentation = null, savedExam = null;
 
+    private FragmentActivity activity;
     private GlobalData globalData;
     private Course course;
     private boolean isEditMode, editable;
@@ -58,6 +61,7 @@ public class CourseOverviewFragment extends Fragment {
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
+        this.activity = (FragmentActivity)activity;
         globalData = (GlobalData)activity.getApplicationContext();
     }
 
@@ -100,9 +104,27 @@ public class CourseOverviewFragment extends Fragment {
 
         if(code != null)            code.setText(course.getCode());
         if(name != null)            name.setText(course.getName());
-        if(professor != null)       professor.setText(course.getProfessor().getName() + " " + course.getProfessor().getSurname());
         if(presentation != null)    presentation.setText(savedPresentation == null ? course.getPresentation() : savedPresentation);
         if(examModalities != null)  examModalities.setText(savedExam == null ? course.getExam() : savedExam);
+
+        if(professor != null){
+            professor.setText(course.getProfessor().getName() + " " + course.getProfessor().getSurname());
+
+                professor.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                        boolean editable = false;
+                        if(globalData.getUserObject().getType().equals(User.TYPE_PROFESSOR) && ((Professor)globalData.getUserObject()).equals(course.getProfessor()))
+                            editable = true;
+
+                        ProfileManagement pm = ProfileManagement.newInstance(editable,course.getProfessor());
+                        FragmentTransaction ft = activity.getSupportFragmentManager().beginTransaction();
+                        ft.replace(R.id.tab_Home_container, pm).addToBackStack(null).commit();
+                    }
+                });
+        }
+
 
         LinearLayout l = (LinearLayout)root;
 

@@ -93,6 +93,17 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder
 
             holder.professor.setText(courses.get(position).getProfessor().getName() + " " + courses.get(position).getProfessor().getSurname());
 
+            // open professor profile view
+            holder.professor.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    ProfileManagement pm = ProfileManagement.newInstance(false,courses.get(position).getProfessor());
+                    FragmentTransaction ft = activity.getSupportFragmentManager().beginTransaction();
+                    ft.replace(R.id.tab_Home_container, pm).addToBackStack(null).commit();
+                }
+            });
+
         }
 
         if(holder.details != null){
