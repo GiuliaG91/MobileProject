@@ -77,16 +77,17 @@ public class SetOfferStatusDialogFragment extends DialogFragment {
 
        StatusSpinner.setAdapter(new StringAdapter(items));
 
-        ParseQuery query=new ParseQuery("OfferStatus");
+        ParseQuery<OfferStatus> query=new ParseQuery("OfferStatus");
                 query.whereEqualTo("student",student);
                 query.whereEqualTo("offer",globalData.getCurrentViewOffer());
-   List<OfferStatus> status=null;
+        List<OfferStatus> status=null;
         try {
-         status=query.find();
+           status = query.find();
         } catch (ParseException e) {
             e.printStackTrace();
         }
         int pos=0;
+
         if(!status.isEmpty())
         {
             myStatus=status.get(0);
