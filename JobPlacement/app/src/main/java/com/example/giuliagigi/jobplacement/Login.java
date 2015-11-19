@@ -169,6 +169,7 @@ public class Login extends ActionBarActivity {
                 builder.setTitle(GlobalData.getContext().getString(R.string.login_password_reset));
                 final EditText mail = new EditText(getApplicationContext());
                 mail.setHint(GlobalData.getContext().getString(R.string.login_insert_mail));
+                mail.setHintTextColor(Color.BLACK);
                 mail.setTextColor(Color.BLACK);
                 mail.setInputType(InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS);
                 builder.setView(mail);

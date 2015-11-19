@@ -9,7 +9,7 @@
 
     <!-- Intestazione con logo -->
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight=".3"
         android:layout_centerHorizontal="true"
@@ -17,9 +17,11 @@
         android:orientation="vertical">
 
         <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:src="@drawable/application_logo"/>
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:layout_marginTop="10dp"
+            android:src="@drawable/logo_poli"/>
     </LinearLayout>
     <!-- Fine intestazione con logo -->
 
@@ -44,7 +46,7 @@
         <MultiAutoCompleteTextView
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:padding="15dp"
+            android:padding="10dp"
             android:hint="@string/login_hint_email"
             android:backgroundTint="@color/blue_semi_transparent"
             android:textCursorDrawable="@drawable/edit_cursor"
@@ -55,7 +57,7 @@
         <EditText
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:padding="15dp"
+            android:padding="10dp"
             android:hint="@string/login_hint_password"
             android:id="@+id/password_editText"
             android:backgroundTint="@color/blue_semi_transparent"
@@ -73,14 +75,15 @@
                 android:layout_width="wrap_content"
                 android:layout_height="fill_parent"
                 android:buttonTint="@color/ColorPrimary"
+                android:gravity="center_vertical"
                 android:id="@+id/login_stayConnected_checkBox"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="fill_parent"
                 android:text="@string/login_remember"
-                android:padding="5dp"
                 android:textSize="15sp"
+                android:gravity="center_vertical"
                 android:id="@+id/login_stayConnected_text"/>
 
         </LinearLayout>
@@ -108,7 +111,7 @@
             android:layout_height="0dp"
             android:layout_weight=".4"
             android:text="@string/login_register"
-            android:textColor="#191970"
+            android:textColor="@color/white"
             android:layout_margin="5dp"
             android:textSize="15dp"
             android:gravity="center"/>
@@ -120,7 +123,7 @@
             android:layout_weight=".5"
             android:textSize="15dp"
             android:id="@+id/login_passwordReset_text"
-            android:textColor="#191970"
+            android:textColor="@color/white"
             android:layout_marginBottom="5dp"
             android:layout_below="@+id/login_button"
             android:gravity="center" />
@@ -138,7 +141,7 @@
             android:layout_marginBottom="10dp"
             android:layout_marginLeft="30dp"
             android:layout_marginRight="30dp"
-            android:background="#191970"
+            android:background="@color/ColorPrimary"
             android:textColor="#ffffff"
             android:text="LOGIN"
             />

@@ -19,6 +19,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_horizontal"
+            android:layout_marginTop="10dp"
             android:src="@drawable/logo_poli"/>
     </LinearLayout>
 <!-- Fine intestazione con logo -->
@@ -96,7 +97,7 @@
             android:layout_marginBottom="15dp"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
-            android:background="#191970"
+            android:background="@color/ColorPrimary"
             android:textColor="#ffffff"
             android:text="LOGIN"/>
 
