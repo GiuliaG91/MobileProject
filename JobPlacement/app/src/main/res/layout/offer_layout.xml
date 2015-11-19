@@ -71,15 +71,9 @@
                         android:textColor="#ffffffff"
                         android:paddingTop="5dp" />
 
-
                 </LinearLayout>
 
-
-
-
             </LinearLayout>
-
-
 
               <include android:id="@+id/object_row"
                 layout="@layout/offer_item_row"></include>
@@ -89,7 +83,6 @@
 
             <include android:id="@+id/field_row"
                 layout="@layout/offer_item_row"> </include>
-
 
 
             <include android:id="@+id/places_row"
@@ -132,7 +125,6 @@
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="10dp"
                 card_view:cardCornerRadius="4dp">
-
 
                     <TextView
                         android:layout_width="match_parent"
