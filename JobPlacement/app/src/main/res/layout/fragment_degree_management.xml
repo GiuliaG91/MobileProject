@@ -52,6 +52,15 @@
                         android:layout_height="0dp"
                         android:layout_weight=".5"
                         android:id="@+id/degree_management_spinnerType" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/line_profile_height"
+                        android:background="@drawable/line_background"
+                        android:layout_marginRight="20dp">
+                    </View>
+
+
                 </LinearLayout>
 
                 <LinearLayout
@@ -66,6 +75,13 @@
                         android:layout_height="0dp"
                         android:layout_weight=".5"
                         android:id="@+id/degree_management_spinnerField" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/line_profile_height"
+                        android:background="@drawable/line_background"
+                        android:layout_marginRight="20dp">
+                    </View>
 
                 </LinearLayout>
 
@@ -123,6 +139,13 @@
                         android:textSize="15dp"
                         android:paddingLeft="10dp" />
 
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/line_profile_height"
+                        android:background="@drawable/line_background"
+                        android:layout_marginRight="20dp">
+                    </View>
+
                 </LinearLayout>
 
                 <LinearLayout
@@ -145,15 +168,23 @@
                         android:textSize="10sp" />
 
                     <Switch
-                        android:layout_width="fill_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="0dp"
                         android:layout_weight=".7"
                         android:id="@+id/degree_management_loud_switch"
                         android:showText="true"
+                        android:layout_gravity="center_horizontal"
                         android:layout_marginRight="20dp"
                         android:textOn="Yes"
                         android:textOff="No"
                         />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/line_profile_height"
+                        android:background="@drawable/line_background"
+                        android:layout_marginRight="20dp">
+                    </View>
 
                 </LinearLayout>
 
@@ -208,7 +239,14 @@
                         android:paddingLeft="10dp"
                         android:paddingTop="5dp"
                         android:id="@+id/degree_management_datePicker" />
-                    />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/line_profile_height"
+                        android:background="@drawable/line_background"
+                        android:layout_marginRight="20dp">
+                    </View>
+
 
                 </LinearLayout>
 
@@ -223,6 +261,7 @@
 
 
             </LinearLayout>
+
 
              <!--END Degree date-->
 

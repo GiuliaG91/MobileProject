@@ -28,6 +28,7 @@
             android:id="@+id/hint_tv"
             android:layout_weight="1"
             android:paddingLeft="30dp"
+            android:textColor="@color/ColorPrimary"
             android:gravity="bottom"
             android:textSize="10sp" />
 
@@ -38,9 +39,17 @@
             android:id="@+id/content_tv"
             android:layout_weight="1"
             android:textColor="@color/black_light_transparent"
-            android:textSize="20dp"
+            android:textSize="@dimen/textView_textSize"
             android:paddingLeft="30dp"
             android:paddingTop="5dp" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/line_profile_height"
+            android:background="@drawable/line_background"
+            android:layout_marginRight="20dp"
+            android:layout_marginLeft="20dp">
+        </View>
 
     </LinearLayout>
 

@@ -70,6 +70,8 @@
                         android:paddingLeft="10dp"
                         android:textColor="#ffffffff"
                         android:paddingTop="5dp" />
+
+
                 </LinearLayout>
 
 
@@ -88,11 +90,6 @@
             <include android:id="@+id/field_row"
                 layout="@layout/offer_item_row"> </include>
 
-            <RelativeLayout
-                android:layout_width="fill_parent"
-                android:layout_height="1dp"
-                android:background="@android:color/darker_gray"
-                android:layout_marginLeft="70dp"></RelativeLayout>
 
 
             <include android:id="@+id/places_row"
@@ -107,11 +104,6 @@
             <include android:id="@+id/term_row"
                 layout="@layout/offer_item_row"> </include>
 
-            <RelativeLayout
-                android:layout_width="fill_parent"
-                android:layout_height="1dp"
-                android:background="@android:color/darker_gray"
-                android:layout_marginLeft="70dp"></RelativeLayout>
 
             <include android:id="@+id/location_row"
                 layout="@layout/offer_item_row"> </include>
@@ -119,21 +111,16 @@
             <include android:id="@+id/salary_row"
                 layout="@layout/offer_item_row"> </include>
 
-            <RelativeLayout
-                android:layout_width="fill_parent"
-                android:layout_height="1dp"
-                android:background="@android:color/darker_gray"
-                android:layout_marginLeft="70dp"></RelativeLayout>
 
             <TextView
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textAppearance="?android:attr/textAppearanceMedium"
                 android:text="@string/new_offer_fragment_Description"
+                android:textColor="@color/ColorPrimary"
                 android:id="@+id/newOffer_tv3"
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="20dp" />
-
 
 
             <android.support.v7.widget.CardView
@@ -141,17 +128,18 @@
                 android:id="@+id/CardDescription"
                 android:layout_gravity="center"
                 android:layout_width="350dp"
-                android:layout_height="wrap_content"
+                android:layout_height="100dp"
                 android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
                 card_view:cardCornerRadius="4dp">
 
 
-
                     <TextView
-                        android:layout_width="fill_parent"
-                        android:layout_height="fill_parent"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
                         android:id="@+id/DescriptionText_tv"
                         android:background="@null"
+                        android:padding="5dp"
                         android:backgroundTint="@android:color/white"/>
 
 

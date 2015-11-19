@@ -42,7 +42,7 @@
     <string name="warning">Attenzione!</string>
     <string name = "SEARCH">CERCA</string>
     <string name="home">Home</string>
-    <string name="Done">Fattp</string>
+    <string name="Done">Fatto</string>
     <string name="publish">Pubblica</string>
     <string name="save">Salva</string>
     <string name="location">Posizione</string>
@@ -379,7 +379,7 @@
     <!-- ________________ OFFER DETAIL _________________________________________________________ -->
     <string name="offer_detail_apply_button">Candidati</string>
     <string name="offer_detail_contact_button">Contatta l\'azienda</string>
-    <string name="offer_detail_NoApply">Non posso conclidere la candidatura</string>
+    <string name="offer_detail_NoApply">Non posso concludere la candidatura</string>
     <string name="offer_detail_AlreadyApplied">Già candidato</string>
     <string name="offer_detail_hint_object">Oggetto</string>
     <string name="offer_detail_hint_mission">Scopo</string>

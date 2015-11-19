@@ -83,6 +83,13 @@
                                 android:paddingLeft="10dp"
                                 android:paddingTop="5dp" />
 
+                            <View
+                                android:layout_width="match_parent"
+                                android:layout_height="@dimen/line_profile_height"
+                                android:background="@drawable/line_background"
+                                android:layout_marginRight="20dp">
+                            </View>
+
                         </LinearLayout>
 
                         <LinearLayout
@@ -118,6 +125,13 @@
                                 android:textSize="15dp"
                                 android:paddingLeft="10dp"
                                 android:paddingTop="5dp" />
+
+                            <View
+                                android:layout_width="match_parent"
+                                android:layout_height="@dimen/line_profile_height"
+                                android:background="@drawable/line_background"
+                                android:layout_marginRight="20dp">
+                            </View>
 
                         </LinearLayout>
 
@@ -177,6 +191,13 @@
                                 android:paddingLeft="10dp"
                                 android:paddingTop="5dp" />
 
+                            <View
+                                android:layout_width="match_parent"
+                                android:layout_height="@dimen/line_profile_height"
+                                android:background="@drawable/line_background"
+                                android:layout_marginRight="20dp">
+                            </View>
+
                         </LinearLayout>
 
                         <LinearLayout
@@ -212,6 +233,13 @@
                                 android:textSize="15dp"
                                 android:paddingLeft="10dp"
                                 android:paddingTop="5dp" />
+
+                            <View
+                                android:layout_width="match_parent"
+                                android:layout_height="@dimen/line_profile_height"
+                                android:background="@drawable/line_background"
+                                android:layout_marginRight="20dp">
+                            </View>
 
                         </LinearLayout>
 
