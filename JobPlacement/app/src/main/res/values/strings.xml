@@ -193,10 +193,19 @@
     <string name="string_account_change_username">Change username</string>
     <string name="string_account_change_password">Change password</string>
     <string name="string_account_resend_mail">Re-send verification mail</string>
+    <string name="string_account_resend_to">Re-send verification mail to: </string>
+    <string name="string_account_resend_title">Re-send verification mail?</string>
+    <string name="string_account_no_need">No need for verification: your account mail was already verified.</string>
     <string name="string_account_delete">Delete this account</string>
+    <string name="string_accout_you_will_receive">You will receive a message on the new eMail for verification</string>
+    <string name="string_account_insert_new_mail">Instert new mail:</string>
+    <string name="string_account_change_title">Change Email / Username</string>
+    <string name="string_account_insert_new_password">Insert new password:</string>
+    <string name="string_account_confirm_new_password">Confirm new password:</string>
 
     <!-- ___________________ DELETE ACCOUNT_____________________________________________________ -->
     <string name="account_delete_title">Delete your profile</string>
+    <string name="account_delete_confirm">Delete this account?</string>
     <string name="account_delete_help_improve">We are sorry you decided to delete your profile. Would you help us understand how to improve our app?</string>
     <string name="account_delete_why">Why are you deleting your account?</string>
     <string name="account_delete_hard_understand">I found hard to understand the app</string>
@@ -206,6 +215,11 @@
     <string name="account_delete_write_reason">write the reason</string>
     <string name="account_delete_hints">Do you have some hints?</string>
     <string name="account_delete_shy">Don\'t be shy!</string>
+    <string name="account_delete_must_specify">You must specify at least one reason!</string>
+    <string name="account_delete_proceding">proceeding with account delete</string>
+    <string name="account_delete_try_later">Your account wasn\'t deleted due to some reason. Try later.</string>
+    <string name="account_delete_error">An error occurred</string>
+    <string name="account_delete_error_2">An error occurred. Your account info were deleted but you are still able to access.</string>
 
     <!-- ________________ OFFICE/TELEPHONE/LANGUAGE ____________________________________________ -->
     <string name="string_office_headquarter">Headquarter</string>
@@ -253,6 +267,7 @@
     <string name="course_presentation_title">Course presentation:</string>
     <string name="professor_consulting_title">Time consulting:</string>
     <string name="course_exam_title">Exam modalities:</string>
+    <string name="notice_wont_be_published">The notice won\'t be published</string>
 
 
     <!-- ________________ ROOMS SEARCH / DISPLAY _______________________________________________ -->

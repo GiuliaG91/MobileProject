@@ -191,10 +191,19 @@
     <string name="string_account_change_username">Modifica lo username</string>
     <string name="string_account_change_password">Modifica la password</string>
     <string name="string_account_resend_mail">Re-invia la mail di verifica</string>
+    <string name="string_account_resend_to">Re-invio la mail di verifica a: </string>
+    <string name="string_account_resend_title">Re-invio la mail di verifica?</string>
+    <string name="string_account_no_need">Non è necessaria la verifica: l\'account è già stato verificato.</string>
     <string name="string_account_delete">Elimina questo account</string>
+    <string name="string_accout_you_will_receive">Riceverai un messaggio sulla nuova mail per la verifica</string>
+    <string name="string_account_insert_new_mail">Inserisci la nuova mail:</string>
+    <string name="string_account_change_title">Modifica mail / username</string>
+    <string name="string_account_insert_new_password">Inserisci una nuova password:</string>
+    <string name="string_account_confirm_new_password">Conferma la nuova password:</string>
 
     <!-- ___________________ DELETE ACCOUNT_____________________________________________________ -->
     <string name="account_delete_title">Elimina il tuo profilo</string>
+    <string name="account_delete_confirm">Vuoi eliminare questo account?</string>
     <string name="account_delete_help_improve">Ci dispiace che tu abbia deciso di eliminare il tuo profilo. Vuoi aiutarci a capire il perché per migliorare la nostra app?</string>
     <string name="account_delete_why">Perché elimini il tuo account?</string>
     <string name="account_delete_hard_understand">Ho trovato difficile la compresione della app</string>
@@ -204,6 +213,11 @@
     <string name="account_delete_write_reason">scrivi il motivo</string>
     <string name="account_delete_hints">Hai qualche consiglio?</string>
     <string name="account_delete_shy">Non essere timido!</string>
+    <string name="account_delete_must_specify">Devi specificare almeno un motivo!</string>
+    <string name="account_delete_proceding">stiamo procedendo alla rimozione dell\'account</string>
+    <string name="account_delete_try_later">Eliminazione dell\'account fallita. Riprova più tardi.</string>
+    <string name="account_delete_error">Si è verificato un errore</string>
+    <string name="account_delete_error_2">Si è verificato un errore. Le tue informazioni sono state eliminate ma puoi ancora effettuare il login.</string>
 
     <!-- ________________ OFFICE/TELEPHONE/LANGUAGE ____________________________________________ -->
     <string name="string_office_headquarter">Sede principale</string>
@@ -251,6 +265,7 @@
     <string name="course_presentation_title">Presentazione del corso:</string>
     <string name="professor_consulting_title">Orario di consulenza:</string>
     <string name="course_exam_title">Modalità d\' esame:</string>
+    <string name="notice_wont_be_published">Il messaggio non sarà pubblicato</string>
 
 
     <!-- ________________ ROOMS SEARCH / DISPLAY _______________________________________________ -->

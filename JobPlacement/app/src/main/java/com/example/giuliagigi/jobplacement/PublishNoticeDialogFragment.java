@@ -89,7 +89,7 @@ public class PublishNoticeDialogFragment extends DialogFragment {
         cancelButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
 
-                Toast.makeText(activity, "The notice won't be published",Toast.LENGTH_LONG).show();
+                Toast.makeText(activity, GlobalData.getContext().getResources().getString(R.string.notice_wont_be_published),Toast.LENGTH_LONG).show();
                 noticeDialog.dismiss();
             }
         });

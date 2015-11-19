@@ -12,6 +12,8 @@ import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.text.format.DateUtils;
+import android.util.Log;
 import android.view.ContextMenu;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -227,7 +229,8 @@ public class OfferDetail extends  Fragment {
                 Student s = (Student)globalData.getUserObject();
                 // if is possible perform apply
                 if (!offer.getStudents().contains(s)) {
-                    if (offer.getnPositions() > 0 && offer.getValidity().after(Calendar.getInstance().getTime())) {
+                    Log.println(Log.ASSERT, "OFFER", "validity: "+offer.getValidity().toString() + " today: " + Calendar.getInstance().getTime().toString());
+                    if (offer.getnPositions() > 0 && (offer.getValidity().after(Calendar.getInstance().getTime()))) {
                         //Set apply
 
                         offer.addStudent(s);
@@ -301,6 +304,7 @@ public class OfferDetail extends  Fragment {
 
         return root;
     }
+
 
 
 }

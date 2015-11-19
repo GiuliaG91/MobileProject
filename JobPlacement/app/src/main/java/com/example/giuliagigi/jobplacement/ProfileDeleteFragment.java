@@ -102,10 +102,10 @@ public class ProfileDeleteFragment extends Fragment {
                     }
 
                 if(!flag)
-                    Toast.makeText(getActivity(),"You must specify at least one reason!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(),GlobalData.getContext().getResources().getString(R.string.account_delete_must_specify), Toast.LENGTH_SHORT).show();
                 else {
 
-                    Toast.makeText(getActivity(),"proceeding with account delete", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(),GlobalData.getContext().getResources().getString(R.string.account_delete_proceding), Toast.LENGTH_SHORT).show();
                     final String objectId = application.getUserObject().getObjectId();
 
                     application.getUserObject().deleteInBackground(new DeleteCallback() {
@@ -126,10 +126,10 @@ public class ProfileDeleteFragment extends Fragment {
                                                 if(students.isEmpty())
                                                     completeAccountDeletion();
                                                 else
-                                                    Toast.makeText(getActivity(),"Your account wasn't deleted due to some reason. try later",Toast.LENGTH_SHORT).show();
+                                                    Toast.makeText(getActivity(),GlobalData.getContext().getResources().getString(R.string.account_delete_try_later),Toast.LENGTH_SHORT).show();
                                             }
                                             else
-                                                Toast.makeText(getActivity(),"An error occured",Toast.LENGTH_SHORT).show();
+                                                Toast.makeText(getActivity(),GlobalData.getContext().getResources().getString(R.string.account_delete_error),Toast.LENGTH_SHORT).show();
                                         }
                                     });
 
@@ -146,10 +146,10 @@ public class ProfileDeleteFragment extends Fragment {
                                                 if(companies.isEmpty())
                                                     completeAccountDeletion();
                                                 else
-                                                    Toast.makeText(getActivity(),"Your account wasn't deleted due to some reason. try later",Toast.LENGTH_SHORT).show();
+                                                    Toast.makeText(getActivity(),GlobalData.getContext().getResources().getString(R.string.account_delete_try_later),Toast.LENGTH_SHORT).show();
                                             }
                                             else
-                                                Toast.makeText(getActivity(),"An error occured",Toast.LENGTH_SHORT).show();
+                                                Toast.makeText(getActivity(),GlobalData.getContext().getResources().getString(R.string.account_delete_error),Toast.LENGTH_SHORT).show();
                                         }
                                     });
                                 }
@@ -218,7 +218,7 @@ public class ProfileDeleteFragment extends Fragment {
                     startActivity(i);
                 }
                 else
-                    Toast.makeText(getActivity(),"An error occured. Your account info were deleted but you are still able to access.",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(),GlobalData.getContext().getResources().getString(R.string.account_delete_error_2),Toast.LENGTH_SHORT).show();
             }
         });
 

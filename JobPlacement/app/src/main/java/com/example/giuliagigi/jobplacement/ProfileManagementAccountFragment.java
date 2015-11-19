@@ -93,18 +93,18 @@ public class ProfileManagementAccountFragment extends ProfileManagementFragment 
             public void onClick(View v) {
 
                 if(application.getCurrentUser().isEmailVerified())
-                    Toast.makeText(getActivity(),"No need for verification: your account mail was already verified",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(),GlobalData.getContext().getResources().getString(R.string.string_account_no_need),Toast.LENGTH_SHORT).show();
                 else {
 
                     AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
-                    builder.setTitle("Send verification request?");
-                    builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    builder.setTitle(GlobalData.getContext().getResources().getString(R.string.string_account_resend_title));
+                    builder.setPositiveButton(GlobalData.getContext().getResources().getString(R.string.yes), new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
 
                             String mail = application.getCurrentUser().getEmail();
-                            Log.println(Log.ASSERT,"ACCOUNT FRAG","re-send verification mail to: " + mail);
+                            Log.println(Log.ASSERT,"ACCOUNT FRAG",GlobalData.getContext().getResources().getString(R.string.string_account_resend_to) + mail);
                             application.getCurrentUser().setEmail("null@null.null");
                             application.getCurrentUser().saveEventually();
                             application.getCurrentUser().setEmail(mail);
@@ -112,7 +112,7 @@ public class ProfileManagementAccountFragment extends ProfileManagementFragment 
                         }
                     });
 
-                    builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    builder.setNegativeButton(GlobalData.getContext().getResources().getString(R.string.no), new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {}
                     });
@@ -128,8 +128,8 @@ public class ProfileManagementAccountFragment extends ProfileManagementFragment 
 
                 AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
-                builder.setTitle("Delete this account?");
-                builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                builder.setTitle(GlobalData.getContext().getResources().getString(R.string.account_delete_confirm));
+                builder.setPositiveButton(GlobalData.getContext().getResources().getString(R.string.yes), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
 
@@ -137,7 +137,7 @@ public class ProfileManagementAccountFragment extends ProfileManagementFragment 
                     }
                 });
 
-                builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                builder.setNegativeButton(GlobalData.getContext().getResources().getString(R.string.no), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {}
                 });

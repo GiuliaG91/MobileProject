@@ -51,18 +51,18 @@ public class ProfileManagementDialogChangeEmail extends DialogFragment {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
-        builder.setTitle("Change Email / Username");
+        builder.setTitle(GlobalData.getContext().getResources().getString(R.string.string_account_change_title));
 
         LinearLayout layout = new LinearLayout(getActivity());
         layout.setOrientation(LinearLayout.VERTICAL);
         layout.setPadding(10, 10, 10, 10);
         newMail = new EditText(getActivity());
-        newMail.setHint("Instert new mail");
+        newMail.setHint(GlobalData.getContext().getResources().getString(R.string.string_account_insert_new_mail));
         newMail.setInputType(InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS);
         layout.addView(newMail);
         builder.setView(layout);
 
-        builder.setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
+        builder.setPositiveButton(GlobalData.getContext().getResources().getString(R.string.confirm), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
 
@@ -73,11 +73,11 @@ public class ProfileManagementDialogChangeEmail extends DialogFragment {
                 application.getCurrentUser().saveEventually();
                 application.getUserObject().saveEventually();
 
-                Toast.makeText(getActivity(),"You will receive a message on the new eMail for verification", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(),GlobalData.getContext().getResources().getString(R.string.string_accout_you_will_receive), Toast.LENGTH_SHORT).show();
             }
         });
 
-        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+        builder.setNegativeButton(GlobalData.getContext().getResources().getString(R.string.cancel_), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {}
         });

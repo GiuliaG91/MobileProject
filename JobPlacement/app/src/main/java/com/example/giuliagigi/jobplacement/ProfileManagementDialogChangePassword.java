@@ -44,20 +44,20 @@ public class ProfileManagementDialogChangePassword extends DialogFragment {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
-        builder.setTitle("Change Password");
+        builder.setTitle(GlobalData.getContext().getResources().getString(R.string.string_account_change_password));
 
         LinearLayout layout = new LinearLayout(getActivity());
         layout.setOrientation(LinearLayout.VERTICAL);
         layout.setPadding(10,10,10,10);
         newPassword = new EditText(getActivity());
-        newPassword.setHint("Insert new password");
+        newPassword.setHint(GlobalData.getContext().getResources().getString(R.string.string_account_insert_new_password));
         confirmPassword = new EditText(getActivity());
-        confirmPassword.setHint("Confirm new password");
+        confirmPassword.setHint(GlobalData.getContext().getResources().getString(R.string.string_account_confirm_new_password));
         layout.addView(newPassword);
         layout.addView(confirmPassword);
         builder.setView(layout);
 
-        builder.setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
+        builder.setPositiveButton(GlobalData.getContext().getResources().getString(R.string.confirm), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
 
@@ -69,12 +69,12 @@ public class ProfileManagementDialogChangePassword extends DialogFragment {
 
                     newPassword.setText("");
                     confirmPassword.setText("");
-                    Toast.makeText(getActivity(),"Passwords doesn't match", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(),GlobalData.getContext().getResources().getString(R.string.registration_mismatching_password), Toast.LENGTH_SHORT).show();
                 }
             }
         });
 
-        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+        builder.setNegativeButton(GlobalData.getContext().getResources().getString(R.string.cancel_), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {}
         });
