@@ -26,68 +26,86 @@
                 <LinearLayout
                     android:orientation="horizontal"
                     android:layout_width="fill_parent"
+                    android:layout_height="100dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/material_background">
 
-                    <TextView
+                    <!-- A RecyclerView with some commonly used attributes -->
+
+
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:layout_width="70dp"
+                        android:layout_height="70dp"
+                        android:layout_marginLeft="16dp"
+                        android:layout_gravity="center"
+                        android:id="@+id/circleView_logo"
+                        android:src="@drawable/ic_profile"
+                        app:border_color="@android:color/darker_gray"
+                        app:border_width="2dp"/>
+
+                    <LinearLayout
+                        android:orientation="vertical"
                         android:layout_width="fill_parent"
-                        android:layout_height="0dp"
-                        android:textAppearance="?android:attr/textAppearanceLarge"
-                        android:text="NameCompany"
-                        android:id="@+id/company_name_tv"
-                        android:layout_weight="1"
-                        android:gravity="bottom"
-                        android:paddingLeft="10dp"
-                        android:paddingBottom="5dp"
-                        android:textColor="#fff7ffff" />
+                        android:layout_height="fill_parent">
 
-                    <TextView
-                        android:layout_width="fill_parent"
-                        android:layout_height="0dp"
-                        android:textAppearance="?android:attr/textAppearanceMedium"
-                        android:text="email"
-                        android:id="@+id/Company_email"
-                        android:layout_weight="1"
-                        android:paddingLeft="10dp"
-                        android:textColor="#ffffffff"
-                        android:paddingTop="5dp" />
+                        <TextView
+                            android:layout_width="fill_parent"
+                            android:layout_height="0dp"
+                            android:textAppearance="?android:attr/textAppearanceLarge"
+                            android:text="NameCompany"
+                            android:id="@+id/company_name_tv"
+                            android:layout_weight="1"
+                            android:gravity="bottom"
+                            android:paddingLeft="10dp"
+                            android:paddingBottom="5dp"
+                            android:textColor="#fff7ffff" />
 
+                        <TextView
+                            android:layout_width="fill_parent"
+                            android:layout_height="0dp"
+                            android:textAppearance="?android:attr/textAppearanceMedium"
+                            android:text="email"
+                            android:id="@+id/Company_email"
+                            android:layout_weight="1"
+                            android:paddingLeft="10dp"
+                            android:textColor="#ffffffff"
+                            android:paddingTop="5dp" />
+
+                    </LinearLayout>
 
                 </LinearLayout>
 
+                <include android:id="@+id/object_row"
+                    layout="@layout/offer_item_row"> </include>
+
+                <include android:id="@+id/mission_row"
+                    layout="@layout/offer_item_row"> </include>
+
+                <include android:id="@+id/field_row"
+                    layout="@layout/offer_item_row"> </include>
 
 
+                <include android:id="@+id/places_row"
+                    layout="@layout/offer_item_row"> </include>
 
-            </LinearLayout>
+                <include android:id="@+id/validity_row"
+                    layout="@layout/offer_item_row"> </include>
 
+                <include android:id="@+id/contract_row"
+                    layout="@layout/offer_item_row"> </include>
 
-            <include android:id="@+id/object_row"
-                layout="@layout/offer_item_row"></include>
-
-            <include android:id="@+id/mission_row"
-                layout="@layout/offer_item_row"> </include>
-
-            <include android:id="@+id/field_row"
-                layout="@layout/offer_item_row"> </include>
-
+                <include android:id="@+id/term_row"
+                    layout="@layout/offer_item_row"> </include>
 
 
+                <include android:id="@+id/location_row"
+                    layout="@layout/offer_item_row"> </include>
 
-            <include android:id="@+id/validity_row"
-                layout="@layout/offer_item_row"> </include>
+                <include android:id="@+id/salary_row"
+                    layout="@layout/offer_item_row"> </include>
 
-            <include android:id="@+id/contract_row"
-                layout="@layout/offer_item_row"> </include>
-
-            <include android:id="@+id/term_row"
-                layout="@layout/offer_item_row"> </include>
-
-
-
-            <include android:id="@+id/salary_row"
-                layout="@layout/offer_item_row"> </include>
-
-            <include android:id="@+id/status_row"
-                layout="@layout/offer_item_row"> </include>
-
+                <include android:id="@+id/status_row"
+                    layout="@layout/offer_item_row"> </include>
 
 
                 <TextView
