@@ -5,26 +5,27 @@
     android:layout_height="fill_parent">
 
     <TextView
-        android:layout_width="fill_parent"
-        android:layout_height="0dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:id="@+id/SetStatusTitle"
-        android:layout_weight="1"
-        android:layout_margin="5dp"
+        android:textColor="@color/ColorPrimary"
+        android:layout_marginRight="5dp"
+        android:layout_marginBottom="5dp"
+        android:layout_marginLeft="5dp"
+        android:text="Tile Here"
         android:gravity="center"
-        android:textSize="25sp" />
+        android:textSize="@dimen/textView_textSize" />
 
     <Spinner
         android:layout_width="fill_parent"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         android:id="@+id/StatusSpinner"
-        android:layout_margin="5dp"
-        android:layout_weight="1" />
+        android:layout_margin="5dp"/>
 
 
     <LinearLayout
         android:layout_width="fill_parent"
-        android:layout_height="0dp"
-        android:layout_weight="0.6"
+        android:layout_height="wrap_content"
         android:orientation="horizontal">
 
         <Button
@@ -32,12 +33,22 @@
             android:layout_height="fill_parent"
             android:layout_weight="1"
             android:text="@string/cancel_"
+            android:layout_margin="5dp"
+            android:background="@drawable/button_background"
+            android:textColor="@color/ColorPrimary"
+            android:textSize="@dimen/button_textSize_small"
             android:id="@+id/cancel_button"/>
         <Button
             android:layout_width="0dp"
             android:layout_height="fill_parent"
             android:layout_weight="1"
             android:text="@string/ok"
+            android:layout_marginRight="5dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:background="@drawable/button_background"
+            android:textColor="@color/ColorPrimary"
+            android:textSize="@dimen/button_textSize_small"
             android:id="@+id/ok_button"/>
     </LinearLayout>
 </LinearLayout>

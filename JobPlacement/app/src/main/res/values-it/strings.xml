@@ -8,7 +8,7 @@
     <string name="new_message_toolbar_title">Nuovo Messaggio</string>
     <string name="sent_mail">Posta inviata</string>
     <string name="received_mail">Posta ricevuta</string>
-    <string name="cancel_mails">Email cancellate</string>
+    <string name="cancel_mails">Cancella email selezionate</string>
     <string name="sender">Da</string>
     <string name="recipient">A</string>
     <string name="recipients">Destinatari</string>
@@ -365,6 +365,17 @@
     <string name="application_dialog_confirm_message">L\'operazione non è reversibile: per esempio, nel caso in cui si accetti la candidatura, i posti disponibili vengono decrementati</string>
     <string name="application_dialog_already_replied">Hai già dato una risposta relativa a questa candidatura: il suo stato non è reversibile. Ti consigliamo di contattare direttamente lo studente</string>
 
+    <!-- ________________ OFFER STATUS _________________________________________________________ -->
+    <string name="OfferStatus_Start">Lavorazione</string>
+    <string name="OfferStatus_Considering">Persa in considerazione</string>
+    <string name="OfferStatus_Refused">Rifiutata</string>
+    <string name="OfferStatus_Accepted">Accettata</string>
+    <string name="OfferStatus_applyStatus">Stato della candidatura:</string>
+    <string name="OfferStatus_ChooseItem">Seleziona il prossimo stato:</string>
+    <string name="OfferStatus_NoModify">Non posso modificare questa offerta perchè è già stata pubblicata</string>
+    <string name="see_applied_students">Vedi gli studenti candidati</string>
+    <string name="delete_offer">Cancella questa offerta</string>
+>>>>>>> origin/newMaster2
 
     <!-- ________________ NEW OFFER ____________________________________________________________ -->
     <string name="new_offer_fragment_removed">Rimosso</string>

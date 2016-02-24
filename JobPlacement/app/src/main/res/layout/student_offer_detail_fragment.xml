@@ -8,45 +8,24 @@
     tools:context="com.example.giuliagigi.jobplacement.CompanyEditOfferFragment">
 
 
-<LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
-    <ScrollView
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:id="@+id/Show_OfferScrollView"
-        android:layout_weight="1">
-
-        <LinearLayout
-            android:orientation="vertical"
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <ScrollView
             android:layout_width="fill_parent"
-            android:layout_height="fill_parent">
-
+            android:layout_height="fill_parent"
+            android:id="@+id/Show_OfferScrollView"
+            android:layout_weight="1">
 
             <LinearLayout
-                android:orientation="horizontal"
+                android:orientation="vertical"
                 android:layout_width="fill_parent"
-                android:layout_height="100dp"
-                android:layout_weight="1"
-                android:background="@drawable/material_background">
+                android:layout_height="fill_parent">
 
-                <!-- A RecyclerView with some commonly used attributes -->
-
-
-                <de.hdodenhof.circleimageview.CircleImageView
-                    android:layout_width="70dp"
-                    android:layout_height="70dp"
-                    android:layout_marginLeft="16dp"
-                    android:layout_gravity="center"
-                    android:id="@+id/circleView_logo"
-                    android:src="@drawable/ic_profile"
-                    app:border_color="@android:color/darker_gray"
-                    app:border_width="2dp"/>
 
                 <LinearLayout
-                    android:orientation="vertical"
+                    android:orientation="horizontal"
                     android:layout_width="fill_parent"
-                    android:layout_height="fill_parent">
 
                     <TextView
                         android:layout_width="fill_parent"
@@ -91,8 +70,6 @@
 
 
 
-            <include android:id="@+id/places_row"
-                layout="@layout/offer_item_row"> </include>
 
             <include android:id="@+id/validity_row"
                 layout="@layout/offer_item_row"> </include>
@@ -104,8 +81,6 @@
                 layout="@layout/offer_item_row"> </include>
 
 
-            <include android:id="@+id/location_row"
-                layout="@layout/offer_item_row"> </include>
 
             <include android:id="@+id/salary_row"
                 layout="@layout/offer_item_row"> </include>
@@ -114,27 +89,27 @@
                 layout="@layout/offer_item_row"> </include>
 
 
-            <TextView
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="@string/new_offer_fragment_Description"
-                android:textColor="@color/ColorPrimary"
-                android:id="@+id/newOffer_tv3"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="20dp" />
+
+                <TextView
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="@string/new_offer_fragment_Description"
+                    android:textColor="@color/ColorPrimary"
+                    android:id="@+id/newOffer_tv3"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="20dp" />
 
 
-            <android.support.v7.widget.CardView
-                xmlns:card_view="http://schemas.android.com/apk/res-auto"
-                android:id="@+id/CardDescription"
-                android:layout_gravity="center"
-                android:layout_width="350dp"
-                android:layout_height="100dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="10dp"
-                card_view:cardCornerRadius="4dp">
-
+                <android.support.v7.widget.CardView
+                    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+                    android:id="@+id/CardDescription"
+                    android:layout_gravity="center"
+                    android:layout_width="350dp"
+                    android:layout_height="100dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    card_view:cardCornerRadius="4dp">
 
                     <TextView
                         android:layout_width="match_parent"
@@ -145,15 +120,15 @@
                         android:backgroundTint="@android:color/white"/>
 
 
-            </android.support.v7.widget.CardView>
+                </android.support.v7.widget.CardView>
 
 
 
 
-        </LinearLayout>
-    </ScrollView>
+            </LinearLayout>
+        </ScrollView>
 
-</LinearLayout>
+    </LinearLayout>
 
     <com.getbase.floatingactionbutton.FloatingActionsMenu
         android:id="@+id/new_offer_floating_menu"

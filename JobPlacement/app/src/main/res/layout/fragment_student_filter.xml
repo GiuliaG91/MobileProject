@@ -18,6 +18,8 @@
             <LinearLayout
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
                 android:orientation="horizontal">
 
                 <TextView
@@ -27,7 +29,7 @@
                     android:layout_marginBottom="5dp"
                     android:text="@string/filter_Remove"
                     android:layout_marginLeft="3dp"
-                    android:layout_marginTop="20dp"
+                    android:layout_marginTop="5dp"
                     android:textColor="@color/ColorPrimaryDark"
                     android:textSize="20sp"
                     />
@@ -50,8 +52,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:id="@+id/tag_filter_layout"
-                android:layout_marginBottom="5dp"
-                android:layout_marginTop="5dp">
+                android:layout_marginTop="5dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp">
 
                 <TextView
                     android:layout_width="fill_parent"
@@ -61,7 +64,7 @@
                     android:id="@+id/tag_filter_tv"
                     android:layout_weight="0.3"
                     android:layout_marginLeft="3dp"
-                    android:layout_marginTop="20dp" />
+                    android:layout_marginTop="5dp" />
                 <LinearLayout
                     android:layout_width="fill_parent"
                     android:layout_height="0dp"
@@ -93,8 +96,9 @@
                     android:layout_gravity="center"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="5dp"
+                    android:layout_marginTop="5dp"
                     android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
                     card_view:cardCornerRadius="4dp">
 
                     <GridLayout
@@ -113,8 +117,7 @@
                 android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginBottom="5dp"
-                android:layout_marginTop="5dp"
+                android:layout_margin="5dp"
                 android:id="@+id/field_filter_layout">
 
                 <TextView
@@ -125,7 +128,7 @@
                     android:id="@+id/field_filter_tv"
                     android:layout_weight="0.3"
                     android:layout_marginLeft="3dp"
-                    android:layout_marginTop="20dp" />
+                    android:layout_marginTop="5dp" />
                 <LinearLayout
                     android:layout_width="fill_parent"
                     android:layout_height="0dp"
@@ -150,8 +153,9 @@
                     android:layout_gravity="center"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="5dp"
+                    android:layout_marginTop="5dp"
                     android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
                     card_view:cardCornerRadius="4dp">
 
 
@@ -171,8 +175,9 @@
                 android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginBottom="5dp"
                 android:layout_marginTop="5dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
                 android:id="@+id/contract_filter_layout">
 
                 <TextView
@@ -183,7 +188,7 @@
                     android:id="@+id/contract_filter_tv"
                     android:layout_weight="0.3"
                     android:layout_marginLeft="3dp"
-                    android:layout_marginTop="20dp" />
+                    android:layout_marginTop="5dp" />
                 <LinearLayout
                     android:layout_width="fill_parent"
                     android:layout_height="0dp"
@@ -203,8 +208,9 @@
                 android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginBottom="5dp"
                 android:layout_marginTop="5dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
                 android:id="@+id/term_filter_layout">
 
                 <TextView
@@ -215,7 +221,7 @@
                     android:id="@+id/mark_filter_tv"
                     android:layout_weight="0.3"
                     android:layout_marginLeft="3dp"
-                    android:layout_marginTop="20dp" />
+                    android:layout_marginTop="5dp" />
                 <LinearLayout
                     android:layout_width="fill_parent"
                     android:layout_height="0dp"
@@ -241,8 +247,9 @@
                 android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginBottom="5dp"
                 android:layout_marginTop="5dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
                 android:id="@+id/salary_filter_layout">
 
 
@@ -264,7 +271,7 @@
             android:text="@string/cancel_"
             android:background="@drawable/button_background"
             android:textColor="@color/ColorPrimary"
-            android:layout_margin="2dp"
+            android:layout_margin="5dp"
             android:id="@+id/cancel_button"/>
         <Button
             android:layout_width="0dp"
@@ -273,9 +280,9 @@
             android:text="@string/ok"
             android:background="@drawable/button_background"
             android:textColor="@color/ColorPrimary"
-            android:layout_marginTop="2dp"
-            android:layout_marginRight="2dp"
-            android:layout_marginBottom="2dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginBottom="5dp"
             android:id="@+id/ok_button"/>
 
     </LinearLayout>

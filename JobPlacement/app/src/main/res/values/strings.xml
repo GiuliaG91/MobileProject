@@ -8,7 +8,7 @@
     <string name="new_message_toolbar_title">New Message</string>
     <string name="sent_mail">Sent mails</string>
     <string name="received_mail">Received mails</string>
-    <string name="cancel_mails">Cancel mails</string>
+    <string name="cancel_mails">Cancel selected</string>
     <string name="sender">From</string>
     <string name="recipient">To</string>
     <string name="recipients">Recipients</string>
@@ -367,6 +367,17 @@
     <string name="application_dialog_confirm_request">Are you sure to confirm this operation?</string>
     <string name="application_dialog_confirm_message">This operation is not reversible: for example, if you accept this application, the available places will be decremented</string>
     <string name="application_dialog_already_replied">You already replied to this application. Its state is not reversible at the moment. We suggest you to contact directly this student</string>
+
+    <!-- ________________ OFFER STATUS _________________________________________________________ -->
+    <string name="OfferStatus_Start">Processing</string>
+    <string name="OfferStatus_Considering">Considering</string>
+    <string name="OfferStatus_Refused">Filled</string>
+    <string name="OfferStatus_Accepted">Accepted</string>
+    <string name="OfferStatus_applyStatus">Apply Status:</string>
+    <string name="OfferStatus_ChooseItem">Select next status:</string>
+    <string name="OfferStatus_NoModify">Can\'t modify this offer because it has already been published</string>
+    <string name="see_applied_students">See applied students</string>
+>>>>>>> origin/newMaster2
 
     <!-- ________________ NEW OFFER ____________________________________________________________ -->
     <string name="new_offer_fragment_removed">Removed</string>

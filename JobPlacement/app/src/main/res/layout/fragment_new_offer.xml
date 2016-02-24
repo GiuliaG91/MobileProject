@@ -643,7 +643,6 @@
                 fab:fab_colorPressed="@color/ColorPrimaryDark"/>
 
 
-
             <com.getbase.floatingactionbutton.FloatingActionButton
                 android:id="@+id/floatingButton_publish"
                 android:layout_width="wrap_content"
