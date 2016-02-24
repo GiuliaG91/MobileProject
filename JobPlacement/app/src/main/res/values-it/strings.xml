@@ -49,6 +49,7 @@
     <string name="floor">Piano</string>
     <string name="confirm">Conferma</string>
     <string name="insert_description">Inserisci una descrizione</string>
+    <string name="operation_canceled">Operazione annullata</string>
 
     <string name="ground_floor">Piano terra</string>
     <string name="basement_floor">Piano seminterrato</string>
@@ -296,6 +297,8 @@
     <string name="NoFavourites">Nessun favorito trovato</string>
     <string name="job_offer">Offerte di lavoro</string>
     <string name="new_job_offer_message">ha pubblicato una nuova offerta di lavoro su</string>
+    <string name="deleted_job_offer_message">revocata offerta di lavoro: </string>
+    <string name="deleted_application_message">ha deciso di ritirare la sua candidatura per l\'offerta: </string>
     <string name="new_job_offer">Nuova offerta di lavoro</string>
     <string name="new_student_applied">Nuovo studente candidato</string>
     <string name="student_accepted">Candidatura accettata</string>
@@ -333,9 +336,12 @@
     <!-- ________________ TOOLBARS _____________________________________________________________ -->
     <string name="ToolbarTilteHome">Home</string>
     <string name="ToolbarTilteProfile">Profilo</string>
+    <string name="ToolbarTilteFavouriteOffers">Offerte di lavoro preferite</string>
     <string name="ToolbarTilteOffer">Offerta di lavoro</string>
     <string name="ToolbarTilteNewOffer">Nuova offerta</string>
-    <string name="ToolbarTilteMyJobOffers">Le mie offerte di lavoro</string>
+    <string name="ToolbarTilteMyJobOffers">Offerte di lavoro</string>
+    <string name="ToolbarTilteMyApplications">Le mie candidature</string>
+    <string name="ToolbarTilteApplicationsFor">Candidature per:</string>
     <string name="ToolbarTitleMyCompanies">Le mie aziende</string>
     <string name="ToolbarTitleMyStudents">Studenti</string>
     <string name="ToolbarTilteStudentSearch">Ricerca degli studenti</string>
@@ -343,23 +349,31 @@
     <string name="ToolbarTilteMailBox">Casella Email</string>
     <string name="ToolbarTilteMyCompanies">Le mie aziende</string>
 
-    <!-- ________________ OFFER STATUS _________________________________________________________ -->
-    <string name="OfferStatus_Start">Lavorazione</string>
-    <string name="OfferStatus_Considering">Persa in considerazione</string>
-    <string name="OfferStatus_Refused">Rifiutata</string>
-    <string name="OfferStatus_Accepted">Accettata</string>
-    <string name="OfferStatus_applyStatus">Stato della candidatura:</string>
-    <string name="OfferStatus_ChooseItem">Seleziona il prossimo stato:</string>
-    <string name="OfferStatus_NoModify">Non posso modificare questa offerta</string>
+    <!-- ________________ STUDENT APPLICATION __________________________________________________ -->
+    <string name="application_status_Start">Lavorazione</string>
+    <string name="application_status_Considering">Persa in considerazione</string>
+    <string name="application_status_Refused">Rifiutata</string>
+    <string name="application_status_Accepted">Accettata</string>
+    <string name="application_status_applyStatus">Stato della candidatura:</string>
+    <string name="application_status_ChooseItem">Seleziona il prossimo stato:</string>
+    <string name="application_status_NoModify">Non posso modificare questa offerta</string>
+    <string name="application_dialog_message">Cosa desideri rispondere a: </string>
+    <string name="application_dialog_considering">La sua candidatura è stata presa in considerazione. Le faremo sapere presto di quali informazioni abbiamo bisogno e la contatteremo per un eventuale colloquio</string>
+    <string name="application_dialog_accept">La sua candidatura è stata accettata</string>
+    <string name="application_dialog_refused">La sua candidatura è stata respinta</string>
+    <string name="application_dialog_confirm_request">Sei sicuro di voler confermare l\'operazione?</string>
+    <string name="application_dialog_confirm_message">L\'operazione non è reversibile: per esempio, nel caso in cui si accetti la candidatura, i posti disponibili vengono decrementati</string>
+    <string name="application_dialog_already_replied">Hai già dato una risposta relativa a questa candidatura: il suo stato non è reversibile. Ti consigliamo di contattare direttamente lo studente</string>
+
 
     <!-- ________________ NEW OFFER ____________________________________________________________ -->
     <string name="new_offer_fragment_removed">Rimosso</string>
     <string name="new_offer_fragment_added">Aggiunto</string>
     <string name="new_offer_fragment_existenTtag">Tag già esistente</string>
     <string name="new_offer_fragment_WrongTag">Tag errato</string>
-    <string name="new_offer_fragment_MissingField">Campo mancante</string>
-    <string name="new_offer_fragment_WrongDate">Non posso impostare questa data</string>
-    <string name="new_offer_fragment_Error">Errore: non posso completare l\'operazione.</string>
+    <string name="new_offer_missing_field_error">Campo mancante</string>
+    <string name="new_offer_wrong_date_error">Non posso impostare questa data</string>
+    <string name="new_offer_wrong_type_error">Dati inseriti di tipo non corretto</string>
     <string name="new_offer_fragment_NoDelete">Errore: non posso eliminare questo oggetto.</string>
     <string name="new_offer_fragment_NoStudents">Nessuno studente candidato</string>
     <string name="new_offer_fragment_publish">Pubblica un\'offerta</string>
@@ -383,8 +397,9 @@
     <string name="new_offer_fragment_hint_spinnerField">Per favore seleziona un campo</string>
     <string name="new_offer_fragment_hint_spinnercontract">Per favore seleziona un tipo di contratto</string>
     <string name="new_offer_fragment_hint_number_of_place">Posti disponibili</string>
-    <string name="new_offer_fragment_hint_validity">Validità</string>
-    <string name="new_offer_fragment_hint_tags">Seleziona le skills richieste...</string>
+    <string name="new_offer_fragment_hint_validity">L\'offertà sarà valida fino a:</string>
+    <string name="new_offer_fragment_hint_tags">Seleziona le competenze richieste</string>
+    <string name="new_offer_delete">Cancella/Revoca</string>
 
     <string name="new_offer_validity_date_dialog">Imposta la data di validità:</string>
 
@@ -393,6 +408,11 @@
 
     <!-- ________________ OFFER DETAIL _________________________________________________________ -->
     <string name="offer_detail_apply_button">Candidati</string>
+    <string name="offer_detail_favourites_button">Rimuovi/Aggiungi ai preferiti</string>
+    <string name="offer_detail_revoke_apply_button">Ritira candidatura</string>
+    <string name="offer_detail_revoke_apply_warning">Sei sicuro di voler ritirare la tua candidatura per quest\'offerta?</string>
+    <string name="offer_detail_applications_button">Candidature</string>
+    <string name="offer_detail_delete_button">Ritira Offerta</string>
     <string name="offer_detail_contact_button">Contatta l\'azienda</string>
     <string name="offer_detail_NoApply">Non posso concludere la candidatura</string>
     <string name="offer_detail_AlreadyApplied">Già candidato</string>
@@ -406,6 +426,24 @@
     <string name="offer_detail_hint_location">Luogo</string>
     <string name="offer_detail_hint_Nodefined">Da definire</string>
     <string name="offer_detail_hint_salary">Stipendio</string>
+    <string name="offer_detail_status">Stato dell\'offerta:</string>
+    <string name="offer_detail_favourites_warning">Candidatura in sospeso per questa offerta: impossibile rimuovere dai preferiti. Per rimuovere, revocare la propria candidatura</string>
+    <string name="offer_detail_delete_warning">Vuoi davvero ritirare l\'offerta? Il suo stato passerà a \"Revocata\" e rimarrà visibile fintanto che tutti gli studenti avranno cancellato la loro candidatura</string>
+    <string name="offer_detail_deleted_message">Dal momento che non sono presenti candidature attive per questa offerta, è stata immediatamente cancellata</string>
+    <string name="offer_detail_not_created_message">L\'offerta non è stata creata</string>
+    <string name="offer_detail_save_warning">Vuoi creare una nuova offerta senza salvare quella corrente?</string>
+    <string name="offer_detail_published_message">L\'offerta è stata pubblicata ed è ora visibile agli studenti</string>
+    <string name="offer_detail_created_message">La tua offerta è stata creata. Finché non verrà pubblicata potrai modificarla, ma non sarà visibile agli studenti</string>
+    <string name="offer_detail_saved_message">Modifiche salvate correttamente</string>
+    <string name="offer_detail_add_favourite">Vuoi aggiungere quest\'offerta ai preferiti?</string>
+    <string name="offer_detail_remove_favourite">Vuoi rimuovere quest\'offerta dai preferiti?</string>
+    <string name="offer_detail_favourite_removed">Offerta rimossa dai preferiti</string>
+    <string name="offer_detail_favourite_added">Offerta aggiunta ai preferiti</string>
+
+
+    <!-- ________________ STUDENT APPLICATION __________________________________________________ -->
+    <string name="student_application_status">Stato candidatura:</string>
+
 
     <!-- ________________ FILTERS ______________________________________________________________ -->
     <string name="filter_Skills">Abilità richieste</string>
@@ -488,7 +526,6 @@
         <item>Novità</item>
         <item>Offerte di lavoro</item>
         <item>Aziende</item>
-        <item>Candidature</item>
 
     </string-array>
 
@@ -511,7 +548,6 @@
     <string-array name="Home_Company_Tab">
 
         <item>Novità</item>
-        <item>Offerte di lavoro</item>
         <item>Studenti</item>
 
     </string-array>
@@ -539,6 +575,7 @@
         <item>Profilo</item>
         <item>Casella Email</item>
         <item>Cerca</item>
+        <item>Mie Offerte</item>
         <item>Nuova Offerta</item>
         <item>Logout</item>
 
@@ -578,6 +615,14 @@
         <item>Cinque anni</item>
         <item>Indeterminato</item>
 
+    </string-array>
+
+
+    <string-array name="offer_detail_status">
+        <item>Creata</item>
+        <item>Pubblicata</item>
+        <item>Terminata</item>
+        <item>Ritirata</item>
     </string-array>
 
     <string-array name="new_offer_fragment_fields">

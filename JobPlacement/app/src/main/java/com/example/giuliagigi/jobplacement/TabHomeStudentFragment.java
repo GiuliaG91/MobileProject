@@ -65,7 +65,7 @@ public class TabHomeStudentFragment extends Fragment {
         /*************ViewPager***************************/
 
         // Creating The StudentViewPagerAdapter and Passing Fragment Manager, Titles fot the Tabs and Number Of Tabs.
-        adapter = new StudentViewPagerAdapter(getChildFragmentManager(), Titles, Numboftabs, this);
+        adapter = new StudentViewPagerAdapter(getChildFragmentManager(), Titles, this);
 
         // Assigning ViewPager View and setting the adapter
         pager = (ViewPager) root.findViewById(R.id.pager);

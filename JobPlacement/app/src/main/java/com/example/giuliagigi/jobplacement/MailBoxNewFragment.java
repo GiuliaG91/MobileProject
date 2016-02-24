@@ -143,7 +143,7 @@ public class MailBoxNewFragment extends Fragment {
         recipientTagsContainer = (LinearLayout)root.findViewById(R.id.recipients_tag_container);
 
         // 2) setting view -----------------------------------------------------------------------------------------------
-        if(savedInstanceState != null){ // restoring state after rotation //////////////////////////////////////
+        if(savedInstanceState != null){ // restoring state after rotation ////////////////////////
 
             bundleIdentifierTail = savedInstanceState.getString(BUNDLE_IDENTIFIER_TAIL_KEY);
             MyBundle b = globalData.getBundle(BUNDLE_IDENTIFIER_HEADER + bundleIdentifierTail);
@@ -160,7 +160,7 @@ public class MailBoxNewFragment extends Fragment {
                     currentMails.add((String)o);
             }
         }
-        else { // view is initialized for the first time (using constructor parameters) //////
+        else { // view is initialized for the first time (using constructor parameters) /7////////
 
             if(recipients != null && recipients.size() > 0){
 
@@ -345,7 +345,7 @@ public class MailBoxNewFragment extends Fragment {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
-        View view = activity.getLayoutInflater().inflate(R.layout.warning_message_mail_box, null);
+        View view = activity.getLayoutInflater().inflate(R.layout.warning_message_generic, null);
         LinearLayout container = (LinearLayout)view.findViewById(R.id.warning_message_container);
 
         for(Integer code: warnings){
@@ -403,7 +403,7 @@ public class MailBoxNewFragment extends Fragment {
         Log.println(Log.ASSERT,"MAILBOXNEW", "showing errors");
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
-        View view = activity.getLayoutInflater().inflate(R.layout.error_message_mail_box, null);
+        View view = activity.getLayoutInflater().inflate(R.layout.error_message_generic, null);
         LinearLayout container = (LinearLayout)view.findViewById(R.id.error_message_container);
 
         for(Integer code: errors){

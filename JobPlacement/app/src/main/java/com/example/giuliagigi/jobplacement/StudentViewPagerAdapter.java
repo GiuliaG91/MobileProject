@@ -12,16 +12,14 @@ import android.support.v4.app.FragmentPagerAdapter;
 public class StudentViewPagerAdapter extends FragmentPagerAdapter {
 
     CharSequence Titles[]; // This will Store the Titles of the Tabs which are Going to be passed when StudentViewPagerAdapter is created
-    int NumbOfTabs; // Store the number of tabs, this will also be passed when the StudentViewPagerAdapter is created
     TabHomeStudentFragment parent;
     // Build a Constructor and assign the passed Values to appropriate values in the class
 
-    public StudentViewPagerAdapter(FragmentManager fm, CharSequence mTitles[], int mNumbOfTabsumb, TabHomeStudentFragment fragment) {
+    public StudentViewPagerAdapter(FragmentManager fm, CharSequence mTitles[], TabHomeStudentFragment fragment) {
 
         super(fm);
 
         this.Titles = mTitles;
-        this.NumbOfTabs = mNumbOfTabsumb;
         parent = fragment;
     }
 
@@ -38,17 +36,12 @@ public class StudentViewPagerAdapter extends FragmentPagerAdapter {
         else if (position == 1){
 
             // As we are having 2 tabs if the position is now 0 it must be 1 so we are returning second tab
-            OfferSearchFragment tab2 = OfferSearchFragment.newInstance();
+            StudentOfferSearchFragment tab2 = StudentOfferSearchFragment.newInstance();
             return tab2;
         }
         else if (position == 2) {
 
             StudentCompanySearchFragment tab3 = StudentCompanySearchFragment.newInstance();
-            return tab3;
-        }
-        else if (position == 3) {
-
-            TabApplies tab3 = TabApplies.newInstance();
             return tab3;
         }
         else
@@ -66,7 +59,7 @@ public class StudentViewPagerAdapter extends FragmentPagerAdapter {
 
     @Override
     public int getCount() {
-        return NumbOfTabs;
+        return Titles.length;
     }
 
 

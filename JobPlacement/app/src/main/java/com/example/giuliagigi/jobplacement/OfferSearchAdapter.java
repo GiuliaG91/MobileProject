@@ -1,6 +1,8 @@
 package com.example.giuliagigi.jobplacement;
 
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.graphics.Bitmap;
 import android.location.Address;
 import android.location.Geocoder;
@@ -9,14 +11,13 @@ import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 import com.parse.ParseGeoPoint;
@@ -25,13 +26,10 @@ import com.parse.ParseQuery;
 import com.parse.ParseQueryAdapter;
 
 import java.io.IOException;
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 import java.util.TimeZone;
 
 /**
@@ -45,12 +43,11 @@ public class OfferSearchAdapter extends RecyclerView.Adapter<OfferSearchAdapter.
     private ArrayList<CompanyOffer> mDataset;
     private GlobalData globalData;
     private Student student;
-    private OfferSearchFragment parent;
+    private StudentOfferSearchFragment parent;
     private Integer currentPosition=0;
     private LinearLayoutManager mLayoutManager;
     private final int pageSize=15;
     private int count=0;
-    private List<String> exists;
 
     private ParseQueryAdapter<CompanyOffer> parseAdapter;
     private ParseQueryAdapter.QueryFactory<CompanyOffer> factory;
@@ -59,7 +56,8 @@ public class OfferSearchAdapter extends RecyclerView.Adapter<OfferSearchAdapter.
     OfferSearchAdapter offerSearchAdapter = this;
 
 
-    public OfferSearchAdapter(FragmentActivity c, ViewGroup parentIn, OfferSearchFragment fragment,Integer pos, LinearLayoutManager layoutManager) {
+    public OfferSearchAdapter(FragmentActivity c, ViewGroup parentIn, StudentOfferSearchFragment fragment,Integer pos, LinearLayoutManager layoutManager) {
+
         parseParent = parentIn;
         context = c;
         mDataset = new ArrayList<>();
@@ -69,18 +67,13 @@ public class OfferSearchAdapter extends RecyclerView.Adapter<OfferSearchAdapter.
         currentPosition=pos;
         mLayoutManager=layoutManager;
         count=0;
-        exists=new ArrayList<>();
 
-        for(CompanyOffer o : student.getFavourites()){
 
-            exists.add(o.getObjectId());
-        }
+        if(globalData.getOfferFilterStatus().isValid()) {
 
-        if(globalData.getOfferFilterStatus().isValid())
-        {
-            OfferFilterStatus status=globalData.getOfferFilterStatus();
+            OfferFilterStatus status = globalData.getOfferFilterStatus();
             setFactory(status.getTag_list(),status.getContract_list(),status.getTerm_list(),status.getField_list(),status.getLocation_list(),
-                        status.getSalary_list());
+                    status.getSalary_list());
         }
         else {
 
@@ -106,9 +99,8 @@ public class OfferSearchAdapter extends RecyclerView.Adapter<OfferSearchAdapter.
             };
 
         }
-     setAdapter();
 
-
+        setAdapter();
     }
 
     public void setFactory(final List<Tag> tag_list,
@@ -121,11 +113,11 @@ public class OfferSearchAdapter extends RecyclerView.Adapter<OfferSearchAdapter.
 
 
 
-        factory=new ParseQueryAdapter.QueryFactory<CompanyOffer>() {
+        factory = new ParseQueryAdapter.QueryFactory<CompanyOffer>() {
             @Override
             public ParseQuery<CompanyOffer> create() {
 
-                Calendar today= Calendar.getInstance();
+                Calendar today = Calendar.getInstance();
                 today.set(Calendar.MILLISECOND, 0);
                 today.set(Calendar.SECOND, 0);
                 today.set(Calendar.MINUTE, 0);
@@ -134,95 +126,103 @@ public class OfferSearchAdapter extends RecyclerView.Adapter<OfferSearchAdapter.
 
                 //pubblicate e valide + filtri
                 ParseQuery query = new ParseQuery("CompanyOffer");
-                query.whereEqualTo("publish",true);
-                query.whereGreaterThanOrEqualTo("validity",today.getTime());
+                query.whereEqualTo(CompanyOffer.STATUS_FIELD,CompanyOffer.STATUS_PUBLISHED);
+                query.whereGreaterThanOrEqualTo("validity", today.getTime());
 
-               if(!tag_list.isEmpty())
-                {
+                if(!tag_list.isEmpty()) {
+
                     query.whereContainedIn("tags",tag_list);
                 }
-                if(!contract_list.isEmpty())
-                {
+
+                if(!contract_list.isEmpty()) {
+
                     List<String> newList=new ArrayList<>();
-                    for(String s : contract_list)
-                    {
+                    for(String s : contract_list) {
+
                         newList.add(CompanyOffer.getEnglishContractField(s));
                     }
+
                     query.whereContainedIn("contract",newList);
                 }
-                if(!term_list.isEmpty())
-                {
+
+                if(!term_list.isEmpty()) {
+
                     List<String> newList=new ArrayList<>();
-                    for(String s : term_list)
-                    {
+
+                    for(String s : term_list) {
+
                         newList.add(CompanyOffer.getEnglishTermField(s));
                     }
+
                     query.whereContainedIn("term",term_list);
                 }
-                if(!field_list.isEmpty())
-                {
+
+                if(!field_list.isEmpty()) {
                     List<String> newList=new ArrayList<>();
-                    for(String s : field_list)
-                    {
+
+                    for(String s : field_list) {
+
                         newList.add(CompanyOffer.getEnglishWorkField(s));
                     }
                     query.whereContainedIn("field",field_list);
                 }
 
                 if(!salary_list.isEmpty()) {
+
                     Integer type = Integer.parseInt(salary_list.get(0));
                     Integer sal = Integer.parseInt(salary_list.get(1));
 
+                    if (type == 1) { //less then
 
-                    if (type == 1) //less then
-                    {
                         query.whereLessThan("salary", sal);
+                    }
+                    else if (type == 2) { //more then
 
-                    } else if (type == 2) //more then
-                    {
                         query.whereGreaterThan("salary", sal);
-                    } else if (type == 3) //equal to
-                    {
-                        query.whereEqualTo("salary", sal);
+                    }
+                    else if (type == 3) { //equal to
 
+                        query.whereEqualTo("salary", sal);
                     }
                 }
-                    if (!location_list.isEmpty()) {
-                        Integer type = Integer.parseInt(location_list.get(0));
-                        Integer distance = Integer.parseInt(location_list.get(1));
-                        String nation = location_list.get(2);
-                        String city = location_list.get(3);
 
-                        List<Address> addressList = null;
+                if (!location_list.isEmpty()) {
 
-                        Geocoder geocoder = new Geocoder(context);
-                        String geoAddress = nation + ", " + city;
-                        try {
-                            addressList = geocoder.getFromLocationName(geoAddress, 5);
-                        } catch (IOException e) {
-                            e.printStackTrace();
+                    Integer type = Integer.parseInt(location_list.get(0));
+                    Integer distance = Integer.parseInt(location_list.get(1));
+                    String nation = location_list.get(2);
+                    String city = location_list.get(3);
+
+                    List<Address> addressList = null;
+
+                    Geocoder geocoder = new Geocoder(context);
+                    String geoAddress = nation + ", " + city;
+
+                    try {
+                        addressList = geocoder.getFromLocationName(geoAddress, 5);
+                    }
+                    catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
+                    if (addressList.isEmpty()) {
+
+                    }
+                    else {
+
+                        Address a = addressList.get(0);
+                        ParseGeoPoint geoPoint = new ParseGeoPoint(a.getLatitude(), a.getLongitude());
+
+                        if (type == 1) { //city in general
+
+                            query.whereWithinKilometers("location",geoPoint,100);
                         }
+                        else if (type == 2){ //less then
 
-                        if (addressList.isEmpty()) {
-
-                        } else {
-                            Address a = addressList.get(0);
-                            ParseGeoPoint geoPoint = new ParseGeoPoint(a.getLatitude(), a.getLongitude());
-
-                            if (type == 1) //city in general
-                            {
-
-                                query.whereWithinKilometers("location",geoPoint,100);
-
-
-                            } else if (type == 2) //less then
-                            {
-                                query.whereWithinKilometers("location", geoPoint, distance);
-
-                            }
-
+                            query.whereWithinKilometers("location", geoPoint, distance);
                         }
                     }
+                }
 
                 return query;
             }
@@ -240,50 +240,58 @@ public class OfferSearchAdapter extends RecyclerView.Adapter<OfferSearchAdapter.
 
 
             @Override
-            public View getItemView(final CompanyOffer object, View v, final ViewGroup parent) {
+            public View getItemView(final CompanyOffer offer, View v, final ViewGroup parent) {
+
                 if (v == null) {
                     v = LayoutInflater.from(parent.getContext()).inflate(R.layout.favourites_row, parent, false);
                 }
-                super.getItemView(object, v, parent);
+                super.getItemView(offer, v, parent);
 
 
-                mDataset.add(object);
+                mDataset.add(offer);
                 ImageView logo = (ImageView) v.findViewById(R.id.logo_img);
-                TextView object_tv = (TextView) v.findViewById(R.id.objectOffer_tv);
-                TextView descriprion = (TextView) v.findViewById(R.id.description_tv);
-                TextView date = (TextView) v.findViewById(R.id.date_row_tv);
-                CheckBox pref = (CheckBox) v.findViewById(R.id.star);
+                TextView object_tv = (TextView) v.findViewById(R.id.textView_title);
+                TextView descriprion = (TextView) v.findViewById(R.id.textView_description);
+                TextView date = (TextView) v.findViewById(R.id.textView_date);
+                CheckBox pref = (CheckBox) v.findViewById(R.id.checkbox_favourite);
 
-              Bitmap img=null;
+                Bitmap img=null;
                 //img=object.getCompany().getProfilePhoto();
                 if(img!=null) {
+
                     logo.setImageBitmap(img);
-                }else {
+                }
+                else {
+
                     logo.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_profile));
                 }
-                object_tv.setText(object.getOfferObject());
-                descriprion.setText(object.getDescription());
+
+                object_tv.setText(offer.getOfferObject());
+                descriprion.setText(offer.getDescription());
 
 
-                String des = object.getDescription();
+                String des = offer.getDescription();
 
                 if (des == null || des.equals("")) {
                     descriprion.setText("...");
-                } else {
+                }
+                else {
 
                     if (des.length() < 30) {
                         descriprion.setText(des + "...");
-                    } else {
+                    }
+                    else {
                         descriprion.setText(des.substring(0, 29) + "...");
                     }
                 }
+
                 SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-                String d = dateFormat.format(object.getValidity());
+                String d = dateFormat.format(offer.getValidity());
                 date.setText(d);
                 pref.setChecked(false);
 
 
-                if (exists.contains(object.getObjectId())) {
+                if (student.getFavouriteOffers().contains(offer)) {
                     pref.setChecked(true);
                 }
 
@@ -291,25 +299,56 @@ public class OfferSearchAdapter extends RecyclerView.Adapter<OfferSearchAdapter.
                     @Override
                     public void onClick(View v) {
 
-                        CheckBox checkBox=(CheckBox)v;
+                        final CheckBox checkBox = (CheckBox)v;
 
+                        AlertDialog.Builder builder = new AlertDialog.Builder(context);
 
-                        if (checkBox.isChecked()) {
-                            //add this offer to pref
-                            student.addFavourites(object);
-                            student.saveInBackground();
-                            exists.add(object.getObjectId());
-                        } else if(!checkBox.isChecked()) {
-                            //delete this offer from pref
-                            student.removeFavourites(object);
-                            student.saveInBackground();
-                            exists.remove(object.getObjectId());
-                        }
+                        TextView message = new TextView(globalData);
+                        message.setTextColor(context.getResources().getColor(R.color.black_light_transparent));
+
+                        message.setText(checkBox.isChecked() ? R.string.offer_detail_add_favourite : R.string.offer_detail_remove_favourite);
+
+                        builder.setView(message);
+                        builder.setPositiveButton(globalData.getResources().getString(R.string.yes), new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+
+                                if (checkBox.isChecked()) {
+
+                                    student.addFavouriteOffer(offer);
+                                    student.saveInBackground();
+                                }
+                                else {
+
+                                    ArrayList<CompanyOffer> studentOffers = new ArrayList<CompanyOffer>();
+                                    for (StudentApplication a: student.getApplications())
+                                        studentOffers.add(a.getOffer());
+
+                                    if(studentOffers.contains(offer)){
+
+                                        Toast.makeText(getContext(), R.string.offer_detail_favourites_warning, Toast.LENGTH_LONG).show();
+                                    }
+                                    else {
+
+                                        student.removeFavouriteOffer(offer);
+                                        student.saveInBackground();
+                                    }
+                                }
+                            }
+                        });
+
+                        builder.setNegativeButton(globalData.getResources().getString(R.string.no), new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+
+                                checkBox.setChecked(!checkBox.isChecked());
+                            }
+                        });
+
+                        builder.create().show();
 
                     }
                 });
-
-
 
                 return v;
             }
@@ -330,13 +369,14 @@ public class OfferSearchAdapter extends RecyclerView.Adapter<OfferSearchAdapter.
 
         parseAdapter.addOnQueryLoadListener(new OnQueryLoadListener());
 
-            parseAdapter.setObjectsPerPage(pageSize);
-            parseAdapter.loadObjects();
+        parseAdapter.setObjectsPerPage(pageSize);
+        parseAdapter.loadObjects();
 
     }
 
     @Override
     public OfferSearchAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+
         View v = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.favourites_row, parent, false);
         v.setClickable(true);
@@ -346,10 +386,12 @@ public class OfferSearchAdapter extends RecyclerView.Adapter<OfferSearchAdapter.
         return vh;
     }
 
+
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         parseAdapter.getView(position, holder.myView, parseParent);
     }
+
 
     @Override
     public int getItemCount() {
@@ -363,12 +405,11 @@ public class OfferSearchAdapter extends RecyclerView.Adapter<OfferSearchAdapter.
 
         ViewHolder vh = (ViewHolder)v.getTag();
 
-        globalData.setCurrentOffer(mDataset.get(vh.getPosition()));
         //Pass Object to fragment
         FragmentManager fragmentManager = context.getSupportFragmentManager();
 
         //New Fragment
-        OfferDetail fragment = OfferDetail.newInstance();
+        StudentOfferDetailFragment fragment = StudentOfferDetailFragment.newInstance(mDataset.get(vh.getPosition()), student);
         // Insert the fragment by replacing any existing fragment
         // Insert the fragment by replacing any existing fragment
 
@@ -392,12 +433,19 @@ public class OfferSearchAdapter extends RecyclerView.Adapter<OfferSearchAdapter.
         }
 
         public void onLoaded(List<CompanyOffer> objects, Exception e) {
+
             offerSearchAdapter.notifyDataSetChanged();
+
             if(currentPosition!=0) {
+
                 count += pageSize;
+
                 if (count < currentPosition) {
+
                     parseAdapter.loadNextPage();
-                } else {
+                }
+                else {
+
                     mLayoutManager.scrollToPosition(currentPosition);
                 }
             }

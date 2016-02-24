@@ -549,74 +549,76 @@ public class FilterFragment extends DialogFragment {
                 ){
             flag=1;
         }
-if(flag==0) {
-    GridLayout container = (GridLayout) root.findViewById(R.id.filter_tag_container);
-    if (container.getChildCount() > 0) {
-        for (int i = 0; i < container.getChildCount(); i++) {
-            View tv = container.getChildAt(i);
-            TextView t = (TextView) tv.findViewById(R.id.tag_tv);
-            tag_list.add(retriveTag.get(t.getText().toString().trim()));
+        if(flag==0) {
+            GridLayout container = (GridLayout) root.findViewById(R.id.filter_tag_container);
+            if (container.getChildCount() > 0) {
+                for (int i = 0; i < container.getChildCount(); i++) {
+                    View tv = container.getChildAt(i);
+                    TextView t = (TextView) tv.findViewById(R.id.tag_tv);
+                    tag_list.add(retriveTag.get(t.getText().toString().trim()));
+                }
+            }
+
+            container = (GridLayout) root.findViewById(R.id.filter_field_container);
+            if (container.getChildCount() > 0) {
+                for (int i = 0; i < container.getChildCount(); i++) {
+                    View tv = container.getChildAt(i);
+                    TextView t = (TextView) tv.findViewById(R.id.tag_tv);
+                    field_list.add(t.getText().toString());
+                }
+            }
+
+            pos = salarySpinner.getSelectedItemPosition();
+            if (pos != 0) {
+
+                salary_list.add(String.valueOf(pos));
+                if (editSalary.getText().toString().equals("")) {
+                    salary_list.add("0");
+                } else {
+                    salary_list.add(editSalary.getText().toString());
+                }
+            }
+            container = (GridLayout) root.findViewById(R.id.filter_term_container);
+            if (container.getChildCount() > 0) {
+                for (int i = 0; i < container.getChildCount(); i++) {
+                    View tv = container.getChildAt(i);
+                    TextView t = (TextView) tv.findViewById(R.id.tag_tv);
+                    term_list.add(t.getText().toString().trim());
+                }
+            }
+
+            container = (GridLayout) root.findViewById(R.id.filter_contract_container);
+            if (container.getChildCount() > 0) {
+                for (int i = 0; i < container.getChildCount(); i++) {
+                    View tv = container.getChildAt(i);
+                    TextView t = (TextView) tv.findViewById(R.id.tag_tv);
+                    contract_list.add(t.getText().toString().trim());
+                }
+            }
+
+
+            pos = distanceSpinner.getSelectedItemPosition();
+            if (pos != 0) {
+
+                location_list.add(String.valueOf(pos));
+                if (editDistance.getText().toString().equals("")) {
+                    location_list.add("0");
+                } else {
+                    location_list.add(editDistance.getText().toString());
+                }
+                location_list.add(nation.getText().toString());
+                location_list.add(city.getText().toString());
+            }
+
+            globalData.getOfferFilterStatus().setFilters(tag_list, contract_list, term_list, field_list, location_list, salary_list);
+            globalData.getOfferFilterStatus().setValid(true);
+
+            StudentOfferSearchFragment fragment = (StudentOfferSearchFragment) this.getParentFragment();
+            fragment.addFilters(tag_list, contract_list, term_list, field_list, location_list, salary_list);
+            getDialog().dismiss();
         }
-    }
-
-    container = (GridLayout) root.findViewById(R.id.filter_field_container);
-    if (container.getChildCount() > 0) {
-        for (int i = 0; i < container.getChildCount(); i++) {
-            View tv = container.getChildAt(i);
-            TextView t = (TextView) tv.findViewById(R.id.tag_tv);
-            field_list.add(t.getText().toString());
-        }
-    }
-
-    pos = salarySpinner.getSelectedItemPosition();
-    if (pos != 0) {
-
-        salary_list.add(String.valueOf(pos));
-        if (editSalary.getText().toString().equals("")) {
-            salary_list.add("0");
-        } else {
-            salary_list.add(editSalary.getText().toString());
-        }
-    }
-    container = (GridLayout) root.findViewById(R.id.filter_term_container);
-    if (container.getChildCount() > 0) {
-        for (int i = 0; i < container.getChildCount(); i++) {
-            View tv = container.getChildAt(i);
-            TextView t = (TextView) tv.findViewById(R.id.tag_tv);
-            term_list.add(t.getText().toString().trim());
-        }
-    }
-
-    container = (GridLayout) root.findViewById(R.id.filter_contract_container);
-    if (container.getChildCount() > 0) {
-        for (int i = 0; i < container.getChildCount(); i++) {
-            View tv = container.getChildAt(i);
-            TextView t = (TextView) tv.findViewById(R.id.tag_tv);
-            contract_list.add(t.getText().toString().trim());
-        }
-    }
-
-
-    pos = distanceSpinner.getSelectedItemPosition();
-    if (pos != 0) {
-
-        location_list.add(String.valueOf(pos));
-        if (editDistance.getText().toString().equals("")) {
-            location_list.add("0");
-        } else {
-            location_list.add(editDistance.getText().toString());
-        }
-        location_list.add(nation.getText().toString());
-        location_list.add(city.getText().toString());
-    }
-
-    globalData.getOfferFilterStatus().setFilters(tag_list, contract_list, term_list, field_list, location_list, salary_list);
-    globalData.getOfferFilterStatus().setValid(true);
-
-    OfferSearchFragment fragment = (OfferSearchFragment) this.getParentFragment();
-    fragment.addFilters(tag_list, contract_list, term_list, field_list, location_list, salary_list);
-    getDialog().dismiss();
-       }else Toast.makeText(getActivity(), getString(R.string.filter_hint_location),Toast.LENGTH_SHORT).show();
+        else
+            Toast.makeText(getActivity(), getString(R.string.filter_hint_location),Toast.LENGTH_SHORT).show();
     }
 
 

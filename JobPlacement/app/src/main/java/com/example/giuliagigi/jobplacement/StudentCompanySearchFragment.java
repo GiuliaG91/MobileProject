@@ -1,7 +1,5 @@
 package com.example.giuliagigi.jobplacement;
 
-import android.app.Activity;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -65,9 +63,9 @@ public class StudentCompanySearchFragment extends Fragment {
 
         activity = getActivity();
 
-        root = inflater.inflate(R.layout.fragment_offer_search, container, false);
+        root = inflater.inflate(R.layout.fragment_standard_recycler_view, container, false);
 
-        mRecyclerView = (RecyclerView) root.findViewById(R.id.recycler_view_offer_search);
+        mRecyclerView = (RecyclerView) root.findViewById(R.id.recycler_view);
 
         // use this setting to improve performance if you know that changes
         // in content do not change the layout size of the RecyclerView

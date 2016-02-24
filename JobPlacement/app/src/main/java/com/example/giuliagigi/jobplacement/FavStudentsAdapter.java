@@ -10,11 +10,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -58,7 +56,7 @@ public class FavStudentsAdapter extends RecyclerView.Adapter<FavStudentsAdapter.
             studentName = (TextView) v.findViewById(R.id.student_name_tv);
             studentDegree = (TextView) v.findViewById(R.id.student_degree_tv );
             studentGrade = (TextView) v.findViewById(R.id.student_grade_tv );
-            pref=(CheckBox)v.findViewById(R.id.star);
+            pref=(CheckBox)v.findViewById(R.id.checkbox_favourite);
         }
     }
 

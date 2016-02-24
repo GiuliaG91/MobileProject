@@ -1,6 +1,8 @@
 package com.example.giuliagigi.jobplacement;
 
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.res.TypedArray;
 import android.graphics.Bitmap;
 import android.support.v4.app.Fragment;
@@ -8,13 +10,12 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 
 /**
@@ -41,8 +42,9 @@ public class menuAdapter extends RecyclerView.Adapter<menuAdapter.ViewHolder> {
     /* ----- for companies ------------- */
     private static final int COMPANY_ACTION_HOME = 1 ;
     private static final int COMPANY_ACTION_SEARCH = 4;
-    private static final int COMPANY_ACTION_OFFER = 5;
-    private static final int COMPANY_ACTION_LOGOUT = 6;
+    private static final int COMPANY_ACTION_MYOFFERS = 5;
+    private static final int COMPANY_ACTION_NEW_OFFER = 6;
+    private static final int COMPANY_ACTION_LOGOUT = 7;
 
     /* ----- for professors ------------- */
     private static final int PROFESSOR_ACTION_HOME = 1 ;
@@ -318,10 +320,10 @@ public class menuAdapter extends RecyclerView.Adapter<menuAdapter.ViewHolder> {
                                     FragmentManager fragmentManager = activity.getSupportFragmentManager();
                                     Fragment current = fragmentManager.findFragmentById(R.id.tab_Home_container);
 
-                                    if (!(current instanceof TabFavourites)) {
+                                    if (!(current instanceof StudentMyFavouriteOffersFragment)) {
 
 
-                                        TabFavourites fragment = TabFavourites.newInstance();
+                                        StudentOffersManagementFragment fragment = StudentOffersManagementFragment.newInstance((Student)gd.getUserObject());
 
                                         //clear backstack
                                         int count = fragmentManager.getBackStackEntryCount();
@@ -468,7 +470,7 @@ public class menuAdapter extends RecyclerView.Adapter<menuAdapter.ViewHolder> {
 
                             break;
 
-                        case COMPANY_ACTION_OFFER:
+                        case COMPANY_ACTION_MYOFFERS:
 
                             v.setOnClickListener(new View.OnClickListener() {
                                 @Override
@@ -478,46 +480,93 @@ public class menuAdapter extends RecyclerView.Adapter<menuAdapter.ViewHolder> {
                                     FragmentManager fragmentManager = activity.getSupportFragmentManager();
                                     Fragment current = fragmentManager.findFragmentById(R.id.tab_Home_container);
 
-                                    if ((current instanceof NewOffer)) {
-                                        NewOffer o = (NewOffer) current;
-                                        if (o.isInEditMode()) {
-                                            Toast.makeText(activity, "Please save changes", Toast.LENGTH_SHORT).show();
-                                        } else {
+                                    CompanyShowOffersFragment fragment = CompanyShowOffersFragment.newInstance((Company)gd.getUserObject());
 
-                                            //clear backstack
-                                            int count = fragmentManager.getBackStackEntryCount();
-                                            for (int i = 0; i < count; ++i) {
-                                                fragmentManager.popBackStack();
-                                            }
-                                            //New Fragment
-                                            NewOffer fragment = NewOffer.newInstance(true, true);
+                                    fragmentManager.beginTransaction()
+                                            .replace(R.id.tab_Home_container, fragment)
+                                            .commit();
 
-                                            fragmentManager.beginTransaction()
-                                                    .replace(R.id.tab_Home_container, fragment)
-                                                    .commit();
-
-                                        }
-                                        mDrawerLayout.closeDrawers();
-
-                                    } else {
-                                        //clear backstack
-                                        int count = fragmentManager.getBackStackEntryCount();
-                                        for (int i = 0; i < count; ++i) {
-                                            fragmentManager.popBackStack();
-                                        }
-                                        //New Fragment
-                                        NewOffer fragment = NewOffer.newInstance(true, true);
-
-                                        fragmentManager.beginTransaction()
-                                                .replace(R.id.tab_Home_container, fragment)
-                                                .commit();
-                                    }
                                     mDrawerLayout.closeDrawers();
                                 }
 
 
                             });
 
+
+                            break;
+
+                        case COMPANY_ACTION_NEW_OFFER:
+
+                            v.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+
+
+                                    final FragmentManager fragmentManager = activity.getSupportFragmentManager();
+                                    Fragment current = fragmentManager.findFragmentById(R.id.tab_Home_container);
+
+                                    // in case we are already creating a new offer
+                                    if ((current instanceof CompanyEditOfferFragment)) {
+
+                                        CompanyEditOfferFragment o = (CompanyEditOfferFragment) current;
+
+                                        if (o.isInEditMode()) {
+
+                                            AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+
+                                            View view = activity.getLayoutInflater().inflate(R.layout.warning_message_generic, null);
+                                            LinearLayout container = (LinearLayout) view.findViewById(R.id.warning_message_container);
+
+                                            TextView warningMessage = new TextView(activity);
+                                            warningMessage.setTextColor(activity.getResources().getColor(R.color.black_light_transparent));
+                                            warningMessage.setText(R.string.offer_detail_save_warning);
+                                            container.addView(warningMessage);
+
+                                            builder.setView(view);
+                                            builder.setPositiveButton(activity.getResources().getString(R.string.yes), new DialogInterface.OnClickListener() {
+                                                @Override
+                                                public void onClick(DialogInterface dialog, int which) {
+
+                                                    //New Fragment
+                                                    CompanyEditOfferFragment fragment = CompanyEditOfferFragment.newInstance(true, new CompanyOffer());
+
+                                                    fragmentManager.beginTransaction()
+                                                            .replace(R.id.tab_Home_container, fragment)
+                                                            .commit();
+                                                }
+                                            });
+
+                                            builder.setNegativeButton(activity.getResources().getString(R.string.no), new DialogInterface.OnClickListener() {
+                                                @Override
+                                                public void onClick(DialogInterface dialog, int which) {
+                                                }
+                                            });
+
+                                            builder.create().show();
+                                        }
+
+                                    }
+                                    else {
+
+                                        //clear backstack
+                                        int count = fragmentManager.getBackStackEntryCount();
+                                        for (int i = 0; i < count; ++i) {
+                                            fragmentManager.popBackStack();
+                                        }
+
+                                        //New Fragment
+                                        CompanyEditOfferFragment fragment = CompanyEditOfferFragment.newInstance(true, new CompanyOffer());
+
+                                        fragmentManager.beginTransaction()
+                                                .replace(R.id.tab_Home_container, fragment)
+                                                .commit();
+                                    }
+
+                                    mDrawerLayout.closeDrawers();
+                                }
+
+
+                            });
 
                             break;
 

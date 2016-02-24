@@ -36,7 +36,7 @@
                     android:layout_width="fill_parent"
                     android:layout_height="0dp"
                     android:text="New Text"
-                    android:id="@+id/objectOffer_tv"
+                    android:id="@+id/textView_title"
                     android:layout_weight="1"
                     android:gravity="bottom"
                     android:textColor="@color/black_light_transparent"
@@ -48,7 +48,7 @@
                     android:layout_height="0dp"
                     android:textAppearance="?android:attr/textAppearanceSmall"
                     android:text="Small Text"
-                    android:id="@+id/description_tv"
+                    android:id="@+id/textView_description"
                     android:layout_weight="1"
                     android:paddingTop="8dp"
                     android:textSize="15sp"/>
@@ -66,14 +66,14 @@
                     android:layout_height="0dp"
                     android:textAppearance="?android:attr/textAppearanceSmall"
                     android:text="Small Text"
-                    android:id="@+id/date_row_tv"
+                    android:id="@+id/textView_date"
                     android:layout_weight="1"
                     android:gravity="bottom"
                     android:layout_marginBottom="5dp"
                     android:layout_marginLeft="5dp" />
 
                 <CheckBox
-                    android:id="@+id/star"
+                    android:id="@+id/checkbox_favourite"
                     android:layout_width="fill_parent"
                     android:layout_height="0dp"
                     android:layout_weight="1.3"

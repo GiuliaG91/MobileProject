@@ -1,7 +1,5 @@
 package com.example.giuliagigi.jobplacement;
 
-import android.app.Activity;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -16,7 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import java.util.List;
 
-public class OfferSearchFragment extends Fragment{
+public class StudentOfferSearchFragment extends Fragment{
 
     View root;
     FragmentActivity activity;
@@ -27,13 +25,13 @@ public class OfferSearchFragment extends Fragment{
 
 
 
-    public static OfferSearchFragment newInstance() {
-        OfferSearchFragment fragment = new OfferSearchFragment();
+    public static StudentOfferSearchFragment newInstance() {
+        StudentOfferSearchFragment fragment = new StudentOfferSearchFragment();
 
         return fragment;
     }
 
-    public OfferSearchFragment() {
+    public StudentOfferSearchFragment() {
         // Required empty public constructor
     }
 
@@ -59,8 +57,6 @@ public class OfferSearchFragment extends Fragment{
         if (item.getItemId() == R.id.action_filter) {
             FilterFragment newFragment = FilterFragment.newInstance();
             newFragment.show(getChildFragmentManager(), "dialog");
-
-
         }
         return true;
     }
@@ -73,9 +69,9 @@ public class OfferSearchFragment extends Fragment{
         // Inflate the layout for this fragment
         activity = getActivity();
 
-        root = inflater.inflate(R.layout.fragment_offer_search, container, false);
+        root = inflater.inflate(R.layout.fragment_standard_recycler_view, container, false);
 
-        mRecyclerView = (RecyclerView) root.findViewById(R.id.recycler_view_offer_search);
+        mRecyclerView = (RecyclerView) root.findViewById(R.id.recycler_view);
 
         // use this setting to improve performance if you know that changes
         // in content do not change the layout size of the RecyclerView
@@ -86,7 +82,7 @@ public class OfferSearchFragment extends Fragment{
         mRecyclerView.addItemDecoration(new DividerItemDecoration(this.getActivity(), DividerItemDecoration.VERTICAL_LIST));
         mRecyclerView.setLayoutManager(mLayoutManager);
 
-        adapter = new OfferSearchAdapter(this.getActivity(), mRecyclerView,this,position,mLayoutManager);
+        adapter = new OfferSearchAdapter(this.getActivity(), mRecyclerView, this, position, mLayoutManager);
 
         /*********************/
 

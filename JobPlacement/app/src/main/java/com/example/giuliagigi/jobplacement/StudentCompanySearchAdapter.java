@@ -12,7 +12,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -22,11 +21,8 @@ import com.parse.ParseQuery;
 import com.parse.ParseQueryAdapter;
 
 import java.io.IOException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 /**
  * Created by pietro on 14/05/2015.
@@ -195,7 +191,7 @@ public class StudentCompanySearchAdapter extends RecyclerView.Adapter<StudentCom
                 mDataset.add(object);
                 ImageView logo = (ImageView) v.findViewById(R.id.logo_img);
                 TextView companyName = (TextView) v.findViewById(R.id.company_name_tv);
-                CheckBox pref = (CheckBox) v.findViewById(R.id.star);
+                CheckBox pref = (CheckBox) v.findViewById(R.id.checkbox_favourite);
 
                 Bitmap img=null;
                 try{

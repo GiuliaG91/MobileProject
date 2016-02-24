@@ -8,8 +8,8 @@ import java.util.HashMap;
 /**
  * Created by pietro on 22/05/2015.
  */
-@ParseClassName("OfferStatus")
-public class OfferStatus  extends ParseObject {
+@ParseClassName("StudentApplication")
+public class StudentApplication extends ParseObject {
 
 
     public static final String TYPE_START =  "Processing";
@@ -17,10 +17,10 @@ public class OfferStatus  extends ParseObject {
     public static final String TYPE_ACCEPTED = "Accepted";
     public static final String TYPE_REFUSED ="Refused";
 
-    public static final String TYPE_START_TRANSLATED =  GlobalData.getContext().getString(R.string.OfferStatus_Start);
-    public static final String TYPE_CONSIDERING_TRANSLATED =  GlobalData.getContext().getString(R.string.OfferStatus_Considering);
-    public static final String TYPE_ACCEPTED_TRANSLATED =  GlobalData.getContext().getString(R.string.OfferStatus_Accepted);
-    public static final String TYPE_REFUSED_TRANSLATED =  GlobalData.getContext().getString(R.string.OfferStatus_Refused);
+    public static final String TYPE_START_TRANSLATED =  GlobalData.getContext().getString(R.string.application_status_Start);
+    public static final String TYPE_CONSIDERING_TRANSLATED =  GlobalData.getContext().getString(R.string.application_status_Considering);
+    public static final String TYPE_ACCEPTED_TRANSLATED =  GlobalData.getContext().getString(R.string.application_status_Accepted);
+    public static final String TYPE_REFUSED_TRANSLATED =  GlobalData.getContext().getString(R.string.application_status_Refused);
 
 
     public static final HashMap<String,String> STATUS_TYPES = new HashMap<>();
@@ -30,13 +30,15 @@ public class OfferStatus  extends ParseObject {
     public static final String OFFER_FIELD =  "offer";
     public static final String STUDENT_FIELD = "student";
 
-    public OfferStatus(){super();}
+    public StudentApplication(){super();}
 
-    public void setType(String type){
+    public void setStatus(String type){
+
         String typeTranslated = (String)getKeyByValue(STATUS_TYPES, type);
         this.put(STATUS_FIELD, typeTranslated);
     }
-    public String getType(){
+
+    public String getStatus(){
 
         return STATUS_TYPES.get(this.getString(STATUS_FIELD));
     }
@@ -68,25 +70,30 @@ public class OfferStatus  extends ParseObject {
     }
 
     public static Object getKeyByValue(HashMap hm, Object value) {
+
         for (Object o : hm.keySet()) {
+
             if (hm.get(o).equals(value)) {
                 return o;
             }
         }
+
         return null;
     }
-     public void init(){
+
+    public void init(){
+
          String typeTranslated = (String)getKeyByValue(STATUS_TYPES,TYPE_START_TRANSLATED);
          this.put(STATUS_FIELD,typeTranslated);
-     }
+    }
 
 
-    public static int getTypeIndex(String type)
-    {
-        for(int i=0;i<TYPES.length;i++)
-        {
-            if(TYPES[i].equals(type))
-            {
+    public static int getTypeIndex(String type) {
+
+        for(int i=0;i<TYPES.length;i++) {
+
+            if(TYPES[i].equals(type)) {
+
                 return i;
             }
         }
@@ -95,8 +102,8 @@ public class OfferStatus  extends ParseObject {
     }
 
 
-    public static String getEnglishType(String type)
-    {
+    public static String getEnglishType(String type) {
+
         return (String)getKeyByValue(STATUS_TYPES,type);
     }
 }

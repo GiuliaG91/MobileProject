@@ -10,7 +10,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -18,14 +17,9 @@ import com.parse.ParseException;
 import com.parse.ParseQuery;
 import com.parse.ParseQueryAdapter;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
-import java.util.SimpleTimeZone;
 
 /**
  * Created by pietro on 15/05/2015.
@@ -195,7 +189,7 @@ public class CompanyStudentSearchAdapter extends RecyclerView.Adapter<CompanyStu
                     TextView studentDegree = (TextView) v.findViewById(R.id.student_degree_tv);
                     TextView studentGrade = (TextView) v.findViewById(R.id.student_grade_tv);
 
-                    CheckBox pref = (CheckBox) v.findViewById(R.id.star);
+                    CheckBox pref = (CheckBox) v.findViewById(R.id.checkbox_favourite);
 
                     Bitmap img = null;
                     try {

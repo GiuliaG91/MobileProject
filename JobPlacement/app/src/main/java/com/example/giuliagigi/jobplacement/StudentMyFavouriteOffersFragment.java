@@ -15,41 +15,56 @@ import android.view.ViewGroup;
 /**
  * Created by pietro on 25/04/2015.
  */
-public class TabFavourites extends Fragment{
+public class StudentMyFavouriteOffersFragment extends Fragment{
 
-    private   View root;
+    private View root;
     private GlobalData globalData;
     private Student student;
     private RecyclerView mRecyclerView;
-    private  FavouritesAdapter adapter;
+    private OfferAdapter adapter;
     private LinearLayoutManager mLayoutManager;
     private Integer position=0;
 
 
-   public static TabFavourites newInstance(){
-       TabFavourites fragment=new TabFavourites();
-       return fragment;
+    /* -------------------------------------------------------------------------------------------*/
+    /* -------------------------------- CONSTRUCTOR ----------------------------------------------*/
+    /* -------------------------------------------------------------------------------------------*/
 
-   }
+    public static StudentMyFavouriteOffersFragment newInstance(Student student){
+
+        StudentMyFavouriteOffersFragment fragment=new StudentMyFavouriteOffersFragment();
+        fragment.student = student;
+        return fragment;
+
+    }
+
+    public StudentMyFavouriteOffersFragment(){}
+
+
+
+    /* -------------------------------------------------------------------------------------------*/
+    /* -------------------------------- STANDARD CALLBACKS ---------------------------------------*/
+    /* -------------------------------------------------------------------------------------------*/
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if(savedInstanceState!=null)
-        {
+        if(savedInstanceState!=null) {
+
             position=savedInstanceState.getInt("position");
         }
+
         globalData=(GlobalData)getActivity().getApplication();
     }
 
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        root  = inflater.inflate(R.layout.fragment_offer_search,container,false);
 
+        root  = inflater.inflate(R.layout.fragment_standard_recycler_view,container,false);
 
-        Toolbar toolbar=globalData.getToolbar();
-        toolbar.setTitle(R.string.ToolbarTilteMyJobOffers);
-        globalData.setToolbarTitle(getString(R.string.ToolbarTilteMyJobOffers));
-        student = (Student)globalData.getUserObject();
-        mRecyclerView = (RecyclerView) root.findViewById(R.id.recycler_view_offer_search);
+        Toolbar toolbar = globalData.getToolbar();
+        toolbar.setTitle(R.string.ToolbarTilteFavouriteOffers);
+        globalData.setToolbarTitle(getString(R.string.ToolbarTilteFavouriteOffers));
+        mRecyclerView = (RecyclerView) root.findViewById(R.id.recycler_view);
 
         // use this setting to improve performance if you know that changes
         // in content do not change the layout size of the RecyclerView
@@ -60,20 +75,13 @@ public class TabFavourites extends Fragment{
         mRecyclerView.addItemDecoration(new DividerItemDecoration(this.getActivity(), DividerItemDecoration.VERTICAL_LIST));
         mRecyclerView.setLayoutManager(mLayoutManager);
 
+        adapter = new OfferAdapter(getActivity(),
+                student.getFavouriteOffers(),
+                OfferAdapter.MODE_STUDENT_VIEW,
+                position,
+                mLayoutManager);
 
-        if(student.getFavourites().isEmpty())
-        {
-            voidPrefAdapter ad=new voidPrefAdapter(this.getActivity());
-            // specify an adapter
-            mRecyclerView.setAdapter(ad);
-        }
-        else {
-            adapter = new FavouritesAdapter(this.getActivity(), student.getFavourites(), mRecyclerView, this, position,mLayoutManager);
-            // specify an adapter
-            mRecyclerView.setAdapter(adapter);
-        }
-
-
+        mRecyclerView.setAdapter(adapter);
 
         return root;
     }

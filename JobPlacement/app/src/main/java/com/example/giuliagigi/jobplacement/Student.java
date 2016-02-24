@@ -3,8 +3,6 @@ package com.example.giuliagigi.jobplacement;
 import android.os.AsyncTask;
 import android.util.Log;
 
-import com.parse.FindCallback;
-import com.parse.GetDataCallback;
 import com.parse.ParseClassName;
 import com.parse.ParseException;
 import com.parse.ParseFile;
@@ -12,10 +10,7 @@ import com.parse.ParseGeoPoint;
 import com.parse.ParseRelation;
 import com.parse.SaveCallback;
 
-import java.io.File;
-import java.net.URL;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -39,7 +34,8 @@ public class Student extends User {
     protected static final String LANGUAGE_FIELD = "languages";
     protected static final String CERTIFICATE_FIELD = "certificates";
     protected static final String COURSES_FIELD = "courses";
-    protected static final String FAVOURITES_FIELD = "favourites";
+    protected static final String FAVOURITE_OFFERS_FIELD = "favouriteOffers";
+    protected static final String APPLICATIONS_FIELD = "Applications";
     protected static final String DESCRIPTION_FIELD = "description";
     protected static final String ADDRESS_LOCATION_FIELD = "address_location";
     public static final String SEX_MALE = "Male";
@@ -61,7 +57,8 @@ public class Student extends User {
     protected ParseGeoPoint addressLocation;
     protected ArrayList<Language> languages;
     protected ArrayList<Certificate> certificates;
-    protected ArrayList<CompanyOffer> favourites;
+    protected ArrayList<CompanyOffer> favouriteOffers;
+    protected ArrayList<StudentApplication> applications;
     protected ArrayList<Company> companies;
     protected ArrayList<Course> courses;
     protected byte[] curriculum;
@@ -84,7 +81,8 @@ public class Student extends User {
         addressLocation = null;
         curriculum = null;
         languages = new ArrayList<Language>();
-        favourites = new ArrayList<CompanyOffer>();
+        favouriteOffers = new ArrayList<CompanyOffer>();
+        applications = new ArrayList<StudentApplication>();
         certificates = new ArrayList<Certificate>();
         courses = new ArrayList<Course>();
         companies=new ArrayList<>();
@@ -100,7 +98,8 @@ public class Student extends User {
         isCached.put(POSTAL_CODE_FIELD,false);
         isCached.put(NATION_FIELD,false);
         isCached.put(LANGUAGE_FIELD,false);
-        isCached.put(FAVOURITES_FIELD, false);
+        isCached.put(FAVOURITE_OFFERS_FIELD, false);
+        isCached.put(APPLICATIONS_FIELD, false);
         isCached.put(CERTIFICATE_FIELD,false);
         isCached.put(COURSES_FIELD,false);
         isCached.put(DESCRIPTION_FIELD, false);
@@ -120,6 +119,7 @@ public class Student extends User {
         isCached.put(NAME_FIELD,true);
         return name;
     }
+
     synchronized public String getSurname() {
         if(isCached.get(SURNAME_FIELD))
             return surname;
@@ -257,22 +257,41 @@ public class Student extends User {
         return certificates;
     }
 
-    synchronized public ArrayList<CompanyOffer> getFavourites( ){
+    synchronized public ArrayList<CompanyOffer> getFavouriteOffers(){
 
-        if(isCached.get(FAVOURITES_FIELD))
-            return favourites;
+        if(isCached.get(FAVOURITE_OFFERS_FIELD))
+            return favouriteOffers;
 
-        ParseRelation<CompanyOffer> tmp = getRelation(FAVOURITES_FIELD);
+        ParseRelation<CompanyOffer> tmp = getRelation(FAVOURITE_OFFERS_FIELD);
+
         try {
 
-            favourites.addAll(tmp.getQuery().find());
-            isCached.put(FAVOURITES_FIELD,true);
+            favouriteOffers.addAll(tmp.getQuery().find());
+            isCached.put(FAVOURITE_OFFERS_FIELD,true);
+        }
+        catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        return favouriteOffers;
+    }
+
+    synchronized public ArrayList<StudentApplication> getApplications(){
+
+        if(isCached.get(APPLICATIONS_FIELD))
+            return applications;
+
+        ParseRelation<StudentApplication> tmp = getRelation(APPLICATIONS_FIELD);
+        try {
+
+            applications.addAll(tmp.getQuery().find());
+            isCached.put(APPLICATIONS_FIELD,true);
 
         } catch (ParseException e) {
             e.printStackTrace();
         }
 
-        return favourites;
+        return applications;
     }
 
     synchronized public ParseGeoPoint getAddressLocation(){
@@ -285,7 +304,7 @@ public class Student extends User {
         return addressLocation;
     }
 
-    synchronized public List<Company> getCompanies( ){
+    synchronized public List<Company> getCompanies(){
 
         if(isCached.get(COMPANIES_FIELD))
             return companies;
@@ -330,7 +349,7 @@ public class Student extends User {
         if(isCached.get(COURSES_FIELD))
             return this.courses;
 
-        ParseRelation<Course> tmp= getRelation(COURSES_FIELD);
+        ParseRelation<Course> tmp = getRelation(COURSES_FIELD);
 
         try {
             courses.addAll(tmp.getQuery().find());
@@ -349,7 +368,7 @@ public class Student extends User {
 
         this.name = name;
         isCached.put(NAME_FIELD,true);
-        this.put(NAME_FIELD,name);
+        this.put(NAME_FIELD, name);
     }
     public void setSurname(String surname){
 
@@ -376,8 +395,8 @@ public class Student extends User {
     public void setBirth(Date birth){
 
         this.birthDate = birth;
-        isCached.put(BIRTH_DATE_FIELD,true);
-        this.put(BIRTH_DATE_FIELD,birth);
+        isCached.put(BIRTH_DATE_FIELD, true);
+        this.put(BIRTH_DATE_FIELD, birth);
     }
     public void setBirthCity(String birthCity){
 
@@ -447,18 +466,31 @@ public class Student extends User {
         ParseRelation<Course> r = getRelation(COURSES_FIELD);
         r.remove(course);
     }
-    public void addFavourites(CompanyOffer companyOffer){
 
-        favourites.add(companyOffer);
-        getRelation(FAVOURITES_FIELD).add(companyOffer);
+    public void addFavouriteOffer(CompanyOffer companyOffer){
+
+        favouriteOffers.add(companyOffer);
+        getRelation(FAVOURITE_OFFERS_FIELD).add(companyOffer);
 
     }
-    public void removeFavourites(CompanyOffer companyOffer) {
-        {
-            favourites.remove(companyOffer);
-            getRelation(FAVOURITES_FIELD).remove(companyOffer);
-        }
+    public void removeFavouriteOffer(CompanyOffer companyOffer) {
+
+        favouriteOffers.remove(companyOffer);
+        getRelation(FAVOURITE_OFFERS_FIELD).remove(companyOffer);
     }
+
+    public void addApplication(StudentApplication application){
+
+        applications.add(application);
+        getRelation(APPLICATIONS_FIELD).add(application);
+
+    }
+    public void removeApplication(StudentApplication application) {
+
+        applications.remove(application);
+        getRelation(APPLICATIONS_FIELD).remove(application);
+    }
+
     public void setAddressLocation(ParseGeoPoint addressLocation){
 
         this.addressLocation = addressLocation;
@@ -525,7 +557,7 @@ public class Student extends User {
                 getLanguages();
                 getCertificates();
                 getCourses();
-                getFavourites();
+                getFavouriteOffers();
                 getAddressLocation();
                 getCompanies();
                 getCurriculum();

@@ -61,6 +61,7 @@ public class Home extends ActionBarActivity
     /* -------------------------------------------------------------------------------------------*/
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);
@@ -88,7 +89,8 @@ public class Home extends ActionBarActivity
 
 
       application.setToolbar(toolbar);
-      //Setup Drawer
+
+      // ----------------- Setup Drawer and pager -------------------------------------------------
 
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mDrawerList = (RecyclerView) findViewById(R.id.left_drawer);

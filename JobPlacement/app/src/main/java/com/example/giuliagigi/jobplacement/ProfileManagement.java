@@ -256,13 +256,6 @@ public class ProfileManagement extends Fragment{
             builder.create().show();
         }
 
-        else if(item.getItemId() == R.id.action_see_candidatures && !editable){
-
-            SetOfferStatusDialogFragment statusDialogFragment=SetOfferStatusDialogFragment.newInstance((Student)user);
-
-            statusDialogFragment.show(getChildFragmentManager(), "dialog");
-    }
-
         return true;
     }
 

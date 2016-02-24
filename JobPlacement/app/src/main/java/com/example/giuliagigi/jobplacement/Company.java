@@ -212,12 +212,12 @@ public class Company extends User {
         getRelation(STUDENTS_FIELD).remove(student);
     }
 
-    synchronized public List<CompanyOffer> getOffers()
+    synchronized public ArrayList<CompanyOffer> getOffers()
     {
         if(isCached.get(OFFERS_FIELD))
             return offers;
 
-        ParseRelation<CompanyOffer> tmp= getRelation(OFFERS_FIELD);
+        ParseRelation<CompanyOffer> tmp = getRelation(OFFERS_FIELD);
         try {
 
             offers.addAll(tmp.getQuery().find());

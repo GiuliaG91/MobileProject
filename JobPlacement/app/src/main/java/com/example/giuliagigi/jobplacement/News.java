@@ -27,9 +27,9 @@ public class News extends ParseObject {
     public static final int TYPE_APPLICATION_STATE = 2;
     public static final int TYPE_NEW_COMPANY = 3;
     public static final int TYPE_ADVERTISEMENT = 4;
-    public static final int TYPE_OFFER_MODIFIED = 5;
     public static final int TYPE_OFFER_DELETED = 6;
     public static final int TYPE_NEW_NOTICE = 7;
+    public static final int TYPE_APPLICATION_DELETED = 8;
 
     GlobalData globalData;
 
@@ -74,9 +74,9 @@ public class News extends ParseObject {
         return (CompanyOffer)get(News.COMPANY_OFFER_FIELD);
     }
 
-    public OfferStatus getOfferStatus(){
+    public StudentApplication getOfferStatus(){
 
-        return (OfferStatus) get(News.OFFER_STATUS_FIELD);
+        return (StudentApplication) get(News.OFFER_STATUS_FIELD);
     }
 
     /*****   GETTER   *****/
@@ -109,11 +109,11 @@ public class News extends ParseObject {
         this.put(News.COMPANY_OFFER_FIELD, companyOffer);
     }
 
-    public void setOfferStatus(OfferStatus offerStatus){
-        this.put(News.OFFER_STATUS_FIELD, offerStatus);
+    public void setStudentApplication(StudentApplication studentApplication){
+        this.put(News.OFFER_STATUS_FIELD, studentApplication);
     }
 
-    public void createNews(int type, CompanyOffer offer, Student student, OfferStatus offerStatus, GlobalData globalData){
+    public void createNews(int type, CompanyOffer offer, Student student, StudentApplication studentApplication, GlobalData globalData){
 
         this.setType(type);
         this.setDate(Calendar.getInstance());
@@ -123,79 +123,91 @@ public class News extends ParseObject {
         switch (type){
 
             case TYPE_NEW_OFFER:  // New job offer published
-                     this.setCompanyOffer(offer);
-                     message = globalData.getUserObject().getName() + " " + globalData.getResources().getString(R.string.new_job_offer_message) + " \"" + offer.getOfferObject() + "\"";
-                     this.setMessage(message);
+                this.setCompanyOffer(offer);
+                message = globalData.getUserObject().getName() + " " + globalData.getResources().getString(R.string.new_job_offer_message) + " \"" + offer.getOfferObject() + "\"";
+                this.setMessage(message);
 
-                     this.saveInBackground();
+                this.saveInBackground();
 
-                     break;
+                break;
 
             case TYPE_OFFER_APPLICATION:  // Student applied for a own Job Offer
-                     this.setCompanyOffer(offer);
-                     this.setStudent((Student) globalData.getUserObject());
-                     message = globalData.getUserObject().getName() + " " + ((Student) globalData.getUserObject()).getSurname() + " " + globalData.getResources().getString(R.string.new_application_message) + " \"" + offer.getOfferObject() + "\"";
-                     this.setMessage(message);
+                this.setCompanyOffer(offer);
+                this.setStudent((Student) globalData.getUserObject());
+                message = globalData.getUserObject().getName() + " " + ((Student) globalData.getUserObject()).getSurname() + " " + globalData.getResources().getString(R.string.new_application_message) + " \"" + offer.getOfferObject() + "\"";
+                this.setMessage(message);
 
-                     this.setCompany(offer.getCompany());
+                this.setCompany(offer.getCompany());
 
-                     this.saveInBackground();
+                this.saveInBackground();
 
-                     break;
+                break;
 
             case TYPE_APPLICATION_STATE:  // Student's application state changed
-                     this.setCompanyOffer(offer);
-                     this.setStudent(student);
-                     this.setOfferStatus(offerStatus);
+                this.setCompanyOffer(offer);
+                this.setStudent(student);
+                this.setStudentApplication(studentApplication);
 
-                                String status=offerStatus.getType();
-                                String eng=OfferStatus.getEnglishType(offerStatus.getType());
-                switch (OfferStatus.getEnglishType(offerStatus.getType())){
+                String status= studentApplication.getStatus();
+                String eng= StudentApplication.getEnglishType(studentApplication.getStatus());
+                switch (StudentApplication.getEnglishType(studentApplication.getStatus())){
 
-                         case OfferStatus.TYPE_ACCEPTED:
-                                                        message = globalData.getResources().getString(R.string.the_company) + " " + globalData.getUserObject().getName() + " " + globalData.getResources().getString(R.string.application_accepted_message) + " \"" + offer.getOfferObject() + "\"";
-                                                        break;
+                    case StudentApplication.TYPE_ACCEPTED:
+                        message = globalData.getResources().getString(R.string.the_company) + " " + globalData.getUserObject().getName() + " " + globalData.getResources().getString(R.string.application_accepted_message) + " \"" + offer.getOfferObject() + "\"";
+                        break;
 
-                         case OfferStatus.TYPE_CONSIDERING:
-                                                             message = globalData.getResources().getString(R.string.the_company) + " " + globalData.getUserObject().getName() + " " + globalData.getResources().getString(R.string.application_considering_message) + " \"" + offer.getOfferObject() + "\"";
-                                                             break;
+                    case StudentApplication.TYPE_CONSIDERING:
+                        message = globalData.getResources().getString(R.string.the_company) + " " + globalData.getUserObject().getName() + " " + globalData.getResources().getString(R.string.application_considering_message) + " \"" + offer.getOfferObject() + "\"";
+                        break;
 
-                         case OfferStatus.TYPE_REFUSED:
-                                                        message = globalData.getResources().getString(R.string.the_company) + " " + globalData.getUserObject().getName() + " " + globalData.getResources().getString(R.string.application_refused_message) + " \"" + offer.getOfferObject() + "\"";
-                                                        break;
+                    case StudentApplication.TYPE_REFUSED:
+                        message = globalData.getResources().getString(R.string.the_company) + " " + globalData.getUserObject().getName() + " " + globalData.getResources().getString(R.string.application_refused_message) + " \"" + offer.getOfferObject() + "\"";
+                        break;
 
-                         case OfferStatus.TYPE_START:
-                                                        message = globalData.getResources().getString(R.string.the_company) + " " + globalData.getUserObject().getName() + " " + globalData.getResources().getString(R.string.application_processing_message) + " \"" + offer.getOfferObject() + "\"";
-                                                        break;
+                    case StudentApplication.TYPE_START:
+                        message = globalData.getResources().getString(R.string.the_company) + " " + globalData.getUserObject().getName() + " " + globalData.getResources().getString(R.string.application_processing_message) + " \"" + offer.getOfferObject() + "\"";
+                        break;
 
-                         default:
-                     }
-                     this.setMessage(message);
+                    default:
+                }
+                this.setMessage(message);
 
-                     this.saveInBackground();
+                this.saveInBackground();
 
-                     break;
+                break;
 
             case TYPE_NEW_COMPANY:  // New Company signed up
-                     globalData.getCurrentUser();
-                     this.setCompany((Company)globalData.getUserObject());
-                     message = globalData.getResources().getString(R.string.the_company) + " " + globalData.getUserObject().getName() + " " + globalData.getResources().getString(R.string.new_company_signed_up_message) + " \"" + globalData.getResources().getString(R.string.app_name) + "\"";
-                     this.setMessage(message);
+                globalData.getCurrentUser();
+                this.setCompany((Company)globalData.getUserObject());
+                message = globalData.getResources().getString(R.string.the_company) + " " + globalData.getUserObject().getName() + " " + globalData.getResources().getString(R.string.new_company_signed_up_message) + " \"" + globalData.getResources().getString(R.string.app_name) + "\"";
+                this.setMessage(message);
 
-                     this.saveInBackground();
+                this.saveInBackground();
 
-                     break;
+                break;
 
             case TYPE_ADVERTISEMENT:  // Advertisement Company
 
-                     break;
-
-            case TYPE_OFFER_MODIFIED: // Modified Job Offer
-
-                    break;
+                break;
 
             case TYPE_OFFER_DELETED: // Deleted Job Offer
 
+                this.setCompanyOffer(offer);
+                message = globalData.getUserObject().getName() + " " + globalData.getResources().getString(R.string.deleted_job_offer_message) + " \"" + offer.getOfferObject() + "\"";
+                this.setMessage(message);
+                this.saveInBackground();
+
+                break;
+
+            case TYPE_APPLICATION_DELETED:
+
+                this.setCompanyOffer(offer);
+                message = student.getName() + " " + student.getSurname() + globalData.getResources().getString(R.string.deleted_application_message) + "\"" + offer.getOfferObject() + "\"";
+                this.setMessage(message);
+
+                this.saveInBackground();
+
+                break;
 
             default:
         }

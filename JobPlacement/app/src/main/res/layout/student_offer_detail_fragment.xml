@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/fragment_show_offer"
-    tools:context="com.example.giuliagigi.jobplacement.NewOffer">
+    tools:context="com.example.giuliagigi.jobplacement.CompanyEditOfferFragment">
 
 
 <LinearLayout
@@ -80,8 +80,7 @@
             </LinearLayout>
 
 
-
-              <include android:id="@+id/object_row"
+            <include android:id="@+id/object_row"
                 layout="@layout/offer_item_row"></include>
 
             <include android:id="@+id/mission_row"
@@ -109,6 +108,9 @@
                 layout="@layout/offer_item_row"> </include>
 
             <include android:id="@+id/salary_row"
+                layout="@layout/offer_item_row"> </include>
+
+            <include android:id="@+id/status_row"
                 layout="@layout/offer_item_row"> </include>
 
 
@@ -154,7 +156,7 @@
 </LinearLayout>
 
     <com.getbase.floatingactionbutton.FloatingActionsMenu
-        android:id="@+id/multiple_actions"
+        android:id="@+id/new_offer_floating_menu"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
@@ -172,6 +174,7 @@
             android:id="@+id/action_contact_company"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            fab:fab_icon="@drawable/ic_mail"
             fab:fab_colorNormal="@color/ColorPrimary"
             fab:fab_title="@string/offer_detail_contact_button"
             fab:fab_colorPressed="@color/ColorPrimaryDark"/>
@@ -180,8 +183,27 @@
             android:id="@+id/action_apply"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            fab:fab_icon="@drawable/ic_apply"
             fab:fab_colorNormal="@color/ColorPrimary"
             fab:fab_title="@string/offer_detail_apply_button"
+            fab:fab_colorPressed="@color/ColorPrimaryDark"/>
+
+        <com.getbase.floatingactionbutton.FloatingActionButton
+            android:id="@+id/action_favourites"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            fab:fab_icon="@drawable/ic_preferite"
+            fab:fab_colorNormal="@color/ColorPrimary"
+            fab:fab_title="@string/offer_detail_favourites_button"
+            fab:fab_colorPressed="@color/ColorPrimaryDark"/>
+
+        <com.getbase.floatingactionbutton.FloatingActionButton
+            android:id="@+id/action_revoke_application"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            fab:fab_icon="@drawable/ic_waste"
+            fab:fab_colorNormal="@color/ColorPrimary"
+            fab:fab_title="@string/offer_detail_revoke_apply_button"
             fab:fab_colorPressed="@color/ColorPrimaryDark"/>
 
     </com.getbase.floatingactionbutton.FloatingActionsMenu>

@@ -49,6 +49,7 @@
     <string name="floor">Floor</string>
     <string name="confirm">Confirm</string>
     <string name="insert_description">Insert a description</string>
+    <string name="operation_canceled">Operation canceled</string>
 
     <string name="ground_floor">Ground floor</string>
     <string name="basement_floor">Basement</string>
@@ -279,7 +280,7 @@
     <string name="room_floor">Floor:</string>
     <string name="room_timetable">Opening hours:</string>
 
-    <!-- ________________ MAILBOX ______________________________________________________________ -->
+    <!-- ________________ MAILBOX AND NEWS _____________________________________________________ -->
     <string name="message_sent">The message was sent!</string>
     <string name="message_emails_wrong">Delivery to the following recipient failed permanently:</string>
     <string name="delete_messages">Delete Messages</string>
@@ -298,6 +299,8 @@
     <string name="NoFavourites">No favourites found</string>
     <string name="job_offer">Job Offer</string>
     <string name="new_job_offer_message">published a new job offer on</string>
+    <string name="deleted_job_offer_message">the company revoked job offer: </string>
+    <string name="deleted_application_message">decided to revoke an application for the offer: </string>
     <string name="new_job_offer">New Job Offer</string>
     <string name="new_student_applied">New Applied Student</string>
     <string name="student_accepted">Application Accepted</string>
@@ -336,9 +339,12 @@
     <!-- ________________ TOOLBARS _____________________________________________________________ -->
     <string name="ToolbarTilteHome">Home</string>
     <string name="ToolbarTilteProfile">Profile</string>
+    <string name="ToolbarTilteFavouriteOffers">Favourite Job Offers</string>
     <string name="ToolbarTilteOffer">Job Offer</string>
     <string name="ToolbarTilteNewOffer">New Offer</string>
     <string name="ToolbarTilteMyJobOffers">My Job Offers</string>
+    <string name="ToolbarTilteMyApplications">My Applications</string>
+    <string name="ToolbarTilteApplicationsFor">Applications for:</string>
     <string name="ToolbarTitleMyCompanies">My Companies</string>
     <string name="ToolbarTitleMyStudents">Students</string>
     <string name="ToolbarTilteStudentSearch">Student Search</string>
@@ -346,23 +352,30 @@
     <string name="ToolbarTilteMailBox">MailBox</string>
     <string name="ToolbarTilteMyCompanies">MyCompanies</string>
 
-    <!-- ________________ OFFER STATUS _________________________________________________________ -->
-    <string name="OfferStatus_Start">Processing</string>
-    <string name="OfferStatus_Considering">Considering</string>
-    <string name="OfferStatus_Refused">Filled</string>
-    <string name="OfferStatus_Accepted">Accepted</string>
-    <string name="OfferStatus_applyStatus">Apply Status:</string>
-    <string name="OfferStatus_ChooseItem">Select next status:</string>
-    <string name="OfferStatus_NoModify">Can\'t modify this offer</string>
+    <!-- ________________ STUDENT APPLICATION __________________________________________________ -->
+    <string name="application_status_Start">Processing</string>
+    <string name="application_status_Considering">Considering</string>
+    <string name="application_status_Refused">Refused</string>
+    <string name="application_status_Accepted">Accepted</string>
+    <string name="application_status_applyStatus">Apply Status:</string>
+    <string name="application_status_ChooseItem">Select next status:</string>
+    <string name="application_status_NoModify">Can\'t modify this offer</string>
+    <string name="application_dialog_message">What would you like to answer to: </string>
+    <string name="application_dialog_considering">Your application has been taken in consideration. We will contact you soon to request further information and eventually set an interview</string>
+    <string name="application_dialog_accept">Your application has been accepted</string>
+    <string name="application_dialog_refused">Your application has been refused</string>
+    <string name="application_dialog_confirm_request">Are you sure to confirm this operation?</string>
+    <string name="application_dialog_confirm_message">This operation is not reversible: for example, if you accept this application, the available places will be decremented</string>
+    <string name="application_dialog_already_replied">You already replied to this application. Its state is not reversible at the moment. We suggest you to contact directly this student</string>
 
     <!-- ________________ NEW OFFER ____________________________________________________________ -->
     <string name="new_offer_fragment_removed">Removed</string>
     <string name="new_offer_fragment_added">Added</string>
     <string name="new_offer_fragment_existenTtag">Tag already exist</string>
     <string name="new_offer_fragment_WrongTag">Wrong tag</string>
-    <string name="new_offer_fragment_MissingField">Missing field</string>
-    <string name="new_offer_fragment_WrongDate">Can\'t set this date</string>
-    <string name="new_offer_fragment_Error">Errors: can\'t perform operation.</string>
+    <string name="new_offer_missing_field_error">Missing field</string>
+    <string name="new_offer_wrong_date_error">Can\'t set this date</string>
+    <string name="new_offer_wrong_type_error">You tried to use wrong data type for some field</string>
     <string name="new_offer_fragment_NoDelete">Errors: can\'t delete this object.</string>
     <string name="new_offer_fragment_NoStudents">No students applied</string>
     <string name="new_offer_fragment_publish">Publish offer</string>
@@ -385,8 +398,9 @@
     <string name="new_offer_fragment_hint_spinnerField">Please choose a field</string>
     <string name="new_offer_fragment_hint_spinnercontract">Please choose a type of contract</string>
     <string name="new_offer_fragment_hint_number_of_place">Available places</string>
-    <string name="new_offer_fragment_hint_validity">Validity</string>
+    <string name="new_offer_fragment_hint_validity">The offer will be valid until:</string>
     <string name="new_offer_fragment_hint_tags">Set Required Skills...</string>
+    <string name="new_offer_delete">Delete/Revoke</string>
 
     <string name="new_offer_validity_date_dialog">Set validity date:</string>
 
@@ -395,6 +409,11 @@
 
     <!-- ________________ OFFER DETAIL _________________________________________________________ -->
     <string name="offer_detail_apply_button">Apply</string>
+    <string name="offer_detail_favourites_button">Remove/Add to favourites</string>
+    <string name="offer_detail_revoke_apply_button">Revoke application</string>
+    <string name="offer_detail_revoke_apply_warning">Are you sure to revoke your application for this offer?</string>
+    <string name="offer_detail_applications_button">See Applications</string>
+    <string name="offer_detail_delete_button">Revoke offer</string>
     <string name="offer_detail_contact_button">Contact company</string>
     <string name="offer_detail_NoApply">Can\'t perform apply</string>
     <string name="offer_detail_AlreadyApplied">Already Applied</string>
@@ -408,6 +427,25 @@
     <string name="offer_detail_hint_location">Location</string>
     <string name="offer_detail_hint_Nodefined">To be defined</string>
     <string name="offer_detail_hint_salary">Salary</string>
+    <string name="offer_detail_status">Offer status:</string>
+    <string name="offer_detail_favourites_warning">You cannot remove this offer from your favourites, as there is a pending application. To remove it, revoke your application</string>
+    <string name="offer_detail_delete_warning">Do you really want to revoke this offer? The offer state will change to \"Revoked\" and it will be still visible until all student applications will be deleted</string>
+    <string name="offer_detail_deleted_message">As no application was pending for this offer, it has been deleted immediately</string>
+    <string name="offer_detail_not_created_message">The offer was not created</string>
+    <string name="offer_detail_applied_message">Your candidature is now visible in \"My</string>
+    <string name="offer_detail_save_warning">Do you want to create a new offer without saving the current one?</string>
+    <string name="offer_detail_published_message">Your offer is now published and visible to students</string>
+    <string name="offer_detail_created_message">Your offer has been created. Until it is not published, it will not be visible to students and can be modified</string>
+    <string name="offer_detail_saved_message">Changes saved successfully</string>
+    <string name="offer_detail_add_favourite">Do You want to add this offer to favourites?</string>
+    <string name="offer_detail_remove_favourite">Do You want to remove this offer from favourites?</string>
+    <string name="offer_detail_favourite_removed">Offer removed from favourites</string>
+    <string name="offer_detail_favourite_added">Offer added to favourites</string>
+
+
+    <!-- ________________ STUDENT APPLICATION __________________________________________________ -->
+    <string name="student_application_status">Application status:</string>
+
 
     <!-- ________________ FILTERS ______________________________________________________________ -->
     <string name="filter_Skills">Required Skills</string>
@@ -490,7 +528,6 @@
         <item>News</item>
         <item>Job Offers</item>
         <item>Companies</item>
-        <item>Applies</item>
 
     </string-array>
 
@@ -499,6 +536,13 @@
         <item>My Schedule</item>
         <item>My Courses</item>
         <item>Search</item>
+
+    </string-array>
+
+    <string-array name="Offers_Students_Tab">
+
+        <item>Applications</item>
+        <item>Favourites</item>
 
     </string-array>
 
@@ -513,7 +557,6 @@
     <string-array name="Home_Company_Tab">
 
         <item>News</item>
-        <item>Job Offers</item>
         <item>Students</item>
 
     </string-array>
@@ -541,6 +584,7 @@
         <item>Profile</item>
         <item>MessageBox</item>
         <item>Search</item>
+        <item>MyOffers</item>
         <item>NewOffer</item>
         <item>Logout</item>
 
@@ -564,6 +608,13 @@
         <item>Thesis</item>
         <item>Master</item>
 
+    </string-array>
+
+    <string-array name="offer_detail_status">
+        <item>Created</item>
+        <item>Published</item>
+        <item>Expired</item>
+        <item>Revoked</item>
     </string-array>
 
     <string-array name="new_offer_fragment_salary_spinner_content">
@@ -611,7 +662,7 @@
     <string-array name="filter_location">
         <item>Choose a distance in Km</item>
         <item>Near The city</item>
-        <item>Less then</item>
+        <item>Less than</item>
 
     </string-array>
 

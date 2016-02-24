@@ -5,7 +5,6 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -210,29 +209,29 @@ public class TabHomeAdapter extends RecyclerView.Adapter<TabHomeAdapter.ViewHold
                             e.printStackTrace();
                         }
 
-                        OfferStatus status = null;
+                        StudentApplication status = null;
 
                         try {
 
-                            OfferStatus offerStatus = object.getOfferStatus().fetchIfNeeded();
-                            status = offerStatus;
+                            StudentApplication studentApplication = object.getOfferStatus().fetchIfNeeded();
+                            status = studentApplication;
 
                         } catch (ParseException e) {
                             e.printStackTrace();
                         }
 
-                        switch (status.getType()) {
-                            case OfferStatus.TYPE_ACCEPTED:
+                        switch (status.getStatus()) {
+                            case StudentApplication.TYPE_ACCEPTED:
                                 title.setText(context.getResources().getString(R.string.student_accepted));
                                 break;
-                            case OfferStatus.TYPE_START:
-                                title.setText(context.getResources().getString(R.string.OfferStatus_Start));
+                            case StudentApplication.TYPE_START:
+                                title.setText(context.getResources().getString(R.string.application_status_Start));
                                 break;
-                            case OfferStatus.TYPE_CONSIDERING:
-                                title.setText(context.getResources().getString(R.string.OfferStatus_Considering));
+                            case StudentApplication.TYPE_CONSIDERING:
+                                title.setText(context.getResources().getString(R.string.application_status_Considering));
                                 break;
-                            case OfferStatus.TYPE_REFUSED:
-                                title.setText(context.getResources().getString(R.string.OfferStatus_Refused));
+                            case StudentApplication.TYPE_REFUSED:
+                                title.setText(context.getResources().getString(R.string.application_status_Refused));
                                 break;
                         }
                         break;
@@ -350,7 +349,7 @@ public class TabHomeAdapter extends RecyclerView.Adapter<TabHomeAdapter.ViewHold
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
 
-//        holder.type = mDataset.get(position).getType();
+//        holder.type = mDataset.get(position).getStatus();
         parseAdapter.getView(position, holder.myView, parseParent);
     }
 
@@ -375,11 +374,8 @@ public class TabHomeAdapter extends RecyclerView.Adapter<TabHomeAdapter.ViewHold
             case News.TYPE_NEW_OFFER:
             case News.TYPE_APPLICATION_STATE:
 
-                globalData.setCurrentOffer(mDataset.get(vh.getPosition()).getCompanyOffer());
-
                 FragmentManager fragmentManager = context.getSupportFragmentManager();
-
-                fragment = OfferDetail.newInstance();
+                fragment = StudentOfferDetailFragment.newInstance(mDataset.get(vh.getPosition()).getCompanyOffer(), (Student)globalData.getUserObject());
 
                 fragmentManager.beginTransaction()
                         .replace(R.id.tab_Home_container, fragment)

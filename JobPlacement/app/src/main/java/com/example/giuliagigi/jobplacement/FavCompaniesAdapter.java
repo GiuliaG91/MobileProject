@@ -10,13 +10,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 
 /**
  * Created by pietro on 17/05/2015.
@@ -55,7 +52,7 @@ public class FavCompaniesAdapter extends RecyclerView.Adapter<FavCompaniesAdapte
 
             profile = (ImageView) v.findViewById(R.id.logo_img);
            companyName = (TextView) v.findViewById(R.id.company_name_tv);
-            pref=(CheckBox)v.findViewById(R.id.star);
+            pref=(CheckBox)v.findViewById(R.id.checkbox_favourite);
         }
     }
 

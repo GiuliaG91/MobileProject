@@ -54,10 +54,6 @@ public class GlobalData extends Application {
     private HashMap<String,Fragment> fragments;
 
 
-    /**************NEW OFFER BUNDLE**********/
-    private Bundle offerBundle;
-    private ArrayList<Tag> tagBoundle=new ArrayList<>();
-    /******************************************/
     /************FILTERS***************/
     private OfferFilterStatus offerFilterStatus=new OfferFilterStatus();
     private StudentFilterStatus studentFilterStatus=new StudentFilterStatus();
@@ -123,7 +119,7 @@ public class GlobalData extends Application {
         ParseObject.registerSubclass(InboxMessageReceived.class);
         ParseObject.registerSubclass(InboxMessageSent.class);
         ParseObject.registerSubclass(News.class);
-        ParseObject.registerSubclass(OfferStatus.class);
+        ParseObject.registerSubclass(StudentApplication.class);
         ParseObject.registerSubclass(Professor.class);
         ParseObject.registerSubclass(Course.class);
         ParseObject.registerSubclass(Lecture.class);
@@ -134,7 +130,7 @@ public class GlobalData extends Application {
         Language.initializeLangauges();
         Telephone.initializeLangauges();
         User.initializeLangauges();
-        OfferStatus.initializeLangauges();
+        StudentApplication.initializeLangauges();
 
 
         Parse.initialize(this, "EICiUy2eT7CZPXw8N6I1p6lE4844svLI73JTc2QY", "8I9HZ7AgMHgeIxQKk8k653jNBvBCz57nRuSH73pA");
@@ -142,7 +138,7 @@ public class GlobalData extends Application {
         // reading lectures DB in a secondary thread ---------------------------------------
         lecturesFileReader = new LecturesFileReader();
         isLectureReadComplete = false;
-       AsyncTask<Void, Boolean, Void> lecturesDBeReadingTask = new AsyncTask<Void, Boolean, Void>() {
+        AsyncTask<Void, Boolean, Void> lecturesDBeReadingTask = new AsyncTask<Void, Boolean, Void>() {
             @Override
             protected Void doInBackground(Void... params) {
                 lecturesFileReader.readFromDB();
@@ -256,16 +252,6 @@ public class GlobalData extends Application {
         return toolbar;
     }
 
-
-    public void setCurrentOffer(CompanyOffer o)
-    {
-        currentViewOffer=o;
-    }
-    public CompanyOffer getCurrentViewOffer()
-    {
-        return currentViewOffer;
-    }
-
     /***********************************************************/
 
 
@@ -275,16 +261,6 @@ public class GlobalData extends Application {
     public StudentFilterStatus getStudentFilterStatus(){return  studentFilterStatus;}
     public CompanyFilterStatus getCompanyFilterStatus() {
         return companyFilterStatus;
-    }
-
-    /* ---------------- INBOX MESSAGES -----------------------------------------------------------*/
-
-    public InboxMessage getCurrentViewMessage(){
-        return currentViewMessage;
-    }
-
-    public void setCurrentViewMessage(InboxMessage m){
-        this.currentViewMessage = m;
     }
 
 

@@ -1,19 +1,13 @@
 package com.example.giuliagigi.jobplacement;
 
-import android.util.Log;
-
 import com.parse.ParseClassName;
 import com.parse.ParseGeoPoint;
 import com.parse.ParseObject;
 import com.parse.ParseRelation;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.TimeZone;
 
@@ -26,25 +20,31 @@ public class CompanyOffer extends ParseObject {
 
     protected static final String OBJECT_FIELD = "object";
     protected static final String WORK_FIELD = "field";
-    private static final String  N_POSITIONS_FIELD = "n_positions";
-    private static final String  VALIDITY_FIELD = "validity";
-    private static final String  CONTRACT_FIELD = "contract";
-    private static final String  TERM_FIELD = "term";
-    private static final String  LOCATION_FIELD = "location";
-    private static final String  NATION_FIELD = "nation";
-    private static final String  CITY_FIELD = "city";
-    private static final String  SAlARY_FIELD = "salary";
-    private static final String  DESCRIPTION_FIELD= "description";
-    private static final String COMPANY_FIELD=  "company";
+    private static final String N_POSITIONS_FIELD = "n_positions";
+    private static final String VALIDITY_FIELD = "validity";
+    private static final String CONTRACT_FIELD = "contract";
+    private static final String TERM_FIELD = "term";
+    private static final String LOCATION_FIELD = "location";
+    private static final String NATION_FIELD = "nation";
+    private static final String CITY_FIELD = "city";
+    private static final String SAlARY_FIELD = "salary";
+    private static final String DESCRIPTION_FIELD = "description";
+    private static final String COMPANY_FIELD = "company";
+    public static final String STATUS_FIELD = "status";
+    private static final String TAGS_FIELD = "tags";
+    private static final String APPLICATIONS_FIELD ="applies";
 
-    private static final String TAGS_FIELD=  "tags";
-    private static final String APPLIES_FIELD="applies";
-    private static final String PUBLISH_FIELD="publish";
+    public static final String STATUS_NEW = "New";
+    public static final String STATUS_CREATED = "Created";
+    public static final String STATUS_PUBLISHED = "Published";
+    public static final String STATUS_EXPIRED = "Expired";
+    public static final String STATUS_REVOKED = "Revoked";
 
 
-    public static final String[] TYPE_WORK_FIELD_TRANSLATED =GlobalData.getContext().getResources().getStringArray(R.array.new_offer_fragment_fields);
+    public static final String[] TYPE_WORK_FIELD_TRANSLATED = GlobalData.getContext().getResources().getStringArray(R.array.new_offer_fragment_fields);
     public static final String[] TYPE_CONTRACT_FIELD_TRANSLATED =GlobalData.getContext().getResources().getStringArray(R.array.new_offer_fragment_typeOfContracts);
-    public static final String[] TYPE_TERM_FIELD_TRANSLATED =GlobalData.getContext().getResources().getStringArray(R.array.new_offer_fragment_termContracts);
+    public static final String[] TYPE_TERM_FIELD_TRANSLATED = GlobalData.getContext().getResources().getStringArray(R.array.new_offer_fragment_termContracts);
+    public static final String[] TYPE_OFFER_STATUS_TRANSLATED = GlobalData.getContext().getResources().getStringArray(R.array.offer_detail_status);
 
     public static final String[] TYPE_WORK_FIELD ={"Choose a field:",  "Mechanics", "Informatics","Chemistry", "Energy" ,"Materials"};
     public static final String[] TYPE_CONTRACT_FIELD = {"Select a type of contract","Stage", "Part-Time", "Full-Time", "Thesis","Master"};
@@ -58,7 +58,9 @@ public class CompanyOffer extends ParseObject {
 
 
     /*GETTER*/
-    public Boolean getPublished(){return this.getBoolean(PUBLISH_FIELD);}
+    public String getStatus(){
+        return this.getString(STATUS_FIELD);
+    }
 
     public String getOfferObject() {
         return this.getString(OBJECT_FIELD);
@@ -77,12 +79,12 @@ public class CompanyOffer extends ParseObject {
 
     public String getContract() {
 
-        String res=getTranslatedContractField( this.getString(CONTRACT_FIELD));
+        String res=getTranslatedContractField(this.getString(CONTRACT_FIELD));
         return res;
     }
 
     public String getTerm() {
-        String res=getTranslatedTermField( this.getString(TERM_FIELD));
+        String res=getTranslatedTermField(this.getString(TERM_FIELD));
         return res;
     }
 
@@ -115,33 +117,38 @@ public class CompanyOffer extends ParseObject {
         return result;
     }
 
-       public List<Student> getStudents( ){
+    public ArrayList<StudentApplication> getApplications( ){
 
-        ParseRelation<Student> students = getRelation(APPLIES_FIELD);
-          List<Student> result= null;
-           try {
-               result = students.getQuery().find();
-           } catch (com.parse.ParseException e) {
-               e.printStackTrace();
-           }
+        ParseRelation<StudentApplication> applications = getRelation(APPLICATIONS_FIELD);
+        ArrayList<StudentApplication> result = new ArrayList<StudentApplication>();
+
+        try {
+            List<StudentApplication> list = applications.getQuery().find();
+
+            if(!list.isEmpty())
+                result.addAll(list);
+        }
+        catch (com.parse.ParseException e) {
+            e.printStackTrace();
+        }
 
         return result;
     }
 
     /***************END GETTER****************/
 
-
-
     public void setObject(String object){
 
         this.put(OBJECT_FIELD,object);
     }
+
     public void setWorkField(String workField){
 
         String result=getEnglishWorkField(workField);
                 if(result!=null)
                   this.put(WORK_FIELD,result);
     }
+
     public void setPositions(Integer positions){
 
         this.put(N_POSITIONS_FIELD,positions);
@@ -206,14 +213,19 @@ public class CompanyOffer extends ParseObject {
         }
     }
 
-    public void addStudent(Student student)
-    {
-      getRelation(APPLIES_FIELD).add(student);
+    public void addApplication(StudentApplication application) {
+
+      getRelation(APPLICATIONS_FIELD).add(application);
     }
 
-    public void setPublishField(Boolean bool)
+    public void removeApplication(StudentApplication application) {
+
+        getRelation(APPLICATIONS_FIELD).remove(application);
+    }
+
+    public void setStatus(String status)
     {
-        this.put(PUBLISH_FIELD, bool);
+        this.put(STATUS_FIELD, status);
     }
 
     /*END SETTER METHODS*/
@@ -302,9 +314,6 @@ public class CompanyOffer extends ParseObject {
         }
         return null;
     }
-
-
-
 
 
 }

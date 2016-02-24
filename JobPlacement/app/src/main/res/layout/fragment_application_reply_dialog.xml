@@ -1,0 +1,39 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.giuliagigi.jobplacement.ApplicationReplyDialogFragment">
+
+    <TextView
+        android:id="@+id/application_dialog_student"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" />
+
+    <RadioGroup
+        android:id="@+id/radio_group_application_reply"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content">
+
+        <RadioButton
+            android:id="@+id/radio_button_application_considering"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/application_dialog_considering"/>
+
+        <RadioButton
+            android:id="@+id/radio_button_application_accept"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/application_dialog_accept"/>
+
+        <RadioButton
+            android:id="@+id/radio_button_application_refuse"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/application_dialog_refused"/>
+
+    </RadioGroup>
+
+</LinearLayout>

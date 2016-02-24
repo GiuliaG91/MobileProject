@@ -9,7 +9,7 @@ import android.util.Log;
 /**
  * Created by MarcoEsposito90 on 10/11/2015.
  */
-public class StudentCoursesPagerAdapter extends FragmentPagerAdapter{
+public class StudentDidacticsPagerAdapter extends FragmentPagerAdapter{
 
     private String[] titles;
     private Student student;
@@ -18,7 +18,7 @@ public class StudentCoursesPagerAdapter extends FragmentPagerAdapter{
     /* -------------------------------- CONSTRUCTOR ----------------------------------------------*/
     /* -------------------------------------------------------------------------------------------*/
 
-    public StudentCoursesPagerAdapter(FragmentManager fm, Activity activity, Student student) {
+    public StudentDidacticsPagerAdapter(FragmentManager fm, Activity activity, Student student) {
         super(fm);
 
         titles = activity.getApplicationContext().getResources().getStringArray(R.array.Courses_Students_Tab);

@@ -1,5 +1,6 @@
 package com.example.giuliagigi.jobplacement;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -12,32 +13,36 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
-
-
-import com.parse.ParseQuery;
-import com.parse.ParseQueryAdapter;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by pietro on 05/05/2015.
  */
-public class CompanyShowOfferFragment extends Fragment {
+public class CompanyShowOffersFragment extends Fragment {
 
-    View root;
+    private GlobalData application;
+    private Company company;
+
+    private View root;
     private RecyclerView mRecyclerView;
-    private  ShowOffersAdapter adapter;
+    private OfferAdapter adapter;
     private LinearLayoutManager mLayoutManager;
-    private Integer position=0;
 
-    public static CompanyShowOfferFragment newInstance() {
+    private Integer position = 0;
 
-        CompanyShowOfferFragment fragment = new CompanyShowOfferFragment();
+    public static CompanyShowOffersFragment newInstance(Company company) {
+
+        CompanyShowOffersFragment fragment = new CompanyShowOffersFragment();
+        fragment.company = company;
         return fragment;
     }
 
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+
+        application = (GlobalData)context.getApplicationContext();
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -52,6 +57,12 @@ public class CompanyShowOfferFragment extends Fragment {
     }
 
     @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        application.getToolbar().setTitle(R.string.ToolbarTilteMyJobOffers);
+    }
+
+    @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
         menu.clear();
@@ -61,7 +72,6 @@ public class CompanyShowOfferFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         root = inflater.inflate(R.layout.recycler_view_template, container, false);
-
         mRecyclerView = (RecyclerView) root.findViewById(R.id.recycler_view_template);
 
         // use this setting to improve performance if you know that changes
@@ -74,7 +84,8 @@ public class CompanyShowOfferFragment extends Fragment {
         mRecyclerView.setLayoutManager(mLayoutManager);
 
 
-          adapter = new ShowOffersAdapter(this.getActivity(),position,mLayoutManager);
+        Log.println(Log.ASSERT,"COMPSHOWOFF", "number of offers:" + company.getOffers().size());
+        adapter = new OfferAdapter(this.getActivity(), company.getOffers(), OfferAdapter.MODE_COMPANY_VIEW, position, mLayoutManager);
 
         /*********************/
 
@@ -90,9 +101,11 @@ public class CompanyShowOfferFragment extends Fragment {
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
+
         try {
             outState.putInt("position", mLayoutManager.findFirstVisibleItemPosition());
-        }catch (Exception e){
+        }
+        catch (Exception e){
             outState.putInt("position",0);
         }
     }

@@ -27,10 +27,6 @@ public class CompanyViewPagerAdapter extends FragmentPagerAdapter {
         {
             return new TabHome();
         }
-        else if(position==1)
-        {
-            return CompanyShowOfferFragment.newInstance();
-        }
         else return FavStudentsFragment.newInstance();
 
     }

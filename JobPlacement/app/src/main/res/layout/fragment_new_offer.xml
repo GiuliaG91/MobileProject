@@ -5,11 +5,13 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:id="@+id/fragment_new_offer"
-    tools:context="com.example.giuliagigi.jobplacement.NewOffer">
+    tools:context="com.example.giuliagigi.jobplacement.CompanyEditOfferFragment">
 
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
+
         <ScrollView
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
@@ -564,6 +566,15 @@
                         android:layout_height="fill_parent">
 
 
+                        <ImageButton
+                            android:layout_width="0dp"
+                            android:layout_height="fill_parent"
+                            android:id="@+id/addTagButton"
+                            android:layout_weight="0.25"
+                            android:background="@android:color/darker_gray"
+                            android:src="@drawable/ic_plus_white" />
+
+
                         <MultiAutoCompleteTextView
                             android:layout_width="0dp"
                             android:layout_height="fill_parent"
@@ -576,14 +587,6 @@
                             android:textCursorDrawable="@drawable/edit_cursor"
                             android:lines="1"
                             android:singleLine="true"/>
-
-                        <ImageButton
-                            android:layout_width="0dp"
-                            android:layout_height="fill_parent"
-                            android:id="@+id/addTagButton"
-                            android:layout_weight="0.25"
-                            android:background="@android:color/darker_gray"
-                            android:src="@drawable/ic_plus_white" />
 
 
                     </LinearLayout>
@@ -605,7 +608,7 @@
 
 
         <com.getbase.floatingactionbutton.FloatingActionsMenu
-            android:id="@+id/multiple_actions"
+            android:id="@+id/new_offer_floating_menu"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
@@ -619,41 +622,54 @@
             android:layout_marginRight="16dp"
             android:layout_marginEnd="16dp">
 
+
             <com.getbase.floatingactionbutton.FloatingActionButton
-                android:id="@+id/action_d"
+                android:id="@+id/floatingButton_save"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                fab:fab_title="@string/see"
+                fab:fab_icon="@drawable/ic_save_white"
+                fab:fab_title="@string/save"
+                fab:fab_colorNormal="@color/ColorPrimary"
+                fab:fab_colorPressed="@color/ColorPrimaryDark"/>
+
+
+            <com.getbase.floatingactionbutton.FloatingActionButton
+                android:id="@+id/floatingButton_seeApplications"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                fab:fab_title="@string/offer_detail_applications_button"
+                fab:fab_icon="@drawable/ic_apply"
                 fab:fab_colorNormal="@color/ColorPrimary"
                 fab:fab_colorPressed="@color/ColorPrimaryDark"/>
 
 
 
             <com.getbase.floatingactionbutton.FloatingActionButton
-                android:id="@+id/action_a"
+                android:id="@+id/floatingButton_publish"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                fab:fab_icon="@drawable/ic_create"
                 fab:fab_title="@string/publish"
                 fab:fab_colorNormal="@color/ColorPrimary"
                 fab:fab_colorPressed="@color/ColorPrimaryDark"/>
 
             <com.getbase.floatingactionbutton.FloatingActionButton
-                android:id="@+id/action_b"
+                android:id="@+id/floatingButton_modify"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                fab:fab_icon="@drawable/ic_modify_white"
                 fab:fab_title="@string/modify"
                 fab:fab_colorNormal="@color/ColorPrimary"
                 fab:fab_colorPressed="@color/ColorPrimaryDark"/>
 
             <com.getbase.floatingactionbutton.FloatingActionButton
-                android:id="@+id/action_c"
+                android:id="@+id/floatingButton_delete"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                fab:fab_title="@string/delete_messages"
+                fab:fab_icon="@drawable/ic_delete"
+                fab:fab_title="@string/new_offer_delete"
                 fab:fab_colorNormal="@color/ColorPrimary"
                 fab:fab_colorPressed="@color/ColorPrimaryDark"/>
-
-
 
 
         </com.getbase.floatingactionbutton.FloatingActionsMenu>
