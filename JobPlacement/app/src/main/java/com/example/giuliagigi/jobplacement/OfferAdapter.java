@@ -16,6 +16,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -211,7 +212,10 @@ public class OfferAdapter extends RecyclerView.Adapter<OfferAdapter.ViewHolder> 
             }
         });
 
-        holder.validity.setText(offers.get(position).getValidity().toString());
+
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        String date = dateFormat.format(offers.get(position).getValidity());
+        holder.validity.setText(date);
     }
 
     @Override
@@ -253,6 +257,12 @@ public class OfferAdapter extends RecyclerView.Adapter<OfferAdapter.ViewHolder> 
 
             Toast.makeText(context, "We are sorry. An application error occurred. Impossible to perform operation", Toast.LENGTH_LONG).show();
             return;
+        }
+
+        //clear backstack
+        int count = fragmentManager.getBackStackEntryCount();
+        for (int i = 0; i < count; ++i) {
+            fragmentManager.popBackStack();
         }
 
         fragmentManager.beginTransaction()

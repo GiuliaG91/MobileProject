@@ -1055,10 +1055,13 @@ public class CompanyEditOfferFragment extends Fragment implements DatePickerFrag
             }
 
             FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-
-            //New Fragment
             ApplicationsListFragment fragment = ApplicationsListFragment.newInstance(offer);
-            // Insert the fragment by replacing any existing fragment
+
+            //clear backstack
+            int count = fragmentManager.getBackStackEntryCount();
+            for (int i = 0; i < count; ++i) {
+                fragmentManager.popBackStack();
+            }
 
             fragmentManager.beginTransaction()
                     .replace(R.id.tab_Home_container, fragment)

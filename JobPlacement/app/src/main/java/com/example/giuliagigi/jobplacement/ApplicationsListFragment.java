@@ -14,6 +14,14 @@ import java.util.ArrayList;
 
 public class ApplicationsListFragment extends Fragment {
 
+    private static final String BUNDLE_IDENTIFIER_HEADER = "ApplicationsList_Bundle_";
+    private static final String BUNDLE_IDENTIFIER_TAIL_KEY = "ApplicationsList_bundle_id_tail";
+
+    private static final String BUNDLE_KEY_STUDENT = "student";
+    private static final String BUNDLE_KEY_OFFER = "offer";
+    private static final String BUNDLE_KEY_POSITION = "position";
+
+
     private GlobalData globalData;
     private Student student = null;
     private CompanyOffer offer = null;
@@ -60,6 +68,19 @@ public class ApplicationsListFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        if(savedInstanceState != null){
+
+            String tail = savedInstanceState.getString(BUNDLE_IDENTIFIER_TAIL_KEY);
+            MyBundle bundle = globalData.getBundle(BUNDLE_IDENTIFIER_HEADER + tail);
+
+            if(bundle != null){
+
+                student = (Student)bundle.get(BUNDLE_KEY_STUDENT);
+                offer = (CompanyOffer)bundle.get(BUNDLE_KEY_OFFER);
+                position = bundle.getInt(BUNDLE_KEY_POSITION);
+            }
+        }
     }
 
     @Override
@@ -100,11 +121,25 @@ public class ApplicationsListFragment extends Fragment {
     }
 
 
-
-
     @Override
-    public void onDetach() {
-        super.onDetach();
-    }
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
 
+        String tail = "";
+
+        if(student != null)
+            tail = student.toString();
+
+        if(offer != null)
+            tail = offer.toString();
+
+
+        outState.putString(BUNDLE_IDENTIFIER_TAIL_KEY, tail);
+        MyBundle bundle = globalData.addBundle(BUNDLE_IDENTIFIER_HEADER + tail);
+
+        bundle.put(BUNDLE_KEY_STUDENT, student);
+        bundle.put(BUNDLE_KEY_OFFER, offer);
+        bundle.putInt(BUNDLE_KEY_POSITION, position);
+
+    }
 }

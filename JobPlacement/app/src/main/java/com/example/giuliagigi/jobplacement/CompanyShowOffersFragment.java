@@ -19,6 +19,12 @@ import android.view.ViewGroup;
  */
 public class CompanyShowOffersFragment extends Fragment {
 
+    private static final String BUNDLE_IDENTIFIER_HEADER = "ShowOffers_Bundle_";
+    private static final String BUNDLE_IDENTIFIER_TAIL_KEY = "ShowOffers_bundle_id_tail";
+
+    private static final String BUNDLE_KEY_COMPANY = "company";
+    private static final String BUNDLE_KEY_POSITION = "position";
+
     private GlobalData application;
     private Company company;
 
@@ -29,6 +35,10 @@ public class CompanyShowOffersFragment extends Fragment {
 
     private Integer position = 0;
 
+    /* --------------------------------------------------------------------------------------------------------------------- */
+    /* ----------------------- CONSTRUCTORS -------------------------------------------------------------------------------- */
+    /* --------------------------------------------------------------------------------------------------------------------- */
+
     public static CompanyShowOffersFragment newInstance(Company company) {
 
         CompanyShowOffersFragment fragment = new CompanyShowOffersFragment();
@@ -36,6 +46,12 @@ public class CompanyShowOffersFragment extends Fragment {
         return fragment;
     }
 
+    public CompanyShowOffersFragment(){}
+
+
+    /* --------------------------------------------------------------------------------------------------------------------- */
+    /* ----------------------- STANDARD CALLBACKS -------------------------------------------------------------------------- */
+    /* --------------------------------------------------------------------------------------------------------------------- */
 
     @Override
     public void onAttach(Context context) {
@@ -43,6 +59,7 @@ public class CompanyShowOffersFragment extends Fragment {
 
         application = (GlobalData)context.getApplicationContext();
     }
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -52,9 +69,17 @@ public class CompanyShowOffersFragment extends Fragment {
 
         if(savedInstanceState!=null){
 
-            position=savedInstanceState.getInt("position");
+            String tail = savedInstanceState.getString(BUNDLE_IDENTIFIER_TAIL_KEY);
+            MyBundle bundle = application.getBundle(BUNDLE_IDENTIFIER_HEADER + tail);
+
+            if(bundle != null){
+
+                company = (Company)bundle.get(BUNDLE_KEY_COMPANY);
+                position = bundle.getInt(BUNDLE_KEY_POSITION);
+            }
         }
     }
+
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
@@ -62,11 +87,13 @@ public class CompanyShowOffersFragment extends Fragment {
         application.getToolbar().setTitle(R.string.ToolbarTilteMyJobOffers);
     }
 
+
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
         menu.clear();
     }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -83,11 +110,8 @@ public class CompanyShowOffersFragment extends Fragment {
         mRecyclerView.addItemDecoration(new DividerItemDecoration(this.getActivity(), DividerItemDecoration.VERTICAL_LIST));
         mRecyclerView.setLayoutManager(mLayoutManager);
 
-
         Log.println(Log.ASSERT,"COMPSHOWOFF", "number of offers:" + company.getOffers().size());
         adapter = new OfferAdapter(this.getActivity(), company.getOffers(), OfferAdapter.MODE_COMPANY_VIEW, position, mLayoutManager);
-
-        /*********************/
 
         // specify an adapter
         mRecyclerView.setAdapter(adapter);
@@ -102,12 +126,11 @@ public class CompanyShowOffersFragment extends Fragment {
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
 
-        try {
-            outState.putInt("position", mLayoutManager.findFirstVisibleItemPosition());
-        }
-        catch (Exception e){
-            outState.putInt("position",0);
-        }
+        outState.putString(BUNDLE_IDENTIFIER_TAIL_KEY, company.toString());
+        MyBundle bundle = application.addBundle(BUNDLE_IDENTIFIER_HEADER + company.toString());
+
+        bundle.put(BUNDLE_KEY_COMPANY, company);
+        bundle.putInt(BUNDLE_KEY_POSITION, position);
     }
 }
 
