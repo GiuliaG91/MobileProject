@@ -59,6 +59,8 @@ public class ProfileManagementBasicsFragment extends ProfileManagementFragment {
 
         return BUNDLE_IDENTIFIER;
     }
+
+
     /* ---------------------------- STANDARD CALLBACKS -------------------------------------------*/
 
     @Override
@@ -107,6 +109,7 @@ public class ProfileManagementBasicsFragment extends ProfileManagementFragment {
             Bitmap photoBitmap = null;
 
             try {
+
                 photoBitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(),photoUri);
 
                 if(photoBitmap == null)
