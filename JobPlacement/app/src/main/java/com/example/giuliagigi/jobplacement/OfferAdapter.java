@@ -16,6 +16,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.parse.ParseException;
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -131,14 +133,20 @@ public class OfferAdapter extends RecyclerView.Adapter<OfferAdapter.ViewHolder> 
     @Override
     public void onBindViewHolder(ViewHolder holder, final int position) {
 
-        if(student == null && company == null){
+        try {
+            Company publisher = offers.get(position).getCompany().fetchIfNeeded();
 
-            holder.logo.setImageResource(R.drawable.ic_profile);
-        }
-        else {
+            if(publisher.getProfilePhoto() != null)
+                holder.logo.setImageBitmap(publisher.getProfilePhoto());
+            else
+                holder.logo.setImageResource(R.drawable.ic_profile);
 
-            // TODO : set profile image
         }
+        catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+
 
         holder.object.setText(offers.get(position).getOfferObject());
         String description = offers.get(position).getDescription();

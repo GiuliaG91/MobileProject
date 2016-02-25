@@ -19,6 +19,7 @@ import android.widget.Toast;
 
 import com.parse.ParseException;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 /**
@@ -67,6 +68,7 @@ public class StudentApplicationAdapter extends RecyclerView.Adapter<StudentAppli
             case MODE_STUDENT_VIEW:
 
                 student = (Student)globalData.getUserObject();
+
                 break;
 
             case MODE_COMPANY_VIEW:
@@ -78,6 +80,7 @@ public class StudentApplicationAdapter extends RecyclerView.Adapter<StudentAppli
 
                 break;
         }
+
 
     }
 
@@ -126,10 +129,21 @@ public class StudentApplicationAdapter extends RecyclerView.Adapter<StudentAppli
     @Override
     public void onBindViewHolder(StudentApplicationAdapter.ViewHolder holder, final int position) {
 
+
+        /* ----------------------- retrieving data ---------------------------------------------- */
         CompanyOffer offer = null;
+        Company publisher = null;
+        Student applicant = null;
+
 
         try {
             offer = applications.get(position).getOffer().fetchIfNeeded();
+
+            if(company == null)
+                publisher = offer.getCompany().fetchIfNeeded();
+
+            else if(student == null)
+                applicant = applications.get(position).getStudent().fetchIfNeeded();
         }
         catch (ParseException e) {
             e.printStackTrace();
@@ -138,34 +152,75 @@ public class StudentApplicationAdapter extends RecyclerView.Adapter<StudentAppli
         if(offer == null)
             return;
 
+
+        /* ---------------- logo ---------------------------------------------------------------- */
         holder.logo.setImageResource(R.drawable.ic_profile);
 
+        if(company == null && publisher != null){
+
+            if(publisher.getProfilePhoto() != null)
+                holder.logo.setImageBitmap(publisher.getProfilePhoto());
+        }
+        if(student == null && applicant != null){
+
+            if(applicant.getProfilePhoto() != null)
+                holder.logo.setImageBitmap(applicant.getProfilePhoto());
+        }
+
+
+        /* ----------- name and status ---------------------------------------------------------- */
         String studentName = applications.get(position).getStudent().getName() + " " + applications.get(position).getStudent().getSurname();
         holder.object.setText(mode == MODE_STUDENT_VIEW? offer.getOfferObject() : studentName);
-
-        String description = offer.getDescription();
-
-        if(description == null || description.isEmpty() || description.equals("")) {
-
-            holder.descriprion.setText("...");
-        }
-        else{
-
-            if(description.length()<30) {
-
-                holder.descriprion.setText(description+"...");
-            }
-            else {
-
-                holder.descriprion.setText(offer.getDescription().substring(0,29)+"...");
-            }
-        }
 
         holder.status.setText(applications.get(position).getStatus());
 
 
+        /* ---------------- description (student or offer) -------------------------------------- */
+        String description = "";
+
+
+        if(company == null)                             // a students wants to see the offer description
+            description = offer.getDescription();
+
+        else if(student == null && applicant != null){  // a company wants to see the student's info
+
+            try {
+
+                if(applicant.getDegrees() != null && !applicant.getDegrees().isEmpty()){
+
+                    for(Degree d: applicant.getDegrees()){
+
+                        d.fetchIfNeeded();
+                        description += (d.getType() + " " + d.getStudies() + ", ");
+                    }
+                }
+                else
+                    description += context.getString(R.string.application_no_graduation) + ". ";
+
+            }
+            catch (ParseException e) {
+                e.printStackTrace();
+            }
+        }
+
+
+        if(description == null || description.isEmpty() || description.equals(""))
+            holder.descriprion.setText("...");
+
+        else {
+
+            if(description.length()<30)
+                holder.descriprion.setText(description);
+
+            else
+                holder.descriprion.setText(offer.getDescription().substring(0,29)+"...");
+        }
+
+
+        /* ---------------- reply (only if company) --------------------------------------------- */
         holder.replyButton.setEnabled(!(mode == MODE_STUDENT_VIEW));
         holder.replyButton.setVisibility(mode == MODE_STUDENT_VIEW ? View.INVISIBLE : View.VISIBLE);
+
         holder.replyButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {

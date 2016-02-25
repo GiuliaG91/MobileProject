@@ -364,6 +364,7 @@
     <string name="application_dialog_confirm_request">Sei sicuro di voler confermare l\'operazione?</string>
     <string name="application_dialog_confirm_message">L\'operazione non è reversibile: per esempio, nel caso in cui si accetti la candidatura, i posti disponibili vengono decrementati</string>
     <string name="application_dialog_already_replied">Hai già dato una risposta relativa a questa candidatura: il suo stato non è reversibile. Ti consigliamo di contattare direttamente lo studente</string>
+    <string name="application_no_graduation">Nessun titolo di laurea</string>
 
     <!-- ________________ OFFER STATUS _________________________________________________________ -->
     <string name="OfferStatus_Start">Lavorazione</string>

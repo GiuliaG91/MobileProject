@@ -220,39 +220,26 @@ public class StudentOfferDetailFragment extends  Fragment {
         icon.setImageDrawable(getResources().getDrawable(R.drawable.ic_salary));
 
 
-        // ---- status ------------------------------------------------------------------------
-
+        // ---- status and icon --------------------------------------------------------------------
         linearLayout = (LinearLayout)root.findViewById(R.id.status_row);
-        hint=(TextView)linearLayout.findViewById(R.id.hint_tv);
-        content=(TextView)linearLayout.findViewById(R.id.content_tv);
-        icon=(ImageView)linearLayout.findViewById(R.id.rowIcon);
-
+        hint = (TextView)linearLayout.findViewById(R.id.hint_tv);
         hint.setText(R.string.offer_detail_status);
+
+        content=(TextView)linearLayout.findViewById(R.id.content_tv);
         content.setText(offer.getStatus());
-        // TODO: SET ICON
+
 
         // ---- company info ------------------------------------------------------------------
-        ImageView logo=(ImageView)root.findViewById(R.id.circleView_logo);
-        TextView companyName=(TextView)root.findViewById(R.id.company_name_tv);
-        TextView companyMail=(TextView)root.findViewById(R.id.Company_email);
+        ImageView logo = (ImageView)root.findViewById(R.id.circleView_logo);
+        TextView companyName = (TextView)root.findViewById(R.id.company_name_tv);
+        TextView companyMail = (TextView)root.findViewById(R.id.Company_email);
 
         TextView description=(TextView)root.findViewById(R.id.DescriptionText_tv);
         description.setText(offer.getDescription());
 
-        Bitmap img=null;
+        if(company.getProfilePhoto() != null){
 
-        try {
-
-          img = company.getProfilePhoto();
-        }
-        catch (Exception e){
-            img =null;
-        }
-
-
-        if(img!=null){
-
-            logo.setImageBitmap(img);
+            logo.setImageBitmap(company.getProfilePhoto());
         }
 
         companyName.setText(company.getName());
