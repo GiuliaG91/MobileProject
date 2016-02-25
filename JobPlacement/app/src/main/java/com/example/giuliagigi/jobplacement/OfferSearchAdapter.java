@@ -255,16 +255,13 @@ public class OfferSearchAdapter extends RecyclerView.Adapter<OfferSearchAdapter.
                 TextView date = (TextView) v.findViewById(R.id.textView_date);
                 CheckBox pref = (CheckBox) v.findViewById(R.id.checkbox_favourite);
 
-                Bitmap img=null;
-                //img=object.getCompany().getProfilePhoto();
-                if(img!=null) {
 
-                    logo.setImageBitmap(img);
-                }
-                else {
+                if(offer.getCompany().getProfilePhoto() != null)
+                    logo.setImageBitmap(offer.getCompany().getProfilePhoto());
 
+                else
                     logo.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_profile));
-                }
+
 
                 object_tv.setText(offer.getOfferObject());
                 descriprion.setText(offer.getDescription());
