@@ -89,7 +89,7 @@ public class OfferSearchAdapter extends RecyclerView.Adapter<OfferSearchAdapter.
                     today.set(Calendar.HOUR_OF_DAY, 0);
 
                     ParseQuery query = new ParseQuery("CompanyOffer");
-                    query.whereEqualTo("publish", true);
+                    query.whereEqualTo(CompanyOffer.STATUS_FIELD,CompanyOffer.STATUS_PUBLISHED);
                     query.whereGreaterThanOrEqualTo("validity", today.getTime());
 
 
