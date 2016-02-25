@@ -13,6 +13,7 @@ import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -52,11 +53,23 @@ import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
 
 public class CompanyEditOfferFragment extends Fragment implements DatePickerFragment.OnDataSetListener {
 
+    private static final String BUNDLE_KEY_OFFER = "Offer";
+    private static final String BUNDLE_KEY_OBJECT = "Object";
+    private static final String BUNDLE_KEY_FIELD = "Field";
+    private static final String BUNDLE_KEY_PLACES = "Places";
+    private static final String BUNDLE_KEY_VALIDITY = "Validity";
+    private static final String BUNDLE_KEY_TERM = "Term";
+    private static final String BUNDLE_KEY_CITY = "City";
+    private static final String BUNDLE_KEY_NATION = "Nation";
+    private static final String BUNDLE_KEY_CONTRACT = "Contract";
+    private static final String BUNDLE_KEY_SALARY_TYPE = "Salary_Type";
+    private static final String BUNDLE_KEY_SALARY = "Salary";
+    private static final String BUNDLE_KEY_DESCRIPTION = "Description";
+    private static final String BUNDLE_KEY_TAGS = "Tags";
+    private static final String BUNDLE_KEY_EDIT_MODE = "Edit_Mode";
 
     private static final String BUNDLE_IDENTIFIER_HEADER = "offerNew_bundle";
     private static final String BUNDLE_IDENTIFIER_TAIL_KEY = "offerNew_bundle_id_tail";
@@ -71,11 +84,12 @@ public class CompanyEditOfferFragment extends Fragment implements DatePickerFrag
     private View root;
     private MenuItem saveToolbarButton = null;
     private EditText editDescriptionText = null;
-    private TextView textView = null;
+    private TextView descriptionCountTextView = null;
     private EditText editObject = null;
     private EditText editSalary = null;
     private Button dateButton = null;
     private TextView validity = null;
+    private GridLayout tagContainer = null;
     //Button and its children
 
     private FloatingActionButton publishFloatingButton = null;
@@ -93,18 +107,16 @@ public class CompanyEditOfferFragment extends Fragment implements DatePickerFrag
     private Spinner contractSpinner = null;
     private Spinner salarySpinner = null;
     private Spinner termSpinner = null;
-    private ImageButton addtag = null;
+    private ImageButton addTagButton = null;
 
 
-    private String[] typeOfFields;
-    private String[] typeOfContracts;
-    private String[] salaries;
-    private String[] durations;
+    private HashMap<String, Tag> allTags;
+    private HashSet<String> currentTags;
 
     private MultiAutoCompleteTextView tagsView = null;
 
-    private Map<String, Tag> retriveTag = null;
-    final Set<String> existent = new HashSet<>();
+//    private Map<String, Tag> retriveTag = null;
+//    final Set<String> existent = new HashSet<>();
 
     /* --------------------------------------------------------------------------------------------------------------------- */
     /* ----------------------- CONSTRUCTORS -------------------------------------------------------------------------------- */
@@ -134,8 +146,6 @@ public class CompanyEditOfferFragment extends Fragment implements DatePickerFrag
     /* ----------------------- STANDARD CALLBACKS -------------------------------------------------------------------------- */
     /* --------------------------------------------------------------------------------------------------------------------- */
 
-
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
 
@@ -144,15 +154,22 @@ public class CompanyEditOfferFragment extends Fragment implements DatePickerFrag
         globalData = (GlobalData) getActivity().getApplication();
         company = (Company) globalData.getUserObject();
 
+        allTags = globalData.getTags();
+        currentTags = new HashSet<>();
+
         if (savedInstanceState != null) {
 
-            Boolean tmp = savedInstanceState.getBoolean("editMode");
+            String tail = savedInstanceState.getString(BUNDLE_IDENTIFIER_TAIL_KEY);
+            MyBundle bundle = globalData.getBundle(BUNDLE_IDENTIFIER_HEADER + tail);
 
-            if (tmp) {
+            if(bundle != null){
 
-                editMode = true;
+                Log.println(Log.ASSERT, "NEW OFFER", "onCreate with bundle: " + BUNDLE_IDENTIFIER_HEADER + tail);
+                offer = (CompanyOffer)bundle.get(BUNDLE_KEY_OFFER);
+                editMode = bundle.getBoolean(BUNDLE_KEY_EDIT_MODE);
             }
         }
+
 
         setHasOptionsMenu(true);
     }
@@ -162,45 +179,69 @@ public class CompanyEditOfferFragment extends Fragment implements DatePickerFrag
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         Toolbar toolbar = globalData.getToolbar();
-        toolbar.setTitle(R.string.ToolbarTilteProfile);
-        globalData.setToolbarTitle(getString(R.string.ToolbarTilteProfile));
+        toolbar.setTitle(R.string.ToolbarTilteNewOffer);
+        globalData.setToolbarTitle(getString(R.string.ToolbarTilteNewOffer));
 
-        // Inflate the layout for this fragment
         root = inflater.inflate(R.layout.fragment_new_offer, container, false);
 
-        editDescriptionText = (EditText) root.findViewById(R.id.DescriptionText);
-        textView = (TextView) root.findViewById(R.id.countCharacter);
+
+        /* --------------- object --------------------------------------------------------------- */
         editObject = (EditText) root.findViewById(R.id.offerObject);
-        editSalary = (EditText) root.findViewById(R.id.offerSalary);
+        editObject.addTextChangedListener(new TextWatcher() {
+
+            boolean complete = false; //Vuoto
+            EditText et;
+
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                if (!complete) {
+                    if (s.length() > 0) {
+                        complete = true;
+                        et.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_tick, 0);
+                    }
+                }
+                if (s.length() == 0) {
+                    complete = false;
+                    et.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_cross, 0);
+                }
+
+            }
+
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            public void afterTextChanged(Editable s) {}
+
+        });
+
+
+        /* --------------- field places contract ------------------------------------------------ */
+        fieldSpinner = (Spinner) root.findViewById(R.id.fieldOffer);
+        fieldSpinner.setAdapter(new StringAdapter(CompanyOffer.TYPE_WORK_FIELD_TRANSLATED));
+
+        places = (EditText) root.findViewById(R.id.offerAvailability);
+
+        contractSpinner = (Spinner) root.findViewById(R.id.typeContract);
+        contractSpinner.setAdapter(new StringAdapter(CompanyOffer.TYPE_CONTRACT_FIELD_TRANSLATED));
+
+
+        /* ------------------ date -------------------------------------------------------------- */
         dateButton = (Button) root.findViewById(R.id.dateButton);
         validity = (TextView) root.findViewById(R.id.validity_tv);
 
-        publishFloatingButton = (FloatingActionButton) root.findViewById(R.id.floatingButton_publish);
-        modifyFloatingButton = (FloatingActionButton) root.findViewById(R.id.floatingButton_modify);
-        deleteFloatingButton = (FloatingActionButton) root.findViewById(R.id.floatingButton_delete);
-        viewAppliesFloatingButton = (FloatingActionButton) root.findViewById(R.id.floatingButton_seeApplications);
-        saveFloatingButton = (FloatingActionButton) root.findViewById(R.id.floatingButton_save);
-        floatingActionMenu = (FloatingActionsMenu) root.findViewById(R.id.new_offer_floating_menu);
+        final Fragment tf = this;
+        dateButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
-        places = (EditText) root.findViewById(R.id.offerAvailability);
-        nation = (EditText) root.findViewById(R.id.new_offer_edit_nation);
-        city = (EditText) root.findViewById(R.id.new_offer_edit_city);
+                DatePickerFragment datapicker = new DatePickerFragment();
+                datapicker.setTargetFragment(tf, 0);
+                datapicker.show(getFragmentManager(), "datapicker");
+            }
+        });
 
-
-        addtag = (ImageButton) root.findViewById(R.id.addTagButton);
-        tagsView = (MultiAutoCompleteTextView) root.findViewById(R.id.tagAutoComplete_tv);
-
-        fieldSpinner = (Spinner) root.findViewById(R.id.fieldOffer);
-        typeOfFields = getResources().getStringArray(R.array.new_offer_fragment_fields);
-        fieldSpinner.setAdapter(new StringAdapter(typeOfFields));
-
-        contractSpinner = (Spinner) root.findViewById(R.id.typeContract);
-        typeOfContracts = getResources().getStringArray(R.array.new_offer_fragment_typeOfContracts);
-        contractSpinner.setAdapter(new StringAdapter(typeOfContracts));
-
+        /* ------------------- salary ------------------------------------------------------------*/
+        editSalary = (EditText) root.findViewById(R.id.offerSalary);
         salarySpinner = (Spinner) root.findViewById(R.id.spinnerSalary);
-        salaries = getResources().getStringArray(R.array.new_offer_fragment_salary_spinner_content);
-        salarySpinner.setAdapter(new StringAdapter(salaries));
+        salarySpinner.setAdapter(new StringAdapter(CompanyOffer.TYPE_SALARY_TYPE_FIELD_TRANSLATED));
 
         salarySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -220,130 +261,93 @@ public class CompanyEditOfferFragment extends Fragment implements DatePickerFrag
             }
         });
 
-
+        /* ------------------- term nation city --------------------------------------------------*/
         termSpinner = (Spinner) root.findViewById(R.id.spinnerDuration);
-        durations = getResources().getStringArray(R.array.new_offer_fragment_termContracts);
-        termSpinner.setAdapter(new StringAdapter(durations));
+        termSpinner.setAdapter(new StringAdapter(CompanyOffer.TYPE_TERM_FIELD_TRANSLATED));
+
+        nation = (EditText) root.findViewById(R.id.new_offer_edit_nation);
+        city = (EditText) root.findViewById(R.id.new_offer_edit_city);
 
 
-        final Fragment tf = this;
-        dateButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        /* --------------- description ---------------------------------------------------------- */
+        editDescriptionText = (EditText) root.findViewById(R.id.DescriptionText);
+        descriptionCountTextView = (TextView) root.findViewById(R.id.countCharacter);
 
-                DatePickerFragment datapicker = new DatePickerFragment();
-                datapicker.setTargetFragment(tf, 0);
-                datapicker.show(getFragmentManager(), "datapicker");
+        editDescriptionText.addTextChangedListener(new TextWatcher() {
+
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                descriptionCountTextView.setText(String.valueOf(s.length()));
             }
+
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            public void afterTextChanged(Editable s) {}
         });
 
 
-        //Conta caratteri
-        final TextWatcher mTextEditorWatcher = new TextWatcher() {
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-            }
+        /* ----------------- tags --------------------------------------------------------------- */
 
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                //This sets a textview to the current length
-                textView.setText(String.valueOf(s.length()));
-            }
+        // 1) multiautocompleteview ----
+        tagsView = (MultiAutoCompleteTextView) root.findViewById(R.id.tagAutoComplete_tv);
 
-            public void afterTextChanged(Editable s) {
-            }
-        };
-
-
-        //Gestione object obbligatorio
-        final TextWatcher mobjectTextWhatcer = new TextWatcher() {
-            int complete = 0; //Vuoto
-
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-            }
-
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-                if (complete == 0) {
-                    if (s.length() > 0) {
-                        complete = 1;
-                        editObject.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_tick, 0);
-                    }
-                }
-                if (s.length() == 0) {
-                    complete = 0;
-                    editObject.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_cross, 0);
-                }
-
-            }
-
-            public void afterTextChanged(Editable s) {
-            }
-        };
-
-        editDescriptionText.addTextChangedListener(mTextEditorWatcher);
-        editObject.addTextChangedListener(mobjectTextWhatcer);
-
-
-        //multiautocompletetextview
-        ParseQuery<Tag> query = ParseQuery.getQuery("Tag");
-        List<Tag> tags = null;
-        try {
-            tags = query.find();
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-
-        String[] t = new String[tags.size()];
-
-        final Set<String> support = new HashSet<String>();
-        retriveTag = new HashMap<>();
-
-
-        for (int i = 0; i < tags.size(); i++) {
-            t[i] = tags.get(i).getTag();
-            retriveTag.put(tags.get(i).getTag().toLowerCase().trim(), tags.get(i));
-            support.add(tags.get(i).getTag().toLowerCase().trim());
-        }
-
-
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this.getActivity(),
-                android.R.layout.simple_dropdown_item_1line, t);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(
+                this.getActivity(),
+                android.R.layout.simple_dropdown_item_1line,
+                new ArrayList<String>(allTags.keySet()));
 
         tagsView.setAdapter(adapter);
         tagsView.setTokenizer(new SpaceTokenizer());
         tagsView.setThreshold(1);
 
-        addtag.setOnClickListener(new View.OnClickListener() {
+        tagsView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                // when a tag is selected, highlight the button
+                addTagButton.setBackgroundColor(Color.BLUE);
+            }
+        });
+
+
+        // 2) add tag button ----
+        addTagButton = (ImageButton) root.findViewById(R.id.addTagButton);
+        tagContainer = (GridLayout) root.findViewById(R.id.tagContainder);
+
+        addTagButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                if (support.contains((String) tagsView.getText().toString().toLowerCase().trim())) {
+                if (allTags.keySet().contains((String) tagsView.getText().toString().trim())) {
 
-                    if (existent.add(tagsView.getText().toString().toLowerCase().trim())) {
-
-                        final GridLayout tagContainer = (GridLayout) root.findViewById(R.id.tagContainder);
-
-                        LayoutInflater inflater = (LayoutInflater) getActivity().getBaseContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                        View mytagView = inflater.inflate(R.layout.taglayout, null);
-
-                        mytagView.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                TextView tv = (TextView) v.findViewById(R.id.tag_tv);
-                                existent.remove((tv.getText().toString().toLowerCase().trim()));
-                                tagContainer.removeView(v);
-                                Toast.makeText(getActivity(), getString(R.string.new_offer_fragment_removed), Toast.LENGTH_SHORT).show();
+                    if (!currentTags.contains(tagsView.getText().toString().trim())) {
 
 
-                            }
-                        });
+                        addTag(tagsView.getText().toString().trim());
+//                        // creating tad view
+//                        LayoutInflater inflater = (LayoutInflater) getActivity().getBaseContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+//                        View mytagView = inflater.inflate(R.layout.taglayout, null);
+//
+//                        // setting tag view
+//                        TextView t = (TextView) mytagView.findViewById(R.id.tag_tv);
+//                        t.setText(tagsView.getText().toString());
+//                        mytagView.setOnClickListener(new View.OnClickListener() {
+//
+//                            @Override
+//                            public void onClick(View v) {
+//
+//                                TextView tv = (TextView) v.findViewById(R.id.tag_tv);
+//                                currentTags.remove((tv.getText().toString().toLowerCase().trim()));
+//                                tagContainer.removeView(v);
+//                                Toast.makeText(getActivity(), getString(R.string.new_offer_fragment_removed), Toast.LENGTH_SHORT).show();
+//                            }
+//                        });
+//
+//                        // adding tag view
+//                        tagContainer.addView(mytagView);
 
-                        TextView t = (TextView) mytagView.findViewById(R.id.tag_tv);
-                        t.setText(tagsView.getText().toString());
-                        tagContainer.addView(mytagView);
-
+                        // cleaning
                         tagsView.setText("");
-                        addtag.setBackgroundColor(Color.DKGRAY);
-
+                        addTagButton.setBackgroundColor(Color.DKGRAY);
                         Toast.makeText(getActivity(), getString(R.string.new_offer_fragment_added), Toast.LENGTH_SHORT).show();
 
                     } else
@@ -356,15 +360,12 @@ public class CompanyEditOfferFragment extends Fragment implements DatePickerFrag
         });
 
 
-        tagsView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-                addtag.setBackgroundColor(Color.BLUE);
-            }
-        });
+        /* ------------------- floating action menu ----------------------------------------------*/
+        floatingActionMenu = (FloatingActionsMenu) root.findViewById(R.id.new_offer_floating_menu);
 
 
+        // 1) publish ----
+        publishFloatingButton = (FloatingActionButton) root.findViewById(R.id.floatingButton_publish);
         publishFloatingButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -374,6 +375,8 @@ public class CompanyEditOfferFragment extends Fragment implements DatePickerFrag
         });
 
 
+        // 2) modify ----
+        modifyFloatingButton = (FloatingActionButton) root.findViewById(R.id.floatingButton_modify);
         modifyFloatingButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -382,6 +385,9 @@ public class CompanyEditOfferFragment extends Fragment implements DatePickerFrag
             }
         });
 
+
+        // 3) delete ----
+        deleteFloatingButton = (FloatingActionButton) root.findViewById(R.id.floatingButton_delete);
         deleteFloatingButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -389,6 +395,9 @@ public class CompanyEditOfferFragment extends Fragment implements DatePickerFrag
             }
         });
 
+
+        // 4) view applications ----
+        viewAppliesFloatingButton = (FloatingActionButton) root.findViewById(R.id.floatingButton_seeApplications);
         viewAppliesFloatingButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -397,6 +406,9 @@ public class CompanyEditOfferFragment extends Fragment implements DatePickerFrag
             }
         });
 
+
+        // 5) save ----
+        saveFloatingButton = (FloatingActionButton) root.findViewById(R.id.floatingButton_save);
         saveFloatingButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -405,93 +417,100 @@ public class CompanyEditOfferFragment extends Fragment implements DatePickerFrag
             }
         });
 
+        if(savedInstanceState == null && !offer.getStatus().equals(CompanyOffer.STATUS_NEW))
+            setViewContentWithAvailableData();
 
-        if (!editMode) {
-
-            editDescriptionText.setText(offer.getDescription());
-            textView.setEnabled(false);
-            editObject.setText(offer.getOfferObject());
-            Integer salary = offer.getSAlARY();
-            if (salary != -1) {
-                editSalary.setText(String.valueOf(salary));
-            }
-
-            SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-            String date = dateFormat.format(offer.getValidity());
-
-            validity.setText(date);
-            places.setText(offer.getnPositions().toString());
-            nation.setText(offer.getNation());
-            city.setText(offer.getCity());
-            int i;
-
-            for (i = 0; i < typeOfFields.length; i++) {
-                if (typeOfFields[i].toLowerCase().trim().equals(offer.getWorkField().toLowerCase().trim())) {
-                    fieldSpinner.setSelection(i);
-                    break;
-                }
-                fieldSpinner.setSelection(0);
-
-            }
+        else if (savedInstanceState != null)
+            restoreViews(savedInstanceState);
 
 
-            for (i = 0; i < typeOfContracts.length; i++) {
-                if (typeOfContracts[i].toLowerCase().trim().equals(offer.getContract().toLowerCase().trim())) {
-                    contractSpinner.setSelection(i);
-                    break;
-                }
-                contractSpinner.setSelection(0);
-            }
 
-
-            for (i = 0; i < salaries.length; i++) {
-                if (salaries[i].toLowerCase().trim().equals(String.valueOf(offer.getSAlARY()).trim())) {
-                    salarySpinner.setSelection(i);
-                    break;
-                }
-                salarySpinner.setSelection(0);
-            }
-
-
-            for (i = 0; i < durations.length; i++) {
-                if (durations[i].toLowerCase().trim().equals(offer.getTerm().toLowerCase().trim())) {
-                    termSpinner.setSelection(i);
-                    break;
-                }
-                termSpinner.setSelection(0);
-            }
-
-
-            /****TAGS*****/
-
-            final GridLayout tagContainer = (GridLayout) root.findViewById(R.id.tagContainder);
-            tagContainer.setEnabled(false);
-
-            if (offer.getTags().isEmpty()) {
-                tagContainer.setVisibility(View.INVISIBLE);
-            } else {
-                LayoutInflater tag_inflater = (LayoutInflater) getActivity().getBaseContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-
-                for (Tag tag : offer.getTags()) {
-                    final Tag tmp = tag;
-                    View mytagView = tag_inflater.inflate(R.layout.taglayout, null);
-                    mytagView.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            tagContainer.removeView(v);
-                            Toast.makeText(getActivity(), getString(R.string.new_offer_fragment_removed), Toast.LENGTH_SHORT).show();
-                            existent.remove(tmp.getTag().toLowerCase().trim());
-                        }
-                    });
-                    mytagView.setEnabled(false);
-
-                    TextView tag_tv = (TextView) mytagView.findViewById(R.id.tag_tv);
-                    tag_tv.setText(tag.getTag());
-                    tagContainer.addView(mytagView);
-                    existent.add(tag.getTag().toLowerCase().trim());
-                }
-            }
-        }
+//        if (!editMode) {
+//
+//            editDescriptionText.setText(offer.getDescription());
+//            descriptionCountTextView.setEnabled(false);
+//            editObject.setText(offer.getOfferObject());
+//            Integer salary = offer.getSalary();
+//            if (salary != -1) {
+//                editSalary.setText(String.valueOf(salary));
+//            }
+//
+//            SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+//            String date = dateFormat.format(offer.getValidity());
+//
+//            validity.setText(date);
+//            places.setText(offer.getnPositions().toString());
+//            nation.setText(offer.getNation());
+//            city.setText(offer.getCity());
+//            int i;
+//
+//            for (i = 0; i < typeOfFields.length; i++) {
+//                if (typeOfFields[i].toLowerCase().trim().equals(offer.getWorkField().toLowerCase().trim())) {
+//                    fieldSpinner.setSelection(i);
+//                    break;
+//                }
+//                fieldSpinner.setSelection(0);
+//
+//            }
+//
+//
+//            for (i = 0; i < typeOfContracts.length; i++) {
+//                if (typeOfContracts[i].toLowerCase().trim().equals(offer.getContract().toLowerCase().trim())) {
+//                    contractSpinner.setSelection(i);
+//                    break;
+//                }
+//                contractSpinner.setSelection(0);
+//            }
+//
+//
+//            for (i = 0; i < salaries.length; i++) {
+//                if (salaries[i].toLowerCase().trim().equals(String.valueOf(offer.getSalary()).trim())) {
+//                    salarySpinner.setSelection(i);
+//                    break;
+//                }
+//                salarySpinner.setSelection(0);
+//            }
+//
+//
+//            for (i = 0; i < durations.length; i++) {
+//                if (durations[i].toLowerCase().trim().equals(offer.getTerm().toLowerCase().trim())) {
+//                    termSpinner.setSelection(i);
+//                    break;
+//                }
+//                termSpinner.setSelection(0);
+//            }
+//
+//
+//            /****TAGS*****/
+//
+//            final GridLayout tagContainer = (GridLayout) root.findViewById(R.id.tagContainder);
+//            tagContainer.setEnabled(false);
+//
+//            if (offer.getTags().isEmpty()) {
+//                tagContainer.setVisibility(View.INVISIBLE);
+//            } else {
+//                LayoutInflater tag_inflater = (LayoutInflater) getActivity().getBaseContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+//
+//                for (Tag tag : offer.getTags()) {
+//                    final Tag tmp = tag;
+//                    View mytagView = tag_inflater.inflate(R.layout.taglayout, null);
+//                    mytagView.setOnClickListener(new View.OnClickListener() {
+//                        @Override
+//                        public void onClick(View v) {
+//                            tagContainer.removeView(v);
+//                            Toast.makeText(getActivity(), getString(R.string.new_offer_fragment_removed), Toast.LENGTH_SHORT).show();
+//                            existent.remove(tmp.getTag().toLowerCase().trim());
+//                        }
+//                    });
+//                    mytagView.setEnabled(false);
+//
+//                    TextView tag_tv = (TextView) mytagView.findViewById(R.id.tag_tv);
+//                    tag_tv.setText(tag.getTag());
+//                    tagContainer.addView(mytagView);
+//                    existent.add(tag.getTag().toLowerCase().trim());
+//                }
+//            }
+//        }
 
         switchEditMode();
         return root;
@@ -499,116 +518,128 @@ public class CompanyEditOfferFragment extends Fragment implements DatePickerFrag
     }
 
 
-    @Override
-    public void onViewCreated(View view, Bundle savedInstanceState) {
-
-        if (savedInstanceState != null) {
-
-            Boolean tmp_state = savedInstanceState.getBoolean("editMode");
-
-            if (tmp_state) {
-
-                editMode = true;
-                editObject.setText(savedInstanceState.getString("objectOffer"));
-                fieldSpinner.setSelection(savedInstanceState.getInt("workField"));
-                places.setText(savedInstanceState.getString("places"));
-                contractSpinner.setSelection(savedInstanceState.getInt("contract"));
-                validity.setText(savedInstanceState.getString("validity"));
-                termSpinner.setSelection(savedInstanceState.getInt("term"));
-                nation.setText(savedInstanceState.getString("nation"));
-                city.setText(savedInstanceState.getString("city"));
-                Integer pos = savedInstanceState.getInt("posSalary");
-                salarySpinner.setSelection(pos);
-
-                if (pos != 0) {
-
-                    editSalary.setText(savedInstanceState.getString("salary"));
-                } else editSalary.setText("");
-
-                editDescriptionText.setText(savedInstanceState.getString("description"));
-                ArrayList<String> tmp = savedInstanceState.getStringArrayList("taglist");
-
-                final GridLayout tagContainer = (GridLayout) root.findViewById(R.id.tagContainder);
-                LayoutInflater tag_inflater = (LayoutInflater) getActivity().getBaseContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-
-                for (String tag : tmp) {
-
-                    final String text_tag = tag;
-                    View mytagView = tag_inflater.inflate(R.layout.taglayout, null);
-                    mytagView.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            tagContainer.removeView(v);
-                            Toast.makeText(getActivity(), getString(R.string.new_offer_fragment_removed), Toast.LENGTH_SHORT).show();
-                            existent.remove(text_tag.toLowerCase().trim());
-                        }
-                    });
-
-
-                    TextView tag_tv = (TextView) mytagView.findViewById(R.id.tag_tv);
-                    tag_tv.setText(tag);
-                    tagContainer.addView(mytagView);
-                    existent.add(tag.toLowerCase().trim());
-                }
-
-
-            }
-        }
-
-
-    }
+//    @Override
+//    public void onViewCreated(View view, Bundle savedInstanceState) {
+//
+//        if (savedInstanceState != null) {
+//
+//            Boolean tmp_state = savedInstanceState.getBoolean("editMode");
+//
+//            if (tmp_state) {
+//
+//                editMode = true;
+//                editObject.setText(savedInstanceState.getString("objectOffer"));
+//                fieldSpinner.setSelection(savedInstanceState.getInt("workField"));
+//                places.setText(savedInstanceState.getString("places"));
+//                contractSpinner.setSelection(savedInstanceState.getInt("contract"));
+//                validity.setText(savedInstanceState.getString("validity"));
+//                termSpinner.setSelection(savedInstanceState.getInt("term"));
+//                nation.setText(savedInstanceState.getString("nation"));
+//                city.setText(savedInstanceState.getString("city"));
+//                Integer pos = savedInstanceState.getInt("posSalary");
+//                salarySpinner.setSelection(pos);
+//
+//                if (pos != 0) {
+//
+//                    editSalary.setText(savedInstanceState.getString("salary"));
+//                } else editSalary.setText("");
+//
+//                editDescriptionText.setText(savedInstanceState.getString("description"));
+//                ArrayList<String> tmp = savedInstanceState.getStringArrayList("taglist");
+//
+//                final GridLayout tagContainer = (GridLayout) root.findViewById(R.id.tagContainder);
+//                LayoutInflater tag_inflater = (LayoutInflater) getActivity().getBaseContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+//
+//                for (String tag : tmp) {
+//
+//                    final String text_tag = tag;
+//                    View mytagView = tag_inflater.inflate(R.layout.taglayout, null);
+//                    mytagView.setOnClickListener(new View.OnClickListener() {
+//                        @Override
+//                        public void onClick(View v) {
+//                            tagContainer.removeView(v);
+//                            Toast.makeText(getActivity(), getString(R.string.new_offer_fragment_removed), Toast.LENGTH_SHORT).show();
+//                            existent.remove(text_tag.toLowerCase().trim());
+//                        }
+//                    });
+//
+//
+//                    TextView tag_tv = (TextView) mytagView.findViewById(R.id.tag_tv);
+//                    tag_tv.setText(tag);
+//                    tagContainer.addView(mytagView);
+//                    existent.add(tag.toLowerCase().trim());
+//                }
+//
+//
+//            }
+//        }
+//
+//
+//    }
 
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
         outState.putBoolean("editMode", editMode);
 
-        outState.putString("objectOffer", editObject.getText().toString());
-        outState.putInt("workField", fieldSpinner.getSelectedItemPosition());
-        outState.putString("places", places.getText().toString());
-        outState.putInt("contract", contractSpinner.getSelectedItemPosition());
-        outState.putString("validity", validity.getText().toString());
-        outState.putInt("term", termSpinner.getSelectedItemPosition());
-        outState.putString("nation", nation.getText().toString());
-        outState.putString("city", city.getText().toString());
-        outState.putInt("posSalary", salarySpinner.getSelectedItemPosition());
-        outState.putString("salary", editSalary.getText().toString());
-        outState.putString("description", editDescriptionText.getText().toString());
+        String tail = offer.toString();
+        outState.putString(BUNDLE_IDENTIFIER_TAIL_KEY, tail);
+
+        MyBundle bundle = globalData.addBundle(BUNDLE_IDENTIFIER_HEADER + tail);
+        Log.println(Log.ASSERT, "NEW OFFER", "saving to bundle: " + BUNDLE_IDENTIFIER_HEADER + tail);
+
+        bundle.put(BUNDLE_KEY_OFFER, offer);
+        bundle.put(BUNDLE_KEY_EDIT_MODE, editMode);
+
+        bundle.putString(BUNDLE_KEY_OBJECT, editObject.getText().toString());
+        bundle.putInt(BUNDLE_KEY_FIELD, fieldSpinner.getSelectedItemPosition());
+        bundle.putString(BUNDLE_KEY_PLACES, places.getText().toString());
+        bundle.putString(BUNDLE_KEY_VALIDITY, validity.getText().toString());
+        bundle.putInt(BUNDLE_KEY_CONTRACT, contractSpinner.getSelectedItemPosition());
+        bundle.putInt(BUNDLE_KEY_TERM, termSpinner.getSelectedItemPosition());
+        bundle.putString(BUNDLE_KEY_NATION, nation.getText().toString());
+        bundle.putString(BUNDLE_KEY_CITY, city.getText().toString());
+        bundle.putInt(BUNDLE_KEY_SALARY_TYPE, salarySpinner.getSelectedItemPosition());
+        bundle.putString(BUNDLE_KEY_SALARY, editSalary.getText().toString());
+        bundle.putString(BUNDLE_KEY_DESCRIPTION, editDescriptionText.getText().toString());
+
+        bundle.putList(BUNDLE_KEY_TAGS, new ArrayList<String>(currentTags));
+        tagContainer.removeAllViews();
+        currentTags.clear();
 
         //elimino i tag salvati
-
-        ArrayList<String> tmp = new ArrayList<>();
-
-        final GridLayout tagContainer = (GridLayout) root.findViewById(R.id.tagContainder);
-
-        int n_tags = tagContainer.getChildCount();
-        for (int i = 0; i < n_tags; i++) {
-            View tv = tagContainer.getChildAt(i);
-            TextView t = (TextView) tv.findViewById(R.id.tag_tv);
-
-            Tag tag = retriveTag.get(t.getText().toString().toLowerCase().trim());
-            tmp.add(tag.getTag());
-            offer.getTags().remove(tag);
-            existent.remove(tag.getTag().toLowerCase().trim());
-
-        }
+//        ArrayList<String> tmp = new ArrayList<>();
+//        final GridLayout tagContainer = (GridLayout) root.findViewById(R.id.tagContainder);
+//
+//        int n_tags = tagContainer.getChildCount();
+//        for (int i = 0; i < n_tags; i++) {
+//            View tv = tagContainer.getChildAt(i);
+//            TextView t = (TextView) tv.findViewById(R.id.tag_tv);
+//
+//            Tag tag = retriveTag.get(t.getText().toString().toLowerCase().trim());
+//            tmp.add(tag.getTag());
+//            offer.getTags().remove(tag);
+//            existent.remove(tag.getTag().toLowerCase().trim());
+//
+//        }
 
 
-        tagContainer.removeAllViews();
 
-        outState.putStringArrayList("taglist", tmp);
+//        outState.putStringArrayList("taglist", tmp);
 
     }
 
 
 
+    /* --------------------------------------------------------------------------------------------------------------------- */
+    /* ----------------------- DATE PICKER IMPLEMENTATION ------------------------------------------------------------------ */
+    /* --------------------------------------------------------------------------------------------------------------------- */
+
     @Override
     public void onDataSet(GregorianCalendar gc) {
 
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-
         dateFormat.format(gc.getTime());
-
         validity.setText(dateFormat.format(gc.getTime()).toString());
 
     }
@@ -654,9 +685,106 @@ public class CompanyEditOfferFragment extends Fragment implements DatePickerFrag
     /* ----------------------- AUXILIARY METHODS --------------------------------------------------------------------------- */
     /* --------------------------------------------------------------------------------------------------------------------- */
 
+    // ---------------- at view creation, if the offer already exists ------------------------------
+    private void setViewContentWithAvailableData(){
 
-    // ----------------- edit mode switching ------------------------------------------------------
+        Log.println(Log.ASSERT, "NEW OFFER", "offer not new. no rotation");
+
+        if(offer == null){
+
+            Log.println(Log.ASSERT, "NEW OFFER", "Attention: trying to set view content with a null offer object");
+            return;
+        }
+
+        if(offer.getOfferObject() != null)
+            editObject.setText(offer.getOfferObject());
+
+        if(offer.getWorkField() != null)
+            fieldSpinner.setSelection(CompanyOffer.getIndexFromEnglishWorkField(offer.getWorkField()));
+
+        if(offer.getnPositions() != null)
+            places.setText(offer.getnPositions());
+
+        if(offer.getContract() != null)
+            contractSpinner.setSelection(CompanyOffer.getIndexFromEnglishContractField(offer.getContract()));
+
+        if(offer.getTerm() != null)
+            termSpinner.setSelection(CompanyOffer.getIndexFromEnglishTermField(offer.getTerm()));
+
+        if(offer.getNation() != null)
+            nation.setText(offer.getNation());
+
+        if(offer.getCity() != null)
+            city.setText(offer.getCity());
+
+        if(offer.getSalaryType() != null){
+
+            salarySpinner.setSelection(CompanyOffer.getIndexFromEnglishSalaryTypeField(offer.getSalaryType()));
+
+            if(offer.getSalary() != null)
+                editSalary.setText(offer.getSalary());
+        }
+
+        if(offer.getDescription() != null)
+            editDescriptionText.setText(offer.getDescription());
+
+        if(offer.getTags() != null)
+            for(Tag t: offer.getTags())
+                addTag(t.getTag());
+
+        if(offer.getValidity() != null){
+
+            SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+            String date = dateFormat.format(offer.getValidity());
+            validity.setText(date);
+        }
+    }
+
+
+
+    // ------------------ restoring view content after rotation ------------------------------------
+    private void restoreViews(Bundle savedInstanceState){
+
+        Log.println(Log.ASSERT, "NEW OFFER", "restoring after rotation");
+
+        if(savedInstanceState == null)
+            return;
+
+        String tail = savedInstanceState.getString(BUNDLE_IDENTIFIER_TAIL_KEY);
+        MyBundle bundle = globalData.getBundle(BUNDLE_IDENTIFIER_HEADER + tail);
+
+        if(bundle == null){
+
+            Log.println(Log.ASSERT, "NEW OFFER", "Attention: bundle not found after rotation");
+            return;
+        }
+
+        editObject.setText(bundle.getString(BUNDLE_KEY_OBJECT));
+        fieldSpinner.setSelection(bundle.getInt(BUNDLE_KEY_FIELD));
+        places.setText(bundle.getString(BUNDLE_KEY_PLACES));
+        contractSpinner.setSelection(bundle.getInt(BUNDLE_KEY_CONTRACT));
+        termSpinner.setSelection(bundle.getInt(BUNDLE_KEY_TERM));
+        nation.setText(bundle.getString(BUNDLE_KEY_NATION));
+        city.setText(bundle.getString(BUNDLE_KEY_CITY));
+        salarySpinner.setSelection(bundle.getInt(BUNDLE_KEY_SALARY_TYPE));
+        editSalary.setText(bundle.getString(BUNDLE_KEY_SALARY));
+        editDescriptionText.setText(bundle.getString(BUNDLE_KEY_DESCRIPTION));
+        validity.setText(bundle.getString(BUNDLE_KEY_VALIDITY));
+
+        ArrayList<String> retrievedTags = new ArrayList<>();
+        for (Object o : bundle.getList(BUNDLE_KEY_TAGS))
+            retrievedTags.add((String)o);
+
+        for (String t: retrievedTags)
+            if(!currentTags.contains(t))
+                addTag(t);
+    }
+
+
+    // ----------------- edit mode switching -------------------------------------------------------
     private void switchEditMode() {
+
+        Log.println(Log.ASSERT, "NEW OFFER", "setting editmode = " + editMode);
 
         fieldSpinner.setEnabled(editMode);
         contractSpinner.setEnabled(editMode);
@@ -664,7 +792,7 @@ public class CompanyEditOfferFragment extends Fragment implements DatePickerFrag
         termSpinner.setEnabled(editMode);
 
         editDescriptionText.setEnabled(editMode);
-        textView.setEnabled(editMode);
+        descriptionCountTextView.setEnabled(editMode);
         editObject.setEnabled(editMode);
         editSalary.setEnabled(editMode && salarySpinner.getSelectedItemPosition() != 0);
         dateButton.setEnabled(editMode);
@@ -676,8 +804,8 @@ public class CompanyEditOfferFragment extends Fragment implements DatePickerFrag
         CardView cardView = (CardView) root.findViewById(R.id.card_AddTag);
 
         cardView.setVisibility(editMode ? View.VISIBLE : View.INVISIBLE);
-        addtag.setVisibility(editMode ? View.VISIBLE : View.INVISIBLE);
-        addtag.setEnabled(editMode);
+        addTagButton.setVisibility(editMode ? View.VISIBLE : View.INVISIBLE);
+        addTagButton.setEnabled(editMode);
         tagsView.setEnabled(editMode);
 
         final GridLayout tagContainer = (GridLayout) root.findViewById(R.id.tagContainder);
@@ -726,20 +854,51 @@ public class CompanyEditOfferFragment extends Fragment implements DatePickerFrag
     }
 
 
+    // ---------------- adding tag to view ---------------------------------------------------------
+    private void addTag(final String tagName){
+
+        Log.println(Log.ASSERT, "NEW OFFER", "adding tag: " + tagName);
+
+        // creating tad view
+        LayoutInflater inflater = (LayoutInflater) getActivity().getBaseContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View mytagView = inflater.inflate(R.layout.taglayout, null);
+
+        // setting tag view
+        TextView t = (TextView) mytagView.findViewById(R.id.tag_tv);
+        t.setText(tagName);
+        mytagView.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+
+                TextView tv = (TextView) v.findViewById(R.id.tag_tv);
+                currentTags.remove(tv.getText().toString().trim());
+                tagContainer.removeView(v);
+                Toast.makeText(getActivity(), getString(R.string.new_offer_fragment_removed), Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        // adding tag view
+        currentTags.add(tagName);
+        tagContainer.addView(mytagView);
+    }
+
+
+
     // --------------- offer creation and save ----------------------------------------------------
     public void saveChanges() {
 
         boolean correct = true;
         String errorMessage = getString(R.string.error) + ":\n";
         // ****** preliminary checks ********
+
         if (editObject.getText().length() == 0 ||
                 fieldSpinner.getSelectedItemPosition() == 0 ||
                 places.getText().length() == 0 ||
                 validity.getText().length() == 0 ||
                 contractSpinner.getSelectedItemPosition() == 0 ||
                 termSpinner.getSelectedItemPosition() == 0 ||
-                nation.getText().length() != 0 && city.getText().length() == 0 ||
-                nation.getText().length() == 0 && city.getText().length() != 0) {
+                (nation.getText().length() == 0 && city.getText().length() == 0)) {
 
             correct = false;
             errorMessage += getString(R.string.new_offer_missing_field_error) + "\n";
@@ -752,9 +911,11 @@ public class CompanyEditOfferFragment extends Fragment implements DatePickerFrag
 
         try {
 
+            // check places number
             p = Integer.parseInt(places.getText().toString());
             SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
 
+            // date must be after today
             d = dateFormat.parse(validity.getText().toString());
             Date today = Calendar.getInstance().getTime();
 
@@ -764,6 +925,7 @@ public class CompanyEditOfferFragment extends Fragment implements DatePickerFrag
                 errorMessage += getString(R.string.new_offer_wrong_date_error) + "\n";
             }
 
+            // check salary
             if (salarySpinner.getSelectedItemPosition() != 0) {
                 s = Integer.parseInt(editSalary.getText().toString());
             }
@@ -802,11 +964,11 @@ public class CompanyEditOfferFragment extends Fragment implements DatePickerFrag
 
         // ****** if everything correct ********
         offer.setObject(editObject.getText().toString());
-        offer.setWorkField(fieldSpinner.getSelectedItem().toString());
+        offer.setWorkField(CompanyOffer.TYPE_WORK_FIELD[fieldSpinner.getSelectedItemPosition()]);
         offer.setPositions(p);
-        offer.setContract(contractSpinner.getSelectedItem().toString());
+        offer.setContract(CompanyOffer.TYPE_CONTRACT_FIELD[contractSpinner.getSelectedItemPosition()]);
         offer.setValidity(d);
-        offer.setTerm(termSpinner.getSelectedItem().toString());
+        offer.setTerm(CompanyOffer.TYPE_TERM_FIELD[termSpinner.getSelectedItemPosition()]);
 
         if(offer.getStatus().equals(CompanyOffer.STATUS_NEW))
             offer.setStatus(CompanyOffer.STATUS_CREATED);
@@ -818,6 +980,7 @@ public class CompanyEditOfferFragment extends Fragment implements DatePickerFrag
 
             Integer salary = Integer.parseInt(editSalary.getText().toString());
             offer.setSalary(salary);
+            offer.setSalaryType(CompanyOffer.TYPE_SALARY_TYPE_FIELD[salarySpinner.getSelectedItemPosition()]);
         }
         else {
 
@@ -834,22 +997,20 @@ public class CompanyEditOfferFragment extends Fragment implements DatePickerFrag
             List<Address> addressList = null;
 
             try {
+
                 addressList = geocoder.getFromLocationName(geoAddress, 5);
+                if (!addressList.isEmpty()) {
+
+                    Address a = addressList.get(0);
+                    ParseGeoPoint geoPoint = new ParseGeoPoint(a.getLatitude(), a.getLongitude());
+
+                    offer.setLocation(geoPoint);
+                    offer.setNation(nation.getText().toString());
+                    offer.setCity(city.getText().toString());
+                }
             }
             catch (IOException e) {
                 e.printStackTrace();
-            }
-
-            if (addressList.isEmpty()) {
-                //do nothing
-            }
-            else {
-                Address a = addressList.get(0);
-                ParseGeoPoint geoPoint = new ParseGeoPoint(a.getLatitude(), a.getLongitude());
-
-                offer.setLocation(geoPoint);
-                offer.setNation(nation.getText().toString());
-                offer.setCity(city.getText().toString());
             }
         }
 
@@ -860,24 +1021,28 @@ public class CompanyEditOfferFragment extends Fragment implements DatePickerFrag
             offer.setDescription(editDescriptionText.getText().toString());
 
 
-        final GridLayout tagContainer = (GridLayout) root.findViewById(R.id.tagContainder);
-        int n_tags = tagContainer.getChildCount();
+        for (String tagName: currentTags){
 
-        for (int i = 0; i < n_tags; i++) {
-            View tv = tagContainer.getChildAt(i);
-            TextView t = (TextView) tv.findViewById(R.id.tag_tv);
+            Tag t = allTags.get(tagName);
 
-            Tag tag = retriveTag.get(t.getText().toString().toLowerCase().trim());
-            offer.addTag(tag);
-
+            if(!offer.getTags().contains(t))
+                offer.addTag(allTags.get(tagName));
         }
 
-        final CompanyOffer obj = offer;
+//        for (int i = 0; i < n_tags; i++) {
+//            View tv = tagContainer.getChildAt(i);
+//            TextView t = (TextView) tv.findViewById(R.id.tag_tv);
+//
+//            Tag tag = retriveTag.get(t.getText().toString().toLowerCase().trim());
+//            offer.addTag(tag);
+//
+//        }
+
 
         offer.saveInBackground(new SaveCallback() {
             @Override
             public void done(ParseException e) {
-                obj.getCompany().addOffer(obj);
+                offer.getCompany().addOffer(offer);
             }
         });
 

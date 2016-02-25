@@ -27,7 +27,8 @@ public class CompanyOffer extends ParseObject {
     private static final String LOCATION_FIELD = "location";
     private static final String NATION_FIELD = "nation";
     private static final String CITY_FIELD = "city";
-    private static final String SAlARY_FIELD = "salary";
+    private static final String SALARY_FIELD = "salary";
+    private static final String SALARY_TYPE_FIELD = "salary_type";
     private static final String DESCRIPTION_FIELD = "description";
     private static final String COMPANY_FIELD = "company";
     public static final String STATUS_FIELD = "status";
@@ -44,11 +45,15 @@ public class CompanyOffer extends ParseObject {
     public static final String[] TYPE_WORK_FIELD_TRANSLATED = GlobalData.getContext().getResources().getStringArray(R.array.new_offer_fragment_fields);
     public static final String[] TYPE_CONTRACT_FIELD_TRANSLATED =GlobalData.getContext().getResources().getStringArray(R.array.new_offer_fragment_typeOfContracts);
     public static final String[] TYPE_TERM_FIELD_TRANSLATED = GlobalData.getContext().getResources().getStringArray(R.array.new_offer_fragment_termContracts);
-    public static final String[] TYPE_OFFER_STATUS_TRANSLATED = GlobalData.getContext().getResources().getStringArray(R.array.offer_detail_status);
+    public static final String[] TYPE_SALARY_TYPE_FIELD_TRANSLATED = GlobalData.getContext().getResources().getStringArray(R.array.new_offer_fragment_salary_spinner_content);
+    public static final String[] TYPE_STATUS_FIELD_TRANSLATED = GlobalData.getContext().getResources().getStringArray(R.array.offer_detail_status);
 
+    // it is fundamental these arrays are aligned with their relatives in strings.xml
     public static final String[] TYPE_WORK_FIELD ={"Choose a field:",  "Mechanics", "Informatics","Chemistry", "Energy" ,"Materials"};
     public static final String[] TYPE_CONTRACT_FIELD = {"Select a type of contract","Stage", "Part-Time", "Full-Time", "Thesis","Master"};
     public static final String[] TYPE_TERM_FIELD={"Select term of contract...","Up to 6 months","One year","Two year","Five year","Indefinitely"};
+    public static final String[] TYPE_SALARY_TYPE_FIELD={"To be decided","Euros","Dollars","Pounds"};
+    public static final String[] TYPE_STATUS_FIELD={STATUS_NEW,STATUS_CREATED,STATUS_PUBLISHED, STATUS_EXPIRED, STATUS_REVOKED};
 
 
 
@@ -57,7 +62,10 @@ public class CompanyOffer extends ParseObject {
     }
 
 
-    /*GETTER*/
+    /* ------------------------------------------------------------------------------------------ */
+    /* ----------------------- GETTERS ---------------------------------------------------------- */
+    /* ------------------------------------------------------------------------------------------ */
+
     public String getStatus(){
         return this.getString(STATUS_FIELD);
     }
@@ -88,9 +96,12 @@ public class CompanyOffer extends ParseObject {
         return res;
     }
 
+    public Integer getSalary() {
+        return this.getInt(SALARY_FIELD);
+    }
 
-    public Integer getSAlARY() {
-        return this.getInt(SAlARY_FIELD);
+    public String getSalaryType(){
+        return this.getString(SALARY_TYPE_FIELD);
     }
 
     public String getDescription() {
@@ -135,7 +146,11 @@ public class CompanyOffer extends ParseObject {
         return result;
     }
 
-    /***************END GETTER****************/
+
+
+    /* ------------------------------------------------------------------------------------------ */
+    /* ----------------------- SETTERS ---------------------------------------------------------- */
+    /* ------------------------------------------------------------------------------------------ */
 
     public void setObject(String object){
 
@@ -181,7 +196,11 @@ public class CompanyOffer extends ParseObject {
     }
     public void setSalary(int salay){
 
-        this.put(SAlARY_FIELD,salay);
+        this.put(SALARY_FIELD,salay);
+    }
+    public void setSalaryType(String salaryType){
+
+        this.put(SALARY_TYPE_FIELD,salaryType);
     }
     public void setDescription(String description){
 
@@ -240,8 +259,12 @@ public class CompanyOffer extends ParseObject {
     }
 
 
-    /*********************AUXILIAR METHODS**********************************/
+    /* ------------------------------------------------------------------------------------------ */
+    /* ----------------------- AUXIALIARY ------------------------------------------------------- */
+    /* ------------------------------------------------------------------------------------------ */
 
+
+    //  ------------- get english ------------------------------------------------------------------
     public static String getEnglishWorkField(String it)
     {
         for(int i=0;i<TYPE_WORK_FIELD_TRANSLATED.length;i++)
@@ -278,6 +301,34 @@ public class CompanyOffer extends ParseObject {
         return null;
     }
 
+
+    public static String getEnglishSalaryTypeField(String it){
+
+        for(int i=0;i<TYPE_SALARY_TYPE_FIELD_TRANSLATED.length;i++)
+        {
+            if(it.equals(TYPE_SALARY_TYPE_FIELD_TRANSLATED[i]))
+            {
+                return TYPE_SALARY_TYPE_FIELD[i];
+            }
+        }
+        return null;
+    }
+
+
+    public static String getEnglishStatusField(String it){
+
+        for(int i=0;i< TYPE_STATUS_FIELD_TRANSLATED.length;i++)
+        {
+            if(it.equals(TYPE_STATUS_FIELD_TRANSLATED[i]))
+            {
+                return TYPE_STATUS_FIELD[i];
+            }
+        }
+        return null;
+    }
+
+
+    //  ------------- get tanslated ----------------------------------------------------------------
 
     public static String getTranlatedWorkField(String it)
     {
@@ -316,4 +367,80 @@ public class CompanyOffer extends ParseObject {
     }
 
 
+    public static String getTranslatedSalaryTypeField(String it){
+
+        for(int i=0;i<TYPE_SALARY_TYPE_FIELD.length;i++)
+        {
+            if(it.equals(TYPE_SALARY_TYPE_FIELD[i]))
+            {
+                return TYPE_SALARY_TYPE_FIELD_TRANSLATED[i];
+            }
+        }
+        return null;
+    }
+
+
+    public static String getTranslatedStatusField(String it){
+
+        for(int i=0;i<TYPE_STATUS_FIELD.length;i++)
+        {
+            if(it.equals(TYPE_STATUS_FIELD[i]))
+            {
+                return TYPE_STATUS_FIELD_TRANSLATED[i];
+            }
+        }
+        return null;
+    }
+
+
+    // ----------------- get indexes ---------------------------------------------------------------
+
+    public static int getIndexFromEnglishWorkField(String it){
+
+        for(int i = 0; i < TYPE_WORK_FIELD.length ; i++)
+            if(TYPE_WORK_FIELD[i].equals(it))
+                return i;
+
+        return 0;
+    }
+
+
+    public static int getIndexFromEnglishContractField(String it){
+
+        for(int i = 0; i < TYPE_CONTRACT_FIELD.length ; i++)
+            if(TYPE_CONTRACT_FIELD[i].equals(it))
+                return i;
+
+        return 0;
+    }
+
+
+    public static int getIndexFromEnglishTermField(String it){
+
+        for(int i = 0; i < TYPE_TERM_FIELD.length ; i++)
+            if(TYPE_TERM_FIELD[i].equals(it))
+                return i;
+
+        return 0;
+    }
+
+
+    public static int getIndexFromEnglishSalaryTypeField(String it){
+
+        for(int i = 0; i < TYPE_SALARY_TYPE_FIELD.length ; i++)
+            if(TYPE_SALARY_TYPE_FIELD[i].equals(it))
+                return i;
+
+        return 0;
+    }
+
+
+    public static int getIndexFromEnglishStatusField(String it){
+
+        for(int i = 0; i < TYPE_STATUS_FIELD.length ; i++)
+            if(TYPE_STATUS_FIELD[i].equals(it))
+                return i;
+
+        return 0;
+    }
 }

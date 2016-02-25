@@ -206,7 +206,7 @@ public class StudentOfferDetailFragment extends  Fragment {
         icon=(ImageView)linearLayout.findViewById(R.id.rowIcon);
 
         hint.setText(getString(R.string.offer_detail_hint_salary));
-        Integer salary=offer.getSAlARY();
+        Integer salary=offer.getSalary();
 
         if(salary!=-1) {
 
