@@ -10,7 +10,7 @@
         android:id="@+id/card_news"
         android:layout_gravity="center"
         android:layout_width="fill_parent"
-        android:layout_height="130dp"
+        android:layout_height="140dp"
         card_view:cardBackgroundColor="@color/white"
         card_view:cardCornerRadius="4dp"
         android:layout_margin="5dp">
@@ -26,7 +26,7 @@
 
 
             <ImageView
-                android:layout_width="100dp"
+                android:layout_width="70dp"
                 android:layout_height="fill_parent"
                 android:layout_marginLeft="1dp"
                 android:id="@+id/logo_img"
@@ -42,14 +42,14 @@
                 android:layout_marginRight="5dp">
 
                 <TextView
-                    android:layout_width="fill_parent"
+                    android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:text="New Text"
                     android:id="@+id/textView_title"
                     android:layout_weight="1"
                     android:gravity="start"
                     android:textColor="@color/black_light_transparent"
-                    android:textSize="25sp"
+                    android:textSize="18sp"
                     android:layout_marginBottom="10dp"
                     android:layout_marginTop="10dp"/>
 
@@ -59,7 +59,7 @@
                     android:textAppearance="?android:attr/textAppearanceSmall"
                     android:text="Small Text"
                     android:id="@+id/textView_description"
-                    android:layout_weight="1.5"
+                    android:layout_weight="1"
                     android:gravity="start"
                     android:layout_marginBottom="5dp"/>
 
@@ -78,7 +78,7 @@
 
 
                     <TextView
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="fill_parent"
                         android:id="@+id/status_tv"
                         android:gravity="start"

@@ -54,7 +54,7 @@
                     <EditText
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:textAppearance="?android:attr/textAppearanceLarge"
                         android:text="@string/string_company_fragment_name_title"
                         android:gravity="bottom"
                         android:id="@+id/company_name_area"

@@ -10,7 +10,7 @@
         android:id="@+id/card_view"
         android:layout_gravity="center"
         android:layout_width="fill_parent"
-        android:layout_height="120dp"
+        android:layout_height="150dp"
         card_view:cardCornerRadius="5dp"
         android:layout_margin="5dp">
         <LinearLayout
@@ -20,7 +20,8 @@
             <de.hdodenhof.circleimageview.CircleImageView
                 android:layout_width="70dp"
                 android:layout_height="70dp"
-                android:layout_marginLeft="16dp"
+                android:layout_marginLeft="1dp"
+                android:layout_marginRight="5dp"
                 android:id="@+id/logo_img"
                 android:src="@drawable/ic_profile"
                 android:layout_gravity="center_vertical" />
@@ -37,21 +38,43 @@
                     android:layout_height="0dp"
                     android:text="New Text"
                     android:id="@+id/textView_title"
-                    android:layout_weight="1"
-                    android:gravity="bottom"
-                    android:textColor="@color/black_light_transparent"
-                    android:textSize="20dp"
-                    android:paddingBottom="5dp" />
+                    android:layout_weight=".25"
+                    android:gravity="start"
+                    android:textColor="@color/ColorPrimary"
+                    android:textSize="25sp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginTop="10dp"/>
 
-                <TextView
+                <LinearLayout
                     android:layout_width="fill_parent"
                     android:layout_height="0dp"
-                    android:textAppearance="?android:attr/textAppearanceSmall"
-                    android:text="Small Text"
-                    android:id="@+id/textView_description"
-                    android:layout_weight="1"
-                    android:paddingTop="8dp"
-                    android:textSize="15sp"/>
+                    android:layout_weight=".75"
+                    android:orientation="vertical"
+                    android:layout_marginBottom="5dp">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="start"
+                        android:layout_marginBottom="3dp"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:text="@string/new_offer_fragment_Description"
+                        android:textColor="@color/ColorPrimaryDark"
+                        android:paddingRight="3dp" />
+
+
+                    <TextView
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="17dp"
+                        android:text="Small Text"
+                        android:id="@+id/textView_description"
+                        android:textColor="@color/black_light_transparent"
+                        android:gravity="start"
+                        android:layout_marginBottom="2dp"
+                        android:layout_marginLeft="5dp"/>
+
+                </LinearLayout>
             </LinearLayout>
 
 
@@ -67,16 +90,15 @@
                     android:textAppearance="?android:attr/textAppearanceSmall"
                     android:text="Small Text"
                     android:id="@+id/textView_date"
-                    android:layout_weight="1"
+                    android:layout_weight=".5"
                     android:gravity="bottom"
-                    android:layout_marginBottom="5dp"
-                    android:layout_marginLeft="5dp" />
+                    android:layout_margin="5dp" />
 
                 <CheckBox
                     android:id="@+id/checkbox_favourite"
                     android:layout_width="fill_parent"
                     android:layout_height="0dp"
-                    android:layout_weight="1.3"
+                    android:layout_weight=".5"
                     android:clickable="true"
                     android:focusable="true"
                     android:button="@drawable/star"

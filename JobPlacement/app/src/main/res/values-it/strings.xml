@@ -548,6 +548,13 @@
 
     </string-array>
 
+    <string-array name="Offers_Students_Tab">
+
+        <item>Candidature</item>
+        <item>Preferite</item>
+
+    </string-array>
+
     <string-array name="Courses_Details_Tab">
 
         <item>Guida</item>
