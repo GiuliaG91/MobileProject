@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="horizontal"
     android:layout_width="match_parent"
-    android:layout_height="70dp"
+    android:layout_height="130dp"
     android:background="@drawable/selector_item_drawer">
 
 
@@ -10,54 +10,104 @@
     <de.hdodenhof.circleimageview.CircleImageView
         android:layout_width="70dp"
         android:layout_height="70dp"
-        android:layout_marginLeft="16dp"
+        android:layout_marginLeft="12dp"
+        android:layout_marginRight="12dp"
         android:id="@+id/logo_img"
         android:src="@drawable/ic_profile"
         android:layout_gravity="center_vertical" />
 
     <LinearLayout
-        android:orientation="vertical"
-        android:layout_width="0dp"
+        android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:layout_weight="1">
+        android:orientation="vertical">
 
         <TextView
             android:layout_width="fill_parent"
             android:layout_height="0dp"
             android:text="New Text"
             android:id="@+id/textView_title"
-            android:layout_weight="1"
-            android:gravity="bottom"
-            android:textColor="@color/black_light_transparent"
-            android:textSize="20dp"
-            android:paddingBottom="5dp"
-            android:paddingLeft="20dp" />
+            android:layout_weight=".3"
+            android:gravity="start"
+            android:textColor="@color/ColorPrimary"
+            android:textSize="25sp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="3dp"
+            android:layout_marginRight="3dp"
+            android:layout_marginTop="10dp"/>
 
-        <TextView
-            android:layout_width="fill_parent"
-            android:layout_height="0dp"
-            android:textAppearance="?android:attr/textAppearanceSmall"
-            android:text="Small Text"
-            android:id="@+id/textView_description"
-            android:layout_weight="1"
-            android:paddingLeft="20dp" />
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_weight=".7">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:layout_weight=".4">
+
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="start"
+                android:layout_marginBottom="3dp"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="@string/new_offer_fragment_Description"
+                android:textColor="@color/ColorPrimaryDark"
+                android:paddingRight="3dp" />
+
+
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:textSize="17dp"
+                android:text="Small Text"
+                android:id="@+id/textView_description"
+                android:textColor="@color/black_light_transparent"
+                android:gravity="start"
+                android:layout_marginBottom="2dp"
+                android:layout_marginLeft="5dp"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:layout_weight=".4">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="start"
+                android:layout_marginBottom="3dp"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="@string/student_application_status"
+                android:textColor="@color/ColorPrimaryDark"
+                android:paddingRight="3dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/status_tv"
+                android:text="Status"
+                android:gravity="start"
+                android:textSize="17dp"
+                android:textColor="@color/black_light_transparent"
+                android:layout_marginTop="3dp"
+                android:layout_marginLeft="5dp" />
+        </LinearLayout>
+
+        <Button
+                android:id="@+id/application_reply_button"
+                android:background="@drawable/ic_reply"
+                android:layout_width="40dp"
+                android:layout_height="40dp"/>
+
+
     </LinearLayout>
-
-    <TextView
-        android:layout_width="0dp"
-        android:layout_height="fill_parent"
-        android:text="New Text"
-        android:id="@+id/status_tv"
-        android:layout_weight="0.3"
-        android:gravity="center"
-        android:paddingRight="3dp" />
-
-    <Button
-        android:id="@+id/application_reply_button"
-        android:layout_width="0dp"
-        android:layout_height="fill_parent"
-        android:layout_weight="0.3"
-        android:text="reply"/>
-
-
+    </LinearLayout>
 </LinearLayout>

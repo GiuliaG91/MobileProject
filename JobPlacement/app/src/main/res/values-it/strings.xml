@@ -73,6 +73,7 @@
     <string name="action_settings">Impostazioni</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="user_icon_description">UserIcon</string>
+    <string name="application_error">Ci dispiace. Si è verificato un problema nell\'applicazione. Impossibile completare l\'operazione.</string>
 
     <!-- ___________________ HOME ______________________________________________________________ -->
     <string name="navigation_drawer_open">Open navigation drawer</string>
@@ -451,7 +452,7 @@
     <string name="offer_detail_remove_favourite">Vuoi rimuovere quest\'offerta dai preferiti?</string>
     <string name="offer_detail_favourite_removed">Offerta rimossa dai preferiti</string>
     <string name="offer_detail_favourite_added">Offerta aggiunta ai preferiti</string>
-
+    <string name="offer_valid_until">Termina il:</string>
 
     <!-- ________________ STUDENT APPLICATION __________________________________________________ -->
     <string name="student_application_status">Stato candidatura:</string>

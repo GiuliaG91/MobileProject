@@ -73,6 +73,7 @@
     <string name="action_settings">Settings</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="user_icon_description">UserIcon</string>
+    <string name="application_error">We are sorry. An application error occurred. Impossible to perform operation.</string>
 
     <!-- ___________________ HOME ______________________________________________________________ -->
     <string name="navigation_drawer_open">Open navigation drawer</string>
@@ -393,6 +394,7 @@
     <string name="new_offer_fragment_spinner_title">Field of offer</string>
     <string name="new_offer_fragment_field_title">Field of offer:</string>
     <string name="new_offer_fragment_places_title">Available places:</string>
+    <string name="new_offer_fragment_expiring_title">Expiring date:</string>
     <string name="new_offer_fragment_intro">Basic informations:</string>
     <string name="new_offer_fragment_Description">Description:</string>
     <string name="new_offer_fragment_hint_object">Object of offer</string>
@@ -452,6 +454,7 @@
     <string name="offer_detail_remove_favourite">Do You want to remove this offer from favourites?</string>
     <string name="offer_detail_favourite_removed">Offer removed from favourites</string>
     <string name="offer_detail_favourite_added">Offer added to favourites</string>
+    <string name="offer_valid_until">Valid until:</string>
 
 
     <!-- ________________ STUDENT APPLICATION __________________________________________________ -->

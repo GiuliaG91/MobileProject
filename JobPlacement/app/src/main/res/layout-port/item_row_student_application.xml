@@ -10,7 +10,7 @@
         android:id="@+id/card_news"
         android:layout_gravity="center"
         android:layout_width="fill_parent"
-        android:layout_height="170dp"
+        android:layout_height="175dp"
         card_view:cardBackgroundColor="@color/white"
         card_view:cardCornerRadius="4dp"
         android:layout_margin="5dp">
@@ -25,8 +25,8 @@
             <de.hdodenhof.circleimageview.CircleImageView
                 android:layout_width="70dp"
                 android:layout_height="70dp"
-                android:layout_marginLeft="1dp"
-                android:layout_marginRight="5dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
                 android:id="@+id/logo_img"
                 android:src="@drawable/ic_profile"
                 android:layout_gravity="center_vertical" />

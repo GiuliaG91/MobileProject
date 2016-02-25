@@ -223,7 +223,7 @@ public class OfferAdapter extends RecyclerView.Adapter<OfferAdapter.ViewHolder> 
 
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
         String date = dateFormat.format(offers.get(position).getValidity());
-        holder.validity.setText(date);
+        holder.validity.setText(globalData.getResources().getString(R.string.new_offer_fragment_expiring_title) + " " +date);
     }
 
     @Override
@@ -263,7 +263,7 @@ public class OfferAdapter extends RecyclerView.Adapter<OfferAdapter.ViewHolder> 
 
         if(fragment == null){
 
-            Toast.makeText(context, "We are sorry. An application error occurred. Impossible to perform operation", Toast.LENGTH_LONG).show();
+            Toast.makeText(context, GlobalData.getContext().getString(R.string.application_error), Toast.LENGTH_LONG).show();
             return;
         }
 

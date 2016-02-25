@@ -284,7 +284,7 @@ public class OfferSearchAdapter extends RecyclerView.Adapter<OfferSearchAdapter.
 
                 SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
                 String d = dateFormat.format(offer.getValidity());
-                date.setText(d);
+                date.setText(globalData.getResources().getString(R.string.new_offer_fragment_expiring_title) + " " + d);
                 pref.setChecked(false);
 
 
