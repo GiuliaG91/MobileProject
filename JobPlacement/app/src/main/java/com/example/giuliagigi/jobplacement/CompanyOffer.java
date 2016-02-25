@@ -117,7 +117,7 @@ public class CompanyOffer extends ParseObject {
 
     public List<Tag> getTags( ){
 
-        ParseRelation<Tag> tmp= getRelation(TAGS_FIELD);
+        ParseRelation<Tag> tmp = getRelation(TAGS_FIELD);
         List<Tag> result= null;
         try {
             result = tmp.getQuery().find();

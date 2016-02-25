@@ -84,7 +84,7 @@ public class menuAdapter extends RecyclerView.Adapter<menuAdapter.ViewHolder> {
             // Here we set the appropriate view in accordance with the the view type as passed when the holder object is created
 
             if (ViewType == TYPE_HEADER) {
-                                                        // setting holder id as 1 as the object being populated are of type item row
+                // setting holder id as 1 as the object being populated are of type item row
                 Name = (TextView) itemView.findViewById(R.id.name);         // Creating Text View object from header.xml for name
                 email = (TextView) itemView.findViewById(R.id.email);       // Creating Text View object from header.xml for email
                 profile = (ImageView) itemView.findViewById(R.id.circleView);// Creating Image view object from header.xml for profile pic
@@ -505,45 +505,50 @@ public class menuAdapter extends RecyclerView.Adapter<menuAdapter.ViewHolder> {
                                     final FragmentManager fragmentManager = activity.getSupportFragmentManager();
                                     Fragment current = fragmentManager.findFragmentById(R.id.tab_Home_container);
 
-                                    // in case we are already creating a new offer
-                                    if ((current instanceof CompanyEditOfferFragment)) {
+                                    CompanyEditOfferFragment o = null;
+                                    if(current instanceof  CompanyEditOfferFragment)
+                                        o = (CompanyEditOfferFragment)current;
 
-                                        CompanyEditOfferFragment o = (CompanyEditOfferFragment) current;
+                                    // in case we are already creating a new offer or editing an existing one
+                                    if (o != null && o.isInEditMode()) {
 
-                                        if (o.isInEditMode()) {
+                                        AlertDialog.Builder builder = new AlertDialog.Builder(activity);
 
-                                            AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+                                        View view = activity.getLayoutInflater().inflate(R.layout.warning_message_generic, null);
+                                        LinearLayout container = (LinearLayout) view.findViewById(R.id.warning_message_container);
 
-                                            View view = activity.getLayoutInflater().inflate(R.layout.warning_message_generic, null);
-                                            LinearLayout container = (LinearLayout) view.findViewById(R.id.warning_message_container);
+                                        TextView warningMessage = new TextView(activity);
+                                        warningMessage.setTextColor(activity.getResources().getColor(R.color.black_light_transparent));
+                                        warningMessage.setText(R.string.offer_detail_save_warning);
+                                        container.addView(warningMessage);
 
-                                            TextView warningMessage = new TextView(activity);
-                                            warningMessage.setTextColor(activity.getResources().getColor(R.color.black_light_transparent));
-                                            warningMessage.setText(R.string.offer_detail_save_warning);
-                                            container.addView(warningMessage);
+                                        builder.setView(view);
+                                        builder.setPositiveButton(activity.getResources().getString(R.string.yes), new DialogInterface.OnClickListener() {
+                                            @Override
+                                            public void onClick(DialogInterface dialog, int which) {
 
-                                            builder.setView(view);
-                                            builder.setPositiveButton(activity.getResources().getString(R.string.yes), new DialogInterface.OnClickListener() {
-                                                @Override
-                                                public void onClick(DialogInterface dialog, int which) {
-
-                                                    //New Fragment
-                                                    CompanyEditOfferFragment fragment = CompanyEditOfferFragment.newInstance(true, new CompanyOffer());
-
-                                                    fragmentManager.beginTransaction()
-                                                            .replace(R.id.tab_Home_container, fragment)
-                                                            .commit();
+                                                //clear backstack
+                                                int count = fragmentManager.getBackStackEntryCount();
+                                                for (int i = 0; i < count; ++i) {
+                                                    fragmentManager.popBackStack();
                                                 }
-                                            });
 
-                                            builder.setNegativeButton(activity.getResources().getString(R.string.no), new DialogInterface.OnClickListener() {
-                                                @Override
-                                                public void onClick(DialogInterface dialog, int which) {
-                                                }
-                                            });
+                                                //New Fragment
+                                                CompanyEditOfferFragment fragment = CompanyEditOfferFragment.newInstance(true, new CompanyOffer());
 
-                                            builder.create().show();
-                                        }
+                                                fragmentManager.beginTransaction()
+                                                        .replace(R.id.tab_Home_container, fragment)
+                                                        .commit();
+                                            }
+                                        });
+
+                                        builder.setNegativeButton(activity.getResources().getString(R.string.no), new DialogInterface.OnClickListener() {
+                                            @Override
+                                            public void onClick(DialogInterface dialog, int which) {
+                                            }
+                                        });
+
+                                        builder.create().show();
 
                                     }
                                     else {
@@ -699,7 +704,7 @@ public class menuAdapter extends RecyclerView.Adapter<menuAdapter.ViewHolder> {
     public void onBindViewHolder(menuAdapter.ViewHolder holder, int position) {
 
         if (holder.Holderid == 1) {                              // as the list view is going to be called after the header view so we decrement the
-                                                                 // position by 1 and pass it to the holder while setting the text and image
+            // position by 1 and pass it to the holder while setting the text and image
             holder.textView.setText(mNavTitles[position - 1]); // Setting the Text with the array of our Titles
             holder.imageView.setImageResource(ICONS.getResourceId(position - 1,0));// Settimg the image with array of our icons
 
