@@ -277,7 +277,7 @@ public class TabHomeAdapter extends RecyclerView.Adapter<TabHomeAdapter.ViewHold
 
                 }
 
-                message.setText(object.getMessage());
+                message.setText(object.calculateTranslatedMessage(object.getType(), globalData));
 
                 Calendar dateNews = object.getDate();
                 Calendar now = Calendar.getInstance();

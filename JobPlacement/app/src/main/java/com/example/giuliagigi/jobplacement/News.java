@@ -1,6 +1,7 @@
 package com.example.giuliagigi.jobplacement;
 
 import com.parse.ParseClassName;
+import com.parse.ParseException;
 import com.parse.ParseObject;
 
 import java.util.Calendar;
@@ -30,6 +31,8 @@ public class News extends ParseObject {
     public static final int TYPE_OFFER_DELETED = 6;
     public static final int TYPE_NEW_NOTICE = 7;
     public static final int TYPE_APPLICATION_DELETED = 8;
+
+
 
     GlobalData globalData;
 
@@ -124,6 +127,7 @@ public class News extends ParseObject {
 
             case TYPE_NEW_OFFER:  // New job offer published
                 this.setCompanyOffer(offer);
+                this.setCompany((Company) globalData.getUserObject());
                 message = globalData.getUserObject().getName() + " " + globalData.getResources().getString(R.string.new_job_offer_message) + " \"" + offer.getOfferObject() + "\"";
                 this.setMessage(message);
 
@@ -147,6 +151,7 @@ public class News extends ParseObject {
                 this.setCompanyOffer(offer);
                 this.setStudent(student);
                 this.setStudentApplication(studentApplication);
+                this.setCompany(offer.getCompany());
 
                 String status= studentApplication.getStatus();
                 String eng= StudentApplication.getEnglishType(studentApplication.getStatus());
@@ -193,6 +198,7 @@ public class News extends ParseObject {
             case TYPE_OFFER_DELETED: // Deleted Job Offer
 
                 this.setCompanyOffer(offer);
+                this.setCompany(offer.getCompany());
                 message = globalData.getUserObject().getName() + " " + globalData.getResources().getString(R.string.deleted_job_offer_message) + " \"" + offer.getOfferObject() + "\"";
                 this.setMessage(message);
                 this.saveInBackground();
@@ -202,6 +208,8 @@ public class News extends ParseObject {
             case TYPE_APPLICATION_DELETED:
 
                 this.setCompanyOffer(offer);
+                this.setCompany(offer.getCompany());
+                this.setStudent(student);
                 message = student.getName() + " " + student.getSurname() + globalData.getResources().getString(R.string.deleted_application_message) + "\"" + offer.getOfferObject() + "\"";
                 this.setMessage(message);
 
@@ -211,6 +219,127 @@ public class News extends ParseObject {
 
             default:
         }
+
+    }
+
+
+    public String calculateTranslatedMessage(int type, GlobalData globalData){
+
+        String message = "";
+
+        switch (type){
+
+            case TYPE_NEW_OFFER:  // New job offer published
+
+                try {
+                    CompanyOffer companyOffer = this.getCompanyOffer().fetchIfNeeded();
+                    message = companyOffer.getCompany().getName() + " " + globalData.getResources().getString(R.string.new_job_offer_message) + " \"" + companyOffer.getOfferObject() + "\"";
+
+                    break;
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+
+
+            case TYPE_OFFER_APPLICATION:  // Student applied for a own Job Offer
+                try {
+                    Student student = this.getStudent().fetchIfNeeded();
+                    CompanyOffer companyOffer = this.getCompanyOffer().fetchIfNeeded();
+                    message = student.getName() + " " + student.getSurname() + " " + globalData.getResources().getString(R.string.new_application_message) + " \"" + companyOffer.getOfferObject() + "\"";
+
+                    break;
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+
+
+            case TYPE_APPLICATION_STATE:  // Student's application state changed
+
+                try {
+                    StudentApplication sa = this.getOfferStatus().fetchIfNeeded();
+                    switch (sa.getStatus()){
+
+                        case StudentApplication.TYPE_ACCEPTED:
+                            message = globalData.getResources().getString(R.string.the_company) + " " + this.getCompany().getName() + " " + globalData.getResources().getString(R.string.application_accepted_message) + " \"" + this.getCompanyOffer().getOfferObject() + "\"";
+                            break;
+
+                        case StudentApplication.TYPE_CONSIDERING:
+                            message = globalData.getResources().getString(R.string.the_company) + " " + this.getCompany().getName() + " " + globalData.getResources().getString(R.string.application_considering_message) + " \"" + this.getCompanyOffer().getOfferObject() + "\"";
+                            break;
+
+                        case StudentApplication.TYPE_REFUSED:
+                            message = globalData.getResources().getString(R.string.the_company) + " " + this.getCompany().getName() + " " + globalData.getResources().getString(R.string.application_refused_message) + " \"" + this.getCompanyOffer().getOfferObject() + "\"";
+                            break;
+
+                        case StudentApplication.TYPE_START:
+                            message = globalData.getResources().getString(R.string.the_company) + " " + this.getCompany().getName() + " " + globalData.getResources().getString(R.string.application_processing_message) + " \"" + this.getCompanyOffer().getOfferObject() + "\"";
+                            break;
+
+                        default:
+                    }
+
+                    break;
+
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+
+            case TYPE_NEW_COMPANY:  // New Company signed up
+
+                try {
+                    Company company = this.getCompany().fetchIfNeeded();
+                    message = globalData.getResources().getString(R.string.the_company) + " " + this.getCompany().getName() + " " + globalData.getResources().getString(R.string.new_company_signed_up_message) + " \"" + globalData.getResources().getString(R.string.app_name) + "\"";
+
+                    break;
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+
+
+            case TYPE_ADVERTISEMENT:  // Advertisement Company
+
+                break;
+
+            case TYPE_OFFER_DELETED: // Deleted Job Offer
+
+                try {
+                    CompanyOffer companyOffer = this.getCompanyOffer().fetchIfNeeded();
+                    message = companyOffer.getCompany().getName() + " " + globalData.getResources().getString(R.string.deleted_job_offer_message) + " \"" + companyOffer.getOfferObject() + "\"";
+
+                    break;
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+
+
+            case TYPE_NEW_NOTICE:
+
+                try {
+                    Course course = this.getCourse().fetchIfNeeded();
+                    message = globalData.getResources().getString(R.string.notice_news_title) +" " + course.getName();
+                    break;
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+
+
+            case TYPE_APPLICATION_DELETED:
+
+                try {
+                    Student student = this.getStudent().fetchIfNeeded();
+                    CompanyOffer companyOffer = this.getCompanyOffer().fetchIfNeeded();
+                    message = student.getName() + " " + student.getSurname() + globalData.getResources().getString(R.string.deleted_application_message) + "\"" + companyOffer.getOfferObject() + "\"";
+
+                    break;
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+
+
+            default:
+        }
+
+        return message;
 
     }
 
