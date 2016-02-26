@@ -207,6 +207,9 @@ public class TabHomeAdapter extends RecyclerView.Adapter<TabHomeAdapter.ViewHold
                             //Company company = offer.getCompany().fetchIfNeeded();
                             StudentApplication studentApplication = object.getOfferStatus().fetchIfNeeded();
 
+                            Log.println(Log.ASSERT, "COMPANY ", offer.getCompany().getName());
+                            Log.println(Log.ASSERT, "STATUS ", studentApplication.getStatus());
+
                             switch (studentApplication.getStatus()) {
                                 case StudentApplication.TYPE_ACCEPTED:
                                     title.setText(context.getResources().getString(R.string.student_accepted));
