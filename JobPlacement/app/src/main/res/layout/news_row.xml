@@ -9,12 +9,13 @@
         android:id="@+id/card_news"
         android:layout_gravity="center"
         android:layout_width="fill_parent"
-        android:layout_height="200dp"
+        android:layout_height="wrap_content"
         card_view:cardBackgroundColor="@color/white"
         card_view:cardCornerRadius="4dp"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
-        android:layout_marginTop="10dp">
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp">
 
 
         <LinearLayout
@@ -36,49 +37,45 @@
                 android:textSize="12dp"
                 />
 
-            <TextView
-                android:id="@+id/title_news"
-                android:text="Title of news / notification"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="0.4"
-                android:gravity="center_horizontal"
-                android:layout_marginRight="10dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginBottom="5dp"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                android:textColor="@color/ColorPrimary"/>
-
-
             <LinearLayout
                 android:layout_width="fill_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
+                android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
-
                 <de.hdodenhof.circleimageview.CircleImageView
-                    android:layout_width="70dp"
-                    android:layout_height="70dp"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
                     android:layout_marginLeft="12dp"
                     android:id="@+id/logo_img"
                     android:src="@drawable/ic_profile"
                     android:layout_gravity="center_vertical" />
 
                 <TextView
-                    android:layout_width="fill_parent"
-                    android:layout_height="fill_parent"
-                    android:layout_marginRight="12dp"
-                    android:textAppearance="?android:attr/textAppearanceLarge"
-                    android:text="L&apos;azienda x ha pubblicato una nuova offerta che potrebbe interessarti"
-                    android:id="@+id/news_message"
-                    android:textColor="@color/black_light_transparent"
-                    android:gravity="center"
-                    android:textSize="16sp"
-                    android:layout_margin="10dp"/>
+                    android:id="@+id/title_news"
+                    android:text="Title of news / notification"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginLeft="13dp"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/ColorPrimary"/>
 
             </LinearLayout>
+
+
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="12dp"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="L&apos;azienda x ha pubblicato una nuova offerta che potrebbe interessarti"
+                android:id="@+id/news_message"
+                android:textColor="@color/black_light_transparent"
+                android:gravity="left"
+                android:textSize="16sp"
+                android:layout_margin="13dp"/>
 
         </LinearLayout>
 
