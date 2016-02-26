@@ -160,8 +160,11 @@ public class CompanyOffer extends ParseObject {
     public void setWorkField(String workField){
 
         String result=getEnglishWorkField(workField);
-                if(result!=null)
-                  this.put(WORK_FIELD,result);
+
+        if(result!=null)
+            this.put(WORK_FIELD,result);
+        else
+            this.put(WORK_FIELD, workField);
     }
 
     public void setPositions(Integer positions){
@@ -181,14 +184,22 @@ public class CompanyOffer extends ParseObject {
     }
 
     public void setContract(String contract){
+
         String result=getEnglishContractField(contract);
+
         if(result!=null)
-        this.put(CONTRACT_FIELD,result);
+            this.put(CONTRACT_FIELD,result);
+        else
+            this.put(CONTRACT_FIELD, contract);
     }
     public void setTerm(String term){
+
         String result=getEnglishTermField(term);
+
         if(result!=null)
-        this.put(TERM_FIELD,result);
+            this.put(TERM_FIELD,result);
+        else
+            this.put(TERM_FIELD, term);
     }
     public void setLocation(String location){
 
@@ -200,7 +211,12 @@ public class CompanyOffer extends ParseObject {
     }
     public void setSalaryType(String salaryType){
 
-        this.put(SALARY_TYPE_FIELD,salaryType);
+        String result = getEnglishSalaryTypeField(salaryType);
+
+        if(result != null)
+            this.put(SALARY_TYPE_FIELD, salaryType);
+        else
+            this.put(SALARY_TYPE_FIELD,salaryType);
     }
     public void setDescription(String description){
 
@@ -222,7 +238,7 @@ public class CompanyOffer extends ParseObject {
 
     public void addTag(Tag t){ //this.addUnique(TAGS_FIELD, Arrays.asList(t));
         getRelation(TAGS_FIELD).add(t);
-     }
+    }
 
     public void removeAllTag(List<Tag> list)
     {
@@ -234,7 +250,7 @@ public class CompanyOffer extends ParseObject {
 
     public void addApplication(StudentApplication application) {
 
-      getRelation(APPLICATIONS_FIELD).add(application);
+        getRelation(APPLICATIONS_FIELD).add(application);
     }
 
     public void removeApplication(StudentApplication application) {
@@ -251,7 +267,7 @@ public class CompanyOffer extends ParseObject {
 
     public void setLocation(ParseGeoPoint location){
 
-            this.put(LOCATION_FIELD,location);
+        this.put(LOCATION_FIELD,location);
     }
     public ParseGeoPoint getLocation(){
 
