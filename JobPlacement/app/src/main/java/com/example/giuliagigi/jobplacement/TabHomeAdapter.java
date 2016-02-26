@@ -204,41 +204,36 @@ public class TabHomeAdapter extends RecyclerView.Adapter<TabHomeAdapter.ViewHold
                         try {
 
                             CompanyOffer offer = object.getCompanyOffer().fetchIfNeeded();
-                            Company company = offer.getCompany().fetchIfNeeded();
+                            //Company company = offer.getCompany().fetchIfNeeded();
+                            StudentApplication studentApplication = object.getOfferStatus().fetchIfNeeded();
 
-                            if (company.getProfilePhoto() != null)
-                                icon.setImageBitmap(object.getCompanyOffer().getCompany().getProfilePhoto());
+                            switch (studentApplication.getEnglishType(studentApplication.getStatus())) {
+                                case StudentApplication.TYPE_ACCEPTED:
+                                    title.setText(context.getResources().getString(R.string.student_accepted));
+                                    break;
+                                case StudentApplication.TYPE_START:
+                                    title.setText(context.getResources().getString(R.string.application_status_Start));
+                                    break;
+                                case StudentApplication.TYPE_CONSIDERING:
+                                    title.setText(context.getResources().getString(R.string.application_status_Considering));
+                                    break;
+                                case StudentApplication.TYPE_REFUSED:
+                                    title.setText(context.getResources().getString(R.string.application_status_Refused));
+                                    break;
+                                default:
+                            }
+
+                            if (offer.getCompany().getProfilePhoto() != null)
+                                icon.setImageBitmap(offer.getCompany().getProfilePhoto());
                         } catch (RuntimeException re) {
                             re.printStackTrace();
                         } catch (ParseException e) {
                             e.printStackTrace();
                         }
 
-                        StudentApplication status = null;
+                        //StudentApplication status = null;
 
-                        try {
 
-                            StudentApplication studentApplication = object.getOfferStatus().fetchIfNeeded();
-                            status = studentApplication;
-
-                        } catch (ParseException e) {
-                            e.printStackTrace();
-                        }
-
-                        switch (status.getStatus()) {
-                            case StudentApplication.TYPE_ACCEPTED:
-                                title.setText(context.getResources().getString(R.string.student_accepted));
-                                break;
-                            case StudentApplication.TYPE_START:
-                                title.setText(context.getResources().getString(R.string.application_status_Start));
-                                break;
-                            case StudentApplication.TYPE_CONSIDERING:
-                                title.setText(context.getResources().getString(R.string.application_status_Considering));
-                                break;
-                            case StudentApplication.TYPE_REFUSED:
-                                title.setText(context.getResources().getString(R.string.application_status_Refused));
-                                break;
-                        }
                         break;
 
                     case News.TYPE_NEW_COMPANY:
@@ -335,8 +330,6 @@ public class TabHomeAdapter extends RecyclerView.Adapter<TabHomeAdapter.ViewHold
         parseAdapter.addOnQueryLoadListener(new OnQueryLoadListener());
         parseAdapter.setObjectsPerPage(pageSize);
         parseAdapter.loadObjects();
-
-        Log.println(Log.ASSERT, "TABHOMEADAPTER", "setadapter terminated");
 
     }
 

@@ -29,10 +29,11 @@
                 android:id="@+id/news_date"
                 android:text="00:00"
                 android:layout_marginRight="10dp"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="4dp"
                 android:layout_marginLeft="10dp"
                 android:layout_marginBottom="3dp"
-                android:textSize="15sp"
+                android:textColor="@color/black_light_transparent"
+                android:textSize="12dp"
                 />
 
             <TextView
@@ -45,7 +46,7 @@
                 android:layout_marginRight="10dp"
                 android:layout_marginLeft="10dp"
                 android:layout_marginBottom="5dp"
-                android:textSize="18sp"
+                android:textSize="20sp"
                 android:textStyle="bold"
                 android:textColor="@color/ColorPrimary"/>
 
@@ -68,12 +69,13 @@
                 <TextView
                     android:layout_width="fill_parent"
                     android:layout_height="fill_parent"
+                    android:layout_marginRight="12dp"
                     android:textAppearance="?android:attr/textAppearanceLarge"
                     android:text="L&apos;azienda x ha pubblicato una nuova offerta che potrebbe interessarti"
                     android:id="@+id/news_message"
                     android:textColor="@color/black_light_transparent"
                     android:gravity="center"
-                    android:textSize="18sp"
+                    android:textSize="16sp"
                     android:layout_margin="10dp"/>
 
             </LinearLayout>
