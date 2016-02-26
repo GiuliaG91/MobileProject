@@ -218,6 +218,7 @@ public class ProfileManagement extends Fragment{
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         menu.clear();
+
         if(editable){
             inflater.inflate(R.menu.menu_profile_management, menu);
             editIcon = menu.findItem(R.id.action_edit);

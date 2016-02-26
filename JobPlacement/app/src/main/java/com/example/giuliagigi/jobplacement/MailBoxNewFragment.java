@@ -238,8 +238,15 @@ public class MailBoxNewFragment extends Fragment {
                 ArrayList<Integer> warnings = new ArrayList<Integer>();
                 ArrayList<Integer> errors = new ArrayList<Integer>();
 
-                object = ((EditText) root.findViewById(R.id.object_new_message)).getText().toString();
-                messageText = ((EditText)root.findViewById(R.id.body_new_message)).getText().toString();
+                object = objectEdit.getText().toString();
+                messageText = messageTextEdit.getText().toString();
+
+                if(!recipientsEdit.getText().toString().trim().isEmpty()){
+
+                    currentMails.add(recipientsEdit.getText().toString().trim());
+                    addTag(inflater, recipientsEdit.getText().toString().trim());
+                }
+
 
                 int validRecipients = 0;
 

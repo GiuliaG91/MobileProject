@@ -5,6 +5,7 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -334,6 +335,8 @@ public class TabHomeAdapter extends RecyclerView.Adapter<TabHomeAdapter.ViewHold
         parseAdapter.addOnQueryLoadListener(new OnQueryLoadListener());
         parseAdapter.setObjectsPerPage(pageSize);
         parseAdapter.loadObjects();
+
+        Log.println(Log.ASSERT, "TABHOMEADAPTER", "setadapter terminated");
 
     }
 

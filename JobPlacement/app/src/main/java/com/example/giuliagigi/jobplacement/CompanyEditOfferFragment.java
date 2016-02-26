@@ -45,7 +45,6 @@ import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
 import java.io.IOException;
-import java.text.Format;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -507,16 +506,16 @@ public class CompanyEditOfferFragment extends Fragment implements DatePickerFrag
             editObject.setText(offer.getOfferObject());
 
         if(offer.getWorkField() != null)
-            fieldSpinner.setSelection(CompanyOffer.getIndexFromEnglishWorkField(offer.getWorkField()));
+            fieldSpinner.setSelection(CompanyOffer.getWorkFieldIndex(offer.getWorkField()));
 
         if(offer.getnPositions() != null)
             places.setText(String.format("%d", offer.getnPositions()));
 
         if(offer.getContract() != null)
-            contractSpinner.setSelection(CompanyOffer.getIndexFromEnglishContractField(offer.getContract()));
+            contractSpinner.setSelection(CompanyOffer.getContractFieldIndex(offer.getContract()));
 
         if(offer.getTerm() != null)
-            termSpinner.setSelection(CompanyOffer.getIndexFromEnglishTermField(offer.getTerm()));
+            termSpinner.setSelection(CompanyOffer.getTermFieldIndex(offer.getTerm()));
 
         if(offer.getNation() != null)
             nation.setText(offer.getNation());
@@ -526,7 +525,7 @@ public class CompanyEditOfferFragment extends Fragment implements DatePickerFrag
 
         if(offer.getSalaryType() != null){
 
-            salarySpinner.setSelection(CompanyOffer.getIndexFromEnglishSalaryTypeField(offer.getSalaryType()));
+            salarySpinner.setSelection(CompanyOffer.getSalaryTypeFieldIndex(offer.getSalaryType()));
 
             if(offer.getSalary() != null)
                 editSalary.setText(String.format("%d", offer.getSalary()));

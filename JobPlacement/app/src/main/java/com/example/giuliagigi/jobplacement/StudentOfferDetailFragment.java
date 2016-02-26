@@ -269,7 +269,6 @@ public class StudentOfferDetailFragment extends  Fragment {
 
                         offer.saveInBackground();
                         final StudentApplication studentApplication = new StudentApplication();
-                        studentApplication.init();
                         studentApplication.setOffer(offer);
                         studentApplication.setStudent(student);
                         studentApplication.saveInBackground(new SaveCallback() {

@@ -23,7 +23,7 @@ public class StudentApplication extends ParseObject {
     public static final String TYPE_REFUSED_TRANSLATED =  GlobalData.getContext().getString(R.string.application_status_Refused);
 
 
-    public static final HashMap<String,String> STATUS_TYPES = new HashMap<>();
+    public static final HashMap<String,String> STATUS_TYPES_MAP = new HashMap<>();
     public static final String[] TYPES = new String[]{TYPE_START_TRANSLATED, TYPE_CONSIDERING_TRANSLATED, TYPE_ACCEPTED_TRANSLATED, TYPE_REFUSED_TRANSLATED};
 
     public static final String STATUS_FIELD = "status";
@@ -32,18 +32,31 @@ public class StudentApplication extends ParseObject {
 
     public StudentApplication(){super();}
 
+
+
+    /*--------------------------------------------------------------------------------------------*/
+    /* --------------------------- GETTERS AND SETTERS ------------------------------------------ */
+    /*--------------------------------------------------------------------------------------------*/
+
+
+    /*------------------ status ----------------------------------------------------------------- */
     public void setStatus(String type){
 
-        String typeTranslated = (String)getKeyByValue(STATUS_TYPES, type);
-        this.put(STATUS_FIELD, typeTranslated);
+        String res = getEnglishType(type);
+
+        if(res == null)
+            this.put(STATUS_FIELD, type);
+        else
+            this.put(STATUS_FIELD, res);
     }
 
     public String getStatus(){
 
-        return STATUS_TYPES.get(this.getString(STATUS_FIELD));
+        return STATUS_TYPES_MAP.get(this.getString(STATUS_FIELD));
     }
 
 
+    /*------------------ student ---------------------------------------------------------------- */
     public void setStudent(Student student){
         this.put(STUDENT_FIELD,student);
     }
@@ -51,6 +64,8 @@ public class StudentApplication extends ParseObject {
         return (Student)this.get(STUDENT_FIELD);
     }
 
+
+    /*------------------ offer ------------------------------------------------------------------ */
     public void setOffer(CompanyOffer offer){
         this.put(OFFER_FIELD,offer);
     }
@@ -60,32 +75,19 @@ public class StudentApplication extends ParseObject {
 
 
 
+    /*--------------------------------------------------------------------------------------------*/
+    /* ----------------------------------- AUXILIARY METHODS ------------------------------------ */
+    /*--------------------------------------------------------------------------------------------*/
+
     public static void initializeLangauges(){
 
-        STATUS_TYPES.put(TYPE_START, TYPE_START_TRANSLATED);
-        STATUS_TYPES.put(TYPE_CONSIDERING, TYPE_CONSIDERING_TRANSLATED);
-        STATUS_TYPES.put(TYPE_REFUSED, TYPE_REFUSED_TRANSLATED);
-        STATUS_TYPES.put(TYPE_ACCEPTED, TYPE_ACCEPTED_TRANSLATED);
+        STATUS_TYPES_MAP.put(TYPE_START, TYPE_START_TRANSLATED);
+        STATUS_TYPES_MAP.put(TYPE_CONSIDERING, TYPE_CONSIDERING_TRANSLATED);
+        STATUS_TYPES_MAP.put(TYPE_REFUSED, TYPE_REFUSED_TRANSLATED);
+        STATUS_TYPES_MAP.put(TYPE_ACCEPTED, TYPE_ACCEPTED_TRANSLATED);
 
     }
 
-    public static Object getKeyByValue(HashMap hm, Object value) {
-
-        for (Object o : hm.keySet()) {
-
-            if (hm.get(o).equals(value)) {
-                return o;
-            }
-        }
-
-        return null;
-    }
-
-    public void init(){
-
-         String typeTranslated = (String)getKeyByValue(STATUS_TYPES,TYPE_START_TRANSLATED);
-         this.put(STATUS_FIELD,typeTranslated);
-    }
 
 
     public static int getTypeIndex(String type) {
@@ -104,6 +106,18 @@ public class StudentApplication extends ParseObject {
 
     public static String getEnglishType(String type) {
 
-        return (String)getKeyByValue(STATUS_TYPES,type);
+        return (String)getKeyByValue(STATUS_TYPES_MAP,type);
+    }
+
+    public static Object getKeyByValue(HashMap hm, Object value) {
+
+        for (Object o : hm.keySet()) {
+
+            if (hm.get(o).equals(value)) {
+                return o;
+            }
+        }
+
+        return null;
     }
 }

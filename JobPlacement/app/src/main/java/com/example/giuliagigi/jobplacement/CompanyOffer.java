@@ -75,7 +75,7 @@ public class CompanyOffer extends ParseObject {
     }
 
     public String getWorkField() {
-        String res=getTranlatedWorkField( this.getString(WORK_FIELD));
+        String res= getTranslatedWorkField(this.getString(WORK_FIELD));
         return res;
     }
 
@@ -263,8 +263,6 @@ public class CompanyOffer extends ParseObject {
         this.put(STATUS_FIELD, status);
     }
 
-    /*END SETTER METHODS*/
-
     public void setLocation(ParseGeoPoint location){
 
         this.put(LOCATION_FIELD,location);
@@ -346,7 +344,7 @@ public class CompanyOffer extends ParseObject {
 
     //  ------------- get tanslated ----------------------------------------------------------------
 
-    public static String getTranlatedWorkField(String it)
+    public static String getTranslatedWorkField(String it)
     {
         for(int i=0;i<TYPE_WORK_FIELD.length;i++)
         {
@@ -411,51 +409,101 @@ public class CompanyOffer extends ParseObject {
 
     // ----------------- get indexes ---------------------------------------------------------------
 
-    public static int getIndexFromEnglishWorkField(String it){
+    public static int getWorkFieldIndex(String it){
 
-        for(int i = 0; i < TYPE_WORK_FIELD.length ; i++)
-            if(TYPE_WORK_FIELD[i].equals(it))
+        String[] whereToSearch = null;
+        String res = getTranslatedWorkField(it);
+
+        if(res == null)
+            whereToSearch = TYPE_WORK_FIELD_TRANSLATED;
+        else
+            whereToSearch = TYPE_WORK_FIELD;
+
+        for(int i = 0; i < whereToSearch.length ; i++){
+
+            if(whereToSearch[i].equals(it))
                 return i;
+        }
 
         return 0;
     }
 
 
-    public static int getIndexFromEnglishContractField(String it){
+    public static int getContractFieldIndex(String it){
 
-        for(int i = 0; i < TYPE_CONTRACT_FIELD.length ; i++)
-            if(TYPE_CONTRACT_FIELD[i].equals(it))
+        String[] whereToSearch = null;
+        String res = getTranslatedContractField(it);
+
+        if(res == null)
+            whereToSearch = TYPE_CONTRACT_FIELD_TRANSLATED;
+        else
+            whereToSearch = TYPE_CONTRACT_FIELD;
+
+        for(int i = 0; i < whereToSearch.length ; i++){
+
+            if(whereToSearch[i].equals(it))
                 return i;
+        }
 
         return 0;
     }
 
 
-    public static int getIndexFromEnglishTermField(String it){
+    public static int getTermFieldIndex(String it){
 
-        for(int i = 0; i < TYPE_TERM_FIELD.length ; i++)
-            if(TYPE_TERM_FIELD[i].equals(it))
+        String[] whereToSearch = null;
+        String res = getTranslatedTermField(it);
+
+        if(res == null)
+            whereToSearch = TYPE_TERM_FIELD_TRANSLATED;
+        else
+            whereToSearch = TYPE_TERM_FIELD;
+
+        for(int i = 0; i < whereToSearch.length ; i++){
+
+            if(whereToSearch[i].equals(it))
                 return i;
+        }
 
         return 0;
     }
 
 
-    public static int getIndexFromEnglishSalaryTypeField(String it){
+    public static int getSalaryTypeFieldIndex(String it){
 
-        for(int i = 0; i < TYPE_SALARY_TYPE_FIELD.length ; i++)
-            if(TYPE_SALARY_TYPE_FIELD[i].equals(it))
+        String[] whereToSearch = null;
+        String res = getTranslatedSalaryTypeField(it);
+
+        if(res == null)
+            whereToSearch = TYPE_SALARY_TYPE_FIELD_TRANSLATED;
+        else
+            whereToSearch = TYPE_SALARY_TYPE_FIELD;
+
+        for(int i = 0; i < whereToSearch.length ; i++){
+
+            if(whereToSearch[i].equals(it))
                 return i;
+        }
 
         return 0;
     }
 
 
-    public static int getIndexFromEnglishStatusField(String it){
+    public static int getStatusFieldIndex(String it){
 
-        for(int i = 0; i < TYPE_STATUS_FIELD.length ; i++)
-            if(TYPE_STATUS_FIELD[i].equals(it))
+        String[] whereToSearch = null;
+        String res = getTranslatedStatusField(it);
+
+        if(res == null)
+            whereToSearch = TYPE_STATUS_FIELD_TRANSLATED;
+        else
+            whereToSearch = TYPE_STATUS_FIELD;
+
+        for(int i = 0; i < whereToSearch.length ; i++){
+
+            if(whereToSearch[i].equals(it))
                 return i;
+        }
 
         return 0;
     }

@@ -303,12 +303,10 @@ public class Home extends ActionBarActivity
 
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
 
-//        Bundle data = new Bundle();
-//        ArrayList<String> recipients = new ArrayList<String>();
-//        recipients.add(user.getMail());
-//        data.putStringArrayList(MailBoxDetailFragment.RECIPIENTS_KEY, recipients);
+        ArrayList<ParseUserWrapper> recipients = new ArrayList<ParseUserWrapper>();
+        recipients.add(user.getParseUser());
 
-        MailBoxNewFragment mailbox = MailBoxNewFragment.newInstance();
+        MailBoxNewFragment mailbox = MailBoxNewFragment.newInstance(recipients,null,null);
         ft.replace(R.id.tab_Home_container,mailbox);
         ft.commit();
 
