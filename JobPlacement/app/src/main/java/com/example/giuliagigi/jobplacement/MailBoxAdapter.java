@@ -248,12 +248,6 @@ public class MailBoxAdapter extends RecyclerView.Adapter<MailBoxAdapter.MailboxV
 
         FragmentManager fragmentManager = activity.getSupportFragmentManager();
 
-        //clear backstack
-        int count = fragmentManager.getBackStackEntryCount();
-        for (int i = 0; i < count; ++i) {
-            fragmentManager.popBackStack();
-        }
-
         fragmentManager.beginTransaction()
                 .replace(R.id.tab_Home_container, fragment)
                 .addToBackStack((String)vh.object.getText())

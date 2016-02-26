@@ -259,23 +259,24 @@ public class News extends ParseObject {
                 try {
                     StudentApplication sa = this.getOfferStatus().fetchIfNeeded();
                     CompanyOffer companyOffer = this.getCompanyOffer().fetchIfNeeded();
+                    Company publisher = companyOffer.getCompany().fetchIfNeeded();
 
                     switch (sa.getEnglishType(sa.getStatus())){
 
                         case StudentApplication.TYPE_ACCEPTED:
-                            message = globalData.getResources().getString(R.string.the_company) + " " + companyOffer.getCompany().getName() + " " + globalData.getResources().getString(R.string.application_accepted_message) + " \"" + companyOffer.getOfferObject() + "\"";
+                            message = globalData.getResources().getString(R.string.the_company) + " " + publisher.getName() + " " + globalData.getResources().getString(R.string.application_accepted_message) + " \"" + companyOffer.getOfferObject() + "\"";
                             break;
 
                         case StudentApplication.TYPE_CONSIDERING:
-                            message = globalData.getResources().getString(R.string.the_company) + " " + companyOffer.getCompany().getName() + " " + globalData.getResources().getString(R.string.application_considering_message) + " \"" + companyOffer.getOfferObject() + "\"";
+                            message = globalData.getResources().getString(R.string.the_company) + " " + publisher.getName() + " " + globalData.getResources().getString(R.string.application_considering_message) + " \"" + companyOffer.getOfferObject() + "\"";
                             break;
 
                         case StudentApplication.TYPE_REFUSED:
-                            message = globalData.getResources().getString(R.string.the_company) + " " + companyOffer.getCompany().getName() + " " + globalData.getResources().getString(R.string.application_refused_message) + " \"" + companyOffer.getOfferObject() + "\"";
+                            message = globalData.getResources().getString(R.string.the_company) + " " + publisher.getName() + " " + globalData.getResources().getString(R.string.application_refused_message) + " \"" + companyOffer.getOfferObject() + "\"";
                             break;
 
                         case StudentApplication.TYPE_START:
-                            message = globalData.getResources().getString(R.string.the_company) + " " + companyOffer.getCompany().getName() + " " + globalData.getResources().getString(R.string.application_processing_message) + " \"" + companyOffer.getOfferObject() + "\"";
+                            message = globalData.getResources().getString(R.string.the_company) + " " + publisher.getName() + " " + globalData.getResources().getString(R.string.application_processing_message) + " \"" + companyOffer.getOfferObject() + "\"";
                             break;
 
                         default:
