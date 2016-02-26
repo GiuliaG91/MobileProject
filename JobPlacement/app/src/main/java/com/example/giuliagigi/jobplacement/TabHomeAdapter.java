@@ -107,7 +107,7 @@ public class TabHomeAdapter extends RecyclerView.Adapter<TabHomeAdapter.ViewHold
                     query1.whereEqualTo(News.TYPE_FIELD, News.TYPE_OFFER_APPLICATION);
 
                     ParseQuery<News> query2 = ParseQuery.getQuery("News");
-                    query2.whereEqualTo(News.COMPANY_FIELD, (Company)globalData.getUserObject());
+                    query2.whereEqualTo(News.TYPE_FIELD, News.TYPE_APPLICATION_DELETED);
 
                     List<ParseQuery<News>> queries = new ArrayList<ParseQuery<News>>();
                     queries.add(query1);

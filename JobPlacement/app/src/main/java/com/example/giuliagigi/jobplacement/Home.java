@@ -306,6 +306,12 @@ public class Home extends ActionBarActivity
         ArrayList<ParseUserWrapper> recipients = new ArrayList<ParseUserWrapper>();
         recipients.add(user.getParseUser());
 
+        //clear backstack
+        int count = getSupportFragmentManager().getBackStackEntryCount();
+        for (int i = 0; i < count; ++i) {
+            getSupportFragmentManager().popBackStack();
+        }
+
         MailBoxNewFragment mailbox = MailBoxNewFragment.newInstance(recipients,null,null);
         ft.replace(R.id.tab_Home_container,mailbox);
         ft.commit();

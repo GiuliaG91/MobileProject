@@ -219,14 +219,15 @@ public class StudentApplicationAdapter extends RecyclerView.Adapter<StudentAppli
 
         /* ---------------- reply (only if company) --------------------------------------------- */
         holder.replyButton.setEnabled(!(mode == MODE_STUDENT_VIEW));
+
         holder.replyButton.setVisibility(mode == MODE_STUDENT_VIEW ? View.INVISIBLE : View.VISIBLE);
 
         holder.replyButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                if(     applications.get(position).getStatus().equals(StudentApplication.TYPE_ACCEPTED)
-                        || applications.get(position).getStatus().equals(StudentApplication.TYPE_REFUSED)){
+                if(StudentApplication.getEnglishType(applications.get(position).getStatus()).equals(StudentApplication.TYPE_ACCEPTED) ||
+                   StudentApplication.getEnglishType(applications.get(position).getStatus()).equals(StudentApplication.TYPE_REFUSED)){
 
                     AlertDialog.Builder builder = new AlertDialog.Builder(context);
                     builder.setTitle(R.string.application_dialog_already_replied);

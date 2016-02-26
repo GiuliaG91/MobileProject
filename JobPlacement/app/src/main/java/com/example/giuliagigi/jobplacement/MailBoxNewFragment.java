@@ -518,6 +518,13 @@ public class MailBoxNewFragment extends Fragment {
                     /* -------------- opening mailbox main view -------------------------------------*/
                     FragmentManager fragmentManager = activity.getSupportFragmentManager();
                     Fragment fragment = MailBoxDisplayFragment.newInstance();
+
+                    //clear backstack
+                    int count = fragmentManager.getBackStackEntryCount();
+                    for (int i = 0; i < count; ++i) {
+                        fragmentManager.popBackStack();
+                    }
+
                     fragmentManager.beginTransaction()
                             .replace(R.id.tab_Home_container, fragment)
                             .addToBackStack(globalData.getResources().getStringArray(R.array.Menu_items_student)[4])

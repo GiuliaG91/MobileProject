@@ -106,7 +106,12 @@ public class StudentApplication extends ParseObject {
 
     public static String getEnglishType(String type) {
 
-        return (String)getKeyByValue(STATUS_TYPES_MAP,type);
+        String res = (String)getKeyByValue(STATUS_TYPES_MAP,type);
+
+        if(res == null)
+            return type;
+        else
+            return res;
     }
 
     public static Object getKeyByValue(HashMap hm, Object value) {

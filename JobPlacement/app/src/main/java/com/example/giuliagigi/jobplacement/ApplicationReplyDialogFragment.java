@@ -97,7 +97,7 @@ public class ApplicationReplyDialogFragment extends DialogFragment {
         studentTV = (TextView)v.findViewById(R.id.application_dialog_student);
 
 
-        if(studentApplication.getStatus().equals(StudentApplication.TYPE_CONSIDERING)){
+        if(StudentApplication.getEnglishType(studentApplication.getStatus()).equals(StudentApplication.TYPE_CONSIDERING)){
 
             considering.setChecked(true);
             considering.setEnabled(false);

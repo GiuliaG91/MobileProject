@@ -130,7 +130,7 @@ public class CompanyEditOfferFragment extends Fragment implements DatePickerFrag
 
             fragment.justCreated = true;
             fragment.offer.setStatus(CompanyOffer.STATUS_NEW);
-            fragment.offer.saveInBackground();
+//            fragment.offer.saveInBackground();
         }
 
         return fragment;
