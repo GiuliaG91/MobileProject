@@ -35,14 +35,12 @@ public class StudentApplication extends ParseObject {
     public void setStatus(String type){
 
         String typeTranslated = (String)getKeyByValue(STATUS_TYPES, type);
-        if (typeTranslated!=null)
-            this.put(STATUS_FIELD, typeTranslated);
-        else
-            this.put(STATUS_FIELD, type);
+        this.put(STATUS_FIELD, typeTranslated);
     }
 
     public String getStatus(){
-        return this.get(STATUS_FIELD).toString();
+
+        return STATUS_TYPES.get(this.getString(STATUS_FIELD));
     }
 
 
@@ -86,7 +84,6 @@ public class StudentApplication extends ParseObject {
     public void init(){
 
          String typeTranslated = (String)getKeyByValue(STATUS_TYPES,TYPE_START_TRANSLATED);
-
          this.put(STATUS_FIELD,typeTranslated);
     }
 
