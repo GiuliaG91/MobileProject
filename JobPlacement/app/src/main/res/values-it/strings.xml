@@ -353,7 +353,7 @@
 
     <!-- ________________ STUDENT APPLICATION __________________________________________________ -->
     <string name="application_status_Start">Lavorazione</string>
-    <string name="application_status_Considering">Persa in considerazione</string>
+    <string name="application_status_Considering">Presa in considerazione</string>
     <string name="application_status_Refused">Rifiutata</string>
     <string name="application_status_Accepted">Accettata</string>
     <string name="application_status_applyStatus">Stato della candidatura:</string>
@@ -370,7 +370,7 @@
 
     <!-- ________________ OFFER STATUS _________________________________________________________ -->
     <string name="OfferStatus_Start">Lavorazione</string>
-    <string name="OfferStatus_Considering">Persa in considerazione</string>
+    <string name="OfferStatus_Considering">Presa in considerazione</string>
     <string name="OfferStatus_Refused">Rifiutata</string>
     <string name="OfferStatus_Accepted">Accettata</string>
     <string name="OfferStatus_applyStatus">Stato della candidatura:</string>
