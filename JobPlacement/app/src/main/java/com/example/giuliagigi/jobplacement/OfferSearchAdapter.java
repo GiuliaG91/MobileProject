@@ -20,6 +20,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
+import com.parse.ParseException;
 import com.parse.ParseGeoPoint;
 
 import com.parse.ParseQuery;
@@ -255,12 +256,22 @@ public class OfferSearchAdapter extends RecyclerView.Adapter<OfferSearchAdapter.
                 TextView date = (TextView) v.findViewById(R.id.textView_date);
                 CheckBox pref = (CheckBox) v.findViewById(R.id.checkbox_favourite);
 
+                try {
 
-                if(offer.getCompany().getProfilePhoto() != null)
-                    logo.setImageBitmap(offer.getCompany().getProfilePhoto());
+                    Company publisher = offer.getCompany().fetchIfNeeded();
 
-                else
-                    logo.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_profile));
+                    if(offer.getCompany().getProfilePhoto() != null)
+                        logo.setImageBitmap(offer.getCompany().getProfilePhoto());
+
+                    else
+                        logo.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_profile));
+
+
+                }
+                catch (ParseException e) {
+                    e.printStackTrace();
+                }
+
 
 
                 object_tv.setText(offer.getOfferObject());
