@@ -31,6 +31,7 @@ public class News extends ParseObject {
     public static final int TYPE_OFFER_DELETED = 6;
     public static final int TYPE_NEW_NOTICE = 7;
     public static final int TYPE_APPLICATION_DELETED = 8;
+    public static final int TYPE_SCHEDULE_CHANGED = 9;
 
 
 
@@ -314,14 +315,8 @@ public class News extends ParseObject {
 
             case TYPE_NEW_NOTICE:
 
-                try {
-                    Course course = this.getCourse().fetchIfNeeded();
-                    message = globalData.getResources().getString(R.string.notice_news_title) +" " + course.getName();
-                    break;
-                } catch (ParseException e) {
-                    e.printStackTrace();
-                }
-
+                message = this.getMessage();
+                break;
 
             case TYPE_APPLICATION_DELETED:
 
@@ -334,6 +329,11 @@ public class News extends ParseObject {
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
+
+            case TYPE_SCHEDULE_CHANGED:
+
+                message = globalData.getContext().getResources().getString(R.string.notice_message_course_changes);
+                break;
 
 
             default:

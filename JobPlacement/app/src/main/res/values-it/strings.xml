@@ -247,7 +247,8 @@
     <string name="title_activity_lecture_display">LectureDisplayActivity</string>
     <string name="title_activity_week_display">WeekDisplayActivity</string>
     <string name="lecture_dialog_title">Dettagli della lezione</string>
-    <string name="notice_message_course_changes">: l\'orario del corso è stato modificato.</string>
+    <string name="notice_message_course_changes">La programmazione del corso è stata modificata.</string>
+    <string name="schedule_changed_title">Modifiche al corso: </string>
     <string name="schedule_not_valid">L\'orario inserito non è valido. Non sono state apportate modifiche.</string>
 
     <!-- _________________ PROFESSOR ___________________________________________________________ -->

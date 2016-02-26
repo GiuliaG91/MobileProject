@@ -158,7 +158,7 @@ public class LectureAdapter implements ListAdapter {
                                 l.setSchedule(Integer.parseInt(startHour.getText().toString()), Integer.parseInt(startMinute.getText().toString()), Integer.parseInt(endHour.getText().toString()), Integer.parseInt(endMinute.getText().toString()));
                                 l.saveEventually();
                                 News courseNotice = new News();
-                                courseNotice.createNews(7, l.getCourse(),GlobalData.getContext().getResources().getString(R.string.notice_message_course_changes));
+                                courseNotice.createNews(9, l.getCourse(),GlobalData.getContext().getResources().getString(R.string.notice_message_course_changes));
                             }
                             else {
                                 Toast.makeText(activity, GlobalData.getContext().getResources().getString(R.string.schedule_not_valid), Toast.LENGTH_SHORT).show();

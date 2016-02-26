@@ -122,13 +122,17 @@ public class TabHomeAdapter extends RecyclerView.Adapter<TabHomeAdapter.ViewHold
                     //query1.whereEqualTo(News.TYPE_FIELD, News.TYPE_NEW_NOTICE);
                     Professor p = (Professor) globalData.getUserObject();
 
-                    ParseQuery<News> query2 = ParseQuery.getQuery("News");
-                    query2.whereEqualTo(News.TYPE_FIELD, News.TYPE_NEW_NOTICE);
-                    query2.whereContainedIn(News.COURSE_FIELD, (p.getCourses()));
+                    ParseQuery<News> query5 = ParseQuery.getQuery("News");
+                    query5.whereEqualTo(News.TYPE_FIELD, News.TYPE_NEW_NOTICE);
+                    query5.whereContainedIn(News.COURSE_FIELD, (p.getCourses()));
+
+                    ParseQuery<News> query6 = ParseQuery.getQuery("News");
+                    query6.whereEqualTo(News.TYPE_FIELD, News.TYPE_SCHEDULE_CHANGED);
+                    query6.whereContainedIn(News.COURSE_FIELD, (p.getCourses()));
 
                     List<ParseQuery<News>> queries = new ArrayList<ParseQuery<News>>();
-                    //queries.add(query1);
-                    queries.add(query2);
+                    queries.add(query5);
+                    queries.add(query6);
                     query = ParseQuery.or(queries);
 
                     query.orderByDescending("date");
@@ -263,7 +267,7 @@ public class TabHomeAdapter extends RecyclerView.Adapter<TabHomeAdapter.ViewHold
                             if(professor.getProfilePhoto() != null)
                                 icon.setImageBitmap(object.getCourse().getProfessor().getProfilePhoto());
                             else
-                                icon.setImageResource(R.drawable.ic_schedule);
+                                icon.setImageResource(R.drawable.ic_advertising);
                             title.setText(context.getResources().getString(R.string.notice_news_title) + " " + object.getCourse().getName());
 
                         }
@@ -272,6 +276,23 @@ public class TabHomeAdapter extends RecyclerView.Adapter<TabHomeAdapter.ViewHold
                         }
 
                            break;
+
+                    case News.TYPE_SCHEDULE_CHANGED:
+                    try {
+                        Professor professor=object.getCourse().getProfessor().fetchIfNeeded();
+
+                        if(professor.getProfilePhoto() != null)
+                            icon.setImageBitmap(object.getCourse().getProfessor().getProfilePhoto());
+                        else
+                            icon.setImageResource(R.drawable.ic_schedule);
+                        title.setText(context.getResources().getString(R.string.schedule_changed_title) + " " + object.getCourse().getName());
+
+                    }
+                    catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+
+                    break;
 
                     default:
 
