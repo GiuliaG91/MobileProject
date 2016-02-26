@@ -31,7 +31,6 @@ import com.parse.SaveCallback;
 public class ApplicationReplyDialogFragment extends DialogFragment {
 
     GlobalData globalData;
-    FragmentActivity context;
 
     private StudentApplication studentApplication;
     private RadioGroup replyOptionsGroup;
@@ -62,7 +61,6 @@ public class ApplicationReplyDialogFragment extends DialogFragment {
     public void onAttach(Activity activity) {
         super.onAttach(activity);
         globalData = (GlobalData)activity.getApplicationContext();
-        context = (FragmentActivity)activity;
     }
 
 
@@ -119,24 +117,6 @@ public class ApplicationReplyDialogFragment extends DialogFragment {
         }
 
         studentTV.setText(name);
-//        studentTV.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//
-//                FragmentManager fragmentManager = context.getSupportFragmentManager();
-//                ProfileManagement fragment = ProfileManagement.newInstance(false, studentApplication.getStudent());
-//
-//                fragmentManager.beginTransaction()
-//                        .replace(R.id.tab_Home_container, fragment)
-//                        .addToBackStack("ApplicationReply")
-//                        .commit();
-//
-//
-//                Toolbar toolbar= globalData.getToolbar();
-//                toolbar.setTitle(R.string.ToolbarTilteProfile);
-//            }
-//        });
-
         builder.setView(v);
 
 
@@ -149,7 +129,7 @@ public class ApplicationReplyDialogFragment extends DialogFragment {
                 AlertDialog.Builder innerBuilder = new AlertDialog.Builder(getActivity());
                 innerBuilder.setTitle(R.string.application_dialog_confirm_request);
 
-                TextView warningMessage = new TextView(context);
+                TextView warningMessage = new TextView(getActivity());
                 warningMessage.setText(R.string.application_dialog_confirm_message);
                 innerBuilder.setView(warningMessage);
 
@@ -171,7 +151,7 @@ public class ApplicationReplyDialogFragment extends DialogFragment {
                             studentApplication.setStatus(StudentApplication.TYPE_REFUSED);
                         } else {
 
-                            Toast.makeText(context, R.string.operation_canceled, Toast.LENGTH_SHORT).show();
+                            Toast.makeText(globalData, R.string.operation_canceled, Toast.LENGTH_SHORT).show();
                             return;
                         }
 
@@ -201,11 +181,12 @@ public class ApplicationReplyDialogFragment extends DialogFragment {
 
                         ParsePush push = new ParsePush();
                         push.setQuery(pushQuery);
-                        push.setMessage("" + context.getString(R.string.Message_Update) + " " + studentApplication.getOffer().getOfferObject() +
-                                " " + context.getString(R.string.Message_UpdateEnd) + " " + globalData.getUserObject().getMail());
+
+                        push.setMessage("" + globalData.getString(R.string.Message_Update) + " " + studentApplication.getOffer().getOfferObject() +
+                                " " + globalData.getString(R.string.Message_UpdateEnd) + " " + globalData.getUserObject().getMail());
                         push.sendInBackground();
 
-                        Toast.makeText(getActivity(),context.getString(R.string.Done),Toast.LENGTH_SHORT).show();
+                        Toast.makeText(globalData,R.string.Done,Toast.LENGTH_SHORT).show();
                     }
                 });
 
@@ -215,7 +196,7 @@ public class ApplicationReplyDialogFragment extends DialogFragment {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
 
-                        Toast.makeText(context,R.string.operation_canceled,Toast.LENGTH_SHORT).show();
+                        Toast.makeText(globalData,R.string.operation_canceled,Toast.LENGTH_SHORT).show();
                     }
                 });
 
@@ -230,7 +211,7 @@ public class ApplicationReplyDialogFragment extends DialogFragment {
             @Override
             public void onClick(DialogInterface dialog, int which) {
 
-                Toast.makeText(context,R.string.operation_canceled,Toast.LENGTH_SHORT).show();
+                Toast.makeText(globalData,R.string.operation_canceled,Toast.LENGTH_SHORT).show();
             }
         });
 
