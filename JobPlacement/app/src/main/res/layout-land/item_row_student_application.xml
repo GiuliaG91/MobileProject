@@ -30,8 +30,8 @@
             android:gravity="start"
             android:textColor="@color/ColorPrimary"
             android:textSize="25sp"
-            android:layout_marginBottom="10dp"
-            android:layout_marginLeft="3dp"
+            android:layout_marginBottom="5dp"
+            android:layout_marginLeft="5dp"
             android:layout_marginRight="3dp"
             android:layout_marginTop="10dp"/>
 
@@ -58,7 +58,8 @@
                 android:textAppearance="?android:attr/textAppearanceSmall"
                 android:text="@string/new_offer_fragment_Description"
                 android:textColor="@color/ColorPrimaryDark"
-                android:paddingRight="3dp" />
+                android:paddingRight="3dp"
+                android:layout_marginLeft="5dp"/>
 
 
             <TextView
@@ -87,7 +88,8 @@
                 android:textAppearance="?android:attr/textAppearanceSmall"
                 android:text="@string/student_application_status"
                 android:textColor="@color/ColorPrimaryDark"
-                android:paddingRight="3dp" />
+                android:paddingRight="3dp"
+                android:layout_marginLeft="5dp" />
 
             <TextView
                 android:layout_width="match_parent"

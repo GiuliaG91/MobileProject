@@ -23,6 +23,7 @@
             android:layout_height="fill_parent"
             android:orientation="vertical">
 
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -30,15 +31,15 @@
                 android:id="@+id/news_date"
                 android:text="00:00"
                 android:layout_marginRight="10dp"
-                android:layout_marginTop="4dp"
+                android:layout_marginTop="3dp"
                 android:layout_marginLeft="10dp"
-                android:layout_marginBottom="3dp"
+                android:layout_marginBottom="1dp"
                 android:textColor="@color/black_light_transparent"
-                android:textSize="12dp"
+                android:textSize="12sp"
                 />
 
             <LinearLayout
-                android:layout_width="fill_parent"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
@@ -50,32 +51,41 @@
                     android:src="@drawable/ic_profile"
                     android:layout_gravity="center_vertical" />
 
-                <TextView
-                    android:id="@+id/title_news"
-                    android:text="Title of news / notification"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:gravity="center_vertical"
-                    android:layout_marginRight="10dp"
-                    android:layout_marginLeft="13dp"
-                    android:textSize="18sp"
-                    android:textStyle="bold"
-                    android:textColor="@color/ColorPrimary"/>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/title_news"
+                        android:text="Title of news / notification"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center_vertical"
+                        android:layout_marginRight="10dp"
+                        android:layout_marginLeft="13dp"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/ColorPrimary"/>
+
+                    <TextView
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="12dp"
+                        android:textAppearance="?android:attr/textAppearanceLarge"
+                        android:text="L&apos;azienda x ha pubblicato una nuova offerta che potrebbe interessarti"
+                        android:id="@+id/news_message"
+                        android:textColor="@color/black_light_transparent"
+                        android:gravity="left"
+                        android:textSize="16sp"
+                        android:layout_margin="13dp"/>
+
+                </LinearLayout>
+
 
             </LinearLayout>
 
-
-            <TextView
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="12dp"
-                android:textAppearance="?android:attr/textAppearanceLarge"
-                android:text="L&apos;azienda x ha pubblicato una nuova offerta che potrebbe interessarti"
-                android:id="@+id/news_message"
-                android:textColor="@color/black_light_transparent"
-                android:gravity="left"
-                android:textSize="16sp"
-                android:layout_margin="13dp"/>
 
         </LinearLayout>
 

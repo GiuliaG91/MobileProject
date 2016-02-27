@@ -10,56 +10,71 @@
         android:id="@+id/card_news"
         android:layout_gravity="center"
         android:layout_width="fill_parent"
-        android:layout_height="175dp"
+        android:layout_height="wrap_content"
         card_view:cardBackgroundColor="@color/white"
         card_view:cardCornerRadius="4dp"
         android:layout_margin="5dp">
 
-
         <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:layout_weight="1">
-
-            <de.hdodenhof.circleimageview.CircleImageView
-                android:layout_width="70dp"
-                android:layout_height="70dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:id="@+id/logo_img"
-                android:src="@drawable/ic_profile"
-                android:layout_gravity="center_vertical" />
-
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
             <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="fill_parent"
-                android:orientation="vertical"
-                android:layout_weight="1"
-                android:layout_marginRight="5dp">
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:orientation="horizontal">
+
 
                 <TextView
-                    android:layout_width="fill_parent"
-                    android:layout_height="0dp"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight=".8"
                     android:text="New Text"
                     android:id="@+id/textView_title"
-                    android:layout_weight=".2"
                     android:gravity="start"
                     android:textColor="@color/ColorPrimary"
                     android:textSize="25sp"
-                    android:layout_marginBottom="10dp"
-                    android:layout_marginLeft="3dp"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginLeft="10dp"
                     android:layout_marginRight="3dp"
                     android:layout_marginTop="10dp"/>
 
+                <Button
+                    android:id="@+id/application_reply_button"
+                    android:background="@drawable/ic_reply"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_gravity="end"
+                    android:layout_marginRight="5dp"/>
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                android:layout_marginLeft="10dp">
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_marginRight="10dp"
+                    android:id="@+id/logo_img"
+                    android:src="@drawable/ic_profile"
+                    android:layout_gravity="center_vertical" />
+
 
                 <LinearLayout
-                    android:layout_width="fill_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight=".4"
-                    android:orientation="vertical"
-                    android:layout_marginBottom="5dp">
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight=".8"
+                    android:gravity="center_vertical"
+                    android:orientation="vertical">
 
                     <TextView
                         android:layout_width="match_parent"
@@ -69,29 +84,20 @@
                         android:textAppearance="?android:attr/textAppearanceSmall"
                         android:text="@string/new_offer_fragment_Description"
                         android:textColor="@color/ColorPrimaryDark"
-                        android:paddingRight="3dp" />
+                        android:paddingRight="3dp"
+                        android:layout_marginLeft="10dp" />
 
 
                     <TextView
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
-                        android:textSize="17dp"
+                        android:textSize="17sp"
                         android:text="Small Text"
                         android:id="@+id/textView_description"
                         android:textColor="@color/black_light_transparent"
                         android:gravity="start"
                         android:layout_marginBottom="2dp"
-                        android:layout_marginLeft="5dp"/>
-
-                </LinearLayout>
-
-
-                <LinearLayout
-                    android:layout_width="fill_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight=".4"
-                    android:orientation="vertical"
-                    android:layout_marginBottom="5dp">
+                        android:layout_marginLeft="10dp"/>
 
                     <TextView
                         android:layout_width="match_parent"
@@ -101,7 +107,8 @@
                         android:textAppearance="?android:attr/textAppearanceSmall"
                         android:text="@string/student_application_status"
                         android:textColor="@color/ColorPrimaryDark"
-                        android:paddingRight="3dp" />
+                        android:paddingRight="3dp"
+                        android:layout_marginLeft="10dp" />
 
 
                     <TextView
@@ -110,30 +117,19 @@
                         android:id="@+id/status_tv"
                         android:text="Status"
                         android:gravity="start"
-                        android:textSize="17dp"
+                        android:textSize="17sp"
                         android:textColor="@color/black_light_transparent"
                         android:layout_marginTop="3dp"
-                        android:layout_marginLeft="5dp" />
+                        android:layout_marginLeft="10dp" />
+
 
                 </LinearLayout>
 
             </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:layout_gravity="bottom">
-
-                <Button
-                    android:id="@+id/application_reply_button"
-                    android:background="@drawable/ic_reply"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"/>
-
-            </LinearLayout>
 
         </LinearLayout>
+
 
     </android.support.v7.widget.CardView>
 </LinearLayout>
