@@ -113,7 +113,7 @@ public class FavStudentsAdapter extends RecyclerView.Adapter<FavStudentsAdapter.
             holder.profile.setImageBitmap(img);
         }else
             holder.profile.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_profile));
-        holder.studentName.setText(mDataset.get(position).getName());
+        holder.studentName.setText(mDataset.get(position).getSurname() + " " + mDataset.get(position).getName());
 
         List<Degree> degrees=mDataset.get(position).getDegrees();
         if(!degrees.isEmpty()) {
@@ -121,11 +121,16 @@ public class FavStudentsAdapter extends RecyclerView.Adapter<FavStudentsAdapter.
 
             holder.studentDegree.setText(degrees.get(0).getType() + " " + degrees.get(0).getStudies());
             Integer mark=null;
+            Boolean laude = false;
             try{
                 mark=degrees.get(0).getMark();
+                laude = degrees.get(0).getLoud();
             }catch (Exception e){mark=null;}
             if(mark!=null) {
-                holder.studentGrade.setText(context.getResources().getString(R.string.Mark) + String.valueOf(mark));
+                if(laude)
+                    holder.studentGrade.setText(String.valueOf(mark) + " " + context.getResources().getString(R.string.mark_cum_laude));
+                else
+                    holder.studentGrade.setText(String.valueOf(mark));
             }
             else{
                 holder.studentGrade.setText(context.getResources().getString(R.string.noMark));

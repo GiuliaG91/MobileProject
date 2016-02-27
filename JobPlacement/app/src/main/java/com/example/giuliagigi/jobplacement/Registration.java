@@ -261,7 +261,7 @@ public class Registration extends ActionBarActivity implements StudentRegistrati
                         else if(newUser.getType().equals(User.TYPE_COMPANY)){
 
                             News news = new News();
-                            news.createNews(3, null, null, null, (GlobalData) getApplication());
+                            news.createNews(News.TYPE_NEW_COMPANY, null, null, null, (GlobalData) getApplication());
 
                             pushMessage = application.getResources().getString(R.string.the_company)
                                     + " " + application.getUserObject().getName()

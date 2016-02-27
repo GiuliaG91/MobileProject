@@ -928,7 +928,7 @@ public class CompanyEditOfferFragment extends Fragment implements DatePickerFrag
             }
 
             News news = new News();
-            news.createNews(0, offer, null, null, globalData);
+            news.createNews(News.TYPE_NEW_OFFER, offer, null, null, globalData);
 
                             /* Invio notifica push a studenti */
             ParsePush push = new ParsePush();

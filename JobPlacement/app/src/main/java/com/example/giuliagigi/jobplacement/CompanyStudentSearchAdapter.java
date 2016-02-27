@@ -203,7 +203,7 @@ public class CompanyStudentSearchAdapter extends RecyclerView.Adapter<CompanyStu
                         profile.setImageBitmap(img);
                     } else
                         profile.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_profile));
-                    studentName.setText(object.getName());
+                    studentName.setText(object.getSurname() + " " + object.getName());
 
                     List<Degree> degrees = object.getDegrees();
                     if (!degrees.isEmpty()) {
@@ -211,13 +211,19 @@ public class CompanyStudentSearchAdapter extends RecyclerView.Adapter<CompanyStu
 
                         studentDegree.setText(degrees.get(0).getType() + " " + degrees.get(0).getStudies());
                         Integer mark = null;
+                        Boolean loud = false;
                         try {
                             mark = degrees.get(0).getMark();
+                            loud = degrees.get(0).getLoud();
+
                         } catch (Exception e) {
                             mark = null;
                         }
                         if (mark != null) {
-                            studentGrade.setText(context.getResources().getString(R.string.Mark) + String.valueOf(mark));
+                            if(loud)
+                                studentGrade.setText(String.valueOf(mark) + " " + context.getResources().getString(R.string.mark_cum_laude));
+                            else
+                                studentGrade.setText(String.valueOf(mark));
                         } else {
                             studentGrade.setText(context.getResources().getString(R.string.noMark));
                         }

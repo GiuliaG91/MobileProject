@@ -310,7 +310,7 @@ public class StudentOfferDetailFragment extends  Fragment {
                         push.sendInBackground();
 
                         News news = new News();
-                        news.createNews(1, offer, (Student) globalData.getUserObject(), null, globalData);
+                        news.createNews(News.TYPE_OFFER_APPLICATION, offer, (Student) globalData.getUserObject(), null, globalData);
 
                         applied = true;
                         configureFloatingButtons();

@@ -50,9 +50,10 @@
     <string name="confirm">Confirm</string>
     <string name="insert_description">Insert a description</string>
     <string name="operation_canceled">Operation canceled</string>
-
     <string name="ground_floor">Ground floor</string>
     <string name="basement_floor">Basement</string>
+    <string name="study_title">Qualification:</string>
+    <string name="mark_cum_laude">cum laude</string>
 
     <string-array name="cardinal_numbers">
         <item>1st</item>
@@ -171,7 +172,7 @@
     <string name="string_degree_fragment_degree_type_title">Degree type:</string>
     <string name="string_degree_fragment_degree_field_title">Field of study:</string>
     <string name="string_degree_fragment_degree_mark_title">Mark:</string>
-    <string name="string_degree_fragment_degree_loud_title">Loud:</string>
+    <string name="string_degree_fragment_degree_loud_title">Laude:</string>
     <string name="string_degree_fragment_degree_date_title">Degree date:</string>
     <string name="string_degree_type_bachelor">Bachelor</string>
     <string name="string_degree_type_master">Master</string>

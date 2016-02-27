@@ -50,9 +50,10 @@
     <string name="confirm">Conferma</string>
     <string name="insert_description">Inserisci una descrizione</string>
     <string name="operation_canceled">Operazione annullata</string>
-
     <string name="ground_floor">Piano terra</string>
     <string name="basement_floor">Piano seminterrato</string>
+    <string name="study_title">Titolo di studi:</string>
+    <string name="mark_cum_laude">e lode</string>
 
     <string-array name="cardinal_numbers">
         <item>Primo</item>
