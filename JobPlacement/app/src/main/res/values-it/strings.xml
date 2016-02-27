@@ -299,8 +299,10 @@
     <string name="NoFavourites">Nessun favorito trovato</string>
     <string name="job_offer">Offerte di lavoro</string>
     <string name="new_job_offer_message">ha pubblicato una nuova offerta di lavoro su</string>
-    <string name="deleted_job_offer_message">revocata offerta di lavoro: </string>
-    <string name="deleted_application_message">ha deciso di ritirare la sua candidatura per l\'offerta: </string>
+    <string name="deleted_job_offer_title">Offerta di lavoro rimossa</string>
+    <string name="deleted_job_application">Candidatura rimossa</string>
+    <string name="deleted_job_offer_message">ha deciso di revocare l\'offerta di lavoro </string>
+    <string name="deleted_application_message">ha deciso di ritirare la sua candidatura per l\'offerta </string>
     <string name="new_job_offer">Nuova offerta di lavoro</string>
     <string name="new_student_applied">Nuovo studente candidato</string>
     <string name="student_accepted">Candidatura accettata</string>

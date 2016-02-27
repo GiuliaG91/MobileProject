@@ -182,16 +182,18 @@ public class TabHomeAdapter extends RecyclerView.Adapter<TabHomeAdapter.ViewHold
 
                 switch (object.getType()) {
 
-                    case News.TYPE_NEW_OFFER: icon.setImageResource(R.drawable.ic_offer);
-                            title.setText(context.getResources().getString(R.string.new_job_offer));
-                            break;
+                    case News.TYPE_NEW_OFFER:
+                        icon.setImageResource(R.drawable.ic_offer);
+                        title.setText(context.getResources().getString(R.string.new_job_offer));
+                        break;
 
                     case News.TYPE_OFFER_APPLICATION:
                         try {
                             Student student=object.getStudent().fetchIfNeeded();
 
-                        if(student.getProfilePhoto() != null)
+                            if(student.getProfilePhoto() != null)
                                 icon.setImageBitmap(object.getStudent().getProfilePhoto());
+
                             title.setText(context.getResources().getString(R.string.new_student_applied));
 
                         }
@@ -256,6 +258,23 @@ public class TabHomeAdapter extends RecyclerView.Adapter<TabHomeAdapter.ViewHold
                     case News.TYPE_ADVERTISEMENT:
                             break;
 
+                    case News.TYPE_OFFER_DELETED:
+
+                        try {
+                            Company company = object.getCompany().fetchIfNeeded();
+                            if (company.getProfilePhoto() != null)
+                                icon.setImageBitmap(object.getCompany().getProfilePhoto());
+
+                        }catch (RuntimeException re) {
+                        }
+                        catch (ParseException e) {
+                            e.printStackTrace();
+                        }
+
+                        title.setText(context.getResources().getString(R.string.deleted_job_offer_title));
+                        break;
+
+
                     case News.TYPE_NEW_NOTICE:
                         try {
                             Professor professor=object.getCourse().getProfessor().fetchIfNeeded();
@@ -272,6 +291,23 @@ public class TabHomeAdapter extends RecyclerView.Adapter<TabHomeAdapter.ViewHold
                         }
 
                            break;
+
+                    case News.TYPE_APPLICATION_DELETED:
+
+                        try {
+                            Student student=object.getStudent().fetchIfNeeded();
+
+                            if(student.getProfilePhoto() != null)
+                                icon.setImageBitmap(object.getStudent().getProfilePhoto());
+                            title.setText(context.getResources().getString(R.string.deleted_job_application));
+
+                        }
+                        catch (ParseException e) {
+                            e.printStackTrace();
+                        }
+
+                        break;
+
 
                     case News.TYPE_SCHEDULE_CHANGED:
                     try {

@@ -301,8 +301,10 @@
     <string name="NoFavourites">No favourites found</string>
     <string name="job_offer">Job Offer</string>
     <string name="new_job_offer_message">published a new job offer on</string>
-    <string name="deleted_job_offer_message">the company revoked job offer: </string>
-    <string name="deleted_application_message">decided to revoke an application for the offer: </string>
+    <string name="deleted_job_offer_title">Job offer removed</string>
+    <string name="deleted_job_application">Application revoked</string>
+    <string name="deleted_job_offer_message">decided to revoke the job offer </string>
+    <string name="deleted_application_message">decided to revoke an application for the offer </string>
     <string name="new_job_offer">New Job Offer</string>
     <string name="new_student_applied">New Applied Student</string>
     <string name="student_accepted">Application Accepted</string>

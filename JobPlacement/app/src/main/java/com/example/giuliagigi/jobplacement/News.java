@@ -326,7 +326,7 @@ public class News extends ParseObject {
                 try {
                     Student student = this.getStudent().fetchIfNeeded();
                     CompanyOffer companyOffer = this.getCompanyOffer().fetchIfNeeded();
-                    message = student.getName() + " " + student.getSurname() + globalData.getResources().getString(R.string.deleted_application_message) + "\"" + companyOffer.getOfferObject() + "\"";
+                    message = student.getName() + " " + student.getSurname() + " " + globalData.getResources().getString(R.string.deleted_application_message) + " \"" + companyOffer.getOfferObject() + "\"";
 
                     break;
                 } catch (ParseException e) {
