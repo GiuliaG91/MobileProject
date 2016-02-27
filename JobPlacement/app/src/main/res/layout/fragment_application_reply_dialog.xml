@@ -9,7 +9,13 @@
     <TextView
         android:id="@+id/application_dialog_student"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:textColor="@color/ColorPrimaryDark"
+        android:textSize="20sp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="10dp"
+        android:text="Student name"/>
 
     <RadioGroup
         android:id="@+id/radio_group_application_reply"
@@ -20,20 +26,41 @@
             android:id="@+id/radio_button_application_considering"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:buttonTint="@color/ColorPrimaryDark"
+            android:textColor="@color/black_semi_transparent"
+            android:textAppearance="?android:attr/textAppearanceSmall"
             android:text="@string/application_dialog_considering"/>
 
         <RadioButton
             android:id="@+id/radio_button_application_accept"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:textColor="@color/black_semi_transparent"
+            android:buttonTint="@color/ColorPrimaryDark"
+            android:textAppearance="?android:attr/textAppearanceSmall"
             android:text="@string/application_dialog_accept"/>
 
         <RadioButton
             android:id="@+id/radio_button_application_refuse"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginBottom="10dp"
+            android:textColor="@color/black_semi_transparent"
+            android:buttonTint="@color/ColorPrimaryDark"
+            android:textAppearance="?android:attr/textAppearanceSmall"
             android:text="@string/application_dialog_refused"/>
 
     </RadioGroup>
+
+
 
 </LinearLayout>

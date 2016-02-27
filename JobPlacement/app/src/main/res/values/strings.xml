@@ -365,12 +365,12 @@
     <string name="application_status_applyStatus">Apply Status:</string>
     <string name="application_status_ChooseItem">Select next status:</string>
     <string name="application_status_NoModify">Can\'t modify this offer</string>
-    <string name="application_dialog_message">What would you like to answer to: </string>
+    <string name="application_dialog_message">What would you like to answer to </string>
     <string name="application_dialog_considering">Your application has been taken in consideration. We will contact you soon to request further information and eventually set an interview</string>
     <string name="application_dialog_accept">Your application has been accepted</string>
     <string name="application_dialog_refused">Your application has been refused</string>
     <string name="application_dialog_confirm_request">Are you sure to confirm this operation?</string>
-    <string name="application_dialog_confirm_message">This operation is not reversible: for example, if you accept this application, the available places will be decremented</string>
+    <string name="application_dialog_confirm_message">Are you sure to confirm this operation? This operation is not reversible: for example, if you accept this application, the available places will be decremented</string>
     <string name="application_dialog_already_replied">You already replied to this application. Its state is not reversible at the moment. We suggest you to contact directly this student</string>
     <string name="application_no_graduation">No graduation</string>
 

@@ -5,16 +5,10 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
 import android.content.DialogInterface;
-import android.net.Uri;
 import android.os.Bundle;
-import android.app.Fragment;
-import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentManager;
-import android.support.v7.widget.Toolbar;
-import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
@@ -24,7 +18,6 @@ import com.parse.ParseException;
 import com.parse.ParseInstallation;
 import com.parse.ParsePush;
 import com.parse.ParseQuery;
-import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
 
@@ -84,7 +77,7 @@ public class ApplicationReplyDialogFragment extends DialogFragment {
     public Dialog onCreateDialog(Bundle savedInstanceState) {
 
         final AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        builder.setTitle(GlobalData.getContext().getString(R.string.application_dialog_message));
+        //builder.setTitle(GlobalData.getContext().getString(R.string.application_dialog_message));
 
 
         /* ------------ set up the dialog window ------------------------------------------------ */
@@ -116,7 +109,7 @@ public class ApplicationReplyDialogFragment extends DialogFragment {
             e.printStackTrace();
         }
 
-        studentTV.setText(name);
+        studentTV.setText(GlobalData.getContext().getString(R.string.application_dialog_message) + " " + name + "?");
         builder.setView(v);
 
 
@@ -127,10 +120,12 @@ public class ApplicationReplyDialogFragment extends DialogFragment {
 
                 // 1) for further safety, a inner dialog window is opened --------------------------
                 AlertDialog.Builder innerBuilder = new AlertDialog.Builder(getActivity());
-                innerBuilder.setTitle(R.string.application_dialog_confirm_request);
+                //innerBuilder.setTitle(R.string.application_dialog_confirm_request);
 
                 TextView warningMessage = new TextView(getActivity());
                 warningMessage.setText(R.string.application_dialog_confirm_message);
+                warningMessage.setTextColor(getResources().getColor(R.color.black_semi_transparent));
+
                 innerBuilder.setView(warningMessage);
 
 
@@ -186,7 +181,7 @@ public class ApplicationReplyDialogFragment extends DialogFragment {
                                 " " + globalData.getString(R.string.Message_UpdateEnd) + " " + globalData.getUserObject().getMail());
                         push.sendInBackground();
 
-                        Toast.makeText(globalData,R.string.Done,Toast.LENGTH_SHORT).show();
+                        Toast.makeText(globalData, R.string.Done, Toast.LENGTH_SHORT).show();
                     }
                 });
 
@@ -196,12 +191,34 @@ public class ApplicationReplyDialogFragment extends DialogFragment {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
 
-                        Toast.makeText(globalData,R.string.operation_canceled,Toast.LENGTH_SHORT).show();
+                        Toast.makeText(globalData, R.string.operation_canceled, Toast.LENGTH_SHORT).show();
                     }
                 });
 
                 // 4) display the inner dialog window ----------------------------------------------
-                innerBuilder.create().show();
+
+                AlertDialog in = innerBuilder.create();
+                in.show();
+
+                Button pos = in.getButton(DialogInterface.BUTTON_POSITIVE);
+                pos.setTextColor(getResources().getColor(R.color.ColorPrimaryDark));
+                pos.setBackgroundResource(R.drawable.button_background);
+                LinearLayout.LayoutParams posParams = (LinearLayout.LayoutParams) pos.getLayoutParams();
+                posParams.bottomMargin = 5;
+                posParams.topMargin = 5;
+                posParams.leftMargin = 5;
+                pos.setLayoutParams(posParams);
+
+                Button neg = in.getButton(DialogInterface.BUTTON_NEGATIVE);
+                neg.setTextColor(getResources().getColor(R.color.ColorPrimaryDark));
+                neg.setBackgroundResource(R.drawable.button_background);
+                LinearLayout.LayoutParams negParams = (LinearLayout.LayoutParams) neg.getLayoutParams();
+                negParams.bottomMargin = 5;
+                negParams.topMargin = 5;
+                negParams.leftMargin = 5;
+                negParams.rightMargin = 5;
+                neg.setLayoutParams(negParams);
+
             }
         });
 
@@ -211,11 +228,36 @@ public class ApplicationReplyDialogFragment extends DialogFragment {
             @Override
             public void onClick(DialogInterface dialog, int which) {
 
-                Toast.makeText(globalData,R.string.operation_canceled,Toast.LENGTH_SHORT).show();
+                Toast.makeText(globalData, R.string.operation_canceled, Toast.LENGTH_SHORT).show();
             }
         });
 
-        return builder.create();
+        AlertDialog al=builder.create();
+
+        al.show();
+
+        Button pos = al.getButton(DialogInterface.BUTTON_POSITIVE);
+        pos.setTextColor(getResources().getColor(R.color.ColorPrimaryDark));
+        pos.setBackgroundResource(R.drawable.button_background);
+
+        LinearLayout.LayoutParams posParams = (LinearLayout.LayoutParams) pos.getLayoutParams();
+        posParams.bottomMargin = 5;
+        posParams.topMargin = 5;
+        posParams.leftMargin = 5;
+        pos.setLayoutParams(posParams);
+
+        Button neg = al.getButton(DialogInterface.BUTTON_NEGATIVE);
+        neg.setTextColor(getResources().getColor(R.color.ColorPrimaryDark));
+        neg.setBackgroundResource(R.drawable.button_background);
+
+        LinearLayout.LayoutParams negParams = (LinearLayout.LayoutParams) neg.getLayoutParams();
+        negParams.bottomMargin = 5;
+        negParams.topMargin = 5;
+        negParams.leftMargin = 5;
+        negParams.rightMargin = 5;
+        neg.setLayoutParams(negParams);
+
+        return al;
 
     }
 }

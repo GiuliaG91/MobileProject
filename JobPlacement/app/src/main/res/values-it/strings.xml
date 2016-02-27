@@ -362,12 +362,12 @@
     <string name="application_status_applyStatus">Stato della candidatura:</string>
     <string name="application_status_ChooseItem">Seleziona il prossimo stato:</string>
     <string name="application_status_NoModify">Non posso modificare questa offerta</string>
-    <string name="application_dialog_message">Cosa desideri rispondere a: </string>
+    <string name="application_dialog_message">Cosa desideri rispondere a </string>
     <string name="application_dialog_considering">La sua candidatura è stata presa in considerazione. Le faremo sapere presto di quali informazioni abbiamo bisogno e la contatteremo per un eventuale colloquio</string>
     <string name="application_dialog_accept">La sua candidatura è stata accettata</string>
     <string name="application_dialog_refused">La sua candidatura è stata respinta</string>
     <string name="application_dialog_confirm_request">Sei sicuro di voler confermare l\'operazione?</string>
-    <string name="application_dialog_confirm_message">L\'operazione non è reversibile: per esempio, nel caso in cui si accetti la candidatura, i posti disponibili vengono decrementati</string>
+    <string name="application_dialog_confirm_message">Sei sicuro di voler confermare l\'operazione? L\'operazione non è reversibile: per esempio, nel caso in cui si accetti la candidatura, i posti disponibili vengono decrementati</string>
     <string name="application_dialog_already_replied">Hai già dato una risposta relativa a questa candidatura: il suo stato non è reversibile. Ti consigliamo di contattare direttamente lo studente</string>
     <string name="application_no_graduation">Nessun titolo di laurea</string>
 
